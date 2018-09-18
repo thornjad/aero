@@ -497,6 +497,8 @@ Other:
     to Sylvain Benner)
   - New function =configuration-layer/load-file= to load files silently (thanks
     to Sylvain Benner)
+  - Fix configuration-layer/insert-lazy-install-configuration, which has been
+    broken since v0.200.0.
   - Fixed duplicate "Open quick help..." in the minibuffer at startup (thanks to
     Sylvain Benner)
   - Fixed overflow of line in page-break-lines-mode when using line number
@@ -819,6 +821,7 @@ Other:
   - Added =go-run-args= to pass command line arguments to `go run`
   - Editing: Enable smartparens in eldoc-eval-expression
     (thanks to Aaron Jensen)
+  - Check for universal argument before paste (thanks to Bet4)
 - Fixed:
   - Fixed ~h~ key binding in compilation and grep buffers (thanks to Sylvain
     Benner)
@@ -1119,14 +1122,18 @@ Other:
   - Enabled =flycheck= by default (thanks to Saulius Menkevičius)
   - No need to unset =omnisharp-auto-complete-want-documentation= anymore
    (thanks to Saulius Menkevičius)
+  - Add ~SPC m t~ which key prefix: =csharp/tests= (thanks to duianto)
+  - Hide mode-line indicator: =omnisharp= (thanks to duianto)
 - Key bindings:
   - New key binding =SPC m g e= for =omnisharp-solution-errors=
     (thanks to Saulius Menkevičius)
-  - New key bindings:
-    - ~SPC t b~ for =omnisharp-unit-test-buffer=
-    - ~SPC u~ for =omnisharp-auto-complete-overrides=
-    - ~SPC i~ for =omnisharp-fix-usings=
-    (thanks to Alistair Bush)
+  - New key bindings (thanks to Alistair Bush):
+    - ~SPC m t b~ for =omnisharp-unit-test-buffer=
+    - ~SPC m u~ for =omnisharp-auto-complete-overrides=
+    - ~SPC m i~ for =omnisharp-fix-usings=
+  - Add unit test bindings (thanks to Saulius Menkevičius):
+    - ~SPC m t p~ for =omnisharp-unit-test-at-point=
+    - ~SPC m t t~ for =omnisharp-unit-test-last=
 - Fixes:
   - Disabled functions not present in the latest =omnisharp= package
     (thanks to Saulius Menkevičius)
@@ -1545,6 +1552,7 @@ Other:
   - Added ES6 module extension to =init-js2-mode= (thanks to Nathan Lloyd)
   - Added =org-babel= support (thanks to Michael Rohleder)
   - Added debug support via =dap= layer (Firefox and Google Chrome)
+  - Added format on save option. (thanks to Trapez Breen)
 - Key bindings
   - Improved coffeescript support:
     - ~SPC m '~ to create or go to REPL
@@ -1784,6 +1792,8 @@ Other:
     Pillsworth):
     - ~SPC m i b~ for =org-insert-structure-template=
     - ~SPC m i t~ for =org-set-tags-command=
+  - Added key binding for org-insert-item (thanks to Emil Petersen)
+    - ~SPC m i i~ for =org-insert-item=
 - Key binding changes for archiving (thanks to Ag Ibragimov):
   - Added ~SPC m s a~ to toggle archive tag for subtree
   - Added ~SPC m s A~ to archive subtree (previously ~SPC m s a~)
@@ -2278,18 +2288,18 @@ Other:
   Joshua Santos, Justin Stone, Kainalu Hagiwara, Kalle Lindqvist, Kechao Cai,
   Keith Simmons, Keith Wygant, Kevin Ji, Kristoffer Haugsbakk, lawrsp, Leo
   Joseph Buchignani III, Luke Worth, Marco Ieni, Marco Zucconelli, Max
-  Beutelspacher, Max Nordlund, Maximilian Wolff, Miciah Dashiel Butler Masters,
-  mjkramer, Mikhail Yakutovich, Muneeb Shaikh, Nasser Alshammari, Nasser
-  Alshammari, Niko Felger, Nikolai Myllymäki, nikolaiam, Nicolas Forgerit,
-  Olivier Verdier, Pancho Horrillo, Paul Milla, Paulo Schneider, Pawan Dubey,
-  Paweł Siudak, Phil Pirozhkov, Philippe Bourdages, Piotr Grzesik, Rafi Khan,
-  Rand01ph, rakyi, Raymond Wanyoike, Reverend Homer, Robby O'Connor, Rhommel
-  Lamas, Sam Pablo Kuper, Saulius Menkevičius, sduthil, Sergio Ugalde, Shane
-  Kilkelly, Sid Kapur, Somelauw, Soobin Rho, sorawee, SteveJobzniak, Sunghyun
-  Hwang, Swaroop C H, Sylvain Benner, Szunti, Tim Stewart, timor, TinySong,
-  Titov Andrey, Thomas de Beauchêne, Tomasz Cichocinski, tzhao11, Vincent Taing,
-  Vlad Bokov, Vladimir Kochnev, Wieland Hoffmann, Xiang Ji, Yi Liu, zer09, Zhige
-  Xin, Serghei Iakovlev)
+  Beutelspacher, Max Deineko, Max Nordlund, Maximilian Wolff,
+  Miciah Dashiel Butler Masters, mjkramer, Mikhail Yakutovich, Muneeb Shaikh,
+  Nasser Alshammari, Nasser Alshammari, Niko Felger, Nikolai Myllymäki, nikolaiam,
+  Nicolas Forgerit, Olivier Verdier, Pancho Horrillo, Paul Milla, Paulo Schneider,
+  Pawan Dubey, Paweł Siudak, Phil Pirozhkov, Philippe Bourdages, Piotr Grzesik,
+  Rafi Khan, Rand01ph, rakyi, Raymond Wanyoike, Reverend Homer, Robby O'Connor,
+  Rhommel Lamas, Sam Pablo Kuper, Saulius Menkevičius, sduthil, Sergio Ugalde,
+  Shane Kilkelly, Sid Kapur, Somelauw, Soobin Rho, sorawee, SteveJobzniak,
+  Sunghyun Hwang, Swaroop C H, Sylvain Benner, Szunti, Tim Stewart, timor,
+  TinySong, Titov Andrey, Thomas de Beauchêne, Tomasz Cichocinski, tzhao11,
+  Vincent Taing, Vlad Bokov, Vladimir Kochnev, Wieland Hoffmann, Xiang Ji,
+  Yi Liu, zer09, Zhige Xin, Serghei Iakovlev)
 *** Release notes summarized
   Thanks to: Grant Shangreaux, Songpeng Zu, Igor Almeida, Miciah Dashiel Butler
   Masters, Abhishek(Compro) Prasad, Deepak Khidia, Ward Harris, Jiahao Jiang,
