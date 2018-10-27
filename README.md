@@ -2,7 +2,13 @@
    [![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
 
 This is a custom fork of [Spacemacs](https://github.com/syl20bnr/spacemacs). 
-Focus is on Tcl, web, Node.js and Lisp development on MacOS and Linux.
+Focus is on Tcl, web, Node.js and Lisp development on MacOS and Linux. This
+project may contain some tweaks and serves as a gate-keeper for new Spacemacs
+functionality. The [GitHub mirror](https://github.com/thornjad/emacs) also
+serves as a test-bed for future PRs into Spacemacs. Because the differences
+are not super-massive, I still consider this project to be Spacemacs, and 
+should you choose to use this project, please do still give your support and
+recognition to the Spacemacs upstream to which the project owes its life.
 
 
 ## Documentation
