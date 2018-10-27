@@ -67,10 +67,11 @@ The license is GPLv3 for all parts specific to Spacemacs, this includes:
 - the initialization and core files
 - all the layer files
 - the documentation
+- all thorn emacs changes
 
 For the packages shipped in this repository, you can refer to the files header.
 
-[Spacemacs logo][] by [Nasser Alshammari][] released under a
+Spacemacs logo by Nasser Alshammari released under a
 [Creative Commons Attribution-ShareAlike 4.0 International License.](http://creativecommons.org/licenses/by-sa/4.0/)
 
 
