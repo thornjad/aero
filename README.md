@@ -17,9 +17,9 @@ Comprehensive documentation is available for each layer by pressing
 <kbd>SPC h SPC</kbd>.
 
 Also check Spacemacs's 
-[general documentation][https://github.com/syl20bnr/DOCUMENTATION.org], 
-[quick start guide][https://github.com/syl20bnr/QUICK_START.org] and 
-[FAQ][https://github.com/syl20bnr/FAQ.org].
+[general documentation](https://github.com/syl20bnr/DOCUMENTATION.org), 
+[quick start guide](https://github.com/syl20bnr/QUICK_START.org) and 
+[FAQ](https://github.com/syl20bnr/FAQ.org).
 
 
 ## Install
