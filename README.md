@@ -57,6 +57,8 @@ brew cask install font-source-code-pro
 
 ```
 git clone https://gitlab.com/thornjad/emacs ~/.emacs.d
+cd ~/.emacs.d
+make setup
 ```
 
 ## License
