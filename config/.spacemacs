@@ -532,7 +532,7 @@ before packages are loaded."
 	(setq shell-file-name "/usr/local/bin/bash")
 
 	;; cache that project!
-	(setq projectile-indexing-method 'turbo-alien)
+	(setq projectile-indexing-method 'alien)
 	(setq projectile-enable-caching t)
 
 	;; I really want tabs all the time always
