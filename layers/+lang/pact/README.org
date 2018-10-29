@@ -41,7 +41,11 @@ All Pact specific bindings are prefixed with the major-mode leader ~SPC m~.
 REPL commands are prefixed by ~SPC m s~:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Key binding | Description                                     |
+=======
+| Key Binding | Description                                     |
+>>>>>>> Fix TRAMP hang on decode
 =======
 | Key Binding | Description                                     |
 >>>>>>> Fix TRAMP hang on decode

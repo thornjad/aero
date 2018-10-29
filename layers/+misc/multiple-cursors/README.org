@@ -1,9 +1,14 @@
 #+TITLE: multiple-cursors layer
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Table of Contents                     :TOC_4_gh:noexport:
 - [[#description][Description]]
   - [[#features][Features:]]
+=======
+* Table of Contents                                       :TOC_4_gh:noexport:
+- [[#description][Description]]
+>>>>>>> Fix TRAMP hang on decode
 =======
 * Table of Contents                                       :TOC_4_gh:noexport:
 - [[#description][Description]]
@@ -15,8 +20,12 @@
 
 * Description
 <<<<<<< HEAD
+<<<<<<< HEAD
 ** Features:
 - support for multiple cursors.
+=======
+This layer adds support for multiple cursors.
+>>>>>>> Fix TRAMP hang on decode
 =======
 This layer adds support for multiple cursors.
 >>>>>>> Fix TRAMP hang on decode
@@ -32,8 +41,13 @@ availabe in the future.
 
 #+BEGIN_SRC emacs-lisp
 <<<<<<< HEAD
+<<<<<<< HEAD
   (setq-default dotspacemacs-configuration-layers '(
     (multiple-cursors :variables multiple-cursors-backend 'evil-mc))
+=======
+(setq-default dotspacemacs-configuration-layers '(
+  (multiple-cursors :variables multiple-cursors-backend 'evil-mc))
+>>>>>>> Fix TRAMP hang on decode
 =======
 (setq-default dotspacemacs-configuration-layers '(
   (multiple-cursors :variables multiple-cursors-backend 'evil-mc))
@@ -43,14 +57,20 @@ availabe in the future.
 * Key bindings
 ** =evil-mc=
 <<<<<<< HEAD
+<<<<<<< HEAD
 The =evil-mc= package provides the following key bindings:
 
 | Key binding | Description                        |
 =======
+=======
+>>>>>>> Fix TRAMP hang on decode
 
 The =evil-mc= package provides the following key bindings:
 
 | Key Binding | Description                        |
+<<<<<<< HEAD
+>>>>>>> Fix TRAMP hang on decode
+=======
 >>>>>>> Fix TRAMP hang on decode
 |-------------+------------------------------------|
 | ~g r f~     | evil-mc-make-and-goto-first-cursor |
@@ -70,7 +90,11 @@ The =evil-mc= package provides the following key bindings:
 For easy navigation you also have the following:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Key binding | Description                        |
+=======
+| Key Binding | Description                        |
+>>>>>>> Fix TRAMP hang on decode
 =======
 | Key Binding | Description                        |
 >>>>>>> Fix TRAMP hang on decode
