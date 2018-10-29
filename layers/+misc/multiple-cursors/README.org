@@ -1,18 +1,25 @@
 #+TITLE: multiple-cursors layer
 
-#+TAGS: layer|misc
-
-* Table of Contents                     :TOC_5_gh:noexport:
+<<<<<<< HEAD
+* Table of Contents                     :TOC_4_gh:noexport:
 - [[#description][Description]]
   - [[#features][Features:]]
+=======
+* Table of Contents                                       :TOC_4_gh:noexport:
+- [[#description][Description]]
+>>>>>>> Fix TRAMP hang on decode
 - [[#install][Install]]
 - [[#configuration][Configuration]]
 - [[#key-bindings][Key bindings]]
   - [[#evil-mc][=evil-mc=]]
 
 * Description
+<<<<<<< HEAD
 ** Features:
 - support for multiple cursors.
+=======
+This layer adds support for multiple cursors.
+>>>>>>> Fix TRAMP hang on decode
 
 * Install
 To use this configuration layer, add it to your =~/.spacemacs=. You will need to
@@ -21,18 +28,30 @@ file.
 
 * Configuration
 Currently the only supported backend is =evil-mc=, but more backends will be
-available in the future.
+availabe in the future.
 
 #+BEGIN_SRC emacs-lisp
+<<<<<<< HEAD
   (setq-default dotspacemacs-configuration-layers '(
     (multiple-cursors :variables multiple-cursors-backend 'evil-mc))
+=======
+(setq-default dotspacemacs-configuration-layers '(
+  (multiple-cursors :variables multiple-cursors-backend 'evil-mc))
+>>>>>>> Fix TRAMP hang on decode
 #+END_SRC
 
 * Key bindings
 ** =evil-mc=
+<<<<<<< HEAD
 The =evil-mc= package provides the following key bindings:
 
 | Key binding | Description                        |
+=======
+
+The =evil-mc= package provides the following key bindings:
+
+| Key Binding | Description                        |
+>>>>>>> Fix TRAMP hang on decode
 |-------------+------------------------------------|
 | ~g r f~     | evil-mc-make-and-goto-first-cursor |
 | ~g r h~     | evil-mc-make-cursor-here           |
@@ -46,12 +65,15 @@ The =evil-mc= package provides the following key bindings:
 | ~g r P~     | evil-mc-skip-and-goto-prev-cursor  |
 | ~g r r~     | evil-mc-resume-cursors             |
 | ~g r s~     | evil-mc-pause-cursors              |
-| ~g r q~     | evil-mc-undo-all-cursors           |
-| ~g r u~     | evil-mc-undo-last-added-cursor     |
+| ~g r u~     | evil-mc-undo-all-cursors           |
 
 For easy navigation you also have the following:
 
+<<<<<<< HEAD
 | Key binding | Description                        |
+=======
+| Key Binding | Description                        |
+>>>>>>> Fix TRAMP hang on decode
 |-------------+------------------------------------|
 | ~M-n~       | evil-mc-make-and-goto-next-cursor  |
 | ~M-p~       | evil-mc-make-and-goto-prev-cursor  |

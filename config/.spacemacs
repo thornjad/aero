@@ -40,7 +40,6 @@ This function should only modify configuration layer settings."
 		 sql
 		 html
 		 javascript
-		 vimscript
 		 yaml
 		 php
 		 gtags
@@ -69,7 +68,6 @@ This function should only modify configuration layer settings."
 	 ;; '(your-package :location "~/path/to/your-package/")
 	 ;; Also include the dependencies as they will not be resolved automatically.
 	 dotspacemacs-additional-packages '(
-																			handlebars-mode
 																			beacon
 																			)
 
@@ -214,7 +212,7 @@ It should only modify the values of Spacemacs settings."
 	 ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
 	 ;; quickly tweak the mode-line size to make separators look not too crappy.
 	 dotspacemacs-default-font '("Source Code Pro"
-															 :size 13
+															 :size 12
 															 :weight normal
 															 :width normal)
 
@@ -450,11 +448,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-	;; I guess get company loaded before anything else, because otherwise it throws
-	;;	 void errors like nobody's business
-	;; (require 'company)
-
-	;; allow emacs to find tern
+  ;; allow emacs to find tern
 	(add-to-list 'exec-path "/usr/local/bin")
 
 	;; fix for tramp arrayp woes
@@ -508,11 +502,8 @@ before packages are loaded."
 	;;						(tabify (point-min) (point-max))))
 
 	;; ensure rvt and tcl are both recognized as tcl (also see rvt section below)
-	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . tcl-mode))
-	(add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-mode))
-
-	;; handle handlebars correctly
-	(add-to-list 'auto-mode-alist '("\\.tpl\\'" . handlebars-mode))
+	;; (add-to-list 'auto-mode-alist '("\\.rvt\\'" . tcl-mode))
+	;; (add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-mode))
 
 	;; recognize rvt as tcl
 	(require 'mmm-auto)
@@ -530,15 +521,12 @@ before packages are loaded."
 	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode)) auto-mode-alist))
 
 	;; eshell
-	(setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
+	;; (setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
 	(setq eshell-save-history-on-exit t
 				eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
 	(setq eshell-prompt-function
 				(lambda ()
 					(concat "\n" (getenv "USER") " in " (eshell/pwd) " at " (format-time-string "%l:%M %p") "\n" "λ ")))
-
-	;; tramp
-	(setq tramp-default-method "ssh")
 
 	;; make tramp play nicely with hopnu (and others)
 	(setq shell-file-name "/usr/local/bin/bash")
@@ -550,11 +538,8 @@ before packages are loaded."
 	;; I really want tabs all the time always
 	(setq indent-tabs-mode t)
 
-	;; show battery status in modeline
-	(display-battery-mode t)
-
 	;; set cursor color
-	(set-face-attribute 'spacemacs-normal-face nil :background "#FFFFEF")
+	;; (set-face-attribute 'spacemacs-normal-face nil :background "#FFFFEF")
 
 	;; enable beacon
 	(beacon-mode 1)
@@ -563,7 +548,7 @@ before packages are loaded."
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (defun dotspacemacs/emacs-custom-settings ()
-	"Emacs custom settings.
+  "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
@@ -573,8 +558,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 (quote
-		(yasnippet-snippets yaml-mode xterm-color ws-butler winum web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen unfill tagedit symon string-inflection sql-indent spaceline-all-the-icons spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox spinner overseer open-junk-file neotree nameless mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode link-hint json-navigator hierarchy json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc indent-guide impatient-mode htmlize simple-httpd hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore request helm-git-grep helm-flx helm-descbinds helm-css-scss helm-c-yasnippet helm-ag handlebars-mode haml-mode google-translate golden-ratio gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub treepy graphql with-editor evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump drupal-mode doom-modeline eldoc-eval shrink-path all-the-icons memoize diff-hl define-word dactyl-mode counsel-projectile projectile counsel swiper ivy pkg-info epl web-completion-data dash-functional tern ac-php-core xcscope php-mode column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode centered-cursor-mode browse-at-remote f dash s auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core ac-ispell auto-complete popup which-key use-package pcre2el hydra font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async))))
+   (quote
+    (yasnippet-snippets yaml-mode xterm-color web-mode unfill tagedit sql-indent smeargle slime-company slime slim-mode shell-pop scss-mode sass-mode pug-mode phpunit phpcbf php-extras php-auto-yasnippets mwim multi-term mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow impatient-mode htmlize helm-gtags helm-gitignore helm-git-grep helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy graphql with-editor eshell-z eshell-prompt-extras esh-help emmet-mode drupal-mode diff-hl company-web web-completion-data company-tern dash-functional company-statistics company-php ac-php-core xcscope php-mode company common-lisp-snippets color-theme-sanityinc-tomorrow browse-at-remote beacon auto-yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters prettier-js popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file neotree nameless move-text macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -582,21 +567,3 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(left-margin 1)
- '(package-selected-packages
-   (quote
-    (beacon slime-company slime common-lisp-snippets yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit sql-indent spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode popwin phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gtags helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode haml-mode google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub treepy graphql with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump f drupal-mode php-mode diminish diff-hl define-word dactyl-mode company-web web-completion-data company-tern s dash-functional tern dash company-statistics company column-enforce-mode coffee-mode clean-aindent-mode bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup color-theme-sanityinc-tomorrow)))
- '(standard-indent 2)
- '(tcl-tab-always-indent t)
- '(web-mode-markup-indent-offset 2))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
