@@ -3,3 +3,7 @@ CONF_FILE = config/.spacemacs
 setup:
 	@cp $(CONF_FILE) $(HOME)
 	@echo "SETUP CONFIGURATION FILE. YOU SHOULD NOW START EMACS TO COMPLETE SETUP"
+
+grabconf:
+	@cp $(HOME)/.spacemacs $(CONF_FILE)
+	@echo "GRABBED CONFIGURATION FILE"
