@@ -47,9 +47,12 @@ This function should only modify configuration layer settings."
 		 better-defaults
 		 git
 		 markdown
-		 spell-checking
+		 ;; spell-checking
 		 syntax-checking
-		 version-control
+		 (version-control :variables
+											version-control-diff-tool 'git-gutter
+											version-control-diff-side 'left
+											version-control-global-margin t)
 		 common-lisp
 		 ;; spacemacs-purpose
 		 (shell :variables
@@ -75,7 +78,9 @@ This function should only modify configuration layer settings."
 	 dotspacemacs-frozen-packages '()
 
 	 ;; A list of packages that will not be installed and loaded.
-	 dotspacemacs-excluded-packages '()
+	 dotspacemacs-excluded-packages '(
+																		git-gutter+
+																		)
 
 	 ;; Defines the behaviour of Spacemacs when installing packages.
 	 ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -451,7 +456,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; allow emacs to find tern
 	(add-to-list 'exec-path "/usr/local/bin")
 
-	;; fix for tramp arrayp woes
+	;; attempt at fixing tramp/git-gutter-pl
 	(defun git-gutter+-remote-default-directory (dir file)
 		(let* ((vec (tramp-dissect-file-name file))
 					 (method (tramp-file-name-method vec))
