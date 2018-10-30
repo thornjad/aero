@@ -1,0 +1,18 @@
+
+       ╭───────────────────────────────────────────────────────────╮
+
+                       VERSION 1.0.0 IS ALMOST OUT!
+
+       ╰───────────────────────────────────────────────────────────╯
+
+
+Version 1.0.0 of thorn emacs will be based on Spacemacs develop. Most changes
+from the base will be a reduction in size by removing unneeded packages and
+files, plus some patches as necessary.
+
+Please keep in mind that thorn emacs is very highly opinionated, and is tailored
+entirely to Jade Michael Thornton and the way he uses emacs. That being said, if
+you would like to contribute and/or have a strong opinion, the source is always
+open at https://gitlab.com/thornjad/emacs.
+
+Fly safe!

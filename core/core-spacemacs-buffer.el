@@ -13,13 +13,13 @@
 ;;
 ;;; Code:
 
-(defconst spacemacs-buffer-version-info "0.300"
+(defconst spacemacs-buffer-version-info "1.0.0"
   "Current version used to display addition release information.")
 
-(defconst spacemacs-buffer-name "*spacemacs*"
+(defconst spacemacs-buffer-name "*thorn emacs*"
   "The name of the spacemacs buffer.")
 
-(defconst spacemacs-buffer-logo-title "[S P A C E M A C S]"
+(defconst spacemacs-buffer-logo-title "[thorn emacs_]"
   "The title displayed beneath the logo.")
 
 (defconst spacemacs-buffer-buttons-startup-lists-offset 25
