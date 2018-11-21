@@ -1,6 +1,0 @@
-alias e find-file $1
-alias la ls -lah $*
-alias d dired $1
-
-alias fp ack "proc\s+(flightaware_|fa_)?$*" --type=tcl
-alias ff find . -type f -iname '*'$*'*' -ls
