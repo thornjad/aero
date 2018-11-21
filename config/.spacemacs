@@ -41,26 +41,28 @@ This function should only modify configuration layer settings."
 		 html
 		 javascript
 		 yaml
-		 php
 		 gtags
 		 auto-completion
 		 better-defaults
 		 git
 		 markdown
+		 org
 		 ;; spell-checking
 		 syntax-checking
-		 (version-control :variables
-											version-control-diff-tool 'git-gutter
-											version-control-diff-side 'left
-											version-control-global-margin t)
+		 ;; (version-control :variables
+		 ;; 									version-control-diff-tool 'git-gutter
+		 ;; 									version-control-diff-side 'left
+		 ;; 									version-control-global-margin t)
 		 common-lisp
 		 ;; spacemacs-purpose
 		 (shell :variables
 						shell-default-shell 'eshell
-						shell-default-height 19
+						shell-default-height 29
 						shell-default-width 180
 						shell-command-switch "-ic"
 						shell-default-position 'bottom)
+
+		 spotify
 		 )
 
 	 ;; List of additional packages that will be installed without being
@@ -72,6 +74,8 @@ This function should only modify configuration layer settings."
 	 ;; Also include the dependencies as they will not be resolved automatically.
 	 dotspacemacs-additional-packages '(
 																			beacon
+																			doom-themes
+																			handlebars-mode
 																			)
 
 	 ;; A list of packages that cannot be updated.
@@ -79,7 +83,7 @@ This function should only modify configuration layer settings."
 
 	 ;; A list of packages that will not be installed and loaded.
 	 dotspacemacs-excluded-packages '(
-																		git-gutter+
+																		version-control
 																		)
 
 	 ;; Defines the behaviour of Spacemacs when installing packages.
@@ -197,9 +201,11 @@ It should only modify the values of Spacemacs settings."
 	 ;; List of themes, the first of the list is loaded when spacemacs starts.
 	 ;; Press `SPC T n' to cycle to the next theme in the list (works great
 	 ;; with 2 themes variants, one dark and one light)
-	 dotspacemacs-themes '(sanityinc-tomorrow-bright
+	 dotspacemacs-themes '(
+												 doom-opera
+												 sanityinc-tomorrow-bright
 												 spacemacs-dark
-												 spacemacs-light)
+												 )
 
 	 ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
 	 ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -208,7 +214,7 @@ It should only modify the values of Spacemacs settings."
 	 ;; refer to the DOCUMENTATION.org for more info on how to create your own
 	 ;; spaceline theme. Value can be a symbol or list with additional properties.
 	 ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-	 dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+	 dotspacemacs-mode-line-theme '(doom)
 
 	 ;; If non-nil the cursor color matches the state color in GUI Emacs.
 	 ;; (default t)
@@ -309,7 +315,7 @@ It should only modify the values of Spacemacs settings."
 
 	 ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
 	 ;; (Emacs 24.4+ only)
-	 dotspacemacs-fullscreen-at-startup t
+	 dotspacemacs-fullscreen-at-startup nil
 
 	 ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
 	 ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -318,17 +324,17 @@ It should only modify the values of Spacemacs settings."
 	 ;; If non-nil the frame is maximized when Emacs starts up.
 	 ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
 	 ;; (default nil) (Emacs 24.4+ only)
-	 dotspacemacs-maximized-at-startup nil
+	 dotspacemacs-maximized-at-startup t
 
 	 ;; A value from the range (0..100), in increasing opacity, which describes
 	 ;; the transparency level of a frame when it's active or selected.
 	 ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-	 dotspacemacs-active-transparency 90
+	 dotspacemacs-active-transparency 100
 
 	 ;; A value from the range (0..100), in increasing opacity, which describes
 	 ;; the transparency level of a frame when it's inactive or deselected.
 	 ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-	 dotspacemacs-inactive-transparency 90
+	 dotspacemacs-inactive-transparency 80
 
 	 ;; If non-nil show the titles of transient states. (default t)
 	 dotspacemacs-show-transient-state-title t
@@ -480,7 +486,7 @@ This function is called only while dumping Spacemacs configuration. You can
 dump."
 	)
 
-(defun dotspacemacs/user-config ()
+ (defun dotspacemacs/user-config ()
 	"Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
@@ -494,9 +500,12 @@ before packages are loaded."
   (setq tcl-indent-level 2)
 	(defvaralias 'c-basic-offset 'tab-width) ;; keep them the same
 	(setq tab-stop-list (number-sequence 2 200 2))
+	(setq tcl-tab-always-indent t)
+	(setq standard-indent 2)
+	(setq web-mode-markup-indent-offset 2)
 
 	;; leave lines at top and bottom when scrolling
-	(setq scroll-margin 7)
+	(setq scroll-margin 6)
 
 	;; type to get rid of active selection
 	(delete-selection-mode t)
@@ -506,27 +515,13 @@ before packages are loaded."
 	;;					(lambda ()
 	;;						(tabify (point-min) (point-max))))
 
-	;; ensure rvt and tcl are both recognized as tcl (also see rvt section below)
-	;; (add-to-list 'auto-mode-alist '("\\.rvt\\'" . tcl-mode))
-	;; (add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-mode))
-
-	;; recognize rvt as tcl
-	(require 'mmm-auto)
-	(mmm-add-classes
-	 '((html-rvt
-			:submode tcl-mode
-			:delimiter-mode nil
-			:front "<\\?[=]?"
-			:front-offset 1
-			:back-offset 1
-			:back "\\?>")))
-	(setq mmm-submode-decoration-level 0)
-	(setq mmm-global-mode 'maybe)
-	(mmm-add-mode-ext-class 'html-mode "\\.rvt\\'" 'html-rvt)
-	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode)) auto-mode-alist))
+	;; fix up filename mappings
+	(add-to-list 'auto-mode-alist '("\\.test\\'" . tcl-mode))
+	(add-to-list 'auto-mode-alist '("\\.tpl\\'" . handlebars-mode))
+	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . tcl-mode))
 
 	;; eshell
-	;; (setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
+	(setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
 	(setq eshell-save-history-on-exit t
 				eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
 	(setq eshell-prompt-function
@@ -548,6 +543,10 @@ before packages are loaded."
 
 	;; enable beacon
 	(beacon-mode 1)
+
+	;; doom modeline
+	(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+
 	)
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -563,10 +562,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 (quote
-		(yasnippet-snippets yaml-mode xterm-color web-mode unfill tagedit sql-indent smeargle slime-company slime slim-mode shell-pop scss-mode sass-mode pug-mode phpunit phpcbf php-extras php-auto-yasnippets mwim multi-term mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow impatient-mode htmlize helm-gtags helm-gitignore helm-git-grep helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy graphql with-editor eshell-z eshell-prompt-extras esh-help emmet-mode drupal-mode diff-hl company-web web-completion-data company-tern dash-functional company-statistics company-php ac-php-core xcscope php-mode company common-lisp-snippets color-theme-sanityinc-tomorrow browse-at-remote beacon auto-yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tern symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters prettier-js popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file neotree nameless move-text macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line)))
- '(tramp-copy-size-limit 10240000 nil (tramp))
- )
+   (quote
+    (yasnippet-snippets winum web-mode toc-org org-brain neotree mwim hl-todo helm-make git-timemachine git-link ggtags evil-matchit editorconfig doom-themes doom-modeline ace-link tern counsel swiper ivy iedit helm helm-core markdown-mode projectile magit git-commit ghub with-editor company slime which-key use-package evil org-plus-contrib hydra yaml-mode xterm-color ws-butler web-beautify volatile-highlights vi-tilde-fringe uuidgen unfill undo-tree treepy tagedit symon string-inflection sql-indent spotify spaceline-all-the-icons smeargle slime-company slim-mode shrink-path shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-spotify-plus helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode graphql goto-chg google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-messenger gh-md fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav eldoc-eval dumb-jump dotenv-mode diminish define-word counsel-projectile company-web company-tern company-statistics common-lisp-snippets column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode centered-cursor-mode bind-key beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-window ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
