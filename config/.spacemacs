@@ -477,6 +477,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
+
+	;; Fix tramp, dammit
+	(setq tramp-copy-size-limit 10240000)
+	(setq tramp-inline-compress-start-size 4096000)
 	)
 
 (defun dotspacemacs/user-load ()
@@ -526,7 +530,12 @@ before packages are loaded."
 				eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
 	(setq eshell-prompt-function
 				(lambda ()
-					(concat "\n" (getenv "USER") " in " (eshell/pwd) " at " (format-time-string "%l:%M %p") "\n" "λ ")))
+					(concat
+					 "\n"
+					 (propertize " ┌─── " 'face '(:foreground "green"))
+					 (propertize (eshell/pwd) 'face '(:foreground "gold" :bold ultra-bold))
+					 "\n"
+					 (propertize " └─ λ " 'face '(:foreground "green")))))
 
 	;; make tramp play nicely with hopnu (and others)
 	(setq shell-file-name "/usr/local/bin/bash")
@@ -563,7 +572,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet-snippets winum web-mode toc-org org-brain neotree mwim hl-todo helm-make git-timemachine git-link ggtags evil-matchit editorconfig doom-themes doom-modeline ace-link tern counsel swiper ivy iedit helm helm-core markdown-mode projectile magit git-commit ghub with-editor company slime which-key use-package evil org-plus-contrib hydra yaml-mode xterm-color ws-butler web-beautify volatile-highlights vi-tilde-fringe uuidgen unfill undo-tree treepy tagedit symon string-inflection sql-indent spotify spaceline-all-the-icons smeargle slime-company slim-mode shrink-path shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-spotify-plus helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode graphql goto-chg google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-messenger gh-md fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav eldoc-eval dumb-jump dotenv-mode diminish define-word counsel-projectile company-web company-tern company-statistics common-lisp-snippets column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode centered-cursor-mode bind-key beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-window ace-jump-helm-line ac-ispell))))
+    (neotree evil-magit evil-goggles dumb-jump doom-modeline counsel-projectile counsel swiper ivy auto-yasnippet flycheck helm helm-core avy magit git-commit slime org-plus-contrib hydra yasnippet-snippets yaml-mode xterm-color ws-butler with-editor winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spotify spaceline-all-the-icons smeargle slime-company slim-mode shrink-path shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-spotify-plus helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link ghub gh-md ggtags fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav eldoc-eval editorconfig dotenv-mode doom-themes diminish define-word company-web company-tern company-statistics common-lisp-snippets column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode centered-cursor-mode beacon auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
