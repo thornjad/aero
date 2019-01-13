@@ -87,8 +87,8 @@ See `spacemacs//fetch-docs-from-root'"
   (with-temp-buffer
     (org-mode)
     (insert "#+TITLE: Configuration layers\n")
-    (insert "\n")
-    (insert "* Table of Contents                     :TOC_4_gh:noexport:\n")
+    (insert "\n* Table of Contents\n")
+    (org-set-tags-to '("TOC_4_gh" "noexport"))
     ;; there is no layer at the root level for now
     ;; uncomment this line if any new layer is added at the root level
     ;; (insert "* General layers\n")
@@ -320,11 +320,8 @@ preprocessors for the exported .org files."
              :recursive t
              :publishing-directory ,(concat publish-target "layers/")
              :publishing-function org-html-publish-to-html
-             ;; :preparation-function spacemacs/generate-layers-file
-             ;; NOTE: Local exclusion disabled because we have files like:
-             ;; /layers/+themes/colors/local/nyan-mode/README.org
-             ;; :exclude "local\\|dockerfiles"
-             :exclude "dockerfiles"
+             :preparation-function spacemacs/generate-layers-file
+             :exclude "local\\|dockerfiles"
              :html-head ,header)
             ("spacemacs-doc-static"
              :base-directory ,spacemacs-docs-directory
