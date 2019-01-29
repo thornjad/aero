@@ -33,10 +33,10 @@ This function should only modify configuration layer settings."
 
 	 ;; List of configuration layers to load.
 	 dotspacemacs-configuration-layers
-	 '(
+	 '(vimscript
 		 helm
 		 emacs-lisp
-		 ;; neotree
+		 neotree
 		 sql
 		 html
 		 javascript
@@ -47,22 +47,20 @@ This function should only modify configuration layer settings."
 		 git
 		 markdown
 		 org
-		 ;; spell-checking
+		 spell-checking
 		 syntax-checking
 		 ;; (version-control :variables
-		 ;; 									version-control-diff-tool 'git-gutter
-		 ;; 									version-control-diff-side 'left
-		 ;; 									version-control-global-margin t)
+		 ;;										version-control-diff-tool 'git-gutter
+		 ;;										version-control-diff-side 'left
+		 ;;										version-control-global-margin t)
 		 common-lisp
 		 ;; spacemacs-purpose
 		 (shell :variables
 						shell-default-shell 'eshell
-						shell-default-height 29
+						shell-default-height 35
 						shell-default-width 180
 						shell-command-switch "-ic"
-						shell-default-position 'bottom)
-
-		 spotify
+						shell-default-position 'top)
 		 )
 
 	 ;; List of additional packages that will be installed without being
@@ -75,7 +73,7 @@ This function should only modify configuration layer settings."
 	 dotspacemacs-additional-packages '(
 																			beacon
 																			doom-themes
-																			handlebars-mode
+																			coffee-mode
 																			)
 
 	 ;; A list of packages that cannot be updated.
@@ -202,8 +200,9 @@ It should only modify the values of Spacemacs settings."
 	 ;; Press `SPC T n' to cycle to the next theme in the list (works great
 	 ;; with 2 themes variants, one dark and one light)
 	 dotspacemacs-themes '(
+												 ;; doom-one
 												 doom-opera
-												 sanityinc-tomorrow-bright
+												 ;; sanityinc-tomorrow-bright
 												 spacemacs-dark
 												 )
 
@@ -459,21 +458,8 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
-  ;; allow emacs to find tern
+	;; allow emacs to find tern
 	(add-to-list 'exec-path "/usr/local/bin")
-
-	;; attempt at fixing tramp/git-gutter-pl
-	(defun git-gutter+-remote-default-directory (dir file)
-		(let* ((vec (tramp-dissect-file-name file))
-					 (method (tramp-file-name-method vec))
-					 (user (tramp-file-name-user vec))
-					 (domain (tramp-file-name-domain vec))
-					 (host (tramp-file-name-host vec))
-					 (port (tramp-file-name-port vec)))
-			(tramp-make-tramp-file-name method user domain host port dir)))
-	(defun git-gutter+-remote-file-path (dir file)
-		(let ((file (tramp-file-name-localname (tramp-dissect-file-name file))))
-			(replace-regexp-in-string (concat "\\`" dir) "" file)))
 
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
@@ -481,6 +467,18 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 	;; Fix tramp, dammit
 	(setq tramp-copy-size-limit 10240000)
 	(setq tramp-inline-compress-start-size 4096000)
+	(setq tramp-default-method "rsyncc")
+
+	;; set up slime to use sbcl
+	(load (expand-file-name "~/quicklisp/slime-helper.el"))
+	(setq inferior-lisp-program "sbcl")
+
+	;; (setq evil-want-integration t)
+	;; (setq evil-want-keybinding nil)
+	;; (with-eval-after-load 'eww
+	;; 	(require 'evil-collection-eww)
+	;; 	(evil-collection-eww-setup))
+
 	)
 
 (defun dotspacemacs/user-load ()
@@ -490,26 +488,40 @@ This function is called only while dumping Spacemacs configuration. You can
 dump."
 	)
 
- (defun dotspacemacs/user-config ()
+(defun dotspacemacs/user-config ()
 	"Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+	;; fix savehist cpu hogging
+	(setq history-length 100)
+	(put 'minibuffer-history 'history-length 50)
+	(put 'evil-ex-history 'history-length 50)
+	(put 'kill-ring 'history-length 25)
+
+	;; custom layer loading
+	(add-to-list 'load-path "~/.emacs.d/layers/rest")
+	(load "wttrin")
+	(load "hackernews")
+	(load "rivet-mode")
+	(load "handlebars-mode")
+
+	;; load private layers
+	(load "~/.emacs.d/.private/privateConfig.el")
+
 	;; set all dem tab sizes
 	(setq-default indent-tabs-mode t)
 	(setq-default tab-width 2)
+	(setq-default css-indent-offset 2)
 	(setq js-indent-level 2)
-  (setq tcl-indent-level 2)
+	(setq tcl-indent-level 2)
 	(defvaralias 'c-basic-offset 'tab-width) ;; keep them the same
 	(setq tab-stop-list (number-sequence 2 200 2))
 	(setq tcl-tab-always-indent t)
 	(setq standard-indent 2)
 	(setq web-mode-markup-indent-offset 2)
-
-	;; leave lines at top and bottom when scrolling
-	(setq scroll-margin 6)
 
 	;; type to get rid of active selection
 	(delete-selection-mode t)
@@ -522,7 +534,30 @@ before packages are loaded."
 	;; fix up filename mappings
 	(add-to-list 'auto-mode-alist '("\\.test\\'" . tcl-mode))
 	(add-to-list 'auto-mode-alist '("\\.tpl\\'" . handlebars-mode))
-	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . tcl-mode))
+	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . rivet-mode))
+	(add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
+	(add-to-list 'auto-mode-alist '("\\Lakefile\\'" . common-lisp-mode))
+
+	;; (require 'mmm-auto)
+	;; (mmm-add-classes
+	;;  '((html-rvt
+	;; 		:submode tcl-mode
+	;; 		:delimiter-mode nil
+	;; 		:front "<\\?[=]?"
+	;; 		:front-offset 1
+	;; 		:back-offset 1
+	;; 		:back "\\?>")))
+	;; (setq mmm-submode-decoration-level 0)
+	;; (setq mmm-global-mode 'maybe)
+	;; (mmm-add-mode-ext-class 'html-mode "\\.rvt\\'" 'html-rvt)
+	;; (setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode))
+	;; 															auto-mode-alist))
+
+	;; AGGRESSIVELY INDENT THAT SHIT
+	(add-hook 'tcl-mode #'aggressive-indent-mode)
+	(add-hook 'scss-mode #'aggressive-indent-mode)
+	(add-hook 'emacs-lisp-mode #'aggressive-indent-mode)
+	(add-hook 'common-lisp-mode #'aggressive-indent-mode)
 
 	;; eshell
 	(setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
@@ -533,9 +568,15 @@ before packages are loaded."
 					(concat
 					 "\n"
 					 (propertize " ┌─── " 'face '(:foreground "green"))
-					 (propertize (eshell/pwd) 'face '(:foreground "gold" :bold ultra-bold))
+					 (propertize (eshell/pwd) 'face '(:weight ultra-bold))
 					 "\n"
 					 (propertize " └─ λ " 'face '(:foreground "green")))))
+
+	;; apologize for smacking emacs (stop debug on quit)
+	;; use this after smacking emacs with SIGUSR2
+	(defun apologize-to-emacs ()
+		(interactive)
+		(toggle-debug-on-quit))
 
 	;; make tramp play nicely with hopnu (and others)
 	(setq shell-file-name "/usr/local/bin/bash")
@@ -547,16 +588,94 @@ before packages are loaded."
 	;; I really want tabs all the time always
 	(setq indent-tabs-mode t)
 
-	;; set cursor color
-	;; (set-face-attribute 'spacemacs-normal-face nil :background "#FFFFEF")
-
 	;; enable beacon
 	(beacon-mode 1)
 
 	;; doom modeline
 	(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
 
-	)
+	;; neotree theme
+	(setq neo-theme (if (display-graphic-p) 'icons 'nerd))
+
+	;; fix magit colors and things
+	(eval-after-load 'magit
+		'(progn
+			 (set-face-attribute 'magit-diff-added nil :foreground "green")
+			 (set-face-attribute 'magit-diff-added-highlight nil :foreground "green" :background "color-234" :weight 'bold)
+			 (set-face-attribute 'magit-diff-context-highlight nil :weight 'bold :foreground "white" :background "color-234")
+			 (set-face-attribute 'magit-diff-hunk-heading nil :weight 'bold :background "blue")
+			 (set-face-attribute 'magit-diff-hunk-heading-highlight nil :weight 'bold :background "blue")
+			 (set-face-attribute 'magit-diff-hunk-region nil :weight 'bold :background "black")
+			 (set-face-attribute 'magit-diff-lines-heading nil :foreground "white" :background "blue")
+			 (set-face-attribute 'magit-diff-removed nil :foreground "red" :background "color-232")
+			 (set-face-attribute 'magit-diff-removed-highlight nil :weight 'bold :foreground "red" :background "color-234")
+			 ))
+	(setq magit-diff-paint-whitespace t)
+	(setq magit-diff-highlight-trailing t)
+	(set-face-attribute 'hl-line nil :background nil)
+	(set-face-attribute 'cursor nil :background "white")
+	(set-face-attribute 'default nil :background nil :foreground "white")
+
+	;; word wrap in all text mode, including eww
+	(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
+	;; osx thangs
+	(defun osx-get-from-clipboard ()
+		"Get clipboard text"
+		(shell-command-to-string "pbpaste"))
+	(defun osx-paste-from-clipboard ()
+		"Paste from clipboard"
+		(interactive)
+		(insert (osx-get-from-clipboard)))
+	(defun osx-copy-to-clipboard (&optional text)
+		"Copy the given text to clipboard"
+		(interactive)
+		(unless text
+			(setq text (buffer-substring (mark) (point))))
+		(shell-command-to-string (concat "pbcopy < <(echo -n " (shell-quote-argument text) ")")))
+
+	;; setup eww
+	(setq browse-url-browser-function 'eww-browse-url)
+	;; (setq browse-url-browser-function 'browse-url-default-macosx-browser)
+	(defun add-title-to-eww-buffer-name ()
+		"Rename eww mode buffer so the title of the page is displayed, making
+     fake-tabbed-browsing easier"
+		(let ((title (plist-get eww-data :title)))
+			(when (eq major-mode 'eww-mode)
+				(if title
+						(rename-buffer (concat "eww - " title) t)
+					(rename-buffer "eww" t)))))
+	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name)
+
+	;; sql comint
+	(add-to-list 'same-window-buffer-names "*SQL: *")
+
+	;; mouse scroll
+	(defun up-slightly () (interactive) (scroll-up 5))
+	(defun down-slightly () (interactive) (scroll-down 5))
+	(global-set-key [mouse-4] 'down-slightly)
+	(global-set-key [mouse-5] 'up-slightly)
+
+	;; tcl flycheck
+	(load "tclchecker")
+	(with-eval-after-load 'flycheck
+		(flycheck-tcl-setup))
+	(defun flyspell-ignore-http-and-https ()
+		"Function used for `flyspell-generic-check-word-predicate' to ignore stuff
+		starting with \"http\" or \"https\"."
+		(save-excursion
+			(forward-whitespace -1)
+			(when (looking-at " ")
+        (forward-char)
+				(not (looking-at "https?\\b")))))
+	(put 'text-mode 'flyspell-mode-predicate 'flyspell-ignore-http-and-https)
+
+	(defun thornlog ()
+		"Quickly open my daily professional log (journal)"
+		(interactive)
+		(find-file "~/doc/thornlog.org"))
+
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -572,7 +691,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (neotree evil-magit evil-goggles dumb-jump doom-modeline counsel-projectile counsel swiper ivy auto-yasnippet flycheck helm helm-core avy magit git-commit slime org-plus-contrib hydra yasnippet-snippets yaml-mode xterm-color ws-butler with-editor winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spotify spaceline-all-the-icons smeargle slime-company slim-mode shrink-path shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-spotify-plus helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link ghub gh-md ggtags fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav eldoc-eval editorconfig dotenv-mode doom-themes diminish define-word company-web company-tern company-statistics common-lisp-snippets column-enforce-mode color-theme-sanityinc-tomorrow clean-aindent-mode centered-cursor-mode beacon auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (flyspell-correct-helm flyspell-correct auto-dictionary writeroom-mode visual-fill-column yasnippet-snippets yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin pomidor persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes doom-modeline diminish define-word dactyl-mode counsel-projectile company-web company-tern company-statistics common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode centered-cursor-mode beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
