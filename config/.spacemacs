@@ -33,7 +33,9 @@ This function should only modify configuration layer settings."
 
 	 ;; List of configuration layers to load.
 	 dotspacemacs-configuration-layers
-	 '(vimscript
+	 '(php
+		 rust
+		 vimscript
 		 helm
 		 emacs-lisp
 		 neotree
@@ -71,9 +73,12 @@ This function should only modify configuration layer settings."
 	 ;; '(your-package :location "~/path/to/your-package/")
 	 ;; Also include the dependencies as they will not be resolved automatically.
 	 dotspacemacs-additional-packages '(
+                                      cargo
+                                      racer
 																			beacon
 																			doom-themes
 																			coffee-mode
+																			gitlab-ci-mode
 																			)
 
 	 ;; A list of packages that cannot be updated.
@@ -495,6 +500,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+	(setenv "PATH" (concat "~/.cargo/bin:" (getenv "PATH")))
+
 	;; fix savehist cpu hogging
 	(setq history-length 100)
 	(put 'minibuffer-history 'history-length 50)
@@ -506,7 +513,11 @@ before packages are loaded."
 	(load "wttrin")
 	(load "hackernews")
 	(load "rivet-mode")
-	(load "handlebars-mode")
+	(load "coffeescript-mode")
+	(load "litcoffee-mode")
+
+	;; TODO fix this
+	;; (load "handlebars-mode")
 
 	;; load private layers
 	(load "~/.emacs.d/.private/privateConfig.el")
@@ -522,6 +533,7 @@ before packages are loaded."
 	(setq tcl-tab-always-indent t)
 	(setq standard-indent 2)
 	(setq web-mode-markup-indent-offset 2)
+	(setq rust-indent-offset 2)
 
 	;; type to get rid of active selection
 	(delete-selection-mode t)
@@ -592,7 +604,7 @@ before packages are loaded."
 	(beacon-mode 1)
 
 	;; doom modeline
-	(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+	(setq doom-modeline-buffer-file-name-style 'relative-to-project)
 
 	;; neotree theme
 	(setq neo-theme (if (display-graphic-p) 'icons 'nerd))
@@ -659,7 +671,7 @@ before packages are loaded."
 	;; tcl flycheck
 	(load "tclchecker")
 	(with-eval-after-load 'flycheck
-		(flycheck-tcl-setup))
+		(tclchecker-setup))
 	(defun flyspell-ignore-http-and-https ()
 		"Function used for `flyspell-generic-check-word-predicate' to ignore stuff
 		starting with \"http\" or \"https\"."
@@ -669,11 +681,34 @@ before packages are loaded."
         (forward-char)
 				(not (looking-at "https?\\b")))))
 	(put 'text-mode 'flyspell-mode-predicate 'flyspell-ignore-http-and-https)
+	(add-hook 'tcl-mode-hook 'flycheck-mode)
+
+	;; JS autocomplete
+	(add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
+	(autoload 'tern-mode "tern.el" nil t)
+	(add-hook 'javascript-mode #'tern-mode)
 
 	(defun thornlog ()
 		"Quickly open my daily professional log (journal)"
 		(interactive)
 		(find-file "~/doc/thornlog.org"))
+
+  ;; rust IDE
+	(require 'rust-mode)
+	(setq racer-cmd "~/.cargo/bin/racer")
+	(setq racer-rust-src-path "~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src")
+	(add-hook 'rust-mode-hook #'racer-mode)
+	(add-hook 'racer-mode-hook #'eldoc-mode)
+	(add-hook 'racer-mode-hook #'company-mode)
+	(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+	(add-hook 'rust-mode-hook 'flycheck-mode)
+	(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+	(setq company-tooltip-align-annotations t)
+	(add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+	;; org mode fix-ups
+	(setq org-hide-leading-stars t)
+	;; (s t-face-attribute 'org-hide nil :foreground "black")
 
 )
 
@@ -691,7 +726,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flyspell-correct-helm flyspell-correct auto-dictionary writeroom-mode visual-fill-column yasnippet-snippets yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin pomidor persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes doom-modeline diminish define-word dactyl-mode counsel-projectile company-web company-tern company-statistics common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode centered-cursor-mode beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (gitlab-ci-mode toml-mode racer phpunit phpcbf php-extras php-auto-yasnippets flyspell-correct-helm flyspell-correct flycheck-rust drupal-mode company-php ac-php-core xcscope php-mode cargo rust-mode auto-dictionary yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag handlebars-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes doom-modeline diminish define-word dactyl-mode counsel-projectile company-web company-tern company-statistics common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode centered-cursor-mode beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
