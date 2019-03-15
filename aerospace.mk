@@ -1,11 +1,7 @@
-## Makefile --- Spacemacs master makefile
+## Makefile --- aerospace master makefile
 ##
+## Copyright (c) 2019 Jade Michael Thornton
 ## Copyright (c) 2012-2018 Sylvain Benner & Contributors
-##
-## Author: Sylvain Benner <sylvain.benner@gmail.com>
-## URL: https://github.com/syl20bnr/spacemacs
-##
-## This file is not part of GNU Emacs.
 ##
 ## License: GPLv3
 
@@ -19,7 +15,6 @@ test: installation unit_tests func_tests
 installation:
 	@echo "================================================================="
 	@echo "INSTALLATION OF PACKAGES FOR $(TEST_NAME)"
-	@echo "================================================================="
 	@emacs -batch \
 		$(addprefix -l $(EMACS_DIR)/, $(LOAD_FILES))
 
@@ -27,7 +22,6 @@ ifneq ($(strip $(UNIT_TEST_FILES)),)
 unit_tests:
 	@echo "================================================================="
 	@echo "UNIT TESTS FOR $(TEST_NAME)"
-	@echo "================================================================="
 	emacs -batch -l ert \
 		$(addprefix -l $(EMACS_DIR)/, $(LOAD_FILES)) \
 		$(addprefix -l $(TEST_DIR)/, $(UNIT_TEST_FILES)) \
@@ -38,7 +32,6 @@ ifneq ($(strip $(FUNC_TEST_FILES)),)
 func_tests:
 	@echo "================================================================="
 	@echo "FUNCTIONAL TESTS FOR $(TEST_NAME)"
-	@echo "================================================================="
 	@emacs -batch -l ert \
 		$(addprefix -l $(EMACS_DIR)/, $(LOAD_FILES)) \
 		$(addprefix -l $(TEST_DIR)/, $(FUNC_TEST_FILES)) \

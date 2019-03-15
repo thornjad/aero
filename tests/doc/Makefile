@@ -16,4 +16,4 @@ UNIT_TEST_FILES =
 FUNC_TEST_FILES = \
 org-export-ftest.el
 
-include ../../spacemacs.mk
+include ../../aerospace.mk

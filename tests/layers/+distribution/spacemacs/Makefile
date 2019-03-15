@@ -15,4 +15,4 @@ LOAD_FILES = init.el
 UNIT_TEST_FILES =
 FUNC_TEST_FILES =
 
-include ../../../../spacemacs.mk
+include ../../../../aerospace.mk

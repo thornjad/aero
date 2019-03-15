@@ -18,4 +18,4 @@ UNIT_TEST_FILES = \
 FUNC_TEST_FILES = \
   evil-evilified-state-ftest.el
 
-include ../../../../spacemacs.mk
+include ../../../../aerospace.mk

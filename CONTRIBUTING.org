@@ -347,7 +347,7 @@ To add tests for a layer, do the following:
      UNIT_TEST_FILES = ...
      FUNC_TEST_FILES = ...
 
-     include ../../spacemacs.mk
+     include ../../aerospace.mk
    #+END_SRC
 
 5. Add the new test to list of tests in =travis/run_build.sh=.

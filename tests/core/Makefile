@@ -1,4 +1,4 @@
-## Makefile --- Spacemacs Core
+## Makefile --- aerospace core
 ##
 ## Copyright (c) 2012-2018 Sylvain Benner & Contributors
 ##
@@ -21,4 +21,4 @@ FUNC_TEST_FILES = \
   core-configuration-layer-ftest.el \
   core-release-management-ftest.el
 
-include ../../spacemacs.mk
+include ../../aerospace.mk
