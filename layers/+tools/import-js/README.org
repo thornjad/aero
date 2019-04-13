@@ -1,8 +1,6 @@
 #+TITLE: import-js layer
 
-#+TAGS: layer|tool
-
-* Table of Contents                     :TOC_5_gh:noexport:
+* Table of Contents                     :TOC_4_gh:noexport:
 - [[#description][Description]]
   - [[#features][Features:]]
 - [[#install][Install]]
@@ -21,11 +19,13 @@ To use this configuration layer, add it to your =~/.spacemacs=.
 
 To install =import-js= globally:
 
+
+
 #+BEGIN_SRC sh
   $ npm install -g import-js
 #+END_SRC
 
-If that doesn’t work you can also try installing =import-js= with =--unsafe-perm= tag
+If that doesn't work you can also try installing =import-js= with =--unsafe-perm= tag
 
 #+BEGIN_SRC sh
   $ sudo npm install --unsafe-perm -g import-js
@@ -33,7 +33,6 @@ If that doesn’t work you can also try installing =import-js= with =--unsafe-pe
 
 To enable it, set the layer variable =javascript-import-tool=, for example for
 the =javascript= layer
-
 #+BEGIN_SRC elisp
   (javascript :variables javascript-import-tool 'import-js)
 #+END_SRC

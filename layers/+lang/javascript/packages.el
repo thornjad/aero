@@ -176,6 +176,10 @@
   (when (eq javascript-import-tool 'import-js)
     (add-to-list 'spacemacs--import-js-modes (cons 'js2-mode 'js2-mode-hook))))
 
+(defun javascript/pre-init-import-js ()
+  (if (eq javascript-import-tool 'import-js)
+      (add-to-list 'spacemacs--import-js-modes (cons 'js2-mode 'js2-mode-hook))))
+
 (defun javascript/init-skewer-mode ()
   (use-package skewer-mode
     :defer t
