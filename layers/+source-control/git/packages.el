@@ -210,20 +210,14 @@ Press [_b_] again to blame further in the history, [_q_] to go up or quit."
               (concat mm-key mm-key) 'with-editor-finish
               (concat mm-key "a")    'with-editor-cancel
               (concat mm-key "c")    'with-editor-finish
-              (concat mm-key "k")    'with-editor-cancel)
-            (evil-define-key state magit-log-select-mode-map
-              (concat mm-key mm-key) 'magit-log-select-pick
-              (concat mm-key "a")    'magit-log-select-quit
-              (concat mm-key "c")    'magit-log-select-pick
-              (concat mm-key "k")    'magit-log-select-quit))))
+              (concat mm-key "k")    'with-editor-cancel))))
       ;; whitespace
       (define-key magit-status-mode-map (kbd "C-S-w")
         'spacemacs/magit-toggle-whitespace)
       ;; full screen magit-status
       (when git-magit-status-fullscreen
         (setq magit-display-buffer-function
-              'magit-display-buffer-fullframe-status-v1))
-      (spacemacs|hide-lighter with-editor-mode))))
+              'magit-display-buffer-fullframe-status-v1)))))
 
 (defun git/init-magit-gitflow ()
   (use-package magit-gitflow
