@@ -28,9 +28,6 @@
 (defconst spacemacs-info-directory
   (expand-file-name (concat spacemacs-core-directory "info/"))
   "Spacemacs info files directory")
-(defconst spacemacs-release-notes-directory
-  (expand-file-name (concat spacemacs-info-directory "release-notes/"))
-  "Spacemacs release notes directory")
 (defconst spacemacs-banner-directory
   (expand-file-name (concat spacemacs-core-directory "banners/"))
   "Spacemacs banners directory.")
