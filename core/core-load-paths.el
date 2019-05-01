@@ -1,13 +1,3 @@
-;;; core-load-paths.el
-;;
-;; Copyright (c) 2012-2018 Sylvain Benner & Contributors
-;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
-;;
-;; This file is not part of GNU Emacs.
-;;
-;;; License: GPLv3
 (defun add-to-load-path (dir) (add-to-list 'load-path dir))
 
 (defun add-to-load-path-if-exists (dir)
@@ -71,7 +61,6 @@
         ,spacemacs-core-directory
         ,(concat spacemacs-core-directory "libs/")
         ,(concat spacemacs-core-directory "libs/spacemacs-theme/")
-        ;; ,(concat spacemacs-core-directory "aprilfool/")
         ))
 
 ;; themes
