@@ -9,7 +9,7 @@
 ;;
 ;;; License: GPLv3
 (require 'core-funcs)
-(require 'core-spacemacs-buffer)
+(require 'core-aero-buffer)
 
 (defvar spacemacs--diminished-minor-modes nil
   "List of diminished modes to unicode or ascii values.")
@@ -34,7 +34,7 @@ The return value is nil if no font was found, truthy otherwise."
                             (spacemacs/mplist-remove props :powerline-scale)
                             :powerline-offset))
                (fontspec (apply 'font-spec :name font font-props)))
-          (spacemacs-buffer/message "Setting font \"%s\"..." font)
+          (aero-buffer/message "Setting font \"%s\"..." font)
           (set-frame-font fontspec nil t)
           (push `(font . ,(frame-parameter nil 'font)) default-frame-alist)
           ;; fallback font for unicode characters used in spacemacs
@@ -90,7 +90,7 @@ The return value is nil if no font was found, truthy otherwise."
 
 (defun spacemacs/set-font (&rest args)
   "Deprecated function, display a warning message."
-  (spacemacs-buffer/warning (concat "spacemacs/set-font is deprecated. "
+  (aero-buffer/warning (concat "spacemacs/set-font is deprecated. "
                              "Use the variable `dotspacemacs-default-font' "
                              "instead (see Font section in "
                              "~/.emacs.d/doc/DOCUMENTATION.org for more "

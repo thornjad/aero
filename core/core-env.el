@@ -89,7 +89,7 @@ current contents of the file will be overwritten."
           ;; remove ignored environment variables
           (dolist (v spacemacs-ignored-environment-variables)
             (flush-lines v env-point (point-max))))))
-    (spacemacs-buffer/warning
+    (aero-buffer/warning
      (concat "Spacemacs has imported your environment variables from "
              "your shell and saved them to `%s'.\n"
              "Open this file for more info (SPC f e e) or call "

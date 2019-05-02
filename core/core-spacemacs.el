@@ -25,7 +25,7 @@
 (require 'core-display-init)
 (require 'core-themes-support)
 (require 'core-fonts-support)
-(require 'core-spacemacs-buffer)
+(require 'core-aero-buffer)
 (require 'core-keybindings)
 (require 'core-toggle)
 (require 'core-funcs)
@@ -116,22 +116,22 @@ the final step of executing code in `emacs-startup-hook'.")
    ;; believe me? Go ahead, try it. After you'll have notice that this was true,
    ;; increase the counter bellow so next people will give it more confidence.
    ;; Counter = 1
-   (spacemacs-buffer/message "Setting the font...")
+   (aero-buffer/message "Setting the font...")
    (unless (spacemacs/set-default-font dotspacemacs-default-font)
-     (spacemacs-buffer/warning
+     (aero-buffer/warning
       "Cannot find any of the specified fonts (%s)! Font settings may not be correct."
       (if (listp (car dotspacemacs-default-font))
           (mapconcat 'car dotspacemacs-default-font ", ")
         (car dotspacemacs-default-font)))))
   ;; spacemacs init
   (setq inhibit-startup-screen t)
-  (spacemacs-buffer/goto-buffer)
+  (aero-buffer/goto-buffer)
   (unless (display-graphic-p)
     ;; explicitly recreate the home buffer for the first GUI client
     ;; in order to correctly display the logo
     (spacemacs|do-after-display-system-init
-     (kill-buffer (get-buffer spacemacs-buffer-name))
-     (spacemacs-buffer/goto-buffer)))
+     (kill-buffer (get-buffer aero-buffer-name))
+     (aero-buffer/goto-buffer)))
   ;; This is set to nil during startup to allow Spacemacs to show buffers opened
   ;; as command line arguments.
   (setq initial-buffer-choice nil)
@@ -139,7 +139,7 @@ the final step of executing code in `emacs-startup-hook'.")
   (require 'core-keybindings)
   ;; for convenience and user support
   (unless (fboundp 'tool-bar-mode)
-    (spacemacs-buffer/message (concat "No graphical support detected, "
+    (aero-buffer/message (concat "No graphical support detected, "
                                       "you won't be able to launch a "
                                       "graphical instance of Emacs"
                                       "with this build.")))
@@ -204,7 +204,7 @@ Note: the hooked function is not executed when in dumped mode."
      ;; so that it can be changed in user-config if necessary). It was set to
      ;; nil earlier in the startup process to properly handle command line
      ;; arguments.
-     (setq initial-buffer-choice (lambda () (get-buffer spacemacs-buffer-name)))
+     (setq initial-buffer-choice (lambda () (get-buffer aero-buffer-name)))
      ;; Ultimate configuration decisions are given to the user who can defined
      ;; them in his/her ~/.spacemacs file
      (dotspacemacs|call-func dotspacemacs/user-config
@@ -223,7 +223,7 @@ Note: the hooked function is not executed when in dumped mode."
        (spacemacs/load-theme spacemacs--delayed-user-theme
                              spacemacs--fallback-theme t))
      (configuration-layer/display-summary emacs-start-time)
-     (spacemacs-buffer//startup-hook)
+     (aero-buffer//startup-hook)
      (spacemacs/check-for-new-version nil spacemacs-version-check-interval)
      (setq spacemacs-initialized t)
      (setq gc-cons-threshold (car dotspacemacs-gc-cons)

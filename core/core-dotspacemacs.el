@@ -423,13 +423,13 @@ has `spacemacs-start-directory'"
 If MSG is not nil then display a message in `*Messages*'. Errors
 are caught and signaled to user in spacemacs buffer."
   `(progn
-     (when ,msg (spacemacs-buffer/message ,msg))
+     (when ,msg (aero-buffer/message ,msg))
      (when (fboundp ',func)
        (condition-case-unless-debug err
            (,func)
          (error
           (configuration-layer//increment-error-count)
-          (spacemacs-buffer/append (format "Error in %s: %s\n"
+          (aero-buffer/append (format "Error in %s: %s\n"
                                            ',(symbol-name func)
                                            (error-message-string err))
                                    t))))))
@@ -454,7 +454,7 @@ are caught and signaled to user in spacemacs buffer."
 changed, and issue a warning if it did."
   (unless (eq dotspacemacs-configuration-layers
               dotspacemacs--configuration-layers-saved)
-    (spacemacs-buffer/warning
+    (aero-buffer/warning
      "`dotspacemacs-configuration-layers' was changed outside of `dotspacemacs/layers'.")))
 (add-hook 'spacemacs-post-user-config-hook
           'dotspacemacs//check-layers-changed)
@@ -474,12 +474,12 @@ the symbol of an editing style and the cdr is a list of keyword arguments like
               (condition-case-unless-debug err
                   (set-default var (eval (pop variables)))
                 ('error
-                 (spacemacs-buffer/append
+                 (aero-buffer/append
                   (format (concat "\nAn error occurred while reading the "
                                   "editing style variable %s "
                                   "(error: %s). Be sure to quote the value "
                                   "if needed.\n") var err))))
-            (spacemacs-buffer/warning "Missing value for variable %s !"
+            (aero-buffer/warning "Missing value for variable %s !"
                                       var)))))
     (car config))))
 
@@ -543,7 +543,7 @@ Called with `C-u C-u' skips `dotspacemacs/user-config' _and_ preliminary tests."
                   (run-hooks 'spacemacs-post-user-config-hook)
                   (message "Done.")))
             (switch-to-buffer-other-window dotspacemacs-test-results-buffer)
-            (spacemacs-buffer/warning "Some tests failed, check `%s' buffer"
+            (aero-buffer/warning "Some tests failed, check `%s' buffer"
                                       dotspacemacs-test-results-buffer))))))
   (when (configuration-layer/package-used-p 'spaceline)
     (spacemacs//restore-buffers-powerline)))
@@ -595,7 +595,7 @@ a display strng and the value is the actual value to return."
 (defun dotspacemacs/maybe-install-dotfile ()
   "Install the dotfile if it does not exist."
   (unless (file-exists-p dotspacemacs-filepath)
-    (spacemacs-buffer/set-mode-line "Dotfile wizard installer" t)
+    (aero-buffer/set-mode-line "Dotfile wizard installer" t)
     (when (dotspacemacs/install 'with-wizard)
       (configuration-layer/load))))
 

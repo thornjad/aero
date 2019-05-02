@@ -17,7 +17,7 @@ UNIT_TEST_FILES = \
   core-funcs-utest.el
 FUNC_TEST_FILES = \
   core-spacemacs-ftest.el \
-  core-spacemacs-buffer-ftest.el \
+  core-aero-buffer-ftest.el \
   core-configuration-layer-ftest.el \
   core-release-management-ftest.el
 

@@ -36,7 +36,7 @@
     (spacemacs/init)
     (configuration-layer/stable-elpa-download-tarball)
     (configuration-layer/load)
-    (spacemacs-buffer/display-startup-note)
+    (aero-buffer/display-startup-note)
     (spacemacs/setup-startup-hook)
     (spacemacs|unless-dumping
       (global-font-lock-mode)

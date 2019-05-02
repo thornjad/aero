@@ -1,9 +1,6 @@
-;;; core-spacemacs-buffer.el --- Spacemacs Core File
+;;; core-aero-buffer.el
 ;;
-;; Copyright (c) 2012-2018 Sylvain Benner & Contributors
-;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
+;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -13,51 +10,51 @@
 ;;
 ;;; Code:
 
-(defconst spacemacs-buffer-version-info "1.0.0"
+(defconst aero-buffer-version-info "1.0.0"
   "Current version used to display addition release information.")
 
-(defconst spacemacs-buffer-name "*thorn emacs*"
-  "The name of the spacemacs buffer.")
+(defconst aero-buffer-name "*aero emacs*"
+  "The name of the aero buffer.")
 
-(defconst spacemacs-buffer-logo-title "[thorn emacs_]"
+(defconst aero-buffer-logo-title "[aero emacs_]"
   "The title displayed beneath the logo.")
 
-(defconst spacemacs-buffer-buttons-startup-lists-offset 25
+(defconst aero-buffer-buttons-startup-lists-offset 25
   "Relative position between the home buffer buttons and startup lists.")
 
-(defconst spacemacs-buffer--window-width 80
+(defconst aero-buffer--window-width 80
   "Current width of the home buffer if responsive, 80 otherwise.
 See `dotspacemacs-startup-buffer-responsive'.")
 
-(defconst spacemacs-buffer--cache-file
-  (expand-file-name (concat spacemacs-cache-directory "spacemacs-buffer.el"))
-  "Cache file for various persistent data for the spacemacs startup buffer.")
+(defconst aero-buffer--cache-file
+  (expand-file-name (concat spacemacs-cache-directory "aero-buffer.el"))
+  "Cache file for various persistent data for the aero startup buffer.")
 
-(defvar spacemacs-buffer-startup-lists-length 20
+(defvar aero-buffer-startup-lists-length 20
   "Length used for startup lists with otherwise unspecified bounds.
 Set to nil for unbounded.")
 
-(defvar spacemacs-buffer--release-note-version nil
+(defvar aero-buffer--release-note-version nil
   "If nil the release note is displayed.
 If non nil it contains a version number, if the version number is lesser than
 the current version the release note it displayed")
 
-(defvar spacemacs-buffer--note-widgets nil
+(defvar aero-buffer--note-widgets nil
   "List of widgets used in currently inserted notes.
 Allows to keep track of widgets to delete when removing them.")
 
-(defvar spacemacs-buffer--current-note-type nil
+(defvar aero-buffer--current-note-type nil
   "Type of note currently displayed.")
 
-(defvar spacemacs-buffer--fresh-install
+(defvar aero-buffer--fresh-install
   (not (file-exists-p dotspacemacs-filepath))
   "Non-nil if this Emacs instance if a fresh install.")
 
-(defvar spacemacs-buffer--buttons-position nil
+(defvar aero-buffer--buttons-position nil
   "Horizontal position of the home buffer buttons.
 Internal use, do not set this variable.")
 
-(defvar spacemacs-buffer-mode-map
+(defvar aero-buffer-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map [down-mouse-1] 'widget-button-click)
     (define-key map (kbd "RET") 'widget-button-press)
@@ -69,16 +66,16 @@ Internal use, do not set this variable.")
     (define-key map [backtab] 'widget-backward)
     (define-key map (kbd "K") 'widget-backward)
 
-    (define-key map (kbd "C-r") 'spacemacs-buffer/refresh)
+    (define-key map (kbd "C-r") 'aero-buffer/refresh)
     (define-key map "q" 'quit-window)
     map)
-  "Keymap for spacemacs buffer mode.")
+  "Keymap for aero buffer mode.")
 
 (with-eval-after-load 'evil
-  (evil-make-overriding-map spacemacs-buffer-mode-map 'motion))
+  (evil-make-overriding-map aero-buffer-mode-map 'motion))
 
-(define-derived-mode spacemacs-buffer-mode fundamental-mode "Spacemacs buffer"
-  "Spacemacs major mode for startup screen."
+(define-derived-mode aero-buffer-mode fundamental-mode "aero buffer"
+  "aero major mode for startup screen."
   :group 'spacemacs
   :syntax-table nil
   :abbrev-table nil
@@ -86,12 +83,12 @@ Internal use, do not set this variable.")
   (setq buffer-read-only t
         truncate-lines t)
   ;; needed to make tab work correctly in terminal
-  (evil-define-key 'motion spacemacs-buffer-mode-map
+  (evil-define-key 'motion aero-buffer-mode-map
     (kbd "C-i") 'widget-forward)
   ;; motion state since this is a special mode
-  (evil-set-initial-state 'spacemacs-buffer-mode 'motion))
+  (evil-set-initial-state 'aero-buffer-mode 'motion))
 
-(defun spacemacs-buffer//insert-ascii-banner-centered (file)
+(defun aero-buffer//insert-ascii-banner-centered (file)
   "Insert the ascii banner contain in file and center it in the window.
 FILE: the path to the file containing the banner."
   (insert
@@ -104,122 +101,120 @@ FILE: the path to the file containing the banner."
                (setq banner-width line-length)))
          (forward-line 1))
        (goto-char 0)
-       (let ((margin (max 0 (floor (/ (- spacemacs-buffer--window-width
+       (let ((margin (max 0 (floor (/ (- aero-buffer--window-width
                                          banner-width) 2)))))
          (while (not (eobp))
            (insert (make-string margin ?\s))
            (forward-line 1))))
      (buffer-string))))
 
-(defun spacemacs-buffer/insert-banner-and-buttons ()
+(defun aero-buffer/insert-banner-and-buttons ()
   "Choose a banner according to `dotspacemacs-startup-banner'and insert it.
-in spacemacs buffer along with quick buttons underneath.
+in aero buffer along with quick buttons underneath.
 Easter egg:
 Doge special text banner can be reachable via `999', `doge' or `random*'.
 Cate special text banner can de reachable via `998', `cat' or `random*'.
 `random' ignore special banners whereas `random*' does not."
-  (let ((banner (spacemacs-buffer//choose-banner))
+  (let ((banner (aero-buffer//choose-banner))
         (buffer-read-only nil))
     (progn
       (when banner
-        (spacemacs-buffer/message (format "Banner: %s" banner))
+        (aero-buffer/message (format "Banner: %s" banner))
         (if (image-type-available-p (intern (file-name-extension banner)))
-            (spacemacs-buffer//insert-image-banner banner)
-          (spacemacs-buffer//insert-ascii-banner-centered banner)))
-      (spacemacs-buffer//inject-version)
-      (spacemacs-buffer//insert-buttons)
+            (aero-buffer//insert-image-banner banner)
+          (aero-buffer//insert-ascii-banner-centered banner)))
+      (aero-buffer//inject-version)
+      (aero-buffer//insert-buttons)
       (spacemacs//redisplay))))
 
-(defun spacemacs-buffer/display-startup-note ()
+(defun aero-buffer/display-startup-note ()
   "Decide of the startup note and display it if relevant."
-  (when (file-exists-p spacemacs-buffer--cache-file)
-    (load spacemacs-buffer--cache-file nil (not init-file-debug)))
+  (when (file-exists-p aero-buffer--cache-file)
+    (load aero-buffer--cache-file nil (not init-file-debug)))
   (cond
-   (spacemacs-buffer--fresh-install
+   (aero-buffer--fresh-install
     ;; we assume the user is  new to spacemacs and open the quickhelp
-    (spacemacs-buffer/toggle-note 'quickhelp)
-    (setq spacemacs-buffer--release-note-version spacemacs-version)
-    (spacemacs/dump-vars-to-file '(spacemacs-buffer--release-note-version)
-                                 spacemacs-buffer--cache-file))
-   ((or (not spacemacs-buffer--release-note-version)
-        (version< spacemacs-buffer--release-note-version
-                  spacemacs-version))
-    ;; check the variable spacemacs-buffer--release-note-version
+    (aero-buffer/toggle-note 'quickhelp)
+    (setq aero-buffer--release-note-version aero-version)
+    (spacemacs/dump-vars-to-file '(aero-buffer--release-note-version)
+                                 aero-buffer--cache-file))
+   ((or (not aero-buffer--release-note-version)
+        (version< aero-buffer--release-note-version
+                  aero-version))
+    ;; check the variable aero-buffer--release-note-version
     ;; to decide whether we show the release note
-    (spacemacs-buffer/toggle-note 'release-note)))
+    (aero-buffer/toggle-note 'release-note)))
   (spacemacs//redisplay))
 
-(defun spacemacs-buffer//choose-banner ()
+(defun aero-buffer//choose-banner ()
   "Return the full path of a banner based on the dotfile value."
   (when dotspacemacs-startup-banner
     (cond ((eq 'official dotspacemacs-startup-banner)
            (if (and (display-graphic-p) (image-type-available-p 'png))
                spacemacs-banner-official-png
-             (spacemacs-buffer//get-banner-path 1)))
+             (aero-buffer//get-banner-path 1)))
           ((eq 'random dotspacemacs-startup-banner)
-           (spacemacs-buffer//choose-random-text-banner))
+           (aero-buffer//choose-random-text-banner))
           ((eq 'random* dotspacemacs-startup-banner)
-           (spacemacs-buffer//choose-random-text-banner t))
+           (aero-buffer//choose-random-text-banner t))
           ((eq 'doge dotspacemacs-startup-banner)
-           (spacemacs-buffer//get-banner-path 999))
-          ((eq 'cat dotspacemacs-startup-banner)
-           (spacemacs-buffer//get-banner-path 998))
+           (aero-buffer//get-banner-path 999))
           ((integerp dotspacemacs-startup-banner)
-           (spacemacs-buffer//get-banner-path dotspacemacs-startup-banner))
+           (aero-buffer//get-banner-path dotspacemacs-startup-banner))
           ((and dotspacemacs-startup-banner
                 (image-type-available-p (intern (file-name-extension
                                                  dotspacemacs-startup-banner)))
                 (display-graphic-p))
            (if (file-exists-p dotspacemacs-startup-banner)
                dotspacemacs-startup-banner
-             (spacemacs-buffer/warning (format "could not find banner %s"
+             (aero-buffer/warning (format "could not find banner %s"
                                                dotspacemacs-startup-banner))
-             (spacemacs-buffer//get-banner-path 1)))
-          (t (spacemacs-buffer//get-banner-path 1)))))
+             (aero-buffer//get-banner-path 1)))
+          (t (aero-buffer//get-banner-path 1)))))
 
-(defvar spacemacs-buffer--random-banner nil
+(defvar aero-buffer--random-banner nil
   "The random banner chosen.")
 
-(defun spacemacs-buffer//choose-random-text-banner (&optional all)
+(defun aero-buffer//choose-random-text-banner (&optional all)
   "Return the full path of a banner chosen randomly.
 If ALL is non-nil then truly all banners can be selected."
-  (setq spacemacs-buffer--random-banner
-        (or spacemacs-buffer--random-banner
+  (setq aero-buffer--random-banner
+        (or aero-buffer--random-banner
             (let* ((files (directory-files spacemacs-banner-directory t ".*\.txt"))
                    (count (length files))
                    ;; -2 to remove the two last ones (easter eggs)
                    (choice (random (- count (if all 0 2)))))
               (nth choice files)))))
 
-(defun spacemacs-buffer//get-banner-path (index)
+(defun aero-buffer//get-banner-path (index)
   "Return the full path to banner with index INDEX."
   (concat spacemacs-banner-directory (format "%03d-banner.txt" index)))
 
-(defun spacemacs-buffer//insert-image-banner (banner)
+(defun aero-buffer//insert-image-banner (banner)
   "Display an image banner.
 BANNER: the path to an ascii banner file."
   (when (file-exists-p banner)
-    (let* ((title spacemacs-buffer-logo-title)
+    (let* ((title aero-buffer-logo-title)
            (spec (create-image banner))
            (size (image-size spec))
            (width (car size))
-           (left-margin (max 0 (floor (- spacemacs-buffer--window-width width) 2))))
+           (left-margin (max 0 (floor (- aero-buffer--window-width width) 2))))
       (goto-char (point-min))
       (insert "\n")
       (insert (make-string left-margin ?\s))
       (insert-image spec)
       (insert "\n\n")
-      (insert (make-string (max 0 (floor (/ (- spacemacs-buffer--window-width
+      (insert (make-string (max 0 (floor (/ (- aero-buffer--window-width
                                                (+ (length title) 1)) 2))) ?\s))
       (insert (format "%s\n\n" title)))))
 
-(defun spacemacs-buffer//inject-version ()
+(defun aero-buffer//inject-version ()
   "Inject the current version of spacemacs.
 Insert it in the first line of the buffer, right justified."
-  (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+  (with-current-buffer (get-buffer-create aero-buffer-name)
     (save-excursion
       (let ((version (format "%s@%s (%s)"
-                             spacemacs-version
+                             aero-version
                              emacs-version
                              dotspacemacs-distribution))
             (buffer-read-only nil))
@@ -227,12 +222,12 @@ Insert it in the first line of the buffer, right justified."
         (delete-region (point) (progn (end-of-line) (point)))
         (insert (format (format "%%%ds"
                                 (if (display-graphic-p)
-                                    spacemacs-buffer--window-width
+                                    aero-buffer--window-width
                                   ;; terminal needs one less char
-                                  (1- spacemacs-buffer--window-width)))
+                                  (1- aero-buffer--window-width)))
                         version))))))
 
-(defun spacemacs-buffer//insert-footer ()
+(defun aero-buffer//insert-footer ()
   "Insert the footer of the home buffer."
   (save-excursion
     (let* ((badge-path spacemacs-badge-official-png)
@@ -252,26 +247,26 @@ Insert it in the first line of the buffer, right justified."
            (buffer-read-only nil))
       (when (or badge heart)
         (goto-char (point-max))
-        (spacemacs-buffer/insert-page-break)
+        (aero-buffer/insert-page-break)
         (insert "\n")
         (when badge
           (insert-image badge)
-          (spacemacs-buffer//center-line badge-size))
+          (aero-buffer//center-line badge-size))
         (when heart
           (when badge (insert "\n\n"))
           (insert build-lhs)
           (insert-image heart)
           (insert build-rhs)
-          (spacemacs-buffer//center-line (+ (length build-lhs)
+          (aero-buffer//center-line (+ (length build-lhs)
                                             heart-size
                                             (length build-rhs)))
           (insert "\n"))))))
 
-(defmacro spacemacs-buffer||notes-adapt-caption-to-width (caption
+(defmacro aero-buffer||notes-adapt-caption-to-width (caption
                                                           caption-length
                                                           width)
   "Adapt caption string's length to the note's frame current width.
-For internal use in `spacemacs-buffer//notes-render-framed-text'.
+For internal use in `aero-buffer//notes-render-framed-text'.
 CAPTION: string to be encrusted onto the note's frame
 CAPTION-LENGTH: length of the caption
 WIDTH: current external width of the note's frame."
@@ -285,7 +280,7 @@ WIDTH: current external width of the note's frame."
        (setq ,caption nil
              ,caption-length 0))))
 
-(defun spacemacs-buffer//notes-render-framed-text
+(defun aero-buffer//notes-render-framed-text
     (content &optional topcaption botcaption hpadding max-width min-width)
   "Return a formatted string framed with curved lines.
 The width of the created frame is the width of the content, unless it does not
@@ -311,7 +306,7 @@ MIN-WIDTH is the minimal width of the frame, frame included.  The frame will not
       (when (eq ?\n (char-before))    ;; remove additional newline at eof
         (delete-char -1)))
     (let* ((hpadding (if hpadding hpadding 1))
-           (text-width (spacemacs-buffer//get-buffer-width))
+           (text-width (aero-buffer//get-buffer-width))
            (width (+ 2 (* 2 hpadding) text-width))
            (fill-column text-width)
            (sentence-end-double-space nil)    ; needed by fill-region
@@ -321,8 +316,8 @@ MIN-WIDTH is the minimal width of the frame, frame included.  The frame will not
       (setq max-width (or max-width width)
             min-width (or min-width 1)
             max-width (if (< max-width min-width) min-width max-width)
-            max-width (if (> max-width spacemacs-buffer--window-width)
-                              spacemacs-buffer--window-width
+            max-width (if (> max-width aero-buffer--window-width)
+                              aero-buffer--window-width
                             max-width))
       (when (< width min-width)
         (setq width min-width
@@ -330,10 +325,10 @@ MIN-WIDTH is the minimal width of the frame, frame included.  The frame will not
       (when (> width max-width)
         (setq width max-width
               fill-column (max 0 (- max-width 2 (* hpadding 2)))))
-      (spacemacs-buffer||notes-adapt-caption-to-width topcaption
+      (aero-buffer||notes-adapt-caption-to-width topcaption
                                                       topcaption-length
                                                       width)
-      (spacemacs-buffer||notes-adapt-caption-to-width botcaption
+      (aero-buffer||notes-adapt-caption-to-width botcaption
                                                       botcaption-length
                                                       width)
       (fill-region (point-min) (point-max) nil nil)
@@ -342,18 +337,18 @@ MIN-WIDTH is the minimal width of the frame, frame included.  The frame will not
                                          'face
                                          '(:weight bold)))
        (make-string (max 0 (- width (if topcaption 6 4) topcaption-length)) ?─) "─╮\n"
-       (spacemacs-buffer//notes-render-framed-line "" width hpadding)
+       (aero-buffer//notes-render-framed-line "" width hpadding)
        (mapconcat (lambda (line)
-                    (spacemacs-buffer//notes-render-framed-line line width hpadding))
+                    (aero-buffer//notes-render-framed-line line width hpadding))
                   (split-string (buffer-string) "\n" nil) "")
-       (spacemacs-buffer//notes-render-framed-line "" width hpadding)
+       (aero-buffer//notes-render-framed-line "" width hpadding)
        "╰─" (when botcaption (propertize (concat " " botcaption " ")
                                          'face '(:weight bold)))
        (make-string (max 0 (- width (if botcaption 6 4) botcaption-length)) ?─)
        "─╯" (when botcaption "\n")))))
 
 
-(defun spacemacs-buffer//notes-render-framed-line (line width hpadding)
+(defun aero-buffer//notes-render-framed-line (line width hpadding)
   "Return a formatted LINE with borders of a frame on each side.
 WIDTH: external width of the frame.  LINE should be shorter than WIDTH.
 HPADDING: horizontal padding on both sides of the framed string."
@@ -361,7 +356,7 @@ HPADDING: horizontal padding on both sides of the framed string."
     (concat "│" (make-string hpadding ?\s) line (make-string fill ?\s)
             "│\n")))
 
-(defun spacemacs-buffer//notes-insert-note
+(defun aero-buffer//notes-insert-note
     (file topcaption botcaption &optional additional-widgets)
   "Insert the release note just under the banner.
 FILE: the file that contains the content to show.
@@ -370,11 +365,11 @@ BOTCAPTION: a text to be encrusted at the bottom of the frame.
 ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
   (save-excursion
     (goto-char (point-min))
-    (search-forward "Search in Spacemacs\]") ; TODO: this is dirty
+    (search-forward "Search in aero\]") ; TODO: this is dirty
     (forward-line)
     (let* ((buffer-read-only nil)
            (note (concat "\n"
-                         (spacemacs-buffer//notes-render-framed-text file
+                         (aero-buffer//notes-render-framed-text file
                                                                      topcaption
                                                                      botcaption
                                                                      2
@@ -382,9 +377,9 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                                                                      80))))
       (save-restriction
         (narrow-to-region (point) (point))
-        (add-to-list 'spacemacs-buffer--note-widgets (widget-create 'text note))
-        (let* ((width (spacemacs-buffer//get-buffer-width))
-               (padding (max 0 (floor (/ (- spacemacs-buffer--window-width
+        (add-to-list 'aero-buffer--note-widgets (widget-create 'text note))
+        (let* ((width (aero-buffer//get-buffer-width))
+               (padding (max 0 (floor (/ (- aero-buffer--window-width
                                             width) 2)))))
           (goto-char (point-min))
           (while (not (eobp))
@@ -398,16 +393,16 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                             'type 'help-url
                             'help-args (list (match-string 1)))))
       (funcall additional-widgets)
-      (spacemacs-buffer//center-line)
+      (aero-buffer//center-line)
       (delete-trailing-whitespace (line-beginning-position)
                                   (line-end-position)))))
 
-(defun spacemacs-buffer//notes-insert-quickhelp ()
+(defun aero-buffer//notes-insert-quickhelp ()
   "Insert quickhelp."
   (let ((widget-func
          (lambda ()
            (add-to-list
-            'spacemacs-buffer--note-widgets
+            'aero-buffer--note-widgets
             (widget-create 'push-button
                            :tag (propertize "Evil Tutorial"
                                             'face 'font-lock-keyword-face)
@@ -419,7 +414,7 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                            :follow-link "\C-m"))
            (widget-insert " ")
            (add-to-list
-            'spacemacs-buffer--note-widgets
+            'aero-buffer--note-widgets
             (widget-create 'push-button
                            :tag (propertize "Emacs Tutorial"
                                             'face 'font-lock-keyword-face)
@@ -430,7 +425,7 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                            :follow-link "\C-m"))
            (widget-insert " ")
            (add-to-list
-            'spacemacs-buffer--note-widgets
+            'aero-buffer--note-widgets
             (widget-create 'push-button
                            :tag (propertize "Vim Migration Guide"
                                             'face 'font-lock-keyword-face)
@@ -441,18 +436,18 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                                               "VIMUSERS.org") "^" 'all))
                            :mouse-face 'highlight
                            :follow-link "\C-m")))))
-    (spacemacs-buffer//notes-insert-note (concat spacemacs-info-directory
+    (aero-buffer//notes-insert-note (concat spacemacs-info-directory
                                                  "quickhelp.txt")
                                          "Quick Help"
                                          nil
                                          widget-func)))
 
-(defun spacemacs-buffer//notes-insert-release-note ()
+(defun aero-buffer//notes-insert-release-note ()
   "Insert release note."
   (let ((widget-func
          (lambda ()
            (add-to-list
-            'spacemacs-buffer--note-widgets
+            'aero-buffer--note-widgets
             (widget-create 'push-button
                            :tag (propertize "Click here for full change log"
                                             'face 'font-lock-warning-face)
@@ -463,123 +458,126 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                                       (concat spacemacs-start-directory
                                               "CHANGELOG.org")
                                       (format "Release %s.x"
-                                              spacemacs-buffer-version-info)
+                                              aero-buffer-version-info)
                                       'subtree))
                            :mouse-face 'highlight
                            :follow-link "\C-m")))))
-    (spacemacs-buffer//notes-insert-note (format "Important Notes (Release %s.x)"
-                                                 spacemacs-buffer-version-info)
+    (aero-buffer//notes-insert-note (format "Important Notes (Release %s.x)"
+                                                 aero-buffer-version-info)
                                          "Update your dotfile (SPC f e D) and\
  packages after every update"
                                          widget-func))
-  (setq spacemacs-buffer--release-note-version nil)
-  (spacemacs/dump-vars-to-file '(spacemacs-buffer--release-note-version)
-                               spacemacs-buffer--cache-file))
+  (setq aero-buffer--release-note-version nil)
+  (spacemacs/dump-vars-to-file '(aero-buffer--release-note-version)
+                               aero-buffer--cache-file))
 
-(defun spacemacs-buffer//notes-clear-notes-and-widgets ()
+(defun aero-buffer//notes-clear-notes-and-widgets ()
   "Remove existing note widgets if exists."
-  (when spacemacs-buffer--note-widgets
-    (mapc 'widget-delete spacemacs-buffer--note-widgets)
-    (setq spacemacs-buffer--note-widgets nil)
-    (setq spacemacs-buffer--release-note-version spacemacs-version)
+  (when aero-buffer--note-widgets
+    (mapc 'widget-delete aero-buffer--note-widgets)
+    (setq aero-buffer--note-widgets nil)
+    (setq aero-buffer--release-note-version aero-version)
     (spacemacs/dump-vars-to-file
-     '(spacemacs-buffer--release-note-version) spacemacs-buffer--cache-file)))
+     '(aero-buffer--release-note-version) aero-buffer--cache-file)))
 
-(defun spacemacs-buffer//notes-redisplay-current-note ()
+(defun aero-buffer//notes-redisplay-current-note ()
   "Delete and rediplay the currently displayed note."
-  (spacemacs-buffer//notes-clear-notes-and-widgets)
-  (let ((type spacemacs-buffer--current-note-type))
+  (aero-buffer//notes-clear-notes-and-widgets)
+  (let ((type aero-buffer--current-note-type))
     (cond
-     ((eq type 'quickhelp) (spacemacs-buffer//notes-insert-quickhelp))
-     ((eq type 'release-note) (spacemacs-buffer//notes-insert-release-note))
+     ((eq type 'quickhelp) (aero-buffer//notes-insert-quickhelp))
+     ((eq type 'release-note) (aero-buffer//notes-insert-release-note))
      (t))))
 
-(defun spacemacs-buffer/toggle-note (type)
+(defun aero-buffer/toggle-note (type)
   "Toggle the displayed note based on TYPE.
 If TYPE is nil or unknown, just remove the currently displayed note.  Currently
 allowed types are `quickhelp' and `release-note'"
-  (spacemacs-buffer//notes-clear-notes-and-widgets)
-  (if (or (eq spacemacs-buffer--current-note-type nil)
-          (not (eq spacemacs-buffer--current-note-type type)))
+  (aero-buffer//notes-clear-notes-and-widgets)
+  (if (or (eq aero-buffer--current-note-type nil)
+          (not (eq aero-buffer--current-note-type type)))
       (progn
-        (setq spacemacs-buffer--current-note-type type)
+        (setq aero-buffer--current-note-type type)
         (cond
-         ((eq type 'quickhelp) (spacemacs-buffer//notes-insert-quickhelp))
-         ((eq type 'release-note) (spacemacs-buffer//notes-insert-release-note))
-         (t (setq spacemacs-buffer--current-note-type nil)
+         ((eq type 'quickhelp) (aero-buffer//notes-insert-quickhelp))
+         ((eq type 'release-note) (aero-buffer//notes-insert-release-note))
+         (t (setq aero-buffer--current-note-type nil)
             (message "Unknown note type: %s" 'type))))
-    (setq spacemacs-buffer--current-note-type nil)))
+    (setq aero-buffer--current-note-type nil)))
 
-(defun spacemacs-buffer/set-mode-line (format &optional redisplay)
+(defun aero-buffer/set-mode-line (format &optional redisplay)
   "Set mode-line format for spacemacs buffer.
 FORMAT: the `mode-line-format' variable Emacs will use to build the mode-line.
 If REDISPLAY is non-nil then force a redisplay as well"
-  (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+  (with-current-buffer (get-buffer-create aero-buffer-name)
     (setq mode-line-format format))
   (when redisplay (spacemacs//redisplay)))
 
-(defun spacemacs-buffer/message (msg &rest args)
-  "Display MSG in *Messages* prepended with '(Spacemacs)'.
+(defun aero-buffer/message (msg &rest args)
+  "Display MSG in *Messages* prepended with '(aero)'.
 The message is displayed only if `init-file-debug' is non nil.
 ARGS: format string arguments."
   (when init-file-debug
-    (message "(Spacemacs) %s" (apply 'format msg args))))
+    (message "(aero) %s" (apply 'format msg args))))
+(define-obsolete-function-alias spacemacs-buffer/message aero-buffer/message)
 
-(defvar spacemacs-buffer--errors nil
+(defvar aero-buffer--errors nil
   "List of errors during startup.")
 
-(defun spacemacs-buffer/error (msg &rest args)
+(defun aero-buffer/error (msg &rest args)
   "Display MSG as an Error message in `*Messages*' buffer.
 ARGS: format string arguments."
   (let ((msg (apply 'format msg args)))
-    (message "(Spacemacs) Error: %s" msg)
+    (message "(aero) Error: %s" msg)
     (when message-log-max
-      (add-to-list 'spacemacs-buffer--errors msg 'append))))
+      (add-to-list 'aero-buffer--errors msg 'append))))
+(define-obsolete-function-alias spacemacs-buffer/error aero-buffer/error)
 
-(defvar spacemacs-buffer--warnings nil
+(defvar aero-buffer--warnings nil
   "List of warnings during startup.")
 
-(defun spacemacs-buffer/warning (msg &rest args)
+(defun aero-buffer/warning (msg &rest args)
   "Display MSG as a warning message but in buffer `*Messages*'.
 ARGS: format string arguments."
   (let ((msg (apply 'format msg args)))
-    (message "(Spacemacs) Warning: %s" msg)
+    (message "(aero) Warning: %s" msg)
     (when message-log-max
-      (add-to-list 'spacemacs-buffer--warnings msg 'append))))
+      (add-to-list 'aero-buffer--warnings msg 'append))))
+(define-obsolete-function-alias spacemacs-buffer/warning aero-buffer/warning)
 
-(defun spacemacs-buffer/insert-page-break ()
+(defun aero-buffer/insert-page-break ()
   "Insert a page break line in spacemacs buffer."
-  (spacemacs-buffer/append "\n\n"))
+  (aero-buffer/append "\n\n\n\n"))
 
-(defun spacemacs-buffer/append (msg &optional messagebuf)
+(defun aero-buffer/append (msg &optional messagebuf)
   "Append MSG to spacemacs buffer.
 If MESSAGEBUF is not nil then MSG is also written in message buffer."
-  (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+  (with-current-buffer (get-buffer-create aero-buffer-name)
     (goto-char (point-max))
     (let ((buffer-read-only nil))
       (insert msg)
       (when messagebuf
-        (message "(Spacemacs) %s" msg)))))
+        (message "(aero) %s" msg)))))
 
-(defun spacemacs-buffer/replace-last-line (msg &optional messagebuf)
+(defun aero-buffer/replace-last-line (msg &optional messagebuf)
   "Replace the last line of the spacemacs buffer with MSG.
 If MESSAGEBUF is not nil then MSG is also written in message buffer."
-  (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+  (with-current-buffer (get-buffer-create aero-buffer-name)
     (goto-char (point-max))
     (let ((buffer-read-only nil))
       (delete-region (line-beginning-position) (point-max))
       (insert msg)
       (when messagebuf
-        (message "(Spacemacs) %s" msg)))))
+        (message "(aero) %s" msg)))))
 
-(defmacro spacemacs-buffer||add-shortcut
+(defmacro aero-buffer||add-shortcut
     (shortcut-char search-label &optional no-next-line)
   "Add a single-key keybinding for quick navigation in the home buffer.
 Navigation is done by searching for a specific word in the buffer.
 SHORTCUT-CHAR: the key that the user will have to press.
 SEARCH-LABEL: the word the cursor will be brought under (or on).
 NO-NEXT-LINE: if nil the cursor is brought under the searched word."
-  `(define-key spacemacs-buffer-mode-map
+  `(define-key aero-buffer-mode-map
      ,shortcut-char (lambda ()
                       (interactive)
                       (unless (search-forward ,search-label (point-max) t)
@@ -588,7 +586,7 @@ NO-NEXT-LINE: if nil the cursor is brought under the searched word."
                           '((forward-line 1)))
                       (back-to-indentation))))
 
-(defun spacemacs-buffer//center-line (&optional real-width)
+(defun aero-buffer//center-line (&optional real-width)
   "When point is at the end of a line, center it.
 REAL-WIDTH: the real width of the line.  If the line contains an image, the size
             of that image will be considered to be 1 by the calculation method
@@ -596,23 +594,23 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
             himself the correct length of the line taking into account the
             images he inserted in it."
   (let* ((width (or real-width (current-column)))
-         (margin (max 0 (floor (/ (- spacemacs-buffer--window-width
+         (margin (max 0 (floor (/ (- aero-buffer--window-width
                                      width)
                                   2)))))
     (beginning-of-line)
     (insert (make-string margin ?\s))
     (end-of-line)))
 
-(defun spacemacs-buffer//insert-buttons ()
+(defun aero-buffer//insert-buttons ()
   "Create and insert the interactive buttons under Spacemacs banner."
   (goto-char (point-max))
   (unless dotspacemacs-startup-banner (insert "\n"))
-  (spacemacs-buffer||add-shortcut "m" "[?]" t)
+  (aero-buffer||add-shortcut "m" "[?]" t)
   (widget-create 'url-link
                  :tag (propertize "?" 'face 'font-lock-doc-face)
                  :help-echo "Open the quickhelp."
                  :action (lambda (&rest ignore)
-                           (spacemacs-buffer/toggle-note 'quickhelp))
+                           (aero-buffer/toggle-note 'quickhelp))
                  :mouse-face 'highlight
                  :follow-link "\C-m")
   (insert " ")
@@ -643,11 +641,11 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                  :action (lambda (&rest ignore) (spacemacs/switch-to-version))
                  :mouse-face 'highlight
                  :follow-link "\C-m"
-                 (propertize "Update Spacemacs" 'face 'font-lock-keyword-face))
+                 (propertize "Update aero" 'face 'font-lock-keyword-face))
   (let ((len (- (line-end-position)
                 (line-beginning-position))))
-    (spacemacs-buffer//center-line)
-    (setq spacemacs-buffer--buttons-position (- (line-end-position)
+    (aero-buffer//center-line)
+    (setq aero-buffer--buttons-position (- (line-end-position)
                                                 (line-beginning-position)
                                                 len)))
   (insert "\n")
@@ -668,21 +666,21 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                  :follow-link "\C-m"
                  (propertize "Rollback Package Update"
                              'face 'font-lock-keyword-face))
-  (spacemacs-buffer//center-line)
+  (aero-buffer//center-line)
   (insert "\n")
   (widget-create 'push-button
                  :tag (propertize "Release Notes"
                                   'face 'font-lock-preprocessor-face)
                  :help-echo "Hide or show the Changelog"
                  :action (lambda (&rest ignore)
-                           (spacemacs-buffer/toggle-note 'release-note))
+                           (aero-buffer/toggle-note 'release-note))
                  :mouse-face 'highlight
                  :follow-link "\C-m")
   (insert " ")
   (widget-create 'url-link
-                 :tag (propertize "Search in Spacemacs"
+                 :tag (propertize "Search in aero"
                                   'face 'font-lock-function-name-face)
-                 :help-echo "Search Spacemacs contents."
+                 :help-echo "Search aero contents."
                  :action
                  (lambda (&rest ignore)
                    (let ((comp-frontend
@@ -694,10 +692,10 @@ REAL-WIDTH: the real width of the line.  If the line contains an image, the size
                      (call-interactively comp-frontend)))
                  :mouse-face 'highlight
                  :follow-link "\C-m")
-  (spacemacs-buffer//center-line)
+  (aero-buffer//center-line)
   (insert "\n\n"))
 
-(defun spacemacs-buffer//insert-string-list (list-display-name list)
+(defun aero-buffer//insert-string-list (list-display-name list)
   "Insert a non-interactive startup list in the home buffer.
 LIST-DISPLAY-NAME: the displayed title of the list.
 LIST: a list of strings displayed as entries."
@@ -716,7 +714,7 @@ LIST: a list of strings displayed as entries."
                (buffer-string))))
           list)))
 
-(defun spacemacs-buffer//insert-file-list (list-display-name list)
+(defun aero-buffer//insert-file-list (list-display-name list)
   "Insert an interactive list of files in the home buffer.
 LIST-DISPLAY-NAME: the displayed title of the list.
 LIST: a list of string pathnames made interactive in this function."
@@ -735,7 +733,7 @@ LIST: a list of string pathnames made interactive in this function."
                            (abbreviate-file-name el)))
           list)))
 
-(defun spacemacs-buffer//insert-bookmark-list (list-display-name list)
+(defun aero-buffer//insert-bookmark-list (list-display-name list)
   "Insert an interactive list of bookmarks entries (if any) in the home buffer.
 LIST-DISPLAY-NAME: the displayed title of the list.
 LIST: a list of string bookmark names made interactive in this function."
@@ -757,7 +755,7 @@ LIST: a list of string bookmark names made interactive in this function."
                                (format "%s" el)))))
           list)))
 
-(defun spacemacs-buffer//get-org-items (types)
+(defun aero-buffer//get-org-items (types)
   "Make a list of agenda file items for today of kind types.
 TYPES: list of `org-mode' types to fetch."
   (require 'org-agenda)
@@ -765,32 +763,32 @@ TYPES: list of `org-mode' types to fetch."
     (apply #'append
            (cl-loop for file in (org-agenda-files nil 'ifmode)
                  collect
-                 (spacemacs-buffer//make-org-items
+                 (aero-buffer//make-org-items
                   file
                   (apply 'org-agenda-get-day-entries file date
                          types))))))
 
-(defun spacemacs-buffer//agenda-list ()
+(defun aero-buffer//agenda-list ()
   "Return today's agenda."
   (require 'org-agenda)
-  (spacemacs-buffer//get-org-items org-agenda-entry-types))
+  (aero-buffer//get-org-items org-agenda-entry-types))
 
-(defun spacemacs-buffer//todo-list ()
+(defun aero-buffer//todo-list ()
   "Return current todos."
   (require 'org-agenda)
-  (spacemacs-buffer//get-org-items '(:todo)))
+  (aero-buffer//get-org-items '(:todo)))
 
-(defun spacemacs-buffer//make-org-items (file items)
-  "Make a spacemacs-buffer org item list.
+(defun aero-buffer//make-org-items (file items)
+  "Make a aero-buffer org item list.
 FILE: file name.
 ITEMS:"
   (cl-loop
    for item in items
    collect
-   (spacemacs-buffer//make-org-item file item)))
+   (aero-buffer//make-org-item file item)))
 
-(defun spacemacs-buffer//make-org-item (file item)
-  "Make a spacemacs-buffer version of an org item.
+(defun aero-buffer//make-org-item (file item)
+  "Make a aero-buffer version of an org item.
 FILE: file name.
 ITEM:"
   (list (cons "text"
@@ -802,7 +800,7 @@ ITEM:"
         (cons "time"
               (get-text-property 0 'time item))))
 
-(defun spacemacs-buffer//org-jump (el)
+(defun aero-buffer//org-jump (el)
   "Action executed when using an item in the home buffer's todo list.
 EL: `org-agenda' element to jump to."
   (require 'org-agenda)
@@ -822,7 +820,7 @@ EL: `org-agenda' element to jump to."
         (goto-char (match-beginning 4))))
   (run-hooks 'org-agenda-after-show-hook))
 
-(defun spacemacs-buffer//insert-todo-list (list-display-name list)
+(defun aero-buffer//insert-todo-list (list-display-name list)
   "Insert an interactive todo list of `org-agenda' entries in the home buffer.
 LIST-DISPLAY-NAME: the displayed title of the list.
 LIST: list of `org-agenda' entries in the todo list."
@@ -842,7 +840,7 @@ LIST: list of `org-agenda' entries in the todo list."
             (insert "\n    ")
             (widget-create 'push-button
                            :action `(lambda (&rest ignore)
-                                      (spacemacs-buffer//org-jump ',el))
+                                      (aero-buffer//org-jump ',el))
                            :mouse-face 'highlight
                            :follow-link "\C-m"
                            :button-prefix ""
@@ -867,69 +865,69 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
     (cl-subseq seq start (and (number-or-marker-p end)
                               (min len end)))))
 
-(defun spacemacs-buffer//do-insert-startupify-lists ()
+(defun aero-buffer//do-insert-startupify-lists ()
   "Insert the startup lists in the current buffer."
   (let ((list-separator "\n\n"))
     (mapc (lambda (els)
             (let ((el (or (car-safe els) els))
                   (list-size
                    (or (cdr-safe els)
-                       spacemacs-buffer-startup-lists-length)))
+                       aero-buffer-startup-lists-length)))
               (cond
                ((eq el 'warnings)
-                (when (spacemacs-buffer//insert-string-list
-                       "Errors:" spacemacs-buffer--errors)
-                  (spacemacs-buffer||add-shortcut "e" "Errors:")
+                (when (aero-buffer//insert-string-list
+                       "Errors:" aero-buffer--errors)
+                  (aero-buffer||add-shortcut "e" "Errors:")
                   (insert list-separator))
-                (when (spacemacs-buffer//insert-string-list
-                       "Warnings:" spacemacs-buffer--warnings)
-                  (spacemacs-buffer||add-shortcut "w" "Warnings:")
+                (when (aero-buffer//insert-string-list
+                       "Warnings:" aero-buffer--warnings)
+                  (aero-buffer||add-shortcut "w" "Warnings:")
                   (insert list-separator)))
                ((eq el 'recents)
                 (recentf-mode)
-                (when (spacemacs-buffer//insert-file-list
+                (when (aero-buffer//insert-file-list
                        "Recent Files:"
                        (spacemacs//subseq recentf-list 0 list-size))
-                  (spacemacs-buffer||add-shortcut "r" "Recent Files:")
+                  (aero-buffer||add-shortcut "r" "Recent Files:")
                   (insert list-separator)))
                ((eq el 'todos)
-                (when (spacemacs-buffer//insert-todo-list
+                (when (aero-buffer//insert-todo-list
                        "ToDo:"
-                       (spacemacs//subseq (spacemacs-buffer//todo-list)
+                       (spacemacs//subseq (aero-buffer//todo-list)
                                           0 list-size))
-                  (spacemacs-buffer||add-shortcut "d" "ToDo:")
+                  (aero-buffer||add-shortcut "d" "ToDo:")
                   (insert list-separator)))
                ((eq el 'agenda)
-                (when (spacemacs-buffer//insert-todo-list
+                (when (aero-buffer//insert-todo-list
                        "Agenda:"
-                       (spacemacs//subseq (spacemacs-buffer//agenda-list)
+                       (spacemacs//subseq (aero-buffer//agenda-list)
                                           0 list-size))
-                  (spacemacs-buffer||add-shortcut "c" "Agenda:")
+                  (aero-buffer||add-shortcut "c" "Agenda:")
                   (insert list-separator)))
                ((eq el 'bookmarks)
                 (when (configuration-layer/layer-used-p 'spacemacs-helm)
                   (helm-mode))
                 (require 'bookmark)
-                (when (spacemacs-buffer//insert-bookmark-list
+                (when (aero-buffer//insert-bookmark-list
                        "Bookmarks:"
                        (spacemacs//subseq (bookmark-all-names)
                                           0 list-size))
-                  (spacemacs-buffer||add-shortcut "b" "Bookmarks:")
+                  (aero-buffer||add-shortcut "b" "Bookmarks:")
                   (insert list-separator)))
                ((and (eq el 'projects)
                      (fboundp 'projectile-mode))
                 (projectile-mode)
-                (when (spacemacs-buffer//insert-file-list
+                (when (aero-buffer//insert-file-list
                        "Projects:"
                        (spacemacs//subseq (projectile-relevant-known-projects)
                                           0 list-size))
-                  (spacemacs-buffer||add-shortcut "p" "Projects:")
+                  (aero-buffer||add-shortcut "p" "Projects:")
                   (insert list-separator))))))
           (append
            '(warnings)
            dotspacemacs-startup-lists))))
 
-(defun spacemacs-buffer//get-buffer-width ()
+(defun aero-buffer//get-buffer-width ()
   "Return the length of longest line in the current buffer."
   (save-excursion
     (goto-char 0)
@@ -941,14 +939,14 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
         (forward-line 1))
       current-max)))
 
-(defun spacemacs-buffer//center-startup-lists ()
+(defun aero-buffer//center-startup-lists ()
   "Center startup lists after they were inserted."
-  (let* ((lists-width (spacemacs-buffer//get-buffer-width))
-         (margin (max 0 (- spacemacs-buffer--buttons-position
-                           spacemacs-buffer-buttons-startup-lists-offset)))
-         (final-padding (if (< spacemacs-buffer--window-width
+  (let* ((lists-width (aero-buffer//get-buffer-width))
+         (margin (max 0 (- aero-buffer--buttons-position
+                           aero-buffer-buttons-startup-lists-offset)))
+         (final-padding (if (< aero-buffer--window-width
                                (+ margin lists-width))
-                            (max 0 (floor (/ (- spacemacs-buffer--window-width
+                            (max 0 (floor (/ (- aero-buffer--window-width
                                                 lists-width)
                                              2)))
                           margin)))
@@ -958,116 +956,116 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
       (insert (make-string final-padding ?\s))
       (forward-line))))
 
-(defun spacemacs-buffer/insert-startup-lists ()
+(defun aero-buffer/insert-startup-lists ()
   "Insert startup lists in home buffer."
   (interactive)
-  (with-current-buffer (get-buffer spacemacs-buffer-name)
+  (with-current-buffer (get-buffer aero-buffer-name)
     (let ((buffer-read-only nil))
       (goto-char (point-max))
-      (spacemacs-buffer/insert-page-break)
+      (aero-buffer/insert-page-break)
       (insert "\n")
       (save-restriction
         (narrow-to-region (point) (point))
-        (spacemacs-buffer//do-insert-startupify-lists)
-        (spacemacs-buffer//center-startup-lists)))))
+        (aero-buffer//do-insert-startupify-lists)
+        (aero-buffer//center-startup-lists)))))
 
-(defun spacemacs-buffer/goto-link-line ()
+(defun aero-buffer/goto-link-line ()
   "Set point to the beginning of the link line."
   (interactive)
-  (with-current-buffer spacemacs-buffer-name
+  (with-current-buffer aero-buffer-name
     (goto-char (point-min))
-    (with-demoted-errors "spacemacs buffer error: %s"
+    (with-demoted-errors "aero buffer error: %s"
       (search-forward "[")
       (left-char 2))))
 
-(defun spacemacs-buffer//startup-hook ()
+(defun aero-buffer//startup-hook ()
   "Code executed when Emacs has finished loading."
-  (with-current-buffer (get-buffer spacemacs-buffer-name)
+  (with-current-buffer (get-buffer aero-buffer-name)
     (when dotspacemacs-startup-lists
-      (spacemacs-buffer/insert-startup-lists))
-    (spacemacs-buffer//insert-footer)
+      (aero-buffer/insert-startup-lists))
+    (aero-buffer//insert-footer)
     (if configuration-layer-error-count
         (progn
-          (spacemacs-buffer-mode)
+          (aero-buffer-mode)
           (face-remap-add-relative 'mode-line
                                    '((:background "red") mode-line))
-          (spacemacs-buffer/set-mode-line
+          (aero-buffer/set-mode-line
            (format
             (concat "%s error(s) at startup! "
-                    "Spacemacs may not be able to operate properly.")
+                    "aero may not be able to operate properly.")
             configuration-layer-error-count) t))
-      (spacemacs-buffer/set-mode-line spacemacs--default-mode-line)
-      (spacemacs-buffer-mode))
+      (aero-buffer/set-mode-line spacemacs--default-mode-line)
+      (aero-buffer-mode))
     (force-mode-line-update)
-    (spacemacs-buffer/goto-link-line)))
+    (aero-buffer/goto-link-line)))
 
-(defvar spacemacs-buffer--last-width nil
-  "Previous width of spacemacs-buffer.")
+(defvar aero-buffer--last-width nil
+  "Previous width of aero-buffer.")
 
-(defun spacemacs-buffer/goto-buffer (&optional refresh)
-  "Create the special buffer for `spacemacs-buffer-mode' and switch to it.
+(defun aero-buffer/goto-buffer (&optional refresh)
+  "Create the special buffer for `aero-buffer-mode' and switch to it.
 REFRESH if the buffer should be redrawn."
   (interactive)
-  (let ((buffer-exists (buffer-live-p (get-buffer spacemacs-buffer-name)))
+  (let ((buffer-exists (buffer-live-p (get-buffer aero-buffer-name)))
         (save-line nil))
     (when (not buffer-exists)
-      (setq spacemacs-buffer--note-widgets nil))
-    (when (or (not (eq spacemacs-buffer--last-width (window-width)))
+      (setq aero-buffer--note-widgets nil))
+    (when (or (not (eq aero-buffer--last-width (window-width)))
               (not buffer-exists)
               refresh)
-      (setq spacemacs-buffer--window-width (if dotspacemacs-startup-buffer-responsive
+      (setq aero-buffer--window-width (if dotspacemacs-startup-buffer-responsive
                                                (window-width)
                                              80)
-            spacemacs-buffer--last-width spacemacs-buffer--window-width)
-      (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+            aero-buffer--last-width aero-buffer--window-width)
+      (with-current-buffer (get-buffer-create aero-buffer-name)
         (page-break-lines-mode)
         (save-excursion
           (when (> (buffer-size) 0)
             (set 'save-line (line-number-at-pos))
             (let ((inhibit-read-only t))
               (erase-buffer)))
-          (spacemacs-buffer/set-mode-line "")
-          (spacemacs-buffer/insert-banner-and-buttons)
+          (aero-buffer/set-mode-line "")
+          (aero-buffer/insert-banner-and-buttons)
           (when (bound-and-true-p spacemacs-initialized)
-            (spacemacs-buffer//notes-redisplay-current-note)
+            (aero-buffer//notes-redisplay-current-note)
             (configuration-layer/display-summary emacs-start-time)
             (when dotspacemacs-startup-lists
-              (spacemacs-buffer/insert-startup-lists))
-            (spacemacs-buffer//insert-footer)
-            (spacemacs-buffer/set-mode-line spacemacs--default-mode-line)
+              (aero-buffer/insert-startup-lists))
+            (aero-buffer//insert-footer)
+            (aero-buffer/set-mode-line spacemacs--default-mode-line)
             (force-mode-line-update)
-            (spacemacs-buffer-mode)))
+            (aero-buffer-mode)))
         (if save-line
             (progn (goto-char (point-min))
                    (forward-line (1- save-line))
                    (forward-to-indentation 0))
-          (spacemacs-buffer/goto-link-line)))
-      (switch-to-buffer spacemacs-buffer-name)
+          (aero-buffer/goto-link-line)))
+      (switch-to-buffer aero-buffer-name)
       (spacemacs//redisplay))))
 
 (add-hook 'window-setup-hook
           (lambda ()
             (add-hook 'window-configuration-change-hook
-                      'spacemacs-buffer//resize-on-hook)
-            (spacemacs-buffer//resize-on-hook)))
+                      'aero-buffer//resize-on-hook)
+            (aero-buffer//resize-on-hook)))
 
-(defun spacemacs-buffer//resize-on-hook ()
+(defun aero-buffer//resize-on-hook ()
   "Hook run on window resize events to redisplay the home buffer."
-  (let ((home-buffer (get-buffer-window spacemacs-buffer-name))
+  (let ((home-buffer (get-buffer-window aero-buffer-name))
         (frame-win (frame-selected-window)))
     (when (and dotspacemacs-startup-buffer-responsive
                home-buffer
                (not (window-minibuffer-p frame-win)))
       (with-selected-window home-buffer
-        (spacemacs-buffer/goto-buffer)))))
+        (aero-buffer/goto-buffer)))))
 
-(defun spacemacs-buffer/refresh ()
+(defun aero-buffer/refresh ()
   "Force recreation of the spacemacs buffer."
   (interactive)
-  (setq spacemacs-buffer--last-width nil)
-  (spacemacs-buffer/goto-buffer t))
+  (setq aero-buffer--last-width nil)
+  (aero-buffer/goto-buffer t))
 
-(defalias 'spacemacs/home 'spacemacs-buffer/refresh
+(defalias 'spacemacs/home 'aero-buffer/refresh
   "Go to home Spacemacs buffer")
 
 (defun spacemacs/home-delete-other-windows ()
@@ -1077,6 +1075,6 @@ Useful for making the home buffer the only visible buffer in the frame."
   (spacemacs/home)
   (delete-other-windows))
 
-(provide 'core-spacemacs-buffer)
+(provide 'core-aero-buffer)
 
-;;; core-spacemacs-buffer ends here
+;;; core-aero-buffer ends here

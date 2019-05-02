@@ -305,12 +305,12 @@ THEME."
              (setq spacemacs--delayed-user-theme theme-name)
              (spacemacs/load-fallback-theme fallback-theme disable))
          ;; no fallback theme was specified, so we log explicit warning
-         (spacemacs-buffer/warning
+         (aero-buffer/warning
           (concat "An error occurred while applying "
                   "the theme \"%s\", fallback on theme \"%s\". \n"
                   "Error was: %s")
           theme-name spacemacs--fallback-theme err)
-         (spacemacs-buffer/warning
+         (aero-buffer/warning
           (concat "Please check the value of \"dotspacemacs-themes\" in your "
                   "dotfile or open an issue \n"
                   "so we can add support for the theme \"%s\".")

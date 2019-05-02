@@ -2082,7 +2082,7 @@
     (defun layer1/init-pkg nil)
     (defun layer2/pre-init-pkg nil)
     (mocker-let
-     ((spacemacs-buffer/message (m) ((:output nil)))
+     ((aero-buffer/message (m) ((:output nil)))
       (layer2/pre-init-pkg nil ((:output nil :occur 1))))
      (configuration-layer//pre-configure-package pkg))))
 
@@ -2100,7 +2100,7 @@
     (defun layer1/init-pkg nil)
     (defun layer2/post-init-pkg nil)
     (mocker-let
-     ((spacemacs-buffer/message (m) ((:output nil)))
+     ((aero-buffer/message (m) ((:output nil)))
       (layer2/post-init-pkg nil ((:output nil :occur 1))))
      (configuration-layer//post-configure-package pkg))))
 
@@ -2117,7 +2117,7 @@
     (defun layer1/init-pkg nil)
     (mocker-let
      ((spacemacs/update-progress-bar nil ((:output nil)))
-      (spacemacs-buffer/message (m) ((:output nil)))
+      (aero-buffer/message (m) ((:output nil)))
       (layer1/init-pkg nil ((:output nil :occur 1))))
      (configuration-layer//configure-package pkg))))
 
@@ -2138,7 +2138,7 @@
     (defun layer3/post-init-pkg () (push 'post-init witness))
     (mocker-let
      ((spacemacs/update-progress-bar nil ((:output nil)))
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-package pkg)
      (should (equal '(init) witness)))))
 
@@ -2159,7 +2159,7 @@
     (defun layer3/post-init-pkg () (push 'post-init witness))
     (mocker-let
      ((spacemacs/update-progress-bar nil ((:output nil)))
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//pre-configure-package pkg)
      (configuration-layer//configure-package pkg)
      (configuration-layer//post-configure-package pkg)
@@ -2182,7 +2182,7 @@
     (defun layer3/post-init-pkg () (push 'post-init witness))
     (mocker-let
      ((spacemacs/update-progress-bar nil ((:output nil)))
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-package pkg)
      (should (equal '(init) witness)))))
 
@@ -2203,7 +2203,7 @@
     (defun layer3/post-init-pkg () (push 'post-init witness))
     (mocker-let
      ((spacemacs/update-progress-bar nil ((:output nil)))
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//pre-configure-package pkg)
      (configuration-layer//configure-package pkg)
      (should (equal '(init pre-init) witness)))))
@@ -2282,7 +2282,7 @@
     (helper--add-packages (list pkg) t)
     (mocker-let
      ((configuration-layer//configure-package (p) nil)
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name))))))
 
 (ert-deftest test-configure-packages-2--protected-package-is-configured()
@@ -2313,7 +2313,7 @@
     (helper--add-packages (list pkg) t)
     (mocker-let
      ((configuration-layer//configure-package (p) nil)
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name))))))
 
 (ert-deftest test-configure-packages-2--package-w/o-owner-is-not-configured()
@@ -2324,7 +2324,7 @@
     (helper--add-packages (list pkg) t)
     (mocker-let
      ((configuration-layer//configure-package (p) nil)
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name))))))
 
 (ert-deftest
@@ -2336,7 +2336,7 @@
     (helper--add-packages (list pkg) t)
     (mocker-let
      ((configuration-layer//configure-package (p) nil)
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name))))))
 
 (ert-deftest test-configure-packages-2--lazy-install-package-is-not-configured()
@@ -2347,7 +2347,7 @@
     (helper--add-packages (list pkg) t)
     (mocker-let
      ((configuration-layer//configure-package (p) nil)
-      (spacemacs-buffer/message (m) ((:output nil))))
+      (aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name))))))
 
 (ert-deftest
@@ -2390,7 +2390,7 @@
         (mocker-mock-default-record-cls 'mocker-stub-record))
     (helper--add-packages (list pkg) t)
     (mocker-let
-     ((spacemacs-buffer/message (m) ((:output nil))))
+     ((aero-buffer/message (m) ((:output nil))))
      (configuration-layer//configure-packages-2 `(,(oref pkg :name)))
      (should (equal load-path old-load-path)))))
 

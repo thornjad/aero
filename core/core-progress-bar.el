@@ -8,7 +8,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(require 'core-spacemacs-buffer)
+(require 'core-aero-buffer)
 
 (defvar spacemacs-loading-char ?█)
 (defvar spacemacs-loading-char-light ?░)
@@ -29,7 +29,7 @@
         (- (/ max spacemacs-loading-dots-chunk-count) 5))
   (setq spacemacs-loading-counter 0)
   (setq spacemacs-loading-value 0)
-  (spacemacs-buffer/set-mode-line (make-string spacemacs-loading-dots-count
+  (aero-buffer/set-mode-line (make-string spacemacs-loading-dots-count
                                                spacemacs-loading-char-light))
   (spacemacs//redisplay))
 
@@ -51,7 +51,7 @@ Display the progress bar by chunks of size `spacemacs--loading-dots-chunk-thresh
         (setq spacemacs-loading-string
               (concat (make-string progress spacemacs-loading-char)
                       (make-string remain spacemacs-loading-char-light)))
-        (spacemacs-buffer/set-mode-line spacemacs-loading-string))
+        (aero-buffer/set-mode-line spacemacs-loading-string))
       (spacemacs//redisplay))))
 
 (provide 'core-progress-bar)

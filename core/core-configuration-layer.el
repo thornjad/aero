@@ -21,7 +21,7 @@
 (require 'core-dotspacemacs)
 (require 'core-funcs)
 (require 'core-progress-bar)
-(require 'core-spacemacs-buffer)
+(require 'core-aero-buffer)
 
 (defvar configuration-layer--refresh-package-timeout dotspacemacs-elpa-timeout
   "Timeout in seconds to reach a package archive page.")
@@ -52,7 +52,7 @@
   (concat spacemacs-start-directory ".lock")
   "Absolute path to the lock file.")
 
-(defvar configuration-layer-stable-elpa-version spacemacs-version
+(defvar configuration-layer-stable-elpa-version aero-version
   "Version of ELPA stable repository. This value is aimed to be overwritten by
 the .lock file at the root of the repository.")
 
@@ -444,7 +444,7 @@ cache folder.")
     (package-initialize 'noactivate)
     ;; hack to be sure to enable insalled org from Org ELPA repository
     (when (package-installed-p 'org-plus-contrib)
-      (spacemacs-buffer/message "Initializing Org early...")
+      (aero-buffer/message "Initializing Org early...")
       (configuration-layer//activate-package 'org-plus-contrib))))
 
 (defun configuration-layer//configure-quelpa ()
@@ -517,7 +517,7 @@ refreshed during the current session."
         (let ((aname (car archive))
               (apath (cdr archive)))
           (unless quiet
-            (spacemacs-buffer/replace-last-line
+            (aero-buffer/replace-last-line
              (format "--> refreshing package archive: %s... [%s/%s]"
                      aname i count) t))
           (spacemacs//redisplay)
@@ -547,7 +547,7 @@ refreshed during the current session."
             (let ((package-archives (list archive)))
               (package-refresh-contents)))))
       (package-read-all-archive-contents)
-      (unless quiet (spacemacs-buffer/append "\n")))))
+      (unless quiet (aero-buffer/append "\n")))))
 
 (defun configuration-layer/load ()
   "Load layers declared in dotfile if necessary."
@@ -615,8 +615,8 @@ refreshed during the current session."
 CHANGEDP non-nil means that layers list has changed since last dump
 To prevent package from being installed or uninstalled set the variable
 `spacemacs-sync-packages' to nil."
-  (when (spacemacs-buffer//choose-banner)
-    (spacemacs-buffer//inject-version))
+  (when (aero-buffer//choose-banner)
+    (aero-buffer//inject-version))
   ;; declare used layers then packages as soon as possible to resolve
   ;; usage and ownership
   (configuration-layer/discover-layers 'refresh-index)
@@ -673,7 +673,7 @@ To prevent package from being installed or uninstalled set the variable
   "Load `auto-layer.el' file"
   (let ((file (concat configuration-layer-directory "auto-layer.el")))
     (when (file-exists-p file)
-      (spacemacs-buffer/message "Loading auto-layer file...")
+      (aero-buffer/message "Loading auto-layer file...")
       (configuration-layer/load-file file))))
 
 (defun configuration-layer/create-layer ()
@@ -1116,7 +1116,7 @@ a new object."
 If `configuration-layer--inhibit-warnings' is non nil then this function is a
 no-op."
   (unless configuration-layer--inhibit-warnings
-    (apply 'spacemacs-buffer/warning msg args)))
+    (apply 'aero-buffer/warning msg args)))
 
 (defun configuration-layer//error (msg &rest args)
   "Display MSG as a warning message in buffer `*Messages*'.
@@ -1124,7 +1124,7 @@ If `configuration-layer--inhibit-errors' is non nil then this function is a
 no-op."
   (unless configuration-layer--inhibit-errors
     (configuration-layer//increment-error-count)
-    (apply 'spacemacs-buffer/error msg args)))
+    (apply 'aero-buffer/error msg args)))
 
 (defun configuration-layer//add-layer (layer &optional usedp)
   "Add a LAYER object to the system.
@@ -1205,7 +1205,7 @@ USEDP if non-nil indicates that made packages are used packages."
     (let* ((layer (configuration-layer/get-layer layer-name))
            (shadowed-by (cfgl-layer-get-shadowing-layers layer)))
       (if shadowed-by
-          (spacemacs-buffer/message
+          (aero-buffer/message
            "Ignoring layer '%s' because it is shadowed by layer(s) '%s'."
            layer-name shadowed-by)
         (dolist (pkg (cfgl-layer-get-packages layer 'with-props))
@@ -1310,7 +1310,7 @@ PREDICATE is an additional expression that eval to a boolean."
                     (cfgl-package-used-p pkg))
                 (or (null predicate)
                     (eval predicate)))
-         (spacemacs-buffer/warning "Cannot find package for %s" x)
+         (aero-buffer/warning "Cannot find package for %s" x)
          nil)))))
 
 (defun configuration-layer//get-private-layer-dir (name)
@@ -1340,8 +1340,8 @@ If LAYER_DIR is nil, the private directory is used."
         (substitute "%USER_FULL_NAME%" user-full-name)
         (substitute "%USER_MAIL_ADDRESS%" user-mail-address))
        (t
-        (substitute "%USER_FULL_NAME%" "Sylvain Benner & Contributors")
-        (substitute "%USER_MAIL_ADDRESS%" "sylvain.benner@gmail.com")))
+        (substitute "%USER_FULL_NAME%" "Jade Michael Thornton")
+        (substitute "%USER_MAIL_ADDRESS%" "jade@jmthornton.net")))
       (save-buffer))))
 
 (defun configuration-layer//directory-type (path)
@@ -1386,7 +1386,7 @@ discovery."
   ;; `dotspacemacs-directory' override the private directory if it exists.
   (when refresh-index
     (setq configuration-layer--indexed-layers (make-hash-table :size 1024)))
-  (spacemacs-buffer/set-mode-line "Indexing layers..." t)
+  (aero-buffer/set-mode-line "Indexing layers..." t)
   (let ((search-paths (append
                        ;; layers shipped with spacemacs
                        (list configuration-layer-directory)
@@ -1425,7 +1425,7 @@ discovery."
                ((eq 'category type)
                 (let ((category (configuration-layer//get-category-from-path
                                  sub)))
-                  (spacemacs-buffer/message "-> Discovered category: %S"
+                  (aero-buffer/message "-> Discovered category: %S"
                                             category)
                   (add-to-list 'configuration-layer-categories category)
                   (setq search-paths (cons sub search-paths))))
@@ -1447,7 +1447,7 @@ discovery."
                           "replacing old directory \"%s\" with new directory.")
                          layer-name-str sub (oref indexed-layer :dir))
                         (oset indexed-layer :dir sub))
-                    (spacemacs-buffer/message
+                    (aero-buffer/message
                      "-> Discovered configuration layer: %s" layer-name-str)
                     (let ((configuration-layer--load-packages-files nil))
                       (configuration-layer//add-layer
@@ -1534,7 +1534,7 @@ RNAME is the name symbol of another existing layer."
             (when rshadow
               (cl-pushnew rname (oref llayer :can-shadow))))
            ((null lshadow)
-            (spacemacs-buffer/message
+            (aero-buffer/message
              (concat "Ignore shadow relation between layers %s and %s because "
                      ":can-shadow of layer %s has been set to nil by the user.")
              lname rname lname)))
@@ -1547,7 +1547,7 @@ RNAME is the name symbol of another existing layer."
             (when lshadow
               (cl-pushnew lname (oref rlayer :can-shadow))))
            ((null rshadow)
-            (spacemacs-buffer/message
+            (aero-buffer/message
              (concat "Ignore shadow relation between layers %s and %s because "
                      ":can-shadow of layer %s has been set to nil by the user.")
              rname lname rname))))
@@ -1680,7 +1680,7 @@ RNAME is the name symbol of another existing layer."
   (let* ((layer (when pkg (car (oref pkg :owners))))
          (location (when pkg (oref pkg :location)))
          (min-version (when pkg (oref pkg :min-version))))
-    (spacemacs-buffer/replace-last-line
+    (aero-buffer/replace-last-line
      (format "--> installing %s: %s%s... [%s/%s]"
              (if layer "package" "dependency")
              pkg-name (if layer (format "@%S" layer) "")
@@ -1734,7 +1734,7 @@ RNAME is the name symbol of another existing layer."
                    (oref layer :packages)))))
       (let ((last-buffer (current-buffer))
             (sorted-pkg (configuration-layer//sort-packages inst-pkgs)))
-        (spacemacs-buffer/goto-buffer)
+        (aero-buffer/goto-buffer)
         (goto-char (point-max))
         (configuration-layer//install-packages sorted-pkg)
         (configuration-layer//configure-packages sorted-pkg)
@@ -1759,9 +1759,9 @@ RNAME is the name symbol of another existing layer."
            installed-count)
       ;; installation
       (when upkg-names
-        (spacemacs-buffer/set-mode-line "Installing packages..." t)
+        (aero-buffer/set-mode-line "Installing packages..." t)
         (let ((delayed-warnings-backup delayed-warnings-list))
-          (spacemacs-buffer/append
+          (aero-buffer/append
            (format "Found %s new package(s) to install...\n"
                    not-inst-count))
           (configuration-layer/retrieve-package-archives)
@@ -1779,7 +1779,7 @@ RNAME is the name symbol of another existing layer."
               (unless (and pkg (memq (oref pkg :step) '(bootstrap pre)))
                 (setq installed-count (1+ installed-count))
                 (configuration-layer//install-package pkg))))
-          (spacemacs-buffer/append "\n")
+          (aero-buffer/append "\n")
           (unless init-file-debug
             ;; get rid of all delayed warnings when byte-compiling packages
             ;; unless --debug-init was passed on the command line
@@ -1788,7 +1788,7 @@ RNAME is the name symbol of another existing layer."
 (defun configuration-layer//install-from-elpa (pkg-name)
   "Install PKG from ELPA."
   (if (not (assq pkg-name package-archive-contents))
-      (spacemacs-buffer/append
+      (aero-buffer/append
        (format (concat "\nPackage %s is unavailable. "
                        "Is the package name misspelled?\n")
                pkg-name))
@@ -1887,19 +1887,19 @@ RNAME is the name symbol of another existing layer."
 (defun configuration-layer//configure-packages (packages)
   "Configure all passed PACKAGES honoring the steps order."
   (spacemacs/init-progress-bar (length packages))
-  (spacemacs-buffer/message "+ Configuring bootstrap packages...")
+  (aero-buffer/message "+ Configuring bootstrap packages...")
   (configuration-layer//configure-packages-2
    (configuration-layer/filter-objects
     packages (lambda (x)
                (let ((pkg (configuration-layer/get-package x)))
                  (eq 'bootstrap (oref pkg :step))))))
-  (spacemacs-buffer/message "+ Configuring pre packages...")
+  (aero-buffer/message "+ Configuring pre packages...")
   (configuration-layer//configure-packages-2
    (configuration-layer/filter-objects
     packages (lambda (x)
                (let ((pkg (configuration-layer/get-package x)))
                  (eq 'pre (oref pkg :step))))))
-  (spacemacs-buffer/message "+ Configuring packages...")
+  (aero-buffer/message "+ Configuring packages...")
   (configuration-layer//configure-packages-2
    (configuration-layer/filter-objects
     packages (lambda (x)
@@ -1913,21 +1913,21 @@ RNAME is the name symbol of another existing layer."
       (let ((pkg (configuration-layer/get-package pkg-name)))
         (cond
          ((oref pkg :lazy-install)
-          (spacemacs-buffer/message
+          (aero-buffer/message
            (format "%S ignored since it can be lazily installed." pkg-name)))
          ((and (oref pkg :excluded)
                (not (oref pkg :protected)))
-          (spacemacs-buffer/message
+          (aero-buffer/message
            (format "%S ignored since it has been excluded." pkg-name)))
          ((null (oref pkg :owners))
-          (spacemacs-buffer/message
+          (aero-buffer/message
            (format "%S ignored since it has no owner layer." pkg-name)))
          ((not (configuration-layer//package-reqs-used-p pkg))
-          (spacemacs-buffer/message
+          (aero-buffer/message
            (format (concat "%S is ignored since it has dependencies "
                            "that are not used.") pkg-name)))
          ((not (cfgl-package-enabled-p pkg))
-          (spacemacs-buffer/message (format "%S is disabled." pkg-name)))
+          (aero-buffer/message (format "%S is disabled." pkg-name)))
          (t
           ;; load-path
           (let ((dir (configuration-layer/get-location-directory
@@ -1941,7 +1941,7 @@ RNAME is the name symbol of another existing layer."
             (configuration-layer//activate-package pkg-name))
           (cond
            ((eq 'dotfile (car (oref pkg :owners)))
-            (spacemacs-buffer/message
+            (aero-buffer/message
              (format "%S is configured in the dotfile." pkg-name)))
            (t
             ;; first loop executes pre-init functions, this allows to setup
@@ -2006,9 +2006,9 @@ LAYER must not be the owner of PKG."
      (lambda (layer)
        (when (configuration-layer/layer-used-p layer)
          (if (not (configuration-layer//package-enabled-p pkg layer))
-             (spacemacs-buffer/message
+             (aero-buffer/message
               (format "%S -> ignored pre-init (%S)..." pkg-name layer))
-           (spacemacs-buffer/message
+           (aero-buffer/message
             (format "%S -> pre-init (%S)..." pkg-name layer))
            (condition-case-unless-debug err
                (funcall (intern (format "%S/pre-init-%S" layer pkg-name)))
@@ -2025,7 +2025,7 @@ LAYER must not be the owner of PKG."
   (let* ((pkg-name (oref pkg :name))
          (owner (car (oref pkg :owners))))
     ;; init
-    (spacemacs-buffer/message (format "%S -> init (%S)..." pkg-name owner))
+    (aero-buffer/message (format "%S -> init (%S)..." pkg-name owner))
     (funcall (intern (format "%S/init-%S" owner pkg-name)))))
 
 (defun configuration-layer//post-configure-package (pkg)
@@ -2036,9 +2036,9 @@ LAYER must not be the owner of PKG."
      (lambda (layer)
        (when (configuration-layer/layer-used-p layer)
          (if (not (configuration-layer//package-enabled-p pkg layer))
-             (spacemacs-buffer/message
+             (aero-buffer/message
               (format "%S -> ignored post-init (%S)..." pkg-name layer))
-           (spacemacs-buffer/message
+           (aero-buffer/message
             (format "%S -> post-init (%S)..." pkg-name layer))
            (condition-case-unless-debug err
                (funcall (intern (format "%S/post-init-%S" layer pkg-name)))
@@ -2071,8 +2071,8 @@ LAYER must not be the owner of PKG."
 If called with a prefix argument or NO-CONFIRMATION is non-nil then assume yes
 to update."
   (interactive "P")
-  (spacemacs-buffer/insert-page-break)
-  (spacemacs-buffer/append "\nUpdating package archives, please wait...\n")
+  (aero-buffer/insert-page-break)
+  (aero-buffer/append "\nUpdating package archives, please wait...\n")
   (configuration-layer/retrieve-package-archives nil 'force)
   (setq configuration-layer--check-new-version-error-packages nil)
   (let* ((distant-packages (configuration-layer//filter-distant-packages
@@ -2089,7 +2089,7 @@ to update."
          (upgraded-count 0)
          (update-packages-alist))
     (when configuration-layer--check-new-version-error-packages
-      (spacemacs-buffer/warning
+      (aero-buffer/warning
        (concat "--> Warning: cannot update %s package(s), possibly due"
                " to a temporary network problem: %s\n")
        skipped-count
@@ -2098,14 +2098,14 @@ to update."
                   " ")))
     ;; (message "packages to udpate: %s" update-packages)
     (when (> upgrade-count 0)
-      (spacemacs-buffer/append
+      (aero-buffer/append
        (format (concat "--> Found %s package(s) to update"
                        (if (> skipped-count 0)
                            (format " (skipped %s):\n" skipped-count)
                          ":\n"))
                upgrade-count) t)
       (mapc (lambda (x)
-              (spacemacs-buffer/append
+              (aero-buffer/append
                (format (if (memq (intern x) dotspacemacs-frozen-packages)
                            "%s (won't be updated because package is frozen)\n"
                          "%s\n") x) t))
@@ -2114,10 +2114,10 @@ to update."
                (not (yes-or-no-p
                      (format "Do you want to update %s package(s)? "
                              upgrade-count))))
-          (spacemacs-buffer/append "Packages update has been cancelled.\n" t)
+          (aero-buffer/append "Packages update has been cancelled.\n" t)
         ;; backup the package directory and construct an alist
         ;; variable to be cached for easy update and rollback
-        (spacemacs-buffer/append
+        (aero-buffer/append
          "--> performing backup of package(s) to update...\n" t)
         (spacemacs//redisplay)
         (dolist (pkg update-packages)
@@ -2137,14 +2137,14 @@ to update."
         (dolist (pkg update-packages)
           (unless (memq pkg dotspacemacs-frozen-packages)
             (setq upgraded-count (1+ upgraded-count))
-            (spacemacs-buffer/replace-last-line
+            (aero-buffer/replace-last-line
              (format "--> preparing update of package %s... [%s/%s]"
                      pkg upgraded-count upgrade-count) t)
             (spacemacs//redisplay)
             (configuration-layer//package-delete pkg)))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          (format "\n--> %s package(s) to be updated.\n" upgraded-count))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          (format
           (concat "\nEmacs has to be restarted to actually install the "
                   "new version of the packages%s.\n")
@@ -2152,7 +2152,7 @@ to update."
         (configuration-layer//cleanup-rollback-directory)
         (spacemacs//redisplay)))
     (when (eq upgrade-count 0)
-      (spacemacs-buffer/append "--> All packages are up to date.\n")
+      (aero-buffer/append "--> All packages are up to date.\n")
       (spacemacs//redisplay))))
 
 (defun configuration-layer//ido-candidate-rollback-slot ()
@@ -2181,7 +2181,7 @@ to select one."
         (when candidates
           (ido-completing-read "Rollback slots (most recent are first): "
                                candidates))))))
-  (spacemacs-buffer/insert-page-break)
+  (aero-buffer/insert-page-break)
   (if (not slot)
       (configuration-layer/message "No rollback slot available.")
     (string-match "^\\(.+?\\)\s.*$" slot)
@@ -2192,12 +2192,12 @@ to select one."
            (info-file (expand-file-name
                        (concat rollback-dir
                                configuration-layer-rollback-info))))
-      (spacemacs-buffer/append
+      (aero-buffer/append
        (format "\nRollbacking ELPA packages from slot %s...\n" slot-dir))
       (configuration-layer/load-file info-file)
       (let ((rollback-count (length update-packages-alist))
             (rollbacked-count 0))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          (format "Found %s package(s) to rollback...\n" rollback-count))
         (spacemacs//redisplay)
         (dolist (apkg update-packages-alist)
@@ -2215,20 +2215,20 @@ to select one."
             (unless (memq pkg dotspacemacs-frozen-packages)
               (setq rollbacked-count (1+ rollbacked-count))
               (if (string-equal (format "%S-%s" pkg installed-ver) pkg-dir-name)
-                  (spacemacs-buffer/replace-last-line
+                  (aero-buffer/replace-last-line
                    (format "--> package %s already rolled back! [%s/%s]"
                            pkg rollbacked-count rollback-count) t)
                 ;; rollback the package
-                (spacemacs-buffer/replace-last-line
+                (aero-buffer/replace-last-line
                  (format "--> rolling back package %s... [%s/%s]"
                          pkg rollbacked-count rollback-count) t)
                 (configuration-layer//package-delete pkg)
                 (copy-directory src-dir dest-dir
                                 'keeptime 'create 'copy-content)))
             (spacemacs//redisplay)))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          (format "\n--> %s packages rolled back.\n" rollbacked-count))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          "\nEmacs has to be restarted for the changes to take effect.\n")))))
 
 (defun configuration-layer//activate-package (pkg)
@@ -2361,22 +2361,22 @@ depends on it."
     ;; (message "orphans: %s" orphans)
     (if orphans
         (progn
-          (spacemacs-buffer/set-mode-line "Uninstalling unused packages..." t)
-          (spacemacs-buffer/append
+          (aero-buffer/set-mode-line "Uninstalling unused packages..." t)
+          (aero-buffer/append
            (format "Found %s orphan package(s) to delete...\n"
                    orphans-count))
           (setq deleted-count 0)
           (dolist (orphan orphans)
             (setq deleted-count (1+ deleted-count))
-            (spacemacs-buffer/replace-last-line
+            (aero-buffer/replace-last-line
              (format "--> deleting %s... [%s/%s]"
                      orphan
                      deleted-count
                      orphans-count) t)
             (configuration-layer//package-delete orphan)
             (spacemacs//redisplay))
-          (spacemacs-buffer/append "\n"))
-      (spacemacs-buffer/message "No orphan package to delete."))))
+          (aero-buffer/append "\n"))
+      (aero-buffer/message "No orphan package to delete."))))
 
 (defun configuration-layer//gather-auto-mode-extensions (mode)
   "Return a regular expression matching all the extensions associate to MODE."
@@ -2438,10 +2438,10 @@ depends on it."
           (float-time (time-subtract (current-time) emacs-start-time))))
   (let ((stats (configuration-layer/configured-packages-stats
                 configuration-layer--used-packages)))
-    (spacemacs-buffer/insert-page-break)
-    (with-current-buffer (get-buffer-create spacemacs-buffer-name)
+    (aero-buffer/insert-page-break)
+    (with-current-buffer (get-buffer-create aero-buffer-name)
       (let ((buffer-read-only nil))
-        (spacemacs-buffer/append
+        (aero-buffer/append
          (format "\n%s packages loaded in %.3fs (e:%s r:%s l:%s b:%s)"
                  (cadr (assq 'total stats))
                  configuration-layer--spacemacs-startup-time
@@ -2449,10 +2449,10 @@ depends on it."
                  (cadr (assq 'recipe stats))
                  (cadr (assq 'local stats))
                  (cadr (assq 'built-in stats))))
-        (spacemacs-buffer//center-line)
-        (spacemacs-buffer/append (format "\n(%.3fs spent in your user-config)"
+        (aero-buffer//center-line)
+        (aero-buffer/append (format "\n(%.3fs spent in your user-config)"
                            dotspacemacs--user-config-elapsed-time))
-        (spacemacs-buffer//center-line)
+        (aero-buffer//center-line)
         (insert "\n")))))
 
 (defun configuration-layer//get-indexed-elpa-package-names ()
@@ -2611,7 +2611,7 @@ ELPA stable repository."
                             (buffer-string)))
               (context (epg-make-context 'OpenPGP))
               (homedir (configuration-layer//stable-elpa-directory)))
-          (spacemacs-buffer/set-mode-line
+          (aero-buffer/set-mode-line
            (format "Verifying %s archive..." name) t)
           (condition-case-unless-debug error
               (epg-import-keys-from-file
@@ -2644,7 +2644,7 @@ ELPA stable repository."
              (setq untar nil)))))
       ;; uncompress
       (when untar
-        (spacemacs-buffer/set-mode-line
+        (aero-buffer/set-mode-line
          (format "Extracting %s archive..." name) t)
         (if (and (spacemacs/system-is-mswindows)
                  (not (executable-find "tar")))
@@ -2666,7 +2666,7 @@ ELPA stable repository."
           (url-sig (configuration-layer//stable-elpa-tarball-distant-sign-file))
           (local-sig (configuration-layer//stable-elpa-tarball-local-sign-file))
           (name configuration-layer-stable-elpa-name))
-      (spacemacs-buffer/set-mode-line
+      (aero-buffer/set-mode-line
        (format (concat "Downloading stable ELPA repository: %s... "
                        "(please wait)") name) t)
       (if (and (spacemacs/system-is-mswindows)
