@@ -1,10 +1,10 @@
 #+TITLE: phoenix layer
 
-#+TAGS: framework|layer|programming
+#+TAGS: framework|layer
 
 [[file:img/phoenix.png]] with [[file:img/alchemist.png]]
 
-* Table of Contents                     :TOC_5_gh:noexport:
+* Table of Contents                     :TOC_4_gh:noexport:
 - [[#description][Description]]
   - [[#features][Features:]]
 - [[#install][Install]]
