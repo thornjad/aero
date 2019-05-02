@@ -1,10 +1,5 @@
 ;;; core-dotspacemacs.el --- Spacemacs Core File
 ;;
-;; Copyright (c) 2012-2018 Sylvain Benner & Contributors
-;;
-;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
-;;
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
@@ -176,13 +171,12 @@ whenever you start Emacs.")
 Press `SPC T n' to cycle to the next theme in the list (works great
 with 2 themes variants, one dark and one light")
 
-(defvar dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
-  "Set the theme for the Spaceline. Supported themes are `spacemacs',
-`all-the-icons', `custom', `doom',`vim-powerline' and `vanilla'. The first three
-are spaceline themes. `doom' is the doom-emacs mode-line. `vanilla' is default
-Emacs mode-line. `custom' is a user defined themes, refer to the
-DOCUMENTATION.org for more info on how to create your own spaceline theme. Value
-can be a symbol or a list with additional properties like '(all-the-icons
+(defvar dotspacemacs-mode-line-theme '(doom)
+  "Set the theme for the modeline. Supported themes are `custom',
+`doom',`vim-powerline' and `vanilla'. `doom' is the doom-emacs mode-line.
+`vanilla' is default Emacs mode-line. `custom' is a user defined themes, refer
+to the DOCUMENTATION.org for more info on how to create your own modeline theme.
+Value can be a symbol or a list with additional properties like '(all-the-icons
 :separator-scale 1.5).")
 
 (defvar dotspacemacs-frame-title-format "%I@%S"
@@ -820,10 +814,8 @@ error recovery."
     "is \'vim, \'emacs or \'hybrid or and list with `:variables' keyword")
    (spacemacs//test-var
     (lambda (x)
-      (let ((themes '(spacemacs
-                      all-the-icons
+      (let ((themes '(doom
                       custom
-                      doom
                       vim-powerline
                       vanilla)))
         (or (member x themes)
