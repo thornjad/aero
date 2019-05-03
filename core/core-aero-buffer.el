@@ -442,35 +442,6 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
                                          nil
                                          widget-func)))
 
-(defun aero-buffer//notes-insert-release-note ()
-  "Insert release note."
-  (let ((widget-func
-         (lambda ()
-           (add-to-list
-            'aero-buffer--note-widgets
-            (widget-create 'push-button
-                           :tag (propertize "Click here for full change log"
-                                            'face 'font-lock-warning-face)
-                           :help-echo "Open the full change log."
-                           :action
-                           (lambda (&rest ignore)
-                             (funcall 'spacemacs/view-org-file
-                                      (concat spacemacs-start-directory
-                                              "CHANGELOG.org")
-                                      (format "Release %s.x"
-                                              aero-buffer-version-info)
-                                      'subtree))
-                           :mouse-face 'highlight
-                           :follow-link "\C-m")))))
-    (aero-buffer//notes-insert-note (format "Important Notes (Release %s.x)"
-                                                 aero-buffer-version-info)
-                                         "Update your dotfile (SPC f e D) and\
- packages after every update"
-                                         widget-func))
-  (setq aero-buffer--release-note-version nil)
-  (spacemacs/dump-vars-to-file '(aero-buffer--release-note-version)
-                               aero-buffer--cache-file))
-
 (defun aero-buffer//notes-clear-notes-and-widgets ()
   "Remove existing note widgets if exists."
   (when aero-buffer--note-widgets
@@ -486,7 +457,7 @@ ADDITIONAL-WIDGETS: a function for inserting a widget under the frame."
   (let ((type aero-buffer--current-note-type))
     (cond
      ((eq type 'quickhelp) (aero-buffer//notes-insert-quickhelp))
-     ((eq type 'release-note) (aero-buffer//notes-insert-release-note))
+     ((eq type 'release-note) ())
      (t))))
 
 (defun aero-buffer/toggle-note (type)
@@ -500,7 +471,7 @@ allowed types are `quickhelp' and `release-note'"
         (setq aero-buffer--current-note-type type)
         (cond
          ((eq type 'quickhelp) (aero-buffer//notes-insert-quickhelp))
-         ((eq type 'release-note) (aero-buffer//notes-insert-release-note))
+         ((eq type 'release-note) ())
          (t (setq aero-buffer--current-note-type nil)
             (message "Unknown note type: %s" 'type))))
     (setq aero-buffer--current-note-type nil)))
