@@ -19,16 +19,16 @@
                          shell-file-name nil '(t nil) nil shell-command-switch
                          "opam config var share"))))))
         (cond ((string= "" share)
-               (spacemacs-buffer/warning
+               (aero-buffer/warning
                 "\"opam config var share\" output empty string."))
               ((not (file-directory-p share))
-               (spacemacs-buffer/warning
+               (aero-buffer/warning
                 "opam share directory does not exist."))
               (t (setq opam-share share
                        opam-load-path (concat share "/emacs/site-lisp"))
                  (add-to-list 'load-path opam-load-path))))
     (unless (executable-find "ocamlmerlin")
-      (spacemacs-buffer/warning
+      (aero-buffer/warning
        (concat "Cannot find \"opam\" or \"merlin\" executable. "
                "The ocaml layer won't work properly.")))))
 

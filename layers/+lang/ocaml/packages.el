@@ -160,7 +160,7 @@
     (progn
       (if (executable-find "opam")
           (setq utop-command "opam config exec -- utop -emacs")
-        (spacemacs-buffer/warning "Cannot find \"opam\" executable."))
+        (aero-buffer/warning "Cannot find \"opam\" executable."))
 
       (defun spacemacs/utop-eval-phrase-and-go ()
         "Send phrase to REPL and evaluate it and switch to the REPL in

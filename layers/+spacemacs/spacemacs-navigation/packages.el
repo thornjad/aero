@@ -31,7 +31,7 @@
     :commands spacemacs/ace-buffer-links
     :init
     (progn
-      (define-key spacemacs-buffer-mode-map "o" 'spacemacs/ace-buffer-links)
+      (define-key aero-buffer-mode-map "o" 'spacemacs/ace-buffer-links)
       (with-eval-after-load 'info
         (define-key Info-mode-map "o" 'ace-link-info))
       (with-eval-after-load 'help-mode

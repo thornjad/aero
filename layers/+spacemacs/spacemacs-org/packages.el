@@ -43,7 +43,7 @@
       ;; https://github.com/syl20bnr/spacemacs/issues/3933
       ;; (when (featurep 'org)
       ;;   (configuration-layer//set-error)
-      ;;   (spacemacs-buffer/append
+      ;;   (aero-buffer/append
       ;;    (concat
       ;;     "Org features were loaded before the `org' layer initialized.\n"
       ;;     "Try removing org code from user initialization and private layers.") t))

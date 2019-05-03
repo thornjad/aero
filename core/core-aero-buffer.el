@@ -519,7 +519,6 @@ The message is displayed only if `init-file-debug' is non nil.
 ARGS: format string arguments."
   (when init-file-debug
     (message "(aero) %s" (apply 'format msg args))))
-(define-obsolete-function-alias spacemacs-buffer/message aero-buffer/message)
 
 (defvar aero-buffer--errors nil
   "List of errors during startup.")
@@ -531,7 +530,6 @@ ARGS: format string arguments."
     (message "(aero) Error: %s" msg)
     (when message-log-max
       (add-to-list 'aero-buffer--errors msg 'append))))
-(define-obsolete-function-alias spacemacs-buffer/error aero-buffer/error)
 
 (defvar aero-buffer--warnings nil
   "List of warnings during startup.")
@@ -543,7 +541,6 @@ ARGS: format string arguments."
     (message "(aero) Warning: %s" msg)
     (when message-log-max
       (add-to-list 'aero-buffer--warnings msg 'append))))
-(define-obsolete-function-alias spacemacs-buffer/warning aero-buffer/warning)
 
 (defun aero-buffer/insert-page-break ()
   "Insert a page break line in spacemacs buffer."

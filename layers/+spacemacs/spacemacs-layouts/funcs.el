@@ -288,7 +288,7 @@ Available PROPS:
        ;; Check for Clashes
        (if ,already-defined?
            (unless (equal ,already-defined? ,name)
-             (spacemacs-buffer/message "Replacing existing binding \"%s\" for %s with %s"
+             (aero-buffer/message "Replacing existing binding \"%s\" for %s with %s"
                                        ,binding ,already-defined? ,name)
              (setq spacemacs--custom-layout-alist
                    (delete (assoc ,binding spacemacs--custom-layout-alist)
@@ -309,7 +309,7 @@ Available PROPS:
                    (format "[%s] %s"
                            (car custom-persp) (cdr custom-persp)))
                  spacemacs--custom-layout-alist " ")
-    (spacemacs-buffer/warning (format "`spacemacs--custom-layout-alist' variable is empty" ))))
+    (aero-buffer/warning (format "`spacemacs--custom-layout-alist' variable is empty" ))))
 
 (defun spacemacs//update-custom-layouts ()
   "Ensure the custom-perspectives transient-state is updated.

@@ -22,7 +22,7 @@
 (defun agda/init-agda ()
   (if (and (eq 'use-helper agda-mode-path)
            (not (executable-find "agda-mode")))
-      (spacemacs-buffer/warning
+      (aero-buffer/warning
        (concat "Couldn't find `agda-mode', make sure it is "
                "available in your PATH or check the installation "
                "instructions in the README file."))

@@ -260,7 +260,7 @@ If the universal prefix argument is used then kill also the window."
 
 (defvar spacemacs--link-pattern "~?/.+\\|\s\\[")
 
-(defun spacemacs//collect-spacemacs-buffer-links ()
+(defun spacemacs//collect-aero-buffer-links ()
   (let ((end (window-end))
         points)
     (save-excursion
@@ -275,7 +275,7 @@ If the universal prefix argument is used then kill also the window."
   (require 'avy)
   (let ((res (avy-with spacemacs/ace-buffer-links
                (avy--process
-                (spacemacs//collect-spacemacs-buffer-links)
+                (spacemacs//collect-aero-buffer-links)
                 #'avy--overlay-pre))))
     (when res
       (goto-char (1+ res))

@@ -200,7 +200,7 @@
        ;; keywords
        nameless-prefix ">")
       ;; some default aliases for Spacemacs source code
-      (setq nameless-global-aliases '(("SB" . "spacemacs-buffer")
+      (setq nameless-global-aliases '(("SB" . "aero-buffer")
                                       ("S"  . "spacemacs")
                                       (".S"  . "dotspacemacs")
                                       ("CL" . "configuration-layer")))
