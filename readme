@@ -1,0 +1,39 @@
+AERO EMACS
+
+Aero is my own approach to Emacs, blending Spacemacs, Prelude and whatever other
+good shit I can find. Aero is not intended for widespread use; it is tailored
+for what I want and use.
+
+CREDO
+
+Productivity, elegance, improvement
+
+Emacs changes the way you think about programming, as does Lisp itself. The
+sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
+by decades of rich experience and a fantastic culture. Spacemacs is a beutiful
+and function extension which provides the perfect base for productivity.
+
+Aero does not adhere to any versioning, instead it is a continuously improving,
+evolving ambition.
+
+INSTALLING
+
+Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. DO NOT
+use XEmacs, it is not supported.
+
+Aero is optimized to use the font Dank Mono, but also works great with Source
+Code Pro.
+
+		git clone https://gitlab.com/thornjad/aero ~/.emacs.d
+		cd ~/.emacs.d
+		make setup
+
+Note that the =make setup= step is only a stopgap for the time being and will
+eventually be unecessary.
+
+LICENSE
+
+Copyright (C) 2018-2019 Jade Michael Thornton
+
+Aero is licensed under the GPLv3. For packages shipped in this repository, refer
+to the file headers.
