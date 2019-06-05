@@ -1,0 +1,116 @@
+;; -*- lexical-binding: t -*-
+;; Utilities
+;;
+;; Copyright (c) 2018-2019 Jade Michael Thornton
+;;
+;; This file is not part of GNU Emacs
+;;
+;; License: GPLv3
+
+(require 'cl-lib)
+
+(defmacro aero/require-and-exec! (feature &rest body)
+  "Require the feature and execute body if it was successfull loaded."
+  (declare (indent defun))
+  `(if (require ,feature nil 'noerror)
+       (progn ,@body)
+     (message (format "%s not loaded" ,feature))))
+
+(defmacro aero/load-and-exec! (file &optional &rest body)
+  "Load the file and execute body if it was successfull loaded."
+  (declare (indent 1))
+  `(if (load ,file t)
+       (progn ,@body)
+     (message (format "%s not loaded" ,file))))
+
+(defun aero/in-mode-p (mode)
+  (eq major-mode mode))
+
+(defun aero/run-prog-mode-hooks ()
+	"Run `prog-mode-hook', useful for modes that don't derive from `prog-mode' but
+should"
+	(run-hooks 'prog-mode-hook))
+
+(defun aero/run-text-mode-hooks ()
+	"Run `text-mode-hook', useful for modes that don't derive from `text-mode' but
+should"
+	(run-hooks 'text-mode-hook))
+
+(defmacro aero/add-hook! (hook &rest body)
+	"Nicer add-hooking that prevents writing lambdas explicitely. Add a lamdba
+containing BODY to hook HOOK."
+	(declare (indent 1))
+	`(add-hook ,hook
+						 (lambda () ,@body)))
+
+(defmacro aero/add-transient-hook! (hook func &optional fname)
+  "Add transient hook by hook FUNC to HOOK.
+Transient hooks are ephemeral hooks that vanishes when executed.
+If FUNC is a lambda you must give it a name with FNAME. "
+  (declare (indent 1))
+  (let ((hfunc (intern (format "aero//transient-hook-%s"
+                               (if fname fname func))))
+        result)
+    (setq result
+          (append (when fname
+                    `((fset ',fname (lambda (&rest _) (funcall #',func)))))
+                  `((fset ',hfunc (lambda (&rest _)
+                                    ,(if fname (list fname) (list func))
+                                    ,(if (functionp hook)
+                                         `(advice-remove ',hook ',hfunc)
+                                       `(remove-hook ',hook ',hfunc))
+                                    (fset ',hfunc 'ignore)
+                                    ,(when fname `(fset ',fname 'ignore)))))
+                  (if (functionp hook)
+                      `((advice-add ',hook :before ',hfunc))
+                    `((add-hook ',hook ',hfunc)))))
+    (push 'progn result)))
+
+(defvar aero/before-kill-hook
+  '(recentf-save-list
+    bookmark-save)
+  "Functions to be executed by `SAVE-KILL-EMACS'")
+
+(defun aero/modified-buffers-p ()
+  "Returns first modified buffer or nil if there is none."
+  (cl-loop for b in (buffer-list)
+           when (and (buffer-live-p b)
+                     (buffer-modified-p b)
+                     (buffer-file-name b))
+           return b))
+
+(defun aero/save-kill-emacs ()
+  (interactive)
+  (mapc (lambda (f) (ignore-errors (funcall f)))
+        aero/before-kill-hook)
+  (if (modified-buffers-p)
+      (progn
+        (when (not (eq window-system 'x))
+          (x-initialize-window-system))
+        (select-frame (make-frame-on-display (getenv "DISPLAY") '((window-system . x))))
+        (save-some-buffers)
+        (if (yes-or-no-p "Kill Emacs? ")
+            (kill-emacs)))
+    (kill-emacs)))
+
+(defmacro p (&rest body)
+  "Create anonymous predicate"
+  `(lambda (x)
+     ,@body))
+
+(defun aero/log-error (msg &rest args)
+  "Display MSG as an error message in `*Messages*' buffer"
+  (let ((msg (apply 'format msg args)))
+    (message "(aero) Error: %s" msg)))
+
+(defun aero/log-warning (msg &rest args)
+  "Display MSG as a warning message in buffer `*Messages*'"
+  (let ((msg (apply 'format msg args)))
+    (message "(aero) Warning: %s" msg)))
+
+(defun aero/log-info (msg &rest args)
+	"Display MSG as an info message in buffer `*Messages'"
+	(let ((msg (apply 'format msg args)))
+		(message "(aero) Info: %s" msg)))
+
+(provide 'core-util)
