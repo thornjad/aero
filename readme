@@ -1,20 +1,25 @@
 AERO EMACS
 
-Aero is my own approach to Emacs, blending Spacemacs, Prelude and whatever other
-good shit I can find. Aero is not intended for widespread use; it is tailored
-for what I want and use.
-
-CREDO
-
-Productivity, elegance, improvement
+Aero is my own approach to Emacs, blending all the best shit I can find. It is
+not intended for widespread use; it is tailored for what I want and use.
 
 Emacs changes the way you think about programming, as does Lisp itself. The
 sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
-by decades of rich experience and a fantastic culture. Spacemacs is a beautiful
-and highly functional extension which provides the perfect base for productivity.
+by decades of rich experience and a fantastic culture.
+
+Spacemacs in Evil mode further provides excellent mnemonic key bindings with an
+ergonomic and intuitive leader key system. This system is roughly approximated
+in Aero, albeit with an entirely different (and faster) implementation. Prelude
+uses an uncomplicated module system which makes configuration of layers simple
+and compartmentalized. A similar system is implemented in Aero, including a
+similar naming convention. Doom Emacs looks great and has some brilliant
+optimization tricks. Aero looks a lot like Doom on purpose. Various utilities
+were modified or outright borrowed from Cofi Emacs as well.
 
 Aero does not adhere to any versioning, instead it is a continuously improving,
-evolving ambition.
+evolving ambition. This evolution of Aero may be generally called Aero Flame, as
+opposed to the previous Aero Space which was closely coupled to
+Spacemacs-develop.
 
 INSTALLING
 
@@ -35,5 +40,18 @@ LICENSE
 
 Copyright (C) 2018-2019 Jade Michael Thornton
 
-Aero is licensed under the GPLv3. For packages shipped in this repository, refer
-to the file headers.
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+Place - Suite 330, Boston, MA 02111-1307, USA.
+
+Some packages in this project may have their own licenses. Refer to these files
+for their copyright information.
