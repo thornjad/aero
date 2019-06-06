@@ -19,90 +19,164 @@
 ;; This file is not part of GNU Emacs
 
 ;; Avoid garbage collection during startup.
-(defconst emacs-start-time (current-time))
 (setq gc-cons-threshold 402653184
 			gc-cons-percentage 0.6)
 
-;;; Prepare and bootstrap `use-package'
+;; vérifier les erreurs dans ce fichier
+(setq debug-on-error t)
+
+;; Always load newest byte code
+(setq load-prefer-newer t)
+
+
+;; Set up load paths
+
+(defun add-to-load-path (dir)
+	(add-to-list 'load-path dir))
+
+(defun add-to-load-path-if-exists (dir)
+	(when (file-exists-p dir)
+		(add-to-load-path dir)))
+
+(defmacro def-path! (name base dir)
+	"Define a directory constant in the `dir' directory of `base'"
+	(let ((dir-name (intern (concat "aero-" (symbol-name name) "-directory")))
+				(dir-base (intern (concat "aero-" (symbol-name base) "-directory"))))
+		`(defconst ,dir-name
+			 (expand-file-name (concat ,dir-base ,dir)))))
+
+(setq user-init-file
+			(or load-file-name (buffer-file-name)))
+(setq user-emacs-directory
+			(file-name-directory user-init-file))
+(defvar aero-start-directory
+	user-emacs-directory)
+
+(def-path! core start "core/")
+(def-path! layer core "layers/")
+(def-path! private start "private/")
+(def-path! cache start ".cache/")
+(def-path! autosave cache "auto-save/")
+(def-path! test start "test/")
+
+(defconst user-home-directory
+	(getenv "HOME"))
+(defconst pcache-directory
+	(concat aero-cache-directory "pcache/"))
+(unless (file-exists-p aero-cache-directory)
+	(make-directory aero-cache-directory))
+
+(mapc 'add-to-load-path
+			`(,aero-core-directory
+				,(concat aero-core-directory "libs/")
+				,(concat aero-core-directory "libs/aero-theme/")))
+
+(add-to-list 'custom-theme-load-path
+						 (concat aero-core-directory
+										 "libs/aero-theme/"))
+
+
+;; Bootstrap `use-package'
+
 (setq package-enable-at-startup nil)
 (let ((default-directory "~/.emacs.d/elpa"))
 	(normal-top-level-add-subdirs-to-load-path))
-(package-initialize t)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+												 ("org" . "https://orgmode.org/elpa/")
+												 ("gnu" . "https://elpa.gnu.org/packages/")
+												 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
+(package-initialize)
 (unless (package-installed-p 'use-package)
 	(package-refresh-contents)
 	(package-install 'use-package))
 (eval-when-compile
 	(require 'use-package))
 (use-package package
-	:config
-	(setq package-check-signature nil)
-	(setq package-enable-at-startup nil)
-	(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-													 ("marmalade" . "https://marmalade-repo.org/packages/")
-													 ("org" . "https://orgmode.org/elpa/")
-													 ("gnu" . "https://elpa.gnu.org/packages/")
-													 ("elpy" . "https://jorgenschaefer.github.io/packages/"))))
+	:config (setq package-check-signature nil))
 
-;; Define load-paths
-(load (concat (file-name-directory load-file-name)
-							"core/load-paths.el"))
+
+;; Core functionality
+
+(defun aero/init-core-keybindings ()
+	(general-define-key
+	 :states '(normal visual insert emacs)
+	 :prefix "SPC"
+	 :non-normal-prefix "C-SPC"
+
+	 ;; simple commands
+	 "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+	 "SPC" '(counsel-M-x :which-key "M-x")
+	 "'" '(eshell :which-key "eshell")))
+
+(defgroup aero nil
+	"Aero customizations"
+	:group 'starter-kit
+	:prefix 'aero/)
+
+(defun aero/startup-echo-message ()
+	(message "Aero is ready"))
+
+(defvar aero-initialized nil
+	"Whether Aero has finished initialization")
+
+(defun aero/init ()
+	"Perform startup initialization"
+
+	;; silence ad-handle-definition without advised functions being redefined
+	(setq ad-redefinition-action 'accept)
+	;; smoother glitches during boot
+	(hidden-mode-line-mode)
+	;; explicitly set utf-8 to avoid prompt from emacs
+	(prefer-coding-system 'utf8)
+	(setq-default evil-want-C-u-scroll t
+                ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
+                ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
+                ;; instead.
+                evil-want-C-i-jump nil)
+
+	(use-package counsel :ensure t
+		:config
+		(setq counsel-find-file-ignore-regexp
+					(concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
+									"\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
+									"\\|\\.aux\\'")))
+
+	(aero/load-layers)
+	(aero/load-theme)
+	(aero/init-core-keybindings))
+
+(defun aero/startup-hook ()
+	"Post-init processing"
+	(add-hook
+	 'emacs-startup-hook
+	 (defun aero/init-hook ()
+		 (require 'aero-rc)
+		 (setq aero-initialized t)
+		 (setq gc-cons-threshold (car aero/gc-cons)
+					 gc-cons-percentage (cadr aero/gc-cons)))))
+
+
+;; The actual initilization
 
 ;; disable file-name-handlers for a speed boost during startup
 (let ((file-name-handler-alist nil))
-	(require 'core-aero))
+	(require 'subr-x)
+	(require 'core-util)
+	(require 'core-layers)
+	(require 'core-theme)
 
-;;; Defaults
-(setq
- use-package-verbose nil
- delete-old-versions -1	    ; supprime les vieilles versions des fichiers sauvegardés
- backup-directory-alist `(("." . "~/.emacs.d/backups"))
- version-control t
- vc-make-backup-files t	    ; backups file even when under vc
- vc-follow-symlinks t
- auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
- initial-scratch-message "Welcome to Aero"
- ring-bell-function 'ignore ; supprime cette putain de cloche.
- sentence-end-double-space nil
- default-fill-column 80
- initial-scratch-message ""
- save-interprogram-paste-before-kill t
- help-window-select t       ; focus help window when opened
- tab-width 2                ; onglet affiché sous forme de 2
- auto-window-vscroll nil
- )
-(setq-default
- indent-tabs-mode t
- tab-width 2
- c-basic-offset 2)
-(setenv "LANG" "en_US.UTF-8")
-(setenv "LC_ALL" "en_US.UTF-8")
-(prefer-coding-system 'utf-8)
+	;; Set up global functionality
+	(use-package which-key :ensure t)
+	(use-package general :ensure t)
+	(use-package diminish)
 
-;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+	;; burn baby burn
+	(aero/init)
+	(aero/startup-hook)
+	(global-font-lock-mode)
+	(global-undo-tree-mode t)
+	(winner-mode t)
 
-;; remplace yes no par y n
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; display changes
-(show-paren-mode) ; highlight delimiters
-(line-number-mode -1) ; only show line number in mode line
-(column-number-mode -1) ; also show column in mode line
-(setq initial-major-mode 'fundamental-mode)
-(add-hook! 'before-save-hook
-					 (delete-trailing-whitespace))
-
-;; rend les scripts executable par défault si c'est un script.
-(add-hook! 'after-save-hook
-					 (executable-make-buffer-file-executable-if-script-p))
-
-(defvar aero/default-font "Dank Mono"
-	"Default font throughout Aero")
-
-(set-face-attribute 'default nil :font aero/default-font)
-
-;; TODO set gc-cons-threshold 100000000
-;; TODO set gc-cons-percentage 0.1
+	;; safe, no more debug please
+	(setq debug-on-error nil)
+	(aero/startup-echo-message))
