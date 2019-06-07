@@ -17,4 +17,4 @@
 		(doom-modeline-init)
 		(setq doom-modeline-height 20)))
 
-(provide 'core-theme)
+(provide 'aero-theme)

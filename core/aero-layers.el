@@ -7,8 +7,6 @@
 ;;
 ;; License: GPLv3
 
-(require 'core-load-paths)
-
 ;; TODO any possible way to do this async?
 (defun aero/load-layers ()
 	"Load all layers in aero-layer-directory"
@@ -17,4 +15,4 @@
 	(dolist (layer layer-dirs)
 		(load (symbol-name layer))))
 
-(provide 'core-layers)
+(provide 'aero-layers)

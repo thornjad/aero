@@ -161,9 +161,9 @@
 ;; disable file-name-handlers for a speed boost during startup
 (let ((file-name-handler-alist nil))
 	(require 'subr-x)
-	(require 'core-util)
-	(require 'core-layers)
-	(require 'core-theme)
+	(require 'aero-util)
+	(require 'aero-layers)
+	(require 'aero-theme)
 
 	;; Set up global functionality
 	(use-package which-key :ensure t)

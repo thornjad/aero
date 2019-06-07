@@ -7,7 +7,7 @@
 ;;
 ;; License: GPLv3
 
-(require 'cl-lib)
+(use-package cl-lib :ensure t)
 
 
 ;; loading
@@ -237,4 +237,4 @@ If FUNC is a lambda you must give it a name with FNAME. "
   (let ((time (format-time-string "[%Y-%m-%d %H:%M:%S]")))
     (format "%s %s\n%s\t" comment-start time comment-start)))
 
-(provide 'core-util)
+(provide 'aero-util)
