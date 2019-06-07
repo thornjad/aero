@@ -124,8 +124,6 @@
 
 	;; silence ad-handle-definition without advised functions being redefined
 	(setq ad-redefinition-action 'accept)
-	;; smoother glitches during boot
-	(hidden-mode-line-mode)
 	;; explicitly set utf-8 to avoid prompt from emacs
 	(prefer-coding-system 'utf8)
 	(setq-default evil-want-C-u-scroll t
