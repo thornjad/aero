@@ -53,7 +53,7 @@
 	user-emacs-directory)
 
 (def-path! core start "core/")
-(def-path! layer core "layers/")
+(def-path! layer start "layers/")
 (def-path! private start "private/")
 (def-path! cache start ".cache/")
 (def-path! autosave cache "auto-save/")
