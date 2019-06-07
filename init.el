@@ -172,8 +172,10 @@
 	(aero/init)
 	(aero/startup-hook)
 	(global-font-lock-mode)
-	(global-undo-tree-mode t)
-	(winner-mode t)
+
+	;; TODO
+	;; (global-undo-tree-mode t)
+	;; (winner-mode t)
 
 	;; safe, no more debug please
 	(setq debug-on-error nil)
