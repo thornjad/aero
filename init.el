@@ -125,7 +125,7 @@
 	;; silence ad-handle-definition without advised functions being redefined
 	(setq ad-redefinition-action 'accept)
 	;; explicitly set utf-8 to avoid prompt from emacs
-	(prefer-coding-system 'utf8)
+	(prefer-coding-system 'utf-8)
 	(setq-default evil-want-C-u-scroll t
                 ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
                 ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
