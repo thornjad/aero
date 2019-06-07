@@ -46,12 +46,12 @@
 (line-number-mode -1) ; only show line number in mode line
 (column-number-mode -1) ; also show column in mode line
 (setq initial-major-mode 'fundamental-mode)
-(add-hook! 'before-save-hook
-					 (delete-trailing-whitespace))
+(aero/add-hook! 'before-save-hook
+	(delete-trailing-whitespace))
 
 ;; rend les scripts executable par défault si c'est un script.
-(add-hook! 'after-save-hook
-					 (executable-make-buffer-file-executable-if-script-p))
+(aero/add-hook! 'after-save-hook
+	(executable-make-buffer-file-executable-if-script-p))
 
 (defvar aero/default-font "Dank Mono"
 	"Default font throughout Aero")
