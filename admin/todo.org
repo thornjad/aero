@@ -1,0 +1,67 @@
+#+TITLE: TODO for Aero
+
+* Core
+
+** TODO evil
+	 - https://github.com/sam217pa/emacs-config/commit/9e6d3a72295449faa34564e444eb42fe658b33c6#diff-981cc1dea74a6b8b0bd7a71417e8d177
+** TODO keybindings
+	 - https://sam217pa.github.io/2016/09/23/keybindings-strategies-in-emacs/
+** TODO counsel
+** TODO ivy
+	 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
+** TODO swiper
+** TODO help keybindings (SPC h)
+** TODO steal some shit from better-defaults
+** TODO tramp
+** TODO restart-emacs
+** TODO magit
+
+** TODO clipboard?
+	 - https://github.com/redguardtoo/emacs.d/blob/master/lisp/init-clipboard.el
+* Layers
+
+** TODO python
+** TODO rust
+** TODO emacs-lisp
+	 - part of lisp layer?
+** TODO sql
+** TODO yaml
+** TODO gtags
+** TODO auto-completion
+** TODO git
+** TODO markdown
+** TODO org
+** TODO rjsx
+** TODO common-lisp
+	 - part of lisp layer?
+** TODO coffeescript
+** TODO maybe games?
+** TODO eshell
+** TODO cargo
+** TODO racer
+** TODO gitlab-ci-mode
+** TODO on-parens
+	 - maybe part of lisp layer? useful for other stuff too?
+** TODO racket-mode
+** TODO geiser
+** TODO evil-surround
+** TODO beacon?
+** TODO hy-mode
+** TODO form-feed
+** TODO polymode? rivet mode?
+	 - part of web?
+** TODO wttrin
+** TODO hackernews
+** TODO sass/scss
+** TODO eww
+** TODO web-mode
+** TODO emmet-mode
+	 - part of web?
+
+* Meta
+
+** TODO better startup
+** TODO start to scratch? other buffer?
+** TODO use-package pull from github/gitlab
+** TODO thornlog
+** TODO tests
