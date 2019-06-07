@@ -11,8 +11,8 @@
 (defun aero/load-layers ()
 	"Load all layers in aero-layer-directory"
 	(let ((layer-dirs (directory-files-recursively
-										 aero-layer-directory "layer\.el"))))
-	(dolist (layer layer-dirs)
-		(load (symbol-name layer))))
+										 aero-layer-directory "layer\.el")))
+		(dolist (layer layer-dirs)
+			(load (symbol-name layer)))))
 
 (provide 'aero-layers)
