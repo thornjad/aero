@@ -116,6 +116,26 @@ If FUNC is a lambda you must give it a name with FNAME. "
             (kill-emacs)))
     (kill-emacs)))
 
+;; https://sachachua.com/blog/2006/09/emacs-changing-the-font-size-on-the-fly/
+(defun aero/increase-font-size ()
+  (interactive)
+  (set-face-attribute
+	 'default
+   nil
+   :height
+   (ceiling (* 1.10
+               (face-attribute 'default :height)))))
+(defun aero/decrease-font-size ()
+  (interactive)
+  (set-face-attribute
+	 'default
+   nil
+   :height
+   (floor (* 0.9
+             (face-attribute 'default :height)))))
+(global-set-key (kbd "C-+") 'aero/increase-font-size)
+(global-set-key (kbd "C--") 'aero/decrease-font-size)
+
 
 ;; logging
 
