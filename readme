@@ -7,19 +7,13 @@ Emacs changes the way you think about programming, as does Lisp itself. The
 sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
 by decades of rich experience and a fantastic culture.
 
-Spacemacs in Evil mode further provides excellent mnemonic key bindings with an
-ergonomic and intuitive leader key system. This system is roughly approximated
-in Aero, albeit with an entirely different (and faster) implementation. Prelude
-uses an uncomplicated module system which makes configuration of layers simple
-and compartmentalized. A similar system is implemented in Aero, including a
-similar naming convention. Doom Emacs looks great and has some brilliant
-optimization tricks. Aero looks a lot like Doom on purpose. Various utilities
-were modified or outright borrowed from Cofi Emacs as well.
+This configuration features Spacemacs-esque leader-key-based bindings, a module
+system inspired by Prelude and many functions, macros and tweaks borrowed from
+the like of Samuel Barreto, Steve Purcell, James Sulak and Michael Markert. The
+theme is modeled on Doom (and includes the Doom mode line).
 
-Aero does not adhere to any versioning, instead it is a continuously improving,
-evolving ambition. This evolution of Aero may be generally called Aero Flame, as
-opposed to the previous AeroSpace which was closely coupled to
-Spacemacs-develop.
+Special focus is put on writing Lisps, Python, TCL, Node and the several web
+languages.
 
 INSTALLING
 
