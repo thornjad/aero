@@ -24,11 +24,6 @@ Aero is optimized to use the font Dank Mono, but also works great with Source
 Code Pro.
 
 		git clone https://gitlab.com/thornjad/aero ~/.emacs.d
-		cd ~/.emacs.d
-		make setup
-
-Note that the =make setup= step is only a stopgap for the time being and will
-eventually be unecessary.
 
 LICENSE
 
