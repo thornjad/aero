@@ -2,19 +2,18 @@
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2 of the License, or
-;; (at your option) any later version.
+;; This program is free software; permission to use, copy, modify, and/or
+;; distribute this software for any purpose with or without fee is hereby
+;; granted, provided that the above copyright notice and this permission notice
+;; appear in all copies.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+;; The software is provided "as is" and the author disclaims all warranties with
+;; regard to this software including all implied warranties of merchantability
+;; and fitness. In no event shall the author be liable for any special, direct,
+;; indirect, or consequential damages or any damages whatsoever resulting from
+;; loss of use, data or profits, whether in an action of contract, Negligence or
+;; other tortious action, arising out of or in connection with the use or
+;; performance of this software.
 ;;
 ;; This file is not part of GNU Emacs
 
