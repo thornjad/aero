@@ -165,7 +165,7 @@
 	;; Set up global functionality
 	(use-package which-key :ensure t)
 	(use-package general :ensure t)
-	(use-package diminish)
+	(use-package diminish :ensure t)
 
 	;; burn baby burn
 	(aero/init)
