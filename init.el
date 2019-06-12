@@ -162,6 +162,14 @@
 	(require 'aero-layers)
 	(require 'aero-theme)
 
+	;; garder ma merde à jour
+	(use-package auto-update-package
+		:ensure t
+		:config
+		(setq auto-package-update-delete-old-versions t
+					auto-package-update-hide-results nil)
+		(auto-package-update-maybe))
+
 	;; Set up global functionality
 	(use-package which-key :ensure t)
 	(use-package general :ensure t)
