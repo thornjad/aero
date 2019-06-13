@@ -73,6 +73,7 @@
 
 (mapc 'add-to-load-path
 			`(,aero-core-directory
+				,aero-layer-directory
 				,(concat aero-core-directory "libs/")
 				,(concat aero-core-directory "libs/aero-theme/")))
 
@@ -81,37 +82,25 @@
 										 "libs/aero-theme/"))
 
 
-;; Bootstrap `use-package'
-
-(setq package-enable-at-startup nil)
-(let ((default-directory "~/.emacs.d/elpa"))
-	(normal-top-level-add-subdirs-to-load-path))
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-												 ("org" . "https://orgmode.org/elpa/")
-												 ("gnu" . "https://elpa.gnu.org/packages/")
-												 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
-(package-initialize)
-(unless (package-installed-p 'use-package)
-	(package-refresh-contents)
-	(package-install 'use-package))
-(eval-when-compile
-	(require 'use-package))
-(use-package package
-	:config (setq package-check-signature nil))
-
-
 ;; Core functionality
 
-(defun aero/init-core-keybindings ()
-	(general-define-key
-	 :states '(normal visual insert emacs)
-	 :prefix "SPC"
-	 :non-normal-prefix "C-SPC"
-
-	 ;; simple commands
-	 "TAB" '(switch-to-other-buffer :which-key "prev buffer")
-	 "SPC" '(counsel-M-x :which-key "M-x")
-	 "'" '(eshell :which-key "eshell")))
+(defun aero/bootstrap-package ()
+	"Bootstrap `use-package' and set up for use"
+	(setq package-enable-at-startup nil)
+	(let ((default-directory "~/.emacs.d/elpa"))
+		(normal-top-level-add-subdirs-to-load-path))
+	(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+													 ("org" . "https://orgmode.org/elpa/")
+													 ("gnu" . "https://elpa.gnu.org/packages/")
+													 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
+	(package-initialize)
+	(unless (package-installed-p 'use-package)
+		(package-refresh-contents)
+		(package-install 'use-package))
+	(eval-when-compile
+		(require 'use-package))
+	(use-package package
+		:config (setq package-check-signature nil)))
 
 (defgroup aero nil
 	"Aero customizations"
@@ -131,22 +120,16 @@
 	(setq ad-redefinition-action 'accept)
 	;; explicitly set utf-8 to avoid prompt from emacs
 	(prefer-coding-system 'utf-8)
-	(setq-default evil-want-C-u-scroll t
-                ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
-                ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
-                ;; instead.
-                evil-want-C-i-jump nil)
 
-	(use-package counsel :ensure t
-		:config
-		(setq counsel-find-file-ignore-regexp
-					(concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
-									"\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
-									"\\|\\.aux\\'")))
+	;; TODO
+	;; (setq-default evil-want-C-u-scroll t
+  ;;               ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
+  ;;               ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
+  ;;               ;; instead.
+  ;;               evil-want-C-i-jump nil)
 
-	(aero/load-layers)
-	(aero/load-theme)
-	(aero/init-core-keybindings))
+	(require 'aero-layers)
+	(aero/load-layers))
 
 (defun aero/startup-hook ()
 	"Post-init processing"
@@ -156,35 +139,22 @@
 		 (require 'aero-rc)
 		 (setq aero-initialized t)
 		 (setq gc-cons-threshold (car aero/gc-cons)
-					 gc-cons-percentage (cadr aero/gc-cons)))))
+					 gc-cons-percentage (cadr aero/gc-cons))
+		 (global-font-lock-mode))))
 
 
 ;; The actual initilization
 
 ;; disable file-name-handlers for a speed boost during startup
 (let ((file-name-handler-alist nil))
+	(aero/bootstrap-package)
+
 	(require 'subr-x)
 	(require 'aero-util)
-	(require 'aero-layers)
-	(require 'aero-theme)
-
-	;; garder ma merde à jour
-	(use-package auto-update-package
-		:ensure t
-		:config
-		(setq auto-package-update-delete-old-versions t
-					auto-package-update-hide-results nil)
-		(auto-package-update-maybe))
-
-	;; Set up global functionality
-	(use-package which-key :ensure t)
-	(use-package general :ensure t)
-	(use-package diminish :ensure t)
 
 	;; burn baby burn
 	(aero/init)
 	(aero/startup-hook)
-	(global-font-lock-mode)
 
 	;; TODO
 	;; (global-undo-tree-mode t)

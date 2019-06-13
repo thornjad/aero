@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Aero core layer utilities
+;; Aero core prelude layer
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
@@ -19,24 +19,44 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(defvar aero-layer-list
-	'(aero-prelude
-		aero-theme)
-	"A list of layers to ensure at startup
+
+;; garder ma merde à jour
 
-If a layer listed here does not have a corresponding file in the `layers'
-directory, it will be loaded without configuration.")
+(use-package auto-package-update
+	:ensure t
+	:config
+	(setq auto-package-update-delete-old-versions t
+				auto-package-update-hide-results t)
+	(auto-package-update-maybe))
 
-(defun aero/require-layer (layer)
-	"Install `layer' unless it is already installed"
-	(unless (memq layer aero-layer-list)
-		(add-to-list 'aero-layer-list layer))
-	(unless (package-installed-p layer)
-		(require layer)))
+
+;; ido-ido
 
-(defun aero/load-layers ()
-	"Load all configured layers, listed above"
-	(dolist (layer aero-layer-list)
-		(aero/require-layer layer)))
+(use-package counsel :ensure t
+	:config
+	(setq counsel-find-file-ignore-regexp
+				(concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
+								"\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
+								"\\|\\.aux\\'")))
 
-(provide 'aero-layers)
+
+;; Set up global functionality
+
+(use-package which-key :ensure t)
+(use-package general :ensure t)
+(use-package diminish :ensure t)
+
+
+;; keybindings
+
+(general-define-key
+ :states '(normal visual insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-SPC"
+
+ ;; simple commands
+ "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+ "SPC" '(counsel-M-x :which-key "M-x")
+ "'" '(eshell :which-key "eshell"))
+
+(provide 'aero-prelude)
