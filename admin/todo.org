@@ -7,6 +7,7 @@
 ** TODO keybindings
 	 - https://sam217pa.github.io/2016/09/23/keybindings-strategies-in-emacs/
 ** TODO counsel
+	 - bind m-x to counsel-m-x
 ** TODO ivy
 	 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 ** TODO swiper
@@ -14,12 +15,11 @@
 ** TODO steal some shit from better-defaults
 ** TODO tramp
 ** TODO restart-emacs
-** TODO magit
-
 ** TODO clipboard?
 	 - https://github.com/redguardtoo/emacs.d/blob/master/lisp/init-clipboard.el
 * Layers
 
+** TODO magit
 ** TODO python
 ** TODO rust
 ** TODO emacs-lisp
