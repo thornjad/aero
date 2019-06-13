@@ -7,10 +7,10 @@ Emacs changes the way you think about programming, as does Lisp itself. The
 sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
 by decades of rich experience and a fantastic culture.
 
-This configuration features Spacemacs-esque leader-key-based bindings, a module
-system inspired by Prelude and many functions, macros and tweaks borrowed from
-the like of Samuel Barreto, Steve Purcell, James Sulak and Michael Markert. The
-theme is modeled on Doom (and includes the Doom mode line).
+This configuration features Spacemacs-esque leader-key-based bindings, a layer
+system inspired by Prelude Emacs and Spacemacs, as well as functions and macros
+borrowed from the likes of Samuel Barreto, Steve Purcell and James Sulak. The
+theme is a variant of Doom (and uses the Doom mode line).
 
 Special focus is put on writing Lisps, Python, TCL, Node and the several web
 languages.
