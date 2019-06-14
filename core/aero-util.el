@@ -140,6 +140,12 @@ If FUNC is a lambda you must give it a name with FNAME. "
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
+;; apologize for smacking emacs (stop debug on quit)
+;; use this after smacking emacs with SIGUSR2
+(defun aero/apologize-to-emacs ()
+	(interactive)
+	(toggle-debug-on-quit))
+
 
 ;; logging
 
