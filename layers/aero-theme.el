@@ -614,7 +614,14 @@
 (use-package doom-modeline :ensure t
   :config
   (doom-modeline-init)
-  (setq doom-modeline-height 20))
+  (setq doom-modeline-height 20
+				doom-modeline-buffer-file-name-style 'buffer-name
+				doom-modeline-icon nil)
+	(doom-modeline-def-modeline 'aero
+		'(bar window-number modals matches buffer-info remote-host buffer-position selection-info)
+		'(misc-info persp-name lsp debug fancy-battery minor-modes buffer-encoding major-mode vcs checker))
+	(add-hook! 'doom-modeline-mode-hook
+						 (doom-modeline-set-modeline 'aero 'default)))
 
 (add-hook 'rjsx-mode-hook
           (lambda ()
