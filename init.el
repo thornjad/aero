@@ -82,10 +82,9 @@
 	(setq package-enable-at-startup nil)
 	(let ((default-directory "~/.emacs.d/elpa"))
 		(normal-top-level-add-subdirs-to-load-path))
-	(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-													 ("org" . "https://orgmode.org/elpa/")
-													 ("gnu" . "https://elpa.gnu.org/packages/")
-													 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
+	(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+													 ("melpa" . "https://melpa.org/packages/")
+													 ("org" . "https://orgmode.org/elpa/")))
 	(package-initialize)
 	(unless (package-installed-p 'use-package)
 		(package-refresh-contents)
@@ -155,4 +154,4 @@
 
 	;; safe, no more debug please
 	(setq debug-on-error nil)
-	(aero/startup-echo-message))
+	(aero/log-info "Aero is ready"))
