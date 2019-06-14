@@ -112,13 +112,6 @@
      (rainbow-delimiters-depth-12-face          (:foreground aero-delimiter-four))
      (rainbow-delimiters-unmatched-face         (:background nil :foreground aero-light0))
 
-     ;; line numbers
-     (line-number                               (:foreground aero-dark4 :background aero-dark1))
-     (line-number-current-line                  (:foreground aero-bright_orange :background aero-dark2))
-     (linum                                     (:foreground aero-dark4 :background aero-dark1))
-     (linum-highlight-face                      (:foreground aero-bright_orange :background aero-dark2))
-     (linum-relative-current-face               (:foreground aero-bright_orange :background aero-dark2))
-
      ;; Highlight indentation mode
      (highlight-indentation-current-column-face (:background aero-dark2))
      (highlight-indentation-face                (:background aero-dark1))
@@ -127,8 +120,6 @@
      (sp-pair-overlay-face                      (:background aero-dark2))
      (sp-show-pair-match-face                   (:background aero-dark2)) ;; Pair tags highlight
      (sp-show-pair-mismatch-face                (:background aero-bright_red)) ;; Highlight for bracket without pair
-     ;;(sp-wrap-overlay-face                     (:inherit 'sp-wrap-overlay-face))
-     ;;(sp-wrap-tag-overlay-face                 (:inherit 'sp-wrap-overlay-face))
 
      ;; elscreen
      (elscreen-tab-background-face              (:background aero-bg :box nil)) ;; Tab bar, not the tabs
@@ -168,49 +159,49 @@
      (popup-menu-selection-face                 (:underline nil :foreground aero-light0 :background aero-faded_green))
      (popup-tip-face                            (:underline nil :foreground aero-light2 :background aero-dark2))
 
-     ;; helm
-     (helm-M-x-key                              (:foreground aero-bright_orange ))
-     (helm-action                               (:foreground aero-light0_hard :underline t))
-     (helm-bookmark-addressbook                 (:foreground aero-bright_red))
-     (helm-bookmark-directory                   (:foreground aero-bright_purple))
-     (helm-bookmark-file                        (:foreground aero-faded_blue))
-     (helm-bookmark-gnus                        (:foreground aero-faded_purple))
-     (helm-bookmark-info                        (:foreground aero-turquoise4))
-     (helm-bookmark-man                         (:foreground aero-sienna))
-     (helm-bookmark-w3m                         (:foreground aero-bright_yellow))
-     (helm-buffer-directory                     (:foreground aero-white :background aero-bright_blue))
-     (helm-buffer-not-saved                     (:foreground aero-faded_red))
-     (helm-buffer-process                       (:foreground aero-burlywood4))
-     (helm-buffer-saved-out                     (:foreground aero-bright_red))
-     (helm-buffer-size                          (:foreground aero-bright_purple))
-     (helm-candidate-number                     (:foreground aero-bright_green))
-     (helm-ff-directory                         (:foreground aero-bright_purple))
-     (helm-ff-executable                        (:foreground aero-turquoise4))
-     (helm-ff-file                              (:foreground aero-sienna))
-     (helm-ff-invalid-symlink                   (:foreground aero-white :background aero-bright_red))
-     (helm-ff-prefix                            (:foreground aero-black :background aero-bright_yellow))
-     (helm-ff-symlink                           (:foreground aero-bright_orange))
-     (helm-grep-cmd-line                        (:foreground aero-bright_green))
-     (helm-grep-file                            (:foreground aero-faded_purple))
-     (helm-grep-finish                          (:foreground aero-turquoise4))
-     (helm-grep-lineno                          (:foreground aero-bright_orange))
-     (helm-grep-match                           (:foreground aero-bright_yellow))
-     (helm-grep-running                         (:foreground aero-bright_red))
-     (helm-header                               (:foreground aero-aquamarine4))
-     (helm-helper                               (:foreground aero-aquamarine4))
-     (helm-history-deleted                      (:foreground aero-black :background aero-bright_red))
-     (helm-history-remote                       (:foreground aero-faded_red))
-     (helm-lisp-completion-info                 (:foreground aero-faded_orange))
-     (helm-lisp-show-completion                 (:foreground aero-bright_red))
-     (helm-locate-finish                        (:foreground aero-white :background aero-aquamarine4))
-     (helm-match                                (:foreground aero-bright_orange))
-     (helm-moccur-buffer                        (:foreground aero-bright_aqua :underline t))
-     (helm-prefarg                              (:foreground aero-turquoise4))
-     (helm-selection                            (:foreground aero-white :background aero-dark2))
-     (helm-selection-line                       (:foreground aero-white :background aero-dark2))
-     (helm-separator                            (:foreground aero-faded_red))
-     (helm-source-header                        (:foreground aero-light2))
-     (helm-visible-mark                         (:foreground aero-black :background aero-light3))
+     ;; counsel
+     (counsel-M-x-key                              (:foreground aero-bright_orange ))
+     (counsel-action                               (:foreground aero-light0_hard :underline t))
+     (counsel-bookmark-addressbook                 (:foreground aero-bright_red))
+     (counsel-bookmark-directory                   (:foreground aero-bright_purple))
+     (counsel-bookmark-file                        (:foreground aero-faded_blue))
+     (counsel-bookmark-gnus                        (:foreground aero-faded_purple))
+     (counsel-bookmark-info                        (:foreground aero-turquoise4))
+     (counsel-bookmark-man                         (:foreground aero-sienna))
+     (counsel-bookmark-w3m                         (:foreground aero-bright_yellow))
+     (counsel-buffer-directory                     (:foreground aero-white :background aero-bright_blue))
+     (counsel-buffer-not-saved                     (:foreground aero-faded_red))
+     (counsel-buffer-process                       (:foreground aero-burlywood4))
+     (counsel-buffer-saved-out                     (:foreground aero-bright_red))
+     (counsel-buffer-size                          (:foreground aero-bright_purple))
+     (counsel-candidate-number                     (:foreground aero-bright_green))
+     (counsel-ff-directory                         (:foreground aero-bright_purple))
+     (counsel-ff-executable                        (:foreground aero-turquoise4))
+     (counsel-ff-file                              (:foreground aero-sienna))
+     (counsel-ff-invalid-symlink                   (:foreground aero-white :background aero-bright_red))
+     (counsel-ff-prefix                            (:foreground aero-black :background aero-bright_yellow))
+     (counsel-ff-symlink                           (:foreground aero-bright_orange))
+     (counsel-grep-cmd-line                        (:foreground aero-bright_green))
+     (counsel-grep-file                            (:foreground aero-faded_purple))
+     (counsel-grep-finish                          (:foreground aero-turquoise4))
+     (counsel-grep-lineno                          (:foreground aero-bright_orange))
+     (counsel-grep-match                           (:foreground aero-bright_yellow))
+     (counsel-grep-running                         (:foreground aero-bright_red))
+     (counsel-header                               (:foreground aero-aquamarine4))
+     (counsel-helper                               (:foreground aero-aquamarine4))
+     (counsel-history-deleted                      (:foreground aero-black :background aero-bright_red))
+     (counsel-history-remote                       (:foreground aero-faded_red))
+     (counsel-lisp-completion-info                 (:foreground aero-faded_orange))
+     (counsel-lisp-show-completion                 (:foreground aero-bright_red))
+     (counsel-locate-finish                        (:foreground aero-white :background aero-aquamarine4))
+     (counsel-match                                (:foreground aero-bright_orange))
+     (counsel-moccur-buffer                        (:foreground aero-bright_aqua :underline t))
+     (counsel-prefarg                              (:foreground aero-turquoise4))
+     (counsel-selection                            (:foreground aero-white :background aero-dark2))
+     (counsel-selection-line                       (:foreground aero-white :background aero-dark2))
+     (counsel-separator                            (:foreground aero-faded_red))
+     (counsel-source-header                        (:foreground aero-light2))
+     (counsel-visible-mark                         (:foreground aero-black :background aero-light3))
 
      ;;hi-lock-mode
      (hi-black-b                                (:foreground aero-black :weight 'bold))
@@ -329,27 +320,6 @@
      (elfeed-search-unread-count-face           (:inherit 'font-lock-comment-face))
      (elfeed-search-filter-face                 (:inherit 'font-lock-string-face))
 
-     ;; smart-mode-line
-     (sml/global                                (:foreground aero-light4 :inverse-video nil))
-     (sml/modes                                 (:foreground aero-bright_green))
-     (sml/filename                              (:foreground aero-bright_red :weight 'bold))
-     (sml/prefix                                (:foreground aero-light1))
-     (sml/read-only                             (:foreground aero-bright_blue))
-     (persp-selected-face                       (:foreground aero-bright_orange))
-
-     ;; powerline
-     (powerline-active0                         (:background aero-dark4 :foreground aero-light0))
-     (powerline-active1                         (:background aero-dark3 :foreground aero-light0))
-     (powerline-active2                         (:background aero-dark2 :foreground aero-light0))
-     (powerline-inactive0                       (:background aero-dark2 :foreground aero-light4))
-     (powerline-inactive1                       (:background aero-dark1 :foreground aero-light4))
-     (powerline-inactive2                       (:background aero-dark0 :foreground aero-light4))
-
-     ;; isearch
-     (isearch                                   (:foreground aero-black :background aero-bright_orange))
-     (lazy-highlight                            (:foreground aero-black :background aero-bright_yellow))
-     (isearch-fail                              (:foreground aero-light0 :background aero-bright_red))
-
      ;; markdown-mode
      (markdown-header-face-1                    (:foreground aero-bright_blue))
      (markdown-header-face-2                    (:foreground aero-bright_yellow))
@@ -357,14 +327,6 @@
      (markdown-header-face-4                    (:foreground aero-bright_red))
      (markdown-header-face-5                    (:foreground aero-bright_green))
      (markdown-header-face-6                    (:foreground aero-bright_aqua))
-
-     ;; anzu-mode
-     (anzu-mode-line                            (:foreground aero-bright_yellow :weight 'bold))
-     (anzu-match-1                              (:background aero-bright_green))
-     (anzu-match-2                              (:background aero-faded_yellow))
-     (anzu-match-3                              (:background aero-aquamarine4))
-     (anzu-replace-to                           (:foreground aero-bright_yellow))
-     (anzu-replace-highlight                    (:inherit 'isearch))
 
      ;; ace-jump-mode
      (ace-jump-face-background                  (:foreground aero-light4 :background aero-bg :inverse-video nil))
