@@ -657,4 +657,9 @@
 	(doom-modeline-init)
 	(setq doom-modeline-height 20))
 
+(add-hook 'rjsx-mode-hook
+					(lambda ()
+						(set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
+						(setq emmet-expand-jsx-className? t)))
+
 (provide 'aero-theme)
