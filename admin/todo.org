@@ -2,8 +2,6 @@
 
 * Core
 
-** TODO evil
-	 - https://github.com/sam217pa/emacs-config/commit/9e6d3a72295449faa34564e444eb42fe658b33c6#diff-981cc1dea74a6b8b0bd7a71417e8d177
 ** TODO keybindings
 	 - https://sam217pa.github.io/2016/09/23/keybindings-strategies-in-emacs/
 ** TODO counsel
