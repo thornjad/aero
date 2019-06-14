@@ -52,10 +52,10 @@
 
 (def-path! core start "core/")
 (def-path! layer start "layers/")
-(def-path! private start "private/")
 (def-path! cache start ".cache/")
 (def-path! autosave cache "auto-save/")
 (def-path! test start "test/")
+(def-path! libs core "libs/")
 
 (defconst user-home-directory
 	(getenv "HOME"))
@@ -67,12 +67,7 @@
 (mapc 'add-to-load-path
 			`(,aero-core-directory
 				,aero-layer-directory
-				,(concat aero-core-directory "libs/")
-				,(concat aero-core-directory "libs/aero-theme/")))
-
-(add-to-list 'custom-theme-load-path
-						 (concat aero-core-directory
-										 "libs/aero-theme/"))
+				,aero-libs-directory))
 
 
 ;; Core functionality
