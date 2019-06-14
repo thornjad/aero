@@ -56,10 +56,9 @@
      (window-divider                            (:foreground aero-dark2))
      (link                                      (:foreground aero-faded_blue :underline t))
      (shadow                                    (:foreground aero-dark4))
-		 (page-break-lines                          (:foreground aero-dark4))
+     (page-break-lines                          (:foreground aero-dark4))
 
      ;; Built-in syntax
-
      (font-lock-builtin-face                            (:foreground aero-bright_orange))
      (font-lock-constant-face                           (:foreground aero-bright_purple))
      (font-lock-comment-face                            (:foreground aero-dark4))
@@ -87,7 +86,6 @@
      (custom-variable-tag                               (:foreground aero-bright_blue :weight 'bold))
 
      ;; whitespace-mode
-
      (whitespace-space                          (:background aero-bg :foreground aero-dark4))
      (whitespace-hspace                         (:background aero-bg :foreground aero-dark4))
      (whitespace-tab                            (:background aero-bg :foreground aero-dark4))
@@ -100,7 +98,6 @@
      (whitespace-space-after-tab                (:background aero-bg :foreground aero-dark4))
 
      ;; RainbowDelimiters
-
      (rainbow-delimiters-depth-1-face           (:foreground aero-delimiter-one))
      (rainbow-delimiters-depth-2-face           (:foreground aero-delimiter-two))
      (rainbow-delimiters-depth-3-face           (:foreground aero-delimiter-three))
@@ -114,7 +111,6 @@
      (rainbow-delimiters-depth-11-face          (:foreground aero-delimiter-three))
      (rainbow-delimiters-depth-12-face          (:foreground aero-delimiter-four))
      (rainbow-delimiters-unmatched-face         (:background nil :foreground aero-light0))
-
 
      ;; line numbers
      (line-number                               (:foreground aero-dark4 :background aero-dark1))
@@ -651,16 +647,16 @@
                                 ,aero-bright_purple
                                 ,aero-bright_aqua
                                 ,aero-light1])
-			     `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
+           `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
 
 (use-package doom-modeline :ensure t
-	:config
-	(doom-modeline-init)
-	(setq doom-modeline-height 20))
+  :config
+  (doom-modeline-init)
+  (setq doom-modeline-height 20))
 
 (add-hook 'rjsx-mode-hook
-					(lambda ()
-						(set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
-						(setq emmet-expand-jsx-className? t)))
+          (lambda ()
+            (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
+            (setq emmet-expand-jsx-className? t)))
 
 (provide 'aero-theme)
