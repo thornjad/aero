@@ -13,8 +13,8 @@
 
 (defun aero/load-theme ()
 	"Load Aero default theme"
-	(use-package doom-themes :ensure t
-		:config (load-theme 'doom-opera t))
+	(use-package gruvbox-theme :ensure t
+		:config (load-theme 'gruvbox-dark-hard t))
 
 	(use-package doom-modeline :ensure t
 		:config
