@@ -15,12 +15,21 @@
 
 ;; garder ma merde à jour
 
-(use-package auto-package-update
-	:ensure t
+(use-package auto-package-update :ensure t
 	:config
 	(setq auto-package-update-delete-old-versions t
 				auto-package-update-hide-results t)
 	(auto-package-update-maybe))
+
+
+;; we descend to hell
+
+(use-package evil :ensure t
+	:commands (evil-mode)
+	:init
+	(aero/add-hook!
+	 'after-init-hook
+	 (evil-mode 1)))
 
 
 ;; ido-ido
