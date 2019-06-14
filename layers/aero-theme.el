@@ -56,6 +56,7 @@
      (window-divider                            (:foreground aero-dark2))
      (link                                      (:foreground aero-faded_blue :underline t))
      (shadow                                    (:foreground aero-dark4))
+		 (page-break-lines                          (:foreground aero-dark4))
 
      ;; Built-in syntax
 
