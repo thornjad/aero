@@ -43,4 +43,6 @@
 (use-package magit-todos :ensure t
 	:after magit)
 
+(use-package gitlab-ci-mode :ensure t)
+
 (provide 'aero-git)

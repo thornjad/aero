@@ -24,7 +24,6 @@
 ** TODO eshell
 ** TODO cargo
 ** TODO racer
-** TODO gitlab-ci-mode
 ** TODO on-parens
 	 - maybe part of lisp layer? useful for other stuff too?
 ** TODO racket-mode
