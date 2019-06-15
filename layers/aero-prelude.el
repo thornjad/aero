@@ -133,6 +133,24 @@
 	 "/" '(swiper :which-key "swiper find")))
 
 
+;; general appearance
+
+(use-package rainbow-delimiters :ensure t
+	:config
+	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+
+;; chicken dinner!
+
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
+(general-define-key
+ :states '(normal emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-SPC"
+ "wu" 'winner-undo)
+
+
 ;; general keybindings
 
 (general-define-key
@@ -158,6 +176,7 @@
 
  "b" '(:ignore t :which-key "buffers")
  "g" '(:ignore t :which-key "git")
- "r" '(:ignore t :which-key "rings"))
+ "r" '(:ignore t :which-key "rings")
+ "w" '(:ignore t :which-key "window"))
 
 (provide 'aero-prelude)
