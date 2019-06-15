@@ -88,15 +88,44 @@
 	(general-define-key
 	 :states '(normal visual insert replace emacs)
 	 :prefix "SPC"
+	 :non-normal-prefix "C-SPC"
 
-	 "SPC" 'counsel-M-x))
+	 "SPC" 'counsel-M-x
+	 "ff" 'counsel-find-file
+	 "fl" 'counsel-locate
+	 "fr" 'counsel-recentf
+	 "gg" '(counsel-git-grep :which-key "git grep")
+	 "gf" '(:ignore t :which-key "files")
+	 "gff" '(counsel-git :which-key "find git file")
+	 "ry" '(counsel-yank-pop :which-key "search kill ring")
+	 ))
 
 (use-package ivy :ensure t
 	:config
-	(setq ivy-initial-inputs-alist nil))
+	(ivy-mode 1)
+	(setq ivy-initial-inputs-alist nil ; screw the regex
+				ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
+				ivy-height 10
+				ivy-count-format "" ; don't count candidates
+				;; configure regexp engine to allow out-of-order input
+				ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+	(general-define-key
+	 :states '(normal emacs)
+	 :prefix "SPC"
+
+	 "bb" 'ivy-switch-buffer))
+
+(use-package swiper :ensure t
+	:config
+	(general-define-key
+	 :states '(normal emacs)
+	 :prefix "SPC"
+	 :non-normal-prefix "C-SPC"
+
+	 "/" '(swiper :which-key "swiper find")))
 
 
-;; keybindings
+;; general keybindings
 
 (general-define-key
  :states '(normal visual insert replace emacs)
@@ -114,6 +143,10 @@
  "fCu" '(aero/dos2unix :which-key "dos2unix")
  "fD" '(aero/delete-this-file :which-key "delete this file")
  "fE" '(aero/sudo-edit :which-key "sudo edit")
- "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file"))
+ "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file")
+
+ "b" '(:ignore t :which-key "buffers")
+ "g" '(:ignore t :which-key "git")
+ "r" '(:ignore t :which-key "rings"))
 
 (provide 'aero-prelude)

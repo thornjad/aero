@@ -1,16 +1,12 @@
 #+TITLE: TODO for Aero
 
 * Core
-** TODO ivy
-	 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
-** TODO swiper
 ** TODO help keybindings (SPC h)
 ** TODO tramp
 ** TODO restart-emacs
 ** TODO clipboard?
 	 - https://github.com/redguardtoo/emacs.d/blob/master/lisp/init-clipboard.el
 * Layers
-
 ** TODO evil-lisp-state
 ** TODO magit
 ** TODO python
@@ -52,7 +48,6 @@
 	 - part of web?
 
 * Meta
-
 ** TODO better startup
 ** TODO start to scratch? other buffer?
 ** TODO use-package pull from github/gitlab
