@@ -1,41 +1,36 @@
 ;;; restart-emacs.el --- Restart emacs from within emacs  -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2015-2017  Iqbal Ansari
-
+;;
+;; Copyright (C) 2019 Jade Michael Thornton
+;; Copyright (C) 2015-2017 Iqbal Ansari
+;;
 ;; Author: Iqbal Ansari <iqbalansari02@yahoo.com>
-;; Keywords: convenience
-;; URL: https://github.com/iqbalansari/restart-emacs
-;; Version: 0.1.1
-
+;; upstream URL: https://github.com/iqbalansari/restart-emacs
+;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+;;
 ;;; Commentary:
-
-;; This package provides a simple command to restart Emacs from within Emacs
-
+;;
+;; This package provides a simple command to restart Emacs from within Emacs. It
+;; is modified from Ansari's package with optimizations for Aero.
+;;
 
-
 ;;; Code:
 
 (require 'server)
 (require 'desktop)
 
-;; Making the byte compiler happy
-(declare-function w32-shell-execute "w32fns.c")
-
 
-
 ;; Customizations
 
 (defgroup restart-emacs nil
@@ -90,15 +85,8 @@ FORMAT and ARGS correspond to STRING and OBJECTS arguments to `format'."
   "The arguments with which to restart Emacs is bound dynamically.")
 
 (defun restart-emacs--get-emacs-binary ()
-  "Get absolute path to binary of currently running Emacs.
-
-On Windows get path to runemacs.exe if possible."
-  (let ((emacs-binary-path (expand-file-name invocation-name invocation-directory))
-        (runemacs-binary-path (when (memq system-type '(windows-nt ms-dos))
-                                (expand-file-name "runemacs.exe" invocation-directory))))
-    (if (and runemacs-binary-path (file-exists-p runemacs-binary-path))
-        runemacs-binary-path
-      emacs-binary-path)))
+  "Get absolute path to binary of currently running Emacs."
+	(expand-file-name invocation-name invocation-directory))
 
 (defun restart-emacs--record-tty-file (current &rest ignored)
   "Save the buffer which is being currently selected in the frame.
@@ -228,14 +216,6 @@ ARGS is the list arguments with which Emacs should be started"
                                                                  args)
                                                          " "))))
 
-(defun restart-emacs--start-gui-on-windows (&optional args)
-  "Start GUI version of Emacs on windows.
-
-ARGS is the list arguments with which Emacs should be started"
-  (w32-shell-execute "open"
-                     (restart-emacs--get-emacs-binary)
-                     (restart-emacs--string-join args " ")))
-
 (defun restart-emacs--start-emacs-in-terminal (&optional args)
   "Start Emacs in current terminal.
 
@@ -261,24 +241,8 @@ current instance"
                              (restart-emacs--string-join (mapcar #'shell-quote-argument args)
                                                          " "))))
 
-(defun restart-emacs--daemon-on-windows (&optional args)
-  "Restart Emacs daemon with the provided ARGS.
-
-This function makes sure the new Emacs instance uses the same server-name as the
-current instance
-
-TODO: Not tested yet"
-  (w32-shell-execute "open"
-                     (restart-emacs--get-emacs-binary)
-                     (restart-emacs--string-join (cons (concat "--daemon=" server-name)
-                                                       args)
-                                                 " ")))
-
 (defun restart-emacs--ensure-can-restart ()
   "Ensure we can restart Emacs on current platform."
-  (when (and (not (display-graphic-p))
-             (memq system-type '(windows-nt ms-dos)))
-    (restart-emacs--user-error (format "Cannot restart Emacs running in terminal on system of type `%s'" system-type)))
 
   (when (and (daemonp)
              (not (locate-library "frameset")))
@@ -295,18 +259,9 @@ Set `restart-emacs-with-tty-frames-p' to non-nil to restart Emacs irrespective o
 
 (defun restart-emacs--launch-other-emacs (arguments)
   "Launch another Emacs session with ARGUMENTS according to current platform."
-  (apply (cond ((daemonp) (if (memq system-type '(windows-nt ms-dos))
-                              #'restart-emacs--daemon-on-windows
-                            #'restart-emacs--daemon-using-sh))
-
-               ((display-graphic-p) (if (memq system-type '(windows-nt ms-dos))
-                                        #'restart-emacs--start-gui-on-windows
-                                      #'restart-emacs--start-gui-using-sh))
-
-               (t (if (memq system-type '(windows-nt ms-dos))
-                      ;; This should not happen since we check this before triggering a restart
-                      (restart-emacs--user-error "Cannot restart Emacs running in a windows terminal")
-                    #'restart-emacs--start-emacs-in-terminal)))
+  (apply (cond ((daemonp) #'restart-emacs--daemon-using-sh)
+               ((display-graphic-p) #'restart-emacs--start-gui-using-sh)
+               (t #'restart-emacs--start-emacs-in-terminal))
          ;; Since this function is called in `kill-emacs-hook' it cannot accept
          ;; direct arguments the arguments are let-bound instead
          (list arguments)))
@@ -421,4 +376,3 @@ with which Emacs should be restarted."
     (save-buffers-kill-emacs)))
 
 (provide 'restart-emacs)
-;;; restart-emacs.el ends here
