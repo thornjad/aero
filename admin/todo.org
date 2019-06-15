@@ -6,7 +6,6 @@
 	 - https://github.com/redguardtoo/emacs.d/blob/master/lisp/init-clipboard.el
 * Layers
 ** TODO evil-lisp-state
-** TODO magit
 ** TODO python
 ** TODO rust
 ** TODO emacs-lisp
@@ -15,7 +14,6 @@
 ** TODO yaml
 ** TODO gtags
 ** TODO auto-completion
-** TODO git
 ** TODO markdown
 ** TODO org
 ** TODO rjsx
