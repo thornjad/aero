@@ -15,6 +15,19 @@
 (require 'aero-files)
 
 
+;; async
+
+(use-package async :ensure t
+	:config
+
+	;; async dired operations
+	(autoload 'dired-async-mode "dired-async.el" nil t)
+	(dired-async-mode 1)
+
+	;; async byte compilation
+	(async-bytecomp-package-mode 1))
+
+
 ;; loading
 
 (defmacro aero/require-and-exec! (feature &rest body)
