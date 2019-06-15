@@ -98,7 +98,15 @@
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 ))
+	 "hda" '(counsel-apropos :which-kay "apropos")
+	 "hdf" 'describe-function
+	 "hdb" 'describe-bindings
+	 "hdv" 'describe-variable
+	 "hdm" 'describe-mode
+	 "hdk" 'describe-key
+	 "hdK" 'describe-keymap
+	 "hdc" 'describe-char
+	 "hdp" 'describe-package))
 
 (use-package ivy :ensure t
 	:config
@@ -144,6 +152,9 @@
  "fD" '(aero/delete-this-file :which-key "delete this file")
  "fE" '(aero/sudo-edit :which-key "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file")
+
+ "h" '(:ignore t :which-key "help/manual")
+ "hd" '(:ignore t :which-key "describe")
 
  "b" '(:ignore t :which-key "buffers")
  "g" '(:ignore t :which-key "git")

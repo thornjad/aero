@@ -1,7 +1,6 @@
 #+TITLE: TODO for Aero
 
 * Core
-** TODO help keybindings (SPC h)
 ** TODO tramp
 ** TODO restart-emacs
 ** TODO clipboard?
