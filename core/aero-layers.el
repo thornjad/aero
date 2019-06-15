@@ -15,7 +15,8 @@
 (defvar aero-layer-list
 	'(aero-prelude
 		aero-theme
-		aero-projectile)
+		aero-projectile
+		aero-restart)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'

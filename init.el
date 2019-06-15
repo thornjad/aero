@@ -56,6 +56,7 @@
 (def-path! autosave cache "auto-save/")
 (def-path! test start "test/")
 (def-path! libs core "libs/")
+(def-path! packages layer "packages/")
 
 (defconst user-home-directory
 	(getenv "HOME"))
@@ -67,7 +68,8 @@
 (mapc 'add-to-load-path
 			`(,aero-core-directory
 				,aero-layer-directory
-				,aero-libs-directory))
+				,aero-libs-directory
+				,aero-packages-directory))
 
 
 ;; Core functionality
