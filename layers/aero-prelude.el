@@ -24,7 +24,9 @@
 
 ;; the general is here
 
-(use-package which-key :ensure t)
+(use-package which-key :ensure t
+	:config
+	(which-key-mode))
 (use-package general :ensure t
 	:config
 	(general-define-key
