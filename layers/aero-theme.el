@@ -620,7 +620,7 @@
 	(doom-modeline-def-modeline 'aero
 		'(bar window-number modals matches buffer-info remote-host buffer-position selection-info)
 		'(misc-info persp-name lsp debug fancy-battery minor-modes buffer-encoding major-mode vcs checker))
-	(add-hook! 'doom-modeline-mode-hook
+	(aero/add-hook! 'doom-modeline-mode-hook
 						 (doom-modeline-set-modeline 'aero 'default)))
 
 (add-hook 'rjsx-mode-hook
