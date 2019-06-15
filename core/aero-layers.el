@@ -14,11 +14,14 @@
 
 (defvar aero-layer-list
 	'(aero-prelude
-		aero-theme)
+		aero-theme
+		aero-projectile)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'
-directory, it will be loaded without configuration.")
+directory, it will be loaded without configuration. However, this is not
+recommended. Using a configuration file,k even with only a single `use-package'
+will be more efficient if compiled.")
 
 (defun aero/require-layer (layer)
 	"Install `layer' unless it is already installed"
