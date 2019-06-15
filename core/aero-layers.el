@@ -16,7 +16,8 @@
 	'(aero-prelude
 		aero-theme
 		aero-projectile
-		aero-restart)
+		aero-restart
+		aero-git)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'
