@@ -22,6 +22,17 @@
   (auto-package-update-maybe))
 
 
+;; the general is here
+
+(use-package which-key :ensure t)
+(use-package general :ensure t
+	:config
+	(general-define-key
+	 :states '(normal motion)
+	 :prefix "SPC"
+	 "" nil))
+
+
 ;; we descend to hell
 
 (use-package evil :ensure t
@@ -30,11 +41,13 @@
   (aero/add-hook!
    'after-init-hook
    (evil-mode 1)
-   (setq evil-want-fin-undo t)))
+   (setq evil-want-fin-undo t))
+	(general-define-key
+	 :states 'normal
+	 :prefix "SPC"
+	 "fS" 'evil-write-all))
 
 (use-package evil-matchit :ensure t
-  :commands
-  evilmi-jump-items
   :config
   (global-evil-matchit-mode 1))
 
@@ -62,33 +75,43 @@
       evil-emacs-state-cursor   '("#d33682" box)) ;; magenta
 
 
-;; ido-ido
+;; abo-abo!
 
 (use-package counsel :ensure t
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
                 "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
-                "\\|\\.aux\\'")))
+                "\\|\\.aux\\'"))
+	(general-define-key
+	 :states '(normal visual insert replace emacs)
+	 :prefix "SPC"
 
-
-;; Set up global functionality
+	 "SPC" 'counsel-M-x))
 
-(use-package which-key :ensure t)
-(use-package general :ensure t)
-(use-package diminish :ensure t)
+(use-package ivy :ensure t
+	:config
+	(setq ivy-initial-inputs-alist nil))
 
 
 ;; keybindings
 
 (general-define-key
- :states '(normal visual insert emacs)
+ :states '(normal visual insert replace emacs)
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
 
- ;; simple commands
- "TAB" '(switch-to-other-buffer :which-key "prev buffer")
- "SPC" '(counsel-M-x :which-key "M-x")
- "'" '(eshell :which-key "eshell"))
+ ;; independent keys
+ "TAB" '((switch-to-buffer (other-buffer (current-buffer) 1))
+				 :which-key "last buffer")
+
+ "f" '(:ignore t :which-key "files")
+ "fw" '(save-buffer :which-key "write buffer")
+ "fC" '(:ignore t :which-key "convert")
+ "fCd" '(aero/unix2dos :which-key "unix2dos")
+ "fCu" '(aero/dos2unix :which-key "dos2unix")
+ "fD" '(aero/delete-this-file :which-key "delete this file")
+ "fE" '(aero/sudo-edit :which-key "sudo edit")
+ "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file"))
 
 (provide 'aero-prelude)
