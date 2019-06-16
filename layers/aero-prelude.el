@@ -186,6 +186,11 @@
  "hd" '(:ignore t :which-key "describe")
 
  "b" '(:ignore t :which-key "buffers")
+ "bn" 'next-buffer
+ "bp" 'previous-buffer
+ "bl" 'list-buffers
+ "bw" 'aero/move-buffer-to-window
+
  "g" '(:ignore t :which-key "git")
  "r" '(:ignore t :which-key "rings")
  "w" '(:ignore t :which-key "window"))
