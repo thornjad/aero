@@ -3,7 +3,6 @@
 ;; Copyright (c) 2019 Jade Michael Thornton
 ;; Copyright (c) 2014-2016 Vasilij Schneidermann
 ;;
-;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This file is free software; you can redistribute it and/or modify
@@ -23,16 +22,29 @@
 ;;
 ;;; Commentary:
 ;;
-;; This minor mode displays page delimiters which usually appear as ^L
-;; glyphs on a single line as horizontal lines spanning the entire
-;; window.  It is suitable for inclusion into mode hooks and is
-;; intended to be used that way.  The following snippet would enable
-;; it for Emacs Lisp files for instance:
+;; This minor mode displays form feed characters (page breaks) as a syngle
+;; horizontal line, spanning the window.
 ;;
-;;     (add-hook 'emacs-lisp-mode-hook 'form-feed-mode)
+;; There are a bunch of ways of attacking this problem, one of the more obscure
+;; ones is manipulating the display table of every window displaying the buffer.
+;; Unfortunately this approach is limited to replacing a glyph with an array of
+;; other glyphs, but guaranteed to work on non-graphical display as well. The
+;; other approach is putting an overlay or text property over the glyph which
+;; manipulates its look. Since a face on its own won't do the trick, this
+;; package uses a lesser known feature of font-lock that allows one to add text
+;; properties as part of the face definition associated with the page delimiter
+;; glyph and tells it to remove those on fontification changes to make sure
+;; disabling works equally well. This also means that while this package is
+;; conceptually very simple and non-invasive, it might not work on non-graphical
+;; displays. As a workaround this packages makes Emacs use underlining instead
+;; of strike-through on such displays.
 ;;
-;; See the README for more info:
-;; https://github.com/wasamasa/form-feed
+;; The implementation of display lines was inspired by the magic-buffer package,
+;; but did eventually remove its "cursor kicking" due to a rather puzzling bug.
+;;
+;; This package is a slightly customized version ofVasilij Schneidermann's
+;; form-feed package. That package's readme is a good read:
+;; https://github.com/wasamasa/form-feed.
 ;;
 ;;; Code:
 

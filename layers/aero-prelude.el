@@ -139,6 +139,11 @@
 	:config
 	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package form-feed
+	:load-path aero-packages-directory
+	:config
+	(add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
+
 
 ;; chicken dinner!
 
