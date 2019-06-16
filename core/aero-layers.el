@@ -19,7 +19,8 @@
 		aero-projectile
 		aero-restart
 		aero-git
-		aero-lisp)
+		aero-lisp
+		aero-wttrin)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'
