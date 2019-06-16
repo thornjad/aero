@@ -100,6 +100,6 @@
 
 (global-prettify-symbols-mode t)
 
-(defvar aero/gc-cons '(100000000 0.1))
+(defvar aero/gc-cons '(16777216 0.1)) ; 16 mB
 
 (provide 'aero-rc)
