@@ -66,4 +66,25 @@
 
 (use-package coffee-mode :ensure t)
 
+
+;; rivet
+
+;; written by James Sulak
+(use-package mmm-mode :ensure t
+	:config
+	(require 'mmm-auto)
+	(mmm-add-classes
+	 '((html-rvt
+			:submode tcl-mode
+			:delimiter-mode nil
+			:front "<\\?[=]?"
+			:front-offset 1
+			:back-offset 1
+			:back "\\?>")))
+	(setq mmm-submode-decoration-level 0)
+	(setq mmm-global-mode 'maybe)
+	(mmm-add-mode-ext-class 'html-mode "\\.rvt\\'" 'html-rvt)
+	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode))
+																auto-mode-alist)))
+
 (provide 'aero-web)
