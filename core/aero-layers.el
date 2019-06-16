@@ -20,7 +20,8 @@
 		aero-restart
 		aero-git
 		aero-lisp
-		aero-wttrin)
+		aero-wttrin
+		aero-eww)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'
