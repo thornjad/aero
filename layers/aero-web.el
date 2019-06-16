@@ -87,4 +87,11 @@
 	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode))
 																auto-mode-alist)))
 
+
+;; the rest
+
+;; major mode for editing Apache configuration files
+(use-package apache-mode
+  :quelpa (apache-mode :fetcher github :repo "emacsmirror/apache-mode"))
+
 (provide 'aero-web)
