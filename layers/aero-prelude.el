@@ -150,9 +150,6 @@
 (use-package dimmer :ensure t
 	:config (dimmer-mode))
 
-
-;; chicken dinner!
-
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 (general-define-key
@@ -160,10 +157,6 @@
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
  "wu" 'winner-undo)
-
-(use-package whitespace-cleanup-mode
-	:ensure t
-	:config (global-spacemacs-whitespace-cleanup-mode))
 
 
 ;; general keybindings
