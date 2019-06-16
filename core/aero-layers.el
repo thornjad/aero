@@ -17,7 +17,8 @@
 		aero-theme
 		aero-projectile
 		aero-restart
-		aero-git)
+		aero-git
+		aero-lisp)
 	"A list of layers to ensure at startup
 
 If a layer listed here does not have a corresponding file in the `layers'
