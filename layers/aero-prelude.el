@@ -168,6 +168,9 @@
 
 ;; general keybindings
 
+;; thanks Steve Yegge!
+(global-set-key "\C-w" 'backward-kill-word)
+
 (general-define-key
  :states '(normal visual insert replace emacs)
  :prefix "SPC"
