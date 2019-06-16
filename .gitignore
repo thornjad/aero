@@ -1,7 +1,9 @@
 auto-save-list/
 elpa/
+quelpa/
 .smex-items
 \#*
+\.#*
 .places
 .directory
 .cache
