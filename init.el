@@ -10,12 +10,20 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-;; Avoid garbage collection during startup.
-(setq gc-cons-threshold 402653184
-			gc-cons-percentage 0.6)
-
 ;; vérifier les erreurs dans ce fichier
 (setq debug-on-error t)
+
+;; Avoid garbage collection during startup.
+(setq gc-cons-threshold 268435456
+			gc-cons-percentage 0.6)
+
+;; Turn off mouse interface and other styles
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'default-frame-alist '(menu-bar-lines . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars))
 
 ;; Always load newest byte code
 (setq load-prefer-newer t)
@@ -81,7 +89,7 @@
 		(normal-top-level-add-subdirs-to-load-path))
 	(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 													 ("melpa" . "https://melpa.org/packages/")
-													 ("org" . "https://orgmode.org/elpa/")))
+													 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 	(package-initialize)
 	(unless (package-installed-p 'use-package)
 		(package-refresh-contents)
