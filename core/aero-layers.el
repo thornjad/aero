@@ -46,6 +46,10 @@ will be more efficient if compiled.")
 
 	;; now the rest
 	(dolist (layer aero-layer-list)
-		(aero/require-layer layer)))
+		(aero/require-layer layer))
+
+	;; and finally, tweaks pseudo-layer
+	(aero/require-layer 'aero-tweaks)
+	)
 
 (provide 'aero-layers)
