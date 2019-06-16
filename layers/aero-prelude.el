@@ -144,6 +144,9 @@
 	:config
 	(add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
 
+(use-package beacon-mode :ensure t
+	:config (beacon-mode 1))
+
 
 ;; chicken dinner!
 
