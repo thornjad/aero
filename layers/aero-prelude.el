@@ -144,7 +144,7 @@
 	:config
 	(add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
 
-(use-package beacon-mode :ensure t
+(use-package beacon :ensure t
 	:config (beacon-mode 1))
 
 (use-package dimmer :ensure t
