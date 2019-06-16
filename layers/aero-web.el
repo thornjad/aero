@@ -55,11 +55,6 @@
 				 tab-width 2)))
 
 
-;; coffee
-
-(use-package coffee-mode :ensure t)
-
-
 ;; rivet
 
 ;; written by James Sulak
@@ -82,6 +77,8 @@
 
 
 ;; the rest
+
+(use-package coffee-mode :ensure t)
 
 ;; major mode for editing Apache configuration files
 (use-package apache-mode
