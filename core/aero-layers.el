@@ -24,6 +24,7 @@
 		aero-markup
 		aero-sql
 		aero-shell
+		aero-heap
 		aero-eww)
 	"A list of layers to ensure at startup
 

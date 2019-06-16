@@ -1,0 +1,31 @@
+;; -*- lexical-binding: t -*-
+;;
+;; Copyright (c) 2019 Jade Michael Thornton
+;;
+;; This program is free software; you may redistribute it and/or modify it under
+;; the terms of the GNU General Public License version 3, as published by the
+;; Free Software Foundation. This program carries no warranty whatsoever,
+;; without even the implied warranty of merchantability or fitness for a
+;; particular purpose. See </license> for more details.
+;;
+;; This file is not part of GNU Emacs
+;;
+;; Commentary:
+;;
+;; This is simply a heap of miscellaneous, low-config packages.
+;;
+;; Code:
+
+(use-package man
+  :init (setq Man-notify-method 'aggressive))
+
+(use-package whitespace-cleanup-mode
+	:ensure t
+	:config (global-spacemacs-whitespace-cleanup-mode))
+
+(use-package recentf
+  :config
+  (setq recentf-save-file (expand-file-name "~/.recentf"))
+  (recentf-mode 1))
+
+(provide 'aero-heap)
