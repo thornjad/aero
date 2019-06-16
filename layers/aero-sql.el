@@ -43,3 +43,5 @@
         (evil-insert-state)))))
 
 (use-package sql-indent :defer t)
+
+(provide 'aero-sql)
