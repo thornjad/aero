@@ -161,6 +161,10 @@
  :non-normal-prefix "C-SPC"
  "wu" 'winner-undo)
 
+(use-package whitespace-cleanup-mode
+	:ensure t
+	:config (global-spacemacs-whitespace-cleanup-mode))
+
 
 ;; general keybindings
 
