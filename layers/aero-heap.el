@@ -21,7 +21,7 @@
 
 (use-package whitespace-cleanup-mode
 	:ensure t
-	:config (global-spacemacs-whitespace-cleanup-mode))
+	:config (global-whitespace-cleanup-mode))
 
 (use-package recentf
   :config
