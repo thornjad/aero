@@ -97,9 +97,15 @@
 	(eval-when-compile
 		(require 'use-package))
 	(use-package package
-		:config (setq package-check-signature nil)))
-
-(use-package quelpa :ensure t)
+		;; TODO check signature
+		:config (setq package-check-signature nil))
+	(use-package quelpa :ensure t
+		:config
+		(quelpa
+		 '(quelpa-use-package
+			 :fetcher git
+			 :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
+		(require 'quelpa-use-package)))
 
 (defun aero/update-packages ()
 	(interactive)
