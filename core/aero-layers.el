@@ -20,7 +20,6 @@
 		aero-restart
 		aero-git
 		aero-lisp
-		aero-wttrin
 		aero-eww)
 	"A list of layers to ensure at startup
 
@@ -40,7 +39,7 @@ will be more efficient if compiled.")
 	"Load all configured layers, listed above"
 	;; load up the prelude first, it defines some functions we want in other
 	;; layers. You could say it... /preludes/ the other layers
-	(aero/require-layer aero-prelude)
+	(aero/require-layer 'aero-prelude)
 
 	;; now the rest
 	(dolist (layer aero-layer-list)
