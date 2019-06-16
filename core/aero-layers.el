@@ -20,6 +20,7 @@
 		aero-restart
 		aero-git
 		aero-lisp
+		aero-web
 		aero-eww)
 	"A list of layers to ensure at startup
 
