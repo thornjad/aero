@@ -22,6 +22,7 @@
 		aero-lisp
 		aero-web
 		aero-markup
+		aero-sql
 		aero-eww)
 	"A list of layers to ensure at startup
 
