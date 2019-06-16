@@ -100,6 +100,12 @@
 		:config (setq package-check-signature nil)))
 
 (use-package quelpa :ensure t)
+
+(defun aero/update-packages ()
+	(interactive)
+	(package-refresh-contents)
+	(quelpa-upgrade))
+
 (defgroup aero nil
 	"Aero customizations"
 	:group 'starter-kit
