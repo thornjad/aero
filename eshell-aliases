@@ -1,0 +1,3 @@
+alias e find-file $1
+alias la ls -lah $*
+alias clear recenter 0

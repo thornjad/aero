@@ -23,6 +23,7 @@
 		aero-web
 		aero-markup
 		aero-sql
+		aero-shell
 		aero-eww)
 	"A list of layers to ensure at startup
 
