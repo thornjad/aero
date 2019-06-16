@@ -1,7 +1,5 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Aero core prelude layer
-;;
 ;; Copyright (c) 2019 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
