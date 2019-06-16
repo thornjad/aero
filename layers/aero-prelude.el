@@ -147,6 +147,9 @@
 (use-package beacon-mode :ensure t
 	:config (beacon-mode 1))
 
+(use-package dimmer :ensure t
+	:config (dimmer-mode))
+
 
 ;; chicken dinner!
 
