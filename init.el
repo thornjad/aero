@@ -161,6 +161,7 @@
 
 	(require 'subr-x)
 	(require 'aero-util)
+	(require 'aero-lib)
 
 	;; burn baby burn
 	(aero/init)

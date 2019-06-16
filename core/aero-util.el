@@ -1,5 +1,4 @@
 ;; -*- lexical-binding: t -*-
-;; Utilities
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
@@ -10,9 +9,14 @@
 ;; particular purpose. See </license> for more details.
 ;;
 ;; This file is not part of GNU Emacs
+;;
+;; Commentary:
+;;
+;; A home for non-interactive utilities
+;;
+;; Code:
 
 (use-package cl-lib :ensure t)
-(require 'aero-files)
 
 
 ;; async
@@ -118,46 +122,6 @@ If FUNC is a lambda you must give it a name with FNAME. "
                      (buffer-file-name b))
            return b))
 
-(defun aero/save-kill-emacs ()
-  (interactive)
-  (mapc (lambda (f) (ignore-errors (funcall f)))
-        aero/before-kill-hook)
-  (if (modified-buffers-p)
-      (progn
-        (when (not (eq window-system 'x))
-          (x-initialize-window-system))
-        (select-frame (make-frame-on-display (getenv "DISPLAY") '((window-system . x))))
-        (save-some-buffers)
-        (if (yes-or-no-p "Kill Emacs? ")
-            (kill-emacs)))
-    (kill-emacs)))
-
-;; https://sachachua.com/blog/2006/09/emacs-changing-the-font-size-on-the-fly/
-(defun aero/increase-font-size ()
-  (interactive)
-  (set-face-attribute
-	 'default
-   nil
-   :height
-   (ceiling (* 1.10
-               (face-attribute 'default :height)))))
-(defun aero/decrease-font-size ()
-  (interactive)
-  (set-face-attribute
-	 'default
-   nil
-   :height
-   (floor (* 0.9
-             (face-attribute 'default :height)))))
-(global-set-key (kbd "C-+") 'aero/increase-font-size)
-(global-set-key (kbd "C--") 'aero/decrease-font-size)
-
-;; apologize for smacking emacs (stop debug on quit)
-;; use this after smacking emacs with SIGUSR2
-(defun aero/apologize-to-emacs ()
-	(interactive)
-	(toggle-debug-on-quit))
-
 
 ;; logging
 
@@ -181,6 +145,21 @@ If FUNC is a lambda you must give it a name with FNAME. "
   (interactive)
   (let ((message-log-max nil))
     (apply 'message msg args)))
+
+
+;; files, buffers, windows
+
+(defun aero|move-buffer-to-window (windownum follow-focus-p)
+  "Moves a buffer to a window, using the aero numbering. follow-focus-p controls
+   whether focus moves to new window (with buffer), or stays on current"
+  (let ((b (current-buffer))
+        (w1 (selected-window))
+        (w2 (winum-get-window-by-number windownum)))
+    (unless (eq w1 w2)
+      (set-window-buffer w2 b)
+      (switch-to-prev-buffer)
+      (unrecord-window-buffer w1 b)))
+  (when follow-focus-p (select-window (winum-get-window-by-number windownum))))
 
 
 ;; general nice functions
