@@ -12,9 +12,10 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+;; TODO can these just be loaded by file-name?
+;;   - but then how would layers be disabled (it happens)?
 (defvar aero-layer-list
-	'(aero-prelude
-		aero-theme
+	'(aero-theme
 		aero-projectile
 		aero-restart
 		aero-git
@@ -35,6 +36,11 @@ will be more efficient if compiled.")
 
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
+	;; load up the prelude first, it defines some functions we want in other
+	;; layers. You could say it... /preludes/ the other layers
+	(aero/require-layer aero-prelude)
+
+	;; now the rest
 	(dolist (layer aero-layer-list)
 		(aero/require-layer layer)))
 
