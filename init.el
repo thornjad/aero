@@ -99,6 +99,7 @@
 	(use-package package
 		:config (setq package-check-signature nil)))
 
+(use-package quelpa :ensure t)
 (defgroup aero nil
 	"Aero customizations"
 	:group 'starter-kit
