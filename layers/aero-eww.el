@@ -10,14 +10,17 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(defun add-title-to-eww-buffer-name ()
-	"Rename eww mode buffer so the title of the page is displayed, making
+(use-package eww
+	:config
+	(setq eww-search-prefix "https://startpage.com/do/m/mobilesearch?query=")
+	(defun add-title-to-eww-buffer-name ()
+		"Rename eww mode buffer so the title of the page is displayed, making
 		 fake-tabbed-browsing easier"
-	(let ((title (plist-get eww-data :title)))
-		(when (eq major-mode 'eww-mode)
-			(if title
-					(rename-buffer (concat "eww - " title) t)
-				(rename-buffer "eww" t)))))
-(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name)
+		(let ((title (plist-get eww-data :title)))
+			(when (eq major-mode 'eww-mode)
+				(if title
+						(rename-buffer (concat "eww - " title) t)
+					(rename-buffer "eww" t)))))
+	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name))
 
 (provide 'aero-eww)
