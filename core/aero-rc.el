@@ -19,12 +19,13 @@
  ring-bell-function 'ignore ; supprime cette putain de cloche.
  sentence-end-double-space nil
  default-fill-column 80
- help-window-select t       ; focus help window when opened
- kill-ring-max 5000                     ;truncate kill ring after 5000 entries
- mark-ring-max 5000                     ;truncate mark ring after 5000 entries
+ help-window-select t ; focus help window when opened
+ kill-ring-max 5000 ; truncate kill ring after 5000 entries
+ mark-ring-max 5000 ; truncate mark ring after 5000 entries
  mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))) ;make mouse scrolling smooth
  apropos-do-all t
  mouse-yank-at-point t
+ global-display-line-numbers-mode nil ; fuck line numbers
 
  ;; version control and saving
  use-package-verbose nil
