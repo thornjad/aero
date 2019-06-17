@@ -18,7 +18,11 @@
 	(setq projectile-indexing-method 'alien
 				projectile-enable-caching t
 				;; fix sub-projects bug https://github.com/bbatsov/projectile/issue/1302
-				projectile-git-submodule-command nil)
+				projectile-git-submodule-command nil))
+
+(use-package counsel-projectile :ensure t
+	:after projectile
+	:config
 	(general-define-key
 	 :states '(normal insert emacs)
 	 :prefix "SPC"
