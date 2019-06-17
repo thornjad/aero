@@ -31,15 +31,17 @@
 	:config
 	(global-git-commit-mode)
 	(general-define-key
-	 :states 'normal
+	 :states '(normal emacs)
 	 :prefix "SPC"
+	 :non-normal-prefix "C-SPC"
 	 "gs" 'magit-status
 	 "gS" 'magit-stage-file
 	 "gU" 'magit-unstage-file
-	 "gb" 'magit-blame))
+	 "gb" 'magit-blame)
+	(use-package magit-todos :ensure t)
+	(use-package evil-magit :ensure t)
+)
 
-(use-package magit-todos :ensure t
-	:after magit)
 
 (use-package gitlab-ci-mode :ensure t)
 
