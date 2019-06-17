@@ -12,6 +12,8 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(require 'cl-lib)
+
 
 ;; garder ma merde à jour
 
@@ -39,11 +41,30 @@
 
 (use-package evil :ensure t
   :commands (evil-mode)
+
   :init
   (aero/add-hook!
    'after-init-hook
    (evil-mode 1)
    (setq evil-want-fin-undo t))
+
+	:config
+
+	;; set states for certain modes
+	(cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . normal)
+																(nrepl-mode . insert)
+																(comint-mode . normal)
+																(shell-mode . insert)
+																(git-commit-mode . insert)
+																(git-rebase-mode . normal)
+																(term-mode . normal)
+																(help-mode . normal)
+																(grep-mode . normal)
+																(magit-branch-manager-mode . normal)
+																(dired-mode . normal)
+																(wdired-mode . normal))
+				do (evil-set-initial-state mode state))
+
 	(general-define-key
 	 :states 'normal
 	 :prefix "SPC"
