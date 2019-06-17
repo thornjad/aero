@@ -23,9 +23,4 @@
 	:ensure t
 	:config (global-whitespace-cleanup-mode))
 
-(use-package recentf
-  :config
-  (setq recentf-save-file (expand-file-name "~/.recentf"))
-  (recentf-mode 1))
-
 (provide 'aero-heap)

@@ -81,6 +81,10 @@
 
 (use-package counsel :ensure t
   :config
+	(use-package recentf
+		:config
+		(setq recentf-save-file (expand-file-name "~/.recentf"))
+		(recentf-mode 1))
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
                 "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
