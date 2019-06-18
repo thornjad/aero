@@ -123,6 +123,9 @@
 (defvar aero-initialized nil
 	"Whether Aero has finished initialization")
 
+
+;; init functions
+
 (defun aero/init ()
 	"Perform startup initialization"
 
@@ -136,14 +139,13 @@
 
 (defun aero/startup-hook ()
 	"Post-init processing"
-	(add-hook
+	(aero/add-hook!
 	 'emacs-startup-hook
-	 (defun aero/init-hook ()
-		 (require 'aero-rc)
-		 (setq aero-initialized t)
-		 (setq gc-cons-threshold (car aero/gc-cons)
-					 gc-cons-percentage (cadr aero/gc-cons))
-		 (global-font-lock-mode))))
+	 (require 'aero-rc)
+	 (setq aero-initialized t)
+	 (setq gc-cons-threshold (car aero/gc-cons)
+				 gc-cons-percentage (cadr aero/gc-cons))
+	 (global-font-lock-mode)))
 
 
 ;; The actual initilization
