@@ -11,7 +11,9 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+
 ;; global defaults
+
 (setq-default
 
  ;; general
@@ -63,6 +65,9 @@
 
 ;; remplace yes no par y n
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+
+;; modes
 
 ;; display changes
 (show-paren-mode 1) ; highlight delimiters
