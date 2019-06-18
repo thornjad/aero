@@ -43,13 +43,12 @@
   :commands (evil-mode)
 
   :init
-  (aero/add-hook!
-   'after-init-hook
-   (evil-mode 1)
-   (setq evil-want-fin-undo t))
+	(evil-mode 1)
+  (setq-default evil-want-fine-undo t
+								evil-want-C-i-jump nil
+								evil-want-C-u-scroll t)
 
 	:config
-
 	;; set states for certain modes
 	(cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . normal)
 																(nrepl-mode . insert)

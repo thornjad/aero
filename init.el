@@ -131,13 +131,6 @@
 	;; explicitly set utf-8 to avoid prompt from emacs
 	(prefer-coding-system 'utf-8)
 
-	;; TODO
-	;; (setq-default evil-want-C-u-scroll t
-  ;;               ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
-  ;;               ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
-  ;;               ;; instead.
-  ;;               evil-want-C-i-jump nil)
-
 	(require 'aero-layers)
 	(aero/load-layers))
 
