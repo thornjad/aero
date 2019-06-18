@@ -40,8 +40,6 @@
 ;; we descend to hell
 
 (use-package evil :ensure t
-  :commands (evil-mode)
-
   :init
   (setq evil-want-fine-undo t
 								evil-want-C-i-jump nil
@@ -148,7 +146,8 @@
 	 "bb" 'ivy-switch-buffer))
 
 (use-package swiper :ensure t
-	:config
+  :commands 'swiper
+	:init
 	(general-define-key
 	 :states '(normal emacs)
 	 :prefix "SPC"
@@ -160,7 +159,7 @@
 ;; general appearance
 
 (use-package rainbow-delimiters :ensure t
-	:config
+	:init
 	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package form-feed
