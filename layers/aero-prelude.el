@@ -43,8 +43,7 @@
   :commands (evil-mode)
 
   :init
-	(evil-mode 1)
-  (setq-default evil-want-fine-undo t
+  (setq evil-want-fine-undo t
 								evil-want-C-i-jump nil
 								evil-want-C-u-scroll t)
 
@@ -67,7 +66,8 @@
 	(general-define-key
 	 :states 'normal
 	 :prefix "SPC"
-	 "fS" 'evil-write-all))
+	 "fS" 'evil-write-all)
+	(evil-mode 1))
 
 (use-package evil-matchit :ensure t
   :config
