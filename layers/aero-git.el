@@ -28,8 +28,7 @@
              magit-status
              magit-unstage-file
              magit-blame-mode)
-	:config
-	(global-git-commit-mode)
+  :init
 	(general-define-key
 	 :states '(normal emacs)
 	 :prefix "SPC"
@@ -38,6 +37,9 @@
 	 "gS" 'magit-stage-file
 	 "gU" 'magit-unstage-file
 	 "gb" 'magit-blame)
+
+	:config
+	(global-git-commit-mode)
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t)
 )
