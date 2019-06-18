@@ -82,13 +82,22 @@
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
+
+;; system-specific
+
+(when (string= system-type "darwin")
+	(setq-default dired-use-ls-dired nil))
+(unless (eq window-system 'ns)
+  (menu-bar-mode -1))
+
+
+;; et cetera
+
 ;; rend les scripts executable par défault si c'est un script.
 (aero/add-hook! 'after-save-hook
 	(executable-make-buffer-file-executable-if-script-p))
 
 ;; turn off unneeded stuff when unneeded
-(unless (eq window-system 'ns)
-  (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
