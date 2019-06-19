@@ -1,5 +1,13 @@
 AERO EMACS
 
+ _______                     _______
+(_______)                   (_______) Voici la vraie liberté
+ _______ _____  ____ ___     _____   ____  _____  ____  ___
+|  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
+| |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
+|_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
+   .-      .    .-.  ---        .     --    .-    -.-. ...
+
 Aero is my own approach to Emacs, blending all the best shit I can find. It is
 not intended for widespread use; it is tailored for what I want and use.
 
@@ -7,22 +15,36 @@ Emacs changes the way you think about programming, as does Lisp itself. The
 sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
 by decades of rich experience and a fantastic culture.
 
-This configuration features Spacemacs-esque leader-key-based bindings, a layer
-system inspired by Prelude Emacs and Spacemacs, as well as functions and macros
-borrowed from the likes of Samuel Barreto, Steve Purcell and James Sulak. The
-theme is based on Gruvbox and Doom.
-
 Special focus is put on writing Lisps, Python, TCL, Node and the several web
 languages.
 
 INSTALLING
 
-Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported.
+Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
+optimized to use the font Dank Mono, but also works great with Source Code Pro.
 
-Aero is optimized to use the font Dank Mono, but also works great with Source
-Code Pro.
+To install, clone or download this repository into your =~/.emacs.d=. There are
+three mirrors to choose from:
 
-	git clone https://gitlab.com/thornjad/aero ~/.emacs.d
+GitLab (best)     https://gitlab.com/thornjad/aero
+Framagit (better) https://framagit.org/thornjad/aero
+GitHub (ok)       https://github.com/thornjad/aero
+
+CREDITS
+
+Aero couldn't be as beautiful as it is without help from the community. Much
+configuration, functions, macros and other crap has been copied or modified
+from:
+
+- Spacemacs
+- Prelude Emacs
+- Doom Emacs
+- ErgoEmacs
+- Samuel Barreto
+- Steve Purcell
+- James Sulak
+- John Wiegley
+- Michael Markert
 
 LICENSE
 
