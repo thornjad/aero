@@ -55,9 +55,9 @@
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
-;; apologize for smacking emacs (stop debug on quit)
-;; use this after smacking emacs with SIGUSR2
 (defun aero/apologize-to-emacs ()
+	"Apologize for smacking emacs (stop debug on quit). Use this after smacking
+emacs with sigusr2"
 	(interactive)
 	(toggle-debug-on-quit))
 
