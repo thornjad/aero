@@ -216,6 +216,9 @@
 
  "g" '(:ignore t :which-key "git")
  "r" '(:ignore t :which-key "rings")
- "w" '(:ignore t :which-key "window"))
+
+ "w" '(:ignore t :which-key "window")
+ "w/" '(evil-window-vsplit :which-key "split vertical")
+ "w-" '(evil-window-split :which-key "split horizontal"))
 
 (provide 'aero-prelude)
