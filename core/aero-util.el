@@ -16,7 +16,8 @@
 ;;
 ;; Code:
 
-(use-package cl-lib :ensure t)
+(eval-when-compile
+  (require 'cl-lib))
 
 
 ;; async
