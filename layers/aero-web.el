@@ -31,7 +31,7 @@
 	 (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
 	 (setq emmet-expand-jsx-className? t)))
 
-(use-package scss-mode
+(use-package scss-mode :ensure t
   :defer t
   :mode ("\\.scss\\.css\\'" . scss-mode))
 
@@ -81,7 +81,7 @@
 (use-package coffee-mode :ensure t)
 
 ;; major mode for editing Apache configuration files
-(use-package apache-mode
+(use-package apache-mode :ensure t
   :quelpa (apache-mode :fetcher github :repo "emacsmirror/apache-mode"))
 
 (provide 'aero-web)
