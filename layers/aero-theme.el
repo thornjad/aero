@@ -97,21 +97,6 @@
      (whitespace-empty                          (:background nil :foreground nil))
      (whitespace-space-after-tab                (:background aero-bg :foreground aero-dark4))
 
-     ;; RainbowDelimiters
-     (rainbow-delimiters-depth-1-face           (:foreground aero-delimiter-one))
-     (rainbow-delimiters-depth-2-face           (:foreground aero-delimiter-two))
-     (rainbow-delimiters-depth-3-face           (:foreground aero-delimiter-three))
-     (rainbow-delimiters-depth-4-face           (:foreground aero-delimiter-four))
-     (rainbow-delimiters-depth-5-face           (:foreground aero-delimiter-one))
-     (rainbow-delimiters-depth-6-face           (:foreground aero-delimiter-two))
-     (rainbow-delimiters-depth-7-face           (:foreground aero-delimiter-three))
-     (rainbow-delimiters-depth-8-face           (:foreground aero-delimiter-four))
-     (rainbow-delimiters-depth-9-face           (:foreground aero-delimiter-one))
-     (rainbow-delimiters-depth-10-face          (:foreground aero-delimiter-two))
-     (rainbow-delimiters-depth-11-face          (:foreground aero-delimiter-three))
-     (rainbow-delimiters-depth-12-face          (:foreground aero-delimiter-four))
-     (rainbow-delimiters-unmatched-face         (:background nil :foreground aero-light0))
-
      ;; Highlight indentation mode
      (highlight-indentation-current-column-face (:background aero-dark2))
      (highlight-indentation-face                (:background aero-dark1))
@@ -627,10 +612,6 @@
  'rjsx-mode-hook
  (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
  (setq emmet-expand-jsx-className? t))
-
-(use-package rainbow-delimiters :ensure t
-	:defines (rainbow-delimiters-mode)
-	:hook prog-mode)
 
 (use-package form-feed
 	:load-path aero-packages-directory
