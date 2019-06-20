@@ -12,12 +12,14 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(require 'cl-lib)
+(eval-when-compile
+  (require 'cl-lib))
 
 
 ;; garder ma merde à jour
 
 (use-package auto-package-update :ensure t
+	:defines auto-package-update-maybe
   :config
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t)
@@ -26,10 +28,29 @@
 
 ;; the general is here
 
+;; TODO use :general keyword with use-package
 (use-package which-key :ensure t
+	:defines which-key-mode
 	:config
 	(which-key-mode))
 (use-package general :ensure t
+	:defines (general-define-key)
+  :functions (general-imap
+							general-emap
+							general-nmap
+							general-vmap
+							general-mmap
+							general-omap
+							general-rmap
+							general-iemap
+							general-nvmap
+							general-itomap
+							general-otomap
+							general-tomap
+							general--sanitize-arglist
+							general-normalize-hook-arglist
+							general-normalize-hook
+							use-package-handler/:ghook)
 	:config
 	(general-define-key
 	 :states '(normal motion)
@@ -68,14 +89,17 @@
 	(evil-mode 1))
 
 (use-package evil-matchit :ensure t
+	:defines global-evil-matchit-mode
   :config
   (global-evil-matchit-mode 1))
 
 (use-package evil-surround :ensure t
+	:defines global-evil-surround-mode
   :config
   (global-evil-surround-mode))
 
 (use-package evil-visualstar :ensure t
+	:defines global-evil-visualstar-mode
   :config
   (global-evil-visualstar-mode t))
 
@@ -100,6 +124,7 @@
 (use-package counsel :ensure t
   :config
 	(use-package recentf
+		:defines (recentf-mode)
 		:config
 		(setq recentf-save-file (expand-file-name "~/.recentf"))
 		(recentf-mode 1))
@@ -131,6 +156,7 @@
 	 "hdp" 'describe-package))
 
 (use-package ivy :ensure t
+	:defines (ivy-mode)
 	:config
 	(ivy-mode 1)
 	(setq ivy-initial-inputs-alist nil ; screw the regex
