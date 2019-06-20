@@ -16,16 +16,17 @@
  :non-normal-prefix "C-SPC"
  "'" 'eshell)
 
-(setq eshell-aliases-file (concat user-emacs-directory "eshell-aliases"))
-(setq eshell-save-history-on-exit t
-			eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
-(setq eshell-prompt-function
-			(lambda ()
-				(concat
-				 "\n"
-				 (propertize " ┌─── " 'face '(:foreground "green"))
-				 (propertize (eshell/pwd) 'face '(:weight ultra-bold))
-				 "\n"
-				 (propertize " └─ λ " 'face '(:foreground "green")))))
+(setq-default eshell-aliases-file (concat user-emacs-directory "eshell-aliases")
+              eshell-save-history-on-exit t
+              eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
+(setq-default
+ eshell-prompt-function
+ (lambda ()
+   (concat
+    "\n"
+    (propertize " ┌─── " 'face '(:foreground "green"))
+    (propertize (eshell/pwd) 'face '(:weight ultra-bold))
+    "\n"
+    (propertize " └─ λ " 'face '(:foreground "green")))))
 
 (provide 'aero-shell)
