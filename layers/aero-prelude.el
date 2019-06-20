@@ -63,24 +63,24 @@
 (use-package evil :ensure t
   :init
   (setq evil-want-fine-undo t
-								evil-want-C-i-jump nil
-								evil-want-C-u-scroll t)
+				evil-want-C-i-jump nil
+				evil-want-C-u-scroll t)
 
 	:config
 	;; set states for certain modes
 	(cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . normal)
-																(nrepl-mode . insert)
-																(comint-mode . normal)
-																(shell-mode . insert)
-																(git-commit-mode . insert)
-																(git-rebase-mode . normal)
-																(term-mode . normal)
-																(help-mode . normal)
-																(grep-mode . normal)
-																(magit-branch-manager-mode . normal)
-																(dired-mode . normal)
-																(wdired-mode . normal))
-				do (evil-set-initial-state mode state))
+																	 (nrepl-mode . insert)
+																	 (comint-mode . normal)
+																	 (shell-mode . insert)
+																	 (git-commit-mode . insert)
+																	 (git-rebase-mode . normal)
+																	 (term-mode . normal)
+																	 (help-mode . normal)
+																	 (grep-mode . normal)
+																	 (magit-branch-manager-mode . normal)
+																	 (dired-mode . normal)
+																	 (wdired-mode . normal))
+					 do (evil-set-initial-state mode state))
 
 	(general-define-key
 	 :states 'normal
@@ -145,15 +145,7 @@
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 "hda" '(counsel-apropos :which-kay "apropos")
-	 "hdf" 'describe-function
-	 "hdb" 'describe-bindings
-	 "hdv" 'describe-variable
-	 "hdm" 'describe-mode
-	 "hdk" 'describe-key
-	 "hdK" 'describe-keymap
-	 "hdc" 'describe-char
-	 "hdp" 'describe-package))
+	 "hda" '(counsel-apropos :which-kay "apropos"))
 
 (use-package ivy :ensure t
 	:defines (ivy-mode)
@@ -219,15 +211,46 @@
 
  "h" '(:ignore t :which-key "help/manual")
  "hd" '(:ignore t :which-key "describe")
+ "hdf" 'describe-function
+ "hdb" 'describe-bindings
+ "hdv" 'describe-variable
+ "hdm" 'describe-mode
+ "hdk" 'describe-key
+ "hdK" 'describe-keymap
+ "hdc" 'describe-char
+ "hdp" 'describe-package)
 
  "b" '(:ignore t :which-key "buffers")
  "bn" 'next-buffer
  "bp" 'previous-buffer
  "bl" 'list-buffers
  "bw" 'aero/move-buffer-to-window
+ "bm" 'switch-to-messages-buffer
+ "bs" 'switch-to-scratch-buffer
+ "bd" 'kill-this-buffer
+ "bx" 'kill-buffer-and-window
+
+ "a" '(:ignore t :which-key "applications")
+ "ad" 'counsel-dired
+
+ "c" '(:ignore t :which-key "compile")
+ "cc" 'compile
+ "ck" 'kill-compilation
+ "cr" 'recompile
+
+ "e" '(:ignore t :which-key "errors")
+ "en" 'next-error
+ "ep" 'previous-error
+
+ "F" '(:ignore t :which-key "frame")
+ "Fd" 'delete-frame
+ "Fo" 'other-frame
+ "Ff" 'find-file-other-frame
+ "Fn" 'make-frame
 
  "g" '(:ignore t :which-key "git")
  "r" '(:ignore t :which-key "rings")
+ "j" '(:ignore t :which-key "jump")
 
  "w" '(:ignore t :which-key "window")
  "w/" '(evil-window-vsplit :which-key "split vertical")

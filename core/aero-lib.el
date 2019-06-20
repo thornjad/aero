@@ -75,4 +75,12 @@ emacs with sigusr2"
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
 
+(defun switch-to-messages-buffer ()
+	(interactive)
+	(switch-to-buffer "*Messages*"))
+
+(defun switch-to-scratch-buffer ()
+	(interactive)
+	(switch-to-buffer "*Scratch*"))
+
 (provide 'aero-lib)
