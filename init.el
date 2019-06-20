@@ -129,12 +129,16 @@
 ;; init functions
 
 (defun aero/init ()
-	"Perform startup initialization"
+	"Perform startup initialization, including all comilation and loading"
 
 	;; silence ad-handle-definition without advised functions being redefined
 	(setq ad-redefinition-action 'accept)
 	;; explicitly set utf-8 to avoid prompt from emacs
 	(prefer-coding-system 'utf-8)
+
+	;; compile
+	(byte-recompile-directory aero-core-directory 0)
+	(byte-recompile-directory aero-layer-directory 0)
 
 	(require 'aero-layers)
 	(aero/load-layers))
