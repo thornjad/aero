@@ -49,7 +49,7 @@
      (mode-line-inactive                        (:background aero-dark1 :foreground aero-light4 :box nil))
      (fringe                                    (:background aero-bg))
      (hl-line                                   (:background aero-dark1))
-     (region                                    (:background aero-dark2)) ;;selection
+     (region                                    (:background aero-dark2))
      (secondary-selection                       (:background aero-dark1))
      (minibuffer-prompt                         (:background aero-bg :foreground aero-bright_green :bold t))
      (vertical-border                           (:foreground aero-dark2))
@@ -491,18 +491,6 @@
      (eshell-ls-special-face                     (:foreground aero-bright_yellow :bold t))
      (eshell-ls-symlink-face                     (:foreground aero-bright_red))
      (eshell-ls-unreadable-face                  (:foreground aero-bright_red :bold t))
-
-     ;; tabbar
-     (tabbar-default                             (:foreground aero-light0 :background aero-dark3 :bold nil :height 1.0 :box (:line-width -5 :color aero-dark3)))
-     (tabbar-separator                           (:foreground aero-light0 :background aero-dark3))
-     (tabbar-highlight                           (:inherit 'highlight))
-     (tabbar-button                              (:foreground aero-dark3 :background aero-dark3 :box nil :line-width 0))
-     (tabbar-button-highlight                    (:inherit 'tabbar-button :inverse-video t))
-     (tabbar-modified                            (:foreground aero-bright_green :background aero-dark3 :box (:line-width -5 :color aero-dark3)))
-     (tabbar-unselected                          (:inherit 'tabbar-default))
-     (tabbar-unselected-modified                 (:inherit 'tabbar-modified))
-     (tabbar-selected                            (:inherit 'tabbar-default :foreground aero-bright_yellow))
-     (tabbar-selected-modified                   (:inherit 'tabbar-selected))
 
      ;; wgrep
      (wgrep-delete-face                          (:strike-through aero-bright_red))
