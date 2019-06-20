@@ -86,6 +86,8 @@
 	"Bootstrap `use-package' and set up for use"
 	(setq package-enable-at-startup nil)
 	(let ((default-directory "~/.emacs.d/elpa"))
+		(unless (file-directory-p default-directory)
+			(make-directory default-directory))
 		(normal-top-level-add-subdirs-to-load-path))
 	(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 													 ("melpa" . "https://melpa.org/packages/")
