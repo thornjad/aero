@@ -11,6 +11,7 @@
 ;; This file is not part of GNU Emacs
 
 (use-package sql
+	:ensure t
   :defer t
   :config
   (defun aero/sql-send-string-and-focus ()
@@ -41,6 +42,8 @@
       (sql-send-region start end)
       (evil-insert-state))))
 
-(use-package sql-indent :defer t)
+(use-package sql-indent :ensure t
+	:defer t
+	:pin gnu)
 
 (provide 'aero-sql)
