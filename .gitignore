@@ -23,7 +23,6 @@ crown/
 bookmarks
 .DS_Store
 tmp/
-*.elc
 *.pyc
 /*.zip
 *.db
