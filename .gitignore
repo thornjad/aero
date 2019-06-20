@@ -19,6 +19,8 @@ tramp
 elnode/
 var/
 crown/
+transient/
+.last-package-update-day
 *.stackdump
 bookmarks
 .DS_Store
