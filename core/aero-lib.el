@@ -62,11 +62,17 @@ emacs with sigusr2"
 	(toggle-debug-on-quit))
 
 
-;; buffers
+;; buffers, windows
 
 (defun aero/move-buffer-to-window ()
 	"Interactive move buffer to window"
 	(interactive)
 	(aero|move-buffer-to-window (read-string "Move to:") t))
+
+(defun aero/switch-to-minibuffer-window ()
+  "switch to minibuffer window (if active)"
+  (interactive)
+  (when (active-minibuffer-window)
+    (select-window (active-minibuffer-window))))
 
 (provide 'aero-lib)

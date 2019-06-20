@@ -190,7 +190,8 @@
  :states '(normal emacs)
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
- "wu" 'winner-undo)
+ "wu" 'winner-undo
+ "wU" 'winner-redo)
 
 
 ;; general keybindings
@@ -230,6 +231,16 @@
 
  "w" '(:ignore t :which-key "window")
  "w/" '(evil-window-vsplit :which-key "split vertical")
- "w-" '(evil-window-split :which-key "split horizontal"))
+ "w-" '(evil-window-split :which-key "split horizontal")
+ "wh" 'evil-window-left
+ "wl" 'evil-window-right
+ "wk" 'evil-window-up
+ "wj" 'evil-window-down
+ "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
+ "wd" 'delete-window
+ "wF" 'make-frame
+ "wx" 'kill-buffer-and-window
+ "w{" 'shrink-window
+ "w}" 'enlarge-window)
 
 (provide 'aero-prelude)
