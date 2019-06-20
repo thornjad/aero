@@ -184,21 +184,6 @@
 
 ;; general appearance
 
-(use-package rainbow-delimiters :ensure t
-	:init
-	(add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-
-(use-package form-feed
-	:load-path aero-packages-directory
-	:config
-	(add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
-
-(use-package beacon :ensure t
-	:config (beacon-mode 1))
-
-(use-package dimmer :ensure t
-	:config (dimmer-mode))
-
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 (general-define-key

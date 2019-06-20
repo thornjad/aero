@@ -623,9 +623,25 @@
 	(aero/add-hook! 'doom-modeline-mode-hook
 						 (doom-modeline-set-modeline 'aero 'default)))
 
-(add-hook 'rjsx-mode-hook
-          (lambda ()
-            (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
-            (setq emmet-expand-jsx-className? t)))
+(aero/add-hook!
+ 'rjsx-mode-hook
+ (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
+ (setq emmet-expand-jsx-className? t))
+
+(use-package rainbow-delimiters :ensure t
+	:defines (rainbow-delimiters-mode)
+	:hook prog-mode)
+
+(use-package form-feed
+	:load-path aero-packages-directory
+	:hook ((prog-mode text-mode) . form-feed-mode))
+
+(use-package beacon :ensure t
+	:defines beacon-mode
+	:config (beacon-mode 1))
+
+(use-package dimmer :ensure t
+	:defines dimmer-mode
+	:config (dimmer-mode))
 
 (provide 'aero-theme)
