@@ -40,7 +40,7 @@
        (progn ,@body)
      (message (format "%s not loaded" ,feature))))
 
-(defmacro aero/load-and-exec! (file &optional &rest body)
+(defmacro aero/load-and-exec! (file &rest body)
   "Load the file and execute body if it was successfull loaded."
   (declare (indent 1))
   `(if (load ,file t)
