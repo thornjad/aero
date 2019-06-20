@@ -11,6 +11,8 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(require 'aero-util)
+
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
