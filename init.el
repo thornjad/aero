@@ -136,10 +136,6 @@
 	;; explicitly set utf-8 to avoid prompt from emacs
 	(prefer-coding-system 'utf-8)
 
-	;; compile
-	(byte-recompile-directory aero-core-directory 0)
-	(byte-recompile-directory aero-layer-directory 0)
-
 	(require 'aero-layers)
 	(aero/load-layers))
 
