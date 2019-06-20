@@ -146,12 +146,7 @@ window."
   :lighter form-feed-lighter
   (if form-feed-mode
       (form-feed--add-font-lock-keywords)
-    (form-feed--remove-font-lock-keywords))
-
-  (when (called-interactively-p 'interactive)
-    (if (fboundp 'font-lock-flush)
-        (font-lock-flush)
-      (font-lock-fontify-buffer))))
+    (form-feed--remove-font-lock-keywords)))
 
 (provide 'form-feed)
 ;;; form-feed.el ends here
