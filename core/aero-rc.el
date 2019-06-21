@@ -70,14 +70,9 @@
 ;; modes
 
 ;; display changes
-(show-paren-mode 1) ; highlight delimiters
-(line-number-mode -1) ; only show line number in mode line
-(column-number-mode -1) ; also show column in mode line
 (setq-default initial-major-mode 'fundamental-mode)
 (aero/add-hook! 'before-save-hook
 	(delete-trailing-whitespace))
-(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-(add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
 
 ;; type to get rid of active selection
 (delete-selection-mode t)

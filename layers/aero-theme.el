@@ -584,6 +584,12 @@
                                 ,aero-light1])
            `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
 
+(show-paren-mode t) ; highlight delimiters
+(line-number-mode t) ; only show line number in mode line
+(column-number-mode t) ; also show column in mode line
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+(add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
+
 (use-package doom-modeline :ensure t
   :config
   (doom-modeline-init)
@@ -608,5 +614,9 @@
 (use-package dimmer :ensure t
 	:defines dimmer-mode
 	:config (dimmer-mode))
+
+(use-package hl-todo
+  :ensure t
+  :hook (prog-mode . hl-todo-mode))
 
 (provide 'aero-theme)
