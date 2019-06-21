@@ -10,8 +10,12 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(setq inferior-lisp-program "sbcl")
+
 (use-package on-parens :ensure t)
 
-(setq inferior-lisp-program "sbcl")
+(use-package hy-mode
+  :ensure t
+  :mode ("\\.hy\\'" . hy-mode))
 
 (provide 'aero-lisp)
