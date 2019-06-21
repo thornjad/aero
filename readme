@@ -16,13 +16,23 @@ by decades of rich experience and a fantastic culture.
 Special focus is put on writing Lisps, Python, TCL, Node and the several web
 languages.
 
-INSTALLING
+REQUIREMENTS
 
 Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
 optimized to use the font Dank Mono, but also works great with Source Code Pro.
 
-To install, clone or download this repository into your ~/.emacs.d. There are
-three mirrors to choose from:
+Flycheck requires the following external tools:
+
+- coffeescript (compiler, npm)
+- clutchski/coffeelint (npm)
+- sasstools/sass-lint (npm)
+- eslint (npm)
+- thornjad/loren (gitlab)
+
+INSTALLING
+
+Clone or download this repository into your ~/.emacs.d. There are three mirrors
+to choose from:
 
 GitLab (best)     https://gitlab.com/thornjad/aero
 Framagit (better) https://framagit.org/thornjad/aero

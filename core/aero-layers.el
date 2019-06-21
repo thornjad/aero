@@ -44,6 +44,7 @@ will be more efficient if compiled.")
 ;; TODO parallel?
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
+
 	;; load up the prelude first, it defines some functions we want in other
 	;; layers. You could say it... /preludes/ the other layers
 	(aero/require-layer 'aero-prelude)
@@ -53,7 +54,6 @@ will be more efficient if compiled.")
 		(aero/require-layer layer))
 
 	;; and finally, tweaks pseudo-layer
-	(aero/require-layer 'aero-tweaks)
-	)
+	(aero/require-layer 'aero-tweaks))
 
 (provide 'aero-layers)
