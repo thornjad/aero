@@ -51,72 +51,77 @@
 							general-normalize-hook-arglist
 							general-normalize-hook
 							use-package-handler/:ghook)
+	:init
+	(setq general-override-states
+				'(insert
+					emacs
+					hybrid
+					normal
+					visual
+					motion
+					operator
+					replace))
 	:config
 	(general-define-key
-	 :states '(normal motion)
+	 :states '(normal visual motion emacs)
+	 :keymaps 'override
 	 :prefix "SPC"
+	 :non-normal-prefix "C-SPC"
 	 "" nil))
 
 
 ;; we descend to hell
 
 (use-package evil :ensure t
+	:after general
   :init
-  (setq evil-want-fine-undo t
+  (setq evil-want-keybinding nil
+				evil-want-fine-undo t
 				evil-want-C-i-jump nil
 				evil-want-C-u-scroll t)
 
 	:config
-	;; set states for certain modes
-	(cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . normal)
-																	 (nrepl-mode . insert)
-																	 (comint-mode . normal)
-																	 (shell-mode . insert)
-																	 (git-commit-mode . insert)
-																	 (git-rebase-mode . normal)
-																	 (term-mode . normal)
-																	 (help-mode . normal)
-																	 (grep-mode . normal)
-																	 (magit-branch-manager-mode . normal)
-																	 (dired-mode . normal)
-																	 (wdired-mode . normal))
-					 do (evil-set-initial-state mode state))
-
 	(general-define-key
 	 :states 'normal
 	 :prefix "SPC"
-	 "fS" 'evil-write-all)
+	 "fW" 'evil-write-all
+	 "w/" '(evil-window-vsplit :which-key "split vertical")
+	 "w-" '(evil-window-split :which-key "split horizontal")
+	 "wh" 'evil-window-left
+	 "wl" 'evil-window-right
+	 "wk" 'evil-window-up
+	 "wj" 'evil-window-down)
+
+	(setq evil-default-state 'normal)
+	(evil-set-initial-state 'dired-mode 'normal)
+	(evil-set-initial-state 'message-mode 'motion)
+
+	;; cursor color by state
+	(setq evil-insert-state-cursor  '("#268bd2" hbar) ; blue
+				evil-normal-state-cursor  '("#b58900" box)  ; blue
+				evil-visual-state-cursor  '("#cb4b16" bar)  ; orange
+				evil-replace-state-cursor '("#859900" hbar) ; green
+				evil-emacs-state-cursor   '("#d33682" box)) ; magenta
+
 	(evil-mode 1))
 
 (use-package evil-matchit :ensure t
+	:after evil
 	:defines global-evil-matchit-mode
   :config
   (global-evil-matchit-mode 1))
 
 (use-package evil-surround :ensure t
+	:after evil
 	:defines global-evil-surround-mode
   :config
   (global-evil-surround-mode))
 
 (use-package evil-visualstar :ensure t
+	:after evil
 	:defines global-evil-visualstar-mode
   :config
   (global-evil-visualstar-mode t))
-
-(setq evil-default-state 'normal)
-(evil-set-initial-state 'dired-mode 'emacs)
-(evil-set-initial-state 'message-mode 'motion)
-(evil-set-initial-state 'help-mode 'emacs)
-(evil-set-initial-state 'ivy-occur-mode 'emacs)
-(evil-set-initial-state 'calendar-mode 'emacs)
-(evil-set-initial-state 'esup-mode 'emacs)
-
-;; cursor color by state
-(setq evil-insert-state-cursor  '("#268bd2" hbar)  ;; blue
-      evil-normal-state-cursor  '("#b58900" box)  ;; blue
-      evil-visual-state-cursor  '("#cb4b16" bar)  ;; orange
-      evil-replace-state-cursor '("#859900" hbar) ;; green
-      evil-emacs-state-cursor   '("#d33682" box)) ;; magenta
 
 
 ;; abo-abo!
@@ -174,7 +179,7 @@
 	 "/" '(swiper :which-key "swiper find")))
 
 
-;; general appearance
+;;; appearances
 
 (when (fboundp 'winner-mode)
   (winner-mode 1))
@@ -186,13 +191,18 @@
  "wU" 'winner-redo)
 
 
-;; general keybindings
+;;; linting
 
-;; thanks Steve Yegge!
+;; TODO
+
+
+;;; general bindings
+
 (global-set-key "\C-w" 'backward-kill-word)
 
 (general-define-key
  :states '(normal visual insert replace emacs)
+ :keymaps 'override
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
 
