@@ -95,4 +95,11 @@ emacs with sigusr2"
 	(interactive)
 	(switch-to-buffer "*Scratch*"))
 
+
+;;; the rest
+
+(defun shrug ()
+	(interactive)
+	(insert "¯\\_(ツ)_/¯"))
+
 (provide 'aero-lib)
