@@ -16,6 +16,7 @@
 ;;   - but then how would layers be disabled (it happens)?
 (defvar aero-layer-list
 	'(aero-theme
+		aero-prog
 		aero-projectile
 		aero-restart
 		aero-git
@@ -40,6 +41,7 @@ will be more efficient if compiled.")
 	(unless (package-installed-p layer)
 		(require layer)))
 
+;; TODO parallel?
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
 	;; load up the prelude first, it defines some functions we want in other

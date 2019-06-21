@@ -1,0 +1,26 @@
+;; -*- lexical-binding: t -*-
+;;
+;; Copyright (c) 2018-2019 Jade Michael Thornton
+;;
+;; This program is free software; you may redistribute it and/or modify it under
+;; the terms of the GNU General Public License version 3, as published by the
+;; Free Software Foundation. This program carries no warranty whatsoever,
+;; without even the implied warranty of merchantability or fitness for a
+;; particular purpose. See </license> for more details.
+;;
+;; This file is not part of GNU Emacs
+
+(use-package company :ensure t
+	:pin gnu
+	:hook (prog-mode . company-mode)
+	:init
+	(setq company-idle-delay 0.2
+        company-selection-wrap-around t
+        company-minimum-prefix-length 2
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-show-numbers t
+				company-tooltip-align-annotations t))
+
+(provide 'aero-prog)
