@@ -40,10 +40,11 @@ GitHub (ok)       https://github.com/thornjad/aero
 
 CREDITS
 
-Aero couldn't be as beautiful as it is without help from the community. Much
-configuration, functions, macros and other crap has been copied or modified
-from:
+Aero couldn't be as beautiful as it is on its own. A lot of configuration,
+functions, macros and other crap has been modified from, copied from or inspired
+by various projects and developers, including:
 
+- eos (Emacs Operating System)
 - Spacemacs
 - Prelude Emacs
 - Doom Emacs
@@ -53,6 +54,7 @@ from:
 - James Sulak
 - John Wiegley
 - Michael Markert
+- Wilfred Hughes
 
 COPYING
 
