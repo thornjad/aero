@@ -11,7 +11,7 @@
 ;; This file is not part of GNU Emacs
 
 
-;;; Set up load paths
+;;; set up load paths
 
 (defun add-to-load-path (dir)
 	(add-to-list 'load-path dir))
@@ -56,10 +56,12 @@
 				,aero-packages-directory))
 
 
-;; Core functionality
+;;; core functionality and utils
 
-(defun aero/bootstrap-package ()
-	"Bootstrap `use-package' and set up for use"
+(defun aero/bootstrap ()
+	"Bootstrap `use-package', `quelpa' and major fixes, and set up for use"
+
+	;; set up package
 	(setq package-enable-at-startup nil)
 	(let ((default-directory "~/.emacs.d/elpa"))
 		(unless (file-directory-p default-directory)
@@ -69,6 +71,8 @@
 													 ("melpa" . "https://melpa.org/packages/")
 													 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 	(package-initialize)
+
+	;; use-package
 	(unless (package-installed-p 'use-package)
 		(package-refresh-contents)
 		(package-install 'use-package))
@@ -77,6 +81,8 @@
 	(use-package package
 		;; TODO check signature
 		:config (setq package-check-signature nil))
+
+	;; quelpa
 	(use-package quelpa :ensure t
 		:config
 		(quelpa
@@ -99,7 +105,7 @@
 	(message "Aero is ready"))
 
 
-;; init functions
+;;; init functions
 
 (defun aero/load-libs ()
 	"Load Aero libraries and utilities, which will be required later"
@@ -111,7 +117,7 @@
 (defun aero/init ()
 	"Perform startup initialization, including all comilation and loading"
 	(aero/load-libs)
-	(aero/bootstrap-package)
+	(aero/bootstrap)
 	(require 'aero-layers)
 	(aero/load-layers)
 
