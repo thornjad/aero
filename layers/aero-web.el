@@ -57,12 +57,12 @@
 
 ;; rivet
 
-;; written by James Sulak
+;; modified from configuration by James Sulak
 (use-package mmm-mode :ensure t
 	:config
 	(require 'mmm-auto)
 	(mmm-add-classes
-	 '((html-rvt
+	 '((web-rvt
 			:submode tcl-mode
 			:delimiter-mode nil
 			:front "<\\?[=]?"
@@ -71,8 +71,8 @@
 			:back "\\?>")))
 	(setq mmm-submode-decoration-level 0)
 	(setq mmm-global-mode 'maybe)
-	(mmm-add-mode-ext-class 'html-mode "\\.rvt\\'" 'html-rvt)
-	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'html-mode))
+	(mmm-add-mode-ext-class 'web-mode "\\.rvt\\'" 'web-rvt)
+	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'web-mode))
 																auto-mode-alist)))
 
 
