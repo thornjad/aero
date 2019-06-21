@@ -49,11 +49,11 @@
 
  ;; indentation
  indent-tabs-mode t
- tab-stop-list (number-sequence 2 200 2)
  tab-width 2                ; onglet affiché sous forme de 2
- c-basic-offset 2
- standard-indent 2
  auto-window-vscroll nil)
+
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
 
 ;; ensure lang is set properly
 (setenv "LANG" "en_US.UTF-8")
