@@ -248,17 +248,14 @@
  "Ff" 'find-file-other-frame
  "Fn" 'make-frame
 
- "g" '(:ignore t :which-key "git")
  "r" '(:ignore t :which-key "rings")
+ "rp" 'aero/clipboard-paste
+ "rc" 'aero/clipboard-copy
+
+ "g" '(:ignore t :which-key "git")
  "j" '(:ignore t :which-key "jump")
 
  "w" '(:ignore t :which-key "window")
- "w/" '(evil-window-vsplit :which-key "split vertical")
- "w-" '(evil-window-split :which-key "split horizontal")
- "wh" 'evil-window-left
- "wl" 'evil-window-right
- "wk" 'evil-window-up
- "wj" 'evil-window-down
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
