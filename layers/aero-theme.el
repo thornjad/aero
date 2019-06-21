@@ -605,10 +605,6 @@
 	:load-path aero-packages-directory
 	:hook ((prog-mode text-mode) . form-feed-mode))
 
-(use-package beacon :ensure t
-	:defines beacon-mode
-	:config (beacon-mode 1))
-
 (use-package dimmer :ensure t
 	:defines dimmer-mode
 	:config (dimmer-mode))
