@@ -43,6 +43,51 @@
       (list start end))))
 
 
+;;; set up load paths
+
+(defun add-to-load-path (dir)
+	(add-to-list 'load-path dir))
+
+(defun add-to-load-path-if-exists (dir)
+	(when (file-exists-p dir)
+		(add-to-load-path dir)))
+
+(defmacro def-path! (name base dir)
+	"Define a directory constant in the `dir' directory of `base'"
+	(let ((dir-name (intern (concat "aero-" (symbol-name name) "-directory")))
+				(dir-base (intern (concat "aero-" (symbol-name base) "-directory"))))
+		`(defconst ,dir-name
+			 (expand-file-name (concat ,dir-base ,dir)))))
+
+(setq user-init-file
+			(or load-file-name (buffer-file-name)))
+(setq user-emacs-directory
+			(file-name-directory user-init-file))
+(defvar aero-start-directory
+	user-emacs-directory)
+
+(def-path! core start "core/")
+(def-path! layer start "layers/")
+(def-path! cache start ".cache/")
+(def-path! autosave cache "auto-save/")
+(def-path! test start "test/")
+(def-path! libs core "libs/")
+(def-path! packages layer "packages/")
+
+(defconst user-home-directory
+	(getenv "HOME"))
+(defconst pcache-directory
+	(concat aero-cache-directory "pcache/"))
+(unless (file-exists-p aero-cache-directory)
+	(make-directory aero-cache-directory))
+
+(mapc 'add-to-load-path
+			`(,aero-core-directory
+				,aero-layer-directory
+				,aero-libs-directory
+				,aero-packages-directory))
+
+
 ;;; initialization
 
 (defvar aero-initialized nil
