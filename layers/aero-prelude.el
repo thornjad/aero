@@ -190,10 +190,31 @@
  "wu" 'winner-undo
  "wU" 'winner-redo)
 
-
-;;; linting
+(use-package helpful :ensure t
+  :commands (helpful-callable
+             helpful-function
+             helpful-macro
+             helpful-command
+             helpful-key
+             helpful-variable
+             helpful-at-point)
 
-;; TODO
+  :config
+  (general-define-key
+   :states '(normal emacs)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+
+   "hdf" 'helpful-function
+   "hdb" 'describe-bindings
+   "hdv" 'helpful-variable
+   "hdm" 'helpful-macro
+   "hdM" 'describe-mode
+   "hdk" 'helpful-key
+   "hdK" 'describe-keymap
+   "hdc" 'helpful-callable
+   "hdC" 'describe-char
+   "hdp" 'describe-package))
 
 
 ;;; general bindings
@@ -221,14 +242,6 @@
 
  "h" '(:ignore t :which-key "help/manual")
  "hd" '(:ignore t :which-key "describe")
- "hdf" 'describe-function
- "hdb" 'describe-bindings
- "hdv" 'describe-variable
- "hdm" 'describe-mode
- "hdk" 'describe-key
- "hdK" 'describe-keymap
- "hdc" 'describe-char
- "hdp" 'describe-package)
 
  "b" '(:ignore t :which-key "buffers")
  "bn" 'next-buffer
