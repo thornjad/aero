@@ -146,11 +146,11 @@
 	 "ff" 'counsel-find-file
 	 "fl" 'counsel-locate
 	 "fr" 'counsel-recentf
-	 "gg" '(counsel-git-grep :which-key "git grep")
+	 "g/" '(counsel-git-grep :which-key "git grep")
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 "hda" '(counsel-apropos :which-kay "apropos"))
+	 "hda" '(counsel-apropos :which-key "apropos"))
 
 (use-package ivy :ensure t
 	:defines (ivy-mode)
@@ -265,6 +265,7 @@
 
  "g" '(:ignore t :which-key "git")
  "j" '(:ignore t :which-key "jump")
+ "s" '(:ignore t :which-key "sexp")
 
  "w" '(:ignore t :which-key "window")
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
