@@ -66,6 +66,12 @@
 ;; remplace yes no par y n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; prevent savehist cpu hogging
+(setq history-length 100)
+(put 'minibuffer-history 'history-length 50)
+(put 'evil-ex-history 'history-length 50)
+(put 'kill-ring 'history-length 25)
+
 
 ;; modes
 
@@ -78,7 +84,7 @@
 (delete-selection-mode t)
 
 
-;; system-specific
+;; system
 
 (when (string= system-type "darwin")
 	(setq-default dired-use-ls-dired nil))
