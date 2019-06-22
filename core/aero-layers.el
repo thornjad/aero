@@ -26,6 +26,7 @@
 		aero-sql
 		aero-shell
 		aero-heap
+    aero-rust
 		aero-eww)
 	"A list of layers to ensure at startup
 
