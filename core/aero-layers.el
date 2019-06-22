@@ -14,12 +14,14 @@
 
 ;; TODO can these just be loaded by file-name?
 ;;   - but then how would layers be disabled (it happens)?
+;; TODO alphabetize
 (defvar aero-layer-list
 	'(aero-theme
 		aero-prog
 		aero-projectile
 		aero-restart
 		aero-git
+    aero-python
 		aero-lisp
 		aero-web
 		aero-markup
