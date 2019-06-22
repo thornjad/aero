@@ -128,11 +128,6 @@
 
 (use-package counsel :ensure t
   :config
-	(use-package recentf
-		:defines (recentf-mode)
-		:config
-		(setq recentf-save-file (expand-file-name "~/.recentf"))
-		(recentf-mode 1))
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
                 "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
@@ -150,7 +145,16 @@
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 "hda" '(counsel-apropos :which-key "apropos"))
+	 "hda" '(counsel-apropos :which-key "apropos")))
+
+(use-package recentf
+  :defines (recentf-mode)
+  :commands (recentf-mode
+             counsel-recentf)
+  :config
+  (setq recentf-save-file (expand-file-name "~/.recentf")
+        recentf-max-saved-items 50)
+  (recentf-mode 1))
 
 (use-package ivy :ensure t
 	:defines (ivy-mode)
