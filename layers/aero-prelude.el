@@ -183,7 +183,7 @@
 	 "/" '(swiper :which-key "swiper find")))
 
 
-;;; appearances
+;;; system
 
 (when (fboundp 'winner-mode)
   (winner-mode 1))
@@ -219,6 +219,11 @@
    "hdc" 'helpful-callable
    "hdC" 'describe-char
    "hdp" 'describe-package))
+
+(use-package pbcopy
+  :load-path aero-packages-directory
+  :config
+  (turn-on-pbcopy))
 
 
 ;;; general bindings

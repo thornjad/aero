@@ -61,18 +61,6 @@ emacs with sigusr2"
 	(interactive)
 	(toggle-debug-on-quit))
 
-(defun aero/clipboard-paste ()
-	"Paste from system clipboard"
-	(interactive)
-	(if (system-is-mac)
-			(shell-command "pbpaste")))
-
-(defun aero/clipboard-copy ()
-	"Copy to system clipboard"
-	(interactive)
-	(if (system-is-mac)
-			(shell-command "pbcopy")))
-
 
 ;; buffers, windows
 
