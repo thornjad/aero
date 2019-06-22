@@ -24,6 +24,7 @@
 	 :prefix "SPC"))
 
 (use-package emmet-mode :ensure t
+  :after (web-mode rjsx-mode)
 	:config
 	(setq emmet-self-closing-tag-style " /")
 	(aero/add-hook!
@@ -38,7 +39,12 @@
 
 ;; js and jsx
 
-(use-package js2-mode :ensure t)
+(use-package js2-mode :ensure t
+  :config
+  ;; TODO make this more better
+  (add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
+	(autoload 'tern-mode "tern.el" nil t)
+	(add-hook 'javascript-mode #'tern-mode))
 
 (use-package rjsx-mode :ensure t
 	:after js2-mode
