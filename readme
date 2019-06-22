@@ -1,77 +1,72 @@
-		 _______                     _______
-		(_______)                   (_______) Voici la vraie liberté
-		 _______ _____  ____ ___     _____   ____  _____  ____  ___
-		|  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
-		| |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
-		|_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
-			 .-      .    .-.  ---        .     --    .-    -.-. ...
+   _______                     _______
+  (_______)                   (_______) Voici la vraie liberté
+   _______ _____  ____ ___     _____   ____  _____  ____  ___
+  |  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
+  | |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
+  |_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
+     .-      .    .-.  ---        .     --    .-    -.-. ...
 
-		Aero is my own approach to Emacs, blending all the best shit I can
-		find. It is not intended for widespread use; it is tailored for
-		what I want and use.
+  Aero is my own approach to Emacs, blending all the best shit I can find. It is
+  not intended for widespread use; it is tailored for what I want and use.
 
-		Emacs changes the way you think about programming, as does Lisp
-		itself. The sheer power of advanced usage makes IDEs look like
-		clunky lemons. It is backed by decades of rich experience and a
-		fantastic culture.
+  Emacs changes the way you think about programming, as does Lisp itself. The
+  sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
+  by decades of rich experience and a fantastic culture.
 
-		Special focus is put on writing Lisps, Python, TCL, Node and the
-		several web languages.
+  Special focus is put on writing Lisps, Python, TCL, Node and the several web
+  languages.
 
 REQUIREMENTS
 
-		Aero requires Emacs 25.1 or higher. Remacs is buggy, but is
-		supported. Aero is optimized to use the font Dank Mono, but also
-		works great with Source Code Pro.
+  Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
+  optimized to use the font Dank Mono, but also works great with Source Code
+  Pro.
 
-		Flycheck requires the following external tools:
+  Flycheck requires the following external tools:
 
-		- coffeescript (compiler, npm)
-		- clutchski/coffeelint (npm)
-		- sasstools/sass-lint (npm)
-		- eslint (npm)
-		- tern (npm)
-		- thornjad/loren (gitlab)
+  - coffeescript (compiler, npm)
+  - clutchski/coffeelint (npm)
+  - sasstools/sass-lint (npm)
+  - eslint (npm)
+  - tern (npm)
+  - thornjad/loren (gitlab)
 
 INSTALLING
 
-		Clone or download this repository into your ~/.emacs.d. There are
-		three mirrors to choose from:
+  Clone or download this repository into your ~/.emacs.d. There are three
+  mirrors to choose from:
 
-		GitLab (best)     https://gitlab.com/thornjad/aero
-		Framagit (better) https://framagit.org/thornjad/aero
-		GitHub (ok)       https://github.com/thornjad/aero
+  GitLab (best)     https://gitlab.com/thornjad/aero
+  Framagit (better) https://framagit.org/thornjad/aero
+  GitHub (ok)       https://github.com/thornjad/aero
 
 CREDITS
 
-		Aero couldn't be as beautiful as it is on its own. A lot of
-		configuration, functions, macros and other crap has been modified
-		from, copied from or inspired by various projects and developers,
-		including:
+  Aero couldn't be as beautiful as it is on its own. A lot of configuration,
+  functions, macros and other crap has been modified from, copied from or
+  inspired by various projects and developers, including:
 
-		- eos (Emacs Operating System)
-		- Spacemacs
-		- Prelude Emacs
-		- Doom Emacs
-		- ErgoEmacs
-		- Samuel Barreto
-		- Steve Purcell
-		- James Sulak
-		- John Wiegley
-		- Michael Markert
-		- Wilfred Hughes
+  - eos (Emacs Operating System)
+  - Spacemacs
+  - Prelude Emacs
+  - Doom Emacs
+  - ErgoEmacs
+  - Samuel Barreto
+  - Steve Purcell
+  - James Sulak
+  - John Wiegley
+  - Michael Markert
+  - Wilfred Hughes
 
 COPYING
 
-		Copyright (C) 2017-2019 Jade Michael Thornton
+  Copyright (C) 2017-2019 Jade Michael Thornton
 
-		This program is free software; you may redistribute it and/or
-		modify it under the terms of the GNU General Public License
-		version 3, as published by the Free Software Foundation. This
-		program carries no warranty whatsoever, without even the implied
-		warranty of merchantability or fitness for a particular purpose.
-		See </license> for more details.
+  This program is free software; you may redistribute it and/or modify it under
+  the terms of the GNU General Public License version 3, as published by the
+  Free Software Foundation. This program carries no warranty whatsoever, without
+  even the implied warranty of merchantability or fitness for a particular
+  purpose. See </license> for more details.
 
-		The Aero Emacs logo (both short and long versions) are released
-		into the public domain under the terms of the CC0 license, no
-		rights reserved.
+  The Aero Emacs logo (both short and long versions) are released into the
+  public domain under the terms of the CC0 license, no rights reserved.
