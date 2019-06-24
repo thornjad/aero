@@ -53,4 +53,20 @@
   (sp-local-pair 'org-mode "=" "=")
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" ))
 
+
+;; yas
+
+(use-package yasnippet :ensure t
+  :commands yas-global-mode
+  :defer 10
+  :init
+  (with-eval-after-load 'yasnippet
+    (progn
+      (def-path! yas start "yas/")
+      (setq yas-snippet-dirs
+            (append yas-snippet-dirs aero-yas-directory))))
+  :config
+  (yas-global-mode)
+  (setq yas-indent-line 'auto))
+
 (provide 'aero-prog)
