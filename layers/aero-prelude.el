@@ -255,8 +255,10 @@
  :non-normal-prefix "C-SPC"
 
  ;; independent keys
- "TAB" '((switch-to-buffer (other-buffer (current-buffer) 1))
-				 :which-key "last buffer")
+ "TAB" '((lambda ()
+           (interactive)
+           (switch-to-buffer (other-buffer (current-buffer) 1)))
+         :which-key "last buffer")
  "q" 'quoted-insert
 
  "f" '(:ignore t :which-key "files")
