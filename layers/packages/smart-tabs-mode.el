@@ -109,17 +109,15 @@
 
 
 ;;;###autoload
-(defmacro smart-tabs-when (condition advice-list)
-  (declare (indent 1))
-  `(when ,condition
-     ,@(smart-tabs-create-advice-list advice-list)))
-
-
-;;;###autoload
 (defmacro smart-tabs-create-advice-list (advice-list)
   `(cl-loop for (func . offset) in ,advice-list
             collect `(smart-tabs-advice ,func ,offset)))
 
+;;;###autoload
+(defmacro smart-tabs-when (condition advice-list)
+  (declare (indent 1))
+  `(when ,condition
+     ,@(smart-tabs-create-advice-list advice-list)))
 
 ;;;###autoload
 (defmacro smart-tabs-create-language-advice (lang mode-hook advice-list &rest body)
@@ -136,7 +134,6 @@ simplifies the creation of such a cons cell."
                            ,@(smart-tabs-create-advice-list advice-list)
                            ,@(cl-loop for form in body
                                       collect (macroexpand form)))))))
-
 
 (defvar smart-tabs-insinuate-alist
   `(,(smart-tabs-create-language-advice c c-mode-hook
@@ -173,8 +170,6 @@ simplifies the creation of such a cons cell."
 
   "Alist of language name and their activation code.
 Smarttabs is enabled in mode hook.")
-
-
 
 (defmacro smart-tabs-mode/no-tabs-mode-advice (function)
   `(unless (ad-find-advice ',function 'around 'smart-tabs)
@@ -253,7 +248,6 @@ indent function and indent level.
                   (t (funcall (cdr lang-map))))))
         languages))
 
-
 ;;;###autoload
 (defmacro smart-tabs-add-language-support (lang mode-hook advice-list &rest body)
   "Add support for a language not already in the `smart-tabs-insinuate-alist'."
@@ -262,7 +256,6 @@ indent function and indent level.
     'smart-tabs-insinuate-alist
     (smart-tabs-create-language-advice ,lang ,mode-hook
       ,advice-list ,@body)))
-
 
 (defun smart-tabs-guess-insinuate (lang-param)
   "Enable smart-tabs-mode if language respect standard naming.
