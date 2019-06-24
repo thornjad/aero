@@ -30,25 +30,29 @@
   :load-path aero-packages-directory
   :config
   (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl))
+
+
+;;; paerns
+
 (use-package smartparens :ensure t
   :commands smartparens-global-mode
-  :hook ((after-init . smartparens-global-mode)
-         (prog-mode . smartparens-strict-mode))
+  :hook ((after-init . smartparens-global-mode))
   :config
   (require 'smartparens-config)
   (show-smartparens-global-mode t)
 
   (general-define-key
-   :states 'normal
+   :states '(normal visual motion emacs)
    :prefix "SPC"
    "s0" '(sp-beginning-of-sexp :which-key "beginning of sexp")
    "s$" '(sp-end-of-sexp :which-key "end of sexp")
-   "sk" '(sp-up-sexp :which-key "up sexp")
-   "sj" '(sp-down-sexp :which-key "down sexp")
-   "sh" '(sp-backward-sexp :which-key "back sexp")
-   "sl" '(sp-forward-sexp :which-key "forward sexp")
-   "su" '(sp-unwrap-sexp :which-key "unwrap sexp")
-   "sK" '(sp-kill-sexp :which-key "kill sexp"))
+   "sk" '(sp-up-sexp :which-key "up")
+   "sj" '(sp-down-sexp :which-key "down")
+   "sh" '(sp-backward-sexp :which-key "back")
+   "sl" '(sp-forward-sexp :which-key "forward")
+   "sw" '(sp-wrap :which-key "wrap")
+   "su" '(sp-unwrap-sexp :which-key "unwrap")
+   "sK" '(sp-kill-sexp :which-key "kill"))
 
   (sp-local-pair 'web-mode "<? " " ?>")
   (sp-local-pair 'web-mode "{ " " }")
@@ -58,7 +62,7 @@
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" ))
 
 
-;; yas
+;;; yas
 
 (use-package yasnippet :ensure t
   :commands yas-global-mode
