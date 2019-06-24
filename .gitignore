@@ -32,4 +32,4 @@ tmp/
 /session.*
 /srecode-map.el
 /recentf
-admin/todo.org
+etc/todo.org
