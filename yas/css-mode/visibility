@@ -1,0 +1,4 @@
+# name: visibility
+# key: v
+# --
+visibility: ${1:$$(yas/choose-value '("hidden" "visible" "collapse"))};

@@ -1,0 +1,4 @@
+# name: overflow
+# key: ov
+# --
+overflow: ${1:$$(yas/choose-value '("auto" "scroll" "hidden" "visible"))};

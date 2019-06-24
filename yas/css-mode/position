@@ -1,0 +1,4 @@
+# name: position
+# key: pos
+# --
+position: ${1:$$(yas/choose-value '("relative" "absolute" "fixed" "static"))};

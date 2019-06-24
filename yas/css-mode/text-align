@@ -1,0 +1,4 @@
+# name: text-align
+# key: ta
+# --
+text-align: ${1:$$(yas/choose-value '("center;" "right;" "justify;" "left;"))}

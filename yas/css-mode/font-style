@@ -1,0 +1,4 @@
+# name: font-style
+# key: fs
+# --
+font-style: ${1:$$(yas/choose-value '("italic" "normal" "oblique"))};

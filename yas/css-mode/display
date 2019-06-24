@@ -1,0 +1,4 @@
+# name: display
+# key: d
+# --
+display: ${1:$$(yas/choose-value '("block" "inline" "inline-block" "none" "table" "table-cell" "list-item" "marker" "compact" "run-in" "inline-table" "table-caption" "table-row" "table-column" "table-row-group" "table-column-group" "table-header-group" "table-footer-group"))};

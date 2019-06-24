@@ -1,0 +1,4 @@
+# name: whs
+# key: whs
+# --
+white-space: ${1:$$(yas/choose-value '("nowrap" "normal" "pre"))};

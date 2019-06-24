@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: memq
+# key: memq
+# --
+(memq ${1:element} ${2:list})

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: references ...
+# key: ins
+# --
+references ${1:TableName}([${2:ColumnName}])

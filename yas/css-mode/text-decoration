@@ -1,0 +1,4 @@
+# name: text-decoration
+# key: td
+# --
+text-decoration: ${1:$$(yas/choose-value '("underline" "none" "line-through" "overline" "blink" "overline underline line-through"))};

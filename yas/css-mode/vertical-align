@@ -1,0 +1,4 @@
+# name: vertical-align
+# key: va
+# --
+vertical-align: ${1:$$(yas/choose-value '("middle" "baseline" "top" "bottom" "text-top" "text-bottom" "super" "sub"))};

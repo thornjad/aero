@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mapc
+# key: mapc
+# --
+(mapc ${1:function} $0)

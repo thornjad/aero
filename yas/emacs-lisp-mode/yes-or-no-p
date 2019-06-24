@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: yes-or-no-p
+# key: yonp
+# --
+(yes-or-no-p "${1:prompt} ")
