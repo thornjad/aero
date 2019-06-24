@@ -15,6 +15,7 @@
 (require 'aero-prelude)
 
 (use-package web-mode :ensure t
+  :commands web-mode
 	:config
 	(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . web-mode))
@@ -33,7 +34,7 @@
 	 (setq emmet-expand-jsx-className? t)))
 
 (use-package scss-mode :ensure t
-  :defer t
+  :commands scss-mode
   :mode ("\\.scss\\.css\\'" . scss-mode))
 
 
