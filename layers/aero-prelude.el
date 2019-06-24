@@ -195,14 +195,6 @@
  "wU" 'winner-redo)
 
 (use-package helpful :ensure t
-  :commands (helpful-callable
-             helpful-function
-             helpful-macro
-             helpful-command
-             helpful-key
-             helpful-variable
-             helpful-at-point)
-
   :config
   (general-define-key
    :states '(normal emacs)
