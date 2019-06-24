@@ -26,6 +26,10 @@
 ;; TODO bindings
 (use-package counsel-gtags :ensure t)
 
+(use-package smart-tabs-mode
+  :load-path aero-packages-directory
+  :config
+  (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl))
 (use-package smartparens :ensure t
   :commands smartparens-global-mode
   :hook ((after-init . smartparens-global-mode)
