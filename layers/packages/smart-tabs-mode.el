@@ -136,37 +136,33 @@ simplifies the creation of such a cons cell."
                                       collect (macroexpand form)))))))
 
 (defvar smart-tabs-insinuate-alist
-  `(,(smart-tabs-create-language-advice c c-mode-hook
-       ((c-indent-line . c-basic-offset)
-        (c-indent-region . c-basic-offset)))
+  `(,(smart-tabs-create-language-advice
+      c c-mode-hook
+      ((c-indent-line . c-basic-offset)
+       (c-indent-region . c-basic-offset)))
 
-    ,(smart-tabs-create-language-advice c++ c++-mode-hook
-       ((c-indent-line . c-basic-offset)
-        (c-indent-region . c-basic-offset)))
+    ,(smart-tabs-create-language-advice
+      c++ c++-mode-hook
+      ((c-indent-line . c-basic-offset)
+       (c-indent-region . c-basic-offset)))
 
-    ,(smart-tabs-create-language-advice java java-mode-hook
-       ((c-indent-line . c-basic-offset)
-        (c-indent-region . c-basic-offset)))
+    ,(smart-tabs-create-language-advice
+      javascript js2-mode-hook
+      ((js2-indent-line . js2-basic-offset)))
 
-    ,(smart-tabs-create-language-advice javascript js2-mode-hook
-       ((js2-indent-line . js2-basic-offset)))
+    ,(smart-tabs-create-language-advice
+      python python-mode-hook
+      ((python-indent-line . python-indent-offset)
+       (python-indent-region . python-indent-offset))
+      (smart-tabs-when (featurep 'python-mode)
+                       ((py-indent-line . py-indent-offset)
+                        (py-newline-and-indent . py-indent-offset)
+                        (py-indent-region . py-indent-offset))))
 
-    ,(smart-tabs-create-language-advice cperl cperl-mode-hook
-       ((cperl-indent-line . cperl-indent-level)))
-
-    ,(smart-tabs-create-language-advice python python-mode-hook
-       ((python-indent-line . python-indent-offset)
-        (python-indent-region . python-indent-offset))
-       (smart-tabs-when (featurep 'python-mode)
-         ((py-indent-line . py-indent-offset)
-          (py-newline-and-indent . py-indent-offset)
-          (py-indent-region . py-indent-offset))))
-
-    ,(smart-tabs-create-language-advice ruby ruby-mode-hook
-       ((ruby-indent-line . ruby-indent-level)))
-
-    ,(smart-tabs-create-language-advice nxml nxml-mode-hook
-       ((nxml-indent-line . nxml-child-indent))))
+    ,(smart-tabs-create-language-advice
+      tcl tcl-mode-hook
+      ((c-indent-line . c-basic-offset)
+       (c-indent-region . c-basic-offset))))
 
   "Alist of language name and their activation code.
 Smarttabs is enabled in mode hook.")
