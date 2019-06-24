@@ -32,7 +32,7 @@
   (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl))
 
 
-;;; paerns
+;;; parens
 
 (use-package smartparens :ensure t
   :commands smartparens-global-mode
