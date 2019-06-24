@@ -265,6 +265,7 @@
  ;; independent keys
  "TAB" '((switch-to-buffer (other-buffer (current-buffer) 1))
 				 :which-key "last buffer")
+ "q" 'quoted-insert
 
  "f" '(:ignore t :which-key "files")
  "fw" '(save-buffer :which-key "write buffer")
