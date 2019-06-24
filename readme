@@ -31,6 +31,9 @@ REQUIREMENTS
   - tern (npm)
   - thornjad/loren (gitlab)
 
+	TODO: the packages above will soon be automated via
+	`use-package-ensure-system-package'
+
 INSTALLING
 
   Clone or download this repository into your ~/.emacs.d. There are three
