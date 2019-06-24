@@ -65,4 +65,6 @@
           (newline-and-indent))
         (indent-paragraph)))))
 
+(use-package xterm-color :ensure t)
+
 (provide 'aero-shell)
