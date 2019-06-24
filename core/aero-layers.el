@@ -30,33 +30,22 @@
 		aero-heap
     aero-rust
 		aero-eww)
-	"A list of layers to ensure at startup
+	"A list of local aero layers to install at startup. To include a single,
+	non-aero layer, add to aero-heap.el.")
 
-If a layer listed here does not have a corresponding file in the `layers'
-directory, it will be loaded without configuration. However, this is not
-recommended. Using a configuration file,k even with only a single `use-package'
-will be more efficient if compiled.")
-
-(defun aero/require-layer (layer)
-	"Install `layer' unless it is already installed"
-	(unless (memq layer aero-layer-list)
-		(add-to-list 'aero-layer-list layer))
-	(unless (package-installed-p layer)
-		(require layer)))
-
-;; TODO parallel?
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
 
 	;; load up the prelude first, it defines some functions we want in other
 	;; layers. You could say it... /preludes/ the other layers
-	(aero/require-layer 'aero-prelude)
+	(require 'aero-prelude)
 
 	;; now the rest
+	;; TODO parallel?
 	(dolist (layer aero-layer-list)
-		(aero/require-layer layer))
+		(require layer))
 
 	;; and finally, tweaks pseudo-layer
-	(aero/require-layer 'aero-tweaks))
+	(require 'aero-tweaks))
 
 (provide 'aero-layers)
