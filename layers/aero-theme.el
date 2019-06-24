@@ -616,7 +616,7 @@
 	:config (dimmer-mode))
 
 (use-package hl-todo
-  :ensure t
+  :load-path aero-packages-directory
   :hook (prog-mode . hl-todo-mode))
 
 (provide 'aero-theme)
