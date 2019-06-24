@@ -63,6 +63,6 @@
         (while (re-search-backward "--\\||\\|([><])\{1,2\}" beg t)
           (insert "\\")
           (newline-and-indent))
-        (indent-paragraph))))
+        (indent-paragraph)))))
 
 (provide 'aero-shell)
