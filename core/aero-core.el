@@ -33,10 +33,12 @@
 		(package-refresh-contents)
 		(package-install 'use-package))
 	(eval-when-compile
-		(require 'use-package))
+		(require 'use-package)
+		(setq use-package-expand-minimally byte-compile-current-file))
 	(use-package package
 		;; TODO check signature
-		:config (setq package-check-signature nil))
+		:config
+		(setq package-check-signature nil))
 
 	;; quelpa
 	(use-package quelpa :ensure t
