@@ -1,4 +1,0 @@
-# name: debug
-# key: debug
-# --
-@debug "$0";

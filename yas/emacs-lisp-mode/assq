@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: assq
-# key: assq
-# --
-(assq ${1:key} ${2:list})

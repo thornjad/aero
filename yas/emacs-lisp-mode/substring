@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: substring
-# key: substring
-# --
-(substring ${1:string} ${2:from}${3: to})
