@@ -251,7 +251,7 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 
 (general-define-key
- :states '(normal visual insert replace emacs)
+ :states '(normal visual insert replace emacs motion)
  :keymaps 'override
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
