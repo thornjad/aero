@@ -33,20 +33,6 @@
        (progn ,@body)
      (message (format "%s not loaded" ,file))))
 
-;; https://github.com/syl20bnr/spacemacs/issues/8414
-(defun aero/recompile-elpa (arg)
-  "Compile or recompile packages in elpa directory, if needed, that is
-    if the corresponding .elc file is either missing or outdated.
-
-      If ARG is non-nil, also recompile every `.el' file, regardless of date.
-
-      Useful if you switch Emacs versions."
-  (interactive "P")
-  ;; First argument must be 0 (not nil) to get missing .elc files rebuilt.
-  ;; Bonus: Optionally force recompilation with universal ARG
-  (byte-recompile-directory package-user-dir 0 arg))
-
-
 
 ;; modes and hooks
 
@@ -134,21 +120,6 @@ If FUNC is a lambda you must give it a name with FNAME. "
     (apply 'message msg args)))
 
 
-;; files, buffers, windows
-
-(defun aero|move-buffer-to-window (windownum follow-focus-p)
-  "Moves a buffer to a window, using the aero numbering. follow-focus-p controls
-   whether focus moves to new window (with buffer), or stays on current"
-  (let ((b (current-buffer))
-        (w1 (selected-window))
-        (w2 (winum-get-window-by-number windownum)))
-    (unless (eq w1 w2)
-      (set-window-buffer w2 b)
-      (switch-to-prev-buffer)
-      (unrecord-window-buffer w1 b)))
-  (when follow-focus-p (select-window (winum-get-window-by-number windownum))))
-
-
 ;; general nice functions
 
 (defmacro p (&rest body)
@@ -172,11 +143,6 @@ If FUNC is a lambda you must give it a name with FNAME. "
 					 while (string-match regexp str start)
 					 do (setq start (match-end 0))
 					 finally return count))
-
-(defun iso-timestamp ()
-  (concat (format-time-string "%Y-%m-%dT%T")
-          ((lambda (x) (concat (substring x 0 3) ":" (substring x 3 5)))
-           (format-time-string "%z"))))
 
 (defun comment-date ()
   (let ((time (format-time-string "[%Y-%m-%d %H:%M:%S]")))
