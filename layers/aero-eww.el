@@ -12,7 +12,8 @@
 
 (use-package eww
 	:config
-	(setq eww-search-prefix "https://startpage.com/do/m/mobilesearch?query=")
+	(setq eww-search-prefix "https://duckduckgo.com/lite?q="
+        browse-url-browser-function 'eww-browse-url)
 	(defun add-title-to-eww-buffer-name ()
 		"Rename eww mode buffer so the title of the page is displayed, making
 		 fake-tabbed-browsing easier"
