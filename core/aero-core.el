@@ -40,6 +40,10 @@
 		:config
 		(setq package-check-signature nil))
 
+  ;; enable `:ensure-system-pacakge'
+  (use-package use-package-ensure-system-package
+  :ensure t)
+
 	;; quelpa
 	(use-package quelpa :ensure t
 		:config
