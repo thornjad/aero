@@ -55,6 +55,7 @@
  ;; indentation
  indent-tabs-mode t
  tab-width 2                ; onglet affiché sous forme de 2
+ tab-stop-list (number-sequence 2 200 2)
  auto-window-vscroll nil)
 
 (defvaralias 'c-basic-offset 'tab-width)
