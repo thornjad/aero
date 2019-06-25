@@ -35,23 +35,27 @@
 
 (use-package scss-mode :ensure t
   :commands scss-mode
-  :mode ("\\.scss\\.css\\'" . scss-mode))
+  :mode "\\.scss\\.css\\'"
+  :ensure-system-package
+  (sass-lint . "npm i -g sass-lint"))
 
 
 ;; js and jsx
 
 (use-package js2-mode :ensure t
+  :ensure-system-package
+  ((eslint . "npm i -g eslint")
+   (tern . "npm i -g tern"))
   :config
   ;; TODO make this more better
   (add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
 	(autoload 'tern-mode "tern.el" nil t)
-	(add-hook 'javascript-mode #'tern-mode))
+	(add-hook 'js2-mode #'tern-mode))
 
 (use-package rjsx-mode :ensure t
 	:after js2-mode
+  :mode "\\.js\\'"
 	:config
-	(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-
 	;; try fixing indentation, not really working
 	;; https://github.com/felipeochoa/rjsx-mode/issues/85
 	(aero/add-hook!
@@ -85,7 +89,10 @@
 
 ;; the rest
 
-(use-package coffee-mode :ensure t)
+(use-package coffee-mode :ensure t
+  :ensure-system-package
+  ((coffeescript . "npm i -g coffeescript")
+   (coffeelint . "npm i -g coffeelint")))
 
 ;; major mode for editing Apache configuration files
 (use-package apache-mode :ensure t
