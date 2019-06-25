@@ -52,17 +52,11 @@
 	(autoload 'tern-mode "tern.el" nil t)
 	(add-hook 'js2-mode #'tern-mode))
 
-(use-package rjsx-mode :ensure t
+(use-package rjsx-mode
+  ;:ensure t
+  :load-path aero-packages-directory
 	:after js2-mode
-  :mode "\\.js\\'"
-;	:config
-	;; try fixing indentation, not really working
-	;; https://github.com/felipeochoa/rjsx-mode/issues/85
-;	(aero/add-hook!
-;	 'rjsx-mode-hook
-;	 (setq index-tabs-mode t
-;				 c-basic-offset 2
-;				 tab-width 2)))
+  :mode "\\.js\\'\\.jsx\\'"
 )
 
 
