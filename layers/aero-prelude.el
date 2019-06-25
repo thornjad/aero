@@ -99,7 +99,7 @@
 	 "wj" 'evil-window-down)
 
 	(setq evil-default-state 'normal)
-	(evil-set-initial-state 'dired-mode 'normal)
+	(evil-set-initial-state 'dired-mode 'emacs)
 	(evil-set-initial-state 'message-mode 'motion)
 
 	;; cursor color by state
