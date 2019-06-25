@@ -10,42 +10,47 @@
 ;; particular purpose. See </license> for more details.
 ;;
 ;; This file is not part of GNU Emacs
-
 
-;; global defaults
 
 (setq-default
-
  ;; general
  initial-scratch-message "Welcome to Aero"
  ring-bell-function 'ignore ; supprime cette putain de cloche.
- sentence-end-double-space nil
- default-fill-column 80
+ sentence-end-double-space nil ; the world will not go to shit today
+ default-fill-column 80 ; i am mortal, not arthur whitney
  help-window-select t ; focus help window when opened
  kill-ring-max 5000 ; truncate kill ring after 5000 entries
  mark-ring-max 5000 ; truncate mark ring after 5000 entries
- mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))) ;make mouse scrolling smooth
- apropos-do-all t
- mouse-yank-at-point t
+ kill-do-not-save-duplicates t
+ mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))) ; make mouse scrolling smooth
+ apropos-do-all t ; apropos is apropos
  global-display-line-numbers-mode nil ; fuck line numbers
+ gnutls-min-prime-bits 4096 ; 256 est absurde
+ confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate file
+ line-move-visual t ; move lines by display, not reality
+ make-pointer-invisible t ; le curseur est une chienne
+ make-pointer-invisible t ; fix some color escape sequences (eos)
 
  ;; version control and saving
  use-package-verbose nil
- delete-old-versions -1	    ; supprime les vieilles versions des fichiers sauvegardés
+ delete-old-versions -1	; supprime les vieilles versions des fichiers sauvegardés
  backup-directory-alist `(("." . "~/.emacs.d/backups"))
  version-control t
- vc-make-backup-files t	    ; backups file even when under vc
+ vc-make-backup-files t ; backups file even when under vc
  vc-follow-symlinks t
  git-commit-fill-column 72
  auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
  save-interprogram-paste-before-kill t
+ diff-switches "-u" ; unified diff by default
 
  ;; files
- confirm-nonexistent-file-or-buffer nil ;don't ask to create a buffer
- recentf-max-saved-items 5000           ;save up to 5000 recent files
+ confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
+ recentf-max-saved-items 5000           ; save up to 5000 recent files
  require-final-newline t
  load-prefer-newer t
  scroll-margin 3
+ read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
+ delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
  ;; indentation
  indent-tabs-mode t
@@ -72,8 +77,12 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
-
-;; modes
+;; advise against killing `*scratch*'
+(defadvice kill-buffer (around kill-buffer-around-advice activate)
+  (let ((buffer-to-kill (ad-get-arg 0)))
+    (if (equal buffer-to-kill "*scratch*")
+        (bury-buffer)
+      ad-do-it)))
 
 ;; display changes
 (setq-default initial-major-mode 'fundamental-mode)
@@ -83,16 +92,8 @@
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
-
-;; system
-
 (when (string= system-type "darwin")
 	(setq-default dired-use-ls-dired nil))
-(unless (eq window-system 'ns)
-  (menu-bar-mode -1))
-
-
-;; et cetera
 
 ;; rend les scripts executable par défault si c'est un script.
 (aero/add-hook! 'after-save-hook
@@ -105,6 +106,12 @@
   (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
+(when (functionp 'mouse-wheel-mode)
+  (mouse-wheel-mode -1))
+(when (functionp 'menu-bar-mode)
+  (menu-bar-mode -1))
+(when (functionp 'blink-cursor-mode)
+  (blink-cursor-mode -1))
 
 ;; ensure buffer names are unique
 (require 'uniquify)
@@ -113,7 +120,14 @@
 (defvar aero/default-font "Dank Mono"
 	"Default font throughout Aero")
 
-(global-prettify-symbols-mode t)
+(when (boundp 'global-prettify-symbols-mode)
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (push '("lambda" . ?λ) prettify-symbols-alist)))
+  (add-hook 'clojure-mode-hook
+            (lambda ()
+              (push '("fn" . ?ƒ) prettify-symbols-alist)))
+  (global-prettify-symbols-mode t))
 
 (defvar aero/gc-cons '(16777216 0.1)) ; 16 mB
 
