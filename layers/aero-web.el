@@ -55,15 +55,15 @@
 (use-package rjsx-mode :ensure t
 	:after js2-mode
   :mode "\\.js\\'"
-	:config
+;	:config
 	;; try fixing indentation, not really working
 	;; https://github.com/felipeochoa/rjsx-mode/issues/85
-	(aero/add-hook!
-	 'rjsx-mode-hook
-	 (setq-local indent-line-function 'js-jsx-indent-line)
-	 (setq index-tabs-mode t
-				 c-basic-offset 2
-				 tab-width 2)))
+;	(aero/add-hook!
+;	 'rjsx-mode-hook
+;	 (setq index-tabs-mode t
+;				 c-basic-offset 2
+;				 tab-width 2)))
+)
 
 
 ;; rivet
