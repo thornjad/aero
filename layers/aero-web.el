@@ -90,8 +90,9 @@
 ;; the rest
 
 (use-package coffee-mode :ensure t
+  :mode "\\.coffee\\'"
   :ensure-system-package
-  ((coffeescript . "npm i -g coffeescript")
+  ((coffee . "npm i -g coffeescript")
    (coffeelint . "npm i -g coffeelint")))
 
 ;; major mode for editing Apache configuration files
