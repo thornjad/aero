@@ -90,4 +90,12 @@ emacs with sigusr2"
 	(interactive)
 	(insert "¯\\_(ツ)_/¯"))
 
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (provide 'aero-lib)
