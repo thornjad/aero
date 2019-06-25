@@ -14,23 +14,24 @@
 
 ;; TODO can these just be loaded by file-name?
 ;;   - but then how would layers be disabled (it happens)?
-;; TODO alphabetize
 (defvar aero-layer-list
-	'(aero-theme
+	'(
+		aero-eww
+    aero-feeds
+		aero-git
+		aero-heap
+		aero-lisp
+		aero-markup
 		aero-prog
 		aero-projectile
-		aero-restart
-		aero-git
     aero-python
-		aero-lisp
-		aero-web
-		aero-markup
-		aero-sql
-		aero-shell
-		aero-heap
+		aero-restart
     aero-rust
-    aero-feeds
-		aero-eww)
+		aero-shell
+		aero-sql
+    aero-theme
+		aero-web
+    )
 	"A list of local aero layers to install at startup. To include a single,
 	non-aero layer, add to aero-heap.el.")
 
