@@ -14,9 +14,8 @@
 
 (eval-when-compile
   (require 'cl-lib))
-
 
-;; garder ma merde à jour
+;; garder ma merde à jour, et async
 
 (use-package auto-package-update :ensure t
 	:defines auto-package-update-maybe
@@ -25,6 +24,13 @@
         auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
+(use-package async :ensure t
+	:config
+	;; async dired operations
+	(autoload 'dired-async-mode "dired-async.el" nil t)
+	(dired-async-mode 1)
+	;; async byte compilation
+	(async-bytecomp-package-mode 1))
 
 ;; the general is here
 
