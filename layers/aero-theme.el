@@ -611,10 +611,6 @@
 	:load-path aero-packages-directory
 	:hook ((prog-mode text-mode) . form-feed-mode))
 
-(use-package dimmer :ensure t
-	:defines dimmer-mode
-	:config (dimmer-mode))
-
 (use-package hl-todo
   :load-path aero-packages-directory
   :hook (prog-mode . hl-todo-mode))
