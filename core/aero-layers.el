@@ -17,7 +17,7 @@
 (defvar aero-layer-list
 	'(
 		aero-eww
-    aero-feeds
+    aero-feed
 		aero-git
 		aero-heap
 		aero-lisp
