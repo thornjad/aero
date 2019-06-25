@@ -29,6 +29,7 @@
 		aero-shell
 		aero-heap
     aero-rust
+    aero-feeds
 		aero-eww)
 	"A list of local aero layers to install at startup. To include a single,
 	non-aero layer, add to aero-heap.el.")
