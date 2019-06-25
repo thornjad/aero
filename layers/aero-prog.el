@@ -42,7 +42,7 @@
   (show-smartparens-global-mode t)
 
   (general-define-key
-   :states '(normal visual motion emacs)
+   :states '(normal visual)
    :prefix "SPC"
    "s0" '(sp-beginning-of-sexp :which-key "beginning of sexp")
    "s$" '(sp-end-of-sexp :which-key "end of sexp")
