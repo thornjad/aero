@@ -317,6 +317,7 @@
  "g" '(:ignore t :which-key "git")
  "j" '(:ignore t :which-key "jump")
  "s" '(:ignore t :which-key "sexp")
+ "m" '(:ignore t :which-key "mode")
 
  "w" '(:ignore t :which-key "window")
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
