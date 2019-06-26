@@ -85,6 +85,9 @@
 	(require 'aero-layers)
 	(aero/load-layers)
 
+  ;; baise cette merde
+  (setq-default custom-file "/dev/null")
+
 	(setq aero-initialized t))
 
 (defun aero/startup-hook ()
