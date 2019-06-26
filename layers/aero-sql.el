@@ -14,6 +14,9 @@
 	:ensure t
   :defer t
   :config
+	;; for sql comint
+	(add-to-list 'same-window-buffer-names "*SQL: *")
+
   (defun aero/sql-send-string-and-focus ()
     "Send a string to SQLi and switch to SQLi in `insert state'."
     (interactive)
