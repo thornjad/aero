@@ -255,6 +255,12 @@
 					do (and (thornjad/tramp-buffer-p buffer) (kill-buffer buffer)))
 		(tramp-cleanup-all-connections)))
 
+;; Trade memory for less cylcles when using the minibuffer
+(aero/add-hook! 'minibuffer-setup-hook
+  (setq gc-cons-threshold (car (car aero/gc-cons))))
+(aero/add-hook! 'minibuffer-exit-hook
+  (setq gc-cons-threshold (car (cadr aero/gc-cons))))
+
 
 ;;; general bindings
 

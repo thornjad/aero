@@ -3,10 +3,6 @@
 ;; Emacs 27+ introduces early-init.el, which is run before init.el, before
 ;; package and UI initialization happens.
 
-;; Avoid garbage collection during startup.
-(setq gc-cons-threshold 268435456
-			gc-cons-percentage 0.6)
-
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We want Aero to handle this, so stop
 ;; Emacs

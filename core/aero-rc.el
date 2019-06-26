@@ -136,6 +136,4 @@
               (push '("fn" . ?ƒ) prettify-symbols-alist)))
   (global-prettify-symbols-mode t))
 
-(defvar aero/gc-cons '(16777216 0.1)) ; 16 mB
-
 (provide 'aero-rc)

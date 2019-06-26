@@ -93,8 +93,8 @@
 	 'emacs-startup-hook
 	 (require 'aero-rc)
 	 (setq aero-initialized t)
-	 (setq gc-cons-threshold (car aero/gc-cons)
-				 gc-cons-percentage (cadr aero/gc-cons))
+	 (setq gc-cons-threshold (car (cadr aero/gc-cons))
+				 gc-cons-percentage (cadr (cadr aero/gc-cons)))
 	 (global-font-lock-mode)))
 
 (provide 'aero-core)
