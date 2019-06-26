@@ -113,3 +113,17 @@ more cycles but less space.")
     ;; no more debug please
     (setq debug-on-error nil)
     (aero/log-info "Aero is ready")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (evil-magit magit-todos apache-mode coffee-mode mmm-mode json-mode js2-mode scss-mode emmet-mode web-mode doom-modeline autothemer sql-indent xterm-color toml-mode rust-mode python-mode counsel-projectile projectile counsel-gtags company org-bullets org-plus-contrib markdown-mode hy-mode on-parens rainbow-mode esup whitespace-cleanup-mode gitlab-ci-mode magit elfeed helpful counsel evil-visualstar evil-surround evil-matchit evil which-key use-package-ensure-system-package undo-tree quelpa-use-package general auto-package-update async))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
