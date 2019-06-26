@@ -101,6 +101,8 @@
 	(setq evil-default-state 'normal)
 	(evil-set-initial-state 'dired-mode 'emacs)
 	(evil-set-initial-state 'message-mode 'motion)
+  (evil-set-initial-state 'elfeed-search-mode 'emacs)
+  (evil-set-initial-state 'elfeed-show-mode 'emacs)
 
 	;; cursor color by state
 	(setq evil-insert-state-cursor  '("#268bd2" hbar) ; blue
