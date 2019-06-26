@@ -26,12 +26,8 @@
 
 (use-package emmet-mode :ensure t
   :after (web-mode rjsx-mode)
-	:config
-	(setq emmet-self-closing-tag-style " /")
-	(aero/add-hook!
-	 'rjsx-mode-hook
-	 (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
-	 (setq emmet-expand-jsx-className? t)))
+	:init
+	(setq emmet-self-closing-tag-style " /"))
 
 (use-package scss-mode :ensure t
   :commands scss-mode
@@ -42,21 +38,21 @@
 
 ;; js and jsx
 
-(use-package js2-mode :ensure t
-  :ensure-system-package
-  ((eslint . "npm i -g eslint")
-   (tern . "npm i -g tern"))
-  :config
-  ;; TODO make this more better
-  (add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
-	(autoload 'tern-mode "tern.el" nil t)
-	(add-hook 'js2-mode #'tern-mode))
-
+(use-package js2-mode :ensure t)
 (use-package rjsx-mode
   ;:ensure t
   :load-path aero-packages-directory
 	:after js2-mode
-  :mode "\\.js\\'\\.jsx\\'")
+  :ensure-system-package
+  ((eslint . "npm i -g eslint")
+   (tern . "npm i -g tern"))
+  :mode "\\.js\\'"
+  :config
+  ;; TODO make this more better
+  (add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
+  (autoload 'tern-mode "tern.el" nil t)
+  (add-hook 'rjsx-mode #'tern-mode)
+  (aero/add-hook! 'rjsx-mode-hook (setq emmet-expand-jsx-className? t)))
 
 (use-package json-mode :ensure t
 	:mode "\\.json\\'")
