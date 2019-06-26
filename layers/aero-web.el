@@ -35,7 +35,7 @@
 
 (use-package scss-mode :ensure t
   :commands scss-mode
-  :mode "\\.scss\\.css\\'"
+  :mode "\\.scss\\'\\.css\\'"
   :ensure-system-package
   (sass-lint . "npm i -g sass-lint"))
 
