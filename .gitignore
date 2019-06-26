@@ -33,3 +33,5 @@ tmp/
 /srecode-map.el
 /recentf
 etc/todo.org
+.private.el
+games/
