@@ -225,6 +225,10 @@
   :config
   (turn-on-pbcopy))
 
+(use-package re-builder
+	:config
+	(setq reb-re-syntax 'string))
+
 (use-package tramp
   :config
   ;; From jwiegley: Without this change, tramp ends up sending
