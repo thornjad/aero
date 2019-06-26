@@ -30,6 +30,7 @@
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  make-pointer-invisible t ; fix some color escape sequences (eos)
+ auto-revert-interval 10 ; wait just a little longer (default is 5)
 
  ;; version control and saving
  use-package-verbose nil
