@@ -64,7 +64,17 @@ emacs with sigusr2"
 (defun aero/thornlog ()
 	"Personal persistent log"
 	(interactive)
-	(find-file "~/doc/thornlog.org"))
+	(find-file (expand-file-name "~/doc/thornlog.org")))
+
+(defun aero/open-tweaks ()
+  "Open editor tweaks file"
+  (interactive)
+  (find-file (format "%s/%s" aero-layer-directory "aero-tweaks.el")))
+
+(defun aero/reload-tweaks ()
+  "Reload tweaks file. This may not be a full load, depending on contents"
+  (interactive)
+  (load-file (format "%s/%s" aero-layer-directory "aero-tweaks.el")))
 
 (defun aero/stop-auto-revert-buffers ()
 	(cancel-function-timers 'auto-revert-buffers))

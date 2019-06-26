@@ -287,6 +287,10 @@
  "fD" '(aero/delete-this-file :which-key "delete this file")
  "fE" '(aero/sudo-edit :which-key "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file")
+ "fo" '(:ignore t :which-key "open special files")
+ "fod" '(aero/open-tweaks :which-key "tweaks")
+ "fot" '(aero/thornlog :which-key "thornlog")
+ "foD" '(aero/reload-tweaks :which-key "reload tweaks")
 
  "h" '(:ignore t :which-key "help/manual")
  "hd" '(:ignore t :which-key "describe")
