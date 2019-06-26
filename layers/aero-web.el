@@ -56,8 +56,10 @@
   ;:ensure t
   :load-path aero-packages-directory
 	:after js2-mode
-  :mode "\\.js\\'\\.jsx\\'"
-)
+  :mode "\\.js\\'\\.jsx\\'")
+
+(use-package json-mode :ensure t
+	:mode "\\.json\\'")
 
 
 ;; rivet
