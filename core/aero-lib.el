@@ -61,6 +61,14 @@ emacs with sigusr2"
 	(interactive)
 	(toggle-debug-on-quit))
 
+(defun aero/thornlog ()
+	"Personal persistent log"
+	(interactive)
+	(find-file "~/doc/thornlog.org"))
+
+(defun aero/stop-auto-revert-buffers ()
+	(cancel-function-timers 'auto-revert-buffers))
+
 
 ;; buffers, windows
 
