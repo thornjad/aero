@@ -57,15 +57,20 @@
  indent-tabs-mode t
  tab-width 2                ; onglet affiché sous forme de 2
  c-basic-offset 2
+ cperl-indent-level 2
  js2-basic-offset 2
  js-basic-offset 2
  sgml-basic-offset 2
  tcl-indent-level 2
+ tcl-tab-always-indent t
+ css-indent-offset 2
+ rust-indent-offset 2
+ web-mode-markup-indent-offset 2
+ web-mode-css-indent-offset 2
+ web-mode-code-indent-offset 2
+ web-mode-attr-indent-offset 2
  tab-stop-list (number-sequence 2 200 2)
  auto-window-vscroll nil)
-
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'cperl-indent-level 'tab-width)
 
 ;; ensure lang is set properly
 (setenv "LANG" "en_US.UTF-8")
