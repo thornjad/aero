@@ -14,6 +14,9 @@
 
 (use-package rust-mode :ensure t
   :mode ("\\.rs\\'" . rust-mode)
+	:init
+	(use-package toml-mode :ensure t)
+
   :config
   (setq company-tooltip-align-annotations t)
   (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
