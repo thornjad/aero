@@ -188,7 +188,7 @@
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 
-	 "/" '(swiper :which-key "swiper find")))
+	 "/" '(counsel-grep-or-swiper :which-key "search")))
 
 
 ;;; system
@@ -278,6 +278,11 @@
            (switch-to-buffer (other-buffer (current-buffer) 1)))
          :which-key "last buffer")
  "q" 'quoted-insert
+ ":" 'eval-expression
+ ";" 'comment-or-uncomment-region
+ "!" 'shell-command
+
+ "U" 'universal-argument
 
  "f" '(:ignore t :which-key "files")
  "fw" '(save-buffer :which-key "write buffer")

@@ -50,7 +50,10 @@
    "sj" '(sp-down-sexp :which-key "down")
    "sh" '(sp-backward-sexp :which-key "back")
    "sl" '(sp-forward-sexp :which-key "forward")
-   "sw" '(sp-wrap :which-key "wrap")
+   "sw" '(:ignore t :which-key "wrap")
+   "sw(" 'sp-wrap-round
+   "sw{" 'sp-wrap-curly
+   "sw[" 'sp-wrap-square
    "su" '(sp-unwrap-sexp :which-key "unwrap")
    "sK" '(sp-kill-sexp :which-key "kill"))
 
