@@ -30,12 +30,14 @@
 
 (use-package org-bullets
   :ensure t
+  :defer t
   :hook (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("➡" "➠" "➟" "➝" "↪")))
 
 (use-package org-indent
   :ensure org-plus-contrib
+  :defer t
   :after org)
 
 (provide 'aero-org)
