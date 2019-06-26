@@ -61,7 +61,7 @@
      ;; Built-in syntax
      (font-lock-builtin-face                            (:foreground aero-bright_orange))
      (font-lock-constant-face                           (:foreground aero-bright_purple))
-     (font-lock-comment-face                            (:foreground aero-dark4))
+     (font-lock-comment-face                            (:foreground aero-dark4 :slant 'italic))
      (font-lock-function-name-face                      (:foreground aero-bright_yellow))
      (font-lock-keyword-face                            (:foreground aero-bright_red))
      (font-lock-string-face                             (:foreground aero-bright_green))
@@ -498,6 +498,9 @@
      (wgrep-face                                 (:underline (:color aero-bright_yellow :style 'line)))
      (wgrep-file-face                            (:inherit 'highlight))
      (wgrep-reject-face                          (:foreground aero-bright_red :bold t))
+
+     ;; rjsx
+     (rjsx-attr                                  (:inherit font-lock-variable-name-face :slant 'italic))
 
      ;; hydra
      (hydra-face-red (:foreground aero-bright_red :weight 'bold))
