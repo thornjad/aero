@@ -64,7 +64,6 @@
           ("https://blog.juliobiason.net/rss.xml" cs)
 
           ;; news
-          ("https://feeds.feedburner.com/arstechnica/index" news)
           ("https://thefeature.net/rss" news)
           ("https://opensource.com/feed" news)
           ("https://spectrum.ieee.org/rss/computing/fulltext" news cs)
