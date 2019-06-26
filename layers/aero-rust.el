@@ -23,6 +23,12 @@
 
   (use-package racer :ensure t
     :hook (rust-mode . racer-mode)
+		:init
+		(use-package company-racer :ensure t
+			:after company
+			:config
+			(push 'company-racer company-backends))
+
     :config
     ;; TODO make these more better
     (setq racer-cmd "~/.cargo/bin/racer"
