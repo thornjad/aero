@@ -18,4 +18,7 @@
   :ensure t
   :mode ("\\.hy\\'" . hy-mode))
 
+;; TODO common lisp
+;; TODO include Lakefile as common lisp
+
 (provide 'aero-lisp)
