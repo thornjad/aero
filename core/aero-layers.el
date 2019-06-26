@@ -30,6 +30,7 @@
     aero-rust
 		aero-shell
 		aero-sql
+		aero-tcl
     aero-theme
 		aero-web
     )
