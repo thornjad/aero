@@ -39,7 +39,8 @@
 	 "gb" 'magit-blame)
 
 	:config
-	(global-git-commit-mode)
+	(global-git-commit-mode t)
+  (magit-auto-revert-mode nil)
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t))
 
