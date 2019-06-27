@@ -44,6 +44,9 @@
   :ensure t)
 
 	(use-package quelpa :ensure t
+    :init
+    ;; update packages manually later
+    (setq quelpa-update-melpa-p nil)
 		:config
 		(quelpa
 		 '(quelpa-use-package
