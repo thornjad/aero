@@ -52,8 +52,10 @@ slightly above the default of 800 KiB, to reverse the trade so we use
 more cycles but less space.")
 
 ;; Avoid garbage collection during startup by increasing thresholds.
+;; Also disable some other crap which would just slow us down.
 (let ((gc-cons-threshold (car (car aero/gc-cons)))
-      (gc-cons-percentage (cadr (car aero/gc-cons))))
+      (gc-cons-percentage (cadr (car aero/gc-cons)))
+      (file-name-handler-alist nil))
 
 ;;; set up load paths
 
