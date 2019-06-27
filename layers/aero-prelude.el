@@ -136,12 +136,6 @@
   :config
   (global-evil-matchit-mode 1))
 
-(use-package evil-surround :ensure t
-	:after evil
-	:defines global-evil-surround-mode
-  :config
-  (global-evil-surround-mode))
-
 (use-package evil-visualstar :ensure t
 	:after evil
 	:defines global-evil-visualstar-mode
