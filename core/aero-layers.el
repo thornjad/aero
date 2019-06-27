@@ -24,6 +24,7 @@
 		aero-markup
 		aero-org
 		aero-prog
+    aero-project
     aero-python
 		aero-restart
     aero-rust
