@@ -35,7 +35,7 @@ REQUIREMENTS
   optimized to use the font Dank Mono, but also works great with Source Code
   Pro.
 
-  Flycheck requires the following external tools. These tolls will be
+  Flycheck requires the following external tools. These tools will be
   installed automatically if they are not present.
 
   - coffeescript (compiler, npm)
