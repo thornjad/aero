@@ -100,11 +100,25 @@
 	 "wk" 'evil-window-up
 	 "wj" 'evil-window-down)
 
+  ;; default states
 	(setq evil-default-state 'normal)
 	(evil-set-initial-state 'dired-mode 'emacs)
 	(evil-set-initial-state 'message-mode 'motion)
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
+
+  (defun aero/evil-shift-right ()
+    (interactive)
+    (evil-shift-right evil-visual-beginning evil-visual-end)
+    (evil-normal-state)
+    (evil-visual-restore))
+  (defun aero/evil-shift-left ()
+    (interactive)
+    (evil-shift-left evil-visual-beginning evil-visual-end)
+    (evil-normal-state)
+    (evil-visual-restore))
+  (evil-define-key 'visual global-map (kbd ">") 'aero/evil-shift-right)
+  (evil-define-key 'visual global-map (kbd "<") 'aero/evil-shift-left)
 
 	;; cursor color by state
 	(setq evil-insert-state-cursor  '("#268bd2" hbar) ; blue
