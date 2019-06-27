@@ -16,6 +16,19 @@
   Special focus is put on writing Lisps, Python, TCL, Node and the several web
   languages.
 
+  "Emacs outshines all other editing software in the same way that the
+  noonday sun does the stars. It is not just bigger and brighter; it
+  simply makes everything else vanish." — Neal Stephenson
+
+	"While any text editor can save your files, only Emacs can save your
+	soul." — Per Abrahamsen
+
+  "The reasonable man adapts himself to Emacs; the unreasonable one
+  persists in trying to adapt Emacs to himself. Therefore all progress
+  depends on the unreasonable man." — G.B. Shaw
+
+  "Thou shalt not cross 80 columns in thy file"
+
 REQUIREMENTS
 
   Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
@@ -48,9 +61,9 @@ CREDITS
   inspired by various projects and developers, including:
 
   - eos (Emacs Operating System)
-  - Spacemacs
   - Prelude Emacs
   - Doom Emacs
+  - Spacemacs
   - ErgoEmacs
   - Samuel Barreto
   - Steve Purcell
