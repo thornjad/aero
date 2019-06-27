@@ -41,10 +41,22 @@
 	:config
 	(global-git-commit-mode)
 	(use-package magit-todos :ensure t)
-	(use-package evil-magit :ensure t)
-)
-
+	(use-package evil-magit :ensure t))
 
 (use-package gitlab-ci-mode :ensure t)
+
+
+;;; project management
+
+(use-package cruiser-find-file
+  :disabled t
+  :load-path aero-packages-directory
+  :config
+  (general-define-key
+   :states '(normal motion emacs)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "p" '(:ignore t :which-key "project")
+   "pf" '(cruiser-find-file :which-key "find file")))
 
 (provide 'aero-git)
