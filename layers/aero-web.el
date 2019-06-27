@@ -58,6 +58,8 @@
 (use-package json-mode :ensure t
 	:mode "\\.json\\'")
 
+(use-package yaml-mode :ensure t
+  :mode "\\.yaml\\'")
 
 ;; rivet
 
