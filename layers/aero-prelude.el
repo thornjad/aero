@@ -98,7 +98,8 @@
 	 "wh" 'evil-window-left
 	 "wl" 'evil-window-right
 	 "wk" 'evil-window-up
-	 "wj" 'evil-window-down)
+	 "wj" 'evil-window-down
+   "cm" 'evil-make)
 
   ;; default states
 	(setq evil-default-state 'normal)
