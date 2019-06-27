@@ -112,6 +112,10 @@ emacs with sigusr2"
   (interactive)
   (untabify (point-min) (point-max)))
 
+(defun tabify-buffer ()
+  (interactive)
+  (tabify (point-min) (point-max)))
+
 (defun indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
