@@ -16,6 +16,7 @@
 ;;   - but then how would layers be disabled (it happens)?
 (defvar aero-layer-list
 	'(
+    aero-c
 		aero-eww
     aero-feed
 		aero-git

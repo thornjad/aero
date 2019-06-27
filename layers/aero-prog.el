@@ -69,7 +69,7 @@
     (flycheck-buffer-automatically 'idle-change))
 
   ;; hooks for several modes
-  (dolist (modehook '(web tcl json js2 rjsx emacs-lisp))
+  (dolist (modehook '(web tcl json js2 rjsx emacs-lisp c-mode cpp-mode))
     (add-hook (concat (car modehook) "-mode-hook")
               'flycheck-mode)))
 
