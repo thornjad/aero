@@ -40,18 +40,19 @@
 		:config
 		(setq package-check-signature nil))
 
-  ;; enable `:ensure-system-pacakge'
   (use-package use-package-ensure-system-package
   :ensure t)
 
-	;; quelpa
 	(use-package quelpa :ensure t
 		:config
 		(quelpa
 		 '(quelpa-use-package
 			 :fetcher git
 			 :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-		(require 'quelpa-use-package)))
+		(require 'quelpa-use-package))
+
+  (use-package gnu-elpa-keyring-update :ensure t
+    :pin gnu))
 
 (defun aero/update-packages ()
 	(interactive)
