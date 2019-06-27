@@ -107,14 +107,11 @@ more cycles but less space.")
   (defvar aero-initialized nil
     "Whether Aero has finished initialization")
 
-  ;; disable file-name-handlers for a speed boost during startup
-  (let ((file-name-handler-alist nil))
+  ;; burn baby burn
+  (require 'aero-core)
+  (aero/init)
+  (aero/startup-hook)
 
-    ;; burn baby burn
-    (require 'aero-core)
-    (aero/init)
-    (aero/startup-hook)
-
-    ;; no more debug please
-    (setq debug-on-error nil)
-    (aero/log-info "Aero is ready")))
+  ;; no more debug please
+  (setq debug-on-error nil)
+  (aero/log-info "Aero is ready"))
