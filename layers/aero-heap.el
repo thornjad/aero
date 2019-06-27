@@ -28,4 +28,11 @@
 (use-package rainbow-mode :ensure t
   :commands rainbow-mode)
 
+
+;;; games
+
+(use-package 2048-game :ensure t :defer t)
+
+(use-package landmark :ensure t :defer t)
+
 (provide 'aero-heap)
