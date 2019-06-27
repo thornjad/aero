@@ -26,6 +26,7 @@
 
 (use-package emmet-mode :ensure t
   :after (web-mode rjsx-mode)
+  :hook web-mode
 	:init
 	(setq emmet-self-closing-tag-style " /"))
 
