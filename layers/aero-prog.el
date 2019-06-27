@@ -31,6 +31,48 @@
   :config
   (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl))
 
+(use-package flycheck :ensure t
+  :commands flycheck-mode
+  :init
+  (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
+                   (haskell-mode-hook    . haskell-mode-map)
+                   (js2-mode-hook        . js2-mode-map)
+                   (c-mode-common-hook   . c-mode-base-map)))
+    (add-hook (car where)
+              `(lambda ()
+                 (bind-key "M-n" #'flycheck-next-error ,(cdr where))
+                 (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))))
+  :config
+  (setq flycheck-highlighting-mode 'symbols)
+  (defalias 'show-error-at-point-soon 'flycheck-show-error-at-point)
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+
+  (defun aero/auto-adjust-flycheck-eagerness ()
+    "Adjust how often we check for errors based on if there are any.
+    In a clean, error-free buffer, we're an order of magnitude more
+    lax about running the checks."
+    (setq flycheck-idle-change-delay
+          (if flycheck-current-errors 0.3 3.0)))
+  ;; auto-adjust at the buffer level
+  (make-variable-buffer-local 'flycheck-idle-change-delay)
+  (add-hook 'flycheck-after-syntax-check-hook
+            'aero/auto-adjust-flycheck-eagerness)
+
+  (defun flycheck-handle-idle-change ()
+    "Handle an expired idle time since the last change. This is an
+  overwritten version of the original flycheck-handle-idle-change,
+  which removes the forced deferred. Timers should only trigger
+  inbetween commands in a single threaded system and the forced
+  deferred makes errors never show up before you execute another
+  command. Credit to jwiegley for this one"
+    (flycheck-clear-idle-change-timer)
+    (flycheck-buffer-automatically 'idle-change))
+
+  ;; hooks for several modes
+  (dolist (modehook '(web tcl json js2 rjsx emacs-lisp))
+    (add-hook (concat (car modehook) "-mode-hook")
+              'flycheck-mode)))
+
 
 ;;; parens
 
