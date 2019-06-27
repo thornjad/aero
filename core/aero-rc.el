@@ -1,5 +1,4 @@
 ;; -*- lexical-binding: t -*-
-;; Aero main configuration
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
