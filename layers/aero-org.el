@@ -21,8 +21,7 @@
 				org-footnote-auto-adjust t
 				org-footnote-section nil
 				org-startup-with-inline-images t
-				org-startup-indented t
-				org-hide-leading-stars t)
+				org-startup-indented t)
 
 	;; rescale images to 400px if no with attribute is set (see
 	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
