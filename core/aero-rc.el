@@ -9,6 +9,8 @@
 ;; particular purpose. See </license> for more details.
 ;;
 ;; This file is not part of GNU Emacs
+;;
+;;; Code:
 
 
 (setq-default
@@ -28,7 +30,6 @@
  confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate file
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
- make-pointer-invisible t ; fix some color escape sequences (eos)
  auto-revert-interval 10 ; wait just a little longer (default is 5)
 
  ;; version control and saving
@@ -88,8 +89,8 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
-;; advise against killing `*scratch*'
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
+  "Don't kill my scratch!"
   (let ((buffer-to-kill (ad-get-arg 0)))
     (if (equal buffer-to-kill "*scratch*")
         (bury-buffer)
@@ -110,26 +111,12 @@
 (aero/add-hook! 'after-save-hook
 	(executable-make-buffer-file-executable-if-script-p))
 
-;; turn off unneeded stuff when unneeded
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-(when (fboundp 'horizontal-scroll-bar-mode)
-  (horizontal-scroll-bar-mode -1))
-(when (functionp 'mouse-wheel-mode)
-  (mouse-wheel-mode -1))
-(when (functionp 'menu-bar-mode)
-  (menu-bar-mode -1))
-(when (functionp 'blink-cursor-mode)
-  (blink-cursor-mode -1))
-
 ;; ensure buffer names are unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
 (defvar aero/default-font "Dank Mono"
-	"Default font throughout Aero")
+	"Default font throughout Aero.")
 
 (when (boundp 'global-prettify-symbols-mode)
   (add-hook 'emacs-lisp-mode-hook
