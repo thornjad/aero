@@ -30,4 +30,4 @@
 	 "p" '(:ignore t :which-key "projectile")
 	 "pf" 'counsel-projectile-find-file))
 
-(provide 'aero-projectile)
+(provide 'aero-project)
