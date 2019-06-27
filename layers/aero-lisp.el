@@ -21,4 +21,11 @@
 ;; TODO common lisp
 ;; TODO include Lakefile as common lisp
 
+(defun indent-defun ()
+  "Indent current defun"
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (indent-region (region-beginning) (region-end))))
+
 (provide 'aero-lisp)
