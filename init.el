@@ -38,6 +38,9 @@
     (defun enriched-decode-display-prop (start end &optional param)
       (list start end))))
 
+(setq-default user-full-name "Jade Michael Thornton"
+              user-mail-address "jade@jmthornton.net")
+
 (defvar aero/gc-cons '((#x10000000 0.6)
                        (#x100000 0.1))
   "High and normal values for gc.
