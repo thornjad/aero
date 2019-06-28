@@ -41,8 +41,16 @@
 	:config
 	(global-git-commit-mode t)
   (magit-auto-revert-mode nil)
+  (setq magit-completing-read-function 'ivy-completing-read
+        magit-buffer-name-format "%x%M%v: %t%x")
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t))
+
+(use-package ediff
+  :commands (ediff ediff3)
+  :config
+  (setq ediff-split-window-function #'split-window-horizontally
+        ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (use-package gitlab-ci-mode :ensure t)
 
