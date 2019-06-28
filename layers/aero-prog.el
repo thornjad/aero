@@ -70,7 +70,7 @@
 
   ;; hooks for several modes
   (dolist (modehook '(web tcl json js2 rjsx emacs-lisp c-mode cpp-mode))
-    (add-hook (concat (car modehook) "-mode-hook")
+    (add-hook (concat modehook "-mode-hook")
               'flycheck-mode)))
 
 
