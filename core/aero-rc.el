@@ -33,6 +33,10 @@
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
 
+ ;; startup with scratch
+ inhibit-startup-screen t
+ initial-buffer-choice t
+
  ;; version control and saving
  use-package-verbose nil
  delete-old-versions -1	; supprime les vieilles versions des fichiers sauvegardés
