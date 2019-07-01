@@ -10,6 +10,7 @@ quelpa/
 /url
 /eww-bookmarks
 eshell/history
+eshell/lastdir
 .emacs.desktop
 .emacs.desktop.lock
 .recentf
