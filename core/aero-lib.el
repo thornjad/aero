@@ -24,7 +24,7 @@
 (defun aero/save-kill-emacs ()
   (interactive)
   (mapc (lambda (f) (ignore-errors (funcall f)))
-        aero/before-kill-hook)
+        '(recentf-save-list bookmark-save))
   (if (modified-buffers-p)
       (progn
         (when (not (eq window-system 'x))
