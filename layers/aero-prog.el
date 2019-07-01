@@ -10,6 +10,8 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(require 'aero-prelude)
+
 (use-package company :ensure t
 	:pin gnu
 	:hook (prog-mode . company-mode)
@@ -18,8 +20,6 @@
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-require-match nil
-        company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil
         company-show-numbers t
 				company-tooltip-align-annotations t))
 
@@ -27,13 +27,28 @@
 (use-package counsel-gtags :ensure t)
 
 (use-package smart-tabs-mode
+  :functions (smart-tabs-insinuate)
   :load-path aero-packages-directory
   :config
   (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl)
   (smart-tabs-advice js2-indent-line js2-basic-offset))
 
+
+;;; flycheck
+
+(defvar flycheck-idle-change-delay 3.0)
+(make-variable-buffer-local 'flycheck-idle-change-delay)
 (use-package flycheck :ensure t
   :commands flycheck-mode
+  :defines (flycheck-clear-idle-change-timer)
+  :hook ((web-mode
+          tcl-mode
+          json-mode
+          js2-mode
+          rjsx-mode
+          emacs-lisp-mode
+          c-mode
+          cpp-mode) . flycheck-mode)
   :init
   (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
                    (haskell-mode-hook    . haskell-mode-map)
@@ -55,13 +70,12 @@
     (setq flycheck-idle-change-delay
           (if flycheck-current-errors 0.3 3.0)))
   ;; auto-adjust at the buffer level
-  (make-variable-buffer-local 'flycheck-idle-change-delay)
   (add-hook 'flycheck-after-syntax-check-hook
             'aero/auto-adjust-flycheck-eagerness)
 
   (defun flycheck-handle-idle-change ()
     "Handle an expired idle time since the last change. This is an
-  overwritten version of the original flycheck-handle-idle-change,
+  overwritten versioon of the original flycheck-handle-idle-change,
   which removes the forced deferred. Timers should only trigger
   inbetween commands in a single threaded system and the forced
   deferred makes errors never show up before you execute another
@@ -69,23 +83,37 @@
     (flycheck-clear-idle-change-timer)
     (flycheck-buffer-automatically 'idle-change))
 
-  ;; hooks for several modes
-  (dolist (modehook '(web tcl json js2 rjsx emacs-lisp c-mode cpp-mode))
-    (add-hook (concat modehook "-mode-hook")
-              'flycheck-mode)))
-
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "pc" '(:ignore t :which-key "flycheck")
+   "pcn" 'flycheck-next-error
+   "pcp" 'flycheck-previous-error
+   "pcc" 'flycheck-clear
+   "pcb" 'flycheck-buffer
+   "pcy" '(flycheck-copy-errors-as-kill :which-key "yank as kill")
+   "pch" 'flycheck-display-error-at-point
+   "pcH" 'flycheck-display-error-at-point-soon
+   "pce" 'flycheck-explain-error-at-point
+   "pcl" 'flycheck-list-errors
+   "pci" 'flycheck-manual)
+  )
 
 ;;; parens
 
 (use-package smartparens :ensure t
+  :functions (sp-pair
+              sp-local-pairs
+              sp-up-sexp)
   :commands smartparens-global-mode
   :hook ((after-init . smartparens-global-mode))
+  :after evil
   :init
   ;; fix highlighting in normal mode
   (setq sp-show-pair-from-inside t)
   :config
 
-  (defun aero/smartparens-pair-newline-and-indent (id action context)
+  (defun aero/smartparens-pair-newline-and-indent ()
     "Insert newline after smart paren, then indent for insert."
     (save-excursion
       (newline)
@@ -93,7 +121,7 @@
     (indent-according-to-mode))
 
   ;; from spacemacs
-  (defun spacemacs/smart-closing-parenthesis ()
+  (defun aero/smart-closing-parenthesis ()
     "Insert a closing pair delimiter or move point past existing delimiter.
 
 If the expression at point is already balanced and there is a closing delimiter
