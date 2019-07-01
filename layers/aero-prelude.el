@@ -310,10 +310,12 @@
  :keymaps 'override
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
+ "" nil
 
  ;; independent keys
  "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
  "q" 'quoted-insert
+ "'" 'eshell
  ":" 'eval-expression
  ";" 'comment-or-uncomment-region
  "!" 'shell-command

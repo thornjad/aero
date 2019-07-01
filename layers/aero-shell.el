@@ -16,12 +16,6 @@
 (use-package eshell
   :commands eshell
   :config
-  (general-define-key
-   :states '(normal emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "'" 'eshell)
-
   (setq-default eshell-aliases-file (concat user-emacs-directory "eshell-aliases")
                 eshell-save-history-on-exit t
                 eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
