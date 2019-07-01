@@ -1,3 +1,4 @@
 alias e find-file $1
+alias eo find-file-other-window $1
 alias la ls -lah $*
 alias clear recenter 0
