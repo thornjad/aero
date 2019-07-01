@@ -43,6 +43,8 @@
   (magit-auto-revert-mode nil)
   (setq magit-completing-read-function 'ivy-completing-read
         magit-buffer-name-format "%x%M%v: %t%x")
+  (defadvice magit-diff (after switch-to-diff activate)
+    (other-window 1))
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t))
 
