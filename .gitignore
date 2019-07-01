@@ -36,3 +36,4 @@ tmp/
 etc/todo.org
 .private.el
 games/
+tmp.*
