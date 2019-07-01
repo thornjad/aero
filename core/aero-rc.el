@@ -36,6 +36,7 @@
  ;; startup with scratch
  inhibit-startup-screen t
  initial-buffer-choice t
+ inhibit-startup-echo-area-message t
 
  ;; version control and saving
  use-package-verbose nil
