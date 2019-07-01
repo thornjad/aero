@@ -39,10 +39,14 @@
 	 "gb" 'magit-blame)
 
 	:config
+  (setq magit-completing-read-function 'ivy-completing-read
+        magit-buffer-name-format "%x%M%v: %t%x"
+        magit-diff-paint-whitespace-lines 'both
+        magit-diff-highlight-trailing t
+        magit-diff-refine-hunk 'all
+        magit-diff-refine-ignore-whitespace t)
 	(global-git-commit-mode t)
   (magit-auto-revert-mode nil)
-  (setq magit-completing-read-function 'ivy-completing-read
-        magit-buffer-name-format "%x%M%v: %t%x")
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
 	(use-package magit-todos :ensure t)
