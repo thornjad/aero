@@ -312,10 +312,7 @@
  :non-normal-prefix "C-SPC"
 
  ;; independent keys
- "TAB" '((lambda ()
-           (interactive)
-           (switch-to-buffer (other-buffer (current-buffer) 1)))
-         :which-key "last buffer")
+ "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
  "q" 'quoted-insert
  ":" 'eval-expression
  ";" 'comment-or-uncomment-region
