@@ -23,6 +23,12 @@
 ;; Michael Thornton forked the Gruvbox project in 2019 to develop the Aero
 ;; theme.
 ;;
+;; The Aero mode line is based on mood-line by Jessie Hildebrandt, which is
+;; touted as a minimal alternative to doom-modeline, but is still rather
+;; bloated. This implementation is smaller and does less. Using a custom mode
+;; line in this way removes any need for "fixer" packages like diminish.el, and
+;; simply looks a lot better.
+;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
 ;; Free Software Foundation. This program carries no warranty whatsoever,
@@ -574,23 +580,286 @@
                                 ,aero-light1])
            `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
 
-(show-paren-mode t) ; highlight delimiters
-(line-number-mode t) ; only show line number in mode line
-(column-number-mode t) ; also show column in mode line
+
+;;; mode line
+
+(defvar aero/modeline--current-window)
+(defvar flycheck-current-errors)
+(declare-function flycheck-count-errors "flycheck" (errors))
+
+;; Config
+
+(defgroup aero/modeline nil
+  "A minimal mode-line configuration inspired by doom-modeline."
+  :group 'mode-line)
+
+(defcustom aero/modeline-show-point nil
+  "If t, the value of `point' will be displayed next to the cursor position in the mode-line."
+  :group 'aero/modeline
+  :type 'boolean)
+
+(defface aero/modeline-status-grayed-out
+  '((t (:inherit (font-lock-doc-face))))
+  "Face used for neutral or inactive status indicators in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-status-info
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for generic status indicators in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-status-success
+  '((t (:inherit (success))))
+  "Face used for success status indicators in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-status-warning
+  '((t (:inherit (warning))))
+  "Face for warning status indicators in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-status-error
+  '((t (:inherit (error))))
+  "Face for error stauts indicators in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-unimportant
+  '((t (:inherit (font-lock-doc-face))))
+  "Face used for less important mode-line elements."
+  :group 'aero/modeline)
+
+(defface aero/modeline-modified
+  '((t (:inherit (error))))
+  "Face used for the 'modified' indicator symbol in the mode-line."
+  :group 'aero/modeline)
+
+;; Helper functions
+
+(defun aero/modeline-format (left right)
+  "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
+  (let ((reserve (length right)))
+    (when (and (display-graphic-p) (eq 'right (get-scroll-bar-mode)))
+      (setq reserve (- reserve 3)))
+    (concat
+     left
+     " "
+     (propertize  " "
+                  'display `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
+     right)))
+
+;; Define a helper function to determine whether or not the current window is active.
+(defsubst aero/modeline-is-active ()
+  "Return \"t\" if the current window is active, \"nil\" if it is not."
+  (eq (selected-window) aero/modeline--current-window))
+
+;; Update functions
+
+;; Window update function
+(defvar-local aero/modeline--current-window (frame-selected-window))
+(defun aero/modeline--update-selected-window (&rest _)
+  "Update the `aero/modeline--current-window' variable."
+  (when (frame-selected-window)
+    (let ((win (frame-selected-window)))
+      (unless (minibuffer-window-active-p win)
+        (setq aero/modeline--current-window win)))))
+
+;; VC update function
+(defvar-local aero/modeline--vc-text nil)
+(defun aero/modeline--update-vc-segment (&rest _)
+  "Update `aero/modeline--vc-text' against the current VCS state."
+  (setq aero/modeline--vc-text
+        (when (and vc-mode buffer-file-name)
+          (let ((backend (vc-backend buffer-file-name))
+                (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
+            (let ((face 'mode-line-inactive)
+                  (active (aero/modeline-is-active)))
+              (concat (cond ((memq state '(edited added))
+                             (if active (setq face 'aero/modeline-status-info))
+                             (propertize "✚" 'face face))
+                            ((eq state 'needs-merge)
+                             (if active (setq face 'aero/modeline-status-warning))
+                             (propertize "●" 'face face))
+                            ((eq state 'needs-update)
+                             (if active (setq face 'aero/modeline-status-warning))
+                             (propertize "↑" 'face face))
+                            ((memq state '(removed conflict unregistered))
+                             (if active (setq face 'aero/modeline-status-error))
+                             (propertize "✖" 'face face))
+                            (t
+                             (if active (setq face 'aero/modeline-status-grayed-out))
+                             (propertize "✔" 'face face)))
+                      " "
+                      (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
+                                  'face (if active face))
+                      "  "))))))
+
+;; Flycheck update function
+(defvar-local aero/modeline--flycheck-text nil)
+(defun aero/modeline--update-flycheck-segment (&optional status)
+  "Update `aero/modeline--flycheck-text' against the reported flycheck STATUS."
+  (setq aero/modeline--flycheck-text
+        (pcase status
+          ('finished (if flycheck-current-errors
+                         (let-alist (flycheck-count-errors flycheck-current-errors)
+                           (let ((sum (+ (or .error 0) (or .warning 0))))
+                             (propertize (concat "✚ Issues: "
+                                                 (number-to-string sum)
+                                                 "  ")
+                                         'face (if .error
+                                                   'aero/modeline-status-error
+                                                 'aero/modeline-status-warning))))
+                       (propertize "✔ Good  " 'face 'aero/modeline-status-success)))
+          ('running (propertize "● Checking  " 'face 'aero/modeline-status-info))
+          ('no-checker "")
+          ('errored (propertize "✖ Error  " 'face 'aero/modeline-status-error))
+          ('interrupted (propertize "|| Paused  " 'face 'aero/modeline-status-grayed-out)))))
+
+;;
+;; Segments
+;;
+
+(defun aero/modeline-segment-modified ()
+  "Displays a color-coded buffer modification indicator in the mode-line."
+  (propertize
+   (if (and
+        (buffer-modified-p)
+        (not (string-match-p "\\*.*\\*" (buffer-name))))
+       " ● "
+     "   ")
+   'face 'aero/modeline-modified))
+
+(defun aero/modeline-segment-buffer-name ()
+  "Displays the name of the current buffer in the mode-line."
+  (concat (propertize "%b" 'face 'mode-line-buffer-id) "  "))
+
+(defun aero/modeline-segment-position ()
+  "Displays the current cursor position in the mode-line."
+  (concat "%l:%c"
+          (when aero/modeline-show-point
+            (concat ":"
+                    (propertize (format "%d" (point)) 'face (if (aero/modeline-is-active)
+                                                                'aero/modeline-unimportant
+                                                              'mode-line-inactive))))
+          " "
+          (propertize "%p%%" 'face (if (aero/modeline-is-active)
+                                       'aero/modeline-unimportant
+                                     'mode-line-inactive))
+          "  "))
+
+(defun aero/modeline-segment-encoding ()
+  "Displays the encoding and EOL style of the buffer in the mode-line."
+  (concat (pcase (coding-system-eol-type buffer-file-coding-system)
+            (0 "LF  ")
+            (1 "CRLF  ")
+            (2 "CR  "))
+          (let ((sys (coding-system-plist buffer-file-coding-system)))
+            (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
+                   "UTF-8")
+                  (t (upcase (symbol-name (plist-get sys :name))))))
+          "  "))
+
+(defun aero/modeline-segment-vc ()
+  "Displays color-coded version control information in the mode-line."
+  aero/modeline--vc-text)
+
+(defun aero/modeline-segment-major-mode ()
+  "Displays the current major mode in the mode-line."
+  (propertize "%m  "
+              'face (if (aero/modeline-is-active)
+                        'bold
+                      'aero/modeline-status-grayed-out)))
+
+(defun aero/modeline-segment-global-mode-string ()
+  "Displays the current value of `global-mode-string' in the mode-line."
+  (when (not (string= (mapconcat 'concat (mapcar 'eval global-mode-string) "") ""))
+    (propertize "%M  "
+                'face 'aero/modeline-status-grayed-out)))
+
+(defun aero/modeline-segment-flycheck ()
+  "Displays color-coded flycheck information in the mode-line (if available)."
+  aero/modeline--flycheck-text)
+
+(defun aero/modeline-segment-process ()
+  "Displays the current value of `mode-line-process' in the mode-line."
+  (when mode-line-process
+    (list mode-line-process "  ")))
+
+;; Activation function
+
+;; Store the default mode-line format
+(defvar aero/modeline--default-mode-line mode-line-format)
+
+(define-minor-mode aero/modeline-mode
+  "Toggle aero/modeline on or off."
+  :group 'aero/modeline
+  :global t
+  :lighter nil
+  (if aero/modeline-mode
+      (progn
+
+        ;; Setup flycheck hooks
+        (add-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
+        (add-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
+
+        ;; Setup VC hooks
+        (add-hook 'find-file-hook #'aero/modeline--update-vc-segment)
+        (add-hook 'after-save-hook #'aero/modeline--update-vc-segment)
+        (advice-add #'vc-refresh-state :after #'aero/modeline--update-vc-segment)
+
+        ;; Setup window update hooks
+        (add-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
+        (add-hook 'focus-in-hook #'aero/modeline--update-selected-window)
+        (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
+        (advice-add #'select-window :after #'aero/modeline--update-selected-window)
+
+        ;; Set the new mode-line-format
+        (setq-default mode-line-format
+                      '((:eval
+                         (aero/modeline-format
+                          ;; Left
+                          (format-mode-line
+                           '((:eval (aero/modeline-segment-modified))
+                             (:eval (aero/modeline-segment-buffer-name))
+                             (:eval (aero/modeline-segment-position))))
+
+                          ;; Right
+                          (format-mode-line
+                           '((:eval (aero/modeline-segment-vc))
+                             (:eval (aero/modeline-segment-major-mode))
+                             (:eval (aero/modeline-segment-global-mode-string))
+                             (:eval (aero/modeline-segment-flycheck))
+                             (:eval (aero/modeline-segment-process))
+                             " ")))))))
+    (progn
+
+      ;; Remove flycheck hooks
+      (remove-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
+      (remove-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
+
+      ;; Remove VC hooks
+      (remove-hook 'file-find-hook #'aero/modeline--update-vc-segment)
+      (remove-hook 'after-save-hook #'aero/modeline--update-vc-segment)
+      (advice-remove #'vc-refresh-state #'aero/modeline--update-vc-segment)
+
+      ;; Remove window update hooks
+      (remove-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
+      (remove-hook 'focus-in-hook #'aero/modeline--update-selected-window)
+      (advice-remove #'handle-switch-frame #'aero/modeline--update-selected-window)
+      (advice-remove #'select-window #'aero/modeline--update-selected-window)
+
+      ;; Restore the original mode-line format
+      (setq-default mode-line-format aero/modeline--default-mode-line))))
+
+;; Do it
+(aero/modeline-mode)
+
+
+;;; additional tweaks and packages
+
+(byte-code "\300\301!\210\302\301!\210\303\301!\207" [show-paren-mode
+                                                      t line-number-mode column-number-mode] 2)
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 (add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
-
-(use-package doom-modeline :ensure t
-  :config
-  (doom-modeline-init)
-  (setq doom-modeline-height 20
-				doom-modeline-buffer-file-name-style 'buffer-name
-				doom-modeline-icon nil)
-	(doom-modeline-def-modeline 'aero
-		'(bar window-number modals matches buffer-info remote-host buffer-position selection-info)
-		'(misc-info persp-name lsp debug fancy-battery minor-modes buffer-encoding major-mode vcs checker))
-	(aero/add-hook! 'doom-modeline-mode-hook
-						 (doom-modeline-set-modeline 'aero 'default)))
 
 (aero/add-hook!
  'rjsx-mode-hook
