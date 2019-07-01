@@ -43,7 +43,7 @@
     ,name
     ,description
     ,palette
-    ((default                                   (:background aero-bg :foreground aero-light0))
+    ((default                                   (:background aero-bg :foreground aero-light0 :font "Dank Mono"))
      (cursor                                    (:background aero-light0))
      (mode-line                                 (:background aero-dark3 :foreground aero-light2 :box nil))
      (mode-line-inactive                        (:background aero-dark1 :foreground aero-light4 :box nil))
