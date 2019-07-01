@@ -80,7 +80,52 @@
 (use-package smartparens :ensure t
   :commands smartparens-global-mode
   :hook ((after-init . smartparens-global-mode))
+  :init
+  ;; fix highlighting in normal mode
+  (setq sp-show-pair-from-inside t)
   :config
+
+  (defun aero/smartparens-pair-newline-and-indent (id action context)
+    "Insert newline after smart paren, then indent for insert."
+    (save-excursion
+      (newline)
+      (indent-according-to-mode))
+    (indent-according-to-mode))
+
+  ;; from spacemacs
+  (defun spacemacs/smart-closing-parenthesis ()
+    "Insert a closing pair delimiter or move point past existing delimiter.
+
+If the expression at point is already balanced and there is a closing delimiter
+for that expression on the current line, move point forward past the closing
+delimiter. If the expression is balanced but there is no closing delimiter on
+the current line, insert a literal ')' character. If the expression is not
+balanced, insert a closing delimiter for the current expression. This command
+uses Smartparens navigation commands and therefore recognizes pair delimiters
+that have been defined using `sp-pair' or `sp-local-pair'."
+    (interactive)
+    (let* ((sp-navigate-close-if-unbalanced t)
+           (current-pos (point))
+           (current-line (line-number-at-pos current-pos))
+           next-pos next-line)
+      (save-excursion
+        (let ((buffer-undo-list)
+              (modified (buffer-modified-p)))
+          (unwind-protect
+              (progn
+                (sp-up-sexp)
+                (setq next-pos (point)
+                      next-line (line-number-at-pos)))
+            (primitive-undo (length buffer-undo-list)
+                            buffer-undo-list)
+            (set-buffer-modified-p modified))))
+      (cond
+       ((and (= current-line next-line)
+             (not (= current-pos next-pos)))
+        (sp-up-sexp))
+       (t
+        (insert-char ?\))))))
+
   (require 'smartparens-config)
   (show-smartparens-global-mode t)
 
@@ -105,6 +150,14 @@
   (sp-local-pair 'web-mode "{{ "  " }}")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
-  (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" ))
+  (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" )
+  (sp-pair "{" nil :post-handlers
+           '(:add (aero/smartparens-pair-newline-and-indent "RET")))
+  (sp-pair "[" nil :post-handlers
+           '(:add (aero/smartparens-pair-newline-and-indent "RET")))
+  (define-key evil-insert-state-map ")"
+    'aero/smart-closing-parenthesis))
+
+
 
 (provide 'aero-prog)
