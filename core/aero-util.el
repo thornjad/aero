@@ -79,11 +79,6 @@ If FUNC is a lambda you must give it a name with FNAME. "
                     `((add-hook ',hook ',hfunc)))))
     (push 'progn result)))
 
-(defvar aero/before-kill-hook
-  '(recentf-save-list
-    bookmark-save)
-  "Functions to be executed by `SAVE-KILL-EMACS'")
-
 
 ;; controlling
 
