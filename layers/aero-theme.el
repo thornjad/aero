@@ -47,12 +47,14 @@
     ((default (:background aero-bg :foreground aero-light0 :font "Dank Mono"))
      (cursor (:background aero-light0))
      (mode-line (:background aero-dark3 :foreground aero-light2 :box nil))
-     (mode-line-inactive (:background aero-dark1 :foreground aero-light4 :box nil))
+     (mode-line-inactive
+      (:background aero-dark1 :foreground aero-light4 :box nil))
      (fringe (:background aero-bg))
      (hl-line (:background aero-dark1))
      (region (:background aero-dark2))
      (secondary-selection (:background aero-dark1))
-     (minibuffer-prompt (:background aero-bg :foreground aero-bright_green :bold t))
+     (minibuffer-prompt
+      (:background aero-bg :foreground aero-bright_green :bold t))
      (vertical-border (:foreground aero-dark2))
      (window-divider (:foreground aero-dark2))
      (link (:foreground aero-faded_blue :underline t))
@@ -76,7 +78,8 @@
      (warning (:foreground aero-bright_yellow :bold t))
      (trailing-whitespace (:background aero-bright_red))
      (escape-glyph (:foreground aero-bright_aqua))
-     (header-line (:background aero-dark0 :foreground aero-light3 :box nil :inherit nil))
+     (header-line
+      (:background aero-dark0 :foreground aero-light3 :box nil :inherit nil))
      (highlight (:background aero-dark4 :foreground aero-light0))
      (homoglyph (:foreground aero-bright_yellow))
      (match (:foreground aero-dark0 :background aero-bright_blue))
@@ -104,14 +107,23 @@
 
      ;; smartparens
      (sp-pair-overlay-face (:background aero-dark2))
-     (sp-show-pair-match-face (:background aero-dark2)) ;; Pair tags highlight
-     (sp-show-pair-mismatch-face (:background aero-bright_red)) ;; Highlight for bracket without pair
+     ;; Pair tags highlight
+     (sp-show-pair-match-face (:background aero-dark2))
+     ;; Highlight for bracket without pair
+     (sp-show-pair-mismatch-face (:background aero-bright_red))
 
      ;; elscreen
-     (elscreen-tab-background-face (:background aero-bg :box nil)) ;; Tab bar, not the tabs
-     (elscreen-tab-control-face (:background aero-dark2 :foreground aero-bright_red :underline nil :box nil)) ;; The controls
-     (elscreen-tab-current-screen-face (:background aero-dark4 :foreground aero-dark0 :box nil)) ;; Current tab
-     (elscreen-tab-other-screen-face (:background aero-dark2 :foreground aero-light4 :underline nil :box nil)) ;; Inactive tab
+     ;; Tab bar, not the tabs
+     (elscreen-tab-background-face (:background aero-bg :box nil))
+     ;; The controls
+     (elscreen-tab-control-face
+      (:background aero-dark2 :foreground aero-bright_red :underline nil :box nil))
+     ;; Current tab
+     (elscreen-tab-current-screen-face
+      (:background aero-dark4 :foreground aero-dark0 :box nil))
+     ;; Inactive tab
+     (elscreen-tab-other-screen-face
+      (:background aero-dark2 :foreground aero-light4 :underline nil :box nil))
 
      ;; ag (The Silver Searcher)
      (ag-hit-face (:foreground aero-bright_blue))
@@ -120,7 +132,9 @@
      ;; Diffs
      (diff-changed (:background nil :foreground aero-light1))
      (diff-added (:background nil :foreground aero-bright_green))
+     (diff-refine-added (:box aero-faded_green))
      (diff-removed (:background nil :foreground aero-bright_red))
+     (diff-refine-removed (:box aero-dark_red))
      (diff-indicator-changed (:inherit 'diff-changed))
      (diff-indicator-added (:inherit 'diff-added))
      (diff-indicator-removed (:inherit 'diff-removed))
@@ -152,37 +166,37 @@
      (counsel-bookmark-directory (:foreground aero-bright_purple))
      (counsel-bookmark-file (:foreground aero-faded_blue))
      (counsel-bookmark-gnus (:foreground aero-faded_purple))
-     (counsel-bookmark-info (:foreground aero-turquoise4))
+     (counsel-bookmark-info (:foreground aero-turquoise))
      (counsel-bookmark-man (:foreground aero-sienna))
      (counsel-bookmark-w3m (:foreground aero-bright_yellow))
      (counsel-buffer-directory (:foreground aero-white :background aero-bright_blue))
      (counsel-buffer-not-saved (:foreground aero-faded_red))
-     (counsel-buffer-process (:foreground aero-burlywood4))
+     (counsel-buffer-process (:foreground aero-burlywood))
      (counsel-buffer-saved-out (:foreground aero-bright_red))
      (counsel-buffer-size (:foreground aero-bright_purple))
      (counsel-candidate-number (:foreground aero-bright_green))
      (counsel-ff-directory (:foreground aero-bright_purple))
-     (counsel-ff-executable (:foreground aero-turquoise4))
+     (counsel-ff-executable (:foreground aero-turquoise))
      (counsel-ff-file (:foreground aero-sienna))
      (counsel-ff-invalid-symlink (:foreground aero-white :background aero-bright_red))
      (counsel-ff-prefix (:foreground aero-black :background aero-bright_yellow))
      (counsel-ff-symlink (:foreground aero-bright_orange))
      (counsel-grep-cmd-line (:foreground aero-bright_green))
      (counsel-grep-file (:foreground aero-faded_purple))
-     (counsel-grep-finish (:foreground aero-turquoise4))
+     (counsel-grep-finish (:foreground aero-turquoise))
      (counsel-grep-lineno (:foreground aero-bright_orange))
      (counsel-grep-match (:foreground aero-bright_yellow))
      (counsel-grep-running (:foreground aero-bright_red))
-     (counsel-header (:foreground aero-aquamarine4))
-     (counsel-helper (:foreground aero-aquamarine4))
+     (counsel-header (:foreground aero-aquamarine))
+     (counsel-helper (:foreground aero-aquamarine))
      (counsel-history-deleted (:foreground aero-black :background aero-bright_red))
      (counsel-history-remote (:foreground aero-faded_red))
      (counsel-lisp-completion-info (:foreground aero-faded_orange))
      (counsel-lisp-show-completion (:foreground aero-bright_red))
-     (counsel-locate-finish (:foreground aero-white :background aero-aquamarine4))
+     (counsel-locate-finish (:foreground aero-white :background aero-aquamarine))
      (counsel-match (:foreground aero-bright_orange))
      (counsel-moccur-buffer (:foreground aero-bright_aqua :underline t))
-     (counsel-prefarg (:foreground aero-turquoise4))
+     (counsel-prefarg (:foreground aero-turquoise))
      (counsel-selection (:foreground aero-white :background aero-dark2))
      (counsel-selection-line (:foreground aero-white :background aero-dark2))
      (counsel-separator (:foreground aero-faded_red))
@@ -210,8 +224,8 @@
      (company-tooltip-common (:foreground aero-bright_blue :underline t))
      (company-tooltip-common-selection (:foreground aero-bright_blue :underline t))
      (company-preview-common (:foreground aero-light0))
-     (company-preview (:background aero-lightblue4))
-     (company-preview-search (:background aero-turquoise4))
+     (company-preview (:background aero-lightblue))
+     (company-preview-search (:background aero-turquoise))
      (company-template-field (:foreground aero-black :background aero-bright_yellow))
      (company-echo-common (:foreground aero-faded_red))
 
@@ -277,7 +291,7 @@
      (org-document-title (:foreground aero-faded_blue))
      (org-document-info (:foreground aero-faded_blue))
      (org-agenda-structure (:inherit 'font-lock-comment-face))
-     (org-agenda-date-today (:foreground aero-light0 :weight 'bold :italic t))
+     (org-agenda-date-today (:foreground aero-light0 :weight 'bold :slant 'italic))
      (org-scheduled (:foreground aero-bright_yellow))
      (org-scheduled-today (:foreground aero-bright_blue))
      (org-scheduled-previously (:foreground aero-faded_red))
@@ -467,7 +481,7 @@
 
      ;; wgrep
      (wgrep-delete-face (:strike-through aero-bright_red))
-     (wgrep-done-face (:foreground aero-turquoise4))
+     (wgrep-done-face (:foreground aero-turquoise))
      (wgrep-face (:underline (:color aero-bright_yellow :style 'line)))
      (wgrep-file-face (:inherit 'highlight))
      (wgrep-reject-face (:foreground aero-bright_red :bold t))
@@ -540,10 +554,10 @@
   (aero-white           "#FFFFFF" "#FFFFFF")
   (aero-black           "#000000" "#000000")
   (aero-sienna          "#DD6F48" "#d7875f")
-  (aero-lightblue4      "#66999D" "#5fafaf")
-  (aero-burlywood4      "#BBAA97" "#afaf87")
-  (aero-aquamarine4     "#83A598" "#87af87")
-  (aero-turquoise4      "#61ACBB" "#5fafaf")
+  (aero-lightblue       "#66999D" "#5fafaf")
+  (aero-burlywood       "#BBAA97" "#afaf87")
+  (aero-aquamarine      "#83A598" "#87af87")
+  (aero-turquoise       "#61ACBB" "#5fafaf")
 
   (aero-bg aero-dark0_hard)
   (aero-bg_inactive aero-dark0))
