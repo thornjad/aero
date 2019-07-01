@@ -118,6 +118,25 @@ emacs with sigusr2"
 	(interactive)
 	(switch-to-buffer "*Scratch*"))
 
+;; from spacemacs
+(defun aero/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the current window."
+  (interactive)
+  (destructuring-bind (buf start pos)
+                      (or (cl-find (window-buffer window) (window-prev-buffers)
+                                   :key #'car :test-not #'eq)
+                          (list (other-buffer) nil nil ))
+                      (set-window-buffer-start-and-point window buf start pos)))
+
+(defun aero/alternate-window ()
+  "Switch back and forth between current and last window in the current frame."
+  (interactive)
+  (let (;; switch to first window previously shown in this frame
+        (prev-window (get-mru-window nil t t)))
+    ;; Check window was not found successfully
+    (unless prev-window (user-error "Last window not found."))
+    (select-window prev-window)))
+
 
 ;;; the rest
 
