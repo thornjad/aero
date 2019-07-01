@@ -13,8 +13,9 @@
   sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
   by decades of rich experience and a fantastic culture.
 
-  Special focus is put on writing Lisps, Python, TCL, Node and the several web
-  languages.
+  Special focus is put on writing Lisps, Python, TCL, Node and the
+  several web languages. Aero est un peu multilingue, avec un français
+  occasionnel et peut-être même un peu d'autre merde.
 
   "Emacs outshines all other editing software in the same way that the
   noonday sun does the stars. It is not just bigger and brighter; it
@@ -29,7 +30,7 @@
 
   "Thou shalt not cross 80 columns in thy file"
 
-REQUIREMENTS
+EXIGENCES
 
   Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
   optimized to use the font Dank Mono, but also works great with Source Code
@@ -45,7 +46,7 @@ REQUIREMENTS
   - tern (npm)
   - thornjad/loren (gitlab)
 
-INSTALLING
+INSTALLATION
 
   Clone or download this repository into your ~/.emacs.d. There are three
   mirrors to choose from:
@@ -54,7 +55,7 @@ INSTALLING
   Framagit (better) https://framagit.org/thornjad/aero
   GitHub (ok)       https://github.com/thornjad/aero
 
-CREDITS
+CRÉDITS
 
   Aero couldn't be as beautiful as it is on its own. A lot of configuration,
   functions, macros and other crap has been modified from, copied from or
@@ -74,7 +75,7 @@ CREDITS
 
 COPYING
 
-  Copyright (C) 2017-2019 Jade Michael Thornton
+  Copyright © 2017-2019 Jade Michael Thornton
 
   This program is free software; you may redistribute it and/or modify it under
   the terms of the GNU General Public License version 3, as published by the
