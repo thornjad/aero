@@ -1,2 +1,2 @@
-*.el diff
-*.elc diff
+*.el diff text working-tree-encoding=UTF-8
+*.elc diff text working-tree-encoding=UTF-8
