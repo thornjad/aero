@@ -25,14 +25,16 @@
 (require 'pcomplete)
 
 (defun eshell-did-you-mean--edit-distance (s1 s2)
-  "Return the edit (levenshtein) distance between strings S1 S2.
+  "Return the edit (Levenshtein) distance between strings S1 S2.
 
 Adapted from `org-babel-edit-distance'."
   (let* ((l1 (length s1))
          (l2 (length s2))
-         (dist (vconcat (mapcar (lambda (_) (make-vector (1+ l2) nil))
+         (dist (vconcat (mapcar (lambda (_)
+                                  (make-vector (1+ l2) nil))
                                 (number-sequence 1 (1+ l1)))))
-         (in (lambda (i j) (aref (aref dist i) j))))
+         (in (lambda (i j)
+               (aref (aref dist i) j))))
     (setf (aref (aref dist 0) 0) 0)
     (dolist (j (number-sequence 1 l2))
       (setf (aref (aref dist 0) j) j))
@@ -91,8 +93,9 @@ Should be added to `eshell-preoutput-filter-functions'."
              (if (= (length guesses) 1)
                  "Did you mean this?"
                "Did you mean one of these?") "\n"
-             (mapconcat (lambda (elt) (format "\t%s" (car elt)))
-                        guesses "\n"))
+               (mapconcat (lambda (elt)
+                            (format "\t%s" (car elt)))
+                          guesses "\n"))
           output))
     output))
 
