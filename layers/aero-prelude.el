@@ -293,7 +293,8 @@
 
 (use-package ranger :ensure t
   :config
-  (setq ranger-show-hidden t)
+  (setq ranger-show-hidden t
+        find-directory-functions 'deer)
   (general-define-key
    :states 'normal
    :prefix "SPC"
