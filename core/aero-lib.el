@@ -17,7 +17,7 @@
 ;; Code:
 
 (require 'aero-files)
-
+(require 'cl-lib)
 
 ;; program-wide
 
@@ -122,11 +122,12 @@ emacs with sigusr2"
 (defun aero/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
-  (destructuring-bind (buf start pos)
-                      (or (cl-find (window-buffer window) (window-prev-buffers)
-                                   :key #'car :test-not #'eq)
-                          (list (other-buffer) nil nil ))
-                      (set-window-buffer-start-and-point window buf start pos)))
+  (cl-destructuring-bind
+   (buf start pos)
+   (or (cl-find (window-buffer window) (window-prev-buffers)
+                :key #'car :test-not #'eq)
+       (list (other-buffer) nil nil ))
+   (set-window-buffer-start-and-point window buf start pos)))
 
 (defun aero/alternate-window ()
   "Switch back and forth between current and last window in the current frame."
