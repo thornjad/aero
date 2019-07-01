@@ -69,9 +69,6 @@
 	:group 'starter-kit
 	:prefix 'aero/)
 
-(defun aero/startup-echo-message ()
-	(message "Aero is ready"))
-
 
 ;;; init functions
 
