@@ -15,24 +15,22 @@
 (require 'aero-prelude)
 
 (use-package web-mode :ensure t
-  :commands web-mode
-	:config
-	(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-	(add-to-list 'auto-mode-alist '("\\.rvt\\'" . web-mode))
-	(add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
-	(general-define-key
-	 :states '(normal emacs)
-	 :prefix "SPC"))
+  :mode
+  "\\.tpl\\.php\\.rvt\\.xml\\.html\\.htm\\.erb\\.eco\\.ejs\\.djhtml\\'")
 
 (use-package emmet-mode :ensure t
-  :after (web-mode rjsx-mode)
-  :hook web-mode
+  :defer t
+  :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
 	:init
-	(setq emmet-self-closing-tag-style " /"))
+	(setq emmet-self-closing-tag-style " /")
+  :config
+  (evil-define-key 'insert emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
+  (evil-define-key 'insert emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
+  (evil-define-key 'hybrid emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
+  (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line))
 
 (use-package scss-mode :ensure t
-  :commands scss-mode
-  :mode "\\.scss\\'\\.css\\'"
+  :mode "\\.scss\\.css\\'"
   :ensure-system-package
   (sass-lint . "npm i -g sass-lint"))
 
@@ -50,7 +48,9 @@
   :mode "\\.js\\'"
   :config
   ;; TODO make this more better
-  (add-to-list 'load-path "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
+  (add-to-list
+   'load-path
+   "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
   (autoload 'tern-mode "tern.el" nil t)
   (add-hook 'rjsx-mode #'tern-mode)
   (aero/add-hook! 'rjsx-mode-hook (setq emmet-expand-jsx-className? t)))
