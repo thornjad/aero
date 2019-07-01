@@ -115,9 +115,6 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-(defvar aero/default-font "Dank Mono"
-	"Default font throughout Aero.")
-
 (when (boundp 'global-prettify-symbols-mode)
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
