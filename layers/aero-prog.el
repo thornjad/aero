@@ -29,7 +29,8 @@
 (use-package smart-tabs-mode
   :load-path aero-packages-directory
   :config
-  (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl))
+  (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl)
+  (smart-tabs-advice js2-indent-line js2-basic-offset))
 
 (use-package flycheck :ensure t
   :commands flycheck-mode
