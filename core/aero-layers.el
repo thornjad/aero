@@ -12,45 +12,38 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-;; TODO can these just be loaded by file-name?
-;;   - but then how would layers be disabled (it happens)?
-(defvar aero-layer-list
-	'(
-    aero-c
-		aero-eww
-    aero-feed
-		aero-git
-		aero-heap
-		aero-lisp
-		aero-markup
-		aero-org
-		aero-prog
-    aero-project
-    aero-python
-		aero-restart
-    aero-rust
-		aero-shell
-		aero-sql
-		aero-tcl
-    aero-theme
-		aero-web
-    )
-	"A list of local aero layers to install at startup. To include a single,
-	non-aero layer, add to aero-heap.el.")
-
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
 
-	;; load up the prelude first, it defines some functions we want in other
-	;; layers. You could say it... /preludes/ the other layers
-	(require 'aero-prelude)
+  (let ((aero-layer-list '(aero-c
+                           aero-eww
+                           aero-feed
+                           aero-git
+                           aero-heap
+                           aero-lisp
+                           aero-markup
+                           aero-org
+                           aero-prog
+                           aero-project
+                           aero-python
+                           aero-restart
+                           aero-rust
+                           aero-shell
+                           aero-sql
+                           aero-tcl
+                           aero-theme
+                           aero-web)))
 
-	;; now the rest
-	;; TODO parallel?
-	(dolist (layer aero-layer-list)
-		(require layer))
+    ;; load up the prelude first, it defines some functions we want in other
+    ;; layers. You could say it... /preludes/ the other layers
+    (require 'aero-prelude)
 
-	;; and finally, tweaks pseudo-layer
-	(require 'aero-tweaks))
+    ;; now the rest
+    ;; TODO parallel?
+    (dolist (layer aero-layer-list)
+      (require layer))
+
+    ;; and finally, tweaks pseudo-layer
+    (require 'aero-tweaks)))
 
 (provide 'aero-layers)
