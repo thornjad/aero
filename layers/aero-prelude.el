@@ -361,8 +361,10 @@
 
  "c" '(:ignore t :which-key "compile")
  "cc" 'compile
+ "cC" 'byte-compile-file
  "ck" 'kill-compilation
  "cr" 'recompile
+ "cR" 'byte-recompile-file
 
  "e" '(:ignore t :which-key "errors")
  "en" 'next-error
