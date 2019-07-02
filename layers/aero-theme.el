@@ -516,8 +516,8 @@
  ((((class color) (min-colors #xFFFFFF))        ; col 1 GUI/24bit
    ((class color) (min-colors #xFF)))           ; col 2 Xterm/256
 
-  (aero-dark0_hard      "#000000" "#000000")
-  (aero-dark0           "#282828" "#262626")
+  (aero-dark0_hard      "#151515" "#151515")
+  (aero-dark0           "#212121" "#212121")
   (aero-dark0_soft      "#32302f" "#303030")
   (aero-dark1           "#3c3836" "#3a3a3a")
   (aero-dark2           "#504945" "#4e4e4e")
