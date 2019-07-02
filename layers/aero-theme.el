@@ -859,8 +859,7 @@
 
 (aero/add-hook!
  'rjsx-mode-hook
- (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic)
- (setq emmet-expand-jsx-className? t))
+ (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic))
 
 (use-package form-feed
 	:load-path aero-packages-directory

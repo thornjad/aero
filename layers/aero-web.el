@@ -23,11 +23,16 @@
   :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
 	:init
 	(setq emmet-self-closing-tag-style " /")
+
   :config
   (evil-define-key 'insert emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
   (evil-define-key 'insert emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
   (evil-define-key 'hybrid emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
-  (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line))
+  (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
+
+  (aero/add-hook!
+      'rjsx-mode-hook
+    (setq emmet-expand-jsx-className? t)))
 
 (use-package scss-mode :ensure t
   :mode "\\.scss\\.css\\'"
