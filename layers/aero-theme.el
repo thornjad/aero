@@ -634,8 +634,6 @@
 (defun aero/modeline-format (left right)
   "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
   (let ((reserve (length right)))
-    (when (and (display-graphic-p) (eq 'right (get-scroll-bar-mode)))
-      (setq reserve (- reserve 3)))
     (concat
      left
      " "
@@ -648,7 +646,7 @@
   "Return \"t\" if the current window is active, \"nil\" if it is not."
   (eq (selected-window) aero/modeline--current-window))
 
-;; Update functions
+;;; Update functions
 
 ;; Window update function
 (defvar-local aero/modeline--current-window (frame-selected-window))
@@ -658,36 +656,6 @@
     (let ((win (frame-selected-window)))
       (unless (minibuffer-window-active-p win)
         (setq aero/modeline--current-window win)))))
-
-;; VC update function
-(defvar-local aero/modeline--vc-text nil)
-(defun aero/modeline--update-vc-segment (&rest _)
-  "Update `aero/modeline--vc-text' against the current VCS state."
-  (setq aero/modeline--vc-text
-        (when (and vc-mode buffer-file-name)
-          (let ((backend (vc-backend buffer-file-name))
-                (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (let ((face 'mode-line-inactive)
-                  (active (aero/modeline-is-active)))
-              (concat (cond ((memq state '(edited added))
-                             (if active (setq face 'aero/modeline-status-info))
-                             (propertize "✚" 'face face))
-                            ((eq state 'needs-merge)
-                             (if active (setq face 'aero/modeline-status-warning))
-                             (propertize "✧" 'face face))
-                            ((eq state 'needs-update)
-                             (if active (setq face 'aero/modeline-status-warning))
-                             (propertize "↑" 'face face))
-                            ((memq state '(removed conflict unregistered))
-                             (if active (setq face 'aero/modeline-status-error))
-                             (propertize "✖" 'face face))
-                            (t
-                             (if active (setq face 'aero/modeline-status-grayed-out))
-                             (propertize "✔" 'face face)))
-                      " "
-                      (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
-                                  'face (if active face))
-                      "  "))))))
 
 ;; Flycheck update function
 (defvar-local aero/modeline--flycheck-text nil)
@@ -710,9 +678,7 @@
           ('errored (propertize "Error  " 'face 'aero/modeline-status-error))
           ('interrupted (propertize "Paused  " 'face 'aero/modeline-status-grayed-out)))))
 
-;;
 ;; Segments
-;;
 
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
@@ -742,22 +708,6 @@
                                      'mode-line-inactive))
           "  "))
 
-(defun aero/modeline-segment-encoding ()
-  "Displays the encoding and EOL style of the buffer in the mode-line."
-  (concat (pcase (coding-system-eol-type buffer-file-coding-system)
-            (0 "LF  ")
-            (1 "CRLF  ")
-            (2 "CR  "))
-          (let ((sys (coding-system-plist buffer-file-coding-system)))
-            (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
-                   "UTF-8")
-                  (t (upcase (symbol-name (plist-get sys :name))))))
-          "  "))
-
-(defun aero/modeline-segment-vc ()
-  "Displays color-coded version control information in the mode-line."
-  aero/modeline--vc-text)
-
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
   (propertize "%m  "
@@ -780,6 +730,10 @@
   (when mode-line-process
     (list mode-line-process "  ")))
 
+(defun aero/modeline-segment-evil-state ()
+  "Display current evil state. Requires `evil-mode'."
+  (evil-state-property evil-state :tag t))
+
 ;; Activation function
 
 ;; Store the default mode-line format
@@ -790,61 +744,35 @@
   :group 'aero/modeline
   :global t
   :lighter nil
-  (if aero/modeline-mode
-      (progn
+  (progn
+    ;; Setup flycheck hooks
+    (add-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
+    (add-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
 
-        ;; Setup flycheck hooks
-        (add-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
-        (add-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
+    ;; Setup window update hooks
+    (add-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
+    (add-hook 'focus-in-hook #'aero/modeline--update-selected-window)
+    (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
+    (advice-add #'select-window :after #'aero/modeline--update-selected-window)
 
-        ;; Setup VC hooks
-        (add-hook 'find-file-hook #'aero/modeline--update-vc-segment)
-        (add-hook 'after-save-hook #'aero/modeline--update-vc-segment)
-        (advice-add #'vc-refresh-state :after #'aero/modeline--update-vc-segment)
+    ;; Set the new mode-line-format
+    (setq-default mode-line-format
+                  '((:eval
+                     (aero/modeline-format
+                      ;; Left
+                      (format-mode-line
+                       '((:eval (aero/modeline-segment-evil-state))
+                         (:eval (aero/modeline-segment-modified))
+                         (:eval (aero/modeline-segment-buffer-name))
+                         (:eval (aero/modeline-segment-position))))
 
-        ;; Setup window update hooks
-        (add-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
-        (add-hook 'focus-in-hook #'aero/modeline--update-selected-window)
-        (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
-        (advice-add #'select-window :after #'aero/modeline--update-selected-window)
-
-        ;; Set the new mode-line-format
-        (setq-default mode-line-format
-                      '((:eval
-                         (aero/modeline-format
-                          ;; Left
-                          (format-mode-line
-                           '((:eval (aero/modeline-segment-modified))
-                             (:eval (aero/modeline-segment-buffer-name))
-                             (:eval (aero/modeline-segment-position))))
-
-                          ;; Right
-                          (format-mode-line
-                           '((:eval (aero/modeline-segment-vc))
-                             (:eval (aero/modeline-segment-major-mode))
-                             (:eval (aero/modeline-segment-global-mode-string))
-                             (:eval (aero/modeline-segment-flycheck))
-                             (:eval (aero/modeline-segment-process))
-                             " ")))))))
-    (progn
-
-      ;; Remove flycheck hooks
-      (remove-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
-      (remove-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
-
-      ;; Remove VC hooks
-      (remove-hook 'file-find-hook #'aero/modeline--update-vc-segment)
-      (remove-hook 'after-save-hook #'aero/modeline--update-vc-segment)
-      (advice-remove #'vc-refresh-state #'aero/modeline--update-vc-segment)
-
-      ;; Remove window update hooks
-      (remove-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
-      (remove-hook 'focus-in-hook #'aero/modeline--update-selected-window)
-      (advice-remove #'handle-switch-frame #'aero/modeline--update-selected-window)
-      (advice-remove #'select-window #'aero/modeline--update-selected-window)
-
-      ;; Restore the original mode-line format
-      (setq-default mode-line-format aero/modeline--default-mode-line))))
+                      ;; Right
+                      (format-mode-line
+                       '((:eval (aero/modeline-segment-major-mode))
+                         (:eval (aero/modeline-segment-global-mode-string))
+                         (:eval (aero/modeline-segment-flycheck))
+                         (:eval (aero/modeline-segment-process))
+                         " "))))))))
 
 ;; Do it
 (aero/modeline-mode)
