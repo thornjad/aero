@@ -36,7 +36,16 @@
 	 "gs" 'magit-status
 	 "gS" 'magit-stage-file
 	 "gU" 'magit-unstage-file
-	 "gb" 'magit-blame)
+	 "gb" 'magit-blame
+   "gm" '(:ignore t :which-key "Smerge")
+   "gmc" 'smerge-keep-current
+   "gmn" 'smerge-next
+   "gmp" 'smerge-prev
+   "gmo" 'smerge-keep-other
+   "gma" 'smerge-keep-all
+   "gmE" 'smerge-ediff
+   "gmC" 'smerge-combine-with-next
+   "gmr" 'smerge-refine)
 
 	:config
   (setq magit-completing-read-function 'ivy-completing-read
