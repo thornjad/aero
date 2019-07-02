@@ -36,12 +36,13 @@
 ;; particular purpose. See </license> for more details.
 ;;
 ;; This file is not part of GNU Emacs
-
-
+;;
 ;; Code:
 
 (eval-when-compile
   (require 'cl-lib))
+
+;;; main theme
 
 (use-package autothemer :ensure t)
 
@@ -135,15 +136,21 @@
      (ag-hit-face (:foreground aero-bright_blue))
      (ag-match-face (:foreground aero-bright_red))
 
-     ;; Diffs
+     ;; diffs
      (diff-changed (:background nil :foreground aero-light1))
      (diff-added (:background nil :foreground aero-bright_green))
-     (diff-refine-added (:background aero-dark_green))
+     (diff-refine-added (:background aero-dark_green1))
      (diff-removed (:background nil :foreground aero-bright_red))
-     (diff-refine-removed (:background aero-dark_red))
+     (diff-refine-removed (:background aero-dark_red1))
      (diff-indicator-changed (:inherit 'diff-changed))
      (diff-indicator-added (:inherit 'diff-added))
      (diff-indicator-removed (:inherit 'diff-removed))
+
+     ;; smerge
+     (smerge-lower (:background aero-dark_green1))
+     (smerge-upper (:background aero-dark_red1))
+     (smerge-base (:background aero-dark_blue1))
+     (smerge-markers (:inherit 'font-lock-comment-face :weight 'bold))
 
      (js2-warning (:underline (:color aero-bright_yellow :style 'wave)))
      (js2-error (:underline (:color aero-bright_red :style 'wave)))
@@ -414,21 +421,6 @@
      (magit-signature-untrusted (:foreground aero-bright_blue))
      (magit-tag (:foreground aero-bright_yellow))
 
-     ;; git-gutter
-     (git-gutter:modified (:background aero-faded_blue :foreground aero-faded_blue))
-     (git-gutter:added (:background aero-faded_green :foreground aero-faded_green))
-     (git-gutter:deleted (:background aero-faded_red :foreground aero-faded_red))
-
-     ;; git-gutter+
-     (git-gutter+-modified (:foreground aero-faded_blue :background aero-faded_blue))
-     (git-gutter+-added (:foreground aero-faded_green :background aero-faded_green))
-     (git-gutter+-deleted (:foreground aero-faded_red :background aero-faded_red))
-
-     ;; git-gutter-fringe
-     (git-gutter-fr:modified (:inherit 'git-gutter:modified))
-     (git-gutter-fr:added (:inherit 'git-gutter:added))
-     (git-gutter-fr:deleted (:inherit 'git-gutter:deleted))
-
      ;; flyspell
      (flyspell-duplicate (:underline (:color aero-light4 :style 'line)))
      (flyspell-incorrect (:underline (:color aero-bright_red :style 'line)))
@@ -549,9 +541,12 @@
   (aero-faded_aqua      "#689d6a" "#87af87")
   (aero-faded_orange    "#d65d0e" "#ff8700")
 
-  (aero-dark_red        "#680000" "#680000")
-  (aero-dark_green      "#076300" "#076300")
-  (aero-dark_blue       "#2B3C44" "#000087")
+  (aero-dark_red        "#700000" "#700000")
+  (aero-dark_red1       "#4a0000" "#4a0000")
+  (aero-dark_green      "#007000" "#007000")
+  (aero-dark_green1     "#004a00" "#004a00")
+  (aero-dark_blue       "#000070" "#000070")
+  (aero-dark_blue1      "#00004a" "#00004a")
   (aero-dark_aqua       "#36473A" "#005f5f")
 
   (aero-delimiter-one   "#458588" "#008787")
@@ -559,6 +554,7 @@
   (aero-delimiter-three "#8ec07c" "#87af87")
   (aero-delimiter-four  "#d65d0e" "#d75f00")
   (aero-white           "#FFFFFF" "#FFFFFF")
+  (aero-cyan            "#507681" "#5699AF")
   (aero-black           "#000000" "#000000")
   (aero-sienna          "#DD6F48" "#d7875f")
   (aero-lightblue       "#66999D" "#5fafaf")
