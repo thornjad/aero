@@ -42,7 +42,6 @@
   (setq magit-completing-read-function 'ivy-completing-read
         magit-buffer-name-format "%x%M%v: %t%x"
         magit-diff-paint-whitespace-lines 'both
-        magit-diff-highlight-trailing t
         magit-diff-refine-hunk 'all
         magit-diff-refine-ignore-whitespace t)
 	(global-git-commit-mode t)

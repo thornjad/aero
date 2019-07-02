@@ -138,9 +138,9 @@
      ;; Diffs
      (diff-changed (:background nil :foreground aero-light1))
      (diff-added (:background nil :foreground aero-bright_green))
-     (diff-refine-added (:box aero-faded_green))
+     (diff-refine-added (:background aero-dark_green))
      (diff-removed (:background nil :foreground aero-bright_red))
-     (diff-refine-removed (:box aero-dark_red))
+     (diff-refine-removed (:background aero-dark_red))
      (diff-indicator-changed (:inherit 'diff-changed))
      (diff-indicator-added (:inherit 'diff-added))
      (diff-indicator-removed (:inherit 'diff-removed))
@@ -549,7 +549,8 @@
   (aero-faded_aqua      "#689d6a" "#87af87")
   (aero-faded_orange    "#d65d0e" "#ff8700")
 
-  (aero-dark_red        "#421E1E" "#5f0000")
+  (aero-dark_red        "#680000" "#680000")
+  (aero-dark_green      "#076300" "#076300")
   (aero-dark_blue       "#2B3C44" "#000087")
   (aero-dark_aqua       "#36473A" "#005f5f")
 
@@ -579,7 +580,6 @@
                                 ,aero-bright_aqua
                                 ,aero-light1])
            `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
-
 
 ;;; mode line
 
