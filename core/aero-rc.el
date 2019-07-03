@@ -37,6 +37,7 @@
  inhibit-startup-screen t
  initial-buffer-choice t
  inhibit-startup-echo-area-message t
+ initial-buffer-choice (lambda () (get-buffer "*scratch*"))
 
  ;; version control and saving
  use-package-verbose nil
