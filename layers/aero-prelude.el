@@ -240,6 +240,7 @@
    :non-normal-prefix "C-SPC"
 
    "hdf" 'helpful-function
+   "hdF" 'counsel-describe-face
    "hdb" 'describe-bindings
    "hdv" 'helpful-variable
    "hdm" 'helpful-macro
