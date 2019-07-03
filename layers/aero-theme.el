@@ -724,7 +724,7 @@
 
 (defun aero/modeline-segment-evil-state ()
   "Display current evil state. Requires `evil-mode'."
-  (evil-state-property evil-state :tag t))
+  (format " %s" (string-trim (evil-state-property evil-state :tag t))))
 
 ;; Activation function
 
