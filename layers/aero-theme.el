@@ -772,14 +772,102 @@
 
 ;;; additional tweaks and packages
 
+(when (boundp 'global-prettify-symbols-mode)
+  (add-hook
+   'prog-mode-hook
+   (lambda ()
+     (setq prettify-symbols-alist
+           (append prettify-symbols-alist
+                   '(
+                     ;; add all greek
+                     ("Alpha" . ?Α)
+                     ("Beta" . ?Β)
+                     ("Gamma" . ?Γ)
+                     ("Delta" . ?Δ)
+                     ("Epsilon" . ?Ε)
+                     ("Zeta" . ?Ζ)
+                     ("Eta" . ?Η)
+                     ("Theta" . ?Θ)
+                     ("Iota" . ?Ι)
+                     ("Kappa" . ?Κ)
+                     ("Lambda" . ?Λ)
+                     ("Mu" . ?Μ)
+                     ("Nu" . ?Ν)
+                     ("Xi" . ?Ξ)
+                     ("Omicron" . ?Ο)
+                     ("Pi" . ?Π)
+                     ("Rho" . ?Ρ)
+                     ("Sigma" . ?Σ)
+                     ("Tau" . ?Τ)
+                     ("Upsilon" . ?Υ)
+                     ("Phi" . ?Φ)
+                     ("Chi" . ?Χ)
+                     ("Psi" . ?Ψ)
+                     ("Omega" . ?Ω)
+                     ("alpha" . ?α)
+                     ("beta" . ?β)
+                     ("gamma" . ?γ)
+                     ("delta" . ?δ)
+                     ("epsilon" . ?ε)
+                     ("zeta" . ?ζ)
+                     ("eta" . ?η)
+                     ("theta" . ?θ)
+                     ("iota" . ?ι)
+                     ("kappa" . ?κ)
+                     ("lambda" . ?λ)
+                     ("mu" . ?μ)
+                     ("nu" . ?ν)
+                     ("xi" . ?ξ)
+                     ("omicron" . ?ο)
+                     ("pi" . ?π)
+                     ("rho" . ?ρ)
+                     ("sigma" . ?σ)
+                     ("sigma-final" . ?ς)
+                     ("tau" . ?τ)
+                     ("upsilon" . ?υ)
+                     ("phi" . ?φ)
+                     ("chi" . ?χ)
+                     ("psi" . ?ψ)
+                     ("omega" . ?ω)
+
+                     ;; mathematics
+                     ("and" . ?∧)
+                     ("&&" . ?∧)
+                     ("or" . ?∨)
+                     ("||" . ?∨)
+                     ("not" . ?¬)
+                     ("sqrt" . ?√)
+                     ("nil" . ?∅)
+                     ("null" . ?∅)
+                     ("Infinity" . ?∞)
+                     ("therefore" . ?∴)
+
+                     ;; arrows and similar
+                     ("<=" . ?≤)
+                     (">=" . ?≥)
+                     ("=>" . ?⇒)
+                     ("<-" . ?←)
+                     ("->" . ?→)
+                     ("!=" . ?≠)
+                     ("===" . ?≡)
+                     ("!==" . ?≢)
+
+                     ;; prog
+                     ("fn" . ?ƒ)
+                     ("defun" . ?ƒ)
+                     ("proc" . ?ƒ)
+                     ("function" . ?ƒ)
+
+                     ;; other
+                     ("(c)" . ?©)
+                     ("(C)" . ?©)
+                     )))))
+  (global-prettify-symbols-mode t))
+
 (byte-code "\300\301!\210\302\301!\210\303\301!\207" [show-paren-mode
                                                       t line-number-mode column-number-mode] 2)
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 (add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
-
-(aero/add-hook!
- 'rjsx-mode-hook
- (set-face-attribute 'rjsx-attr nil :inherit font-lock-variable-name-face :slant 'italic))
 
 (use-package form-feed
 	:load-path aero-packages-directory

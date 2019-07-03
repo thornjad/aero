@@ -122,13 +122,4 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-(when (boundp 'global-prettify-symbols-mode)
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (push '("lambda" . ?λ) prettify-symbols-alist)))
-  (add-hook 'clojure-mode-hook
-            (lambda ()
-              (push '("fn" . ?ƒ) prettify-symbols-alist)))
-  (global-prettify-symbols-mode t))
-
 (provide 'aero-rc)
