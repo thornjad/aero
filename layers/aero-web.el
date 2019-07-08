@@ -12,8 +12,6 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(require 'aero-prelude)
-
 (use-package web-mode :ensure t
   :mode
   "\\.tpl\\.php\\.rvt\\.xml\\.html\\.htm\\.erb\\.eco\\.ejs\\.djhtml\\'")
@@ -30,9 +28,9 @@
   (evil-define-key 'hybrid emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
   (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
 
-  (aero/add-hook!
-      'rjsx-mode-hook
-    (setq emmet-expand-jsx-className? t)))
+  (add-hook
+   'rjsx-mode-hook
+   (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package scss-mode :ensure t
   :mode "\\.scss\\.css\\'"
@@ -56,7 +54,7 @@
    "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
   (autoload 'tern-mode "tern.el" nil t)
   (add-hook 'rjsx-mode #'tern-mode)
-  (aero/add-hook! 'rjsx-mode-hook (setq emmet-expand-jsx-className? t)))
+  (add-hook 'rjsx-mode-hook (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package json-mode :ensure t
 	:mode "\\.json\\'")
@@ -69,6 +67,7 @@
 ;; modified from configuration by James Sulak
 (use-package mmm-mode :ensure t
   :mode "\\.rvt\\'"
+  :functions (mmm-add-mode-ext-class)
 	:config
 	(require 'mmm-auto)
 	(mmm-add-classes
