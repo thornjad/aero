@@ -27,6 +27,7 @@
           ("http://endlessparentheses.com/atom.xml" cs emacs)
           ("https://acidwords.com/feed.xml" cs emacs)
           ("http://irreal.org/blog/?feed=rss2" cs emacs)
+          ("http://emacshorrors.com/feed.atom" cs emacs)
 
           ;; general blogs
           ("https://www.defmacro.org/feed.xml" cs)
