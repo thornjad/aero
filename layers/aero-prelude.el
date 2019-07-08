@@ -360,6 +360,7 @@
  "ck" 'kill-compilation
  "cr" 'recompile
  "cR" 'byte-recompile-file
+ "ce" 'eval-region
 
  "e" '(:ignore t :which-key "errors")
  "en" 'next-error
@@ -381,7 +382,7 @@
  "m" '(:ignore t :which-key "mode")
  "p" '(:ignore t :which-key "project")
 
- "w" '(:ignore t :which-key "window")
+ "w" '(:ignore t :which-key "window/web")
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
