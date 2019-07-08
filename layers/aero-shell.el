@@ -21,6 +21,7 @@
                 eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
   (setq-default
    eshell-prompt-function
+
    (lambda ()
      (concat
       "\n"
@@ -32,25 +33,17 @@
 ;;; shell scripting
 
 (use-package sh-script :defer t
-  :mode
-  (("\\.sh\\'" . shell-script-mode)
-   ("\\.bash\\'" . shell-script-mode)
-   ("\\.zsh\\'" . shell-script-mode)
-   ("zlogin\\'" . shell-script-mode)
-   ("zlogout\\'" . shell-script-mode)
-   ("zpreztorc\\'" . shell-script-mode)
-   ("zprofile\\'" . shell-script-mode)
-   ("zshenv\\'" . shell-script-mode)
-   ("zshrc\\'" . shell-script-mode))
+  :mode "\\.sh\\'\\.bash\\'\\.zsh\\'"
   :config
   (setq shell-file-name "/usr/local/bin/bash")
 
   (use-package company-shell
     :ensure t
     :config
-    (add-hook!
+    (add-hook
      'sh-mode-hook
-     (set-local-company-backends! 'company-shell)))
+     (lambda ()
+       (set-local-company-backends! 'company-shell))))
 
   (defun indent-paragraph ()
     (interactive)
