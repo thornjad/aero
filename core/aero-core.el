@@ -16,32 +16,27 @@
 (defun aero/bootstrap ()
 	"Bootstrap `use-package', `quelpa' and major fixes, and set up for use"
 
-	;; set up package
 	(setq package-enable-at-startup nil)
 	(let ((default-directory "~/.emacs.d/elpa"))
 		(unless (file-directory-p default-directory)
 			(make-directory default-directory))
 		(normal-top-level-add-subdirs-to-load-path))
+
+  ;; (require 'package)
 	(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 													 ("melpa" . "https://melpa.org/packages/")
 													 ("melpa-stable" . "https://stable.melpa.org/packages/")
 													 ("org" . "https://orgmode.org/elpa/")))
-	(package-initialize)
-
-	;; use-package
+	(package-initialize t)
 	(unless (package-installed-p 'use-package)
 		(package-refresh-contents)
 		(package-install 'use-package))
 	(eval-when-compile
 		(require 'use-package)
-		(setq use-package-expand-minimally byte-compile-current-file))
-	(use-package package
-		;; TODO check signature
-		:config
-		(setq package-check-signature nil))
+		(setq use-package-expand-minimally byte-compile-current-file
+          use-package-verbose init-file-debug))
 
-  (use-package use-package-ensure-system-package
-  :ensure t)
+  (use-package use-package-ensure-system-package :ensure t)
 
 	(use-package quelpa :ensure t
     :init
