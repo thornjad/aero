@@ -10,8 +10,6 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(require 'aero-prelude)
-
 (use-package company :ensure t
 	:pin gnu
 	:hook (prog-mode . company-mode)
