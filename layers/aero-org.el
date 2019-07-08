@@ -25,18 +25,11 @@
 
 	;; rescale images to 400px if no with attribute is set (see
 	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
-	(setq org-image-actual-width '(400)))
+	(setq org-image-actual-width '(400))
 
-(use-package org-bullets
-  :ensure t
-  :defer t
-  :hook (org-mode . org-bullets-mode)
-  :config
-  (setq org-bullets-bullet-list '("➡" "➠" "➟" "➝" "↪")))
+  (use-package org-indent
+    :ensure org-plus-contrib)
 
-(use-package org-indent
-  :ensure org-plus-contrib
-  :defer t
-  :after org)
+  (use-package toc-org :ensure t))
 
 (provide 'aero-org)
