@@ -66,9 +66,6 @@
   (setq ediff-split-window-function #'split-window-horizontally
         ediff-window-setup-function #'ediff-setup-windows-plain))
 
-(use-package gitlab-ci-mode :ensure t
-  :mode "\\.gitlab-ci.yml\\'")
-
 
 ;;; project management
 
