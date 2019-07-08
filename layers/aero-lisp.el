@@ -12,8 +12,6 @@
 
 (setq inferior-lisp-program "sbcl")
 
-(use-package on-parens :ensure t)
-
 (use-package hy-mode
   :ensure t
   :mode ("\\.hy\\'" . hy-mode))
