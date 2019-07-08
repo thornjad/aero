@@ -28,8 +28,15 @@
           ("https://acidwords.com/feed.xml" cs emacs)
           ("http://irreal.org/blog/?feed=rss2" cs emacs)
           ("http://emacshorrors.com/feed.atom" cs emacs)
+          ("http://howardism.org/index.xml" cs emacs)
+          ("https://emacsair.me/feed.xml" cs emacs)
+          ("https://iloveemacs.wordpress.com/feed/" cs emacs)
+          ("https://sachachua.com/blog/category/emacs/feed/" cs emacs)
+          ("https://feeds.feedburner.com/SanityInc" cs emacs)
 
           ;; general blogs
+          ("https://julesjacobs.github.io/feed.xml" cs)
+          ("http://standardsandfreedom.net/index.php/feed/" cs)
           ("https://www.defmacro.org/feed.xml" cs)
           ("http://www.philipzucker.com/feed/" cs)
           ("https://cestlaz.github.io/rss.xml" cs edu)
@@ -64,12 +71,24 @@
           ("https://blog.computationalcomplexity.org/feeds/posts/default" cs)
           ("http://matt.might.net/articles/feed.rss" cs)
           ("https://blog.juliobiason.net/rss.xml" cs)
+          ("https://alistapart.com/main/feed/" cs tech)
+          ("http://algosaur.us/feed/" cs)
+          ("http://alyssafrazee.com/feed.xml" cs tech)
+          ("https://amplab.cs.berkeley.edu/feed/" tech)
+          ("http://www.benfrederickson.com/atom.xml" cs)
+          ("https://notstatschat.tumblr.com/rss" cs)
+          ("https://feeds.feedburner.com/bocoup" cs)
 
           ;; news
           ("https://thefeature.net/rss" news)
-          ("https://opensource.com/feed" news)
-          ("https://spectrum.ieee.org/rss/computing/fulltext" news cs)
+          ("https://opensource.com/feed" news tech)
+          ("https://spectrum.ieee.org/rss/computing/fulltext" news cs tech)
           ("https://spectrum.ieee.org/rss/green-tech/fulltext" news)
+          ("https://blog.mozilla.org/feed/" cs news)
+
+          ;; rest
+          ("https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish" tech)
+          ("https://modernstoicism.com/feed/" stoic)
           )) ; left on new line for easy editing
 
   :config
