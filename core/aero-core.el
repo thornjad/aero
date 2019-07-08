@@ -85,6 +85,7 @@
 	(aero/load-libs)
 	(require 'aero-layers)
 	(aero/load-layers)
+  (aero/load-private)
 
   ;; baise cette merde
   (setq-default custom-file "/dev/null")
