@@ -20,7 +20,8 @@
 	:ensure t
 	:config (global-whitespace-cleanup-mode))
 
-(use-package esup :ensure t :defer t)
+(use-package esup :ensure t
+  :commands esup)
 
 (use-package rainbow-mode :ensure t
   :commands rainbow-mode)
