@@ -11,6 +11,7 @@
 ;; This file is not part of GNU Emacs
 
 (use-package eww
+  :commands eww
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q="
         browse-url-browser-function 'eww-browse-url)
