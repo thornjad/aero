@@ -122,4 +122,16 @@
   "Override ridiculous built-in crap."
   (message "Aero est prêt"))
 
+;; If there were no compilation errors, delete the compilation window
+(setq-default compilation-exit-message-function
+      (lambda (status code msg)
+        ;; If M-x compile exists with a 0
+        (when (and (eq status 'exit) (zerop code))
+          ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+          (bury-buffer "*compilation*")
+          ;; and return to whatever were looking at before
+          (replace-buffer-in-windows "*compilation*"))
+        ;; Always return the anticipated result of compilation-exit-message-function
+        (cons msg code)))
+
 (provide 'aero-rc)
