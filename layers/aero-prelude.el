@@ -254,6 +254,7 @@
 	(setq reb-re-syntax 'string))
 
 (use-package tramp
+  :defer t
   :config
   ;; From jwiegley: Without this change, tramp ends up sending
   ;; hundreds of shell commands to the remote side to ask what the
