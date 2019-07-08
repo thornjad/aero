@@ -42,15 +42,13 @@
 
 ;; js and jsx
 
-(use-package js2-mode :ensure t)
 (use-package rjsx-mode
-  ;:ensure t
+  :ensure js2-mode
   :load-path aero-packages-directory
-	:after js2-mode
   :ensure-system-package
   ((eslint . "npm i -g eslint")
    (tern . "npm i -g tern"))
-  :mode "\\.js\\'"
+  :mode "\\.js\\'\\.jsx\\'"
   :config
   ;; TODO make this more better
   (add-to-list
