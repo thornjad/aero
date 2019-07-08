@@ -46,7 +46,6 @@
  delete-old-versions -1	; supprime les vieilles versions des fichiers sauvegardés
  backup-directory-alist `(("." . "~/.emacs.d/backups"))
  version-control t
- vc-make-backup-files t ; backups file even when under vc
  vc-follow-symlinks t
  git-commit-fill-column 72
  auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
