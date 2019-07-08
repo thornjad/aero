@@ -41,12 +41,14 @@
 ;; js and jsx
 
 (use-package rjsx-mode
-  :ensure js2-mode
   :load-path aero-packages-directory
+  :mode "\\.js\\'\\.jsx\\'"
+
+  ;; ensure flycheck can run properly
   :ensure-system-package
   ((eslint . "npm i -g eslint")
    (tern . "npm i -g tern"))
-  :mode "\\.js\\'\\.jsx\\'"
+
   :config
   ;; TODO make this more better
   (add-to-list
