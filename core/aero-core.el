@@ -90,16 +90,12 @@
   ;; baise cette merde
   (setq-default custom-file "/dev/null")
 
-	(setq aero-initialized t))
+  ;; settings
+  (require 'aero-rc)
 
-(defun aero/startup-hook ()
-	"Post-init processing"
-	(aero/add-hook!
-	 'emacs-startup-hook
-	 (require 'aero-rc)
-	 (setq aero-initialized t)
-	 (setq gc-cons-threshold (car (cadr aero/gc-cons))
-				 gc-cons-percentage (cadr (cadr aero/gc-cons)))
-	 (global-font-lock-mode)))
+  (global-font-lock-mode)
+  (setq gc-cons-threshold (car (cadr aero/gc-cons))
+        gc-cons-percentage (cadr (cadr aero/gc-cons)))
+  (setq aero-initialized t))
 
 (provide 'aero-core)
