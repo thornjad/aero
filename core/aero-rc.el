@@ -114,10 +114,6 @@
 (when (string= system-type "darwin")
 	(setq-default dired-use-ls-dired nil))
 
-;; rend les scripts executable par défault si c'est un script.
-(aero/add-hook! 'after-save-hook
-	(executable-make-buffer-file-executable-if-script-p))
-
 ;; ensure buffer names are unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
