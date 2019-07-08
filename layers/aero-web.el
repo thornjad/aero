@@ -96,6 +96,7 @@
 
 ;; major mode for editing Apache configuration files
 (use-package apache-mode :ensure t
+  :defer t
   :quelpa (apache-mode :fetcher github :repo "emacsmirror/apache-mode"))
 
 (provide 'aero-web)
