@@ -43,6 +43,9 @@
     (dolist (layer aero-layer-list)
       (require layer))
 
+    ;; private layer lives at the top level
+    (require 'aero-private)
+
     ;; and finally, tweaks pseudo-layer
     (require 'aero-tweaks)))
 
