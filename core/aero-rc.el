@@ -105,8 +105,8 @@
       ad-do-it)))
 
 ;; display changes
-(aero/add-hook! 'before-save-hook
-	(delete-trailing-whitespace))
+(add-hook 'before-save-hook
+          (lambda () (delete-trailing-whitespace)))
 
 ;; type to get rid of active selection
 (delete-selection-mode t)
