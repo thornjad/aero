@@ -68,6 +68,7 @@
 
 ;; modified from configuration by James Sulak
 (use-package mmm-mode :ensure t
+  :mode "\\.rvt\\'"
 	:config
 	(require 'mmm-auto)
 	(mmm-add-classes
