@@ -16,9 +16,6 @@
 ;;
 ;; Code:
 
-(use-package man
-  :init (setq Man-notify-method 'aggressive))
-
 (use-package whitespace-cleanup-mode
 	:ensure t
 	:config (global-whitespace-cleanup-mode))
