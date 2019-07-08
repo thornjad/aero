@@ -13,15 +13,17 @@
 (setenv "PATH" (concat "~/.cargo/bin:" (getenv "PATH")))
 
 (use-package rust-mode :ensure t
-  :mode ("\\.rs\\'" . rust-mode)
+  :mode "\\.rs\\'"
+
 	:init
-	(use-package toml-mode :ensure t)
 
   :config
   (setq company-tooltip-align-annotations t)
   (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 
   (use-package racer :ensure t
+    :defines (racer-cmd
+              racer-rust-src-path)
     :hook (rust-mode . racer-mode)
 		:init
 		(use-package company-racer :ensure t
@@ -37,6 +39,9 @@
     (add-hook 'racer-mode-hook #'eldoc-mode))
 
   (use-package cargo :ensure t
-    :hook (rust-mode . cargo-minor-mode)))
+    :hook (rust-mode . cargo-minor-mode))
+
+  	(use-package toml-mode :ensure t
+    :mode "\\.toml\\'"))
 
 (provide 'aero-rust)
