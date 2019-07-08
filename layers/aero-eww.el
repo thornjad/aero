@@ -10,11 +10,13 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(setq browse-url-browser-function #'eww-browse-url)
 (use-package eww
-  :commands eww
+  :commands (eww
+             eww-browse-url
+             eww-search-words)
 	:config
-	(setq eww-search-prefix "https://duckduckgo.com/lite?q="
-        browse-url-browser-function 'eww-browse-url)
+	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
 	(defun add-title-to-eww-buffer-name ()
 		"Rename eww mode buffer so the title of the page is displayed, making
 		 fake-tabbed-browsing easier"
@@ -23,6 +25,10 @@
 				(if title
 						(rename-buffer (concat "eww - " title) t)
 					(rename-buffer "eww" t)))))
-	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name))
+	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name)
+  (general-define-key
+   :states '(normal visual)
+   :prefix "SPC"
+   "ws" '(eww-search-words :which-key "web search")))
 
 (provide 'aero-eww)
