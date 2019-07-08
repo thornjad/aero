@@ -15,7 +15,6 @@
 
 (setq-default
  ;; general
- initial-scratch-message "Welcome to Aero"
  ring-bell-function 'ignore ; supprime cette putain de cloche.
  sentence-end-double-space nil ; the world will not go to shit today
  default-fill-column 80 ; i am mortal, not arthur whitney
@@ -35,9 +34,12 @@
 
  ;; startup with scratch
  inhibit-startup-screen t
+ inhibit-splash-screen t
  initial-buffer-choice t
  inhibit-startup-echo-area-message t
  initial-buffer-choice (lambda () (get-buffer "*scratch*"))
+ initial-major-mode 'emacs-lisp-mode
+ initial-scratch-message ";; Aero Emacs\n\n"
 
  ;; version control and saving
  use-package-verbose nil
@@ -104,7 +106,6 @@
       ad-do-it)))
 
 ;; display changes
-(setq-default initial-major-mode 'fundamental-mode)
 (aero/add-hook! 'before-save-hook
 	(delete-trailing-whitespace))
 
@@ -121,5 +122,9 @@
 ;; ensure buffer names are unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
+
+(defun display-startup-echo-area-message ()
+  "Override ridiculous built-in crap."
+  (message "Aero est prêt"))
 
 (provide 'aero-rc)
