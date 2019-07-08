@@ -38,3 +38,7 @@ etc/todo.org
 .private.el
 games/
 tmp.*
+
+# ignore private dir, except private package itself
+/layers/private/
+!/layers/private/aero-private.el*
