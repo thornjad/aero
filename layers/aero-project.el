@@ -29,11 +29,4 @@
 	 :non-normal-prefix "C-SPC"
 	 "pf" 'counsel-projectile-find-file))
 
-(use-package find-file-in-project :ensure t
-  :config
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "pF" '(find-file-in-project-by-selected :which-key "find file in project")))
-
 (provide 'aero-project)
