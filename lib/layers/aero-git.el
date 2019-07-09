@@ -71,7 +71,7 @@
 
 (use-package cruiser-find-file
   :disabled t
-  :load-path aero-packages-directory
+  :load-path aero-packages-dir
   :config
   (general-define-key
    :states '(normal motion emacs)

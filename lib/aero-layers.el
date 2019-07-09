@@ -44,9 +44,6 @@
       (require layer))
 
     ;; load private settings
-    (require 'aero-private)
-
-    ;; and finally, tweaks pseudo-layer
-    (require 'aero-tweaks)))
+    (require 'aero-private)))
 
 (provide 'aero-layers)

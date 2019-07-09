@@ -14,7 +14,7 @@
 
 (use-package web-mode :ensure t
   :mode
-  "\\.tpl\\.php\\.rvt\\.xml\\.html\\.htm\\.erb\\.eco\\.ejs\\.djhtml\\'")
+  "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\)\\'")
 
 (use-package emmet-mode :ensure t
   :defer t
@@ -33,7 +33,7 @@
    (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package scss-mode :ensure t
-  :mode "\\.scss\\.css\\'"
+  :mode "\\.s?css\\'"
   :ensure-system-package
   (sass-lint . "npm i -g sass-lint"))
 
@@ -41,8 +41,8 @@
 ;; js and jsx
 
 (use-package rjsx-mode
-  :load-path aero-packages-directory
-  :mode "\\.js\\'\\.jsx\\'"
+  :load-path aero-packages-dir
+  :mode "\\.jsx?\\'"
 
   ;; ensure flycheck can run properly
   :ensure-system-package
@@ -62,13 +62,13 @@
 	:mode "\\.json\\'")
 
 (use-package yaml-mode :ensure t
-  :mode "\\.yaml\\'\\.yml\\'")
+  :mode "\\.ya?ml\\'")
 
 ;; rivet
 
 ;; modified from configuration by James Sulak
 (use-package mmm-mode :ensure t
-  :mode "\\.rvt\\'"
+  :mode "\\.\\(rvt\\|test\\)\\'"
   :functions (mmm-add-mode-ext-class)
 	:config
 	(require 'mmm-auto)

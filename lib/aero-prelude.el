@@ -228,10 +228,8 @@
 (use-package helpful :ensure t
   :config
   (general-define-key
-   :states '(normal emacs)
+   :states 'normal
    :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-
    "hdf" 'helpful-function
    "hdF" 'counsel-describe-face
    "hdb" 'describe-bindings
@@ -244,8 +242,17 @@
    "hdC" 'describe-char
    "hdp" 'describe-package))
 
+(use-package howdoi :ensure t
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "hs" '(howdoi-query :which-key "howdoi")
+   "hl" '(howdoi-query-line-at-point :which-key "howdoi line")
+   ))
+
 (use-package pbcopy
-  :load-path aero-packages-directory
+  :load-path aero-packages-dir
   :config
   (turn-on-pbcopy))
 
@@ -334,6 +341,9 @@
  "fi" 'indent-buffer
 
  "h" '(:ignore t :which-key "help/manual")
+ "hm" 'woman
+ "hi" 'info
+ "hI" 'info-apropos
  "hd" '(:ignore t :which-key "describe")
 
  "b" '(:ignore t :which-key "buffers")

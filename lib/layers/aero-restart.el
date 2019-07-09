@@ -9,10 +9,8 @@
 ;; particular purpose. See </license> for more details.
 ;;
 ;; This file is not part of GNU Emacs
-;;
-;; Commentary:
-;;
-;; This file hosts temporary tweaks and experiments. Code should not live here
-;; long, it should be moved to an appropriate layer after some good use.
 
-(provide 'aero-tweaks)
+(use-package restart-emacs
+	:load-path aero-packages-dir)
+
+(provide 'aero-restart)

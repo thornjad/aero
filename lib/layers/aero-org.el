@@ -27,9 +27,6 @@
 	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
 	(setq org-image-actual-width '(400))
 
-  (use-package org-indent :ensure t
-    :mode "\\.org\\'")
-
   (use-package toc-org :ensure t))
 
 (provide 'aero-org)

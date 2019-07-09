@@ -864,11 +864,11 @@
 (add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
 
 (use-package form-feed
-	:load-path aero-packages-directory
+	:load-path aero-packages-dir
 	:hook ((prog-mode text-mode) . form-feed-mode))
 
 (use-package hl-todo
-  :load-path aero-packages-directory
+  :load-path aero-packages-dir
   :hook (prog-mode . hl-todo-mode))
 
 (provide 'aero-theme)
