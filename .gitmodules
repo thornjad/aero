@@ -13,3 +13,6 @@
 [submodule "lib/packages/quick-restart"]
 	path = lib/packages/quick-restart
 	url = git@gitlab.com:thornjad/quick-restart.git
+[submodule "lib/packages/pbcopier"]
+	path = lib/packages/pbcopier
+	url = git@gitlab.com:thornjad/pbcopier.git

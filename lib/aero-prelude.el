@@ -244,10 +244,10 @@
    "hl" '(howdoi-query-line-at-point :which-key "howdoi line")
    ))
 
-(use-package pbcopy
-  :load-path aero-packages-dir
+(use-package pbcopier
+  :load-path (concat aero-packages-dir "pbcopier/")
   :config
-  (turn-on-pbcopy))
+  (turn-on-pbcopier))
 
 (use-package re-builder
 	:config
