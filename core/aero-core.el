@@ -38,25 +38,12 @@
 
   (use-package use-package-ensure-system-package :ensure t)
 
-  ;; TODO replace quelpa with submodule system
-	(use-package quelpa :ensure t
-    :init
-    ;; update packages manually later
-    (setq quelpa-update-melpa-p nil)
-		:config
-		(quelpa
-		 '(quelpa-use-package
-			 :fetcher git
-			 :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-		(require 'quelpa-use-package))
-
   (use-package gnu-elpa-keyring-update :ensure t
     :pin gnu))
 
 (defun aero/update-packages ()
 	(interactive)
-	(package-refresh-contents)
-	(quelpa-upgrade))
+	(package-refresh-contents))
 
 
 
