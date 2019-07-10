@@ -26,7 +26,7 @@
 
 (use-package smart-tabs-mode
   :functions (smart-tabs-insinuate)
-  :load-path aero-packages-dir
+  :load-path (concat aero-packages-dir "smart-tabs-mode/")
   :config
   (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl)
   (smart-tabs-advice js2-indent-line js2-basic-offset))
