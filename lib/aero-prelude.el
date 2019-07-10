@@ -55,7 +55,6 @@
 	:init
 	(setq general-override-states
 				'(insert
-					emacs
 					hybrid
 					normal
 					visual
@@ -64,7 +63,7 @@
 					replace))
 	:config
 	(general-define-key
-	 :states '(normal visual motion emacs)
+	 :states '(normal visual motion)
 	 :keymaps 'override
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
@@ -139,7 +138,7 @@
                 "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
                 "\\|\\.aux\\'"))
 	(general-define-key
-	 :states '(normal visual insert replace emacs)
+	 :states '(normal visual insert replace)
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 
@@ -175,16 +174,16 @@
 				;; configure regexp engine to allow out-of-order input
 				ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 	(general-define-key
-	 :states '(normal emacs)
+	 :states '(normal)
 	 :prefix "SPC"
 
 	 "bb" 'ivy-switch-buffer))
 
 (use-package swiper :ensure t
-  :commands 'swiper
+  :commands swiper
 	:init
 	(general-define-key
-	 :states '(normal emacs)
+	 :states '(normal)
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 
@@ -207,7 +206,7 @@
           "*esh command on file*"))
   (winner-mode 1)
   (general-define-key
-   :states '(normal emacs)
+   :states '(normal)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "wu" 'winner-undo
@@ -311,7 +310,7 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 
 (general-define-key
- :states '(normal visual insert replace emacs motion)
+ :states '(normal visual insert replace motion)
  :keymaps 'override
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
@@ -370,6 +369,7 @@
  "c" '(:ignore t :which-key "compile")
  "cc" 'compile
  "cC" 'byte-compile-file
+ "cD" 'byte-recompile-directory
  "ck" 'kill-compilation
  "cr" 'recompile
  "cR" 'byte-recompile-file

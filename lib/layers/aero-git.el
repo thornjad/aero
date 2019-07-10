@@ -30,7 +30,7 @@
              magit-blame-mode)
   :init
 	(general-define-key
-	 :states '(normal emacs)
+	 :states '(normal)
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 	 "gs" 'magit-status
@@ -74,7 +74,7 @@
   :load-path aero-packages-dir
   :config
   (general-define-key
-   :states '(normal motion emacs)
+   :states '(normal motion)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "p" '(:ignore t :which-key "project")

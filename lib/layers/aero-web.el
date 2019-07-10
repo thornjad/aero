@@ -56,7 +56,9 @@
    "/Users/jade.thornton/.nvm/versions/node/v11.3.0/lib/node_modules/tern/emacs/")
   (autoload 'tern-mode "tern.el" nil t)
   (add-hook 'rjsx-mode #'tern-mode)
-  (add-hook 'rjsx-mode-hook (lambda () (setq emmet-expand-jsx-className? t))))
+  (add-hook 'rjsx-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
+  ;; FIXME something is resetting this when this mode loads, need to find out how/where
+  (setq js2-basic-offset 2))
 
 (use-package json-mode :ensure t
 	:mode "\\.json\\'")

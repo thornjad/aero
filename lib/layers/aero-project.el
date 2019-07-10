@@ -24,7 +24,7 @@
 	:after projectile
 	:config
 	(general-define-key
-	 :states '(normal insert emacs)
+	 :states '(normal insert)
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 	 "pf" 'counsel-projectile-find-file))
