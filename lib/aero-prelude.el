@@ -245,7 +245,7 @@
    ))
 
 (use-package pbcopier
-  :load-path (concat aero-packages-dir "pbcopier/")
+  :load-path "lib/packages/pbcopier/"
   :config
   (turn-on-pbcopier))
 
@@ -287,7 +287,7 @@
   (setq gc-cons-threshold (car (cadr aero/gc-cons))))
 
 (use-package quick-restart
-  :load-path (concat aero-packages-dir "quick-restart/"))
+  :load-path "lib/packages/quick-restart/")
 
 (use-package ranger :ensure t
   :config
@@ -299,7 +299,7 @@
    "fd" 'deer))
 
 (use-package velox
-  :load-path (concat aero-packages-dir "velox/")
+  :load-path "lib/packages/velox/"
   :commands velox
   :init
   (general-define-key

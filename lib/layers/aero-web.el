@@ -41,7 +41,7 @@
 ;; js and jsx
 
 (use-package rjsx-mode
-  :load-path (concat aero-packages-dir "rjsx-mode/")
+  :load-path "lib/packages/rjsx-mode/"
   :mode "\\.jsx?\\'"
 
   ;; ensure flycheck can run properly

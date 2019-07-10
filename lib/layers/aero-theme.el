@@ -864,11 +864,11 @@
 (add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
 
 (use-package formfeeder
-	:load-path (concat aero-packages-dir "formfeeder/")
+  :load-path "lib/packages/formfeeder/"
   :hook fundamental-mode)
 
 (use-package todo-light
-  :load-path (concat aero-packages-dir "todo-light/")
+  :load-path "lib/packages/todo-light/"
   :hook fundamental-mode)
 
 (provide 'aero-theme)
