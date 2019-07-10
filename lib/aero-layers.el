@@ -22,6 +22,7 @@
                            aero-heap
                            aero-lisp
                            aero-markup
+                           aero-ml
                            aero-org
                            aero-prog
                            aero-project
