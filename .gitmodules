@@ -1,0 +1,9 @@
+[submodule "lib/packages/velox"]
+	path = lib/packages/velox
+	url = git@gitlab.com:thornjad/velox.git
+[submodule "lib/packages/formfeeder"]
+	path = lib/packages/formfeeder
+	url = git@gitlab.com:thornjad/formfeeder.git
+[submodule "lib/packages/todo-light"]
+	path = lib/packages/todo-light
+	url = git@gitlab.com:thornjad/todo-light.git

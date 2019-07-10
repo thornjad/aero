@@ -863,12 +863,12 @@
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 (add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
 
-(use-package form-feed
-	:load-path aero-packages-dir
-	:hook ((prog-mode text-mode) . form-feed-mode))
+(use-package formfeeder
+	:load-path (concat aero-packages-dir "formfeeder/")
+  :hook fundamental-mode)
 
-(use-package hl-todo
-  :load-path aero-packages-dir
-  :hook (prog-mode . hl-todo-mode))
+(use-package todo-light
+  :load-path (concat aero-packages-dir "todo-light/")
+  :hook fundamental-mode)
 
 (provide 'aero-theme)

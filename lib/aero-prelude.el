@@ -100,6 +100,7 @@
 	(evil-set-initial-state 'message-mode 'motion)
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
+  (evil-set-initial-state 'velox-mode 'emacs)
 
   (defun aero/evil-shift-right ()
     (interactive)
@@ -294,6 +295,15 @@
    :states 'normal
    :prefix "SPC"
    "fd" 'deer))
+
+(use-package velox
+  :load-path (concat aero-packages-dir "velox/")
+  :commands velox
+  :init
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "ap" 'velox))
 
 
 ;;; general bindings
