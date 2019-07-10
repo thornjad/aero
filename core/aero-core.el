@@ -38,6 +38,7 @@
 
   (use-package use-package-ensure-system-package :ensure t)
 
+  ;; TODO replace quelpa with submodule system
 	(use-package quelpa :ensure t
     :init
     ;; update packages manually later
