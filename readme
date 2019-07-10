@@ -38,16 +38,6 @@ EXIGENCES
   optimized to use the font Dank Mono, but also works great with Source Code
   Pro.
 
-  Flycheck requires the following external tools. These tools will be installed
-  automatically if they are not present.
-
-  - coffeescript (compiler, npm)
-  - clutchski/coffeelint (npm)
-  - sasstools/sass-lint (npm)
-  - eslint (npm)
-  - tern (npm)
-  - thornjad/loren (gitlab)
-
 INSTALLATION
 
   Clone or download this repository into your ~/.emacs.d. There are three
