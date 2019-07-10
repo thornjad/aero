@@ -276,11 +276,11 @@
 	(defun aero/kill-tramp ()
 		"Kill and cleanup all Tramp connections. Useful for stale connections."
 		(interactive)
-		(loop for buffer being the buffers
-					do (and (thornjad/tramp-buffer-p buffer) (kill-buffer buffer)))
+		(cl-loop for buffer being the buffers
+					do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
 		(tramp-cleanup-all-connections)))
 
-;; Trade memory for less cylcles when using the minibuffer
+;; Trade memory for less cycles when using the minibuffer
 (aero/add-hook! 'minibuffer-setup-hook
   (setq gc-cons-threshold (car (car aero/gc-cons))))
 (aero/add-hook! 'minibuffer-exit-hook
