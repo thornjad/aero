@@ -37,6 +37,7 @@ tmp/
 etc/todo.org
 /backups
 tmp.*
+*~
 
 # ignore private dir, except private package itself
 lib/private/
