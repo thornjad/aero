@@ -869,6 +869,6 @@
 
 (use-package todo-light
   :load-path "lib/packages/todo-light/"
-  :hook fundamental-mode)
+  :hook ((prog-mode text-mode) . todo-light-mode))
 
 (provide 'aero-theme)
