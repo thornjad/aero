@@ -16,19 +16,10 @@
 (use-package eshell
   :commands eshell
   :config
-  (setq-default eshell-aliases-file (concat user-emacs-directory "eshell-aliases")
-                eshell-save-history-on-exit t
-                eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
-  (setq-default
-   eshell-prompt-function
-
-   (lambda ()
-     (concat
-      "\n"
-      (propertize " ┌─── " 'face '(:foreground "green"))
-      (propertize (eshell/pwd) 'face '(:weight ultra-bold))
-      "\n"
-      (propertize " └─ λ " 'face '(:foreground "green"))))))
+  (setq
+   eshell-aliases-file (concat user-emacs-directory "eshell-aliases")
+   eshell-save-history-on-exit t
+   eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'"))
 
 ;;; shell scripting
 
@@ -37,27 +28,9 @@
   :config
   (setq shell-file-name "/usr/local/bin/bash")
 
-  (use-package company-shell
-    :ensure t
-    :config
-    (add-hook
-     'sh-mode-hook
-     (lambda ()
-       (set-local-company-backends! 'company-shell))))
-
   (defun indent-paragraph ()
     (interactive)
     (save-excursion
-      (mark-paragraph) (indent-region (region-beginning) (region-end))))
-
-  (defun sh-cleanup-line ()
-    (interactive)
-    (let* ((beg (line-beginning-position)))
-      (save-excursion
-        (end-of-line)
-        (while (re-search-backward "--\\||\\|([><])\{1,2\}" beg t)
-          (insert "\\")
-          (newline-and-indent))
-        (indent-paragraph)))))
+      (mark-paragraph) (indent-region (region-beginning) (region-end)))))
 
 (provide 'aero-shell)
