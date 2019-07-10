@@ -39,16 +39,6 @@
 (defun aero/in-mode-p (mode)
   (eq major-mode mode))
 
-(defun aero/run-prog-mode-hooks ()
-	"Run `prog-mode-hook', useful for modes that don't derive from `prog-mode' but
-should"
-	(run-hooks 'prog-mode-hook))
-
-(defun aero/run-text-mode-hooks ()
-	"Run `text-mode-hook', useful for modes that don't derive from `text-mode' but
-should"
-	(run-hooks 'text-mode-hook))
-
 (defmacro aero/add-hook! (hook &rest body)
 	"Nicer add-hooking that prevents writing lambdas explicitely. Add a lamdba
 containing BODY to hook HOOK."
