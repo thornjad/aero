@@ -84,10 +84,6 @@
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
 
-;; store all backup and autosave files in the tmp dir
-(setq-default backup-directory-alist `((".*" . ,temporary-file-directory))
-							auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-
 ;; remplace yes no par y n
 (defalias 'yes-or-no-p 'y-or-n-p)
 

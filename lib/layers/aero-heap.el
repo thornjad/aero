@@ -31,6 +31,7 @@
 
 (use-package 2048-game :ensure t
   :commands 2048-game
+  :config
   (general-define-key
    :keymaps '2048-mode-map
    "h" '2048-left
