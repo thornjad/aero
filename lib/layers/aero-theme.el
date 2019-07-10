@@ -865,7 +865,8 @@
 
 (use-package formfeeder
   :load-path "lib/packages/formfeeder/"
-  :hook fundamental-mode)
+  :config
+  (global-formfeeder-mode 1))
 
 (use-package todo-light
   :load-path "lib/packages/todo-light/"
