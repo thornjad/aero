@@ -57,6 +57,8 @@ INSTALLATION
   Framagit (better) https://framagit.org/thornjad/aero
   GitHub (ok)       https://github.com/thornjad/aero
 
+  Then, initialize required submodules with =make=.
+
 CRÉDITS
 
   Aero couldn't be as beautiful as it is on its own. A lot of configuration,
