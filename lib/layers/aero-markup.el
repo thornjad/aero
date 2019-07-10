@@ -11,6 +11,6 @@
 ;; This file is not part of GNU Emacs
 
 (use-package markdown-mode :ensure t
-  :mode "\\.md\\'\\.markdown\\'")
+  :mode "\\.\\(md\\|markdown\\)")
 
 (provide 'aero-markup)
