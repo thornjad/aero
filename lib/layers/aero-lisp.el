@@ -10,11 +10,11 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(setq inferior-lisp-program "sbcl")
+(setq-default
+ inferior-lisp-program "sbcl")
 
-(use-package hy-mode
-  :ensure t
-  :mode ("\\.hy\\'" . hy-mode))
+(use-package hy-mode :ensure t
+  :mode "\\.hy\\'")
 
 ;; TODO common lisp
 ;; TODO include Lakefile as common lisp
