@@ -95,12 +95,12 @@
   ;; increase title width for papers
   (setq elfeed-search-title-max-width 120)
 
-  (define-key elfeed-show-mode-map (kbd "j") 'next-line)
-  (define-key elfeed-show-mode-map (kbd "k") 'previous-line)
-
-  (defun elfeed-mark-all-as-read ()
-    (interactive)
-    (mark-whole-buffer)
-    (elfeed-search-untag-all-unread)))
+  (general-define-key
+   :keymaps 'elfeed-show-mode-map
+   "j" 'next-line
+   "k" 'previous-line
+   "TAB" 'elfeed-show-next-link
+   "C-u" 'scroll-down
+   "C-d" 'scroll-up))
 
 (provide 'aero-feed)
