@@ -114,13 +114,6 @@
   (evil-define-key 'visual global-map (kbd ">") 'aero/evil-shift-right)
   (evil-define-key 'visual global-map (kbd "<") 'aero/evil-shift-left)
 
-	;; cursor color by state
-	(setq evil-insert-state-cursor  '("#268bd2" hbar) ; blue
-				evil-normal-state-cursor  '("#b58900" box)  ; blue
-				evil-visual-state-cursor  '("#cb4b16" bar)  ; orange
-				evil-replace-state-cursor '("#859900" hbar) ; green
-				evil-emacs-state-cursor   '("#d33682" box)) ; magenta
-
 	(evil-mode 1))
 
 (use-package evil-matchit :ensure t
