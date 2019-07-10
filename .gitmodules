@@ -1,6 +1,3 @@
-[submodule "lib/packages/velox"]
-	path = lib/packages/velox
-	url = git@gitlab.com:thornjad/velox.git
 [submodule "lib/packages/formfeeder"]
 	path = lib/packages/formfeeder
 	url = git@gitlab.com:thornjad/formfeeder.git
@@ -19,3 +16,6 @@
 [submodule "lib/packages/smart-tabs-mode"]
 	path = lib/packages/smart-tabs-mode
 	url = git@gitlab.com:thornjad/smart-tabs-mode.git
+[submodule "lib/packages/pomp"]
+	path = lib/packages/pomp
+	url = git@gitlab.com:thornjad/pomp.git

@@ -99,7 +99,7 @@
 	(evil-set-initial-state 'message-mode 'motion)
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
-  (evil-set-initial-state 'velox-mode 'emacs)
+  (evil-set-initial-state 'pomp-mode 'emacs)
 
   (defun aero/evil-shift-right ()
     (interactive)
@@ -298,14 +298,14 @@
    :prefix "SPC"
    "fd" 'deer))
 
-(use-package velox
-  :load-path "lib/packages/velox/"
-  :commands velox
+(use-package pomp
+  :load-path "lib/packages/pomp/"
+  :commands pomp
   :init
   (general-define-key
    :states 'normal
    :prefix "SPC"
-   "ap" 'velox))
+    "ap" 'pomp))
 
 
 ;;; general bindings
