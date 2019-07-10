@@ -286,6 +286,9 @@
 (aero/add-hook! 'minibuffer-exit-hook
   (setq gc-cons-threshold (car (cadr aero/gc-cons))))
 
+(use-package quick-restart
+  :load-path (concat aero-packages-dir "quick-restart/"))
+
 (use-package ranger :ensure t
   :config
   (setq ranger-show-hidden t
