@@ -7,3 +7,6 @@
 [submodule "lib/packages/todo-light"]
 	path = lib/packages/todo-light
 	url = git@gitlab.com:thornjad/todo-light.git
+[submodule "lib/packages/rjsx-mode"]
+	path = lib/packages/rjsx-mode
+	url = git@github.com:thornjad/rjsx-mode.git
