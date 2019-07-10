@@ -464,7 +464,7 @@
      (widget-single-line-field (:foreground aero-light0 :background aero-dark2))
 
      ;; eshell
-     (eshell-prompt-face (:foreground aero-bright_aqua))
+     (eshell-prompt (:foreground aero-bright_aqua))
      (eshell-ls-archive-face (:foreground aero-light3))
      (eshell-ls-backup-face (:foreground aero-light4))
      (eshell-ls-clutter-face (:foreground aero-bright_orange :weight 'bold))
