@@ -1,3 +1,0 @@
-alias clear recenter 0
-alias la ls -lah $*
-alias eo find-file-other-window $1
