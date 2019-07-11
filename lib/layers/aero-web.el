@@ -61,9 +61,9 @@
   (setq js2-basic-offset 2)
 
   ;; because we want C-d to scroll ups normally
-  (evil-define-key 'insert 'rjsx-mode-map
+  (evil-define-key 'insert rjsx-mode-map
     (kbd "C-d") 'rjsx-delete-creates-full-tag)
-  (evil-define-key 'normal 'rjsx-mode-map
+  (evil-define-key 'normal rjsx-mode-map
     (kbd "C-d") 'evil-scroll-down))
 
 (use-package json-mode :ensure t

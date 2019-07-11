@@ -38,7 +38,7 @@
 	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name)
 
   ;; normal browsing
-  (evil-define-key 'normal 'eww-mode-map
+  (evil-define-key 'normal eww-mode-map
     "^" 'eww-up-url
     "u" 'eww-up-url
     "U" 'eww-top-url
@@ -53,7 +53,7 @@
     "gr" 'eww-reload
     "q" 'kill-buffer
     "Q" 'quit-window
-    "o" 'eww
+    "go" 'eww
     "gf" 'eww-view-source
     "gc" 'url-cookie-list
     "gh" 'eww-list-histories
@@ -62,20 +62,20 @@
 
   ;; viewing history
   (evil-set-initial-state 'normal 'eww-history-mode)
-  (evil-define-key 'normal 'eww-history-mode-map
+  (evil-define-key 'normal eww-history-mode-map
     (kbd "RET") 'eww-history-browse
     "q" 'quit-window)
 
   ;; viewing buffers
   (evil-set-initial-state 'eww-buffers-mode 'normal)
-  (evil-define-key 'normal 'eww-buffers-mode-map
+  (evil-define-key 'normal eww-buffers-mode-map
     "D" 'eww-buffer-kill
     (kbd "RET") 'eww-buffer-select
     "q" 'quit-window)
 
   ;; bookmarks
   (evil-set-initial-state 'eww-bookmark-mode 'normal)
-  (evil-define-key 'normal 'eww-bookmark-mode-map
+  (evil-define-key 'normal eww-bookmark-mode-map
     "D" 'eww-bookmark-kill
     "P" 'eww-bookmark-yank
     (kbd "RET") 'eww-bookmark-browse

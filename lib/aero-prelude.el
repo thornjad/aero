@@ -237,7 +237,7 @@
    "hdp" 'describe-package)
 
   (require 'evil)
-  (evil-define-key 'normal 'helpful-mode-map
+  (evil-define-key 'normal helpful-mode-map
     "q" 'kill-buffer-and-window
     "?" 'describe-mode))
 
