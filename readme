@@ -6,18 +6,18 @@
   |_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
      .-      .    .-.  ---        .     --    .-    -.-. ...
 
-  Aero is my own approach to Emacs, blending all the best shit I can find. It is
-  not intended for widespread use; it is tailored for what I want and use. It
-  uses a similar philosophy to that of the Borg, assimilating that which makes
-  us better.
+  Aero is my own Emacs configuration, blending all the best shit I can find. It
+  is built in the style of a distribution like Prelude or Spacemacs, but it's
+  not intended for widespread use; Aero is highly tailored to me, what I want
+  and what I use.
 
   Emacs changes the way you think about programming, as does Lisp itself. The
   sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
   by decades of rich experience and a fantastic culture.
 
   Special focus is put on writing Lisps, Python, TCL, Node and the several web
-  languages. Aero est un peu multilingue, avec un français occasionnel et
-  peut-être même un peu d'autre merde.
+  languages. Other languages like C and OCaml have some light configuration as
+  well.
 
   "Emacs outshines all other editing software in the same way that the noonday
   sun does the stars. It is not just bigger and brighter; it simply makes
@@ -51,21 +51,18 @@ INSTALLATION
 
 CRÉDITS
 
-  Aero couldn't be as beautiful as it is on its own. A lot of configuration,
-  functions, macros and other crap has been modified from, copied from or
-  inspired by various projects and developers, including:
+  Like the Borg, Aero amalgamates macros, functions, bindings and packages
+  modified from or inspired by a plethora of developers. Special thanks to these
+  fantastic people:
 
-  - eos (Emacs Operating System)
-  - Prelude Emacs
-  - Doom Emacs
-  - Spacemacs
-  - ErgoEmacs
   - Samuel Barreto
-  - Steve Purcell
-  - James Sulak
   - John Wiegley
-  - Michael Markert
-  - Wilfred Hughes
+	- Steve Purcell
+	- Xah Lee
+	- Wilfred Hughes
+	- Lee Hinman
+	- Michael Markert
+	- James Sulak
 
 COPYING
 
