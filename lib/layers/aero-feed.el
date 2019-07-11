@@ -33,6 +33,8 @@
           ("https://iloveemacs.wordpress.com/feed/" cs emacs)
           ("https://sachachua.com/blog/category/emacs/feed/" cs emacs)
           ("https://feeds.feedburner.com/SanityInc" cs emacs)
+          ("https://axisofeval.blogspot.com/feeds/posts/default" cs emacs)
+          ("http://mbork.pl/?action=rss" cs emacs)
 
           ;; general blogs
           ("https://julesjacobs.github.io/feed.xml" cs)
