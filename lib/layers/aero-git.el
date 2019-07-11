@@ -58,12 +58,7 @@
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
 	(use-package magit-todos :ensure t)
-	(use-package evil-magit :ensure t)
-
-  (evil-define-key 'normal 'magit-blame-mode-map
-    "q" 'magit-blame-quit)
-  (evil-define-key 'normal 'magit-blame-read-only-mode-map
-    "q" 'magit-blame-quit))
+	(use-package evil-magit :ensure t))
 
 (use-package ediff
   :commands (ediff ediff3)
