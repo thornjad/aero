@@ -12,8 +12,8 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(eval-when-compile
-  (require 'cl-lib))
+(require 'cl-lib)
+(require 'evil)
 
 ;; garder ma merde à jour
 
@@ -53,14 +53,14 @@
 							general-normalize-hook
 							use-package-handler/:ghook)
 	:init
-	(setq general-override-states
-				'(insert
-					hybrid
-					normal
-					visual
-					motion
-					operator
-					replace))
+	(setq-default general-override-states
+                '(insert
+                  hybrid
+                  normal
+                  visual
+                  motion
+                  operator
+                  replace))
 	:config
 	(general-define-key
 	 :states '(normal visual motion)
@@ -99,7 +99,6 @@
 	(evil-set-initial-state 'message-mode 'motion)
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
-  (evil-set-initial-state 'pomp-mode 'emacs)
 
   (defun aero/evil-shift-right ()
     (interactive)
@@ -164,7 +163,7 @@
   (recentf-mode 1))
 
 (use-package ivy :ensure t
-	:defines (ivy-mode)
+  :functions ivy-mode
 	:config
 	(ivy-mode 1)
 	(setq ivy-initial-inputs-alist nil ; screw the regex
@@ -192,7 +191,9 @@
 
 ;;; system
 
-(when (fboundp 'winner-mode)
+(use-package winner
+  :defines winner-boring-buffers
+  :config
   (setq winner-boring-buffers
         '("*Completions*"
           "*Compile-Log*"
@@ -233,7 +234,9 @@
    "hdK" 'describe-keymap
    "hdc" 'helpful-callable
    "hdC" 'describe-char
-   "hdp" 'describe-package))
+   "hdp" 'describe-package)
+  (evil-define-key 'normal 'helpful-mode-map
+    "q" 'kill-buffer-and-window))
 
 (use-package howdoi :ensure t
   :config
@@ -255,6 +258,7 @@
 
 (use-package tramp
   :defer t
+  :functions tramp-cleanup-all-connection
   :config
   ;; From jwiegley: Without this change, tramp ends up sending
   ;; hundreds of shell commands to the remote side to ask what the
@@ -302,6 +306,7 @@
   :load-path "lib/packages/pomp/"
   :commands pomp
   :init
+  (evil-set-initial-state 'pomp-mode 'emacs)
   (general-define-key
    :states 'normal
    :prefix "SPC"
