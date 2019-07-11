@@ -13,7 +13,6 @@
 ;; This file is not part of GNU Emacs
 
 (require 'cl-lib)
-(require 'evil)
 
 ;; garder ma merde à jour
 
@@ -220,6 +219,7 @@
 (global-set-key (kbd "M-l") #'windmove-right)
 
 (use-package helpful :ensure t
+  :after evil
   :config
   (general-define-key
    :states 'normal
@@ -235,8 +235,11 @@
    "hdc" 'helpful-callable
    "hdC" 'describe-char
    "hdp" 'describe-package)
+
+  (require 'evil)
   (evil-define-key 'normal 'helpful-mode-map
-    "q" 'kill-buffer-and-window))
+    "q" 'kill-buffer-and-window
+    "?" 'describe-mode))
 
 (use-package howdoi :ensure t
   :config
