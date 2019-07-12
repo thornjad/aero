@@ -63,7 +63,7 @@
     "gt" 'eww-list-buffers)
 
   ;; viewing history
-  (evil-set-initial-state 'normal 'eww-history-mode)
+  (evil-set-initial-state 'eww-history-mode 'normal)
   (evil-define-key 'normal eww-history-mode-map
     (kbd "RET") 'eww-history-browse
     "q" 'quit-window)
