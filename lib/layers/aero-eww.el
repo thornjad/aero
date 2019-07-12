@@ -40,6 +40,7 @@
 
   ;; normal browsing
   (evil-define-key 'normal eww-mode-map
+    "?" 'describe-mode
     "^" 'eww-up-url
     "u" 'eww-up-url
     "U" 'eww-top-url
@@ -52,7 +53,7 @@
     "R" 'eww-readable
     "r" 'eww-reload
     "gr" 'eww-reload
-    "q" 'kill-buffer
+    "q" 'kill-this-buffer
     "Q" 'quit-window
     "go" 'eww
     "gf" 'eww-view-source
