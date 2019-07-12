@@ -24,13 +24,6 @@
 ;; TODO bindings
 (use-package counsel-gtags :ensure t)
 
-(use-package smart-tabs-mode
-  :load-path "lib/packages/smart-tabs-mode/"
-  :functions (smart-tabs-insinuate)
-  :config
-  (smart-tabs-insinuate 'c 'c++ 'javascript 'python 'tcl)
-  (smart-tabs-advice js2-indent-line js2-basic-offset))
-
 
 ;;; flycheck
 

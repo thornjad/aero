@@ -13,9 +13,6 @@
 [submodule "lib/packages/pbcopier"]
 	path = lib/packages/pbcopier
 	url = git@gitlab.com:thornjad/pbcopier.git
-[submodule "lib/packages/smart-tabs-mode"]
-	path = lib/packages/smart-tabs-mode
-	url = git@gitlab.com:thornjad/smart-tabs-mode.git
 [submodule "lib/packages/pomp"]
 	path = lib/packages/pomp
 	url = git@gitlab.com:thornjad/pomp.git
