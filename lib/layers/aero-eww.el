@@ -12,12 +12,12 @@
 
 (require 'evil)
 
-(setq browse-url-browser-function #'eww-browse-url)
 (use-package eww
   :commands (eww
              eww-browse-url
              eww-search-words)
   :init
+  (setq browse-url-browser-function #'eww-browse-url)
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
@@ -27,15 +27,16 @@
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
 
-	(defun add-title-to-eww-buffer-name ()
+	(add-hook
+   'eww-after-render-hook
+   (lambda ()
 		"Rename eww mode buffer so the title of the page is displayed, making
 		 fake-tabbed-browsing easier"
 		(let ((title (plist-get eww-data :title)))
 			(when (eq major-mode 'eww-mode)
 				(if title
 						(rename-buffer (concat "eww - " title) t)
-					(rename-buffer "eww" t)))))
-	(add-hook 'eww-after-render-hook 'add-title-to-eww-buffer-name)
+					(rename-buffer "eww" t))))))
 
   ;; normal browsing
   (evil-define-key 'normal eww-mode-map
