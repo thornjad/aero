@@ -370,7 +370,6 @@
 
  "a" '(:ignore t :which-key "applications")
  "ad" 'counsel-dired
- "aw" 'browse-url-at-point
 
  "c" '(:ignore t :which-key "compile")
  "cc" 'compile
