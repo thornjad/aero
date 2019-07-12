@@ -325,6 +325,7 @@
  "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
  "q" 'quoted-insert
  "'" 'eshell
+ "\"" '(aero/eshell-new :which-key "eshell-new")
  ":" 'eval-expression
  ";" 'comment-or-uncomment-region
  "!" 'shell-command

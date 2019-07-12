@@ -128,6 +128,13 @@ emacs with sigusr2"
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
 
+(defun aero/eshell-new ()
+  "Open a new Eshell window.
+
+This is equivalent to SPC U M-x eshell"
+  (interactive)
+  (eshell t))
+
 
 ;;; the rest
 

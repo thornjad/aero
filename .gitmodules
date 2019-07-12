@@ -19,3 +19,6 @@
 [submodule "lib/packages/pomp"]
 	path = lib/packages/pomp
 	url = git@gitlab.com:thornjad/pomp.git
+[submodule "lib/packages/xterm-color"]
+	path = lib/packages/xterm-color
+	url = git@github.com:atomontage/xterm-color.git
