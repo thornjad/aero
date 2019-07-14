@@ -23,7 +23,7 @@
    :prefix "SPC"
     "ws" '(eww-search-words :which-key "web search")
     "ww" 'eww
-    "wu" 'browse-url-at-point)
+    "wp" 'browse-url-at-point)
 
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
