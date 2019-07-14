@@ -1,19 +1,19 @@
 ;; -*- lexical-binding: t -*-
-;; Aero Theme
 ;;
 ;; Copyright (c) 2019 Jade Michael Thornton
-;; Copyright (c) 2017 Martijn Terpstra
-;; Copyright (c) 2016-2017 Jason Milkins
-;; Copyright (c) 2013-2016 Eduardo Lavaque
-;; Copyright (c) 2013 Lee Machin
 ;;
-;; Package-Requires: ((autothemer "0.2"))
+;; This program is free software; you may redistribute it and/or modify it under
+;; the terms of the GNU General Public License version 3, as published by the
+;; Free Software Foundation. This program carries no warranty whatsoever,
+;; without even the implied warranty of merchantability or fitness for a
+;; particular purpose. See </license> for more details.
+;;
+;; This file is not part of GNU Emacs
 ;;
 ;; Commentary:
 ;;
-;; Aero theme is based on Gruvbox, a retro-groove theme for Emacs. While many of
-;; the original faces remain the same as Gruvbox, this is no longer a simple
-;; fork.
+;; Aero theme was originally based on Gruvbox, a retro-groove theme for Emacs.
+;; However, the theme has diverged considerably, and is no longer a simple fork.
 ;;
 ;; Pavel Pertsev created the original Gruvbox theme for Vim. Lee Machin create
 ;; the first Emacs port, further developed by Greduan. Jason Milkins has
@@ -29,545 +29,518 @@
 ;; line in this way removes any need for "fixer" packages like diminish.el, and
 ;; simply looks a lot better.
 ;;
-;; This program is free software; you may redistribute it and/or modify it under
-;; the terms of the GNU General Public License version 3, as published by the
-;; Free Software Foundation. This program carries no warranty whatsoever,
-;; without even the implied warranty of merchantability or fitness for a
-;; particular purpose. See </license> for more details.
-;;
-;; This file is not part of GNU Emacs
-;;
 ;; Code:
 
-(eval-when-compile
-  (require 'cl-lib))
-
-;;; main theme
+(require 'cl-lib)
 
 (use-package autothemer :ensure t)
 
-(defmacro aero-deftheme (name description palette &rest body)
-  `(autothemer-deftheme
-    ,name
-    ,description
-    ,palette
-    ((default (:background aero-bg :foreground aero-light0 :font "Dank Mono"))
-     (cursor (:background aero-light0))
-     (mode-line (:background aero-dark3 :foreground aero-light2 :box nil))
-     (mode-line-inactive
-      (:background aero-dark1 :foreground aero-light4 :box nil))
-     (fringe (:background aero-bg))
-     (hl-line (:background aero-dark1))
-     (region (:background aero-dark2))
-     (secondary-selection (:background aero-dark1))
-     (minibuffer-prompt
-      (:background aero-bg :foreground aero-bright_green :bold t))
-     (vertical-border (:foreground aero-dark2))
-     (window-divider (:foreground aero-dark2))
-     (link (:foreground aero-faded_blue :underline t))
-     (shadow (:foreground aero-dark4))
-     (page-break-lines (:foreground aero-dark4))
+(autothemer-deftheme
+ aero-theme "Aero theme"
 
-     ;; Built-in syntax
-     (font-lock-builtin-face (:foreground aero-bright_orange))
-     (font-lock-constant-face (:foreground aero-bright_purple))
-     (font-lock-comment-face (:foreground aero-dark4 :slant 'italic))
-     (font-lock-function-name-face (:foreground aero-bright_yellow))
-     (font-lock-keyword-face (:foreground aero-bright_red))
-     (font-lock-string-face (:foreground aero-bright_green))
-     (font-lock-variable-name-face (:foreground aero-bright_blue))
-     (font-lock-type-face (:foreground aero-bright_purple))
-     (font-lock-warning-face (:foreground aero-bright_red :bold t))
+
+ ;; the theme
 
-     ;; Basic faces
-     (error (:foreground aero-bright_red :bold t))
-     (success (:foreground aero-bright_green :bold t))
-     (warning (:foreground aero-bright_yellow :bold t))
-     (trailing-whitespace (:background aero-bright_red))
-     (escape-glyph (:foreground aero-bright_aqua))
-     (header-line
-      (:background aero-dark0 :foreground aero-light3 :box nil :inherit nil))
-     (highlight (:background aero-dark4 :foreground aero-light0))
-     (homoglyph (:foreground aero-bright_yellow))
-     (match (:foreground aero-dark0 :background aero-bright_blue))
+ ((((class color) (min-colors #xFF)))
 
-     ;; Customize faces
-     (widget-field (:background aero-dark3))
-     (custom-group-tag (:foreground aero-bright_blue :weight 'bold))
-     (custom-variable-tag (:foreground aero-bright_blue :weight 'bold))
+  (aero-dark0_hard      "#151515")
+  (aero-dark0           "#212121")
+  (aero-dark0_soft      "#303030")
+  (aero-dark1           "#3a3a3a")
+  (aero-dark2           "#4e4e4e")
+  (aero-dark3           "#626262")
+  (aero-dark4           "#767676")
 
-     ;; whitespace-mode
-     (whitespace-space (:background aero-bg :foreground aero-dark4))
-     (whitespace-hspace (:background aero-bg :foreground aero-dark4))
-     (whitespace-tab (:background aero-bg :foreground aero-dark4))
-     (whitespace-newline (:background aero-bg :foreground aero-dark4))
-     (whitespace-trailing (:background aero-dark1 :foreground aero-bright_red))
-     (whitespace-line (:background aero-dark1 :foreground aero-bright_red))
-     (whitespace-space-before-tab (:background aero-bg :foreground aero-dark4))
-     (whitespace-indentation (:background aero-bg :foreground aero-dark4))
-     (whitespace-empty (:background nil :foreground nil))
-     (whitespace-space-after-tab (:background aero-bg :foreground aero-dark4))
+  (aero-grey            "#8a8a8a")
 
-     ;; Highlight indentation mode
-     (highlight-indentation-current-column-face (:background aero-dark2))
-     (highlight-indentation-face (:background aero-dark1))
+  (aero-light0_hard     "#ffffd7")
+  (aero-light0          "#d9d9d9")
+  (aero-light1          "#ffdfaf")
+  (aero-light2          "#bcbcbc")
+  (aero-light3          "#a8a8a8")
+  (aero-light4          "#949494")
 
-     ;; smartparens
-     (sp-pair-overlay-face (:background aero-dark2))
-     ;; Pair tags highlight
-     (sp-show-pair-match-face (:background aero-dark2))
-     ;; Highlight for bracket without pair
-     (sp-show-pair-mismatch-face (:background aero-bright_red))
+  (aero-roman-red       "#d75f5f")
+  (aero-flush-orange    "#ffae42")
+  (aero-golden-green    "#afaf00")
+  (aero-gulf-blue       "#7eb4b4")
+  (aero-cyan            "#5699AF")
+  (aero-aquamarine      "#87af87")
+  (aero-magenta         "#b16286")
+  (aero-sienna          "#d7875f")
+  (aero-burlywood       "#efdeb3")
+  (aero-green           "#b5c454")
+  (aero-bay-green       "#85ad85")
 
-     ;; elscreen
-     ;; Tab bar, not the tabs
-     (elscreen-tab-background-face (:background aero-bg :box nil))
-     ;; The controls
-     (elscreen-tab-control-face
-      (:background aero-dark2 :foreground aero-bright_red :underline nil :box nil))
-     ;; Current tab
-     (elscreen-tab-current-screen-face
-      (:background aero-dark4 :foreground aero-dark0 :box nil))
-     ;; Inactive tab
-     (elscreen-tab-other-screen-face
-      (:background aero-dark2 :foreground aero-light4 :underline nil :box nil))
-
-     ;; ag (The Silver Searcher)
-     (ag-hit-face (:foreground aero-bright_blue))
-     (ag-match-face (:foreground aero-bright_red))
-
-     ;; diffs
-     (diff-changed (:background nil :foreground aero-light1))
-     (diff-added (:background nil :foreground aero-bright_green))
-     (diff-refine-added (:background aero-dark_green))
-     (diff-removed (:background nil :foreground aero-bright_red))
-     (diff-refine-removed (:background aero-dark_red))
-     (diff-indicator-changed (:inherit 'diff-changed))
-     (diff-indicator-added (:inherit 'diff-added))
-     (diff-indicator-removed (:inherit 'diff-removed))
-
-     ;; smerge
-     (smerge-lower (:background aero-dark_green))
-     (smerge-upper (:background aero-dark_red))
-     (smerge-base (:background aero-dark_blue))
-     (smerge-markers (:inherit 'font-lock-comment-face :weight 'bold))
-
-     (js2-warning (:underline (:color aero-bright_yellow :style 'wave)))
-     (js2-error (:underline (:color aero-bright_red :style 'wave)))
-     (js2-external-variable (:underline (:color aero-bright_aqua :style 'wave)))
-     (js2-jsdoc-tag (:background nil :foreground aero-gray  ))
-     (js2-jsdoc-type (:background nil :foreground aero-light4))
-     (js2-jsdoc-value (:background nil :foreground aero-light3))
-     (js2-function-param (:background nil :foreground aero-bright_aqua))
-     (js2-function-call (:background nil :foreground aero-bright_blue))
-     (js2-instance-member (:background nil :foreground aero-bright_orange))
-     (js2-private-member (:background nil :foreground aero-faded_yellow))
-     (js2-private-function-call (:background nil :foreground aero-faded_aqua))
-     (js2-jsdoc-html-tag-name (:background nil :foreground aero-light4))
-     (js2-jsdoc-html-tag-delimiter (:background nil :foreground aero-light3))
-
-     ;; popup
-     (popup-face (:underline nil :foreground aero-light1 :background aero-dark1))
-     (popup-menu-mouse-face (:underline nil :foreground aero-light0 :background aero-faded_green))
-     (popup-menu-selection-face (:underline nil :foreground aero-light0 :background aero-faded_green))
-     (popup-tip-face (:underline nil :foreground aero-light2 :background aero-dark2))
-
-     ;; counsel
-     (counsel-M-x-key (:foreground aero-bright_orange ))
-     (counsel-action (:foreground aero-light0_hard :underline t))
-     (counsel-bookmark-addressbook (:foreground aero-bright_red))
-     (counsel-bookmark-directory (:foreground aero-bright_purple))
-     (counsel-bookmark-file (:foreground aero-faded_blue))
-     (counsel-bookmark-gnus (:foreground aero-faded_purple))
-     (counsel-bookmark-info (:foreground aero-turquoise))
-     (counsel-bookmark-man (:foreground aero-sienna))
-     (counsel-bookmark-w3m (:foreground aero-bright_yellow))
-     (counsel-buffer-directory (:foreground aero-white :background aero-bright_blue))
-     (counsel-buffer-not-saved (:foreground aero-faded_red))
-     (counsel-buffer-process (:foreground aero-burlywood))
-     (counsel-buffer-saved-out (:foreground aero-bright_red))
-     (counsel-buffer-size (:foreground aero-bright_purple))
-     (counsel-candidate-number (:foreground aero-bright_green))
-     (counsel-ff-directory (:foreground aero-bright_purple))
-     (counsel-ff-executable (:foreground aero-turquoise))
-     (counsel-ff-file (:foreground aero-sienna))
-     (counsel-ff-invalid-symlink (:foreground aero-white :background aero-bright_red))
-     (counsel-ff-prefix (:foreground aero-black :background aero-bright_yellow))
-     (counsel-ff-symlink (:foreground aero-bright_orange))
-     (counsel-grep-cmd-line (:foreground aero-bright_green))
-     (counsel-grep-file (:foreground aero-faded_purple))
-     (counsel-grep-finish (:foreground aero-turquoise))
-     (counsel-grep-lineno (:foreground aero-bright_orange))
-     (counsel-grep-match (:foreground aero-bright_yellow))
-     (counsel-grep-running (:foreground aero-bright_red))
-     (counsel-header (:foreground aero-aquamarine))
-     (counsel-helper (:foreground aero-aquamarine))
-     (counsel-history-deleted (:foreground aero-black :background aero-bright_red))
-     (counsel-history-remote (:foreground aero-faded_red))
-     (counsel-lisp-completion-info (:foreground aero-faded_orange))
-     (counsel-lisp-show-completion (:foreground aero-bright_red))
-     (counsel-locate-finish (:foreground aero-white :background aero-aquamarine))
-     (counsel-match (:foreground aero-bright_orange))
-     (counsel-moccur-buffer (:foreground aero-bright_aqua :underline t))
-     (counsel-prefarg (:foreground aero-turquoise))
-     (counsel-selection (:foreground aero-white :background aero-dark2))
-     (counsel-selection-line (:foreground aero-white :background aero-dark2))
-     (counsel-separator (:foreground aero-faded_red))
-     (counsel-source-header (:foreground aero-light2))
-     (counsel-visible-mark (:foreground aero-black :background aero-light3))
-
-     ;;hi-lock-mode
-     (hi-black-b (:foreground aero-black :weight 'bold))
-     (hi-black-hb (:foreground aero-black :weight 'bold :height 1.5))
-     (hi-blue (:foreground aero-dark0 :background aero-bright_blue))
-     (hi-blue-b (:foreground aero-bright_blue :weight 'bold))
-     (hi-green (:foreground aero-dark0 :background aero-bright_green))
-     (hi-green-b (:foreground aero-bright_green :weight 'bold))
-     (hi-pink (:foreground aero-dark0 :background aero-bright_purple))
-     (hi-red-b (:foreground aero-bright_red :weight 'bold))
-     (hi-yellow (:foreground aero-dark0 :background aero-faded_yellow))
-
-     ;; company-mode
-     (company-scrollbar-bg (:background aero-dark1))
-     (company-scrollbar-fg (:background aero-dark0_soft))
-     (company-tooltip (:background aero-dark0_soft))
-     (company-tooltip-annotation (:foreground aero-bright_green))
-     (company-tooltip-annotation-selection (:inherit 'company-tooltip-annotation))
-     (company-tooltip-selection (:foreground aero-bright_purple :background aero-dark2))
-     (company-tooltip-common (:foreground aero-bright_blue :underline t))
-     (company-tooltip-common-selection (:foreground aero-bright_blue :underline t))
-     (company-preview-common (:foreground aero-light0))
-     (company-preview (:background aero-lightblue))
-     (company-preview-search (:background aero-turquoise))
-     (company-template-field (:foreground aero-black :background aero-bright_yellow))
-     (company-echo-common (:foreground aero-faded_red))
-
-     ;; tool tips
-     (tooltip (:foreground aero-light1 :background aero-dark1))
-
-     ;; term
-     (term-color-black (:foreground aero-dark2 :background aero-dark1))
-     (term-color-blue (:foreground aero-bright_blue :background aero-bright_blue))
-     (term-color-cyan (:foreground aero-bright_aqua :background aero-bright_aqua))
-     (term-color-green (:foreground aero-bright_green :background aero-bright_green))
-     (term-color-magenta (:foreground aero-bright_purple :background aero-bright_purple))
-     (term-color-red (:foreground aero-bright_red :background aero-bright_red))
-     (term-color-white (:foreground aero-light1 :background aero-light1))
-     (term-color-yellow (:foreground aero-bright_yellow :background aero-bright_yellow))
-     (term-default-fg-color (:foreground aero-light0))
-     (term-default-bg-color (:background aero-bg))
-
-     ;; message-mode
-     (message-header-to (:inherit 'font-lock-variable-name-face))
-     (message-header-cc (:inherit 'font-lock-variable-name-face))
-     (message-header-subject (:foreground aero-bright_orange :weight 'bold))
-     (message-header-newsgroups (:foreground aero-bright_yellow :weight 'bold))
-     (message-header-other (:inherit 'font-lock-variable-name-face))
-     (message-header-name (:inherit 'font-lock-keyword-face))
-     (message-header-xheader (:foreground aero-faded_blue))
-     (message-separator (:inherit 'font-lock-comment-face))
-     (message-cited-text (:inherit 'font-lock-comment-face))
-     (message-mml (:foreground aero-faded_green :weight 'bold))
-
-     ;; org-mode
-     (org-hide (:foreground aero-dark0))
-     (org-level-1 (:foreground aero-bright_blue))
-     (org-level-2 (:foreground aero-bright_yellow))
-     (org-level-3 (:foreground aero-bright_purple))
-     (org-level-4 (:foreground aero-bright_red))
-     (org-level-5 (:foreground aero-bright_green))
-     (org-level-6 (:foreground aero-bright_aqua))
-     (org-level-7 (:foreground aero-faded_blue))
-     (org-level-8 (:foreground aero-bright_orange))
-     (org-special-keyword (:inherit 'font-lock-comment-face))
-     (org-drawer (:inherit 'font-lock-function-name-face))
-     (org-column (:background aero-dark0))
-     (org-column-title (:background aero-dark0 :underline t :weight 'bold))
-     (org-warning (:foreground aero-bright_red :weight 'bold :underline nil :bold t))
-     (org-archived (:foreground aero-light0 :weight 'bold))
-     (org-link (:foreground aero-faded_aqua :underline t))
-     (org-footnote (:foreground aero-bright_aqua :underline t))
-     (org-ellipsis (:foreground aero-light4))
-     (org-date (:foreground aero-bright_blue :underline t))
-     (org-sexp-date (:foreground aero-faded_blue :underline t))
-     (org-tag (:bold t :weight 'bold))
-     (org-list-dt (:bold t :weight 'bold))
-     (org-todo (:foreground aero-bright_red :weight 'bold :bold t))
-     (org-done (:foreground aero-bright_aqua :weight 'bold :bold t))
-     (org-agenda-done (:foreground aero-bright_aqua))
-     (org-headline-done (:foreground aero-bright_aqua))
-     (org-table (:foreground aero-bright_blue))
-     (org-block (:background aero-dark0_soft))
-     (org-block-begin-line (:background aero-dark1))
-     (org-block-end-line (:background aero-dark1))
-     (org-formula (:foreground aero-bright_yellow))
-     (org-document-title (:foreground aero-faded_blue))
-     (org-document-info (:foreground aero-faded_blue))
-     (org-agenda-structure (:inherit 'font-lock-comment-face))
-     (org-agenda-date-today (:foreground aero-light0 :weight 'bold :slant 'italic))
-     (org-scheduled (:foreground aero-bright_yellow))
-     (org-scheduled-today (:foreground aero-bright_blue))
-     (org-scheduled-previously (:foreground aero-faded_red))
-     (org-upcoming-deadline (:inherit 'font-lock-keyword-face))
-     (org-deadline-announce (:foreground aero-faded_red))
-     (org-time-grid (:foreground aero-faded_orange))
-     (org-latex-and-related (:foreground aero-bright_blue))
-
-     ;; org-habit
-     (org-habit-clear-face (:background aero-faded_blue))
-     (org-habit-clear-future-face (:background aero-bright_blue))
-     (org-habit-ready-face (:background aero-faded_green))
-     (org-habit-ready-future-face (:background aero-bright_green))
-     (org-habit-alert-face (:background aero-faded_yellow))
-     (org-habit-alert-future-face (:background aero-bright_yellow))
-     (org-habit-overdue-face (:background aero-faded_red))
-     (org-habit-overdue-future-face (:background aero-bright_red))
-
-     ;; elfeed
-     (elfeed-search-title-face (:foreground aero-gray  ))
-     (elfeed-search-unread-title-face (:foreground aero-light0))
-     (elfeed-search-date-face (:inherit 'font-lock-builtin-face :underline t))
-     (elfeed-search-feed-face (:inherit 'font-lock-variable-name-face))
-     (elfeed-search-tag-face (:inherit 'font-lock-keyword-face))
-     (elfeed-search-last-update-face (:inherit 'font-lock-comment-face))
-     (elfeed-search-unread-count-face (:inherit 'font-lock-comment-face))
-     (elfeed-search-filter-face (:inherit 'font-lock-string-face))
-
-     ;; markdown-mode
-     (markdown-header-face-1 (:foreground aero-bright_blue))
-     (markdown-header-face-2 (:foreground aero-bright_yellow))
-     (markdown-header-face-3 (:foreground aero-bright_purple))
-     (markdown-header-face-4 (:foreground aero-bright_red))
-     (markdown-header-face-5 (:foreground aero-bright_green))
-     (markdown-header-face-6 (:foreground aero-bright_aqua))
-
-     ;; ace-jump-mode
-     (ace-jump-face-background (:foreground aero-light4 :background aero-bg :inverse-video nil))
-     (ace-jump-face-foreground (:foreground aero-bright_red :background aero-bg :inverse-video nil))
-
-     ;; ace-window
-     (aw-background-face (:forground  aero-light1 :background aero-bg :inverse-video nil))
-     (aw-leading-char-face (:foreground aero-bright_red :background aero-bg :height 4.0))
-
-     ;; show-paren
-     (show-paren-match (:background aero-dark3 :foreground aero-bright_blue  :weight 'bold))
-     (show-paren-mismatch (:background aero-bright_red :foreground aero-dark3 :weight 'bold))
-
-     ;; ivy
-     (ivy-current-match (:foreground aero-light0_hard :weight 'bold :underline t))
-     (ivy-minibuffer-match-face-1 (:foreground aero-bright_orange))
-     (ivy-minibuffer-match-face-2 (:foreground aero-bright_yellow))
-     (ivy-minibuffer-match-face-3 (:foreground aero-faded_orange))
-     (ivy-minibuffer-match-face-4 (:foreground aero-faded_yellow))
-
-     ;; ido
-     (ido-only-match (:foreground aero-faded_green))
-     (ido-first-match (:foreground aero-faded_green))
-     (ido-subdir (:foreground aero-faded_red))
-
-     ;; magit
-     (magit-bisect-bad (:foreground aero-faded_red))
-     (magit-bisect-good (:foreground aero-faded_green))
-     (magit-bisect-skip (:foreground aero-faded_yellow))
-     (magit-blame-heading (:foreground aero-light0 :background aero-dark2))
-     (magit-branch-local (:foreground aero-bright_blue))
-     (magit-branch-current (:underline aero-bright_blue :inherit 'magit-branch-local))
-     (magit-branch-remote (:foreground aero-bright_green))
-     (magit-cherry-equivalent (:foreground aero-bright_purple))
-     (magit-cherry-unmatched (:foreground aero-bright_aqua))
-     (magit-diff-added (:foreground aero-bright_green))
-     (magit-diff-added-highlight (:foreground aero-bright_green :inherit 'magit-diff-context-highlight))
-     (magit-diff-base (:background aero-faded_yellow :foreground aero-light2))
-     (magit-diff-base-highlight (:background aero-faded_yellow :foreground aero-light0))
-     (magit-diff-context (:foreground aero-dark1  :foreground aero-light1))
-     (magit-diff-context-highlight (:background aero-dark1 :foreground aero-light0))
-     (magit-diff-hunk-heading (:background aero-dark3 :foreground aero-light2))
-     (magit-diff-hunk-heading-highlight (:background aero-dark2 :foreground aero-light0))
-     (magit-diff-hunk-heading-selection (:background aero-dark2 :foreground aero-bright_orange))
-     (magit-diff-lines-heading (:background aero-faded_orange :foreground aero-light0))
-     (magit-diff-removed (:foreground aero-bright_red))
-     (magit-diff-removed-highlight (:foreground aero-bright_red :inherit 'magit-diff-context-highlight))
-     (magit-diffstat-added (:foreground aero-faded_green))
-     (magit-diffstat-removed (:foreground aero-faded_red))
-     (magit-dimmed (:foreground aero-dark4))
-     (magit-hash (:foreground aero-bright_blue))
-     (magit-log-author (:foreground aero-bright_red))
-     (magit-log-date (:foreground aero-bright_aqua))
-     (magit-log-graph (:foreground aero-dark4))
-     (magit-process-ng (:foreground aero-bright_red :weight 'bold))
-     (magit-process-ok (:foreground aero-bright_green :weight 'bold))
-     (magit-reflog-amend (:foreground aero-bright_purple))
-     (magit-reflog-checkout (:foreground aero-bright_blue))
-     (magit-reflog-cherry-pick (:foreground aero-bright_green))
-     (magit-reflog-commit (:foreground aero-bright_green))
-     (magit-reflog-merge (:foreground aero-bright_green))
-     (magit-reflog-other (:foreground aero-bright_aqua))
-     (magit-reflog-rebase (:foreground aero-bright_purple))
-     (magit-reflog-remote (:foreground aero-bright_blue))
-     (magit-reflog-reset (:foreground aero-bright_red))
-     (magit-refname (:foreground aero-light4))
-     (magit-section-heading (:foreground aero-bright_yellow :weight 'bold))
-     (magit-section-heading-selection (:foreground aero-faded_yellow))
-     (magit-section-highlight (:background aero-dark1))
-     (magit-sequence-drop (:foreground aero-faded_yellow))
-     (magit-sequence-head (:foreground aero-bright_aqua))
-     (magit-sequence-part (:foreground aero-bright_yellow))
-     (magit-sequence-stop (:foreground aero-bright_green))
-     (magit-signature-bad (:foreground aero-bright_red :weight 'bold))
-     (magit-signature-error (:foreground aero-bright_red))
-     (magit-signature-expired (:foreground aero-bright_orange))
-     (magit-signature-good (:foreground aero-bright_green))
-     (magit-signature-revoked (:foreground aero-bright_purple))
-     (magit-signature-untrusted (:foreground aero-bright_blue))
-     (magit-tag (:foreground aero-bright_yellow))
-
-     ;; flyspell
-     (flyspell-duplicate (:underline (:color aero-light4 :style 'line)))
-     (flyspell-incorrect (:underline (:color aero-bright_red :style 'line)))
-
-     ;; langtool
-     (langtool-errline (:foreground aero-dark0 :background aero-bright_red))
-     (langtool-correction-face (:foreground aero-bright_yellow :weight 'bold))
-
-     ;; latex
-     (font-latex-bold-face (:foreground aero-faded_green :bold t))
-     (font-latex-italic-face (:foreground aero-bright_green :underline t))
-     (font-latex-math-face (:foreground aero-light3))
-     (font-latex-script-char-face (:foreground aero-faded_aqua))
-     (font-latex-sectioning-5-face (:foreground aero-bright_yellow :bold t))
-     (font-latex-sedate-face (:foreground aero-light4))
-     (font-latex-string-face (:foreground aero-bright_orange))
-     (font-latex-verbatim-face (:foreground aero-light4))
-     (font-latex-warning-face (:foreground aero-bright_red :weight 'bold))
-     (preview-face (:background aero-dark1))
-
-     ;; mu4e
-     (mu4e-header-key-face (:foreground aero-bright_green :weight 'bold ))
-     (mu4e-unread-face (:foreground aero-bright_blue :weight 'bold ))
-     (mu4e-highlight-face (:foreground aero-bright_green))
-
-     ;; shell script
-     (sh-quoted-exec (:foreground aero-bright_purple))
-     (sh-heredoc (:foreground aero-bright_orange))
-
-     ;; undo-tree
-     (undo-tree-visualizer-active-branch-face (:foreground aero-light0))
-     (undo-tree-visualizer-current-face (:foreground aero-bright_red))
-     (undo-tree-visualizer-default-face (:foreground aero-dark4))
-     (undo-tree-visualizer-register-face (:foreground aero-bright_yellow))
-     (undo-tree-visualizer-unmodified-face (:foreground aero-bright_aqua))
-
-     ;; widget faces
-     (widget-button-pressed-face (:foreground aero-bright_red))
-     (widget-documentation-face (:foreground aero-faded_green))
-     (widget-field (:foreground aero-light0 :background aero-dark2))
-     (widget-single-line-field (:foreground aero-light0 :background aero-dark2))
-
-     ;; eshell
-     (eshell-prompt (:foreground aero-bright_aqua))
-     (eshell-ls-archive-face (:foreground aero-light3))
-     (eshell-ls-backup-face (:foreground aero-light4))
-     (eshell-ls-clutter-face (:foreground aero-bright_orange :weight 'bold))
-     (eshell-ls-directory-face (:foreground aero-bright_yellow))
-     (eshell-ls-executable-face (:weight 'bold))
-     (eshell-ls-missing-face (:foreground aero-bright_red :bold t))
-     (eshell-ls-product-face (:foreground aero-faded_red))
-     (eshell-ls-readonly-face (:foreground aero-light2))
-     (eshell-ls-special-face (:foreground aero-bright_yellow :bold t))
-     (eshell-ls-symlink-face (:foreground aero-bright_red))
-     (eshell-ls-unreadable-face (:foreground aero-bright_red :bold t))
-
-     ;; wgrep
-     (wgrep-delete-face (:strike-through aero-bright_red))
-     (wgrep-done-face (:foreground aero-turquoise))
-     (wgrep-face (:underline (:color aero-bright_yellow :style 'line)))
-     (wgrep-file-face (:inherit 'highlight))
-     (wgrep-reject-face (:foreground aero-bright_red :bold t))
-
-     ;; rjsx
-     (rjsx-attr (:inherit font-lock-variable-name-face :slant 'italic))
-
-     ;; hydra
-     (hydra-face-red (:foreground aero-bright_red :weight 'bold))
-     (hydra-face-blue (:foreground aero-bright_blue :weight 'bold))
-     (hydra-face-amaranth (:foreground aero-bright_yellow :weight 'bold))
-     (hydra-face-pink (:foreground aero-bright_purple :weight 'bold))
-     (hydra-face-teal (:foreground aero-bright_aqua :weight 'bold))
-
-     ;; which-function-mode
-     (which-func (:foreground aero-faded_blue))
-
-     ;; auto-dim-other-buffers
-     (auto-dim-other-buffers-face (:background aero-bg_inactive)))
-    ,@body))
-
-(aero-deftheme
- aero-dark-hard
- "A retro-smooth theme based on Aero"
-
- ((((class color) (min-colors #xFFFFFF))        ; col 1 GUI/24bit
-   ((class color) (min-colors #xFF)))           ; col 2 Xterm/256
-
-  (aero-dark0_hard      "#151515" "#151515")
-  (aero-dark0           "#212121" "#212121")
-  (aero-dark0_soft      "#32302f" "#303030")
-  (aero-dark1           "#3c3836" "#3a3a3a")
-  (aero-dark2           "#504945" "#4e4e4e")
-  (aero-dark3           "#665c54" "#626262")
-  (aero-dark4           "#7c6f64" "#767676")
-
-  (aero-gray            "#928374" "#8a8a8a")
-
-  (aero-light0_hard     "#ffffc8" "#ffffd7")
-  (aero-light0          "#d9d9d9" "#d9d9d9")
-  (aero-light1          "#ebdbb2" "#ffdfaf")
-  (aero-light2          "#d5c4a1" "#bcbcbc")
-  (aero-light3          "#bdae93" "#a8a8a8")
-  (aero-light4          "#a89984" "#949494")
-
-  (aero-bright_red      "#fb4933" "#d75f5f")
-  (aero-bright_green    "#b8bb26" "#afaf00")
-  (aero-bright_yellow   "#fabd2f" "#ffaf00")
-  (aero-bright_blue     "#83a598" "#87afaf")
-  (aero-bright_purple   "#d3869b" "#d787af")
-  (aero-bright_aqua     "#8ec07c" "#87af87")
-  (aero-bright_orange   "#fe8019" "#ff8700")
-
-  (aero-faded_red       "#cc241d" "#d75f5f")
-  (aero-faded_green     "#98971a" "#afaf00")
-  (aero-faded_yellow    "#d79921" "#ffaf00")
-  (aero-faded_blue      "#458588" "#87afaf")
-  (aero-faded_purple    "#b16286" "#d787af")
-  (aero-faded_aqua      "#689d6a" "#87af87")
-  (aero-faded_orange    "#d65d0e" "#ff8700")
-
-  (aero-dark_red       "#4a0000" "#4a0000")
-  (aero-dark_green     "#004a00" "#004a00")
-  (aero-dark_blue      "#00004a" "#00004a")
-
-  (aero-white           "#FFFFFF" "#FFFFFF")
-  ;; (aero-cyan            "#507681" "#5699AF")
-  (aero-black           "#000000" "#000000")
-  (aero-sienna          "#DD6F48" "#d7875f")
-  (aero-lightblue       "#66999D" "#5fafaf")
-  (aero-burlywood       "#BBAA97" "#afaf87")
-  (aero-aquamarine      "#83A598" "#87af87")
-  (aero-turquoise       "#61ACBB" "#5fafaf")
+  (aero-black           "#000000")
+  (aero-white           "#FFFFFF")
+  (aero-dark-red        "#4a0000")
+  (aero-dark-green      "#004a00")
+  (aero-dark-blue       "#00004a")
 
   (aero-bg aero-dark0_hard)
   (aero-bg_inactive aero-dark0))
 
- (custom-theme-set-variables 'aero-dark-hard
-                             `(ansi-color-names-vector
-                               [,aero-dark1
-                                ,aero-bright_red
-                                ,aero-bright_green
-                                ,aero-bright_yellow
-                                ,aero-bright_blue
-                                ,aero-bright_purple
-                                ,aero-bright_aqua
-                                ,aero-light1])
-           `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
+
+ ;; faces (simplified)
+
+ ((default (:background aero-bg :foreground aero-light0 :font "Dank Mono"))
+  (cursor (:background aero-light0))
+  (mode-line (:background aero-dark3 :foreground aero-light2 :box nil))
+  (mode-line-inactive
+   (:background aero-dark1 :foreground aero-light4 :box nil))
+  (hl-line (:background aero-dark1))
+  (region (:background aero-dark2))
+  (secondary-selection (:background aero-dark1))
+  (minibuffer-prompt
+   (:background aero-bg :foreground aero-golden-green :bold t))
+  (vertical-border (:foreground aero-dark2))
+  (window-divider (:foreground aero-dark2))
+  (link (:foreground aero-gulf-blue :underline t))
+  (shadow (:foreground aero-dark4))
+  (page-break-lines (:foreground aero-dark4))
+
+  ;; Built-in syntax
+  (font-lock-builtin-face (:foreground aero-gulf-blue))
+  (font-lock-constant-face (:foreground aero-green))
+  (font-lock-comment-face (:foreground aero-dark4 :slant 'italic))
+  (font-lock-function-name-face (:foreground aero-bay-green))
+  (font-lock-keyword-face (:foreground aero-sienna))
+  (font-lock-string-face (:foreground aero-burlywood))
+  (font-lock-variable-name-face (:foreground aero-gulf-blue))
+  (font-lock-type-face (:foreground aero-magenta))
+  (font-lock-warning-face (:foreground aero-roman-red :bold t))
+
+  ;; Basic faces
+  (error (:foreground aero-roman-red :bold t))
+  (success (:foreground aero-golden-green :bold t))
+  (warning (:foreground aero-flush-orange :bold t))
+  (trailing-whitespace (:background aero-roman-red))
+  (escape-glyph (:foreground aero-gulf-blue))
+  (header-line
+   (:background aero-dark0 :foreground aero-light3 :box nil :inherit nil))
+  (highlight (:background aero-dark4 :foreground aero-light0))
+  (homoglyph (:foreground aero-flush-orange))
+  (match (:foreground aero-dark0 :background aero-gulf-blue))
+
+  ;; Customize faces
+  (widget-field (:background aero-dark3))
+  (custom-group-tag (:foreground aero-gulf-blue :weight 'bold))
+  (custom-variable-tag (:foreground aero-gulf-blue :weight 'bold))
+
+  ;; whitespace-mode
+  (whitespace-space (:background aero-bg :foreground aero-dark4))
+  (whitespace-hspace (:background aero-bg :foreground aero-dark4))
+  (whitespace-tab (:background aero-bg :foreground aero-dark4))
+  (whitespace-newline (:background aero-bg :foreground aero-dark4))
+  (whitespace-trailing (:background aero-dark1 :foreground aero-roman-red))
+  (whitespace-line (:background aero-dark1 :foreground aero-roman-red))
+  (whitespace-space-before-tab (:background aero-bg :foreground aero-dark4))
+  (whitespace-indentation (:background aero-bg :foreground aero-dark4))
+  (whitespace-empty (:background nil :foreground nil))
+  (whitespace-space-after-tab (:background aero-bg :foreground aero-dark4))
+
+  ;; Highlight indentation mode
+  (highlight-indentation-current-column-face (:background aero-dark2))
+  (highlight-indentation-face (:background aero-dark1))
+
+  ;; smartparens
+  (sp-pair-overlay-face (:background aero-dark2))
+  ;; Pair tags highlight
+  (sp-show-pair-match-face (:background aero-dark2))
+  ;; Highlight for bracket without pair
+  (sp-show-pair-mismatch-face (:background aero-roman-red))
+
+  ;; elscreen
+  ;; Tab bar, not the tabs
+  (elscreen-tab-background-face (:background aero-bg :box nil))
+  ;; The controls
+  (elscreen-tab-control-face
+   (:background aero-dark2 :foreground aero-roman-red :underline nil :box nil))
+  ;; Current tab
+  (elscreen-tab-current-screen-face
+   (:background aero-dark4 :foreground aero-dark0 :box nil))
+  ;; Inactive tab
+  (elscreen-tab-other-screen-face
+   (:background aero-dark2 :foreground aero-light4 :underline nil :box nil))
+
+  ;; ag (The Silver Searcher)
+  (ag-hit-face (:foreground aero-gulf-blue))
+  (ag-match-face (:foreground aero-roman-red))
+
+  ;; diffs
+  (diff-changed (:background nil :foreground aero-light1))
+  (diff-added (:background nil :foreground aero-golden-green))
+  (diff-refine-added (:background aero-dark-green))
+  (diff-removed (:background nil :foreground aero-roman-red))
+  (diff-refine-removed (:background aero-dark-red))
+  (diff-indicator-changed (:inherit 'diff-changed))
+  (diff-indicator-added (:inherit 'diff-added))
+  (diff-indicator-removed (:inherit 'diff-removed))
+
+  ;; smerge
+  (smerge-lower (:background aero-dark-green))
+  (smerge-upper (:background aero-dark-red))
+  (smerge-base (:background aero-dark-blue))
+  (smerge-markers (:inherit 'font-lock-comment-face :weight 'bold))
+
+  (js2-warning (:underline (:color aero-flush-orange :style 'wave)))
+  (js2-error (:underline (:color aero-roman-red :style 'wave)))
+  (js2-external-variable (:underline (:color aero-gulf-blue :style 'wave)))
+  (js2-jsdoc-tag (:background nil :foreground aero-grey  ))
+  (js2-jsdoc-type (:background nil :foreground aero-light4))
+  (js2-jsdoc-value (:background nil :foreground aero-light3))
+  (js2-function-param (:background nil :foreground aero-gulf-blue))
+  (js2-function-call (:background nil :foreground aero-gulf-blue))
+  (js2-instance-member (:background nil :foreground aero-flush-orange))
+  (js2-private-member (:background nil :foreground aero-flush-orange))
+  (js2-private-function-call (:background nil :foreground aero-gulf-blue))
+  (js2-jsdoc-html-tag-name (:background nil :foreground aero-light4))
+  (js2-jsdoc-html-tag-delimiter (:background nil :foreground aero-light3))
+
+  ;; popup
+  (popup-face (:underline nil :foreground aero-light1 :background aero-dark1))
+  (popup-menu-mouse-face (:underline nil :foreground aero-light0 :background aero-golden-green))
+  (popup-menu-selection-face (:underline nil :foreground aero-light0 :background aero-golden-green))
+  (popup-tip-face (:underline nil :foreground aero-light2 :background aero-dark2))
+
+  ;; counsel
+  (counsel-M-x-key (:foreground aero-flush-orange ))
+  (counsel-action (:foreground aero-light0_hard :underline t))
+  (counsel-bookmark-addressbook (:foreground aero-roman-red))
+  (counsel-bookmark-directory (:foreground aero-magenta))
+  (counsel-bookmark-file (:foreground aero-gulf-blue))
+  (counsel-bookmark-gnus (:foreground aero-magenta))
+  (counsel-bookmark-info (:foreground aero-gulf-blue))
+  (counsel-bookmark-man (:foreground aero-sienna))
+  (counsel-bookmark-w3m (:foreground aero-flush-orange))
+  (counsel-buffer-directory (:foreground aero-white :background aero-gulf-blue))
+  (counsel-buffer-not-saved (:foreground aero-roman-red))
+  (counsel-buffer-process (:foreground aero-burlywood))
+  (counsel-buffer-saved-out (:foreground aero-roman-red))
+  (counsel-buffer-size (:foreground aero-magenta))
+  (counsel-candidate-number (:foreground aero-golden-green))
+  (counsel-ff-directory (:foreground aero-magenta))
+  (counsel-ff-executable (:foreground aero-gulf-blue))
+  (counsel-ff-file (:foreground aero-sienna))
+  (counsel-ff-invalid-symlink (:foreground aero-white :background aero-roman-red))
+  (counsel-ff-prefix (:foreground aero-black :background aero-flush-orange))
+  (counsel-ff-symlink (:foreground aero-flush-orange))
+  (counsel-grep-cmd-line (:foreground aero-golden-green))
+  (counsel-grep-file (:foreground aero-magenta))
+  (counsel-grep-finish (:foreground aero-gulf-blue))
+  (counsel-grep-lineno (:foreground aero-flush-orange))
+  (counsel-grep-match (:foreground aero-flush-orange))
+  (counsel-grep-running (:foreground aero-roman-red))
+  (counsel-header (:foreground aero-aquamarine))
+  (counsel-helper (:foreground aero-aquamarine))
+  (counsel-history-deleted (:foreground aero-black :background aero-roman-red))
+  (counsel-history-remote (:foreground aero-roman-red))
+  (counsel-lisp-completion-info (:foreground aero-flush-orange))
+  (counsel-lisp-show-completion (:foreground aero-roman-red))
+  (counsel-locate-finish (:foreground aero-white :background aero-aquamarine))
+  (counsel-match (:foreground aero-flush-orange))
+  (counsel-moccur-buffer (:foreground aero-gulf-blue :underline t))
+  (counsel-prefarg (:foreground aero-gulf-blue))
+  (counsel-selection (:foreground aero-white :background aero-dark2))
+  (counsel-selection-line (:foreground aero-white :background aero-dark2))
+  (counsel-separator (:foreground aero-roman-red))
+  (counsel-source-header (:foreground aero-light2))
+  (counsel-visible-mark (:foreground aero-black :background aero-light3))
+
+  ;;hi-lock-mode
+  (hi-black-b (:foreground aero-black :weight 'bold))
+  (hi-black-hb (:foreground aero-black :weight 'bold :height 1.5))
+  (hi-blue (:foreground aero-dark0 :background aero-gulf-blue))
+  (hi-blue-b (:foreground aero-gulf-blue :weight 'bold))
+  (hi-green (:foreground aero-dark0 :background aero-golden-green))
+  (hi-green-b (:foreground aero-golden-green :weight 'bold))
+  (hi-pink (:foreground aero-dark0 :background aero-magenta))
+  (hi-red-b (:foreground aero-roman-red :weight 'bold))
+  (hi-yellow (:foreground aero-dark0 :background aero-flush-orange))
+
+  ;; company-mode
+  (company-scrollbar-bg (:background aero-dark1))
+  (company-scrollbar-fg (:background aero-dark0_soft))
+  (company-tooltip (:background aero-dark0_soft))
+  (company-tooltip-annotation (:foreground aero-golden-green))
+  (company-tooltip-annotation-selection (:inherit 'company-tooltip-annotation))
+  (company-tooltip-selection (:foreground aero-magenta :background aero-dark2))
+  (company-tooltip-common (:foreground aero-gulf-blue :underline t))
+  (company-tooltip-common-selection (:foreground aero-gulf-blue :underline t))
+  (company-preview-common (:foreground aero-light0))
+  (company-preview (:background aero-gulf-blue))
+  (company-preview-search (:background aero-gulf-blue))
+  (company-template-field (:foreground aero-black :background aero-flush-orange))
+  (company-echo-common (:foreground aero-roman-red))
+
+  ;; tool tips
+  (tooltip (:foreground aero-light1 :background aero-dark1))
+
+  ;; term
+  (term-color-black (:foreground aero-dark2 :background aero-dark1))
+  (term-color-blue (:foreground aero-gulf-blue :background aero-gulf-blue))
+  (term-color-cyan (:foreground aero-gulf-blue :background aero-gulf-blue))
+  (term-color-green (:foreground aero-golden-green :background aero-golden-green))
+  (term-color-magenta (:foreground aero-magenta :background aero-magenta))
+  (term-color-red (:foreground aero-roman-red :background aero-roman-red))
+  (term-color-white (:foreground aero-light1 :background aero-light1))
+  (term-color-yellow (:foreground aero-flush-orange :background aero-flush-orange))
+  (term-default-fg-color (:foreground aero-light0))
+  (term-default-bg-color (:background aero-bg))
+
+  ;; message-mode
+  (message-header-to (:inherit 'font-lock-variable-name-face))
+  (message-header-cc (:inherit 'font-lock-variable-name-face))
+  (message-header-subject (:foreground aero-flush-orange :weight 'bold))
+  (message-header-newsgroups (:foreground aero-flush-orange :weight 'bold))
+  (message-header-other (:inherit 'font-lock-variable-name-face))
+  (message-header-name (:inherit 'font-lock-keyword-face))
+  (message-header-xheader (:foreground aero-gulf-blue))
+  (message-separator (:inherit 'font-lock-comment-face))
+  (message-cited-text (:inherit 'font-lock-comment-face))
+  (message-mml (:foreground aero-golden-green :weight 'bold))
+
+  ;; org-mode
+  (org-hide (:foreground aero-dark0))
+  (org-level-1 (:foreground aero-gulf-blue))
+  (org-level-2 (:foreground aero-flush-orange))
+  (org-level-3 (:foreground aero-magenta))
+  (org-level-4 (:foreground aero-roman-red))
+  (org-level-5 (:foreground aero-golden-green))
+  (org-level-6 (:foreground aero-gulf-blue))
+  (org-level-7 (:foreground aero-gulf-blue))
+  (org-level-8 (:foreground aero-flush-orange))
+  (org-special-keyword (:inherit 'font-lock-comment-face))
+  (org-drawer (:inherit 'font-lock-function-name-face))
+  (org-column (:background aero-dark0))
+  (org-column-title (:background aero-dark0 :underline t :weight 'bold))
+  (org-warning (:foreground aero-roman-red :weight 'bold :underline nil :bold t))
+  (org-archived (:foreground aero-light0 :weight 'bold))
+  (org-link (:foreground aero-gulf-blue :underline t))
+  (org-footnote (:foreground aero-gulf-blue :underline t))
+  (org-ellipsis (:foreground aero-light4))
+  (org-date (:foreground aero-gulf-blue :underline t))
+  (org-sexp-date (:foreground aero-gulf-blue :underline t))
+  (org-tag (:bold t :weight 'bold))
+  (org-list-dt (:bold t :weight 'bold))
+  (org-todo (:foreground aero-roman-red :weight 'bold :bold t))
+  (org-done (:foreground aero-gulf-blue :weight 'bold :bold t))
+  (org-agenda-done (:foreground aero-gulf-blue))
+  (org-headline-done (:foreground aero-gulf-blue))
+  (org-table (:foreground aero-gulf-blue))
+  (org-block (:background aero-dark0_soft))
+  (org-block-begin-line (:background aero-dark1))
+  (org-block-end-line (:background aero-dark1))
+  (org-formula (:foreground aero-flush-orange))
+  (org-document-title (:foreground aero-gulf-blue))
+  (org-document-info (:foreground aero-gulf-blue))
+  (org-agenda-structure (:inherit 'font-lock-comment-face))
+  (org-agenda-date-today (:foreground aero-light0 :weight 'bold :slant 'italic))
+  (org-scheduled (:foreground aero-flush-orange))
+  (org-scheduled-today (:foreground aero-gulf-blue))
+  (org-scheduled-previously (:foreground aero-roman-red))
+  (org-upcoming-deadline (:inherit 'font-lock-keyword-face))
+  (org-deadline-announce (:foreground aero-roman-red))
+  (org-time-grid (:foreground aero-flush-orange))
+  (org-latex-and-related (:foreground aero-gulf-blue))
+
+  ;; org-habit
+  (org-habit-clear-face (:background aero-gulf-blue))
+  (org-habit-clear-future-face (:background aero-gulf-blue))
+  (org-habit-ready-face (:background aero-golden-green))
+  (org-habit-ready-future-face (:background aero-golden-green))
+  (org-habit-alert-face (:background aero-flush-orange))
+  (org-habit-alert-future-face (:background aero-flush-orange))
+  (org-habit-overdue-face (:background aero-roman-red))
+  (org-habit-overdue-future-face (:background aero-roman-red))
+
+  ;; elfeed
+  (elfeed-search-title-face (:foreground aero-grey  ))
+  (elfeed-search-unread-title-face (:foreground aero-light0))
+  (elfeed-search-date-face (:inherit 'font-lock-builtin-face :underline t))
+  (elfeed-search-feed-face (:inherit 'font-lock-variable-name-face))
+  (elfeed-search-tag-face (:inherit 'font-lock-keyword-face))
+  (elfeed-search-last-update-face (:inherit 'font-lock-comment-face))
+  (elfeed-search-unread-count-face (:inherit 'font-lock-comment-face))
+  (elfeed-search-filter-face (:inherit 'font-lock-string-face))
+
+  ;; markdown-mode
+  (markdown-header-face-1 (:foreground aero-gulf-blue))
+  (markdown-header-face-2 (:foreground aero-flush-orange))
+  (markdown-header-face-3 (:foreground aero-magenta))
+  (markdown-header-face-4 (:foreground aero-roman-red))
+  (markdown-header-face-5 (:foreground aero-golden-green))
+  (markdown-header-face-6 (:foreground aero-gulf-blue))
+
+  ;; ace-jump-mode
+  (ace-jump-face-background (:foreground aero-light4 :background aero-bg :inverse-video nil))
+  (ace-jump-face-foreground (:foreground aero-roman-red :background aero-bg :inverse-video nil))
+
+  ;; ace-window
+  (aw-background-face (:forground  aero-light1 :background aero-bg :inverse-video nil))
+  (aw-leading-char-face (:foreground aero-roman-red :background aero-bg :height 4.0))
+
+  ;; show-paren
+  (show-paren-match (:background aero-dark3 :foreground aero-gulf-blue  :weight 'bold))
+  (show-paren-mismatch (:background aero-roman-red :foreground aero-dark3 :weight 'bold))
+
+  ;; ivy
+  (ivy-current-match (:foreground aero-light0_hard :weight 'bold :underline t))
+  (ivy-minibuffer-match-face-1 (:foreground aero-flush-orange))
+  (ivy-minibuffer-match-face-2 (:foreground aero-flush-orange))
+  (ivy-minibuffer-match-face-3 (:foreground aero-flush-orange))
+  (ivy-minibuffer-match-face-4 (:foreground aero-flush-orange))
+
+  ;; magit
+  (magit-bisect-bad (:foreground aero-roman-red))
+  (magit-bisect-good (:foreground aero-golden-green))
+  (magit-bisect-skip (:foreground aero-flush-orange))
+  (magit-blame-heading (:foreground aero-light0 :background aero-dark2))
+  (magit-branch-local (:foreground aero-gulf-blue))
+  (magit-branch-current (:underline aero-gulf-blue :inherit 'magit-branch-local))
+  (magit-branch-remote (:foreground aero-golden-green))
+  (magit-cherry-equivalent (:foreground aero-magenta))
+  (magit-cherry-unmatched (:foreground aero-gulf-blue))
+  (magit-diff-added (:foreground aero-golden-green))
+  (magit-diff-added-highlight (:foreground aero-golden-green :inherit 'magit-diff-context-highlight))
+  (magit-diff-base (:background aero-flush-orange :foreground aero-light2))
+  (magit-diff-base-highlight (:background aero-flush-orange :foreground aero-light0))
+  (magit-diff-context (:foreground aero-dark1  :foreground aero-light1))
+  (magit-diff-context-highlight (:background aero-dark1 :foreground aero-light0))
+  (magit-diff-hunk-heading (:background aero-dark3 :foreground aero-light2))
+  (magit-diff-hunk-heading-highlight (:background aero-dark2 :foreground aero-light0))
+  (magit-diff-hunk-heading-selection (:background aero-dark2 :foreground aero-flush-orange))
+  (magit-diff-lines-heading (:background aero-flush-orange :foreground aero-light0))
+  (magit-diff-removed (:foreground aero-roman-red))
+  (magit-diff-removed-highlight (:foreground aero-roman-red :inherit 'magit-diff-context-highlight))
+  (magit-diffstat-added (:foreground aero-golden-green))
+  (magit-diffstat-removed (:foreground aero-roman-red))
+  (magit-dimmed (:foreground aero-dark4))
+  (magit-hash (:foreground aero-gulf-blue))
+  (magit-log-author (:foreground aero-roman-red))
+  (magit-log-date (:foreground aero-gulf-blue))
+  (magit-log-graph (:foreground aero-dark4))
+  (magit-process-ng (:foreground aero-roman-red :weight 'bold))
+  (magit-process-ok (:foreground aero-golden-green :weight 'bold))
+  (magit-reflog-amend (:foreground aero-magenta))
+  (magit-reflog-checkout (:foreground aero-gulf-blue))
+  (magit-reflog-cherry-pick (:foreground aero-golden-green))
+  (magit-reflog-commit (:foreground aero-golden-green))
+  (magit-reflog-merge (:foreground aero-golden-green))
+  (magit-reflog-other (:foreground aero-gulf-blue))
+  (magit-reflog-rebase (:foreground aero-magenta))
+  (magit-reflog-remote (:foreground aero-gulf-blue))
+  (magit-reflog-reset (:foreground aero-roman-red))
+  (magit-refname (:foreground aero-light4))
+  (magit-section-heading (:foreground aero-flush-orange :weight 'bold))
+  (magit-section-heading-selection (:foreground aero-flush-orange))
+  (magit-section-highlight (:background aero-dark1))
+  (magit-sequence-drop (:foreground aero-flush-orange))
+  (magit-sequence-head (:foreground aero-gulf-blue))
+  (magit-sequence-part (:foreground aero-flush-orange))
+  (magit-sequence-stop (:foreground aero-golden-green))
+  (magit-signature-bad (:foreground aero-roman-red :weight 'bold))
+  (magit-signature-error (:foreground aero-roman-red))
+  (magit-signature-expired (:foreground aero-flush-orange))
+  (magit-signature-good (:foreground aero-golden-green))
+  (magit-signature-revoked (:foreground aero-magenta))
+  (magit-signature-untrusted (:foreground aero-gulf-blue))
+  (magit-tag (:foreground aero-flush-orange))
+
+  ;; flyspell
+  (flyspell-duplicate (:underline (:color aero-light4 :style 'line)))
+  (flyspell-incorrect (:underline (:color aero-roman-red :style 'line)))
+
+  ;; langtool
+  (langtool-errline (:foreground aero-dark0 :background aero-roman-red))
+  (langtool-correction-face (:foreground aero-flush-orange :weight 'bold))
+
+  ;; latex
+  (font-latex-bold-face (:foreground aero-golden-green :bold t))
+  (font-latex-italic-face (:foreground aero-golden-green :underline t))
+  (font-latex-math-face (:foreground aero-light3))
+  (font-latex-script-char-face (:foreground aero-gulf-blue))
+  (font-latex-sectioning-5-face (:foreground aero-flush-orange :bold t))
+  (font-latex-sedate-face (:foreground aero-light4))
+  (font-latex-string-face (:foreground aero-flush-orange))
+  (font-latex-verbatim-face (:foreground aero-light4))
+  (font-latex-warning-face (:foreground aero-roman-red :weight 'bold))
+  (preview-face (:background aero-dark1))
+
+  ;; mu4e
+  (mu4e-header-key-face (:foreground aero-golden-green :weight 'bold ))
+  (mu4e-unread-face (:foreground aero-gulf-blue :weight 'bold ))
+  (mu4e-highlight-face (:foreground aero-golden-green))
+
+  ;; shell script
+  (sh-quoted-exec (:foreground aero-magenta))
+  (sh-heredoc (:foreground aero-flush-orange))
+
+  ;; undo-tree
+  (undo-tree-visualizer-active-branch-face (:foreground aero-light0))
+  (undo-tree-visualizer-current-face (:foreground aero-roman-red))
+  (undo-tree-visualizer-default-face (:foreground aero-dark4))
+  (undo-tree-visualizer-register-face (:foreground aero-flush-orange))
+  (undo-tree-visualizer-unmodified-face (:foreground aero-gulf-blue))
+
+  ;; widget faces
+  (widget-button-pressed-face (:foreground aero-roman-red))
+  (widget-documentation-face (:foreground aero-golden-green))
+  (widget-field (:foreground aero-light0 :background aero-dark2))
+  (widget-single-line-field (:foreground aero-light0 :background aero-dark2))
+
+  ;; eshell
+  (eshell-prompt (:foreground aero-gulf-blue))
+  (eshell-ls-archive-face (:foreground aero-light3))
+  (eshell-ls-backup-face (:foreground aero-light4))
+  (eshell-ls-clutter-face (:foreground aero-flush-orange :weight 'bold))
+  (eshell-ls-directory-face (:foreground aero-flush-orange))
+  (eshell-ls-executable-face (:weight 'bold))
+  (eshell-ls-missing-face (:foreground aero-roman-red :bold t))
+  (eshell-ls-product-face (:foreground aero-roman-red))
+  (eshell-ls-readonly-face (:foreground aero-light2))
+  (eshell-ls-special-face (:foreground aero-flush-orange :bold t))
+  (eshell-ls-symlink-face (:foreground aero-roman-red))
+  (eshell-ls-unreadable-face (:foreground aero-roman-red :bold t))
+
+  ;; wgrep
+  (wgrep-delete-face (:strike-through aero-roman-red))
+  (wgrep-done-face (:foreground aero-gulf-blue))
+  (wgrep-face (:underline (:color aero-flush-orange :style 'line)))
+  (wgrep-file-face (:inherit 'highlight))
+  (wgrep-reject-face (:foreground aero-roman-red :bold t))
+
+  ;; rjsx
+  (rjsx-attr (:inherit font-lock-variable-name-face :slant 'italic))
+
+  ;; hydra
+  (hydra-face-red (:foreground aero-roman-red :weight 'bold))
+  (hydra-face-blue (:foreground aero-gulf-blue :weight 'bold))
+  (hydra-face-amaranth (:foreground aero-flush-orange :weight 'bold))
+  (hydra-face-pink (:foreground aero-magenta :weight 'bold))
+  (hydra-face-teal (:foreground aero-gulf-blue :weight 'bold))
+
+  ;; which-function-mode
+  (which-func (:foreground aero-gulf-blue))
+
+  ;; auto-dim-other-buffers
+  (auto-dim-other-buffers-face (:background aero-bg_inactive)))
+
+
+ ;; Form to evaluate
+ (custom-theme-set-variables
+  'aero-theme
+  `(ansi-color-names-vector
+    [,aero-dark1
+     ,aero-roman-red
+     ,aero-golden-green
+     ,aero-flush-orange
+     ,aero-gulf-blue
+     ,aero-magenta
+     ,aero-gulf-blue
+     ,aero-light1])
+  `(pdf-view-midnight-colors '(,aero-light0 . ,aero-bg))))
 
 ;;; mode line
 
