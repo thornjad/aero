@@ -238,7 +238,7 @@
 
   (require 'evil)
   (evil-define-key 'normal helpful-mode-map
-    "q" 'kill-buffer-and-window
+    "q" 'kill-this-buffer
     "?" 'describe-mode))
 
 (use-package howdoi :ensure t
