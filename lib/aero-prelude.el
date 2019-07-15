@@ -378,7 +378,10 @@
  "ck" 'kill-compilation
  "cr" 'recompile
  "cR" 'byte-recompile-file
- "ce" 'eval-region
+ "ce" '(:ignore t :which-key "eval")
+ "cer" 'eval-region
+ "ceb" 'eval-buffer
+ "ced" 'eval-defun
 
  "e" '(:ignore t :which-key "errors")
  "en" 'next-error
