@@ -14,7 +14,8 @@
 ;;
 ;; Code:
 
-(require 'cl-lib)
+(require 'subr-x)
+(require 'use-package)
 
 (use-package autothemer :ensure t)
 
@@ -57,8 +58,7 @@
   (aero-orange          "#EEB958") ; special fade to get that orange
   (aero-green           "#7EB47E")
   (aero-cyan            "#7EA3B4")
-  (aero-magenta         "#B47E9E")
-  )
+  (aero-magenta         "#B47E9E"))
 
 
  ;; faces (simplified)
@@ -261,7 +261,7 @@
   ;; term
   (term-color-black (:foreground aero-dark2 :background aero-dark1))
   (term-color-blue (:foreground aero-blue :background aero-blue))
-  (term-color-cyan (:foreground aero-blue :background aero-blue))
+  (term-color-cyan (:foreground aero-cyan :background aero-cyan))
   (term-color-green (:foreground aero-green :background aero-green))
   (term-color-magenta (:foreground aero-magenta :background aero-magenta))
   (term-color-red (:foreground aero-roman-red :background aero-roman-red))
@@ -678,7 +678,10 @@
 
 (defun aero/modeline-segment-evil-state ()
   "Display current evil state. Requires `evil-mode'."
-  (format " %s" (string-trim (evil-state-property evil-state :tag t))))
+  (when (require 'evil nil 'noerror)
+    (declare-function evil-state-property "evil")
+    (defvar evil-state)
+    (format " %s" (string-trim (evil-state-property evil-state :tag t)))))
 
 ;; Activation function
 
@@ -820,6 +823,7 @@
 (use-package formfeeder
   :load-path "lib/packages/formfeeder/"
   :config
+  (declare-function global-formfeeder-mode "formfeeder")
   (global-formfeeder-mode 1))
 
 (use-package todo-light
