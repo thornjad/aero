@@ -14,34 +14,41 @@
 
 (use-package rust-mode :ensure t
   :mode "\\.rs\\'"
+  :config
+  (require 'company)
+  (defvar company-tooltip-align-annotations)
+  (declare-function company-indent-or-complete-common "company")
+  (setq company-tooltip-align-annotations t)
+  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
 
-	:init
+(use-package racer :ensure t
+  :defines (racer-cmd
+            racer-rust-src-path)
+  :hook (rust-mode . racer-mode)
 
   :config
-  (setq company-tooltip-align-annotations t)
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  ;; TODO make these more better
+  (setq
+   racer-cmd "~/.cargo/bin/racer"
+   racer-rust-src-path
+   "~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src")
+  (add-hook 'racer-mode-hook #'company-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
 
-  (use-package racer :ensure t
-    :defines (racer-cmd
-              racer-rust-src-path)
-    :hook (rust-mode . racer-mode)
-		:init
-		(use-package company-racer :ensure t
-			:after company
-			:config
-			(push 'company-racer company-backends))
+(use-package company-racer :ensure t
+  :after company
+  :config
+  (require 'company)
+  (defvar company-backends)
+  (push 'company-racer company-backends))
 
-    :config
-    ;; TODO make these more better
-    (setq racer-cmd "~/.cargo/bin/racer"
-          racer-rust-src-path "~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src")
-    (add-hook 'racer-mode-hook #'company-mode)
-    (add-hook 'racer-mode-hook #'eldoc-mode))
+(use-package flycheck-rust :ensure t
+  :hook (flycheck-mode . flycheck-rust-setup))
 
-  (use-package cargo :ensure t
-    :hook (rust-mode . cargo-minor-mode))
+(use-package cargo :ensure t
+  :hook (rust-mode . cargo-minor-mode))
 
-  	(use-package toml-mode :ensure t
-    :mode "\\.toml\\'"))
+(use-package toml-mode :ensure t
+  :mode "\\.toml\\'")
 
 (provide 'aero-rust)
