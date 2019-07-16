@@ -13,9 +13,6 @@
 (setq-default
  inferior-lisp-program "sbcl")
 
-(use-package hy-mode :ensure t
-  :mode "\\.hy\\'")
-
 ;; TODO common lisp
 ;; TODO include Lakefile as common lisp
 

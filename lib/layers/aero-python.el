@@ -15,6 +15,21 @@
   :mode
   (("\\.py\\'" . python-mode)
    ("\\.pyx\\'" . python-mode)
-   ("\\.wsgi$" . python-mode)))
+   ("\\.wsgi$" . python-mode))
+  :config
+  (require 'virtualenvwrapper))
+
+(use-package hy-mode :ensure t
+  :mode "\\.hy\\'"
+  :config
+  (require 'virtualenvwrapper))
+
+(use-package virtualenvwarapper
+  :load-path "lib/packages/virtualenvwarapper.el/"
+  :defer t
+  :config
+  (defvar venv-location)
+  (setq venv-location "/path/to/your/virtualenvs/")
+  (venv-initialize-eshell))
 
 (provide 'aero-python)

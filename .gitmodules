@@ -19,3 +19,6 @@
 [submodule "lib/packages/xterm-color"]
 	path = lib/packages/xterm-color
 	url = git@github.com:atomontage/xterm-color.git
+[submodule "lib/packages/virtualenvwrapper.el"]
+	path = lib/packages/virtualenvwrapper.el
+	url = git@github.com:porterjamesj/virtualenvwrapper.el.git
