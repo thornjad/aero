@@ -10,11 +10,27 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(setq-default
- inferior-lisp-program "sbcl")
+(use-package common-lisp-mode
+  :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'"
+  )
 
-;; TODO common lisp
-;; TODO include Lakefile as common lisp
+;; NOTE: This is far easier to grab from MELPA than to submodule, mostly because
+;; it needs to be compile specially.
+(use-package slime :ensure t
+  :commands slime
+  :init
+  (setq-default
+   inferior-lisp-program "sbcl")
+  ;; Load SBCL faster by using preset socket and POSIX shit.
+  ;; NOTE: this requires some set-up beforehand in the SBCL REPL:
+  ;;   * (mapc 'require '(sb-bsd-sockets sb-posix sb-introspect sb-cltl2 asdf))
+  ;;   * (save-lisp-and-die "sbcl.core-for-slime")
+  (defvar slime-lisp-implementations)
+  (setq slime-lisp-implementations
+        '((sbcl ("sbcl" "--core" "sbcl.core-for-slime"))))
+  :config
+  (evil-define-key 'normal 'slime-prefix-map
+    (kbd "M-h") 'slime-documentation-lookup))
 
 (defun indent-defun ()
   "Indent current defun"
