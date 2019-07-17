@@ -43,7 +43,12 @@
     (interactive "r")
     (let ((sql-pop-to-buffer-after-send-region t))
       (sql-send-region start end)
-      (evil-insert-state))))
+      (evil-insert-state)))
+
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "d" 'sql-connect))
 
 (use-package sql-indent :ensure t
 	:defer t
