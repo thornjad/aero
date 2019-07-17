@@ -91,10 +91,10 @@
 	 "fW" 'evil-write-all
 	 "w/" '(evil-window-vsplit :which-key "split vertical")
 	 "w-" '(evil-window-split :which-key "split horizontal")
-	 "wh" 'evil-window-left
-	 "wl" 'evil-window-right
-	 "wk" 'evil-window-up
-	 "wj" 'evil-window-down
+	 ;; "wh" 'evil-window-left
+	 ;; "wl" 'evil-window-right
+	 ;; "wk" 'evil-window-up
+	 ;; "wj" 'evil-window-down
    "cm" 'evil-make)
 
   ;; default states
