@@ -11,8 +11,7 @@
 ;; This file is not part of GNU Emacs
 
 (use-package common-lisp-mode
-  :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'"
-  )
+  :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'")
 
 ;; NOTE: This is far easier to grab from MELPA than to submodule, mostly because
 ;; it needs to be compile specially.
@@ -27,10 +26,7 @@
   ;;   * (save-lisp-and-die "sbcl.core-for-slime")
   (defvar slime-lisp-implementations)
   (setq slime-lisp-implementations
-        '((sbcl ("sbcl" "--core" "sbcl.core-for-slime"))))
-  :config
-  (evil-define-key 'normal 'slime-prefix-map
-    (kbd "M-h") 'slime-documentation-lookup))
+        '((sbcl ("sbcl" "--core" "sbcl.core-for-slime")))))
 
 (defun indent-defun ()
   "Indent current defun"
