@@ -292,7 +292,7 @@
 		"Kill and cleanup all Tramp connections. Useful for stale connections."
 		(interactive)
 		(cl-loop for buffer being the buffers
-					do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
+             do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
 		(tramp-cleanup-all-connections)))
 
 (use-package quick-restart
