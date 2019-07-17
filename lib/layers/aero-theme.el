@@ -787,32 +787,62 @@
                      ("psi" . ?ψ)
                      ("omega" . ?ω)
 
+                     ;; a couple hebrew/aramaic
+                     ("Alef" . ?א)
+                     ("Bet" . ?ב)
+                     ("alef" . ?א)
+                     ("bet" . ?ב)
+
                      ;; mathematics
                      ("and" . ?∧)
                      ("&&" . ?∧)
                      ("or" . ?∨)
                      ("||" . ?∨)
-                     ("nil" . ?∅)
-                     ("null" . ?∅)
+                     ("nor" . ?⊽)
+                     ("xor" . ?⊻)
+                     ("nand" . ?⊼)
+
+                     ;; relational algebra
+                     ("select" . ?σ)
+                     ("select distinct" . ?Π)
+                     ("in" . ?∈)
+                     ("not in" . ?∉)
+                     ;; technically ⋈ is a natural join, while a bare join in
+                     ;; SQL is an equi-join
+                     ("join" . ?⋈)
+                     ("union" . ?∪)
+                     ("intersect" . ?∩)
+                     ("!" . ?¬)
+                     ("!!" . ?⫬)
 
                      ;; arrows and similar
                      ("<=" . ?≤)
                      (">=" . ?≥)
+                     ("=>" . ?⇒)
                      ("<-" . ?←)
                      ("->" . ?→)
                      ("!=" . ?≠)
                      ("===" . ?≡)
                      ("!==" . ?≢)
+                     ("<<" . ?≪)
+                     (">>" . ?≫)
 
                      ;; prog
+                     ("nil" . ?∅)
+                     ("nul" . ?␀)
+                     ("null" . ?∅)
+                     ("blank" . ?␢)
                      ("fn" . ?ƒ)
                      ("defun" . ?ƒ)
                      ("proc" . ?ƒ)
                      ("function" . ?ƒ)
-
-                     ;; other
-                     ("(c)" . ?©)
-                     ("(C)" . ?©))))))
+                     ("Infinity" . ?∞)
+                     ("infinity" . ?∞)
+                     ("sum" . ?∑)
+                     ("ceil" . ?⎡)
+                     ("floor" . ?⎣)
+                     ("return" . ?⟼ )
+                     )))))
   (global-prettify-symbols-mode t))
 
 (byte-code "\300\301!\210\302\301!\210\303\301!\207" [show-paren-mode
