@@ -29,6 +29,7 @@
                            aero-python
                            aero-rust
                            aero-shell
+                           aero-spotify
                            aero-sql
                            aero-tcl
                            aero-theme
