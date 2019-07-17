@@ -39,6 +39,22 @@
 						(rename-buffer (concat "eww - " title) t)
 					(rename-buffer "eww" t))))))
 
+  (defun aero/eww-open-in-new-buffer (url)
+  "Fetch URL in a new EWW buffer."
+  (interactive
+   (let* ((uris (eww-suggested-uris))
+      (prompt (concat "Enter URL or keywords"
+                      (if uris (format " (default %s)" (car uris)) "")
+                      ": ")))
+     (list (read-string prompt nil nil uris))))
+  (setq url (eww--dwim-expand-url url))
+    (with-current-buffer
+        (if (eq major-mode 'eww-mode) (clone-buffer)
+          (generate-new-buffer "*eww*"))
+      (unless (equal url (eww-current-url))
+        (eww-mode)
+        (eww (if (consp url) (car url) url)))))
+
   ;; normal browsing
   (evil-define-key 'normal eww-mode-map
     "?" 'describe-mode
@@ -54,6 +70,7 @@
     "R" 'eww-readable
     "r" 'eww-reload
     "gr" 'eww-reload
+    "T" 'aero/eww-open-in-new-buffer
     "q" 'kill-this-buffer
     "Q" 'quit-window
     "go" 'eww
