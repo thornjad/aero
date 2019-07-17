@@ -22,3 +22,6 @@
 [submodule "lib/packages/virtualenvwrapper.el"]
 	path = lib/packages/virtualenvwrapper.el
 	url = git@github.com:porterjamesj/virtualenvwrapper.el.git
+[submodule "lib/packages/auto-package-update.el"]
+	path = lib/packages/auto-package-update.el
+	url = git@github.com:rranelli/auto-package-update.el.git

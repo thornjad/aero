@@ -16,7 +16,8 @@
 
 ;; garder ma merde à jour
 
-(use-package auto-package-update :ensure t
+(use-package auto-package-update
+  :load-path "lib/packages/auto-package-update.el/"
 	:defines auto-package-update-maybe
   :config
   (setq auto-package-update-delete-old-versions t
