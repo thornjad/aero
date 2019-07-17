@@ -323,7 +323,7 @@
 (global-set-key (kbd "C-w") 'aero/smarter-backward-kill-word)
 
 (general-define-key
- :states '(normal visual insert replace motion)
+ :states '(normal insert motion)
  :keymaps 'override
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
