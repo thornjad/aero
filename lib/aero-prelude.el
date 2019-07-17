@@ -13,6 +13,8 @@
 ;; This file is not part of GNU Emacs
 
 (require 'cl-lib)
+(require 'aero-lib)
+
 
 ;; garder ma merde à jour
 
@@ -318,7 +320,7 @@
 
 ;;; general bindings
 
-(global-set-key (kbd "C-w") 'backward-kill-word)
+(global-set-key (kbd "C-w") 'aero/smarter-backward-kill-word)
 
 (general-define-key
  :states '(normal visual insert replace motion)
