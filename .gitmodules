@@ -25,3 +25,6 @@
 [submodule "lib/packages/auto-package-update.el"]
 	path = lib/packages/auto-package-update.el
 	url = git@github.com:rranelli/auto-package-update.el.git
+[submodule "lib/packages/js2-mode"]
+	path = lib/packages/js2-mode
+	url = git@github.com:mooz/js2-mode.git

@@ -40,6 +40,9 @@
 
 ;; js and jsx
 
+(use-package js2-mode
+  :load-path "lib/packages/js2-mode/"
+  :defer t)
 (use-package rjsx-mode
   :load-path "lib/packages/rjsx-mode/"
   :mode "\\.jsx?\\'"
