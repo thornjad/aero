@@ -157,7 +157,7 @@
              counsel-recentf)
   :config
   (setq recentf-save-file (expand-file-name "~/.recentf")
-        recentf-max-saved-items 50
+        recentf-max-saved-items 500
         ;; never cleanup, this will get rid of tramp files
         recentf-auto-cleanup 'never)
   (recentf-mode 1))

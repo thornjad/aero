@@ -54,7 +54,6 @@
 
  ;; files
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
- recentf-max-saved-items 5000           ; save up to 5000 recent files
  require-final-newline t
  load-prefer-newer t
  scroll-margin 3
