@@ -24,7 +24,13 @@
         auto-package-update-hide-results t
         auto-package-update-interval 7 ; days
         auto-package-update-prompt-before-update t)
-  (auto-package-update-maybe))
+  (add-hook 'auto-package-update-after-hook
+            (message "Run make and restart"))
+  (auto-package-update-maybe)
+
+  (defun aero/update-packages ()
+    (interactive)
+    (auto-package-update-now)))
 
 
 ;; the general is here

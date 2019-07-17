@@ -41,10 +41,6 @@
   (use-package gnu-elpa-keyring-update :ensure t
     :pin gnu))
 
-(defun aero/update-packages ()
-	(interactive)
-	(package-refresh-contents))
-
 
 
 (defgroup aero nil
