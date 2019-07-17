@@ -315,7 +315,7 @@
   (general-define-key
    :states 'normal
    :prefix "SPC"
-    "ap" 'pomp))
+   "ap" 'pomp))
 
 
 ;;; general bindings
