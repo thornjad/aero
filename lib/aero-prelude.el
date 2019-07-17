@@ -150,7 +150,7 @@
 	 "SPC" 'counsel-M-x
 	 "ff" 'counsel-find-file
 	 "fl" 'counsel-locate
-	 "fr" 'counsel-recentf
+	 ;; "fr" 'counsel-recentf
 	 "g/" '(counsel-git-grep :which-key "git grep")
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
