@@ -337,6 +337,7 @@
  ":" 'eval-expression
  ";" 'comment-or-uncomment-region
  "!" 'shell-command
+ "=" 'quick-calc
 
  "U" 'universal-argument
 
