@@ -50,7 +50,9 @@ INSTALLATION
   Framagit (better) https://framagit.org/thornjad/aero
   GitHub (ok)       https://github.com/thornjad/aero
 
-  Then, initialize required submodules with =make=.
+  Then, initialize required submodules with
+
+    make update-packages
 
 CRÉDITS
 
