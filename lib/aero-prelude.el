@@ -155,7 +155,8 @@
 	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 "hda" '(counsel-apropos :which-key "apropos")))
+	 "hda" '(counsel-apropos :which-key "apropos")
+   "u" 'counsel-unicode-char))
 
 (use-package recentf
   :defines (recentf-mode)
