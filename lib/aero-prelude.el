@@ -422,6 +422,11 @@
  "wF" 'make-frame
  "wx" 'kill-buffer-and-window
  "w{" 'shrink-window
- "w}" 'enlarge-window)
+ "w}" 'enlarge-window
+
+ "t" '(:ignore t :which-key "text")
+ "tU" 'upcase-dwim
+ "tD" 'downcase-dwim
+ )
 
 (provide 'aero-prelude)
