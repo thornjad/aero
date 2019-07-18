@@ -66,18 +66,4 @@
   (setq ediff-split-window-function #'split-window-horizontally
         ediff-window-setup-function #'ediff-setup-windows-plain))
 
-
-;;; project management
-
-(use-package cruiser-find-file
-  :disabled t
-  :load-path aero-packages-dir
-  :config
-  (general-define-key
-   :states '(normal motion)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "p" '(:ignore t :which-key "project")
-   "pf" '(cruiser-find-file :which-key "find file")))
-
 (provide 'aero-git)
