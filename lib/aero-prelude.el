@@ -175,7 +175,9 @@
 	(ivy-mode 1)
 	(setq ivy-initial-inputs-alist nil ; screw the regex
 				ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
-				ivy-height 10
+        ivy-virtual-abbreviate 'abbreviate
+        ivy-wrap t
+				ivy-height 8
 				ivy-count-format "" ; don't count candidates
 				;; configure regexp engine to allow out-of-order input
 				ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
