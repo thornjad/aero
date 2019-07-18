@@ -333,6 +333,8 @@
 
  ;; independent keys
  "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
+ (kbd "ESC") 'keyboard-quit
+ (kbd "C-g") 'keyboard-quit
  "q" 'quoted-insert
  "'" 'eshell
  "\"" '(aero/eshell-new :which-key "eshell-new")
