@@ -57,6 +57,23 @@
   (magit-auto-revert-mode nil)
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
+
+  (defun aero/fetch-pr ()
+    "Fetch a GH(E) pull request into a new branch prefixed with `pr'."
+    (interactive)
+    (let* ((pr (message-read-from-minibuffer "Enter PR number: "))
+           (new-branch (format "pr%s" pr))
+           (fetch-command
+            (format "git fetch origin pull/%s/head:%s" pr new-branch)))
+      (shell-command fetch-command)
+      (magit-status)
+      (message "Checked out PR as %s" new-branch)))
+
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+    "gp" 'aero/fetch-pr)
+
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t))
 
@@ -65,5 +82,6 @@
   :config
   (setq ediff-split-window-function #'split-window-horizontally
         ediff-window-setup-function #'ediff-setup-windows-plain))
+
 
 (provide 'aero-git)
