@@ -48,6 +48,7 @@
    "gmr" 'smerge-refine)
 
 	:config
+  (add-hook 'with-editor-mode-hook 'evil-insert-state)
   (setq magit-completing-read-function 'ivy-completing-read
         magit-buffer-name-format "%x%M%v: %t%x"
         magit-diff-paint-whitespace-lines 'both
