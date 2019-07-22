@@ -31,10 +31,10 @@
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  (eval-when-compile
-    (require 'use-package)
-    (setq use-package-expand-minimally byte-compile-current-file
-          use-package-verbose init-file-debug))
+
+  (require 'use-package)
+  (setq use-package-expand-minimally byte-compile-current-file
+        use-package-verbose init-file-debug)
 
   (use-package use-package-ensure-system-package :ensure t)
 
