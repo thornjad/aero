@@ -17,6 +17,7 @@
 ;; Code:
 
 (require 'aero-files)
+(require 'aero-util)
 (require 'cl-lib)
 
 ;; program-wide
