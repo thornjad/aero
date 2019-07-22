@@ -251,15 +251,6 @@
     "q" 'kill-this-buffer
     "?" 'describe-mode))
 
-(use-package howdoi :ensure t
-  :config
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "hs" '(howdoi-query :which-key "howdoi")
-   "hl" '(howdoi-query-line-at-point :which-key "howdoi line")
-   ))
-
 (use-package pbcopier
   :load-path "lib/packages/pbcopier/"
   :config
