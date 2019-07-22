@@ -156,7 +156,7 @@
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
 	 "hda" '(counsel-apropos :which-key "apropos")
-   "u" 'counsel-unicode-char))
+   "qu" 'counsel-unicode-char))
 
 (use-package recentf
   :defines (recentf-mode)
@@ -335,7 +335,6 @@
  "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
  (kbd "ESC") 'keyboard-quit
  (kbd "C-g") 'keyboard-quit
- "q" 'quoted-insert
  "'" 'eshell
  "\"" '(aero/eshell-new :which-key "eshell-new")
  ":" 'eval-expression
@@ -344,6 +343,10 @@
  "=" 'quick-calc
 
  "U" 'universal-argument
+
+ "q" '(:ignore t :which-key "quoted insert")
+ "qq" 'quoted-insert
+ "ql" 'insert-lambda
 
  "f" '(:ignore t :which-key "files")
  "fw" '(save-buffer :which-key "write buffer")
