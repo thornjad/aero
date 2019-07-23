@@ -35,7 +35,7 @@
 
   "Thou shalt not cross 80 columns in thy file" — God, probably
 
-EXIGENCES
+REQUIREMENTS
 
   Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
   optimized to use the font Dank Mono, but also works great with Source Code
@@ -54,7 +54,7 @@ INSTALLATION
 
     make update-packages
 
-CRÉDITS
+CREDITS
 
   Like the Borg, Aero amalgamates macros, functions, bindings and packages
   modified from or inspired by a plethora of developers. Special thanks to these
