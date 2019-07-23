@@ -19,7 +19,9 @@
   (defvar company-tooltip-align-annotations)
   (declare-function company-indent-or-complete-common "company")
   (setq company-tooltip-align-annotations t)
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
+  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode t))))
 
 (use-package racer :ensure t
   :defines (racer-cmd
