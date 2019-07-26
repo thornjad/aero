@@ -14,7 +14,7 @@
 ;;; core functionality and utils
 
 (defun aero/bootstrap ()
-  "Bootstrap `use-package', `quelpa' and major fixes, and set up for use"
+  "Bootstrap `use-package' and major components, and set up for use"
 
   (setq package-enable-at-startup nil)
   (let ((default-directory "~/.emacs.d/elpa"))
@@ -27,6 +27,15 @@
                            ("melpa" . "https://melpa.org/packages/")
                            ("melpa-stable" . "https://stable.melpa.org/packages/")
                            ("org" . "https://orgmode.org/elpa/")))
+
+  (when (version< emacs-version "26.3")
+    ;; Emacs before 26.3 has a bug in its TLS implementation which breaks
+    ;; synchonous TLS 1.3-only connections, such as GNU ELPA (as of July 2019,
+    ;; at least). By setting this variable, we disable TLS 1.3 entirely. The
+    ;; better option is to use Emacs 27+ and/or Remacs. See
+    ;; https://debbugs.gnu.org/34341
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+
   (package-initialize t)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
