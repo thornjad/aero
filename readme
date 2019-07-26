@@ -37,20 +37,20 @@
 
 REQUIREMENTS
 
-  Aero requires Emacs 25.1 or higher. Remacs is buggy, but is supported. Aero is
-  optimized to use the font Dank Mono, but also works great with Source Code
-  Pro.
+	Aero works best with Remacs, or at least Emacs 27. It should run on Emacs as
+	far back as 25.1, but this is not tested. Aero is optimized for the font Dank
+	Mono, but Source Code Pro is pretty good too.
 
 INSTALLATION
 
   Clone or download this repository into your ~/.emacs.d. There are three
   mirrors to choose from:
 
-  GitLab (best)     https://gitlab.com/thornjad/aero
-  Framagit (better) https://framagit.org/thornjad/aero
-  GitHub (ok)       https://github.com/thornjad/aero
+  GitLab (best)     https://gitlab.com/thornjad/aero.git
+  Framagit (better) https://framagit.org/thornjad/aero.git
+  GitHub (ok)       https://github.com/thornjad/aero.git
 
-  Then, initialize required submodules with
+  Then, install and compile required submodules with
 
     make update-packages
 
