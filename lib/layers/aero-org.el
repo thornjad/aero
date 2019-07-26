@@ -27,6 +27,9 @@
 	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
 	(setq org-image-actual-width '(400))
 
+  ;; org tries to take this binding back, so wrest control back once more
+  (define-key org-mode-map (kbd "M-h") #'windmove-left)
+
   (use-package toc-org :ensure t))
 
 (provide 'aero-org)
