@@ -1,39 +1,39 @@
-   _______                     _______
-  (_______)                   (_______) Voici la vraie liberté
-   _______ _____  ____ ___     _____   ____  _____  ____  ___
-  |  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
-  | |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
-  |_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
-     .-      .    .-.  ---        .     --    .-    -.-. ...
+	 _______										 _______
+	(_______)										(_______) Voici la vraie liberté
+	 _______ _____	____ ___		 _____	 ____	 _____	____	___
+	|	 ___	| ___ |/ ___) _ \		|	 ___) |		 \(____ |/ ___)/___)
+	| |		| | ____| |	 | |_| |	| |_____| | | / ___ ( (___|___ |
+	|_|		|_|_____)_|		\___/		|_______)_|_|_\_____|\____|___/
+		 .-			 .		.-.	 ---				.			--		.-		-.-. ...
 
-  Aero is my own Emacs configuration, blending all the best shit I can find. It
-  is built in the style of a distribution like Prelude or Spacemacs, but it's
-  not intended for widespread use; Aero is highly tailored to me, what I want
-  and what I use.
+	Aero is my own Emacs configuration, blending all the best shit I can find. It
+	is built in the style of a distribution like Prelude or Spacemacs, but it's
+	not intended for widespread use; Aero is highly tailored to me, what I want
+	and what I use.
 
-  Emacs changes the way you think about programming, as does Lisp itself. The
-  sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
-  by decades of rich experience and a fantastic culture.
+	Emacs changes the way you think about programming, as does Lisp itself. The
+	sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
+	by decades of rich experience and a fantastic culture.
 
-  Special focus is put on writing Lisps, Python, TCL, Node and the several web
-  languages. Other languages like C and OCaml have some light configuration as
-  well.
+	Special focus is put on writing Lisps, Python, TCL, Node and the several web
+	languages. Other languages like C and OCaml have some light configuration as
+	well.
 
-  "Emacs outshines all other editing software in the same way that the noonday
-  sun does the stars. It is not just bigger and brighter; it simply makes
-  everything else vanish." — Neal Stephenson
+	"Emacs outshines all other editing software in the same way that the noonday
+	sun does the stars. It is not just bigger and brighter; it simply makes
+	everything else vanish." — Neal Stephenson
 
-  "While any text editor can save your files, only Emacs can save your soul." —
-  Per Abrahamsen
+	"While any text editor can save your files, only Emacs can save your soul." —
+	Per Abrahamsen
 
-  "The reasonable man adapts himself to Emacs; the unreasonable one persists in
-  trying to adapt Emacs to himself. Therefore all progress depends on the
-  unreasonable man." — G.B. Shaw
+	"The reasonable man adapts himself to Emacs; the unreasonable one persists in
+	trying to adapt Emacs to himself. Therefore all progress depends on the
+	unreasonable man." — G.B. Shaw
 
-  "Emacs is the ground. We run around and act silly on top of it, and when we
-  die, may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
+	"Emacs is the ground. We run around and act silly on top of it, and when we
+	die, may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
 
-  "Thou shalt not cross 80 columns in thy file" — God, probably
+	"Thou shalt not cross 80 columns in thy file" — God, probably
 
 REQUIREMENTS
 
@@ -43,41 +43,41 @@ REQUIREMENTS
 
 INSTALLATION
 
-  Clone or download this repository into your ~/.emacs.d. There are three
-  mirrors to choose from:
+	Clone or download this repository into your ~/.emacs.d. There are three
+	mirrors to choose from:
 
-  GitLab (best)     https://gitlab.com/thornjad/aero.git
-  Framagit (better) https://framagit.org/thornjad/aero.git
-  GitHub (ok)       https://github.com/thornjad/aero.git
+	GitLab (best)			https://gitlab.com/thornjad/aero.git
+	Framagit (better) https://framagit.org/thornjad/aero.git
+	GitHub (ok)				https://github.com/thornjad/aero.git
 
-  Then, install and compile required submodules with
+	Then, install and compile required submodules with
 
-    make update-packages
+		make update-packages
 
 CREDITS
 
-  Like the Borg, Aero amalgamates macros, functions, bindings and packages
-  modified from or inspired by a plethora of developers. Special thanks to these
-  fantastic people:
+	Like the Borg, Aero amalgamates macros, functions, bindings and packages
+	modified from or inspired by a plethora of developers. Special thanks to these
+	fantastic people:
 
-  - Samuel Barreto
-  - John Wiegley
-  - Steve Purcell
-  - Xah Lee
-  - Wilfred Hughes
-  - Lee Hinman
-  - Michael Markert
-  - James Sulak
+	- Samuel Barreto
+	- John Wiegley
+	- Steve Purcell
+	- Xah Lee
+	- Wilfred Hughes
+	- Lee Hinman
+	- Michael Markert
+	- James Sulak
 
 COPYING
 
-  Copyright © 2017-2019 Jade Michael Thornton
+	Copyright © 2017-2019 Jade Michael Thornton
 
-  This program is free software; you may redistribute it and/or modify it under
-  the terms of the GNU General Public License version 3, as published by the
-  Free Software Foundation. This program carries no warranty whatsoever, without
-  even the implied warranty of merchantability or fitness for a particular
-  purpose. See </license> for more details.
+	This program is free software; you may redistribute it and/or modify it under
+	the terms of the GNU General Public License version 3, as published by the
+	Free Software Foundation. This program carries no warranty whatsoever, without
+	even the implied warranty of merchantability or fitness for a particular
+	purpose. See </license> for more details.
 
-  The Aero Emacs logo (both short and long versions) are released into the
-  public domain under the terms of the CC0 license, no rights reserved.
+	The Aero Emacs logo (both short and long versions) are released into the
+	public domain under the terms of the CC0 license, no rights reserved.
