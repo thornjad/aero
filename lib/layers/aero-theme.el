@@ -804,8 +804,8 @@
                      ("nand" . ?⊼)
 
                      ;; relational algebra
-                     ("select" . ?σ)
-                     ("select distinct" . ?Π)
+                     ;; ("select" . ?σ)
+                     ;; ("select distinct" . ?Π)
                      ("in" . ?∈)
                      ("not in" . ?∉)
                      ;; technically ⋈ is a natural join, while a bare join in
@@ -830,7 +830,6 @@
 
                      ;; prog
                      ("nil" . ?∅)
-                     ("nul" . ?␀)
                      ("null" . ?∅)
                      ("blank" . ?␢)
                      ("fn" . ?ƒ)
