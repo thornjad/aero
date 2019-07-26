@@ -1,10 +1,10 @@
-	 _______										 _______
-	(_______)										(_______) Voici la vraie liberté
-	 _______ _____	____ ___		 _____	 ____	 _____	____	___
-	|	 ___	| ___ |/ ___) _ \		|	 ___) |		 \(____ |/ ___)/___)
-	| |		| | ____| |	 | |_| |	| |_____| | | / ___ ( (___|___ |
-	|_|		|_|_____)_|		\___/		|_______)_|_|_\_____|\____|___/
-		 .-			 .		.-.	 ---				.			--		.-		-.-. ...
+   _______                     _______
+  (_______)                   (_______) Voici la vraie liberté
+   _______ _____  ____ ___     _____   ____  _____  ____  ___
+  |  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
+  | |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
+  |_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
+     .-      .    .-.  ---        .     --    .-    -.-. ...
 
 	Aero is my own Emacs configuration, blending all the best shit I can find. It
 	is built in the style of a distribution like Prelude or Spacemacs, but it's
@@ -46,9 +46,9 @@ INSTALLATION
 	Clone or download this repository into your ~/.emacs.d. There are three
 	mirrors to choose from:
 
-	GitLab (best)			https://gitlab.com/thornjad/aero.git
+	GitLab (best)     https://gitlab.com/thornjad/aero.git
 	Framagit (better) https://framagit.org/thornjad/aero.git
-	GitHub (ok)				https://github.com/thornjad/aero.git
+	GitHub (ok)	      https://github.com/thornjad/aero.git
 
 	Then, install and compile required submodules with
 
