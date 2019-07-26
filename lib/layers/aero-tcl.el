@@ -11,6 +11,10 @@
 ;; This file is not part of GNU Emacs
 
 (use-package tcl-mode
-	:mode "\\.tcl\\'\\.test\\'")
+	:mode "\\.tcl\\'\\.test\\'"
+
+  :init
+	;; make inferior-tcl use tclsh (default is wish)
+	(setq tcl-application "tclsh"))
 
 (provide 'aero-tcl)
