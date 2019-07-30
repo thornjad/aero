@@ -142,6 +142,14 @@
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
                 "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
                 "\\|\\.aux\\'"))
+
+  (defun aero/counsel-unicode-char-after ()
+    "Like `counsel-unicode-char', but insert after point"
+    (interactive)
+    (save-excursion
+      (right-char)
+      (counsel-unicode-char)))
+
 	(general-define-key
 	 :states '(normal visual insert replace)
 	 :prefix "SPC"
@@ -156,7 +164,8 @@
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
 	 "hda" '(counsel-apropos :which-key "apropos")
-   "qu" 'counsel-unicode-char))
+   "qu" '(aero/counsel-unicode-char-after :which-key "unicode char")
+   "qU" 'counsel-unicode-char))
 
 (use-package recentf
   :defines (recentf-mode)
