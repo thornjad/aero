@@ -84,11 +84,11 @@
   (font-lock-builtin-face (:foreground aero-faded-blue))
   (font-lock-constant-face (:foreground aero-faded-magenta))
   (font-lock-comment-face (:foreground aero-grey2 :slant 'italic))
-  (font-lock-function-name-face (:foreground aero-faded-green))
+  (font-lock-function-name-face (:foreground aero-faded-cyan))
   (font-lock-keyword-face (:foreground aero-faded-red))
   (font-lock-string-face (:foreground aero-faded-yellow))
-  (font-lock-variable-name-face (:foreground aero-faded-blue))
-  (font-lock-type-face (:foreground aero-faded-green))
+  (font-lock-variable-name-face (:foreground aero-faded-green))
+  (font-lock-type-face (:foreground aero-faded-magenta))
   (font-lock-warning-face (:foreground aero-bright-red :bold t))
 
   ;; special
