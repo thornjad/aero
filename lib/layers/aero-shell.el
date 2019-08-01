@@ -41,6 +41,10 @@
   (setenv "PAGER" "cat")
   (setenv "TERM" "xterm-256color")
 
+  (add-hook
+   'eshell-mode-hook
+   (lambda () (setq-local evil-move-cursor-back nil)))
+
   (defun eshell/cds ()
     "Change directory to git project root."
     (eshell/cd (locate-dominating-file default-directory ".git")))
