@@ -130,4 +130,9 @@
         ;; Always return the anticipated result of compilation-exit-message-function
         (cons msg code)))
 
+;; open some buffers in the same window
+(add-to-list 'display-buffer-alist
+             '("*Help*" display-buffer-same-window)
+             '("*helpful*" display-buffer-same-window))
+
 (provide 'aero-rc)
