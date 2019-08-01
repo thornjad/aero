@@ -367,9 +367,6 @@
  "fod" '(aero/open-tweaks :which-key "tweaks")
  "fot" '(aero/thornlog :which-key "thornlog")
  "foD" '(aero/reload-tweaks :which-key "reload tweaks")
- "ft" 'untabify-buffer
- "fT" 'tabify-buffer
- "fi" 'indent-buffer
 
  "h" '(:ignore t :which-key "help/manual")
  "hm" 'woman
@@ -386,6 +383,9 @@
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
+ "bt" 'untabify-buffer
+ "bT" 'tabify-buffer
+ "bi" 'indent-buffer
 
  "e" '(:ignore t :which-key "emacs")
  "eq" 'aero/save-kill-emacs
