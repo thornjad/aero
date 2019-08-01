@@ -326,7 +326,10 @@
 
 ;;; general bindings
 
-(global-set-key (kbd "C-w") 'aero/smarter-backward-kill-word)
+(general-def
+  ;; Emacs chose ^? for the help system for some despicable reason. Fuck that.
+  (kbd "C-h") 'delete-backward-char
+  (kbd "C-w") 'aero/smarter-backward-kill-word)
 
 (general-define-key
  :states '(normal insert motion)
