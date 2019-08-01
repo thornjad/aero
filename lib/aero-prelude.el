@@ -229,7 +229,11 @@
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "wu" 'winner-undo
-   "wU" 'winner-redo))
+   "wU" 'winner-redo
+   "wh" 'windmove-left
+   "wj" 'windmove-down
+   "wk" 'windmove-up
+   "wl" 'windmove-right))
 
 ;; windmove
 (global-set-key (kbd "M-h") #'windmove-left)
