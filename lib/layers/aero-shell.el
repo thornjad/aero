@@ -16,6 +16,15 @@
 (use-package eshell
   :commands eshell
   :config
+  (require 'evil)
+  (defvar evil-move-cursor-back)
+  (defvar eshell-save-history-on-exit)
+  (defvar eshell-history-size)
+  (defvar eshell-ls-initial-args)
+  (defvar eshell-cmpl-dir-ignore)
+  (defvar eshell-visual-commands)
+  (defvar eshell-visual-subcommands)
+
   (setq
    eshell-save-history-on-exit t
    eshell-buffer-maximum-lines 12000
