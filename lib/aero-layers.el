@@ -24,6 +24,7 @@
                            aero-markup
                            aero-ml
                            aero-org
+                           aero-orson
                            aero-prog
                            aero-project
                            aero-python
