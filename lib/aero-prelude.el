@@ -426,6 +426,12 @@
  "m" '(:ignore t :which-key "mode")
  "p" '(:ignore t :which-key "project")
 
+ "S" '(:ignore t :which-key "shell")
+ "Se" 'eshell
+ "SE" '(:ignore t :which-key "eshell")
+ "St" 'term
+ "ST" '(:ignore t :which-key "term")
+
  "w" '(:ignore t :which-key "window/web")
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
