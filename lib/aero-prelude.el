@@ -90,6 +90,7 @@
 ;; we descend to hell
 
 (use-package evil :ensure t
+  :load-path "lib/packages/evil/"
 	:after general
   :init
   (setq evil-want-keybinding nil

@@ -49,3 +49,6 @@
 [submodule "lib/packages/general.el"]
 	path = lib/packages/general.el
 	url = git@github.com:noctuid/general.el.git
+[submodule "lib/packages/evil"]
+	path = lib/packages/evil
+	url = git@github.com:emacs-evil/evil.git
