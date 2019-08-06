@@ -46,3 +46,6 @@
 [submodule "lib/packages/emacs-which-key"]
 	path = lib/packages/emacs-which-key
 	url = git@github.com:justbur/emacs-which-key.git
+[submodule "lib/packages/general.el"]
+	path = lib/packages/general.el
+	url = git@github.com:noctuid/general.el.git

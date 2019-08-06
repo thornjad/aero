@@ -45,11 +45,13 @@
 
 ;; TODO use :general keyword with use-package
 (use-package which-key :ensure t
-  :load-path "lib/packages/emacs-which-key"
+  :load-path "lib/packages/emacs-which-key/"
 	:defines which-key-mode
 	:config
 	(which-key-mode))
+
 (use-package general :ensure t
+  :load-path "lib/packages/general.el/"
 	:defines (general-define-key)
   :functions (general-imap
 							general-emap
