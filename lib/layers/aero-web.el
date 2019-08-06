@@ -26,17 +26,22 @@
   "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\)\\'")
 
 (use-package emmet-mode :ensure t
-  :defer t
   :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
 	:init
 	(setq emmet-self-closing-tag-style " /")
 
-  :config
-  (evil-define-key 'insert emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
-  (evil-define-key 'insert emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
-  (evil-define-key 'hybrid emmet-mode-keymap (kbd "TAB") 'emmet-expand-line)
-  (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-line)
+  :general
+  ('insert
+   emmet-mode-keymap
+   (kbd "TAB") 'emmet-expand-line
+   (kbd "<tab") 'emmet-expand-line)
 
+  ('hybrid
+   emmet-mode-keymap
+   (kbd "TAB") 'emmet-expand-line
+   (kbd "<tab") 'emmet-expand-line)
+
+  :config
   (add-hook
    'rjsx-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
