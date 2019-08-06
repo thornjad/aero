@@ -31,3 +31,9 @@
 [submodule "lib/packages/counsel-spotify"]
 	path = lib/packages/counsel-spotify
 	url = git@github.com:Lautaro-Garcia/counsel-spotify.git
+[submodule "lib/packages/web-mode"]
+	path = lib/packages/web-mode
+	url = https://github.com/fxbois/web-mode.git
+[submodule "web-mode"]
+	path = web-mode
+	url = git@github.com:fxbois/web-mode.git
