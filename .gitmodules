@@ -37,3 +37,6 @@
 [submodule "web-mode"]
 	path = web-mode
 	url = git@github.com:fxbois/web-mode.git
+[submodule "lib/packages/emmet-mode"]
+	path = lib/packages/emmet-mode
+	url = git@github.com:smihica/emmet-mode.git

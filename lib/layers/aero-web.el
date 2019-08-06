@@ -26,6 +26,7 @@
   "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\)\\'")
 
 (use-package emmet-mode :ensure t
+  :load-path "lib/packages/emmet-mode/"
   :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
 	:init
 	(setq emmet-self-closing-tag-style " /")
