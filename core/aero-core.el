@@ -37,11 +37,12 @@
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
   (package-initialize t)
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
 
+  (add-to-list
+   'load-path
+   (format "%s/%s" user-emacs-directory "lib/packages/use-package/"))
   (require 'use-package)
+
   (setq use-package-expand-minimally byte-compile-current-file
         use-package-verbose init-file-debug)
 
