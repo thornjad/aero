@@ -27,7 +27,7 @@
 ;; garder ma merde à jour
 
 (use-package auto-package-update
-  :load-path "lib/packages/auto-package-update.el/"
+  ;; local
 	:defines auto-package-update-maybe
   :config
   (setq auto-package-update-delete-old-versions t
@@ -45,13 +45,13 @@
 
 ;; TODO use :general keyword with use-package
 (use-package which-key
-  :load-path "lib/packages/emacs-which-key/"
+  ;; local
 	:defines which-key-mode
 	:config
 	(which-key-mode))
 
 (use-package general
-  :load-path "lib/packages/general.el/"
+  ;; local
 	:defines (general-define-key)
   :functions (general-imap
 							general-emap
@@ -90,7 +90,7 @@
 ;; we descend to hell
 
 (use-package evil
-  :load-path "lib/packages/evil/"
+  ;; local
 	:after general
   :init
   (setq evil-want-keybinding nil
@@ -145,7 +145,7 @@
 ;; abo-abo!
 
 (use-package counsel
-  :load-path "lib/packages/swiper/"
+  ;; local
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -188,7 +188,7 @@
   (recentf-mode 1))
 
 (use-package ivy
-  :load-path "lib/packages/swiper/"
+  ;; local
   :functions ivy-mode
 	:config
 	(ivy-mode 1)
@@ -207,7 +207,7 @@
 	 "bb" 'ivy-switch-buffer))
 
 (use-package swiper
-  :load-path "lib/packages/swiper/"
+  ;; local
   :commands swiper
 	:init
 	(general-define-key
@@ -253,7 +253,7 @@
 (global-set-key (kbd "M-l") #'windmove-right)
 
 (use-package helpful
-  :load-path "lib/packages/helpful/"
+  ;; local
   :after evil
   :config
   (general-define-key
@@ -277,7 +277,7 @@
     "?" 'describe-mode))
 
 (use-package pbcopier
-  :load-path "lib/packages/pbcopier/"
+  ;; local
   :config
   (turn-on-pbcopier))
 
@@ -314,10 +314,11 @@
 		(tramp-cleanup-all-connections)))
 
 (use-package quick-restart
-  :load-path "lib/packages/quick-restart/")
+  ;; local
+  )
 
 (use-package ranger
-  :load-path "lib/packages/ranger.el/"
+  ;; local
   :config
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
@@ -327,7 +328,7 @@
    "fd" 'deer))
 
 (use-package pomp
-  :load-path "lib/packages/pomp/"
+  ;; local
   :commands pomp
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)
