@@ -121,5 +121,7 @@ does not specify a special indentation."
                   (funcall method indent-point state)))))))))
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
+(add-hook 'common-lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
+(add-hook 'lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
 (provide 'aero-lisp)
