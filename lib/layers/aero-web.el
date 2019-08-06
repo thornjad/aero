@@ -48,6 +48,7 @@
    (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package scss-mode :ensure t
+  :load-path "lib/packages/emmet-mode"
   :mode "\\.s?css\\'"
   :ensure-system-package
   (sass-lint . "npm i -g sass-lint"))
