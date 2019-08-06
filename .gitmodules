@@ -19,9 +19,6 @@
 [submodule "lib/packages/xterm-color"]
 	path = lib/packages/xterm-color
 	url = git@github.com:atomontage/xterm-color.git
-[submodule "lib/packages/virtualenvwrapper.el"]
-	path = lib/packages/virtualenvwrapper.el
-	url = git@github.com:porterjamesj/virtualenvwrapper.el.git
 [submodule "lib/packages/auto-package-update.el"]
 	path = lib/packages/auto-package-update.el
 	url = git@github.com:rranelli/auto-package-update.el.git
@@ -33,9 +30,6 @@
 	url = git@github.com:Lautaro-Garcia/counsel-spotify.git
 [submodule "lib/packages/web-mode"]
 	path = lib/packages/web-mode
-	url = https://github.com/fxbois/web-mode.git
-[submodule "web-mode"]
-	path = web-mode
 	url = git@github.com:fxbois/web-mode.git
 [submodule "lib/packages/emmet-mode"]
 	path = lib/packages/emmet-mode
@@ -61,3 +55,6 @@
 [submodule "lib/packages/ranger.el"]
 	path = lib/packages/ranger.el
 	url = git@github.com:ralesi/ranger.el.git
+[submodule "lib/packages/use-package"]
+	path = lib/packages/use-package
+	url = git@github.com:jwiegley/use-package.git
