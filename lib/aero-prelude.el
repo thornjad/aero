@@ -145,6 +145,7 @@
 ;; abo-abo!
 
 (use-package counsel :ensure t
+  :load-path "lib/packages/swiper/"
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -187,6 +188,7 @@
   (recentf-mode 1))
 
 (use-package ivy :ensure t
+  :load-path "lib/packages/swiper/"
   :functions ivy-mode
 	:config
 	(ivy-mode 1)
@@ -205,6 +207,7 @@
 	 "bb" 'ivy-switch-buffer))
 
 (use-package swiper :ensure t
+  :load-path "lib/packages/swiper/"
   :commands swiper
 	:init
 	(general-define-key

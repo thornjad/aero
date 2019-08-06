@@ -52,3 +52,6 @@
 [submodule "lib/packages/evil"]
 	path = lib/packages/evil
 	url = git@github.com:emacs-evil/evil.git
+[submodule "lib/packages/swiper"]
+	path = lib/packages/swiper
+	url = git@github.com:abo-abo/swiper.git
