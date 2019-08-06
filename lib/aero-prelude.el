@@ -44,13 +44,13 @@
 ;; the general is here
 
 ;; TODO use :general keyword with use-package
-(use-package which-key :ensure t
+(use-package which-key
   :load-path "lib/packages/emacs-which-key/"
 	:defines which-key-mode
 	:config
 	(which-key-mode))
 
-(use-package general :ensure t
+(use-package general
   :load-path "lib/packages/general.el/"
 	:defines (general-define-key)
   :functions (general-imap
@@ -89,7 +89,7 @@
 
 ;; we descend to hell
 
-(use-package evil :ensure t
+(use-package evil
   :load-path "lib/packages/evil/"
 	:after general
   :init
@@ -144,7 +144,7 @@
 
 ;; abo-abo!
 
-(use-package counsel :ensure t
+(use-package counsel
   :load-path "lib/packages/swiper/"
   :config
   (setq counsel-find-file-ignore-regexp
@@ -187,7 +187,7 @@
         recentf-auto-cleanup 'never)
   (recentf-mode 1))
 
-(use-package ivy :ensure t
+(use-package ivy
   :load-path "lib/packages/swiper/"
   :functions ivy-mode
 	:config
@@ -206,7 +206,7 @@
 
 	 "bb" 'ivy-switch-buffer))
 
-(use-package swiper :ensure t
+(use-package swiper
   :load-path "lib/packages/swiper/"
   :commands swiper
 	:init
@@ -252,7 +252,7 @@
 (global-set-key (kbd "M-k") #'windmove-up)
 (global-set-key (kbd "M-l") #'windmove-right)
 
-(use-package helpful :ensure t
+(use-package helpful
   :load-path "lib/packages/helpful/"
   :after evil
   :config
@@ -316,7 +316,7 @@
 (use-package quick-restart
   :load-path "lib/packages/quick-restart/")
 
-(use-package ranger :ensure t
+(use-package ranger
   :load-path "lib/packages/ranger.el/"
   :config
   (setq ranger-show-hidden t
