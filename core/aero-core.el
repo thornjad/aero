@@ -38,9 +38,9 @@
 
   (package-initialize t)
 
-  (add-to-list
-   'load-path
-   (format "%s/%s" user-emacs-directory "lib/packages/use-package/"))
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
   (require 'use-package)
 
   (setq use-package-expand-minimally byte-compile-current-file

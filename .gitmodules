@@ -55,6 +55,3 @@
 [submodule "lib/packages/ranger.el"]
 	path = lib/packages/ranger.el
 	url = git@github.com:ralesi/ranger.el.git
-[submodule "lib/packages/use-package"]
-	path = lib/packages/use-package
-	url = git@github.com:jwiegley/use-package.git
