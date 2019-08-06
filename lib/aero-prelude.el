@@ -253,6 +253,7 @@
 (global-set-key (kbd "M-l") #'windmove-right)
 
 (use-package helpful :ensure t
+  :load-path "lib/packages/helpful/"
   :after evil
   :config
   (general-define-key

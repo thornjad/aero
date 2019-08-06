@@ -55,3 +55,6 @@
 [submodule "lib/packages/swiper"]
 	path = lib/packages/swiper
 	url = git@github.com:abo-abo/swiper.git
+[submodule "lib/packages/helpful"]
+	path = lib/packages/helpful
+	url = git@github.com:Wilfred/helpful.git
