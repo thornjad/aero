@@ -317,6 +317,7 @@
   :load-path "lib/packages/quick-restart/")
 
 (use-package ranger :ensure t
+  :load-path "lib/packages/ranger.el/"
   :config
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
