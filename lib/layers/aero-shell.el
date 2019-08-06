@@ -43,7 +43,9 @@
 
   (add-hook
    'eshell-mode-hook
-   (lambda () (setq-local evil-move-cursor-back nil)))
+   (lambda ()
+     (setq-local evil-move-cursor-back nil)
+     (setq-local scroll-margin 0)))
 
   (defun eshell/cds ()
     "Change directory to git project root."
