@@ -2,13 +2,19 @@
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
-;; This program is free software; you may redistribute it and/or modify it under
-;; the terms of the GNU General Public License version 3, as published by the
-;; Free Software Foundation. This program carries no warranty whatsoever,
-;; without even the implied warranty of merchantability or fitness for a
-;; particular purpose. See </license> for more details.
-;;
 ;; This file is not part of GNU Emacs
+;;
+;; Permission to use, copy, modify, and/or distribute this software for any
+;; purpose with or without fee is hereby granted, provided that the above
+;; copyright notice and this permission notice appear in all copies.
+;;
+;; The software is provided "as is" and the author disclaims all warranties with
+;; regard to this software including all implied warranties of merchantability
+;; and fitness. In no event shall the author be liable for any special, direct,
+;; indirect, or consequential damages or any damages whatsoever resulting from
+;; loss of use, data or profits, whether in an action of contract, negligence or
+;; other tortious action, arising out of or in connection with the use or
+;; performance of this software.
 ;;
 ;;; Code:
 
@@ -23,7 +29,6 @@
  kill-ring-max 5000 ; truncate kill ring after 5000 entries
  mark-ring-max 5000 ; truncate mark ring after 5000 entries
  kill-do-not-save-duplicates t
- mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control))) ; make mouse scrolling smooth
  apropos-do-all t ; apropos is apropos
  global-display-line-numbers-mode nil ; fuck line numbers
  gnutls-min-prime-bits 4096 ; 256 est absurde
