@@ -63,6 +63,7 @@
     (magit-status default-directory)))
 
 (use-package xterm-color
+  :disabled t
   :load-path "lib/packages/xterm-color/"
   :after eshell
   :commands (xterm-color-filter)
