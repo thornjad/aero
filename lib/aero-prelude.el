@@ -45,6 +45,7 @@
 
 ;; TODO use :general keyword with use-package
 (use-package which-key :ensure t
+  :load-path "lib/packages/emacs-which-key"
 	:defines which-key-mode
 	:config
 	(which-key-mode))
