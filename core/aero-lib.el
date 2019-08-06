@@ -2,13 +2,19 @@
 ;;
 ;; Copyright (c) 2018-2019 Jade Michael Thornton
 ;;
-;; This program is free software; you may redistribute it and/or modify it under
-;; the terms of the GNU General Public License version 3, as published by the
-;; Free Software Foundation. This program carries no warranty whatsoever,
-;; without even the implied warranty of merchantability or fitness for a
-;; particular purpose. See </license> for more details.
-;;
 ;; This file is not part of GNU Emacs
+;;
+;; Permission to use, copy, modify, and/or distribute this software for any
+;; purpose with or without fee is hereby granted, provided that the above
+;; copyright notice and this permission notice appear in all copies.
+;;
+;; The software is provided "as is" and the author disclaims all warranties with
+;; regard to this software including all implied warranties of merchantability
+;; and fitness. In no event shall the author be liable for any special, direct,
+;; indirect, or consequential damages or any damages whatsoever resulting from
+;; loss of use, data or profits, whether in an action of contract, negligence or
+;; other tortious action, arising out of or in connection with the use or
+;; performance of this software.
 ;;
 ;; Commentary:
 ;;
@@ -89,6 +95,13 @@ emacs with sigusr2"
 
 
 ;; buffers, windows
+
+(defun aero/toggle-prettify-this-buffer ()
+  "Disable `prettify-symbols-mode' in this buffer."
+  (interactive)
+  (if prettify-symbols-mode
+      (prettify-symbols-mode -1)
+    (prettify-symbols-mode 1)))
 
 (defun aero/move-buffer-to-window ()
 	"Interactive move buffer to window"
