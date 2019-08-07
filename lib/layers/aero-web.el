@@ -31,17 +31,6 @@
 	:init
 	(setq emmet-self-closing-tag-style " /")
 
-  :general
-  ('insert
-   emmet-mode-keymap
-   (kbd "TAB") 'emmet-expand-line
-   (kbd "<tab") 'emmet-expand-line)
-
-  ('hybrid
-   emmet-mode-keymap
-   (kbd "TAB") 'emmet-expand-line
-   (kbd "<tab") 'emmet-expand-line)
-
   :config
   (add-hook
    'rjsx-mode-hook
