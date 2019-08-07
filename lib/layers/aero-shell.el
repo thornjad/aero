@@ -118,6 +118,15 @@
 
 ;;; term
 
+(use-package term
+  :commands (term)
+  :config
+  (add-hook
+   'term-mode-hook
+   (lambda ()
+     (setq-local evil-move-cursor-back nil)
+     (setq-local scroll-margin 0))))
+
 ;; (use-package term
 ;;   :commands (term)
 ;;   :functions (term-char-mode)
