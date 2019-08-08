@@ -7,9 +7,6 @@
 [submodule "lib/packages/rjsx-mode"]
 	path = lib/packages/rjsx-mode
 	url = git@github.com:thornjad/rjsx-mode.git
-[submodule "lib/packages/quick-restart"]
-	path = lib/packages/quick-restart
-	url = git@gitlab.com:thornjad/quick-restart.git
 [submodule "lib/packages/pbcopier"]
 	path = lib/packages/pbcopier
 	url = git@gitlab.com:thornjad/pbcopier.git
@@ -52,6 +49,6 @@
 [submodule "lib/packages/helpful"]
 	path = lib/packages/helpful
 	url = git@github.com:Wilfred/helpful.git
-[submodule "lib/packages/ranger.el"]
-	path = lib/packages/ranger.el
-	url = git@github.com:ralesi/ranger.el.git
+[submodule "lib/packages/quick-restart"]
+	path = lib/packages/quick-restart
+	url = git@gitlab.com:thornjad/quick-restart.git

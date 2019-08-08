@@ -317,8 +317,7 @@
   ;; local
   )
 
-(use-package ranger
-  ;; local
+(use-package ranger :ensure t
   :config
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
