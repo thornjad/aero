@@ -82,25 +82,25 @@
 
 ;; rivet
 
-;; modified from configuration by James Sulak
-(use-package mmm-mode :ensure t
-  :mode "\\.\\(rvt\\|test\\)\\'"
-  :functions (mmm-add-mode-ext-class)
-	:config
-	(require 'mmm-auto)
-	(mmm-add-classes
-	 '((web-rvt
-			:submode tcl-mode
-			:delimiter-mode nil
-			:front "<\\?[=]?"
-			:front-offset 1
-			:back-offset 1
-			:back "\\?>")))
-	(setq mmm-submode-decoration-level 0)
-	(setq mmm-global-mode 'maybe)
-	(mmm-add-mode-ext-class 'web-mode "\\.rvt\\'" 'web-rvt)
-	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'web-mode))
-																auto-mode-alist)))
+;; ;; modified from configuration by James Sulak
+;; (use-package mmm-mode :ensure t
+;;   :mode "\\.\\(rvt\\|test\\)\\'"
+;;   :functions (mmm-add-mode-ext-class)
+;; 	:config
+;; 	(require 'mmm-auto)
+;; 	(mmm-add-classes
+;; 	 '((web-rvt
+;; 			:submode tcl-mode
+;; 			:delimiter-mode nil
+;; 			:front "<\\?[=]?"
+;; 			:front-offset 1
+;; 			:back-offset 1
+;; 			:back "\\?>")))
+;; 	(setq mmm-submode-decoration-level 0)
+;; 	(setq mmm-global-mode 'maybe)
+;; 	(mmm-add-mode-ext-class 'web-mode "\\.rvt\\'" 'web-rvt)
+;; 	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'web-mode))
+;; 																auto-mode-alist)))
 
 
 ;; the rest
