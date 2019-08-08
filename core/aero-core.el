@@ -38,10 +38,11 @@
 
   (package-initialize t)
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (require 'use-package)
+  (eval-when-compile
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+    (require 'use-package))
 
   (setq use-package-expand-minimally byte-compile-current-file
         use-package-verbose init-file-debug)
