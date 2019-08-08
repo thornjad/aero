@@ -144,8 +144,7 @@
 
 ;; abo-abo!
 
-(use-package counsel
-  ;; local
+(use-package counsel :ensure t
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -187,8 +186,7 @@
         recentf-auto-cleanup 'never)
   (recentf-mode 1))
 
-(use-package ivy
-  ;; local
+(use-package ivy :ensure t
   :functions ivy-mode
 	:config
 	(ivy-mode 1)
@@ -206,8 +204,7 @@
 
 	 "bb" 'ivy-switch-buffer))
 
-(use-package swiper
-  ;; local
+(use-package swiper :ensure t
   :commands swiper
 	:init
 	(general-define-key
@@ -282,6 +279,7 @@
   (turn-on-pbcopier))
 
 (use-package re-builder
+  :commands re-builder
 	:config
 	(setq reb-re-syntax 'string))
 
