@@ -21,9 +21,10 @@
         company-show-numbers t
 				company-tooltip-align-annotations t))
 
-;; TODO bindings
 (use-package counsel-gtags :ensure t)
 
+(use-package polymode :ensure t
+  :defer t)
 
 ;;; flycheck
 

@@ -17,4 +17,8 @@
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh"))
 
+(use-package rivet-mode
+  ;; local
+  :mode "\\.rvt\\'")
+
 (provide 'aero-tcl)
