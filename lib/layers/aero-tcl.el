@@ -16,7 +16,7 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 
-(use-package tcl-mode
+(use-package tcl
 	:mode "\\.tcl\\'\\.test\\'"
 
   :init
