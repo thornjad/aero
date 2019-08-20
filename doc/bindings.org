@@ -1,0 +1,158 @@
+#+TITLE: Aero Emacs key bindings
+
+/Please note that Aero changes often, and these bindings are not guaranteed to
+be up to date. The core/most important bindings should be consistent, however./
+
+* Synonyms
+
+The following table summarizes keys which are the same in Aero, Emacs and Evil
+modes. They may /not/ be synonyms in /every/ state.
+
+| key/chord | key/chord | key/chord |
+|-----------+-----------+-----------|
+| M-x       | SPC SPC   |           |
+
+
+* Cursor motion
+
+| key/chord  | states | description                                            |
+|------------+--------+--------------------------------------------------------|
+| hjkl       | NVM    | move cursor left/down/up/right                         |
+| w (W)      | NVM    | jump forward to start of a word (skip punctuation)     |
+| e (E)      | NVM    | jump forward to end of a word (skip punctuation)       |
+| b (B)      | NVM    | jump back to start of a word (skip punctuation)        |
+| 0          | NVM    | jump to start of the line                              |
+| \$         | NVM    | jump to end of the line                                |
+| \^         | NVM    | jump to first non-blank char of the line               |
+| G          | NVM    | jump to last line of document                          |
+| nG, ngg :n | NVM    | jump to line n                                         |
+| ''         | NVM    | jump to last mark                                      |
+| fx (Fx)    | NVM    | jump to next (last) occurence of char x                |
+| tx (Tx)    | NVM    | jump to one char before (after) the next (last) char x |
+| }          | NVM    | jump to next paragraph                                 |
+| {          | NVM    | jump to previous paragraph                             |
+| H          | NVM    | jump to top/home of screen                             |
+| L          | NVM    | jump to last line of screen                            |
+| M          | NVM    | jump to middle of screen                               |
+
+* Buffer and screen motion
+
+| key/chord | states | description                        |
+|-----------+--------+------------------------------------|
+| C-u       | NVM    | move screen up half page           |
+| C-b       | NVM    | move screen up full page           |
+| C-d       | NVM    | move screen down half page         |
+| C-f       | NVM    | move screen down full page         |
+| zz        | NVM    | center screen on cursor            |
+| zt        | NVM    | align top of screen with cursor    |
+| zb        | NVM    | align bottom of screen with cursor |
+
+* Window motion
+
+| key/chord | states | description                       |
+|-----------+--------+-----------------------------------|
+| M-hjkl    | all    | move to window left/down/up/right |
+
+
+* General keys
+
+| key/chord | states      | description                                              |
+|-----------+-------------+----------------------------------------------------------|
+| C-j       | all         | return immediate; with emmet mode, activate emmet return |
+| C-z       | all         | switch between Emacs and Evil states                     |
+
+* General editing
+
+| key/chord | states | description   |
+|-----------+--------+---------------|
+| TAB       | NVMEI  | indent (dwim) |
+
+* Visual editing
+
+| key/chord | states | description                                  |
+|-----------+--------+----------------------------------------------|
+| v         | N      | enter visual state                           |
+| V         | N      | mark line then enter visual state            |
+| C-v       | N      | enter visual block state                     |
+| vaw       | N      | mark word, enter visual                      |
+| vab (vaB) | N      | mark round (curly) block, enter visual       |
+| vib (viB) | N      | mark inner round (curly) block, enter visual |
+| vo        | V      | move to other end of region                  |
+| > (<)     | V      | shift region right (left)                    |
+| y         | V      | yank region                                  |
+| \~        | V      | switch case                                  |
+| d         | V      | delete selection                             |
+| ESC       | V      | enter normal state                           |
+
+* Insert editing
+
+| key/chord | states | description                                   |
+|-----------+--------+-----------------------------------------------|
+| i (a)     | N      | enter insert state before (after) cursor      |
+| I (A)     | N      | enter insert state at beginning (end) of line |
+| o (O)     | N      | open a new line below (above) current line    |
+| ea        | N      | append at end of word                         |
+| C-f (C-b) | I      | move cursor forward (back) char               |
+| ESC       | I      | enter normal state                            |
+
+* Normal editing
+
+| key/chord | states | description                          |
+|-----------+--------+--------------------------------------|
+| r         | N      | replace char                         |
+| J         | N      | join line with line below            |
+| cc, S     | N      | change/replace line                  |
+| cw        | N      | change/replace to end of word        |
+| c$        | N      | change/replace to end of line        |
+| s         | N      | delete char and substitute text      |
+| xp        | N      | transpose two letters/kill and paste |
+| u (C-r)   | N      | undo (redo)                          |
+| .         | N      | repeat last command                  |
+
+* Yanking
+
+Yanking means opposite things in the Evil and Holy camps. In Vi, one yanks /from
+the buffer to a register/, while in Emacs (natively), one yanks /from the kill
+ring to the buffer/. This is very confusing. Here we consider yanking and
+killing synonyms, while pulling from the kill ring is putting. So, in Aero, one
+kills from the buffer to the kill ring, then puts from the kill ring to the
+buffer. However, since "k" is a movement command, we stick with the Vi keys
+based on "y". Putting could also be thought of as pasting.
+
+| key/chord | states | description               |
+|-----------+--------+---------------------------|
+| y         | V      | kill region               |
+| yy        | N      | kill line                 |
+| nyy       | N      | kill n lines              |
+| :n,Ny     | N      | kill lines n to N         |
+| yw        | N      | kill word                 |
+| y$        | N      | kill to end of line       |
+| dd        | N      | kill line                 |
+| ndd       | N      | kill n lines              |
+| :n,Nd     | N      | kill lines n to N         |
+| dw        | N      | kill word                 |
+| D, d$     | N      | kill to end of line       |
+| x         | N      | kill char                 |
+| p (P)     | N      | put after (before) cursor |
+
+* Searching
+
+| key/chord      | states | description             |
+|----------------+--------+-------------------------|
+| \*             | N      | search for word         |
+| /pattern       | N      | search pattern          |
+| ?pattern       | N      | search pattern backward |
+| n              | N      | repeat search forward   |
+| N              | N      | repeat search backward  |
+| :n,Ns/old/new/ | N      | replace in lines n to N |
+| :%s/old/new/   | N      | replace in buffer       |
+| :s/old/new/    | V      | replace in region       |
+
+
+* Exiting, quitting, interrupting
+
+| key/chord      | states | description                                       |
+|----------------+--------+---------------------------------------------------|
+| C-x C-c        | all    | exit with confirmation and unwritten buffer check |
+| M-x kill-emacs | all    | exit immediate                                    |
+| C-g            | all    | quit/interrupt                                   |
