@@ -28,12 +28,16 @@
                            ("melpa-stable" . "https://stable.melpa.org/packages/")
                            ("org" . "https://orgmode.org/elpa/")))
 
-  (when (version< emacs-version "26.3")
+  (when (or (version< emacs-version "26.3") (version< emacs-version "27.1"))
     ;; Emacs before 26.3 has a bug in its TLS implementation which breaks
     ;; synchonous TLS 1.3-only connections, such as GNU ELPA (as of July 2019,
     ;; at least). By setting this variable, we disable TLS 1.3 entirely. The
     ;; better option is to use Emacs 27+ and/or Remacs. See
     ;; https://debbugs.gnu.org/34341
+    ;; Unfortunately, it appears that Remacs 27.0.50 also has this problem, so
+    ;; we make a guess that 27.1 will have it fixed. It's more likely that some
+    ;; patch version will contain this fix, but we'll burn that bridge when get
+    ;; to it.
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
   (package-initialize t)
