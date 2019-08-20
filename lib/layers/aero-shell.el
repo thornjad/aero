@@ -121,11 +121,18 @@
 (use-package term
   :commands (term)
   :config
+
   (add-hook
    'term-mode-hook
    (lambda ()
      (setq-local evil-move-cursor-back nil)
-     (setq-local scroll-margin 0))))
+     (setq-local scroll-margin 0)))
+
+  (general-def 'normal term-mode-map
+    (kbd "M-h") 'windmove-left
+    (kbd "M-l") 'windmove-right
+    (kbd "M-p") 'term-previous-input
+    (kbd "M-n") 'term-next-input))
 
 ;; (use-package term
 ;;   :commands (term)
