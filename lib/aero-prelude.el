@@ -382,6 +382,7 @@
 
  "h" '(:ignore t :which-key "help/manual")
  "hm" 'woman
+ "hM" 'man
  "hi" 'info
  "hI" 'info-apropos
  "hd" '(:ignore t :which-key "describe")
