@@ -52,3 +52,6 @@
 [submodule "lib/packages/rivet-mode"]
 	path = lib/packages/rivet-mode
 	url = git@gitlab.com:thornjad/rivet-mode.git
+[submodule "lib/packages/testbackend.el"]
+	path = lib/packages/testbackend.el
+	url = git@github.flightaware.com:thornjad/testbackend.el.git

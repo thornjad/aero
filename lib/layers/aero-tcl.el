@@ -17,14 +17,26 @@
 ;; performance of this software.
 
 (use-package tcl
-	:mode "\\.tcl\\'\\.test\\'"
+  :mode "\\.\\(tcl|test\\)\\'"
 
   :init
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh"))
 
-(use-package rivet-mode
-  ;; local
+(use-package testbackend ; local
+  :general
+  (:states 'normal
+   :keymaps 'tcl-mode-map
+   :prefix "SPC"
+   ",t" '(:ignore t :which-key "testbackend")
+   ",tr" 'testbackend/run-tests
+   ",tR" 'testbackend/run-tests-no-cache
+   ",tw" 'testbackend/run-tests-on-write
+   ",tS" 'testbackend/stop-run-tests-on-write
+   ",tt" 'testbackend/set-test-target
+   ",tT" 'testbackend/clear-test-target))
+
+(use-package rivet-mode ; local
   :mode "\\.rvt\\'")
 
 (provide 'aero-tcl)
