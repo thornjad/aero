@@ -92,6 +92,9 @@
 ;; remplace yes no par y n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; make case statements indent properly
+(c-set-offset 'case-label '+)
+
 ;; prevent savehist cpu hogging
 (setq history-length 100)
 (put 'minibuffer-history 'history-length 50)
