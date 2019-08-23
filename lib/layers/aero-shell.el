@@ -128,7 +128,7 @@
      (setq-local evil-move-cursor-back nil)
      (setq-local scroll-margin 0)))
 
-  (general-def 'normal term-mode-map
+  (general-def term-mode-map
     (kbd "M-h") 'windmove-left
     (kbd "M-l") 'windmove-right
     (kbd "M-p") 'term-previous-input
