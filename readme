@@ -9,15 +9,13 @@
 	Aero is my own Emacs configuration, blending all the best shit I can find. It
 	is built in the style of a distribution like Prelude or Spacemacs, but it's
 	not intended for widespread use; Aero is highly tailored to me, what I want
-	and what I use.
+	and what I use. Special focus is put on writing Lisps, Python, TCL, Node and
+	the several web languages. Other languages like C and ML have some light
+	configuration as well.
 
 	Emacs changes the way you think about programming, as does Lisp itself. The
 	sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
 	by decades of rich experience and a fantastic culture.
-
-	Special focus is put on writing Lisps, Python, TCL, Node and the several web
-	languages. Other languages like C and OCaml have some light configuration as
-	well.
 
 	"Emacs outshines all other editing software in the same way that the noonday
 	sun does the stars. It is not just bigger and brighter; it simply makes
@@ -50,7 +48,7 @@ INSTALLATION
 
 	GitLab (best)     https://gitlab.com/thornjad/aero.git
 	Framagit (better) https://framagit.org/thornjad/aero.git
-	GitHub (ok)	      https://github.com/thornjad/aero.git
+	GitHub (ok)       https://github.com/thornjad/aero.git
 
 	Then, install and compile required submodules with
 
