@@ -165,9 +165,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "su" '(sp-unwrap-sexp :which-key "unwrap")
    "sK" '(sp-kill-sexp :which-key "kill"))
 
-  (sp-local-pair 'web-mode "<? " " ?>")
-  (sp-local-pair 'web-mode "{ " " }")
-  (sp-local-pair 'web-mode "{{ "  " }}")
+  (sp-local-pair 'web-mode "<?" "?>")
+  (sp-local-pair 'web-mode "{" "}")
+  (sp-local-pair 'web-mode "`" "`")
+  (sp-local-pair 'rjsx-mode "`" "`")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" )
