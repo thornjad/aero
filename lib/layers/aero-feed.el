@@ -38,6 +38,7 @@
      ("http://mbork.pl/?action=rss" cs emacs)
 
      ;; general blogs
+     ("https://cscheerleader.com/feed" cs)
      ("https://julesjacobs.github.io/feed.xml" cs)
      ("http://standardsandfreedom.net/index.php/feed/" cs)
      ("https://www.defmacro.org/feed.xml" cs)
