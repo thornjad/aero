@@ -26,6 +26,9 @@
 (use-package rainbow-mode :ensure t
   :commands rainbow-mode)
 
+(use-package hackernews
+  ;; local
+  :commands hackernews)
 
 ;;; games
 
