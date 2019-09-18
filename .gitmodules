@@ -55,3 +55,6 @@
 [submodule "lib/packages/testbackend.el"]
 	path = lib/packages/testbackend.el
 	url = git@github.flightaware.com:thornjad/testbackend.el.git
+[submodule "lib/packages/hackernews"]
+	path = lib/packages/hackernews
+	url = git@gitlab.com:thornjad/hackernews.git
