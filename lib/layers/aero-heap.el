@@ -33,6 +33,7 @@
   :commands 2048-game
   :config
   (general-define-key
+   :modes '(normal emacs)
    :keymaps '2048-mode-map
    "h" '2048-left
    "j" '2048-down
