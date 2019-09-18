@@ -48,6 +48,7 @@
      ("http://mbork.pl/?action=rss" cs emacs)
 
      ;; general blogs
+     ("https://arp242.net/feed.xml" cs)
      ("https://cscheerleader.com/feed" cs)
      ("https://julesjacobs.github.io/feed.xml" cs)
      ("http://standardsandfreedom.net/index.php/feed/" cs)
