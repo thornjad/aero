@@ -93,7 +93,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; make case statements indent properly
-(c-set-offset 'case-label '+)
+(c-set-offset 'case-label '++)
 
 ;; prevent savehist cpu hogging
 (setq history-length 100)
