@@ -83,6 +83,7 @@
   (vertical-border (:foreground aero-grey1))
   (window-divider (:foreground aero-grey1))
   (link (:foreground aero-faded-blue :underline t))
+  (link-visited (:foreground aero-faded-magenta :underline t))
   (shadow (:foreground aero-grey2))
   (page-break-lines (:foreground aero-grey2))
 
