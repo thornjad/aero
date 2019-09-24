@@ -15,6 +15,7 @@
 ;; loss of use, data or profits, whether in an action of contract, negligence or
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
+
 
 (use-package elfeed :ensure t
   :commands elfeed
@@ -107,6 +108,9 @@
      )) ; left on new line for easy editing
 
   :config
+  (evil-set-initial-state 'elfeed-search-mode 'emacs)
+  (evil-set-initial-state 'elfeed-show-mode 'emacs)
+
   ;; increase title width for papers
   (setq elfeed-search-title-max-width 120)
 
@@ -122,5 +126,25 @@
    "TAB" 'elfeed-show-next-link
    "C-u" 'scroll-down
    "C-d" 'scroll-up))
+
 
-(provide 'aero-feed)
+(use-package hackernews
+  ;; local
+  :commands hackernews)
+
+
+(use-package pocket-reader :ensure t
+	:commands pocket-reader
+  :init
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+    "aR" '(:ignore t :which-key "pocket")
+    "aRr" 'pocket-reader
+    "ar" 'pocket-reader
+    "aRs" 'pocket-reader-add-link)
+  :config
+  (evil-set-initial-state 'pocket-reader-mode 'emacs)
+  (setq pocket-reader-open-url-default-function 'eww))
+
+(provide 'aero-news)

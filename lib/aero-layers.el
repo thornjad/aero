@@ -17,7 +17,7 @@
 
   (let ((aero-layer-list '(aero-c
                            aero-eww
-                           aero-feed
+                           aero-news
                            aero-git
                            aero-heap
                            aero-lisp
