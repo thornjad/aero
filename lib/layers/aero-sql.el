@@ -48,7 +48,7 @@
   (general-define-key
    :states 'normal
    :prefix "SPC"
-   "d" 'sql-connect))
+   "Sc" 'sql-connect))
 
 (use-package sql-indent :ensure t
 	:defer t

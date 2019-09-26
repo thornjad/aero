@@ -438,7 +438,7 @@
  "m" '(:ignore t :which-key "mode")
  "p" '(:ignore t :which-key "project")
 
- "S" '(:ignore t :which-key "shell")
+ "S" '(:ignore t :which-key "shell/sql")
  "Se" 'eshell
  "SE" '(:ignore t :which-key "eshell")
  "St" 'term
