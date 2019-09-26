@@ -12,6 +12,14 @@
 
 (require 'evil)
 
+(defun aero/ddg (&optional term)
+  (interactive "sSearch DuckDuckGo: ")
+  (eww-browse-url (format "https://duckduckgo.com/lite?q=%s" (or term ""))))
+
+(defun aero/wiki (&optional term)
+  (interactive "sSearch Wikipedia: ")
+  (aero/ddg (format "!w %s" (or term ""))))
+
 (use-package eww
   :commands (eww
              eww-browse-url
@@ -23,7 +31,9 @@
    :prefix "SPC"
     "ws" '(eww-search-words :which-key "web search")
     "ww" 'eww
-    "wp" 'browse-url-at-point)
+    "wp" 'browse-url-at-point
+    "wD" '(aero/ddg :which-key "search duckduckgo")
+    "wW" '(aero/wiki :which-key "search wikipedia"))
 
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
