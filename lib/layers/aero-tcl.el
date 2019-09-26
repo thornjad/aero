@@ -17,11 +17,11 @@
 ;; performance of this software.
 
 (use-package tcl
-  :mode "\\.\\(tcl|test\\)\\'"
-
   :init
 	;; make inferior-tcl use tclsh (default is wish)
-	(setq tcl-application "tclsh"))
+	(setq tcl-application "tclsh")
+  (add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-mode))
+  (add-to-list 'auto-mode-alist '("\\.test\\'" . tcl-mode)))
 
 (use-package testbackend ; local
   :general
