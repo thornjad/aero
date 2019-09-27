@@ -13,4 +13,9 @@
 (use-package markdown-mode :ensure t
   :mode "\\.\\(md\\|markdown\\)")
 
+(use-package nov :ensure t
+  :mode "\\.epub\\'"
+  :init
+  (setq nov-text-width 80))
+
 (provide 'aero-markup)
