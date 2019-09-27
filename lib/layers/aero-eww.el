@@ -20,6 +20,10 @@
   (interactive "sSearch Wikipedia: ")
   (aero/ddg (format "!w %s" (or term ""))))
 
+(defun aero/wiki-news ()
+  (interactive)
+  (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
+
 (use-package eww
   :commands (eww
              eww-browse-url
@@ -33,7 +37,8 @@
     "ww" 'eww
     "wp" 'browse-url-at-point
     "wD" '(aero/ddg :which-key "search duckduckgo")
-    "wW" '(aero/wiki :which-key "search wikipedia"))
+    "wW" '(aero/wiki :which-key "search wikipedia")
+    "wN" '(aero/wiki-news :which-key "wikipedia news"))
 
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
