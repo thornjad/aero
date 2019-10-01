@@ -641,7 +641,7 @@
 
 (defun aero/modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the mode-line."
-  (concat (propertize "%b" 'face 'mode-line-buffer-id) "  "))
+  (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) "  "))
 
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
