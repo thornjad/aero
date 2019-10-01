@@ -543,11 +543,6 @@
   "A minimal mode-line configuration inspired by doom-modeline."
   :group 'mode-line)
 
-(defcustom aero/modeline-show-point nil
-  "If t, the value of `point' will be displayed next to the cursor position in the mode-line."
-  :group 'aero/modeline
-  :type 'boolean)
-
 (defface aero/modeline-status-grayed-out
   '((t (:inherit (font-lock-doc-face))))
   "Face used for neutral or inactive status indicators in the mode-line."
@@ -651,11 +646,6 @@
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
   (concat "%l:%c"
-          (when aero/modeline-show-point
-            (concat ":"
-                    (propertize (format "%d" (point)) 'face (if (aero/modeline-is-active)
-                                                                'aero/modeline-unimportant
-                                                              'mode-line-inactive))))
           " "
           (propertize "%p%%" 'face (if (aero/modeline-is-active)
                                        'aero/modeline-unimportant
