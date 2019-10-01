@@ -14,7 +14,7 @@
   :mode "\\.\\(md\\|markdown\\)")
 
 (use-package nov :ensure t
-  :mode "\\.epub\\'"
+  :mode ("\\.epub\\'" . nov-mode)
   :init
   (setq nov-text-width 80))
 
