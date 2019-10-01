@@ -445,6 +445,7 @@
  "ST" '(:ignore t :which-key "term")
 
  "w" '(:ignore t :which-key "window/web")
+ "w=" 'balance-windows
  "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
