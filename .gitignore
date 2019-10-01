@@ -38,6 +38,7 @@ etc/todo.org
 /backups
 tmp.*
 *~
+nov-places
 
 # ignore private dir, except private package itself
 lib/private/
