@@ -646,10 +646,16 @@
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
   (concat "%l:%c"
+          (when (use-region-p)
+            (concat
+             " " (number-to-string (count-lines (point) (mark)))
+             ":" (number-to-string (abs (- (point) (mark))))))
           " "
-          (propertize "%p%%" 'face (if (aero/modeline-is-active)
-                                       'aero/modeline-unimportant
-                                     'mode-line-inactive))
+          (propertize "%p%%"
+                      'face
+                      (if (aero/modeline-is-active)
+                          'aero/modeline-unimportant
+                        'mode-line-inactive))
           "  "))
 
 (defun aero/modeline-segment-major-mode ()
