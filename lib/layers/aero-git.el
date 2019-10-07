@@ -70,10 +70,33 @@
       (magit-status)
       (message "Checked out PR as %s" new-branch)))
 
+  (defun aero/insert-jira-ticket ()
+    "Add JIRA ticket number to current buffer.
+
+Intended to be used with git commit messages to enable automation in JIRA and
+Zeitgit. Requires Magit. Customize MY-BOARDS to all boards you want to match on.
+
+This function will only work if branches are named with the schema
+board_ticket_branch_name."
+    (interactive)
+    (let* ((branch (magit-get-current-branch))
+           (parts (split-string branch "_"))
+           (board (upcase (car parts)))
+           (ticket (cadr parts))
+           (my-boards '("WEB")))
+      (when (member board my-boards)
+        (save-excursion
+          (next-line)
+          (insert (format "\n%s-%s" board ticket))))))
+
+  ;; Auto-add ticket number when opening commit message
+  (add-hook 'git-commit-setup-hook #'aero/insert-jira-ticket)
+
   (general-define-key
    :states 'normal
    :prefix "SPC"
-    "gp" 'aero/fetch-pr)
+    "gp" 'aero/fetch-pr
+    "qw" 'aero/insert-jira-ticket)
 
 	(use-package magit-todos :ensure t)
 	(use-package evil-magit :ensure t))
