@@ -178,7 +178,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            '(:add (aero/smartparens-pair-newline-and-indent "RET")))
   (define-key evil-insert-state-map ")"
     'aero/smart-closing-parenthesis))
+
 
+(add-to-list 'auto-mode-alist '("\\README\\'" . text-mode))
 
 
 (provide 'aero-prog)
