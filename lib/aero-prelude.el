@@ -394,8 +394,9 @@
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
- "bt" 'untabify-buffer
- "bT" 'tabify-buffer
+ "bt" '(:ignore t :which-key "tabify")
+ "btu" 'untabify-buffer
+ "btt" 'tabify-buffer
  "bi" 'indent-buffer
  "bP" 'aero/toggle-prettify-this-buffer
 
