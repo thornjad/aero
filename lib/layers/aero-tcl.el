@@ -39,4 +39,40 @@
 (use-package rivet-mode ; local
   :mode "\\.rvt\\'")
 
+(defun mc-string-at-point (&optional key)
+  "Surround the current string at point with a call to `mc'.
+
+User is prompted to provide a MC key. If user enters nothing, a dummy is used
+instead. After this command, point is moved to the end of the `mc' call for the
+insertion of arguments, if applicable.
+
+This function will not do anything unless tcl-mode is the current major mode."
+   (interactive "sMC key: ")
+   (if (string= major-mode "tcl-mode")
+       (progn
+         (when (or (not key) (string= key ""))
+           (setq key "TODO_ADD_KEY"))
+
+         (let ((open (format "[mc %s " key))
+               (close "]"))
+           (if (and transient-mark-mode mark-active)
+               (progn
+                 (save-excursion
+                   (goto-char (region-end))
+                   (insert close))
+                 (goto-char (region-beginning))
+                 (insert open))
+             (skip-chars-forward " \t")
+             (insert open)
+             (save-excursion
+               (forward-sexp 1)
+               (insert close))
+             (forward-sexp 1))))
+     (message "Must be in TCL mode!")))
+
+(general-define-key
+ :states 'normal
+ :prefix "SPC"
+  "sm" 'mc-string-at-point)
+
 (provide 'aero-tcl)
