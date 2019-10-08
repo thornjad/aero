@@ -414,6 +414,7 @@
  "cr" 'recompile
  "cR" 'byte-recompile-file
  "ce" '(:ignore t :which-key "eval")
+ "cei" '(ielm :which-key "ielm repl")
  "cer" 'eval-region
  "ceb" 'eval-buffer
  "ced" 'eval-defun
