@@ -194,8 +194,7 @@
         ivy-wrap t
 				ivy-height 8
 				ivy-count-format "" ; don't count candidates
-				;; configure regexp engine to allow out-of-order input
-				ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+				ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 	(general-define-key
 	 :states '(normal)
 	 :prefix "SPC"
@@ -211,6 +210,8 @@
 	 :non-normal-prefix "C-SPC"
 
 	 "/" '(counsel-grep-or-swiper :which-key "search")))
+
+(use-package flx :ensure t)
 
 
 ;;; system
