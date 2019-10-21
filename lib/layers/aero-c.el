@@ -20,6 +20,8 @@
   (defun aero/c-mode-common-hook ()
     "Hook to run in all C modes"
     (set (make-local-variable 'parens-require-spaces) nil))
-  :hook (c-mode-common . aero/c-mode-common-hook))
+  :hook (c-mode-common . aero/c-mode-common-hook)
+  :config
+  (add-to-list 'flycheck-disabled-checkers 'c/c++-clang))
 
 (provide 'aero-c)
