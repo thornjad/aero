@@ -33,38 +33,44 @@
 
  ((((class color) (min-colors #xFF)))
 
-  (aero-bg             "#121212") ; 233
-  (aero-fg             "#dadada") ; 253
+  (aero-bg             "#121212")
+  (aero-fg             "#dfdfdf")
 
-  (aero-grey0          "#444444") ; 238
-  (aero-grey1          "#585858") ; 240
-  (aero-grey2          "#808080") ; 244
-  (aero-grey3          "#9e9e9e") ; 247
-  (aero-grey4          "#d0d0d0") ; 252
+  (aero-grey0          "#444444")
+  (aero-grey1          "#585858")
+  (aero-grey2          "#808080")
+  (aero-grey3          "#9e9e9e")
+  (aero-grey4          "#d0d0d0")
+  (aero-grey5          "#c0c0c0")
 
-  (aero-faded-black    "#262626") ; 235
-  (aero-faded-white    "#d7d7d7") ; 188
-  (aero-faded-red      "#d7875f") ; 173
-  (aero-faded-yellow   "#d7af87") ; 180
-  (aero-faded-green    "#87af87") ; 108
-  (aero-faded-blue     "#87afaf") ; 109
-  (aero-faded-cyan     "#87afd7") ; 110
-  (aero-faded-magenta  "#af87af") ; 139
+  (aero-faded-black    "#262626")
+  (aero-faded-white    "#dfdfaf")
+  (aero-faded-red      "#d7875f")
+  (aero-faded-orange   "#d89f85")
+  (aero-faded-yellow   "#d7d7af")
+  (aero-faded-green    "#878700")
+  (aero-faded-blue     "#afd7d7")
+  (aero-faded-cyan     "#5dabab")
+  (aero-faded-magenta  "#af87af")
 
-  (aero-bright-black   "#3a3a3a") ; 237
-  (aero-bright-white   "#d7d7af") ; 187
-  (aero-bright-red     "#d78787") ; 174
-  (aero-bright-yellow  "#ffaf5f") ; 215
-  (aero-bright-green   "#87d787") ; 114
-  (aero-bright-blue    "#87d7d7") ; 116
-  (aero-bright-cyan    "#87d7af") ; 115
-  (aero-bright-magenta "#d787d7") ; 176
+  (aero-bright-black   "#3a3a3a")
+  (aero-bright-white   "#ffffd7")
+  (aero-bright-red     "#d78787")
+  (aero-bright-orange  "#ba7e63")
+  (aero-bright-yellow  "#d7af00")
+  (aero-bright-green   "#afaf00")
+  (aero-bright-blue    "#87d7d7")
+  (aero-bright-cyan    "#66d8bf")
+  (aero-bright-magenta "#afafff")
 
-  (aero-hard-black     "#000000") ; 0
-  (aero-hard-white     "#ffffff") ; 15
-  (aero-hard-green     "#005f00") ; 22
-  (aero-hard-blue      "#00005f") ; 17
-  (aero-hard-red       "#5f0000") ; 52
+  (aero-intense-green  "#5f875f")
+  (aero-intense-yellow "#d7d7af")
+
+  (aero-hard-black     "#000000")
+  (aero-hard-white     "brightwhite")
+  (aero-hard-green     "#005f00")
+  (aero-hard-blue      "#00005f")
+  (aero-hard-red       "#5f0000")
   )
 
 
@@ -88,15 +94,16 @@
   (page-break-lines (:foreground aero-grey2))
 
   ;; Built-in syntax
-  (font-lock-builtin-face (:foreground aero-faded-blue))
-  (font-lock-constant-face (:foreground aero-faded-magenta))
+  (font-lock-builtin-face (:foreground aero-bright-yellow :slant 'italic))
+  (font-lock-constant-face (:foreground aero-faded-magenta :slant 'italic))
   (font-lock-comment-face (:foreground aero-grey2 :slant 'italic))
-  (font-lock-function-name-face (:foreground aero-faded-cyan))
+  (font-lock-function-name-face (:foreground aero-bright-orange))
   (font-lock-keyword-face (:foreground aero-faded-red))
-  (font-lock-string-face (:foreground aero-faded-yellow))
-  (font-lock-variable-name-face (:foreground aero-faded-green))
-  (font-lock-type-face (:foreground aero-faded-magenta))
+  (font-lock-string-face (:foreground aero-bright-green))
+  (font-lock-variable-name-face (:foreground aero-faded-white))
+  (font-lock-type-face (:foreground aero-bright-magenta))
   (font-lock-warning-face (:foreground aero-bright-red :bold t))
+  (font-lock-doc-face (:foreground aero-grey3 :bold t))
 
   ;; special
   (error (:foreground aero-bright-red :bold t))
@@ -173,19 +180,24 @@
   (smerge-base (:background aero-hard-blue))
   (smerge-markers (:inherit 'font-lock-comment-face :weight 'bold))
 
+  ;; js2
   (js2-warning (:underline (:color aero-bright-yellow :style 'wave)))
   (js2-error (:underline (:color aero-bright-red :style 'wave)))
   (js2-external-variable (:underline (:color aero-faded-blue :style 'wave)))
-  (js2-jsdoc-tag (:background nil :foreground aero-grey2  ))
+  (js2-jsdoc-tag (:background nil :foreground aero-grey2))
   (js2-jsdoc-type (:background nil :foreground aero-grey3))
   (js2-jsdoc-value (:background nil :foreground aero-grey4))
-  (js2-function-param (:background nil :foreground aero-faded-blue))
-  (js2-function-call (:background nil :foreground aero-faded-blue))
+  (js2-function-param (:inherit 'font-lock-variable-name-face :slant 'italic))
+  (js2-function-call (:inherit 'font-lock-function-name-face))
+  (js2-object-property (:inherit 'font-lock-variable-name-face))
   (js2-instance-member (:background nil :foreground aero-bright-yellow))
   (js2-private-member (:background nil :foreground aero-bright-yellow))
   (js2-private-function-call (:background nil :foreground aero-faded-blue))
   (js2-jsdoc-html-tag-name (:background nil :foreground aero-grey3))
   (js2-jsdoc-html-tag-delimiter (:background nil :foreground aero-grey4))
+
+  ;; rjsx
+  (rjsx-attr (:slant 'italic))
 
   ;; popup
   (popup-face (:underline nil :foreground aero-faded-yellow :background aero-grey0))
@@ -221,7 +233,7 @@
   (counsel-grep-lineno (:foreground aero-bright-yellow))
   (counsel-grep-match (:foreground aero-bright-yellow))
   (counsel-grep-running (:foreground aero-bright-red))
-  (counsel-header (:foreground aero-faded-green))
+  (counsel-header (:foreground aero-bright-magenta))
   (counsel-helper (:foreground aero-faded-green))
   (counsel-history-deleted (:foreground aero-hard-black :background aero-bright-red))
   (counsel-history-remote (:foreground aero-bright-red))
@@ -391,8 +403,8 @@
   (magit-branch-remote (:foreground aero-faded-magenta))
   (magit-cherry-equivalent (:foreground aero-faded-magenta))
   (magit-cherry-unmatched (:foreground aero-faded-blue))
-  (magit-diff-added (:foreground aero-faded-green))
-  (magit-diff-added-highlight (:foreground aero-faded-green :inherit 'magit-diff-context-highlight))
+  (magit-diff-added (:foreground aero-bright-green))
+  (magit-diff-added-highlight (:foreground aero-bright-green :inherit 'magit-diff-context-highlight))
   (magit-diff-base (:background aero-bright-yellow :foreground aero-grey4))
   (magit-diff-base-highlight (:background aero-bright-yellow :foreground aero-fg))
   (magit-diff-context (:foreground aero-grey0 :foreground aero-fg))
@@ -499,9 +511,6 @@
   (wgrep-face (:underline (:color aero-bright-yellow :style 'line)))
   (wgrep-file-face (:inherit 'highlight))
   (wgrep-reject-face (:foreground aero-bright-red :bold t))
-
-  ;; rjsx
-  (rjsx-attr (:foreground aero-grey4 :slant 'italic))
 
   ;; hydra
   (hydra-face-red (:foreground aero-bright-red :weight 'bold))
