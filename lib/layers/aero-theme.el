@@ -167,7 +167,7 @@
   ;; diffs
   (diff-changed (:background nil :foreground aero-faded-yellow))
   (diff-added (:background nil :foreground aero-faded-green))
-  (diff-refine-added (:background aero-hard-green :foreground aero-faded-green))
+  (diff-refine-added (:background aero-hard-green :foreground aero-bright-green))
   (diff-removed (:background nil :foreground aero-bright-red))
   (diff-refine-removed (:background aero-hard-red :foreground aero-bright-red))
   (diff-indicator-changed (:inherit 'diff-changed))
@@ -415,7 +415,7 @@
   (magit-diff-lines-heading (:background aero-bright-yellow :foreground aero-fg))
   (magit-diff-removed (:foreground aero-bright-red))
   (magit-diff-removed-highlight (:foreground aero-bright-red :inherit 'magit-diff-context-highlight))
-  (magit-diffstat-added (:foreground aero-faded-green))
+  (magit-diffstat-added (:foreground aero-bright-green))
   (magit-diffstat-removed (:foreground aero-bright-red))
   (magit-dimmed (:foreground aero-grey2))
   (magit-hash (:foreground aero-faded-green))
