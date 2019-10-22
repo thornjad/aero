@@ -29,6 +29,17 @@
 (use-package hackernews
   ;; local
   :commands hackernews)
+
+(defun no-pdf ()
+  "Run pdftotext on the entire buffer."
+  (interactive)
+  (erase-buffer)
+  (shell-command
+   (concat "pdftotext " (buffer-file-name) " -")
+   (current-buffer))
+  (text-mode)
+  (set-buffer-modified-p nil))
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . no-pdf))
 
 ;;; games
 
