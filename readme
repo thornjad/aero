@@ -52,11 +52,6 @@ INSTALLATION
 
   Then, install and compile required submodules with =make=
 
-KNOWN ISSUES
-
-  - When idle, Aero occasionally begins running GC continuously, using up a
-    ridiculous amount of CPU. The root cause has not been tracked down yet.
-
 CREDITS
 
   Like the Borg, Aero amalgamates macros, functions, bindings and packages
