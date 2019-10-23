@@ -10,9 +10,15 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package sql
-	:ensure t
-  :defer t
+(use-package sql :ensure t :defer t
+  :commands (sql-connect)
+
+  :init
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "Sc" 'sql-connect)
+
   :config
 	;; for sql comint
 	(add-to-list 'same-window-buffer-names "*SQL: *")
@@ -43,12 +49,7 @@
     (interactive "r")
     (let ((sql-pop-to-buffer-after-send-region t))
       (sql-send-region start end)
-      (evil-insert-state)))
-
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "Sc" 'sql-connect))
+      (evil-insert-state))))
 
 (use-package sql-indent :ensure t
 	:defer t
