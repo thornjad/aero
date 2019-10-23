@@ -197,7 +197,7 @@
   (js2-jsdoc-html-tag-delimiter (:background nil :foreground aero-grey4))
 
   ;; rjsx
-  (rjsx-attr (:slant 'italic))
+  (rjsx-attr (:inherit 'js2-object-property :slant 'italic))
 
   ;; popup
   (popup-face (:underline nil :foreground aero-faded-yellow :background aero-grey0))
