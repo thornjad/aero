@@ -23,13 +23,9 @@
   :mode
   (("\\.py\\'" . python-mode)
    ("\\.pyx\\'" . python-mode)
-   ("\\.wsgi$" . python-mode))
-  :config
-  (require 'virtualenvwrapper))
+   ("\\.wsgi$" . python-mode)))
 
 (use-package hy-mode :ensure t
-  :mode "\\.hy\\'"
-  :config
-  (require 'virtualenvwrapper))
+  :mode "\\.hy\\'")
 
 (provide 'aero-python)
