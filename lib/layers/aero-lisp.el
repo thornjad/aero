@@ -124,4 +124,7 @@ does not specify a special indentation."
 (add-hook 'common-lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 (add-hook 'lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
+(use-package package-lint :ensure t
+  :commands (package-lint-current-buffer))
+
 (provide 'aero-lisp)
