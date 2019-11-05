@@ -310,9 +310,7 @@
              do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
 		(tramp-cleanup-all-connections)))
 
-(use-package quick-restart
-  ;; local
-  )
+(use-package quick-restart)
 
 (use-package ranger :ensure t
   :config
