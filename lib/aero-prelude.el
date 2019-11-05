@@ -357,6 +357,7 @@
  "!" 'shell-command
  "=" 'quick-calc
  "," '(:ignore t :which-key "mode") ; reserved for mode-specific
+ "." 'aero/jump-to-tag
 
  "U" 'universal-argument
 

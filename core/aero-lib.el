@@ -152,6 +152,12 @@ This is equivalent to SPC U M-x eshell"
 
 ;;; editing et cetera
 
+(defun aero/jump-to-tag (id)
+  (interactive "P")
+  (when (fboundp 'xref-find-definitions)
+    (let ((xref-prompt-for-identifier id))
+      (call-interactively #'xref-find-definitions))))
+
 ;; written by github user rompy
 (defun aero/smarter-backward-kill-word ()
   "Deletes the previous word, respecting:
