@@ -439,6 +439,8 @@
  "m" '(:ignore t :which-key "mode")
  "p" '(:ignore t :which-key "project")
 
+ "u" 'undo-tree-visualize
+
  "S" '(:ignore t :which-key "shell/sql")
  "Se" 'eshell
  "SE" '(:ignore t :which-key "eshell")
