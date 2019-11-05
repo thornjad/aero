@@ -75,7 +75,7 @@
    nil
    :height
    (floor (* 0.9
-             (face-attribute 'default :height)))))
+         (face-attribute 'default :height)))))
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
@@ -127,11 +127,11 @@ emacs with sigusr2"
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
   (cl-destructuring-bind
-   (buf start pos)
-   (or (cl-find (window-buffer window) (window-prev-buffers)
-                :key #'car :test-not #'eq)
-       (list (other-buffer) nil nil ))
-   (set-window-buffer-start-and-point window buf start pos)))
+      (buf start pos)
+      (or (cl-find (window-buffer window) (window-prev-buffers)
+                  :key #'car :test-not #'eq)
+         (list (other-buffer) nil nil ))
+    (set-window-buffer-start-and-point window buf start pos)))
 
 (defun aero/alternate-window ()
   "Switch back and forth between current and last window in the current frame."
