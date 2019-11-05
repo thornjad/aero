@@ -94,7 +94,6 @@
 
   (global-font-lock-mode)
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
-        gc-cons-percentage (cadr (cadr aero/gc-cons)))
-  (setq aero-initialized t))
+        gc-cons-percentage (cadr (cadr aero/gc-cons))))
 
 (provide 'aero-core)
