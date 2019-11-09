@@ -16,7 +16,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package 'haskell-mode :ensure t
+(use-package haskell-mode :ensure t
   :mode "\\.hs\\'")
 
 (provide 'aero-haskell)
