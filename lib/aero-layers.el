@@ -16,6 +16,7 @@
 	"Load all configured layers, listed above"
 
   (let ((aero-layer-list '(aero-c
+                           aero-haskell
                            aero-eww
                            aero-news
                            aero-git
