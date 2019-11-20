@@ -38,8 +38,8 @@
 REQUIREMENTS
 
   Aero works best with Remacs, or at least Emacs 27. It should run on Emacs as
-  far back as 25.1, but this is not tested. Aero is optimized for the font Dank
-  Mono, but Source Code Pro is pretty good too.
+  far back as 25.1, but this is not tested. Aero is optimized for the font
+  Victor Mono, but Dank Mono and Source Code Pro look pretty sick too.
 
 INSTALLATION
 
