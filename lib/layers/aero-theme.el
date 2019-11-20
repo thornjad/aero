@@ -76,7 +76,7 @@
 
  ;; faces (simplified)
 
- ((default (:background aero-bg :foreground aero-fg :font "Dank Mono"))
+ ((default (:background aero-bg :foreground aero-fg :font "Victor Mono"))
   (cursor (:background aero-fg))
   (mode-line (:background aero-grey0 :foreground aero-grey4 :box nil))
   (mode-line-inactive
