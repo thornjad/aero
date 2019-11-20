@@ -438,7 +438,9 @@
  "j" '(:ignore t :which-key "jump")
  "s" '(:ignore t :which-key "sexp")
  "m" '(:ignore t :which-key "mode")
+
  "p" '(:ignore t :which-key "project")
+ "pr" '(xref-find-definitions :which-key "find ref")
 
  "u" 'undo-tree-visualize
 
