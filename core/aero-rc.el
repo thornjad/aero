@@ -61,7 +61,6 @@
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
  require-final-newline t
  load-prefer-newer t
- scroll-margin 3
  read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
