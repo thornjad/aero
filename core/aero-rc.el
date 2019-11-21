@@ -71,6 +71,7 @@
  cperl-indent-level 2
  js2-basic-offset 2
  js-basic-offset 2
+ js-switch-indent-offset 2
  sgml-basic-offset 2
  tcl-indent-level 2
  tcl-tab-always-indent t
