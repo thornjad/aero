@@ -34,9 +34,9 @@
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
 	 "gs" 'magit-status
-	 "gS" 'magit-stage-file
-	 "gU" 'magit-unstage-file
 	 "gb" 'magit-blame
+	 "gfS" 'magit-stage-file
+	 "gfU" 'magit-unstage-file
    "gm" '(:ignore t :which-key "Smerge")
    "gmc" 'smerge-keep-current
    "gmn" 'smerge-next

@@ -166,7 +166,6 @@
 	 "fl" 'counsel-locate
 	 ;; "fr" 'counsel-recentf
 	 "g/" '(counsel-git-grep :which-key "git grep")
-	 "gf" '(:ignore t :which-key "files")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
 	 "hda" '(counsel-apropos :which-key "apropos")
@@ -435,6 +434,8 @@
  "rc" 'aero/clipboard-copy
 
  "g" '(:ignore t :which-key "git")
+ "gf" '(:ignore t :which-key "files")
+
  "j" '(:ignore t :which-key "jump")
  "s" '(:ignore t :which-key "sexp")
  "m" '(:ignore t :which-key "mode")
