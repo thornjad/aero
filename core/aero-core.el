@@ -45,9 +45,10 @@
     ;; to it.
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
+  (require 'package)
+  (setq package-enable-at-startup nil)
   (package-initialize t)
 
-  (require 'package)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
