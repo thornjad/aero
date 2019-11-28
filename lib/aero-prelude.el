@@ -43,7 +43,6 @@
 
 ;; the general is here
 
-;; TODO use :general keyword with use-package
 (use-package which-key
   ;; local
 	:defines which-key-mode
@@ -51,24 +50,6 @@
 	(which-key-mode))
 
 (use-package general
-  ;; local
-	:defines (general-define-key)
-  :functions (general-imap
-							general-emap
-							general-nmap
-							general-vmap
-							general-mmap
-							general-omap
-							general-rmap
-							general-iemap
-							general-nvmap
-							general-itomap
-							general-otomap
-							general-tomap
-							general--sanitize-arglist
-							general-normalize-hook-arglist
-							general-normalize-hook
-							use-package-handler/:ghook)
 	:init
 	(setq-default general-override-states
                 '(insert
