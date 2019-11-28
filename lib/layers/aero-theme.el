@@ -866,6 +866,7 @@
 
 (use-package formfeeder
   :load-path "lib/packages/formfeeder/"
+  :hook (text-mode . formfeeder-mode)
   :config
   (declare-function global-formfeeder-mode "formfeeder")
   (global-formfeeder-mode 1))

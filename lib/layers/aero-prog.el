@@ -21,7 +21,13 @@
         company-show-numbers t
 				company-tooltip-align-annotations t))
 
-(use-package counsel-gtags :ensure t)
+(use-package counsel-gtags :ensure t
+  :commands (counsel-gtags-dwim)
+  :init
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "]" 'counsel-gtags-dwim))
 
 (use-package polymode :ensure t
   :defer t)
@@ -98,8 +104,8 @@
               sp-local-pairs
               sp-up-sexp)
   :commands smartparens-global-mode
-  :hook ((after-init . smartparens-global-mode))
   :after evil
+  :hook ((after-init . smartparens-global-mode))
   :init
   ;; fix highlighting in normal mode
   (setq sp-show-pair-from-inside t)

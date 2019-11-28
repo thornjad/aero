@@ -43,7 +43,7 @@
  initial-buffer-choice t
  inhibit-startup-echo-area-message t
  initial-buffer-choice (lambda () (get-buffer "*scratch*"))
- initial-major-mode 'emacs-lisp-mode
+ initial-major-mode 'text-mode
  initial-scratch-message ";; Aero Emacs\n\n"
 
  ;; version control and saving
