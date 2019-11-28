@@ -12,7 +12,7 @@
 
 (require 'aero-prelude)
 
-(use-package magit :ensure t
+(use-package magit :straight t
 	:commands (magit-blame
              magit-commit
              magit-commit-popup
@@ -98,8 +98,8 @@ board_ticket_branch_name."
     "gp" 'aero/fetch-pr
     "qw" 'aero/insert-jira-ticket)
 
-	(use-package magit-todos :ensure t)
-	(use-package evil-magit :ensure t))
+	(use-package magit-todos :straight t)
+	(use-package evil-magit :straight t))
 
 (use-package ediff
   :commands (ediff ediff3)

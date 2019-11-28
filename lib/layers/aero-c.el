@@ -10,8 +10,8 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package cc-mode
-  :ensure t
+(use-package cc-mode :straight t
+  :after flycheck
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode)
          ("\\.cpp\\'" . cpp-mode)

@@ -21,7 +21,7 @@
 
 ;; NOTE: This is far easier to grab from MELPA than to submodule, mostly because
 ;; it needs to be compile specially.
-(use-package slime :ensure t
+(use-package slime :straight t
   :commands slime
   :init
   (setq-default
@@ -124,7 +124,7 @@ does not specify a special indentation."
 (add-hook 'common-lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 (add-hook 'lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
-(use-package package-lint :ensure t
+(use-package package-lint :straight t
   :commands (package-lint-current-buffer))
 
 (provide 'aero-lisp)

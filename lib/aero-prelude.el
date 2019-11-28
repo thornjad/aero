@@ -24,23 +24,6 @@
 (require 'aero-lib)
 
 
-;; garder ma merde à jour
-
-(use-package auto-package-update
-  ;; local
-	:defines auto-package-update-maybe
-  :config
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t
-        auto-package-update-interval 7 ; days
-        auto-package-update-prompt-before-update t)
-  (auto-package-update-maybe)
-
-  (defun aero/update-packages ()
-    (interactive)
-    (auto-package-update-now)))
-
-
 ;; the general is here
 
 (use-package which-key
@@ -49,16 +32,10 @@
 	:config
 	(which-key-mode))
 
-(use-package general
+(use-package general :straight t
 	:init
 	(setq-default general-override-states
-                '(insert
-                  hybrid
-                  normal
-                  visual
-                  motion
-                  operator
-                  replace))
+                '(insert hybrid normal visual motion operator replace))
 	:config
 	(general-define-key
 	 :states '(normal visual motion)
@@ -108,13 +85,13 @@
 
 	(evil-mode 1))
 
-(use-package evil-matchit :ensure t
+(use-package evil-matchit :straight t
 	:after evil
 	:defines global-evil-matchit-mode
   :config
   (global-evil-matchit-mode 1))
 
-(use-package evil-visualstar :ensure t
+(use-package evil-visualstar :straight t
 	:after evil
 	:defines global-evil-visualstar-mode
   :config
@@ -123,7 +100,8 @@
 
 ;; abo-abo!
 
-(use-package counsel :ensure t
+(use-package counsel :straight t
+  :after general
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -164,7 +142,8 @@
         recentf-auto-cleanup 'never)
   (recentf-mode 1))
 
-(use-package ivy :ensure t
+(use-package ivy :straight t
+	:after general
   :functions ivy-mode
 	:config
 	(ivy-mode 1)
@@ -181,7 +160,8 @@
 
 	 "bb" 'ivy-switch-buffer))
 
-(use-package swiper :ensure t
+(use-package swiper :straight t
+	:after general
   :commands swiper
 	:init
 	(general-define-key
@@ -191,12 +171,13 @@
 
 	 "/" '(counsel-grep-or-swiper :which-key "search")))
 
-(use-package flx :ensure t)
+(use-package flx :straight t)
 
 
 ;;; system
 
 (use-package winner
+	:after general
   :defines winner-boring-buffers
   :config
   (setq winner-boring-buffers
@@ -228,9 +209,8 @@
 (global-set-key (kbd "M-k") #'windmove-up)
 (global-set-key (kbd "M-l") #'windmove-right)
 
-(use-package helpful
-  ;; local
-  :after evil
+(use-package helpful :straight t
+  :after (evil general)
   :config
   (general-define-key
    :states 'normal
@@ -292,7 +272,8 @@
 
 (use-package quick-restart)
 
-(use-package ranger :ensure t
+(use-package ranger :straight t
+	:after general
   :config
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
@@ -302,6 +283,7 @@
    "fd" 'deer))
 
 (use-package pomp
+	:after general
   ;; local
   :commands pomp
   :init

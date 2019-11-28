@@ -10,8 +10,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package company :ensure t
-	:pin gnu
+(use-package company :straight t
 	:hook (prog-mode . company-mode)
 	:init
 	(setq company-idle-delay 0.2
@@ -21,7 +20,7 @@
         company-show-numbers t
 				company-tooltip-align-annotations t))
 
-(use-package counsel-gtags :ensure t
+(use-package counsel-gtags :straight t
   :commands (counsel-gtags-dwim)
   :init
   (general-define-key
@@ -29,14 +28,14 @@
    :prefix "SPC"
    "]" 'counsel-gtags-dwim))
 
-(use-package polymode :ensure t
+(use-package polymode :straight t
   :defer t)
 
 ;;; flycheck
 
 (defvar flycheck-idle-change-delay 3.0)
 (make-variable-buffer-local 'flycheck-idle-change-delay)
-(use-package flycheck :ensure t
+(use-package flycheck :straight t
   :commands flycheck-mode
   :defines (flycheck-clear-idle-change-timer)
   :hook ((web-mode
@@ -99,7 +98,7 @@
 
 ;;; parens
 
-(use-package smartparens :ensure t
+(use-package smartparens :straight t
   :functions (sp-pair
               sp-local-pairs
               sp-up-sexp)

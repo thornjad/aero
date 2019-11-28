@@ -17,7 +17,7 @@
 ;; performance of this software.
 
 
-(use-package elfeed :ensure t
+(use-package elfeed :straight t
   :commands elfeed
   :init
   (general-define-key
@@ -133,7 +133,7 @@
   :commands hackernews)
 
 
-(use-package pocket-reader :ensure t
+(use-package pocket-reader :straight t
 	:commands pocket-reader
   :init
   (general-define-key

@@ -19,13 +19,13 @@
 ;;; Code:
 
 (use-package python
-  :ensure python-mode
+  :straight python-mode
   :mode
   (("\\.py\\'" . python-mode)
    ("\\.pyx\\'" . python-mode)
    ("\\.wsgi$" . python-mode)))
 
-(use-package hy-mode :ensure t
+(use-package hy-mode :straight t
   :mode "\\.hy\\'")
 
 (provide 'aero-python)

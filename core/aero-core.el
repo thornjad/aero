@@ -20,18 +20,7 @@
 ;;; core functionality and utils
 
 (defun aero/bootstrap ()
-  "Bootstrap `use-package' and major components, and set up for use"
-
-  (setq package-enable-at-startup nil)
-  (let ((default-directory "~/.emacs.d/elpa"))
-    (unless (file-directory-p default-directory)
-      (make-directory default-directory))
-    (normal-top-level-add-subdirs-to-load-path))
-
-  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                           ("melpa" . "https://melpa.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")))
+  "Bootstrap `straight', `use-package' and major components, and set up for use"
 
   (when (or (version< emacs-version "26.3") (version< emacs-version "27.1"))
     ;; Emacs before 26.3 has a bug in its TLS implementation which breaks
@@ -45,22 +34,28 @@
     ;; to it.
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (package-initialize t)
+  ;; Bootstrap straight.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+  (straight-use-package 'use-package)
   (require 'use-package)
 
   (setq use-package-expand-minimally byte-compile-current-file
         use-package-verbose init-file-debug)
 
-  (use-package use-package-ensure-system-package :ensure t)
-
-  (use-package gnu-elpa-keyring-update :ensure t
-    :pin gnu))
+  (use-package use-package-ensure-system-package :straight t)
+  (use-package gnu-elpa-keyring-update :straight t))
 
 
 

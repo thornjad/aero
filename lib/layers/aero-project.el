@@ -12,7 +12,7 @@
 
 (require 'aero-prelude)
 
-(use-package projectile :ensure t
+(use-package projectile :straight t
 	:config
 	(projectile-mode 1)
 	(setq projectile-indexing-method 'alien
@@ -20,7 +20,7 @@
 				;; fix sub-projects bug https://github.com/bbatsov/projectile/issue/1302
 				projectile-git-submodule-command nil))
 
-(use-package counsel-projectile :ensure t
+(use-package counsel-projectile :straight t
 	:after projectile
 	:config
 	(general-define-key

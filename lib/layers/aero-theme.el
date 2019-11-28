@@ -23,7 +23,7 @@
 (require 'subr-x)
 (require 'use-package)
 
-(use-package autothemer :ensure t)
+(use-package autothemer :straight t)
 
 (autothemer-deftheme
  aero-theme "Aero theme"

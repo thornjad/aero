@@ -20,12 +20,12 @@
 ;;
 ;;; Code:
 
-(use-package web-mode :ensure t
+(use-package web-mode :straight t
   :load-path "lib/packages/web-mode/"
   :mode
   "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\)\\'")
 
-(use-package emmet-mode :ensure t
+(use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
   :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
 	:init
@@ -36,7 +36,7 @@
    'rjsx-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
 
-(use-package scss-mode :ensure t
+(use-package scss-mode :straight t
   :load-path "lib/packages/emmet-mode"
   :mode "\\.s?css\\'"
   :ensure-system-package
@@ -74,38 +74,15 @@
   (evil-define-key 'normal rjsx-mode-map
     (kbd "C-d") 'evil-scroll-down))
 
-(use-package json-mode :ensure t
+(use-package json-mode :straight t
 	:mode "\\.json\\'")
 
-(use-package yaml-mode :ensure t
+(use-package yaml-mode :straight t
   :mode "\\.ya?ml\\'")
-
-;; rivet
-
-;; ;; modified from configuration by James Sulak
-;; (use-package mmm-mode :ensure t
-;;   :mode "\\.\\(rvt\\|test\\)\\'"
-;;   :functions (mmm-add-mode-ext-class)
-;; 	:config
-;; 	(require 'mmm-auto)
-;; 	(mmm-add-classes
-;; 	 '((web-rvt
-;; 			:submode tcl-mode
-;; 			:delimiter-mode nil
-;; 			:front "<\\?[=]?"
-;; 			:front-offset 1
-;; 			:back-offset 1
-;; 			:back "\\?>")))
-;; 	(setq mmm-submode-decoration-level 0)
-;; 	(setq mmm-global-mode 'maybe)
-;; 	(mmm-add-mode-ext-class 'web-mode "\\.rvt\\'" 'web-rvt)
-;; 	(setq auto-mode-alist (append (list (cons "\\.rvt\\'" 'web-mode))
-;; 																auto-mode-alist)))
-
 
 ;; the rest
 
-(use-package coffee-mode :ensure t
+(use-package coffee-mode :straight t
   :mode "\\.coffee\\'"
   :ensure-system-package
   ((coffee . "npm i -g coffeescript")

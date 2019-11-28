@@ -10,7 +10,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package sql :ensure t :defer t
+(use-package sql :straight t :defer t
   :commands (sql-connect)
 
   :init
@@ -51,8 +51,6 @@
       (sql-send-region start end)
       (evil-insert-state))))
 
-(use-package sql-indent :ensure t
-	:defer t
-	:pin gnu)
+(use-package sql-indent :straight t :defer t)
 
 (provide 'aero-sql)

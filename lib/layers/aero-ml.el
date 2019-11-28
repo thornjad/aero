@@ -10,7 +10,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package tuareg :ensure t
+(use-package tuareg :straight t
   :mode "\\.mli?\\'")
 
 (provide 'aero-ml)

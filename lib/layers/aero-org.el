@@ -12,7 +12,7 @@
 
 (use-package org
 	:defer t
-	:ensure org-plus-contrib
+	:straight org-plus-contrib
 	:commands org-mode
 	:mode ("\\.org\\'" . org-mode)
 
@@ -30,6 +30,6 @@
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
 
-  (use-package toc-org :ensure t))
+  (use-package toc-org :straight t))
 
 (provide 'aero-org)

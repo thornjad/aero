@@ -10,10 +10,10 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package markdown-mode :ensure t
+(use-package markdown-mode :straight t
   :mode "\\.\\(md\\|markdown\\)")
 
-(use-package nov :ensure t
+(use-package nov :straight t
   :mode ("\\.epub\\'" . nov-mode)
   :init
   (setq nov-text-width 80))

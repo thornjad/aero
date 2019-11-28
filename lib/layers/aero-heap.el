@@ -17,13 +17,13 @@
 ;; Code:
 
 (use-package whitespace-cleanup-mode
-	:ensure t
+	:straight t
 	:config (global-whitespace-cleanup-mode))
 
-(use-package esup :ensure t
+(use-package esup :straight t
   :commands esup)
 
-(use-package rainbow-mode :ensure t
+(use-package rainbow-mode :straight t
   :commands rainbow-mode)
 
 (use-package hackernews
@@ -43,7 +43,7 @@
 
 ;;; games
 
-(use-package 2048-game :ensure t
+(use-package 2048-game :straight t
   :commands 2048-game
   :config
   (general-define-key
@@ -60,6 +60,6 @@
    (kbd "<down>") '2048-down
    "q" 'quit-window))
 
-(use-package landmark :ensure t :defer t)
+(use-package landmark :straight t :defer t)
 
 (provide 'aero-heap)

@@ -16,7 +16,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package haskell-mode :ensure t
+(use-package haskell-mode :straight t
   :mode "\\.hs\\'"
   :config
   (require 'haskell-doc))
