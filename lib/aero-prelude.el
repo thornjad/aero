@@ -387,11 +387,13 @@ just been killed (which happens during Emacs shutdown)."
 
   (use-package lsp-clients :straight nil
     :config
-    (eval-when-compile (declare-function aero-env-setup "aero-core"))
-    (aero-env-setup)))
+    (eval-when-compile (declare-function aero/env-setup "aero-core"))
+    (aero/env-setup)))
 
 (use-package lsp-ui :straight t
-  :commands lsp-ui-mode)
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode))
 
 
 ;;; general bindings
