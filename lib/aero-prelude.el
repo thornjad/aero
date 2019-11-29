@@ -33,6 +33,17 @@
 (straight-use-package 'org)
 
 
+;;; get ready to patch at any time
+
+(use-package el-patch
+  :straight (:host github
+             :repo "raxod502/el-patch"
+             :branch "develop"))
+;; Only needed at compile time
+(eval-when-compile
+  (require 'el-patch))
+
+
 ;; the general is here
 
 (use-package which-key
@@ -111,6 +122,58 @@
 
 (use-package counsel :straight t
   :after general
+
+  :init/el-patch ; remove bindings which we use `helpful' for
+  (defvar counsel-mode-map
+    (let ((map (make-sparse-keymap)))
+      (dolist (binding
+               '((execute-extended-command . counsel-M-x)
+                 (describe-bindings . counsel-descbinds)
+                 (el-patch-remove
+                  (describe-function . counsel-describe-function)
+                  (describe-variable . counsel-describe-variable))
+                 (apropos-command . counsel-apropos)
+                 (describe-face . counsel-describe-face)
+                 (list-faces-display . counsel-faces)
+                 (find-file . counsel-find-file)
+                 (find-library . counsel-find-library)
+                 (imenu . counsel-imenu)
+                 (load-library . counsel-load-library)
+                 (load-theme . counsel-load-theme)
+                 (yank-pop . counsel-yank-pop)
+                 (info-lookup-symbol . counsel-info-lookup-symbol)
+                 (pop-to-mark-command . counsel-mark-ring)
+                 (bookmark-jump . counsel-bookmark)))
+        (define-key map (vector 'remap (car binding)) (cdr binding)))
+      map)
+    (el-patch-concat
+     "Map for `counsel-mode'.
+Remaps built-in functions to counsel replacements."
+     (el-patch-add
+      "\n\nBindings that are remapped by `helpful' have been removed.")))
+
+  (defcustom counsel-mode-override-describe-bindings nil
+    "Whether to override `describe-bindings' when `counsel-mode' is active."
+    :type 'boolean)
+
+  (define-minor-mode counsel-mode
+    "Toggle Counsel mode on or off.
+Turn Counsel mode on if ARG is positive, off otherwise. Counsel mode remaps
+built-in emacs functions that have counsel replacements.
+Local bindings (`counsel-mode-map'):
+\\{counsel-mode-map}"
+    :global t
+    :keymap counsel-mode-map
+    (if counsel-mode
+        (progn
+          (when (and (fboundp 'advice-add)
+                   counsel-mode-override-describe-bindings)
+            (advice-add #'describe-bindings :override #'counsel-descbinds))
+          (define-key minibuffer-local-map (kbd "C-r")
+            'counsel-minibuffer-history))
+      (when (fboundp 'advice-remove)
+        (advice-remove #'describe-bindings #'counsel-descbinds))))
+
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -341,8 +404,8 @@
      ;; Errors we get from gopls for no good reason (I can't figure out why).
      ;; They don't impair functionality.
      (and (stringp (car args))
-        (or (string-match-p "^no object for ident .+$" (car args))
-           (string-match-p "^no identifier found$" (car args))))))
+          (or (string-match-p "^no object for ident .+$" (car args))
+              (string-match-p "^no identifier found$" (car args))))))
   (dolist (fun '(lsp-warn lsp--warn lsp--info lsp--error))
     (advice-add fun :before-until #'aero--advice-lsp-mode-silence))
 
