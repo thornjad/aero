@@ -60,23 +60,6 @@
 
 ;; program-wide
 
-;; https://github.com/syl20bnr/spacemacs/issues/8414
-(defun aero/recompile-elpa (arg)
-  "Compile or recompile packages in elpa directory, if needed, that is if the
-    corresponding .elc file is either missing or outdated. If ARG is non-nil,
-    also recompile every `.el' file, regardless of date. Useful if you switch
-    Emacs versions."
-  (interactive "P")
-  ;; First argument must be 0 (not nil) to get missing .elc files rebuilt.
-  ;; Bonus: Optionally force recompilation with universal ARG
-  (when arg
-    (seq-do
-     (lambda (fname)
-       (when (file-exists-p fname)
-         (delete-file fname)))
-     (directory-files-recursively user-emacs-directory "\\.elc$" t)))
-  (byte-recompile-directory package-user-dir 0 arg))
-
 ;; https://sachachua.com/blog/2006/09/emacs-changing-the-font-size-on-the-fly/
 (defun aero/increase-font-size ()
   (interactive)
