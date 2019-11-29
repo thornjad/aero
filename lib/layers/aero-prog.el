@@ -28,6 +28,8 @@
    :prefix "SPC"
    "]" 'counsel-gtags-dwim))
 
+(use-package indent-guide :straight t
+  :hook (prog-mode . indent-guide-mode))
 
 ;;; flycheck
 
@@ -91,8 +93,7 @@
    "pcH" 'flycheck-display-error-at-point-soon
    "pce" 'flycheck-explain-error-at-point
    "pcl" 'flycheck-list-errors
-   "pci" 'flycheck-manual)
-  )
+   "pci" 'flycheck-manual))
 
 ;;; parens
 
