@@ -18,5 +18,12 @@ compile-packages:
 	shopt -s extglob
 	$(EMACS) -batch -l ~/.emacs.d/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
 
+install-dependencies: install-lsp-servers
+	npm i -g sass-lint eslint tern coffeescript coffeelint
+
+install-lsp-servers:
+	npm i -g bash-language-server vscode-css-languageserver-bin vscode-html-languageserver-bin typescript typescript-language-server
+	pip install python-language-server
+
 update-elpa:
 	$(EMACS) -batch --eval '(progn(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")(package-initialize)(auto-package-update-now))'
