@@ -108,6 +108,12 @@
         (bury-buffer)
       ad-do-it)))
 
+;; Trigger auto-fill after punctutation characters, not just whitespace.
+(mapc
+ (lambda (c)
+   (set-char-table-range auto-fill-chars c t))
+ "!-=+]};:'\",.?")
+
 ;; display changes
 (add-hook 'before-save-hook
           (lambda () (delete-trailing-whitespace)))
@@ -128,15 +134,15 @@
 
 ;; If there were no compilation errors, delete the compilation window
 (setq-default compilation-exit-message-function
-      (lambda (status code msg)
-        ;; If M-x compile exists with a 0
-        (when (and (eq status 'exit) (zerop code))
-          ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-          (bury-buffer "*compilation*")
-          ;; and return to whatever were looking at before
-          (replace-buffer-in-windows "*compilation*"))
-        ;; Always return the anticipated result of compilation-exit-message-function
-        (cons msg code)))
+              (lambda (status code msg)
+                ;; If M-x compile exists with a 0
+                (when (and (eq status 'exit) (zerop code))
+                  ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+                  (bury-buffer "*compilation*")
+                  ;; and return to whatever were looking at before
+                  (replace-buffer-in-windows "*compilation*"))
+                ;; Always return the anticipated result of compilation-exit-message-function
+                (cons msg code)))
 
 ;; open some buffers in the same window
 (add-to-list 'display-buffer-alist
