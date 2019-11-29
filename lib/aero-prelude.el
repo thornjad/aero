@@ -23,6 +23,14 @@
 (require 'cl-lib)
 (require 'aero-lib)
 
+;; Our real configuration for Org comes much later. Doing this now
+;; means that if any packages that are installed in the meantime
+;; depend on Org, they will not accidentally cause the Emacs-provided
+;; (outdated and duplicated) version of Org to be loaded before the
+;; real one is registered.
+(eval-when-compile (declare-function straight-use-package "straight"))
+(straight-use-package 'org)
+
 
 ;; the general is here
 
