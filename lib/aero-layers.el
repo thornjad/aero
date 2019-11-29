@@ -13,7 +13,7 @@
 ;; This file is not part of GNU Emacs
 
 (defun aero/load-layers ()
-	"Load all configured layers, listed above"
+	"Load all configured layers, listed below"
 
   (let ((aero-layer-list
          '(aero-c
