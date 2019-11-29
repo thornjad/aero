@@ -247,6 +247,16 @@ Local bindings (`counsel-mode-map'):
 
 (use-package flx :straight t)
 
+(use-package avy :straight t
+  :commands (avy-goto-line avy-goto-char avy-goto-word-1)
+  :init
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "jl" '(avy-goto-line :which-key "jump to line")
+   "jc" '(avy-goto-char :which-key "jump to char")
+   "jw" '(avy-goto-word-1 :which-key "jump to word")))
+
 
 ;;; system
 
@@ -564,6 +574,7 @@ just been killed (which happens during Emacs shutdown)."
  "j" '(:ignore t :which-key "jump")
  "s" '(:ignore t :which-key "sexp")
  "m" '(:ignore t :which-key "mode")
+ "j" '(:ignore t :which-key "jump")
 
  "p" '(:ignore t :which-key "project")
  "pr" '(xref-find-definitions :which-key "find ref")
