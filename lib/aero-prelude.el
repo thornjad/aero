@@ -309,6 +309,15 @@
 
 (use-package lsp-mode :straight t
   :after general
+  ;; :hook (XXX-mode . lsp-deferred)
+  :hook ((sh-mode
+          scss-mode
+          css-mode
+          web-mode
+          rjsx-mode
+          python-mode)
+         . lsp-deferred)
+  :commands (lsp lsp-deferred)
   :defines (lsp-prefer-flymake
             lsp-enable-snippet
             lsp-resolve-final-function
@@ -380,6 +389,9 @@ just been killed (which happens during Emacs shutdown)."
     :config
     (eval-when-compile (declare-function aero-env-setup "aero-core"))
     (aero-env-setup)))
+
+(use-package lsp-ui :straight t
+  :commands lsp-ui-mode)
 
 
 ;;; general bindings
