@@ -32,7 +32,7 @@
     ;; we make a guess that 27.1 will have it fixed. It's more likely that some
     ;; patch version will contain this fix, but we'll burn that bridge when get
     ;; to it.
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+    (setq-default gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
   ;; Bootstrap straight.el
   (defvar bootstrap-version)
@@ -48,6 +48,7 @@
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 
+  (eval-when-compile (declare-function straight-use-package "straight.el"))
   (straight-use-package 'use-package)
   (require 'use-package)
 
@@ -78,6 +79,9 @@
   (aero/bootstrap)
   (aero/load-libs)
   (require 'aero-layers)
+  (eval-when-compile
+    (declare-function aero/load-layers "aero-layers")
+    (declare-function aero/load-private "aero-layers"))
   (aero/load-layers)
   (aero/load-private)
 
@@ -88,6 +92,7 @@
   (require 'aero-rc)
 
   (global-font-lock-mode)
+  (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
         gc-cons-percentage (cadr (cadr aero/gc-cons))))
 
