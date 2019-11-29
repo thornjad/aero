@@ -134,7 +134,7 @@
 	 "SPC" 'counsel-M-x
 	 "ff" 'counsel-find-file
 	 "fl" 'counsel-locate
-	 ;; "fr" 'counsel-recentf
+	 "fr" 'counsel-recentf
 	 "g/" '(counsel-git-grep :which-key "git grep")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
@@ -179,7 +179,6 @@
 	 :states '(normal)
 	 :prefix "SPC"
 	 :non-normal-prefix "C-SPC"
-
 	 "/" '(counsel-grep-or-swiper :which-key "search")))
 
 (use-package flx :straight t)
