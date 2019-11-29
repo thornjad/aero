@@ -123,6 +123,9 @@
       (right-char)
       (counsel-unicode-char)))
 
+  (setq counsel-grep-base-command
+        "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+
 	(general-define-key
 	 :states '(normal visual insert replace)
 	 :prefix "SPC"
