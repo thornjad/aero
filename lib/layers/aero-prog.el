@@ -28,8 +28,6 @@
    :prefix "SPC"
    "]" 'counsel-gtags-dwim))
 
-(use-package polymode :straight t
-  :defer t)
 
 ;;; flycheck
 
