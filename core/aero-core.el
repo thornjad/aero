@@ -119,4 +119,61 @@
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
         gc-cons-percentage (cadr (cadr aero/gc-cons))))
 
+
+;;; environment
+
+
+(defvar aero--env-setup-p nil
+  "Non-nil if `aero-env-setup' has completed at least once.")
+
+(defun aero/env-setup (&optional again)
+  "Load ~/.profile and set environment variables exported therein. Only do this
+once, unless AGAIN is non-nil."
+  (interactive (list 'again))
+  ;; No need to worry about race conditions because Elisp isn't concurrent yet
+  (unless (and aero--env-setup-p (not again))
+    (let ((profile-file "~/.profile")
+          (buf-name " *aero-env-output*"))
+      (when (and profile-file
+               (file-exists-p profile-file)
+               (executable-find "python"))
+        (ignore-errors (kill-buffer buf-name))
+        (with-current-buffer (get-buffer-create buf-name)
+          (let* ((python-script
+                  (expand-file-name "scripts/print_env.py" user-emacs-directory))
+                 (delimiter (md5
+                             (format
+                              "%s%s%s%s"
+                              (system-name) (emacs-pid) (current-time) (random))))
+                 (sh-script (format ". %s && %s %s"
+                                    (shell-quote-argument
+                                     (expand-file-name profile-file))
+                                    (shell-quote-argument python-script)
+                                    (shell-quote-argument delimiter)))
+                 (return (call-process "sh" nil t nil "-c" sh-script))
+                 (found-delimiter
+                  (progn
+                    (goto-char (point-min))
+                    (search-forward delimiter nil 'noerror))))
+            (if (and (= 0 return) found-delimiter)
+                (let* ((results (split-string
+                                 (buffer-string) (regexp-quote delimiter)))
+                       (results (cl-subseq results 1 (1- (length results)))))
+                  (if (cl-evenp (length results))
+                      (progn
+                        (cl-loop for (var value) on results by #'cddr do
+                                 (setenv var value)
+                                 (when (string= var "PATH")
+                                   (setq exec-path (append
+                                                    (parse-colon-path value)
+                                                    (list exec-directory)))))
+                        (setq aero--env-setup-p t))
+                    (message
+                     "Loading %s produced malformed result; see buffer %S"
+                     profile-file
+                     buf-name)))
+              (message "Failed to load %s; see buffer %S"
+                       profile-file
+                       buf-name))))))))
+
 (provide 'aero-core)
