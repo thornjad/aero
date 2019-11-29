@@ -18,29 +18,47 @@
 ;;
 ;; Commentary:
 ;;
-;; A home for interactive utilities
+;; A home for utilities
 ;;
 ;; Code:
 
-(require 'aero-files)
-(require 'aero-util)
 (require 'cl-lib)
+
+
+;;; system and logging
+
+(defun system-is-mac ()
+  (eq system-type 'darwin))
+(defun system-is-linux ()
+  (eq system-type 'gnu/linux))
+(defun system-is-mswindows ()
+  (eq system-type 'windows-nt))
+(defun window-system-is-mac ()
+  (memq (window-system) '(mac ns)))
+
+(defun aero/log-error (msg &rest args)
+  "Display MSG as an error message in `*Messages*' buffer"
+  (let ((msg (apply 'format msg args)))
+    (message "(aero) Error: %s" msg)))
+
+(defun aero/log-warning (msg &rest args)
+  "Display MSG as a warning message in buffer `*Messages*'"
+  (let ((msg (apply 'format msg args)))
+    (message "(aero) Warning: %s" msg)))
+
+(defun aero/log-info (msg &rest args)
+	"Display MSG as an info message in buffer `*Messages'"
+	(let ((msg (apply 'format msg args)))
+		(message "(aero) Info: %s" msg)))
+
+(defun aero/echo (msg &rest args)
+  "Display MSG in echo-area without logging it in `*Messages' buffer."
+  (interactive)
+  (let ((message-log-max nil))
+    (apply 'message msg args)))
+
 
 ;; program-wide
-
-(defun aero/save-kill-emacs ()
-  (interactive)
-  (mapc (lambda (f) (ignore-errors (funcall f)))
-        '(recentf-save-list bookmark-save))
-  (if (modified-buffers-p)
-      (progn
-        (when (not (eq window-system 'x))
-          (x-initialize-window-system))
-        (select-frame (make-frame-on-display (getenv "DISPLAY") '((window-system . x))))
-        (save-some-buffers)
-        (if (yes-or-no-p "Kill Emacs? ")
-            (kill-emacs)))
-    (kill-emacs)))
 
 ;; https://github.com/syl20bnr/spacemacs/issues/8414
 (defun aero/recompile-elpa (arg)
@@ -103,11 +121,6 @@ emacs with sigusr2"
       (prettify-symbols-mode -1)
     (prettify-symbols-mode 1)))
 
-(defun aero/move-buffer-to-window ()
-	"Interactive move buffer to window"
-	(interactive)
-	(aero|move-buffer-to-window (read-string "Move to:") t))
-
 (defun aero/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
   (interactive)
@@ -150,13 +163,83 @@ This is equivalent to SPC U M-x eshell"
   (eshell t))
 
 
-;;; editing et cetera
+;;; files
 
-(defun aero/jump-to-tag (id)
+(defun aero/delete-this-file ()
+  "Delete the current file, and kill the buffer."
+  (interactive)
+  (or (buffer-file-name) (error "No file is currently being edited"))
+  (when (yes-or-no-p (format "Really delete '%s'?"
+                             (file-name-nondirectory buffer-file-name)))
+    (delete-file (buffer-file-name))
+    (kill-this-buffer)))
+
+(defun aero/rename-this-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (unless filename
+      (error "Buffer '%s' is not visiting a file!" name))
+    (if (get-buffer new-name)
+        (message "A buffer named '%s' already exists!" new-name)
+      (progn
+        (rename-file filename new-name 1)
+        (rename-buffer new-name)
+        (set-visited-file-name new-name)
+        (set-buffer-modified-p nil)))))
+
+(defun aero/buffer-too-big-p ()
+	"Is buffer longer than 5000"
+  (> (buffer-size) (* 5000 80)))
+
+(defun aero/file-too-big-p (file)
+	"Is file larger than 5000 lines"
+  (> (nth 7 (file-attributes file))
+     (* 5000 64)))
+
+;; adapted from
+;; http://emacs.stackexchange.com/questions/202/close-all-dired-buffers
+(defun aero/kill-diff-buffers ()
+  (interactive)
+  (mapc (lambda (buffer)
+          (when (member (buffer-local-value 'major-mode buffer)
+                        '(diff-mode magit-diff-mode magit-process-mode))
+            (kill-buffer buffer)))
+        (buffer-list)))
+
+(defun aero/dos2unix ()
+  "Converts the current buffer to UNIX file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix nil))
+
+(defun aero/unix2dos ()
+  "Converts the current buffer to DOS file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos nil))
+
+(defun aero/sudo-edit (&optional arg)
   (interactive "P")
-  (when (fboundp 'xref-find-definitions)
-    (let ((xref-prompt-for-identifier id))
-      (call-interactively #'xref-find-definitions))))
+  (let ((fname (if (or arg (not buffer-file-name))
+                   (read-file-name "File: ")
+                 buffer-file-name)))
+    (find-file
+     (cond ((string-match-p "^/ssh:" fname)
+            (with-temp-buffer
+              (insert fname)
+              (search-backward ":")
+              (let ((last-match-end nil)
+                    (last-ssh-hostname nil))
+                (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
+                  (setq last-ssh-hostname (or (match-string 1 fname)
+                                              last-ssh-hostname))
+                  (setq last-match-end (match-end 0)))
+                (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
+              (buffer-string)))
+           (t (concat "/sudo:root@localhost:" fname))))))
+
+
+;;; editing et cetera
 
 ;; written by github user rompy
 (defun aero/smarter-backward-kill-word ()
@@ -208,6 +291,5 @@ This is equivalent to SPC U M-x eshell"
 (defun lorem ()
   (interactive)
   (insert "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent libero orci, auctor sed, faucibus vestibulum, gravida vitae, arcu. Nunc posuere. Suspendisse potenti. Praesent in arcu ac nisl ultricies ultricies. Fusce eros. Sed pulvinar vehicula ante. Maecenas urna dolor, egestas vel, tristique et, porta eu, leo. Curabitur vitae sem eget arcu laoreet vulputate. Cras orci neque, faucibus et, rhoncus ac, venenatis ac, magna. Aenean eu lacus. Aliquam luctus facilisis augue. Nullam fringilla consectetuer sapien. Aenean neque augue, bibendum a, feugiat id, lobortis vel, nunc. Suspendisse in nibh quis erat condimentum pretium. Vestibulum tempor odio et leo. Sed sodales vestibulum justo. Cras convallis pellentesque augue. In eu magna. In pede turpis, feugiat pulvinar, sodales eget, bibendum consectetuer, magna. Pellentesque vitae augue."))
-
 
 (provide 'aero-lib)

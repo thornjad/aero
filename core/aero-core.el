@@ -71,7 +71,6 @@
   "Load Aero libraries and utilities, which will be required later"
 
   (require 'subr-x)
-  (require 'aero-util)
   (require 'aero-lib))
 
 (defun aero/init ()

@@ -319,7 +319,6 @@
  "!" 'shell-command
  "=" 'quick-calc
  "," '(:ignore t :which-key "mode") ; reserved for mode-specific
- "." 'aero/jump-to-tag
 
  "U" 'universal-argument
 
@@ -351,7 +350,6 @@
  "bn" 'next-buffer
  "bp" 'previous-buffer
  "bl" 'list-buffers
- "bw" 'aero/move-buffer-to-window
  "bm" 'switch-to-messages-buffer
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
@@ -363,7 +361,6 @@
  "bP" 'aero/toggle-prettify-this-buffer
 
  "e" '(:ignore t :which-key "emacs")
- "eq" 'aero/save-kill-emacs
  "ea" 'aero/apologize-to-emacs
 
  "a" '(:ignore t :which-key "applications")
