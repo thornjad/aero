@@ -15,27 +15,28 @@
 (defun aero/load-layers ()
 	"Load all configured layers, listed above"
 
-  (let ((aero-layer-list '(aero-c
-                           aero-eww
-                           aero-git
-                           aero-haskell
-                           aero-heap
-                           aero-lisp
-                           aero-markup
-                           aero-ml
-                           aero-news
-                           aero-org
-                           aero-orson
-                           aero-prog
-                           aero-project
-                           aero-python
-                           aero-rust
-                           aero-shell
-                           aero-spotify
-                           aero-sql
-                           aero-tcl
-                           aero-theme
-                           aero-web)))
+  (let ((aero-layer-list
+         '(aero-c
+           aero-eww
+           aero-git
+           aero-haskell
+           aero-heap
+           aero-lisp
+           aero-markup
+           aero-ml
+           aero-news
+           aero-org
+           aero-orson
+           aero-prog
+           aero-project
+           aero-python
+           aero-rust
+           aero-shell
+           aero-spotify
+           aero-sql
+           aero-tcl
+           aero-theme
+           aero-web)))
 
     ;; load up the prelude first, it defines some functions we want in other
     ;; layers. You could say it... /preludes/ the other layers
