@@ -313,31 +313,6 @@
             lsp-resolve-final-function
             lsp-restart
             lsp-language-id-configuration)
-  :init
-  (aero/defhook
-   aero--lsp-enable ()
-   after-change-major-mode-hook
-   "Enable `lsp-mode' for most programming modes. Do this on
-`after-change-major-mode-hook' instead of `prog-mode-hook' and `text-mode-hook'
-because we want to make sure regular mode hooks get a chance to run first, for
-example to set LSP configuration (see `lsp-python-ms')."
-   (when (derived-mode-p #'prog-mode #'text-mode)
-     (unless
-         (or (null buffer-file-name)
-            (derived-mode-p
-             ;; `lsp-mode' doesn't support Elisp, so let's avoid triggering the
-             ;; autoload just for checking that, yes, there's nothing to do for
-             ;; the *scratch* buffer.
-             #'emacs-lisp-mode
-             ;; Disable for modes that we currently use a specialized framework
-             ;; for, until they are phased out in favor of LSP.
-             #'clojure-mode
-             #'ruby-mode
-             #'rust-mode
-             #'tcl-mode
-             ))
-       (lsp))))
-
   :config
   (setq lsp-prefer-flymake nil) ; prefer flycheck over flymake
 
