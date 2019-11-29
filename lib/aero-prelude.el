@@ -304,6 +304,103 @@
    "ap" 'pomp))
 
 
+;;; language server protocol interaction
+
+(use-package lsp-mode :straight t
+  :after general
+  :defines (lsp-prefer-flymake
+            lsp-enable-snippet
+            lsp-resolve-final-function
+            lsp-restart
+            lsp-language-id-configuration)
+  :init
+  (aero/defhook
+   aero--lsp-enable ()
+   after-change-major-mode-hook
+   "Enable `lsp-mode' for most programming modes. Do this on
+`after-change-major-mode-hook' instead of `prog-mode-hook' and `text-mode-hook'
+because we want to make sure regular mode hooks get a chance to run first, for
+example to set LSP configuration (see `lsp-python-ms')."
+   (when (derived-mode-p #'prog-mode #'text-mode)
+     (unless
+         (or (null buffer-file-name)
+            (derived-mode-p
+             ;; `lsp-mode' doesn't support Elisp, so let's avoid triggering the
+             ;; autoload just for checking that, yes, there's nothing to do for
+             ;; the *scratch* buffer.
+             #'emacs-lisp-mode
+             ;; Disable for modes that we currently use a specialized framework
+             ;; for, until they are phased out in favor of LSP.
+             #'clojure-mode
+             #'ruby-mode
+             #'rust-mode
+             #'tcl-mode
+             ))
+       (lsp))))
+
+  :config
+  (setq lsp-prefer-flymake nil) ; prefer flycheck over flymake
+
+  (defun aero--advice-lsp-mode-silence (format &rest args)
+    "Silence needless diagnostic messages from `lsp-mode'. This is a
+`:before-until' advice for several `lsp-mode' logging functions."
+    (or
+     ;; Messages we get when trying to start LSP (happens every time we open a
+     ;; buffer).
+     (member format `("No LSP server for %s(check *lsp-log*)."
+                      "Connected to %s."
+                      ,(concat
+                        "Unable to calculate the languageId for current "
+                        "buffer. Take a look at "
+                        "lsp-language-id-configuration.")))
+     ;; Errors we get from gopls for no good reason (I can't figure out why).
+     ;; They don't impair functionality.
+     (and (stringp (car args))
+        (or (string-match-p "^no object for ident .+$" (car args))
+           (string-match-p "^no identifier found$" (car args))))))
+  (dolist (fun '(lsp-warn lsp--warn lsp--info lsp--error))
+    (advice-add fun :before-until #'aero--advice-lsp-mode-silence))
+
+  ;; Ignore yasnippet crap, since its not used
+  (setq lsp-enable-snippet nil)
+
+  (aero/defadvice
+   aero--lsp-run-from-node-modules (command)
+   :filter-return lsp-resolve-final-function
+   "Find LSP executables inside node_modules/.bin if present."
+   (cl-block nil
+     (prog1 command
+       (when-let ((project-dir
+                   (locate-dominating-file default-directory "node_modules"))
+                  (binary
+                   (aero/path-join
+                    project-dir "node_modules" ".bin" (car command))))
+         (when (file-executable-p binary)
+           (cl-return (cons binary (cdr command))))))))
+
+  (aero/defhook
+   aero--lsp-teardown ()
+   kill-emacs-hook
+   "Ignore the LSP server getting killed. If we don't do this, then when killing
+Emacs we may be prompted with whether we want to restart the LSP server that has
+just been killed (which happens during Emacs shutdown)."
+   (setq lsp-restart nil))
+
+  ;; `lsp-mode' doesn't know about LaTeX yet.
+  (add-to-list 'lsp-language-id-configuration '(latex-mode . "latex"))
+
+  ;; fix some bad regexps
+  (setq lsp-language-id-configuration
+        (mapcar
+         (lambda (link)
+           (if (and (stringp (car link))
+                  (string-match "\\`\\.\\*\\.\\(.+\\)\\'" (car link)))
+               (cons
+                (format "\\.%s\\'" (match-string 1 (car link))) (cdr link))
+             link))
+         lsp-language-id-configuration)))
+
+
 ;;; general bindings
 
 (general-def
