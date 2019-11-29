@@ -127,7 +127,7 @@ board_ticket_branch_name."
            (my-boards '("WEB")))
       (when (member board my-boards)
         (save-excursion
-          (next-line)
+          (forward-line)
           (insert (format "\n%s-%s" board ticket))))))
 
   ;; Auto-add ticket number when opening commit message
