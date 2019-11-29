@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'aero-core)
 (require 'aero-lib)
 
 ;; Our real configuration for Org comes much later. Doing this now
@@ -340,26 +341,26 @@
   (setq lsp-enable-snippet nil)
 
   (aero/defadvice
-   aero--lsp-run-from-node-modules (command)
-   :filter-return lsp-resolve-final-function
-   "Find LSP executables inside node_modules/.bin if present."
-   (cl-block nil
-     (prog1 command
-       (when-let ((project-dir
-                   (locate-dominating-file default-directory "node_modules"))
-                  (binary
-                   (aero/path-join
-                    project-dir "node_modules" ".bin" (car command))))
-         (when (file-executable-p binary)
-           (cl-return (cons binary (cdr command))))))))
+      aero--lsp-run-from-node-modules (command)
+    :filter-return lsp-resolve-final-function
+    "Find LSP executables inside node_modules/.bin if present."
+    (cl-block nil
+      (prog1 command
+        (when-let ((project-dir
+                    (locate-dominating-file default-directory "node_modules"))
+                   (binary
+                    (aero/path-join
+                     project-dir "node_modules" ".bin" (car command))))
+          (when (file-executable-p binary)
+            (cl-return (cons binary (cdr command))))))))
 
   (aero/defhook
-   aero--lsp-teardown ()
-   kill-emacs-hook
-   "Ignore the LSP server getting killed. If we don't do this, then when killing
+      aero--lsp-teardown ()
+    kill-emacs-hook
+    "Ignore the LSP server getting killed. If we don't do this, then when killing
 Emacs we may be prompted with whether we want to restart the LSP server that has
 just been killed (which happens during Emacs shutdown)."
-   (setq lsp-restart nil))
+    (setq lsp-restart nil))
 
   ;; `lsp-mode' doesn't know about LaTeX yet.
   (add-to-list 'lsp-language-id-configuration '(latex-mode . "latex"))
@@ -373,7 +374,12 @@ just been killed (which happens during Emacs shutdown)."
                (cons
                 (format "\\.%s\\'" (match-string 1 (car link))) (cdr link))
              link))
-         lsp-language-id-configuration)))
+         lsp-language-id-configuration))
+
+  (use-package lsp-clients :straight nil
+    :config
+    (eval-when-compile (declare-function aero-env-setup "aero-core"))
+    (aero-env-setup)))
 
 
 ;;; general bindings
