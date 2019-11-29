@@ -25,6 +25,72 @@
 (require 'cl-lib)
 
 
+;;; macros
+
+(defmacro aero/defhook (name arglist hooks docstring &rest body)
+  "Define a function called NAME and add it to a hook. ARGLIST is as in `defun'.
+HOOKS is a list of hooks to which to add the function, or just a single hook.
+DOCSTRING and BODY are as in `defun'."
+  (declare (indent 2)
+           (doc-string 4))
+  (unless (listp hooks)
+    (setq hooks (list hooks)))
+  (dolist (hook hooks)
+    (unless (string-match-p "-\\(hook\\|functions\\)$" (symbol-name hook))
+      (aero/log-error "symbol `%S' is not a hook" hook)))
+  (unless (stringp docstring)
+    (aero/log-error "no docstring provided for `aero/defhook'"))
+  (let ((hooks-str (format "`%S'" (car hooks))))
+    (dolist (hook (cdr hooks))
+      (setq hooks-str (format "%s\nand `%S'" hooks-str hook)))
+    `(progn
+       (defun ,name ,arglist
+         ,(format "%s\n\nThis function is for use in %s."
+                  docstring hooks-str)
+         ,@body)
+       (dolist (hook ',hooks)
+         (add-hook hook ',name)))))
+
+(defmacro aero/defadvice (name arglist where place docstring &rest body)
+  "Define an advice called NAME and add it to a function. ARGLIST is as in
+`defun'. WHERE is a keyword as passed to `advice-add', and PLACE is the function
+to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
+`defun'."
+  (declare (indent 2)
+           (doc-string 5))
+  (unless (stringp docstring)
+    (aero/log-error "no docstring provided for `aero/defadvice'"))
+  `(progn
+     (eval-and-compile
+       (defun ,name ,arglist
+         ,(let ((article (if (string-match-p "^:[aeiou]" (symbol-name where))
+                             "an"
+                           "a")))
+            (format "%s\n\nThis is %s `%S' advice for `%S'."
+                    docstring article where
+                    (if (and (listp place)
+                           (memq (car place) ''function))
+                        (cadr place)
+                      place)))
+         ,@body))
+     (advice-add ',place ',where #',name)
+     ',name))
+
+
+;;; utilities
+
+(defun aero/path-join (path &rest segments)
+  "Join PATH with SEGMENTS using `expand-file-name'.
+First `expand-file-name' is called on the first member of
+SEGMENTS, with PATH as DEFAULT-DIRECTORY. Then `expand-file-name'
+is called on the second member, with the result of the first call
+as DEFAULT-DIRECTORY, and so on. If no SEGMENTS are passed, the
+return value is just PATH."
+  (while segments
+    (setq path (expand-file-name (pop segments) path)))
+  path)
+
+
 ;;; system and logging
 
 (defun system-is-mac ()
@@ -215,7 +281,7 @@ This is equivalent to SPC U M-x eshell"
                     (last-ssh-hostname nil))
                 (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
                   (setq last-ssh-hostname (or (match-string 1 fname)
-                                              last-ssh-hostname))
+                                             last-ssh-hostname))
                   (setq last-match-end (match-end 0)))
                 (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
               (buffer-string)))
