@@ -39,6 +39,7 @@ etc/todo.org
 tmp.*
 *~
 nov-places
+.ignore
 
 # Ignore local init
 init.local.el
