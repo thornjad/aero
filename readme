@@ -52,6 +52,12 @@ INSTALLATION
 
   Then, install and compile required submodules with =make=
 
+LOCAL CONFIG
+
+  Local settings, functions, et cetera can be put into an untracked
+  ~/.emacs.d/init.local.el file, which will be evaluated near the end of the
+  initialization process, after all other layers and settings.
+
 CREDITS
 
   Like the Borg, Aero amalgamates macros, functions, bindings and packages
