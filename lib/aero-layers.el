@@ -45,9 +45,6 @@
     ;; now the rest
     ;; TODO parallel?
     (dolist (layer aero-layer-list)
-      (require layer))
-
-    ;; load private settings
-    (require 'aero-private)))
+      (require layer))))
 
 (provide 'aero-layers)

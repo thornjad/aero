@@ -82,11 +82,18 @@
   (use-package gnu-elpa-keyring-update :straight t))
 
 
+;;; groups and vars
 
 (defgroup aero nil
   "Aero customizations"
   :group 'starter-kit
   :prefix 'aero/)
+
+(defvar aero-local-init-file
+  (expand-file-name "init.local.el" user-emacs-directory)
+  "Local init file, loaded at the end of init.
+Useful for adding or overriding settings and functions for the local environment
+only. This file is not part of Aero proper, and is not shared.")
 
 
 ;;; init functions
@@ -102,17 +109,17 @@
   (aero/bootstrap)
   (aero/load-libs)
   (require 'aero-layers)
-  (eval-when-compile
-    (declare-function aero/load-layers "aero-layers")
-    (declare-function aero/load-private "aero-layers"))
+  (eval-when-compile (declare-function aero/load-layers "aero-layers"))
   (aero/load-layers)
-  (aero/load-private)
 
   ;; baise cette merde
   (setq-default custom-file "/dev/null")
 
   ;; settings
   (require 'aero-rc)
+
+  ;; Load local init
+  (load aero-local-init-file 'noerror 'nomessage)
 
   (global-font-lock-mode)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
@@ -121,7 +128,6 @@
 
 
 ;;; environment
-
 
 (defvar aero--env-setup-p nil
   "Non-nil if `aero-env-setup' has completed at least once.")

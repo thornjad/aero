@@ -40,6 +40,5 @@ tmp.*
 *~
 nov-places
 
-# ignore private dir, except private package itself
-lib/private/
-!aero-private.el*
+# Ignore local init
+init.local.el
