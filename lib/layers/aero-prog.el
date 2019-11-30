@@ -45,7 +45,8 @@
           rjsx-mode
           emacs-lisp-mode
           c-mode
-          cpp-mode) . flycheck-mode)
+          cpp-mode)
+         . flycheck-mode)
   :init
   (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
                    (haskell-mode-hook    . haskell-mode-map)
