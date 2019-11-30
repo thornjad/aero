@@ -28,8 +28,6 @@
    :prefix "SPC"
    "]" 'counsel-gtags-dwim))
 
-(use-package indent-guide :straight t
-  :hook (prog-mode . indent-guide-mode))
 
 ;;; flycheck
 
