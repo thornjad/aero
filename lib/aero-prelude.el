@@ -189,6 +189,7 @@ Local bindings (`counsel-mode-map'):
 
   (setq counsel-grep-base-command
         "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+  (setq counsel-git-cmd "rg --files")
 
 	(general-define-key
 	 :states '(normal visual insert replace)
