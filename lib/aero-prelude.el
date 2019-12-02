@@ -202,7 +202,8 @@ Local bindings (`counsel-mode-map'):
 	 "ff" 'counsel-find-file
 	 "fl" 'counsel-locate
 	 "fr" 'counsel-recentf
-	 "g/" '(counsel-git-grep :which-key "git grep")
+   "?" 'counsel-rg
+   "gg" '(counsel-git-grep :which-key "git grep")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
 	 "hda" '(counsel-apropos :which-key "apropos")
