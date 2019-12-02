@@ -51,7 +51,6 @@
 
 (use-package rjsx-mode
   :load-path "lib/packages/rjsx-mode/"
-  :after emmet
   :mode "\\.jsx?\\'"
 
   ;; ensure flycheck can run properly
