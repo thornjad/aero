@@ -58,6 +58,13 @@ LOCAL CONFIG
   ~/.emacs.d/init.local.el file, which will be evaluated near the end of the
   initialization process, after all other layers and settings.
 
+WARNING
+
+  As stated above, this is not intended for widespread usage. Bindings, settings
+  and packages change all the time with no warning or documentation. Use at your
+  own risk. If you want to use anything, it may be safer to copy what your want
+  to your own configuration, or to make a stable fork.
+
 CREDITS
 
   Like the Borg, Aero amalgamates macros, functions, bindings and packages
@@ -69,10 +76,10 @@ CREDITS
   - Steve Purcell
   - Xah Lee
   - Sacha Chua
+  - James Sulak
   - Wilfred Hughes
   - Lee Hinman
   - Michael Markert
-  - James Sulak
 
 COPYING
 
