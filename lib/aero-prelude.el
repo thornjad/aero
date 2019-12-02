@@ -38,7 +38,9 @@
 (use-package el-patch
   :straight (:host github
              :repo "raxod502/el-patch"
-             :branch "develop"))
+             :branch "develop")
+  :init
+  (setq el-patch-enable-use-package-integration t))
 ;; Only needed at compile time
 (eval-when-compile
   (require 'el-patch))
