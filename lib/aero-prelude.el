@@ -263,6 +263,15 @@ Local bindings (`counsel-mode-map'):
 
 ;;; system
 
+(use-package undo-tree :straight t
+  :config
+  (global-undo-tree-mode +1)
+
+  ;; Disable undo-in-region. It sounds like a cool feature, but
+  ;; unfortunately the implementation is very buggy and usually causes
+  ;; you to lose your undo history if you use it by accident.
+  (setq undo-tree-enable-undo-in-region nil))
+
 (use-package winner
 	:after general
   :defines winner-boring-buffers
