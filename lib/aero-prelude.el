@@ -459,10 +459,7 @@ just been killed (which happens during Emacs shutdown)."
              link))
          lsp-language-id-configuration))
 
-  (use-package lsp-clients :straight nil
-    :config
-    (eval-when-compile (declare-function aero/env-setup "aero-core"))
-    (aero/env-setup)))
+  (use-package lsp-clients :straight nil))
 
 (use-package lsp-ui :straight t
   :after lsp-mode
