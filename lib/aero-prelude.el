@@ -237,8 +237,16 @@ Local bindings (`counsel-mode-map'):
         ivy-virtual-abbreviate 'abbreviate
         ivy-wrap t
 				ivy-height 8
-				ivy-count-format "" ; don't count candidates
-				ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+				;; ivy-count-format "" ; don't count candidates
+
+        ;; use fuzzy by default, but some searching is impossible without
+        ;; stricter regex's
+				ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
+                                (counsel-projectile-rg . ivy--regex-plus)
+                                (counsel-git-grep . ivy--regex-plus)
+                                (projectile-ripgrep . ivy--regex-plus)
+                                (swiper . ivy--regex-plus)
+                                (t . ivy--regex-fuzzy)))
 	(general-define-key
 	 :states '(normal)
 	 :prefix "SPC"
