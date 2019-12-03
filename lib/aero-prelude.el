@@ -314,6 +314,30 @@ Local bindings (`counsel-mode-map'):
    "wk" 'windmove-up
    "wl" 'windmove-right))
 
+(use-package winum :straight t
+  :init
+  (winum-mode)
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "0" '(winum-select-window-0 :which-key "window-0")
+   "1" '(winum-select-window-1 :which-key "window-1")
+   "2" '(winum-select-window-2 :which-key "window-2")
+   "3" '(winum-select-window-3 :which-key "window-3")
+   "4" '(winum-select-window-4 :which-key "window-4")
+   "5" '(winum-select-window-5 :which-key "window-5")
+   "6" '(winum-select-window-6 :which-key "window-6")
+   "7" '(winum-select-window-7 :which-key "window-7")
+   "8" '(winum-select-window-8 :which-key "window-8")
+   "9" '(winum-select-window-9 :which-key "window-9")
+   "wg" '(winum-select-window-by-number :which-key "select window by number"))
+
+  ;; collapse all those window commands to one summary
+  (push '(("\\(.*\\) 0" . "winum-select-window-0") . ("\\1 0..9" . "window 0..9"))
+        which-key-replacement-alist)
+  (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
+
 ;; windmove
 (global-set-key (kbd "M-h") #'windmove-left)
 (global-set-key (kbd "M-j") #'windmove-down)
