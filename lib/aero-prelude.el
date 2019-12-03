@@ -53,11 +53,11 @@
 
 ;;; the general is here
 
-(use-package which-key
-  ;; local
+(use-package which-key ;; local
 	:defines which-key-mode
 	:config
-	(which-key-mode))
+	(which-key-mode)
+  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
 (use-package general :straight t
 	:init
