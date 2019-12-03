@@ -46,7 +46,12 @@
   (require 'el-patch))
 
 
-;; the general is here
+;;; used in several places
+
+(use-package ripgrep :straight t)
+
+
+;;; the general is here
 
 (use-package which-key
   ;; local
@@ -189,9 +194,9 @@ Local bindings (`counsel-mode-map'):
       (right-char)
       (counsel-unicode-char)))
 
-  (setq counsel-grep-base-command
-        "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
-  (setq counsel-git-cmd "rg --files")
+  (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
+        counsel-git-cmd "rg --files"
+        counsel-rg-base-command "rg --with-filename --smart-case --no-heading --line-number --color never %s")
 
 	(general-define-key
 	 :states '(normal visual insert replace)
@@ -203,6 +208,7 @@ Local bindings (`counsel-mode-map'):
 	 "fl" 'counsel-locate
 	 "fr" 'counsel-recentf
    "?" 'counsel-rg
+   "p/" 'counsel-projectile-rg
    "gg" '(counsel-git-grep :which-key "git grep")
 	 "gff" '(counsel-git :which-key "find git file")
 	 "ry" '(counsel-yank-pop :which-key "search kill ring")
