@@ -144,7 +144,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
             (set-buffer-modified-p modified))))
       (cond
        ((and (= current-line next-line)
-             (not (= current-pos next-pos)))
+           (not (= current-pos next-pos)))
         (sp-up-sexp))
        (t
         (insert-char ?\))))))
