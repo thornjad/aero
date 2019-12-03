@@ -563,10 +563,6 @@
   "Face used for neutral or inactive status indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-which-function
-  '((t (:inherit (font-lock-function-name-face))))
-  :group 'aero/modeline)
-
 (defface aero/modeline-status-info
   '((t (:inherit (font-lock-keyword-face))))
   "Face used for generic status indicators in the mode-line."
@@ -685,13 +681,14 @@
           "  "))
 
 (defun aero/modeline-segment-which-function ()
-  "Display the current function, according to `which-function-mode'."
-  (let ((fun (which-function)))
+  "Display the current function, according to `which-func'."
+  (when (require 'which-func nil 'noerror)
+   (let ((fun (which-function)))
     (when fun
       (concat
        "( "
-       (propertize (which-function) 'face 'aero/modeline-which-function)
-       " ) "))))
+       (propertize (which-function) 'face 'which-func)
+       " ) ")))))
 
 (defun aero/modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the mode-line (if available)."
