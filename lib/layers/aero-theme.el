@@ -746,7 +746,8 @@
 
                       ;; Right
                       (format-mode-line
-                       '((:eval (aero/modeline-segment-which-function))
+                       '(
+                         ;; (:eval (aero/modeline-segment-which-function))
                          (:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
