@@ -563,6 +563,10 @@
   "Face used for neutral or inactive status indicators in the mode-line."
   :group 'aero/modeline)
 
+(defface aero/modeline-which-function
+  '((t (:inherit (font-lock-function-name-face))))
+  :group 'aero/modeline)
+
 (defface aero/modeline-status-info
   '((t (:inherit (font-lock-keyword-face))))
   "Face used for generic status indicators in the mode-line."
@@ -682,15 +686,18 @@
                         'mode-line-inactive))
           (when (use-region-p)
             (concat
-             " " (number-to-string (count-lines (point) (mark)))
+             "  " (number-to-string (count-lines (point) (mark)))
              ":" (number-to-string (abs (- (point) (mark))))))
           "  "))
 
-(defun aero/modeline-segment-global-mode-string ()
-  "Displays the current value of `global-mode-string' in the mode-line."
-  (when (not (string= (mapconcat 'concat (mapcar 'eval global-mode-string) "") ""))
-    (propertize "%M  "
-                'face 'aero/modeline-status-grayed-out)))
+(defun aero/modeline-segment-which-function ()
+  "Display the current function, according to `which-function-mode'."
+  (let ((fun (which-function)))
+    (when fun
+      (concat
+       "( "
+       (propertize (which-function) 'face 'aero/modeline-which-function)
+       " ) "))))
 
 (defun aero/modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the mode-line (if available)."
@@ -743,8 +750,8 @@
 
                       ;; Right
                       (format-mode-line
-                       '((:eval (aero/modeline-segment-flycheck))
-                         (:eval (aero/modeline-segment-global-mode-string))
+                       '((:eval (aero/modeline-segment-which-function))
+                         (:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
                          " "))))))))
