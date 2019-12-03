@@ -630,17 +630,17 @@
           ('finished (if flycheck-current-errors
                          (let-alist (flycheck-count-errors flycheck-current-errors)
                            (let ((sum (+ (or .error 0) (or .warning 0))))
-                             (propertize (concat "Issues: "
+                             (propertize (concat "❕ "
                                                  (number-to-string sum)
                                                  "  ")
                                          'face (if .error
                                                    'aero/modeline-status-error
                                                  'aero/modeline-status-warning))))
-                       (propertize "✔  " 'face 'aero/modeline-status-success)))
-          ('running (propertize "Checking  " 'face 'aero/modeline-status-info))
+                       (propertize "✅  " 'face 'aero/modeline-status-success)))
+          ('running (propertize "🔄  " 'face 'aero/modeline-status-info))
           ('no-checker "")
-          ('errored (propertize "Error  " 'face 'aero/modeline-status-error))
-          ('interrupted (propertize "Paused  " 'face 'aero/modeline-status-grayed-out)))))
+          ('errored (propertize "✘  " 'face 'aero/modeline-status-error))
+          ('interrupted (propertize "⏸  " 'face 'aero/modeline-status-grayed-out)))))
 
 ;; Segments
 
