@@ -644,6 +644,13 @@
 
 ;; Segments
 
+(defun aero/modeline-segment-evil-state ()
+  "Display current evil state. Requires `evil-mode'."
+  (when (require 'evil nil 'noerror)
+    (declare-function evil-state-property "evil")
+    (defvar evil-state)
+    (format " %s" (string-trim (evil-state-property evil-state :tag t)))))
+
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
   (propertize
@@ -654,37 +661,30 @@
      "   ")
    'face 'aero/modeline-modified))
 
-(defun aero/modeline-segment-buffer-name ()
-  "Displays the name of the current buffer in the mode-line."
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'"
   (when (require 'winum nil 'noerror)
     (declare-function winum-get-number "winum")
     (concat (format "%d: " (winum-get-number)))))
 
+(defun aero/modeline-segment-buffer-name-and-size ()
+  "Displays the name and size of the current buffer in the mode-line."
   (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) "  "))
 
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
   (concat "%l:%c"
-          (when (use-region-p)
-            (concat
-             " " (number-to-string (count-lines (point) (mark)))
-             ":" (number-to-string (abs (- (point) (mark))))))
           " "
           (propertize "%p%%"
                       'face
                       (if (aero/modeline-is-active)
                           'aero/modeline-unimportant
                         'mode-line-inactive))
+          (when (use-region-p)
+            (concat
+             " " (number-to-string (count-lines (point) (mark)))
+             ":" (number-to-string (abs (- (point) (mark))))))
           "  "))
-
-(defun aero/modeline-segment-major-mode ()
-  "Displays the current major mode in the mode-line."
-  (propertize "%m  "
-              'face (if (aero/modeline-is-active)
-                        'bold
-                      'aero/modeline-status-grayed-out)))
 
 (defun aero/modeline-segment-global-mode-string ()
   "Displays the current value of `global-mode-string' in the mode-line."
@@ -701,12 +701,12 @@
   (when mode-line-process
     (list mode-line-process "  ")))
 
-(defun aero/modeline-segment-evil-state ()
-  "Display current evil state. Requires `evil-mode'."
-  (when (require 'evil nil 'noerror)
-    (declare-function evil-state-property "evil")
-    (defvar evil-state)
-    (format " %s" (string-trim (evil-state-property evil-state :tag t)))))
+(defun aero/modeline-segment-major-mode ()
+  "Displays the current major mode in the mode-line."
+  (propertize "%m  "
+              'face (if (aero/modeline-is-active)
+                        'bold
+                      'aero/modeline-status-grayed-out)))
 
 ;; Activation function
 
@@ -737,16 +737,16 @@
                       (format-mode-line
                        '((:eval (aero/modeline-segment-evil-state))
                          (:eval (aero/modeline-segment-modified))
-                         (:eval (aero/modeline-segment-buffer-name))
                          (:eval (aero/modeline-segment-window-number))
+                         (:eval (aero/modeline-segment-buffer-name-and-size))
                          (:eval (aero/modeline-segment-position))))
 
                       ;; Right
                       (format-mode-line
-                       '((:eval (aero/modeline-segment-major-mode))
+                       '((:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-global-mode-string))
-                         (:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-process))
+                         (:eval (aero/modeline-segment-major-mode))
                          " "))))))))
 
 ;; Do it
