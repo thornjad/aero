@@ -269,7 +269,7 @@ Local bindings (`counsel-mode-map'):
   :commands (avy-goto-line avy-goto-char avy-goto-word-1)
   :init
   (general-define-key
-   :states 'normal
+   :states '(normal visual)
    :prefix "SPC"
    "jl" '(avy-goto-line :which-key "jump to line")
    "jc" '(avy-goto-char :which-key "jump to char")
