@@ -656,6 +656,12 @@
 
 (defun aero/modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the mode-line."
+(defun aero/modeline-segment-window-number ()
+  "Displays the current window number as provided by `winum'"
+  (when (require 'winum nil 'noerror)
+    (declare-function winum-get-number "winum")
+    (concat (format "%d: " (winum-get-number)))))
+
   (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) "  "))
 
 (defun aero/modeline-segment-position ()
@@ -732,6 +738,7 @@
                        '((:eval (aero/modeline-segment-evil-state))
                          (:eval (aero/modeline-segment-modified))
                          (:eval (aero/modeline-segment-buffer-name))
+                         (:eval (aero/modeline-segment-window-number))
                          (:eval (aero/modeline-segment-position))))
 
                       ;; Right
