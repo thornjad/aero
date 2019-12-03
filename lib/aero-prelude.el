@@ -137,8 +137,8 @@
                '((execute-extended-command . counsel-M-x)
                  (describe-bindings . counsel-descbinds)
                  (el-patch-remove
-                  (describe-function . counsel-describe-function)
-                  (describe-variable . counsel-describe-variable))
+                   (describe-function . counsel-describe-function)
+                   (describe-variable . counsel-describe-variable))
                  (apropos-command . counsel-apropos)
                  (describe-face . counsel-describe-face)
                  (list-faces-display . counsel-faces)
@@ -154,10 +154,10 @@
         (define-key map (vector 'remap (car binding)) (cdr binding)))
       map)
     (el-patch-concat
-     "Map for `counsel-mode'.
+      "Map for `counsel-mode'.
 Remaps built-in functions to counsel replacements."
-     (el-patch-add
-      "\n\nBindings that are remapped by `helpful' have been removed.")))
+      (el-patch-add
+        "\n\nBindings that are remapped by `helpful' have been removed.")))
 
   (defcustom counsel-mode-override-describe-bindings nil
     "Whether to override `describe-bindings' when `counsel-mode' is active."
@@ -441,8 +441,8 @@ Local bindings (`counsel-mode-map'):
      ;; Errors we get from gopls for no good reason (I can't figure out why).
      ;; They don't impair functionality.
      (and (stringp (car args))
-          (or (string-match-p "^no object for ident .+$" (car args))
-              (string-match-p "^no identifier found$" (car args))))))
+        (or (string-match-p "^no object for ident .+$" (car args))
+           (string-match-p "^no identifier found$" (car args))))))
   (dolist (fun '(lsp-warn lsp--warn lsp--info lsp--error))
     (advice-add fun :before-until #'aero--advice-lsp-mode-silence))
 
