@@ -534,7 +534,8 @@ just been killed (which happens during Emacs shutdown)."
  "b" '(:ignore t :which-key "buffers")
  "bn" 'next-buffer
  "bp" 'previous-buffer
- "bl" 'list-buffers
+ "bl" 'ibuffer
+ "bL" 'list-buffers
  "bm" 'switch-to-messages-buffer
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
