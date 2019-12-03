@@ -595,7 +595,7 @@
 
 ;; Helper functions
 
-(defun aero/modeline-format (left right)
+(defun aero/info-line-format (left right)
   "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
   (let ((reserve (length right)))
     (concat
@@ -732,7 +732,7 @@
     ;; Set the new mode-line-format
     (setq-default mode-line-format
                   '((:eval
-                     (aero/modeline-format
+                     (aero/info-line-format
                       ;; Left
                       (format-mode-line
                        '((:eval (aero/modeline-segment-evil-state))
@@ -752,6 +752,65 @@
 ;; Do it
 (aero/modeline-mode)
 
+
+;;; headerline
+
+(defgroup aero/headerline nil
+  "A simple header-line configuration."
+  :group 'header-line)
+
+(defvar aero/headerline--current-window)
+
+(defface aero/headerline-which-function
+  '((t (:inherit (font-lock-function-name-face))))
+  :group 'aero/headerline)
+
+(defsubst aero/headerline-is-active ()
+  "Return t if the current window is active, nil if not."
+  (eq (selected-window) aero/headerline--current-window))
+
+(defvar-local aero/headerline--current-window (frame-selected-window))
+(defun aero/headerline--update-selected-window (&rest _)
+  "Update the `aero/headerline--current-window' variable."
+  (when (frame-selected-window)
+    (let ((win (frame-selected-window)))
+      (unless (minibuffer-window-active-p win)
+        (setq aero/headerline--current-window win)))))
+
+(defun aero/headerline-segment-which-function ()
+  "Display the current function, according to `which-function-mode'."
+  (let ((fun (which-function)))
+    (when fun
+      (concat
+       "( "
+       (propertize (which-function) 'face 'aero/headerline-which-function)
+       " )"))))
+
+;; Store the original
+(defvar aero/headerline--default-header-line header-line-format)
+
+(define-minor-mode aero/headerline-mode
+  "Toggle aero/headerline on or off."
+  :group 'aero/headerline
+  :global t
+  :lighter nil
+  (progn
+    (add-hook 'window-configuration-change-hook #'aero/headerline--update-selected-window)
+    (add-hook 'focus-in-hook #'aero/headerline--update-selected-window)
+    (advice-add #'handle-switch-frame :after #'aero/headerline--update-selected-window)
+    (advice-add #'select-window :after #'aero/headerline--update-selected-window)
+
+    (setq-default header-line-format
+                  '((:eval
+                     (aero/info-line-format
+                      ;; Left
+                      (format-mode-line
+                       '((:eval (aero/headerline-segment-which-function))))
+
+                      ;; Right
+                      ""))))))
+
+(aero/headerline-mode)
 
 ;;; additional tweaks and packages
 
