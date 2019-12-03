@@ -648,12 +648,6 @@
 
 ;; Segments
 
-(defun aero/modeline-segment-window-number ()
-  "Displays the current window number as provided by `winum'"
-  (when (require 'winum nil 'noerror)
-    (declare-function winum-get-number "winum")
-    (concat (format " %d |" (winum-get-number)))))
-
 (defun aero/modeline-segment-evil-state ()
   "Display current evil state. Requires `evil-mode'."
   (when (require 'evil nil 'noerror)
@@ -715,6 +709,12 @@
                         'bold
                       'aero/modeline-status-grayed-out)))
 
+(defun aero/modeline-segment-window-number ()
+  "Displays the current window number as provided by `winum'"
+  (when (require 'winum nil 'noerror)
+    (declare-function winum-get-number "winum")
+    (concat (format "|%d| " (winum-get-number)))))
+
 ;; Activation function
 
 ;; Store the default mode-line format
@@ -742,8 +742,7 @@
                      (aero/info-line-format
                       ;; Left
                       (format-mode-line
-                       '((:eval (aero/modeline-segment-window-number))
-                         (:eval (aero/modeline-segment-evil-state))
+                       '((:eval (aero/modeline-segment-evil-state))
                          (:eval (aero/modeline-segment-modified))
                          (:eval (aero/modeline-segment-buffer-name-and-size))
                          (:eval (aero/modeline-segment-position))))
@@ -754,6 +753,7 @@
                          (:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
+                         (:eval (aero/modeline-segment-window-number))
                          " "))))))))
 
 ;; Do it
