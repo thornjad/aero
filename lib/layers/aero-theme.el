@@ -680,16 +680,6 @@
              ":" (number-to-string (abs (- (point) (mark))))))
           "  "))
 
-(defun aero/modeline-segment-which-function ()
-  "Display the current function, according to `which-func'."
-  (when (require 'which-func nil 'noerror)
-   (let ((fun (which-function)))
-    (when fun
-      (concat
-       "( "
-       (propertize (which-function) 'face 'which-func)
-       " ) ")))))
-
 (defun aero/modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the mode-line (if available)."
   aero/modeline--flycheck-text)
@@ -701,7 +691,7 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (propertize "%m  "
+  (propertize " %m  "
               'face (if (aero/modeline-is-active)
                         'bold
                       'aero/modeline-status-grayed-out)))
@@ -746,9 +736,7 @@
 
                       ;; Right
                       (format-mode-line
-                       '(
-                         ;; (:eval (aero/modeline-segment-which-function))
-                         (:eval (aero/modeline-segment-flycheck))
+                       '((:eval (aero/modeline-segment-flycheck))
                          (:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
                          (:eval (aero/modeline-segment-window-number))
@@ -767,7 +755,8 @@
 (defvar aero/headerline--current-window)
 
 (defface aero/headerline-which-function
-  '((t (:inherit (font-lock-function-name-face))))
+  '((t (:inherit (which-func) :weight bold)))
+  "Face for git branch in header."
   :group 'aero/headerline)
 
 (defsubst aero/headerline-is-active ()
@@ -784,12 +773,13 @@
 
 (defun aero/headerline-segment-which-function ()
   "Display the current function, according to `which-function-mode'."
-  (let ((fun (which-function)))
-    (when fun
-      (concat
-       "( "
-       (propertize (which-function) 'face 'aero/headerline-which-function)
-       " )"))))
+  (when (require 'which-func nil 'noerror)
+    (let ((fun (which-function)))
+      (when fun
+        (concat
+         " –– "
+         (propertize (which-function) 'face 'aero/headerline-which-function)
+         " ")))))
 
 ;; Store the original
 (defvar aero/headerline--default-header-line header-line-format)
@@ -888,9 +878,9 @@
                      ("&&" . ?∧)
                      ("or" . ?∨)
                      ("||" . ?∨)
-                     ("nor" . ?⊽)
-                     ("xor" . ?⊻)
-                     ("nand" . ?⊼)
+                     ;; ("nor" . ?⊽)
+                     ;; ("xor" . ?⊻)
+                     ;; ("nand" . ?⊼)
 
                      ;; relational algebra
                      ;; ("select" . ?σ)
@@ -899,10 +889,10 @@
                      ("not in" . ?∉)
                      ;; technically ⋈ is a natural join, while a bare join in
                      ;; SQL is an equi-join
-                     ("join" . ?⋈)
-                     ("union" . ?∪)
-                     ("intersect" . ?∩)
-                     ("foreach" . ?∀)
+                     ;; ("join" . ?⋈)
+                     ;; ("union" . ?∪)
+                     ;; ("intersect" . ?∩)
+                     ;; ("foreach" . ?∀)
                      ;; ("!" . ?¬)
                      ;; ("!!" . ?⫬)
 
@@ -926,11 +916,11 @@
                      ;; ("defun" . ?ƒ)
                      ;; ("proc" . ?ƒ)
                      ;; ("function" . ?ƒ)
-                     ("Infinity" . ?∞)
-                     ("infinity" . ?∞)
-                     ("sum" . ?∑)
-                     ("ceil" . ?⎡)
-                     ("floor" . ?⎣)
+                     ;; ("Infinity" . ?∞)
+                     ;; ("infinity" . ?∞)
+                     ;; ("sum" . ?∑)
+                     ;; ("ceil" . ?⎡)
+                     ;; ("floor" . ?⎣)
                      )))))
   (global-prettify-symbols-mode t))
 
