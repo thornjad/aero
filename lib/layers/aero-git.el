@@ -99,6 +99,7 @@ the process passing the value of that options as argument."
   (magit-auto-revert-mode nil)
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
+  (add-hook 'magit-status-mode-hook (lambda () (toggle-truncate-lines -1)))
 
   (defun aero/fetch-pr ()
     "Fetch a GH(E) pull request into a new branch prefixed with `pr'."
