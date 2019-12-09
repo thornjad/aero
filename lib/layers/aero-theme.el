@@ -559,27 +559,27 @@
   :group 'mode-line)
 
 (defface aero/modeline-status-grayed-out
-  '((t (:inherit (font-lock-doc-face))))
+  '((t (:inherit (font-lock-doc-face) :slant italic)))
   "Face used for neutral or inactive status indicators in the mode-line."
   :group 'aero/modeline)
 
 (defface aero/modeline-status-info
-  '((t (:inherit (font-lock-keyword-face))))
+  '((t (:inherit (font-lock-keyword-face) :slant italic)))
   "Face used for generic status indicators in the mode-line."
   :group 'aero/modeline)
 
 (defface aero/modeline-status-success
-  '((t (:inherit (success))))
+  '((t (:inherit (success) :slant italic)))
   "Face used for success status indicators in the mode-line."
   :group 'aero/modeline)
 
 (defface aero/modeline-status-warning
-  '((t (:inherit (warning))))
+  '((t (:inherit (warning) :slant italic)))
   "Face for warning status indicators in the mode-line."
   :group 'aero/modeline)
 
 (defface aero/modeline-status-error
-  '((t (:inherit (error))))
+  '((t (:inherit (error) :slant italic)))
   "Face for error stauts indicators in the mode-line."
   :group 'aero/modeline)
 
@@ -630,14 +630,14 @@
           ('finished (if flycheck-current-errors
                          (let-alist (flycheck-count-errors flycheck-current-errors)
                            (let ((sum (+ (or .error 0) (or .warning 0))))
-                             (propertize (concat "❕ "
+                             (propertize (concat " "
                                                  (number-to-string sum)
-                                                 "  ")
+                                                 " Issues ")
                                          'face (if .error
                                                    'aero/modeline-status-error
                                                  'aero/modeline-status-warning))))
-                       (propertize "✅  " 'face 'aero/modeline-status-success)))
-          ('running (propertize "🔄  " 'face 'aero/modeline-status-info))
+                       (propertize "✔  " 'face 'aero/modeline-status-success)))
+          ('running (propertize "Checking  " 'face 'aero/modeline-status-info))
           ('no-checker "")
           ('errored (propertize "✘  " 'face 'aero/modeline-status-error))
           ('interrupted (propertize "⏸  " 'face 'aero/modeline-status-grayed-out)))))
