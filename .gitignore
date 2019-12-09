@@ -41,6 +41,7 @@ tmp.*
 nov-places
 .ignore
 .projectile
+.lsp-*
 
 # Ignore local init
 init.local.el
