@@ -430,7 +430,7 @@ Local bindings (`counsel-mode-map'):
 
 ;;; language server protocol interaction
 
-(use-package lsp-mode :straight t
+(use-package lsp-mode :disabled t :straight t
   :after general
   ;; :hook (XXX-mode . lsp-deferred)
   :hook ((sh-mode
@@ -510,7 +510,7 @@ just been killed (which happens during Emacs shutdown)."
 
   (use-package lsp-clients :straight nil))
 
-(use-package lsp-ui :straight t
+(use-package lsp-ui :disabled t :straight t
   :after lsp-mode
   :commands lsp-ui-mode
   :hook (lsp-mode . lsp-ui-mode))
