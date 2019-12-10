@@ -204,6 +204,19 @@ emacs with sigusr2"
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
 
+(defun aero/layout-two-columns ()
+  "Switch to two column window layout."
+  (interactive)
+  (delete-other-windows)
+  (split-window-right))
+
+(defun aero/layout-three-columns ()
+  "Switch to three column window layout."
+  (interactive)
+  (delete-other-windows)
+  (dotimes (_ 2) (split-window-right))
+  (balance-windows))
+
 (defun aero/eshell-new ()
   "Open a new Eshell window.
 
