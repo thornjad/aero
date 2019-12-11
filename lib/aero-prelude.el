@@ -161,7 +161,8 @@ Remaps built-in functions to counsel replacements."
 
   (defcustom counsel-mode-override-describe-bindings nil
     "Whether to override `describe-bindings' when `counsel-mode' is active."
-    :type 'boolean)
+    :type 'boolean
+    :group 'counsel)
 
   (define-minor-mode counsel-mode
     "Toggle Counsel mode on or off.
