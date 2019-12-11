@@ -236,7 +236,7 @@ Local bindings (`counsel-mode-map'):
         ivy-virtual-abbreviate 'abbreviate
         ivy-wrap t
 				ivy-height 8
-				;; ivy-count-format "" ; don't count candidates
+				ivy-count-format "" ; don't count candidates
 
         ;; use fuzzy by default, but some searching is impossible without
         ;; stricter regex's
