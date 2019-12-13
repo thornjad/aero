@@ -310,6 +310,11 @@ This is equivalent to SPC U M-x eshell"
               (buffer-string)))
            (t (concat "/sudo:root@localhost:" fname))))))
 
+(defun aero/open-local-init ()
+  "Open local init file for editing."
+  (interactive)
+  (find-file (concat user-emacs-directory "init.local.el")))
+
 
 ;;; editing et cetera
 
