@@ -81,11 +81,10 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
 
 (defun aero/path-join (path &rest segments)
   "Join PATH with SEGMENTS using `expand-file-name'.
-First `expand-file-name' is called on the first member of
-SEGMENTS, with PATH as DEFAULT-DIRECTORY. Then `expand-file-name'
-is called on the second member, with the result of the first call
-as DEFAULT-DIRECTORY, and so on. If no SEGMENTS are passed, the
-return value is just PATH."
+First `expand-file-name' is called on the first member of SEGMENTS, with PATH as
+DEFAULT-DIRECTORY. Then `expand-file-name' is called on the second member, with
+the result of the first call as DEFAULT-DIRECTORY, and so on. If no SEGMENTS are
+passed, the return value is just PATH."
   (while segments
     (setq path (expand-file-name (pop segments) path)))
   path)
@@ -142,7 +141,7 @@ return value is just PATH."
    nil
    :height
    (floor (* 0.9
-         (face-attribute 'default :height)))))
+             (face-attribute 'default :height)))))
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
@@ -191,8 +190,8 @@ emacs with sigusr2"
   (cl-destructuring-bind
       (buf start pos)
       (or (cl-find (window-buffer window) (window-prev-buffers)
-                  :key #'car :test-not #'eq)
-         (list (other-buffer) nil nil ))
+                   :key #'car :test-not #'eq)
+          (list (other-buffer) nil nil ))
     (set-window-buffer-start-and-point window buf start pos)))
 
 (defun aero/alternate-window ()
@@ -294,7 +293,7 @@ This is equivalent to SPC U M-x eshell"
                     (last-ssh-hostname nil))
                 (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
                   (setq last-ssh-hostname (or (match-string 1 fname)
-                                             last-ssh-hostname))
+                                              last-ssh-hostname))
                   (setq last-match-end (match-end 0)))
                 (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
               (buffer-string)))
