@@ -650,6 +650,9 @@ just been killed (which happens during Emacs shutdown)."
  "t" '(:ignore t :which-key "text")
  "tU" 'upcase-dwim
  "tD" 'downcase-dwim
+ "tn" '(:ignore :wk "number")
+ "tni" 'increment-number-at-point
+ "tnd" 'decrement-number-at-point
  )
 
 

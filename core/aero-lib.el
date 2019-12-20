@@ -365,6 +365,21 @@ This is equivalent to SPC U M-x eshell"
     (right-char)
     (insert "λ")))
 
+(defun alter-number-at-point (offset)
+  (save-excursion
+    (skip-chars-backward "0-9")
+    (or (looking-at "[0-9]+")
+       (aero/log-error "No number at point"))
+    (replace-match (number-to-string (+ offset (string-to-number (match-string 0)))))))
+
+(defun increment-number-at-point ()
+  (interactive)
+  (alter-number-at-point 1))
+
+(defun decrement-number-at-point ()
+  (interactive)
+  (alter-number-at-point -1))
+
 (defun lorem ()
   (interactive)
   (insert "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent libero orci, auctor sed, faucibus vestibulum, gravida vitae, arcu. Nunc posuere. Suspendisse potenti. Praesent in arcu ac nisl ultricies ultricies. Fusce eros. Sed pulvinar vehicula ante. Maecenas urna dolor, egestas vel, tristique et, porta eu, leo. Curabitur vitae sem eget arcu laoreet vulputate. Cras orci neque, faucibus et, rhoncus ac, venenatis ac, magna. Aenean eu lacus. Aliquam luctus facilisis augue. Nullam fringilla consectetuer sapien. Aenean neque augue, bibendum a, feugiat id, lobortis vel, nunc. Suspendisse in nibh quis erat condimentum pretium. Vestibulum tempor odio et leo. Sed sodales vestibulum justo. Cras convallis pellentesque augue. In eu magna. In pede turpis, feugiat pulvinar, sodales eget, bibendum consectetuer, magna. Pellentesque vitae augue."))
