@@ -544,6 +544,7 @@ just been killed (which happens during Emacs shutdown)."
  "," '(:ignore t :which-key "mode") ; reserved for mode-specific
 
  "U" 'universal-argument
+ "z" 'repeat
 
  "q" '(:ignore t :which-key "quoted insert")
  "qq" 'quoted-insert
