@@ -69,7 +69,7 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
             (format "%s\n\nThis is %s `%S' advice for `%S'."
                     docstring article where
                     (if (and (listp place)
-                           (memq (car place) ''function))
+                             (memq (car place) ''function))
                         (cadr place)
                       place)))
          ,@body))
@@ -304,7 +304,7 @@ This is equivalent to SPC U M-x eshell"
                     (last-ssh-hostname nil))
                 (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
                   (setq last-ssh-hostname (or (match-string 1 fname)
-                                              last-ssh-hostname))
+                                             last-ssh-hostname))
                   (setq last-match-end (match-end 0)))
                 (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
               (buffer-string)))
