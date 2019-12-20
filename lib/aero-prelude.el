@@ -524,6 +524,15 @@ just been killed (which happens during Emacs shutdown)."
   (kbd "C-h") 'delete-backward-char
   (kbd "C-w") 'aero/smarter-backward-kill-word)
 
+(evil-define-key 'normal 'global
+  ;; Run macro in register q
+  "Q" "@q")
+(evil-define-key 'visual 'global
+  ;; run macro in register q on region
+  "Q" (kbd ":norm @q RET")
+  ;; repeat on region
+  "." (kbd ":norm . RET"))
+
 (general-define-key
  :states '(normal insert motion)
  :keymaps 'override
