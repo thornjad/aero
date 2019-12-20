@@ -343,6 +343,14 @@ This is equivalent to SPC U M-x eshell"
               (delete-char -1)))
         (delete-char -1)))))
 
+(defun aero/go-to-tag (arg)
+  "Go to tag under point.
+If called with prefix argument, or with nothing under point, prompt for tag."
+  (interactive "P")
+  (when (fboundp 'xref-find-definitions)
+    (let ((xref-prompt-for-identifier arg))
+      (call-interactively #'xref-find-definitions))))
+
 (defun shrug ()
 	(interactive)
 	(insert "¯\\_(ツ)_/¯"))
