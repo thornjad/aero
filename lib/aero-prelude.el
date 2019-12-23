@@ -18,11 +18,12 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 ;;
-;;; Code:
 
 (require 'cl-lib)
 (require 'aero-core)
 (require 'aero-lib)
+
+;;; Code:
 
 ;; Our real configuration for Org comes much later. Doing this now
 ;; means that if any packages that are installed in the meantime
@@ -650,7 +651,7 @@ just been killed (which happens during Emacs shutdown)."
  "w=" 'balance-windows
  "w2" 'aero/layout-two-columns
  "w3" 'aero/layout-three-columns
- "wb" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
+ "wB" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
  "wx" 'kill-buffer-and-window
