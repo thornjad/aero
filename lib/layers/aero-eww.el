@@ -20,9 +20,11 @@
   (interactive "sSearch Wikipedia: ")
   (aero/ddg (format "!w %s" (or term ""))))
 
-(defun aero/wiki-news ()
-  (interactive)
+(defun aero/wiki-news () (interactive)
   (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
+
+(defun aero/npr-news () (interactive)
+  (eww-browse-url "https://text.npr.org/"))
 
 (use-package eww
   :commands (eww
@@ -34,11 +36,14 @@
    :states '(normal visual)
    :prefix "SPC"
     "ws" '(eww-search-words :which-key "web search")
+    "wb" '(:ignore t :wk "browse")
+    "wbd" '(aero/ddg :wk "duckduckgo")
+    "wbw" '(aero/wiki :wk "wikipedia")
+    "wbn" '(:ignore t :wk "news sites")
+    "wbnw" '(aero/wiki-news :wk "wikipedia")
+    "wbnn" '(aero/npr-news :wk "npr")
     "ww" 'eww
-    "wp" 'browse-url-at-point
-    "wD" '(aero/ddg :which-key "search duckduckgo")
-    "wW" '(aero/wiki :which-key "search wikipedia")
-    "wN" '(aero/wiki-news :which-key "wikipedia news"))
+    "wp" 'browse-url-at-point)
 
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
