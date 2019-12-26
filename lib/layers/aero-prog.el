@@ -185,6 +185,14 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 
 (add-to-list 'auto-mode-alist '("\\README\\'" . text-mode))
+
+(defun aero/strip-namespace-from-xref (arg)
+  "Remove namespace qualifiers from xref call."
+  ;; Split up by mode because qualifiers are different all over
+  (cond
+   ((equal major-mode "tcl-mode")
+    (last (split-string arg "::")))))
+
 
 
 (provide 'aero-prog)
