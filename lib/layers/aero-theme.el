@@ -125,16 +125,16 @@
   (custom-variable-tag (:foreground aero-faded-blue :weight 'bold))
 
   ;; whitespace-mode
-  (whitespace-space (:background aero-bg :foreground aero-grey2))
-  (whitespace-hspace (:background aero-bg :foreground aero-grey2))
-  (whitespace-tab (:background aero-bg :foreground aero-grey2))
-  (whitespace-newline (:background aero-bg :foreground aero-grey2))
+  (whitespace-space (:background aero-bg :foreground aero-grey0))
+  (whitespace-hspace (:background aero-bg :foreground aero-grey0))
+  (whitespace-tab (:background aero-bg :foreground aero-grey0))
+  (whitespace-newline (:background aero-bg :foreground aero-grey0))
   (whitespace-trailing (:background aero-grey0 :foreground aero-bright-red))
   (whitespace-line (:background aero-grey0 :foreground aero-bright-red))
-  (whitespace-space-before-tab (:background aero-bg :foreground aero-grey2))
-  (whitespace-indentation (:background aero-bg :foreground aero-grey2))
-  (whitespace-empty (:background nil :foreground nil))
-  (whitespace-space-after-tab (:background aero-bg :foreground aero-grey2))
+  (whitespace-space-before-tab (:background aero-bg :foreground aero-grey0))
+  (whitespace-indentation (:background aero-bg :foreground aero-grey0))
+  (whitespace-empty (:background aero-bg :foreground aero-grey0))
+  (whitespace-space-after-tab (:background aero-bg :foreground aero-grey0))
 
   ;; Highlight indentation mode
   (highlight-indentation-current-column-face (:background aero-grey1))

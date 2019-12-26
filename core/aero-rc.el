@@ -118,6 +118,14 @@
 (add-hook 'before-save-hook
           (lambda () (delete-trailing-whitespace)))
 
+(global-whitespace-mode)
+(eval-when-compile (defvar whitespace-style))
+(setq whitespace-style
+      '(face
+        tabs tab-mark
+        spaces space-mark
+        empty trailing))
+
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
