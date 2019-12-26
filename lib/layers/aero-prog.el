@@ -35,7 +35,6 @@
 (make-variable-buffer-local 'flycheck-idle-change-delay)
 (use-package flycheck :straight t
   :commands flycheck-mode
-  :defines (flycheck-clear-idle-change-timer)
   :hook ((web-mode
           tcl-mode
           json-mode
@@ -69,6 +68,8 @@
   (add-hook 'flycheck-after-syntax-check-hook
             'aero/auto-adjust-flycheck-eagerness)
 
+  (eval-when-compile
+    (declare-function flycheck-clear-idle-change-timer "flycheck"))
   (defun flycheck-handle-idle-change ()
     "Handle an expired idle time since the last change. This is an
   overwritten versioon of the original flycheck-handle-idle-change,
