@@ -252,7 +252,11 @@ Local bindings (`counsel-mode-map'):
 	 :states '(normal)
 	 :prefix "SPC"
 
-	 "bb" 'ivy-switch-buffer))
+	 "bb" 'ivy-switch-buffer)
+
+  (use-package ivy-rich :straight t
+    :init
+    (ivy-rich-mode 1)))
 
 (use-package swiper :straight t
 	:after general
