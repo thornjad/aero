@@ -194,5 +194,46 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     (last (split-string arg "::")))))
 
 
+;;; whitespace and indentation
+
+(eval-when-compile
+  (defvar whitespace-mode)
+  (defvar whitespace-style)
+  (defvar global-whitespace-mode))
+(defvar aero/prev-had-whitespace-indent nil)
+(make-variable-buffer-local 'aero/prev-had-whitespace-indent)
+
+(global-whitespace-mode)
+(setq whitespace-style
+      '(face
+        tabs tab-mark
+        spaces space-mark
+        empty trailing))
+
+(use-package indent-guide :straight t
+  :init
+  (indent-guide-global-mode 1))
+
+(defun pre-popup-draw ()
+  "Turn off whitespace and indent before showing company complete tooltip."
+  (if (or whitespace-mode global-whitespace-mode)
+      (progn
+        (whitespace-mode -1)
+        (indent-guide-global-mode -1)
+        (setq aero/prev-had-whitespace-indent t))))
+(defun post-popup-draw ()
+  "Restore previous whitespace and indent after showing company tooltip."
+  (if aero/prev-had-whitespace-indent
+      (progn
+        (whitespace-mode 1)
+        (indent-guide-global-mode 1)
+        (setq aero/prev-had-whitespace-indent nil))))
+
+(eval-after-load "company"
+  (progn
+    (advice-add 'company-pseudo-tooltip-unhide :before #'pre-popup-draw)
+    (advice-add 'company-pseudo-tooltip-hide :after #'post-popup-draw)))
+
+
 
 (provide 'aero-prog)
