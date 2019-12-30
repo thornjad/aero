@@ -204,19 +204,19 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (make-variable-buffer-local 'aero/did-have-whitespace-p)
 
 (defvar aero/disable-modes-when-pseudo-tooltip
-  '(whitespace-mode indent-guide-global-mode formfeeder-mode)
+  '(whitespace-mode global-indent-indicator-mode formfeeder-mode)
   "Modes to toggle when `company-mode''s pseudo-tooltip is active.")
 
-(global-whitespace-mode)
 (setq whitespace-style
       '(face
         tabs tab-mark
         spaces space-mark
         empty trailing))
+(add-hook prog-mode-hook #'whitespace-mode)
 
-(use-package indent-guide :straight t
+(use-package indent-indicator ; local
   :init
-  (indent-guide-global-mode 1))
+  (global-indent-indicator-mode 1))
 
 (defun pre-popup-draw ()
   "Turn off whitespace and indent before showing company complete tooltip."

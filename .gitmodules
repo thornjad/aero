@@ -55,3 +55,6 @@
 [submodule "lib/packages/hackernews"]
 	path = lib/packages/hackernews
 	url = git@gitlab.com:thornjad/hackernews.git
+[submodule "lib/packages/indent-indicator"]
+	path = lib/packages/indent-indicator
+	url = git@github.com:thornjad/indent-indicator.git
