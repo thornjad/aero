@@ -351,6 +351,17 @@ If called with prefix argument, or with nothing under point, prompt for tag."
     (let ((xref-prompt-for-identifier arg))
       (call-interactively #'xref-find-definitions))))
 
+(defun aero/byte-compile-file-at-buffer ()
+  "Byte compile the file open in the current buffer."
+  (interactive)
+  (save-excursion
+    (byte-compile-file buffer-file-name)))
+(defun aero/byte-recompile-file-at-buffer ()
+  "Byte recompile the file open in the current buffer."
+  (interactive)
+  (save-excursion
+    (byte-recompile-file buffer-file-name)))
+
 (defun shrug ()
 	(interactive)
 	(insert "¯\\_(ツ)_/¯"))
