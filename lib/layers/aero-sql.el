@@ -22,6 +22,7 @@
   :config
 	;; for sql comint
 	(add-to-list 'same-window-buffer-names "*SQL: *")
+  (add-hook 'sql-interactive-mode-hook 'evil-insert-state)
 
   (defun aero/sql-send-string-and-focus ()
     "Send a string to SQLi and switch to SQLi in `insert state'."
