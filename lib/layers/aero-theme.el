@@ -119,6 +119,13 @@
   (homoglyph (:foreground aero-bright-yellow))
   (match (:foreground aero-faded-black :background aero-faded-blue))
 
+  ;; Aero modeline
+  (aero/modeline-evil-normal (:foreground aero-bg :background aero-faded-cyan))
+  (aero/modeline-evil-insert (:foreground aero-bg :background aero-faded-magenta))
+  (aero/modeline-evil-visual (:foreground aero-bg :background aero-faded-green))
+  (aero/modeline-evil-replace (:foreground aero-bg :background aero-bright-orange))
+  (aero/modeline-evil-emacs (:foreground aero-bg :background aero-bright-red))
+
   ;; Customize faces
   (widget-field (:background aero-grey1))
   (custom-group-tag (:foreground aero-faded-blue :weight 'bold))
@@ -139,6 +146,9 @@
   ;; Highlight indentation mode
   (highlight-indentation-current-column-face (:background aero-grey1))
   (highlight-indentation-face (:background aero-grey0))
+
+  ;; indent-guide
+  (indent-guide-face (:background aero-bg :foreground aero-grey0 :slant 'normal))
 
   ;; smartparens
   (sp-pair-overlay-face (:background aero-grey1))
@@ -593,6 +603,31 @@
   "Face used for the 'modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
+(defface aero/modeline-evil-normal
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Normal Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-evil-insert
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Insert Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-evil-visual
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Visual Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-evil-replace
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Replace Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-evil-emacs
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Emacs Evil state message."
+  :group 'aero/modeline)
+
 ;; Helper functions
 
 (defun aero/info-line-format (left right)
@@ -649,7 +684,15 @@
   (when (require 'evil nil 'noerror)
     (declare-function evil-state-property "evil")
     (defvar evil-state)
-    (format " %s" (string-trim (evil-state-property evil-state :tag t)))))
+    (let* ((state (string-trim (evil-state-property evil-state :tag t)))
+           (formed-state (format " %s " state)))
+      (cond
+       ((string= state "<N>") (propertize formed-state 'face 'aero/modeline-evil-normal))
+       ((string= state "<I>") (propertize formed-state 'face 'aero/modeline-evil-insert))
+       ((string= state "<V>") (propertize formed-state 'face 'aero/modeline-evil-visual))
+       ((string= state "<R>") (propertize formed-state 'face 'aero/modeline-evil-replace))
+       ((string= state "<E>") (propertize formed-state 'face 'aero/modeline-evil-emacs))
+       (t formed-state)))))
 
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
