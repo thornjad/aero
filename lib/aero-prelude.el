@@ -616,12 +616,12 @@ just been killed (which happens during Emacs shutdown)."
  "cer" 'eval-region
  "ceb" 'eval-buffer
  "ced" 'eval-defun
- "ceb" '(:ignore t :wk "byte compile")
- "cebb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
- "cebr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
- "cebf" '(byte-compile-file :wk "other file")
- "cebF" '(async-byte-compile-file :wk "other file async")
- "cebd" '(byte-recompile-directory :wk "directory")
+ "cec" '(:ignore t :wk "byte compile")
+ "cecb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
+ "cecr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
+ "cecf" '(byte-compile-file :wk "other file")
+ "cecF" '(async-byte-compile-file :wk "other file async")
+ "cecd" '(byte-recompile-directory :wk "directory")
 
  "e" '(:ignore t :which-key "errors")
  "en" 'next-error
