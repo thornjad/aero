@@ -69,7 +69,7 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
             (format "%s\n\nThis is %s `%S' advice for `%S'."
                     docstring article where
                     (if (and (listp place)
-                             (memq (car place) ''function))
+                           (memq (car place) ''function))
                         (cadr place)
                       place)))
          ,@body))
@@ -201,8 +201,8 @@ emacs with sigusr2"
   (cl-destructuring-bind
       (buf start pos)
       (or (cl-find (window-buffer window) (window-prev-buffers)
-                   :key #'car :test-not #'eq)
-          (list (other-buffer) nil nil ))
+                  :key #'car :test-not #'eq)
+         (list (other-buffer) nil nil ))
     (set-window-buffer-start-and-point window buf start pos)))
 
 (defun aero/alternate-window ()
