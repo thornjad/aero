@@ -200,8 +200,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (defvar whitespace-mode)
   (defvar whitespace-style)
   (defvar global-whitespace-mode))
-(defvar aero/prev-had-whitespace-indent nil)
-(make-variable-buffer-local 'aero/prev-had-whitespace-indent)
+(defvar aero/did-have-whitespace-p nil)
+(make-variable-buffer-local 'aero/did-have-whitespace-p)
 
 (global-whitespace-mode)
 (setq whitespace-style
@@ -220,14 +220,14 @@ that have been defined using `sp-pair' or `sp-local-pair'."
       (progn
         (whitespace-mode -1)
         (indent-guide-global-mode -1)
-        (setq aero/prev-had-whitespace-indent t))))
+        (setq aero/did-have-whitespace-p t))))
 (defun post-popup-draw ()
   "Restore previous whitespace and indent after showing company tooltip."
-  (if aero/prev-had-whitespace-indent
+  (if aero/did-have-whitespace-p
       (progn
         (whitespace-mode 1)
         (indent-guide-global-mode 1)
-        (setq aero/prev-had-whitespace-indent nil))))
+        (setq aero/did-have-whitespace-p nil))))
 
 (eval-after-load "company"
   (progn
