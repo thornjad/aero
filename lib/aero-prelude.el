@@ -607,16 +607,21 @@ just been killed (which happens during Emacs shutdown)."
 
  "c" '(:ignore t :which-key "compile")
  "cc" 'compile
- "cC" 'byte-compile-file
- "cD" 'byte-recompile-directory
+ "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
  "ck" 'kill-compilation
  "cr" 'recompile
  "cR" 'byte-recompile-file
- "ce" '(:ignore t :which-key "eval")
+ "ce" '(:ignore t :which-key "elisp")
  "cei" '(ielm :which-key "ielm repl")
  "cer" 'eval-region
  "ceb" 'eval-buffer
  "ced" 'eval-defun
+ "ceb" '(:ignore t :wk "byte compile")
+ "cebb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
+ "cebr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
+ "cebf" '(byte-compile-file :wk "other file")
+ "cebF" '(async-byte-compile-file :wk "other file async")
+ "cebd" '(byte-recompile-directory :wk "directory")
 
  "e" '(:ignore t :which-key "errors")
  "en" 'next-error
