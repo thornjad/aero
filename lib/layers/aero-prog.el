@@ -145,7 +145,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
             (set-buffer-modified-p modified))))
       (cond
        ((and (= current-line next-line)
-           (not (= current-pos next-pos)))
+             (not (= current-pos next-pos)))
         (sp-up-sexp))
        (t
         (insert-char ?\))))))
@@ -203,6 +203,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (defvar aero/did-have-whitespace-p nil)
 (make-variable-buffer-local 'aero/did-have-whitespace-p)
 
+(defvar aero/disable-modes-when-pseudo-tooltip
+  '(whitespace-mode indent-guide-global-mode formfeeder-mode)
+  "Modes to toggle when `company-mode''s pseudo-tooltip is active.")
+
 (global-whitespace-mode)
 (setq whitespace-style
       '(face
@@ -218,15 +222,15 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   "Turn off whitespace and indent before showing company complete tooltip."
   (if (or whitespace-mode global-whitespace-mode)
       (progn
-        (whitespace-mode -1)
-        (indent-guide-global-mode -1)
+        (dolist (mode aero/disable-modes-when-pseudo-tooltip)
+          (funcall mode -1))
         (setq aero/did-have-whitespace-p t))))
 (defun post-popup-draw ()
   "Restore previous whitespace and indent after showing company tooltip."
   (if aero/did-have-whitespace-p
       (progn
-        (whitespace-mode 1)
-        (indent-guide-global-mode 1)
+        (dolist (mode aero/disable-modes-when-pseudo-tooltip)
+          (funcall mode +1))
         (setq aero/did-have-whitespace-p nil))))
 
 (eval-after-load "company"
