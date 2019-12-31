@@ -43,7 +43,7 @@ REQUIREMENTS
 
 INSTALLATION
 
-  Clone or download this repository into your ~/.emacs.d. There are three
+  Clone or download this repository into your ~/.config/emacs/. There are three
   mirrors to choose from:
 
   GitLab (best)     https://gitlab.com/thornjad/aero.git
@@ -55,8 +55,8 @@ INSTALLATION
 LOCAL CONFIG
 
   Local settings, functions, et cetera can be put into an untracked
-  ~/.emacs.d/init.local.el file, which will be evaluated near the end of the
-  initialization process, after all other layers and settings.
+  ~/.config/emacs/init.local.el file, which will be evaluated near the end of
+  the initialization process, after all other layers and settings.
 
 WARNING
 

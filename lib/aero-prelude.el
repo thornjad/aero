@@ -399,7 +399,7 @@ Local bindings (`counsel-mode-map'):
   ;; temporary directory is.
   (put 'temporary-file-directory 'standard-value '("/tmp"))
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
-        tramp-persistency-file-name "~/.emacs.d/data/tramp"
+        tramp-persistency-file-name "~/.config/emacs/data/tramp"
 
         ;; my dev server is bsd, which tramp seems to forget
         shell-file-name "/usr/local/bin/bash")

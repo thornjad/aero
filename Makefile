@@ -16,7 +16,7 @@ update-packages:
 
 compile-packages:
 	#shopt -s extglob
-	$(EMACS) -batch -l ~/.emacs.d/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
+	$(EMACS) -batch -l ~/.config/emacs/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
 
 install-dependencies: install-lsp-servers
 	npm i -g sass-lint eslint tern coffeescript coffeelint
