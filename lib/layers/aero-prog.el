@@ -215,7 +215,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
 (use-package indent-indicator ; local
-  :init
+  :config
   (global-indent-indicator-mode 1))
 
 (defun pre-popup-draw ()
