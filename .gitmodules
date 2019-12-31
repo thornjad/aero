@@ -61,3 +61,6 @@
 [submodule "lib/packages/aero-dark"]
 	path = lib/packages/aero-dark
 	url = git@gitlab.com:thornjad/aero-dark.git
+[submodule "lib/packages/aero-modeline"]
+	path = lib/packages/aero-modeline
+	url = git@github.com:thornjad/aero-modeline.git
