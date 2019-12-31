@@ -263,7 +263,7 @@ Local bindings (`counsel-mode-map'):
   ;;   (ivy-posframe-mode 1))
 
   (use-package ivy-rich :straight t
-    :init
+    :config
     (ivy-rich-mode 1)))
 
 (use-package swiper :straight t
