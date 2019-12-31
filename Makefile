@@ -15,7 +15,7 @@ update-packages:
 	git submodule update --init --recursive --rebase --remote
 
 compile-packages:
-	shopt -s extglob
+	#shopt -s extglob
 	$(EMACS) -batch -l ~/.emacs.d/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
 
 install-dependencies: install-lsp-servers
