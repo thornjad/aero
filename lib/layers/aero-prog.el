@@ -210,7 +210,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (make-variable-buffer-local 'aero/did-have-whitespace-p)
 
 (defvar aero/disable-modes-when-pseudo-tooltip
-  '(whitespace-mode global-indent-indicator-mode)
+  '(whitespace-mode global-indent-indicator-mode global-formfeeder-mode)
   "Modes to toggle when `company-mode''s pseudo-tooltip is active.")
 
 (setq whitespace-style
