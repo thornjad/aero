@@ -212,7 +212,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
         tabs tab-mark
         spaces space-mark
         empty trailing))
-(add-hook prog-mode-hook #'whitespace-mode)
+(add-hook 'prog-mode-hook #'whitespace-mode)
 
 (use-package indent-indicator ; local
   :init
