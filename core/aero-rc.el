@@ -53,7 +53,7 @@
  version-control t
  vc-follow-symlinks t
  git-commit-fill-column 72
- auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+ auto-save-file-name-transforms '((".*" "~/.config/emacs/auto-save-list/" t))
  save-interprogram-paste-before-kill t
  diff-switches "-u" ; unified diff by default
 
