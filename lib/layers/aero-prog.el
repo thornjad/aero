@@ -220,6 +220,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
         empty trailing))
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
+(global-display-fill-column-indicator-mode 1)
+
 (use-package indent-indicator ; local
   :config
   (global-indent-indicator-mode 1))
