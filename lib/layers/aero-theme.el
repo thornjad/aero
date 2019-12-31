@@ -28,7 +28,8 @@
   (aero-modeline-mode 1))
 
 (use-package autothemer :straight t)
-(load-theme 'aero-dark t)
+(eval-after-load "autothemer"
+  (load-theme 'aero-dark t))
 
 
 ;;; headerline
