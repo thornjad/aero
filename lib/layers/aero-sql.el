@@ -30,6 +30,9 @@
 	(add-to-list 'same-window-buffer-names "*SQL: *")
   (add-hook 'sql-interactive-mode-hook 'evil-insert-state)
 
+  (setq sql-use-indent-support t)
+  (use-package sql-indent :straight t)
+
   (defun aero/sql-send-string-and-focus ()
     "Send a string to SQLi and switch to SQLi in `insert state'."
     (interactive)
@@ -57,7 +60,5 @@
     (let ((sql-pop-to-buffer-after-send-region t))
       (sql-send-region start end)
       (evil-insert-state))))
-
-(use-package sql-indent :straight t :defer t)
 
 (provide 'aero-sql)
