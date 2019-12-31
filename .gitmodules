@@ -58,3 +58,6 @@
 [submodule "lib/packages/indent-indicator"]
 	path = lib/packages/indent-indicator
 	url = git@github.com:thornjad/indent-indicator.git
+[submodule "lib/packages/aero-dark"]
+	path = lib/packages/aero-dark
+	url = git@gitlab.com:thornjad/aero-dark.git
