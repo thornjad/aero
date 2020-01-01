@@ -98,8 +98,9 @@
     (concat
      left
      " "
-     (propertize  " "
-                  'display `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
+     (propertize
+      " " 'display
+      `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
      right)))
 
 ;; Define a helper function to determine whether or not the current window is active.
