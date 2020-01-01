@@ -588,6 +588,7 @@ just been killed (which happens during Emacs shutdown)."
  "fD" '(aero/delete-this-file :which-key "delete this file")
  "fE" '(aero/sudo-edit :which-key "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file")
+ "fT" 'counsel-load-theme
  "fo" '(:ignore t :which-key "open special files")
  "fod" '(aero/open-tweaks :which-key "tweaks")
  "fot" '(aero/thornlog :which-key "thornlog")
