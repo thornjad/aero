@@ -48,7 +48,7 @@
 
  ;; version control and saving
  use-package-verbose nil
- delete-old-versions -1	; supprime les vieilles versions des fichiers sauvegardés
+ delete-old-versions -1 ; supprime les vieilles versions des fichiers sauvegardés
  backup-directory-alist `(("." . "~/.config/emacs/backups"))
  version-control t
  vc-follow-symlinks t
