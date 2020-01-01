@@ -77,6 +77,9 @@
   (mode-line (:background aero-grey0 :foreground aero-grey4 :box nil))
   (mode-line-inactive
    (:background aero-faded-black :foreground aero-grey3 :box nil))
+  (tab-bar (:inherit 'mode-line-inactive))
+  (tab-bar-tab (:inherit 'mode-line))
+  (tab-bar-tab-inactive (:inherit 'mode-line-inactive :slant 'italic))
   (hl-line (:background aero-grey0))
   (region (:background aero-grey1))
   (secondary-selection (:background aero-grey0))
