@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2020 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -528,6 +528,14 @@ just been killed (which happens during Emacs shutdown)."
   :after lsp-mode
   :commands lsp-ui-mode
   :hook (lsp-mode . lsp-ui-mode))
+
+(use-package expand-region :straight t
+  :defer nil
+  :config
+  (general-define-key
+   :states '(normal visual motion replace emacs)
+   :keymaps 'override
+    (kbd "C-e") 'er/expand-region))
 
 
 ;;; general bindings
