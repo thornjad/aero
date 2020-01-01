@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2020 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -171,7 +171,7 @@ emacs with sigusr2"
 	(cancel-function-timers 'auto-revert-buffers))
 
 
-;; buffers, windows
+;; buffers, windows, frames, tabs
 
 (defun aero/toggle-prettify-this-buffer ()
   "Disable `prettify-symbols-mode' in this buffer."
@@ -233,6 +233,32 @@ emacs with sigusr2"
 This is equivalent to SPC U M-x eshell"
   (interactive)
   (eshell t))
+
+(defun make-xpm-bar (color height width)
+  "Create an XPM bar bitmap of HEIGHT and WIDTH, with COLOR accent."
+  (propertize
+   " " 'display
+   (let ((data (make-list height (make-list width 1)))
+         (color (or color "None")))
+     (create-image
+      (concat
+       (format "/* XPM */\nstatic char * percent[] = {\n\"%i %i 2 1\",\n\". c %s\",\n\"  c %s\","
+               (length (car data))
+               (length data)
+               color
+               color)
+       (apply #'concat
+              (cl-loop with idx = 0
+                       with len = (length data)
+                       for dl in data
+                       do (cl-incf idx)
+                       collect
+                       (concat "\""
+                               (cl-loop for d in dl
+                                        if (= d 0) collect (string-to-char " ")
+                                        else collect (string-to-char "."))
+                               (if (eq idx len) "\"};" "\",\n")))))
+      'xpm t :ascent 'center))))
 
 
 ;;; files
@@ -304,7 +330,7 @@ This is equivalent to SPC U M-x eshell"
                     (last-ssh-hostname nil))
                 (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
                   (setq last-ssh-hostname (or (match-string 1 fname)
-                                             last-ssh-hostname))
+                                              last-ssh-hostname))
                   (setq last-match-end (match-end 0)))
                 (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
               (buffer-string)))
@@ -388,7 +414,7 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   (save-excursion
     (skip-chars-backward "0-9")
     (or (looking-at "[0-9]+")
-       (aero/log-error "No number at point"))
+        (aero/log-error "No number at point"))
     (replace-match (number-to-string (+ offset (string-to-number (match-string 0)))))))
 
 (defun increment-number-at-point ()
