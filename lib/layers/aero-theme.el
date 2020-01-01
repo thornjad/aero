@@ -20,7 +20,6 @@
 
 (eval-when-compile
   (require 'cl-lib)
-  (require 'use-package)
   (require 'subr-x))
 
 ;;; Code:
@@ -30,9 +29,6 @@
 
 (require 'aero-modeline)
 (aero/modeline-mode 1)
-
-;; (require 'aero-headerline)
-;; (aero/headerline-mode 1)
 
 
 ;;; additional tweaks and packages
