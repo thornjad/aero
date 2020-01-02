@@ -33,37 +33,37 @@
 
 ;;; additional tweaks and packages
 
-(when (boundp 'global-prettify-symbols-mode)
-  (add-hook
-   'prog-mode-hook
-   (lambda ()
-     (setq prettify-symbols-alist
-           (append prettify-symbols-alist
-                   '(
-                     ;; add all greek
-                     ("lambda" . ?λ)
+;; (when (boundp 'global-prettify-symbols-mode)
+;;   (add-hook
+;;    'prog-mode-hook
+;;    (lambda ()
+;;      (setq prettify-symbols-alist
+;;            (append prettify-symbols-alist
+;;                    '(
+;;                      ;; add all greek
+;;                      ("lambda" . ?λ)
 
-                     ;; mathematics
-                     ("and" . ?∧)
-                     ("&&" . ?∧)
-                     ("or" . ?∨)
-                     ("||" . ?∨)
+;;                      ;; mathematics
+;;                      ("and" . ?∧)
+;;                      ("&&" . ?∧)
+;;                      ("or" . ?∨)
+;;                      ("||" . ?∨)
 
-                     ;; relational algebra
-                     ("in" . ?∈)
-                     ("not in" . ?∉)
+;;                      ;; relational algebra
+;;                      ("in" . ?∈)
+;;                      ("not in" . ?∉)
 
-                     ;; arrows and similar
-                     ("<=" . ?≤)
-                     (">=" . ?≥)
-                     ("=>" . ?⇒)
-                     ("->" . ?→)
-                     ("!=" . ?≠)
-                     ("===" . ?≡)
-                     ("!==" . ?≢)
-                     ("<<" . ?≪)
-                     (">>" . ?≫))))))
-  (global-prettify-symbols-mode t))
+;;                      ;; arrows and similar
+;;                      ("<=" . ?≤)
+;;                      (">=" . ?≥)
+;;                      ("=>" . ?⇒)
+;;                      ("->" . ?→)
+;;                      ("!=" . ?≠)
+;;                      ("===" . ?≡)
+;;                      ("!==" . ?≢)
+;;                      ("<<" . ?≪)
+;;                      (">>" . ?≫))))))
+;;   (global-prettify-symbols-mode t))
 
 (show-paren-mode 1)
 (line-number-mode 1)
