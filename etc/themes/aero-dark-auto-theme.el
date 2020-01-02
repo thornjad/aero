@@ -243,10 +243,10 @@
   (counsel-visible-mark (:foreground aero-hard-black :background aero-grey4))
 
   ;; avy
-  (avy-lead-face (:foreground aero-bright-black :background aero-faded-cyan))
-  (avy-lead-face-0 (:foreground aero-faded-black :background aero-bright-blue))
-  (avy-lead-face-1 (:foreground aero-faded-white :background aero-grey0))
-  (avy-lead-face-2 (:foreground aero-faded-black :background aero-faded-blue))
+  (avy-lead-face (:foreground aero-bright-black :background aero-faded-cyan :slant 'normal))
+  (avy-lead-face-0 (:foreground aero-faded-black :background aero-bright-blue :slant 'normal))
+  (avy-lead-face-1 (:foreground aero-faded-white :background aero-grey0 :slant 'normal))
+  (avy-lead-face-2 (:foreground aero-faded-black :background aero-faded-blue :slant 'normal))
 
   ;; hi-lock-mode
   (hi-black-b (:foreground aero-hard-black :weight 'bold))

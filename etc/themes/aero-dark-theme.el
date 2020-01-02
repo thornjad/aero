@@ -252,10 +252,14 @@
    `(counsel-visible-mark ((t (:foreground ,aero-hard-black :background ,aero-grey4))))
 
    ;; avy
-   `(avy-lead-face ((t (:foreground ,aero-bright-black :background ,aero-faded-cyan))))
-   `(avy-lead-face-0 ((t (:foreground ,aero-faded-black :background ,aero-bright-blue))))
-   `(avy-lead-face-1 ((t (:foreground ,aero-faded-white :background ,aero-grey0))))
-   `(avy-lead-face-2 ((t (:foreground ,aero-faded-black :background ,aero-faded-blue))))
+   `(avy-lead-face
+     ((t (:foreground ,aero-bright-black :background ,aero-faded-cyan :slant 'normal))))
+   `(avy-lead-face-0
+     ((t (:foreground ,aero-faded-black :background ,aero-bright-blue :slant 'normal))))
+   `(avy-lead-face-1
+     ((t (:foreground ,aero-faded-white :background ,aero-grey0 :slant 'normal))))
+   `(avy-lead-face-2
+     ((t (:foreground ,aero-faded-black :background ,aero-faded-blue :slant 'normal))))
 
    ;; hi-lock-mode
    `(hi-black-b ((t (:foreground ,aero-hard-black :weight 'bold))))
