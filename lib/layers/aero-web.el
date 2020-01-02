@@ -71,6 +71,9 @@
 ;;   (evil-define-key 'normal rjsx-mode-map
 ;;     (kbd "C-d") 'evil-scroll-down))
 
+(use-package js :straight nil
+  :mode ("\\.jsx?\\'" . js-mode))
+
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
