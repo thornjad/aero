@@ -418,8 +418,6 @@ Local bindings (`counsel-mode-map'):
              do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
     (tramp-cleanup-all-connections)))
 
-(use-package quick-restart)
-
 (use-package ranger :straight t
   :after general
   :config
