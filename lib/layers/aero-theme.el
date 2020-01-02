@@ -75,6 +75,7 @@
   :load-path "lib/packages/formfeeder/"
   :hook (text-mode . formfeeder-mode)
   :config
+  (setq formfeeder-line-width 80)
   (declare-function global-formfeeder-mode "formfeeder")
   (global-formfeeder-mode 1))
 
