@@ -17,11 +17,7 @@
 ;; performance of this software.
 ;;
 ;;; Commentary:
-
-(eval-when-compile
-  (require 'cl-lib)
-  (require 'subr-x))
-
+;;
 ;;; Code:
 
 (use-package autothemer :straight t) ; required by theme
