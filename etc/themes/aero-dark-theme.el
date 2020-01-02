@@ -90,7 +90,6 @@
   (link (:foreground aero-faded-blue :underline t))
   (link-visited (:foreground aero-faded-magenta :underline t))
   (shadow (:foreground aero-grey2))
-  (page-break-lines (:foreground aero-grey2))
 
   ;; Built-in syntax
   (font-lock-builtin-face (:foreground aero-bright-yellow :slant 'italic))
@@ -131,16 +130,20 @@
   (custom-variable-tag (:foreground aero-faded-blue :weight 'bold))
 
   ;; whitespace-mode
-  (whitespace-space (:background aero-bg :foreground aero-grey0))
-  (whitespace-hspace (:background aero-bg :foreground aero-grey0))
-  (whitespace-tab (:background aero-bg :foreground aero-grey0))
-  (whitespace-newline (:background aero-bg :foreground aero-grey0))
-  (whitespace-trailing (:background aero-grey0 :foreground aero-bright-red))
-  (whitespace-line (:background aero-grey0 :foreground aero-bright-red))
-  (whitespace-space-before-tab (:background aero-bg :foreground aero-grey0))
-  (whitespace-indentation (:background aero-bg :foreground aero-grey0))
-  (whitespace-empty (:background aero-bg :foreground aero-grey0))
-  (whitespace-space-after-tab (:background aero-bg :foreground aero-grey0))
+  (whitespace-space (:foreground aero-grey0))
+  (whitespace-hspace (:foreground aero-grey0))
+  (whitespace-tab (:foreground aero-grey0))
+  (whitespace-newline (:foreground aero-grey0))
+  (whitespace-trailing (:foreground aero-bright-red))
+  (whitespace-line (:foreground aero-bright-red))
+  (whitespace-space-before-tab (:foreground aero-grey0))
+  (whitespace-indentation (:foreground aero-grey0))
+  (whitespace-empty (:foreground aero-grey0))
+  (whitespace-space-after-tab (:foreground aero-grey0))
+
+  ;; Displaying formfeed chars
+  (page-break-lines (:foreground aero-grey2))
+  (formfeeder-line (:strike-through aero-grey2))
 
   ;; Highlight indentation mode
   (highlight-indentation-current-column-face (:background aero-grey1))
@@ -411,6 +414,10 @@
   (ivy-minibuffer-match-face-3 (:foreground aero-bright-yellow))
   (ivy-minibuffer-match-face-4 (:foreground aero-bright-yellow))
 
+  ;; ivy-posframe
+  (ivy-posframe (:background aero-faded-black))
+  (ivy-posframe-border (:background aero-faded-cyan :foreground aero-faded-cyan))
+
   ;; magit
   (magit-bisect-bad (:foreground aero-bright-red))
   (magit-bisect-good (:foreground aero-faded-green))
@@ -470,6 +477,11 @@
   ;; flyspell
   (flyspell-duplicate (:underline (:color aero-grey3 :style 'line)))
   (flyspell-incorrect (:underline (:color aero-bright-red :style 'line)))
+
+  ;; flycheck
+  (flycheck-warning (:underline (:color aero-bright-yellow :style 'line)))
+  (flycheck-error (:underline (:color aero-bright-red :style 'line)))
+  (flycheck-info (:underline (:color aero-bright-green :style 'line)))
 
   ;; langtool
   (langtool-errline (:foreground aero-faded-black :background aero-bright-red))
