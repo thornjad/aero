@@ -55,48 +55,48 @@
 ;;; the general is here
 
 (use-package which-key ;; local
-	:defines which-key-mode
-	:config
-	(which-key-mode)
+  :defines which-key-mode
+  :config
+  (which-key-mode)
   (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
 (use-package general :straight t
-	:init
-	(setq-default general-override-states
+  :init
+  (setq-default general-override-states
                 '(insert hybrid normal visual motion operator replace))
-	:config
-	(general-define-key
-	 :states '(normal visual motion)
-	 :keymaps 'override
-	 :prefix "SPC"
-	 :non-normal-prefix "C-SPC"
-	 "" nil))
+  :config
+  (general-define-key
+   :states '(normal visual motion)
+   :keymaps 'override
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "" nil))
 
 
 ;; we descend to hell
 
 (use-package evil
   ;; local
-	:after general
+  :after general
   :init
   (setq evil-want-keybinding nil
-				evil-want-fine-undo t
-				evil-want-C-i-jump nil
-				evil-want-C-u-scroll t)
+        evil-want-fine-undo t
+        evil-want-C-i-jump nil
+        evil-want-C-u-scroll t)
 
-	:config
-	(general-define-key
-	 :states 'normal
-	 :prefix "SPC"
-	 "fW" 'evil-write-all
-	 "w/" '(evil-window-vsplit :which-key "split vertical")
-	 "w-" '(evil-window-split :which-key "split horizontal")
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "fW" 'evil-write-all
+   "w/" '(evil-window-vsplit :which-key "split vertical")
+   "w-" '(evil-window-split :which-key "split horizontal")
    "cm" 'evil-make)
 
   ;; default states
-	(setq evil-default-state 'normal)
-	(evil-set-initial-state 'dired-mode 'emacs)
-	(evil-set-initial-state 'message-mode 'motion)
+  (setq evil-default-state 'normal)
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'message-mode 'motion)
 
   (defun aero/evil-shift-right ()
     (interactive)
@@ -111,17 +111,17 @@
   (evil-define-key 'visual global-map (kbd ">") 'aero/evil-shift-right)
   (evil-define-key 'visual global-map (kbd "<") 'aero/evil-shift-left)
 
-	(evil-mode 1))
+  (evil-mode 1))
 
 (use-package evil-matchit :straight t
-	:after evil
-	:defines global-evil-matchit-mode
+  :after evil
+  :defines global-evil-matchit-mode
   :config
   (global-evil-matchit-mode 1))
 
 (use-package evil-visualstar :straight t
-	:after evil
-	:defines global-evil-visualstar-mode
+  :after evil
+  :defines global-evil-visualstar-mode
   :config
   (global-evil-visualstar-mode t))
 
@@ -200,20 +200,20 @@ Local bindings (`counsel-mode-map'):
         counsel-git-cmd "rg --files"
         counsel-rg-base-command "rg --with-filename --smart-case --no-heading --line-number --color never %s")
 
-	(general-define-key
-	 :states '(normal visual insert replace)
-	 :prefix "SPC"
-	 :non-normal-prefix "C-SPC"
+  (general-define-key
+   :states '(normal visual insert replace)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
 
-	 "SPC" 'counsel-M-x
-	 "ff" 'counsel-find-file
-	 "fl" 'counsel-locate
-	 "fr" 'counsel-recentf
+   "SPC" 'counsel-M-x
+   "ff" 'counsel-find-file
+   "fl" 'counsel-locate
+   "fr" 'counsel-recentf
    "?" 'counsel-rg
    "gg" '(counsel-git-grep :which-key "git grep")
-	 "gff" '(counsel-git :which-key "find git file")
-	 "ry" '(counsel-yank-pop :which-key "search kill ring")
-	 "hda" '(counsel-apropos :which-key "apropos")
+   "gff" '(counsel-git :which-key "find git file")
+   "ry" '(counsel-yank-pop :which-key "search kill ring")
+   "hda" '(counsel-apropos :which-key "apropos")
    "qu" '(aero/counsel-unicode-char-after :which-key "unicode char")
    "qU" 'counsel-unicode-char))
 
@@ -229,30 +229,30 @@ Local bindings (`counsel-mode-map'):
   (recentf-mode 1))
 
 (use-package ivy :straight t
-	:after general
+  :after general
   :functions ivy-mode
-	:config
-	(ivy-mode 1)
-	(setq ivy-initial-inputs-alist nil ; screw the regex
-				ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
+  :config
+  (ivy-mode 1)
+  (setq ivy-initial-inputs-alist nil ; screw the regex
+        ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
         ivy-virtual-abbreviate 'full
         ivy-wrap t
-				ivy-height 8
-				ivy-count-format "" ; don't count candidates
+        ivy-height 8
+        ivy-count-format "" ; don't count candidates
 
         ;; use fuzzy by default, but some searching is impossible without
         ;; stricter regex's
-				ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
+        ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
                                 (counsel-projectile-rg . ivy--regex-plus)
                                 (counsel-git-grep . ivy--regex-plus)
                                 (projectile-ripgrep . ivy--regex-plus)
                                 (swiper . ivy--regex-plus)
                                 (t . ivy--regex-fuzzy)))
-	(general-define-key
-	 :states '(normal)
-	 :prefix "SPC"
+  (general-define-key
+   :states '(normal)
+   :prefix "SPC"
 
-	 "bb" 'ivy-switch-buffer)
+   "bb" 'ivy-switch-buffer)
 
   ;; (use-package ivy-posframe :straight t
   ;;   :config
@@ -267,14 +267,14 @@ Local bindings (`counsel-mode-map'):
     (ivy-rich-mode 1)))
 
 (use-package swiper :straight t
-	:after general
+  :after general
   :commands swiper
-	:init
-	(general-define-key
-	 :states '(normal)
-	 :prefix "SPC"
-	 :non-normal-prefix "C-SPC"
-	 "/" '(counsel-grep-or-swiper :which-key "search")))
+  :init
+  (general-define-key
+   :states '(normal)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "/" '(counsel-grep-or-swiper :which-key "search")))
 
 (use-package flx :straight t)
 
@@ -301,7 +301,7 @@ Local bindings (`counsel-mode-map'):
   (setq undo-tree-enable-undo-in-region nil))
 
 (use-package winner
-	:after general
+  :after general
   :defines winner-boring-buffers
   :config
   (setq winner-boring-buffers
@@ -387,8 +387,8 @@ Local bindings (`counsel-mode-map'):
 
 (use-package re-builder
   :commands re-builder
-	:config
-	(setq reb-re-syntax 'string))
+  :config
+  (setq reb-re-syntax 'string))
 
 (use-package tramp
   :defer t
@@ -405,23 +405,23 @@ Local bindings (`counsel-mode-map'):
         shell-file-name "/usr/local/bin/bash")
 
   ;; push projectile in the right direction
-	(defadvice projectile-project-root (around ignore-remote first activate)
-		(unless (file-remote-p default-directory) ad-do-it))
+  (defadvice projectile-project-root (around ignore-remote first activate)
+    (unless (file-remote-p default-directory) ad-do-it))
 
   (defun aero/tramp-buffer-p (buffer)
-		(let ((name (buffer-name buffer)))
-			(string-match "^\\*tramp" name)))
-	(defun aero/kill-tramp ()
-		"Kill and cleanup all Tramp connections. Useful for stale connections."
-		(interactive)
-		(cl-loop for buffer being the buffers
+    (let ((name (buffer-name buffer)))
+      (string-match "^\\*tramp" name)))
+  (defun aero/kill-tramp ()
+    "Kill and cleanup all Tramp connections. Useful for stale connections."
+    (interactive)
+    (cl-loop for buffer being the buffers
              do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
-		(tramp-cleanup-all-connections)))
+    (tramp-cleanup-all-connections)))
 
 (use-package quick-restart)
 
 (use-package ranger :straight t
-	:after general
+  :after general
   :config
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
@@ -431,7 +431,7 @@ Local bindings (`counsel-mode-map'):
    "fd" 'deer))
 
 (use-package pomp
-	:after general
+  :after general
   ;; local
   :commands pomp
   :init
