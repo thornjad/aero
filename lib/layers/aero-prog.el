@@ -202,24 +202,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;;; whitespace and indentation
 
-(eval-when-compile
-  (defvar whitespace-mode)
-  (defvar whitespace-style)
-  (defvar global-whitespace-mode))
-(defvar aero/did-have-whitespace-p nil)
-(make-variable-buffer-local 'aero/did-have-whitespace-p)
-
-(defvar aero/disable-modes-when-pseudo-tooltip
-  '(whitespace-mode)
-  "Modes to toggle when `company-mode''s pseudo-tooltip is active.")
-
-(setq whitespace-style
-      '(face
-        tabs tab-mark
-        spaces space-mark
-        empty trailing))
-(add-hook 'prog-mode-hook #'whitespace-mode)
-
 (global-display-fill-column-indicator-mode 1)
 
 (use-package indent-indicator ; local
@@ -227,27 +209,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (general-define-key
    :states 'normal
    :prefix "SPC"
-    "bI" 'indent-indicator-mode))
-
-(defun pre-popup-draw ()
-  "Turn off whitespace and indent before showing company complete tooltip."
-  (if (or whitespace-mode global-whitespace-mode)
-      (progn
-        (dolist (mode aero/disable-modes-when-pseudo-tooltip)
-          (funcall mode -1))
-        (setq aero/did-have-whitespace-p t))))
-(defun post-popup-draw ()
-  "Restore previous whitespace and indent after showing company tooltip."
-  (if aero/did-have-whitespace-p
-      (progn
-        (dolist (mode aero/disable-modes-when-pseudo-tooltip)
-          (funcall mode +1))
-        (setq aero/did-have-whitespace-p nil))))
-
-(eval-after-load "company"
-  (progn
-    (advice-add 'company-pseudo-tooltip-unhide :before #'pre-popup-draw)
-    (advice-add 'company-pseudo-tooltip-hide :after #'post-popup-draw)))
+    "bDi" 'indent-indicator-mode))
 
 
 
