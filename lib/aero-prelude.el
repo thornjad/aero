@@ -535,6 +535,10 @@ just been killed (which happens during Emacs shutdown)."
    :keymaps 'override
     (kbd "C-e") 'er/expand-region))
 
+(use-package beacon :straight t
+  :config
+  (beacon-mode 1))
+
 
 ;;; general bindings
 
