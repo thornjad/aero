@@ -28,7 +28,7 @@
   :config
 	;; for sql comint
 	(add-to-list 'same-window-buffer-names "*SQL: *")
-  (add-hook 'sql-interactive-mode-hook 'evil-insert-state)
+  (add-hook 'sql-interactive-mode-hook #'evil-insert-state)
 
   (setq sql-use-indent-support t)
   (use-package sql-indent :straight t)
