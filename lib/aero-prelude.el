@@ -612,6 +612,8 @@ just been killed (which happens during Emacs shutdown)."
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
+ "bD" '(:ignore t :wk "display")
+ "bDw" '(whitespace-mode :wk "whitespace")
  "bt" '(:ignore t :which-key "tabify")
  "btu" 'untabify-buffer
  "btt" 'tabify-buffer
