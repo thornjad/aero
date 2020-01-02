@@ -25,7 +25,7 @@
 ;;; Code:
 
 (use-package autothemer :straight t) ; required by theme
-(load-theme 'aero-dark t)
+(load-theme 'aero-dark-auto t)
 
 (require 'aero-modeline)
 (aero/modeline-mode 1)
