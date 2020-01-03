@@ -19,13 +19,17 @@
 ;; Commentary:
 ;;
 ;; A home for utilities
-;;
-;; Code:
 
 (require 'cl-lib)
 
+;; Code:
+
 
-;;; macros
+;;; utilities
+
+;; Load in external libs
+(use-package memoize
+  :straight (memoize :host gitlab :repo "thornjad/memoize"))
 
 (defmacro aero/defhook (name arglist hooks docstring &rest body)
   "Define a function called NAME and add it to a hook. ARGLIST is as in `defun'.
@@ -75,9 +79,6 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
          ,@body))
      (advice-add ',place ',where #',name)
      ',name))
-
-
-;;; utilities
 
 (defun aero/path-join (path &rest segments)
   "Join PATH with SEGMENTS using `expand-file-name'.
