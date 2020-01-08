@@ -20,8 +20,8 @@
 ;;
 ;;; Code:
 
-(use-package autothemer :straight t) ; required by theme
-(load-theme 'aero-dark-auto t)
+;; in etc/themes/
+(load-theme 'aero-dark t)
 
 (require 'aero-modeline)
 (aero/modeline-mode 1)
