@@ -66,9 +66,9 @@
    `(cursor ((t (:background ,aero-fg))))
    `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-grey4 :box nil))))
    `(mode-line-inactive ((t (:background ,aero-faded-black :foreground ,aero-grey3 :box nil))))
-   `(tab-bar ((t (:inherit 'mode-line-inactive))))
-   `(tab-bar-tab ((t (:inherit 'mode-line))))
-   `(tab-bar-tab-inactive ((t (:inherit 'mode-line-inactive :slant 'italic))))
+   `(tab-bar ((t (:inherit mode-line-inactive))))
+   `(tab-bar-tab ((t (:inherit mode-line))))
+   `(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :slant italic))))
    `(hl-line ((t (:background ,aero-grey0))))
    `(region ((t (:background ,aero-grey1))))
    `(secondary-selection ((t (:background ,aero-grey0))))
@@ -80,9 +80,9 @@
    `(shadow ((t (:foreground ,aero-grey2))))
 
    ;; Built-in syntax
-   `(font-lock-builtin-face ((t (:foreground ,aero-bright-yellow :slant 'italic))))
-   `(font-lock-constant-face ((t (:foreground ,aero-faded-magenta :slant 'italic))))
-   `(font-lock-comment-face ((,class (:foreground ,aero-grey2 :slant 'italic))))
+   `(font-lock-builtin-face ((t (:foreground ,aero-bright-yellow :slant italic))))
+   `(font-lock-constant-face ((t (:foreground ,aero-faded-magenta :slant italic))))
+   `(font-lock-comment-face ((,class (:foreground ,aero-grey2 :slant italic))))
    `(font-lock-function-name-face ((t (:foreground ,aero-bright-orange))))
    `(font-lock-keyword-face ((t (:foreground ,aero-faded-red))))
    `(font-lock-string-face ((t (:foreground ,aero-bright-green))))
@@ -113,8 +113,8 @@
 
    ;; Customize faces
    `(widget-field ((t (:background ,aero-grey1))))
-   `(custom-group-tag ((t (:foreground ,aero-faded-blue :weight 'bold))))
-   `(custom-variable-tag ((t (:foreground ,aero-faded-blue :weight 'bold))))
+   `(custom-group-tag ((t (:foreground ,aero-faded-blue :weight bold))))
+   `(custom-variable-tag ((t (:foreground ,aero-faded-blue :weight bold))))
 
    ;; whitespace-mode
    `(whitespace-space ((t (:foreground ,aero-grey0))))
@@ -137,7 +137,7 @@
    `(highlight-indentation-face ((t (:background ,aero-grey0))))
 
    ;; indent-guide
-   `(indent-guide-face ((t (:background ,aero-bg :foreground ,aero-grey0 :slant 'normal))))
+   `(indent-guide-face ((t (:background ,aero-bg :foreground ,aero-grey0 :slant normal))))
 
    ;; fill column indicator
    `(fill-column-indicator ((t (:background ,aero-bg :foreground ,aero-grey0))))
@@ -172,26 +172,26 @@
    `(diff-refine-added ((t (:background ,aero-hard-green :foreground ,aero-bright-green))))
    `(diff-removed ((t (:background nil :foreground ,aero-bright-red))))
    `(diff-refine-removed ((t (:background ,aero-hard-red :foreground ,aero-bright-red))))
-   `(diff-indicator-changed ((t (:inherit 'diff-changed))))
-   `(diff-indicator-added ((t (:inherit 'diff-added))))
-   `(diff-indicator-removed ((t (:inherit 'diff-removed))))
+   `(diff-indicator-changed ((t (:inherit diff-changed))))
+   `(diff-indicator-added ((t (:inherit diff-added))))
+   `(diff-indicator-removed ((t (:inherit diff-removed))))
 
    ;; smerge
    `(smerge-lower ((t (:background ,aero-hard-green))))
    `(smerge-upper ((t (:background ,aero-bright-red))))
    `(smerge-base ((t (:background ,aero-hard-blue))))
-   `(smerge-markers ((t (:inherit 'font-lock-comment-face :weight 'bold))))
+   `(smerge-markers ((t (:inherit font-lock-comment-face :weight bold))))
 
    ;; js2
-   `(js2-warning ((t (:underline (:color ,aero-bright-yellow :style 'wave)))))
-   `(js2-error ((t (:underline (:color ,aero-bright-red :style 'wave)))))
-   `(js2-external-variable ((t (:underline (:color ,aero-faded-blue :style 'wave)))))
+   `(js2-warning ((t (:underline (:color ,aero-bright-yellow :style wave)))))
+   `(js2-error ((t (:underline (:color ,aero-bright-red :style wave)))))
+   `(js2-external-variable ((t (:underline (:color ,aero-faded-blue :style wave)))))
    `(js2-jsdoc-tag ((t (:background nil :foreground ,aero-grey2))))
    `(js2-jsdoc-type ((t (:background nil :foreground ,aero-grey3))))
    `(js2-jsdoc-value ((t (:background nil :foreground ,aero-grey4))))
-   `(js2-function-param ((t (:inherit 'font-lock-variable-name-face :slant 'italic))))
-   `(js2-function-call ((t (:inherit 'font-lock-function-name-face))))
-   `(js2-object-property ((t (:inherit 'font-lock-variable-name-face))))
+   `(js2-function-param ((t (:inherit font-lock-variable-name-face :slant italic))))
+   `(js2-function-call ((t (:inherit font-lock-function-name-face))))
+   `(js2-object-property ((t (:inherit font-lock-variable-name-face))))
    `(js2-instance-member ((t (:background nil :foreground ,aero-bright-yellow))))
    `(js2-private-member ((t (:background nil :foreground ,aero-bright-yellow))))
    `(js2-private-function-call ((t (:background nil :foreground ,aero-faded-blue))))
@@ -199,7 +199,7 @@
    `(js2-jsdoc-html-tag-delimiter ((t (:background nil :foreground ,aero-grey4))))
 
    ;; rjsx
-   `(rjsx-attr ((t (:inherit 'js2-object-property :slant 'italic))))
+   `(rjsx-attr ((t (:inherit js2-object-property :slant italic))))
 
    ;; popup
    `(popup-face ((t (:underline nil :foreground ,aero-faded-yellow :background ,aero-grey0))))
@@ -253,23 +253,23 @@
 
    ;; avy
    `(avy-lead-face
-     ((t (:foreground ,aero-bright-black :background ,aero-faded-cyan :slant 'normal))))
+     ((t (:foreground ,aero-bright-black :background ,aero-faded-cyan :slant normal))))
    `(avy-lead-face-0
-     ((t (:foreground ,aero-faded-black :background ,aero-bright-blue :slant 'normal))))
+     ((t (:foreground ,aero-faded-black :background ,aero-bright-blue :slant normal))))
    `(avy-lead-face-1
-     ((t (:foreground ,aero-faded-white :background ,aero-grey0 :slant 'normal))))
+     ((t (:foreground ,aero-faded-white :background ,aero-grey0 :slant normal))))
    `(avy-lead-face-2
-     ((t (:foreground ,aero-faded-black :background ,aero-faded-blue :slant 'normal))))
+     ((t (:foreground ,aero-faded-black :background ,aero-faded-blue :slant normal))))
 
    ;; hi-lock-mode
-   `(hi-black-b ((t (:foreground ,aero-hard-black :weight 'bold))))
-   `(hi-black-hb ((t (:foreground ,aero-hard-black :weight 'bold :height 1.5))))
+   `(hi-black-b ((t (:foreground ,aero-hard-black :weight bold))))
+   `(hi-black-hb ((t (:foreground ,aero-hard-black :weight bold :height 1.5))))
    `(hi-blue ((t (:foreground ,aero-faded-black :background ,aero-faded-blue))))
-   `(hi-blue-b ((t (:foreground ,aero-faded-blue :weight 'bold))))
+   `(hi-blue-b ((t (:foreground ,aero-faded-blue :weight bold))))
    `(hi-green ((t (:foreground ,aero-faded-black :background ,aero-faded-green))))
-   `(hi-green-b ((t (:foreground ,aero-faded-green :weight 'bold))))
+   `(hi-green-b ((t (:foreground ,aero-faded-green :weight bold))))
    `(hi-pink ((t (:foreground ,aero-faded-black :background ,aero-faded-magenta))))
-   `(hi-red-b ((t (:foreground ,aero-bright-red :weight 'bold))))
+   `(hi-red-b ((t (:foreground ,aero-bright-red :weight bold))))
    `(hi-yellow ((t (:foreground ,aero-faded-black :background ,aero-bright-yellow))))
 
    ;; company-mode
@@ -277,7 +277,7 @@
    `(company-scrollbar-fg ((t (:background ,aero-grey0))))
    `(company-tooltip ((t (:background ,aero-grey0))))
    `(company-tooltip-annotation ((t (:foreground ,aero-faded-green))))
-   `(company-tooltip-annotation-selection ((t (:inherit 'company-tooltip-annotation))))
+   `(company-tooltip-annotation-selection ((t (:inherit company-tooltip-annotation))))
    `(company-tooltip-selection ((t (:foreground ,aero-faded-magenta :background ,aero-grey1))))
    `(company-tooltip-common ((t (:foreground ,aero-faded-blue :underline t))))
    `(company-tooltip-common-selection ((t (:foreground ,aero-faded-blue :underline t))))
@@ -303,16 +303,16 @@
    `(term-default-bg-color ((t (:background ,aero-bg))))
 
    ;; message-mode
-   `(message-header-to ((t (:inherit 'font-lock-variable-name-face))))
-   `(message-header-cc ((t (:inherit 'font-lock-variable-name-face))))
-   `(message-header-subject ((t (:foreground ,aero-bright-yellow :weight 'bold))))
-   `(message-header-newsgroups ((t (:foreground ,aero-bright-yellow :weight 'bold))))
-   `(message-header-other ((t (:inherit 'font-lock-variable-name-face))))
-   `(message-header-name ((t (:inherit 'font-lock-keyword-face))))
+   `(message-header-to ((t (:inherit font-lock-variable-name-face))))
+   `(message-header-cc ((t (:inherit font-lock-variable-name-face))))
+   `(message-header-subject ((t (:foreground ,aero-bright-yellow :weight bold))))
+   `(message-header-newsgroups ((t (:foreground ,aero-bright-yellow :weight bold))))
+   `(message-header-other ((t (:inherit font-lock-variable-name-face))))
+   `(message-header-name ((t (:inherit font-lock-keyword-face))))
    `(message-header-xheader ((t (:foreground ,aero-faded-blue))))
-   `(message-separator ((t (:inherit 'font-lock-comment-face))))
-   `(message-cited-text ((t (:inherit 'font-lock-comment-face))))
-   `(message-mml ((t (:foreground ,aero-faded-green :weight 'bold))))
+   `(message-separator ((t (:inherit font-lock-comment-face))))
+   `(message-cited-text ((t (:inherit font-lock-comment-face))))
+   `(message-mml ((t (:foreground ,aero-faded-green :weight bold))))
 
    ;; org-mode
    `(org-hide ((t (:foreground ,aero-faded-black))))
@@ -324,21 +324,21 @@
    `(org-level-6 ((t (:foreground ,aero-faded-blue))))
    `(org-level-7 ((t (:foreground ,aero-faded-blue))))
    `(org-level-8 ((t (:foreground ,aero-bright-yellow))))
-   `(org-special-keyword ((t (:inherit 'font-lock-comment-face))))
-   `(org-drawer ((t (:inherit 'font-lock-function-name-face))))
+   `(org-special-keyword ((t (:inherit font-lock-comment-face))))
+   `(org-drawer ((t (:inherit font-lock-function-name-face))))
    `(org-column ((t (:background ,aero-faded-black))))
-   `(org-column-title ((t (:background ,aero-faded-black :underline t :weight 'bold))))
-   `(org-warning ((t (:foreground ,aero-bright-red :weight 'bold :underline nil :bold t))))
-   `(org-archived ((t (:foreground ,aero-fg :weight 'bold))))
+   `(org-column-title ((t (:background ,aero-faded-black :underline t :weight bold))))
+   `(org-warning ((t (:foreground ,aero-bright-red :weight bold :underline nil :bold t))))
+   `(org-archived ((t (:foreground ,aero-fg :weight bold))))
    `(org-link ((t (:foreground ,aero-faded-blue :underline t))))
    `(org-footnote ((t (:foreground ,aero-faded-blue :underline t))))
    `(org-ellipsis ((t (:foreground ,aero-grey3))))
    `(org-date ((t (:foreground ,aero-faded-blue :underline t))))
    `(org-sexp-date ((t (:foreground ,aero-faded-blue :underline t))))
-   `(org-tag ((t (:bold t :weight 'bold))))
-   `(org-list-dt ((t (:bold t :weight 'bold))))
-   `(org-todo ((t (:foreground ,aero-bright-red :weight 'bold :bold t))))
-   `(org-done ((t (:foreground ,aero-faded-blue :weight 'bold :bold t))))
+   `(org-tag ((t (:bold t :weight bold))))
+   `(org-list-dt ((t (:bold t :weight bold))))
+   `(org-todo ((t (:foreground ,aero-bright-red :weight bold :bold t))))
+   `(org-done ((t (:foreground ,aero-faded-blue :weight bold :bold t))))
    `(org-agenda-done ((t (:foreground ,aero-faded-blue))))
    `(org-headline-done ((t (:foreground ,aero-faded-blue))))
    `(org-table ((t (:foreground ,aero-faded-blue))))
@@ -348,12 +348,12 @@
    `(org-formula ((t (:foreground ,aero-bright-yellow))))
    `(org-document-title ((t (:foreground ,aero-faded-blue))))
    `(org-document-info ((t (:foreground ,aero-faded-blue))))
-   `(org-agenda-structure ((t (:inherit 'font-lock-comment-face))))
-   `(org-agenda-date-today ((t (:foreground ,aero-fg :weight 'bold :slant 'italic))))
+   `(org-agenda-structure ((t (:inherit font-lock-comment-face))))
+   `(org-agenda-date-today ((t (:foreground ,aero-fg :weight bold :slant italic))))
    `(org-scheduled ((t (:foreground ,aero-bright-yellow))))
    `(org-scheduled-today ((t (:foreground ,aero-faded-blue))))
    `(org-scheduled-previously ((t (:foreground ,aero-bright-red))))
-   `(org-upcoming-deadline ((t (:inherit 'font-lock-keyword-face))))
+   `(org-upcoming-deadline ((t (:inherit font-lock-keyword-face))))
    `(org-deadline-announce ((t (:foreground ,aero-bright-red))))
    `(org-time-grid ((t (:foreground ,aero-bright-yellow))))
    `(org-latex-and-related ((t (:foreground ,aero-faded-blue))))
@@ -371,12 +371,12 @@
    ;; elfeed
    `(elfeed-search-title-face ((t (:foreground ,aero-grey2  ))))
    `(elfeed-search-unread-title-face ((t (:foreground ,aero-fg))))
-   `(elfeed-search-date-face ((t (:inherit 'font-lock-builtin-face :underline t))))
-   `(elfeed-search-feed-face ((t (:inherit 'font-lock-variable-name-face))))
-   `(elfeed-search-tag-face ((t (:inherit 'font-lock-keyword-face))))
-   `(elfeed-search-last-update-face ((t (:inherit 'font-lock-comment-face))))
-   `(elfeed-search-unread-count-face ((t (:inherit 'font-lock-comment-face))))
-   `(elfeed-search-filter-face ((t (:inherit 'font-lock-string-face))))
+   `(elfeed-search-date-face ((t (:inherit font-lock-builtin-face :underline t))))
+   `(elfeed-search-feed-face ((t (:inherit font-lock-variable-name-face))))
+   `(elfeed-search-tag-face ((t (:inherit font-lock-keyword-face))))
+   `(elfeed-search-last-update-face ((t (:inherit font-lock-comment-face))))
+   `(elfeed-search-unread-count-face ((t (:inherit font-lock-comment-face))))
+   `(elfeed-search-filter-face ((t (:inherit font-lock-string-face))))
 
    ;; markdown-mode
    `(markdown-header-face-1 ((t (:foreground ,aero-faded-blue))))
@@ -395,11 +395,11 @@
    `(aw-leading-char-face ((t (:foreground ,aero-bright-red :background ,aero-bg :height 4.0))))
 
    ;; show-paren
-   `(show-paren-match ((t (:background ,aero-grey1 :foreground ,aero-faded-blue  :weight 'bold))))
-   `(show-paren-mismatch ((t (:background ,aero-bright-red :foreground ,aero-grey1 :weight 'bold))))
+   `(show-paren-match ((t (:background ,aero-grey1 :foreground ,aero-faded-blue  :weight bold))))
+   `(show-paren-mismatch ((t (:background ,aero-bright-red :foreground ,aero-grey1 :weight bold))))
 
    ;; ivy
-   `(ivy-current-match ((t (:foreground ,aero-faded-yellow :weight 'bold :underline t))))
+   `(ivy-current-match ((t (:foreground ,aero-faded-yellow :weight bold :underline t))))
    `(ivy-minibuffer-match-face-1 ((t (:foreground ,aero-bright-yellow))))
    `(ivy-minibuffer-match-face-2 ((t (:foreground ,aero-bright-yellow))))
    `(ivy-minibuffer-match-face-3 ((t (:foreground ,aero-bright-yellow))))
@@ -415,12 +415,12 @@
    `(magit-bisect-skip ((t (:foreground ,aero-bright-yellow))))
    `(magit-blame-heading ((t (:foreground ,aero-fg :background ,aero-grey1))))
    `(magit-branch-local ((t (:foreground ,aero-faded-blue))))
-   `(magit-branch-current ((t (:underline ,aero-faded-blue :inherit 'magit-branch-local))))
+   `(magit-branch-current ((t (:underline ,aero-faded-blue :inherit magit-branch-local))))
    `(magit-branch-remote ((t (:foreground ,aero-faded-magenta))))
    `(magit-cherry-equivalent ((t (:foreground ,aero-faded-magenta))))
    `(magit-cherry-unmatched ((t (:foreground ,aero-faded-blue))))
    `(magit-diff-added ((t (:foreground ,aero-bright-green))))
-   `(magit-diff-added-highlight ((t (:foreground ,aero-bright-green :inherit 'magit-diff-context-highlight))))
+   `(magit-diff-added-highlight ((t (:foreground ,aero-bright-green :inherit magit-diff-context-highlight))))
    `(magit-diff-base ((t (:background ,aero-bright-yellow :foreground ,aero-grey4))))
    `(magit-diff-base-highlight ((t (:background ,aero-bright-yellow :foreground ,aero-fg))))
    `(magit-diff-context ((t (:foreground ,aero-grey0 :foreground ,aero-fg))))
@@ -430,7 +430,7 @@
    `(magit-diff-hunk-heading-selection ((t (:background ,aero-grey1 :foreground ,aero-bright-yellow))))
    `(magit-diff-lines-heading ((t (:background ,aero-bright-yellow :foreground ,aero-fg))))
    `(magit-diff-removed ((t (:foreground ,aero-bright-red))))
-   `(magit-diff-removed-highlight ((t (:foreground ,aero-bright-red :inherit 'magit-diff-context-highlight))))
+   `(magit-diff-removed-highlight ((t (:foreground ,aero-bright-red :inherit magit-diff-context-highlight))))
    `(magit-diffstat-added ((t (:foreground ,aero-bright-green))))
    `(magit-diffstat-removed ((t (:foreground ,aero-bright-red))))
    `(magit-dimmed ((t (:foreground ,aero-grey2))))
@@ -438,8 +438,8 @@
    `(magit-log-author ((t (:foreground ,aero-bright-red))))
    `(magit-log-date ((t (:foreground ,aero-faded-blue))))
    `(magit-log-graph ((t (:foreground ,aero-grey2))))
-   `(magit-process-ng ((t (:foreground ,aero-bright-red :weight 'bold))))
-   `(magit-process-ok ((t (:foreground ,aero-faded-green :weight 'bold))))
+   `(magit-process-ng ((t (:foreground ,aero-bright-red :weight bold))))
+   `(magit-process-ok ((t (:foreground ,aero-faded-green :weight bold))))
    `(magit-reflog-amend ((t (:foreground ,aero-faded-magenta))))
    `(magit-reflog-checkout ((t (:foreground ,aero-faded-blue))))
    `(magit-reflog-cherry-pick ((t (:foreground ,aero-faded-green))))
@@ -450,14 +450,14 @@
    `(magit-reflog-remote ((t (:foreground ,aero-faded-blue))))
    `(magit-reflog-reset ((t (:foreground ,aero-bright-red))))
    `(magit-refname ((t (:foreground ,aero-grey3))))
-   `(magit-section-heading ((t (:foreground ,aero-bright-yellow :weight 'bold))))
+   `(magit-section-heading ((t (:foreground ,aero-bright-yellow :weight bold))))
    `(magit-section-heading-selection ((t (:foreground ,aero-bright-yellow))))
    `(magit-section-highlight ((t (:background ,aero-grey0))))
    `(magit-sequence-drop ((t (:foreground ,aero-bright-yellow))))
    `(magit-sequence-head ((t (:foreground ,aero-faded-blue))))
    `(magit-sequence-part ((t (:foreground ,aero-bright-yellow))))
    `(magit-sequence-stop ((t (:foreground ,aero-faded-green))))
-   `(magit-signature-bad ((t (:foreground ,aero-bright-red :weight 'bold))))
+   `(magit-signature-bad ((t (:foreground ,aero-bright-red :weight bold))))
    `(magit-signature-error ((t (:foreground ,aero-bright-red))))
    `(magit-signature-expired ((t (:foreground ,aero-bright-yellow))))
    `(magit-signature-good ((t (:foreground ,aero-faded-green))))
@@ -466,17 +466,17 @@
    `(magit-tag ((t (:foreground ,aero-bright-yellow))))
 
    ;; flyspell
-   `(flyspell-duplicate ((t (:underline (:color ,aero-grey3 :style 'line)))))
-   `(flyspell-incorrect ((t (:underline (:color ,aero-bright-red :style 'line)))))
+   `(flyspell-duplicate ((t (:underline (:color ,aero-grey3 :style line)))))
+   `(flyspell-incorrect ((t (:underline (:color ,aero-bright-red :style line)))))
 
    ;; flycheck
-   `(flycheck-warning ((t (:underline (:color ,aero-bright-yellow :style 'line)))))
-   `(flycheck-error ((t (:underline (:color ,aero-bright-red :style 'line)))))
-   `(flycheck-info ((t (:underline (:color ,aero-bright-green :style 'line)))))
+   `(flycheck-warning ((t (:underline (:color ,aero-bright-yellow :style line)))))
+   `(flycheck-error ((t (:underline (:color ,aero-bright-red :style line)))))
+   `(flycheck-info ((t (:underline (:color ,aero-bright-green :style line)))))
 
    ;; langtool
    `(langtool-errline ((t (:foreground ,aero-faded-black :background ,aero-bright-red))))
-   `(langtool-correction-face ((t (:foreground ,aero-bright-yellow :weight 'bold))))
+   `(langtool-correction-face ((t (:foreground ,aero-bright-yellow :weight bold))))
 
    ;; latex
    `(font-latex-bold-face ((t (:foreground ,aero-faded-green :bold t))))
@@ -487,12 +487,12 @@
    `(font-latex-sedate-face ((t (:foreground ,aero-grey3))))
    `(font-latex-string-face ((t (:foreground ,aero-bright-yellow))))
    `(font-latex-verbatim-face ((t (:foreground ,aero-grey3))))
-   `(font-latex-warning-face ((t (:foreground ,aero-bright-red :weight 'bold))))
+   `(font-latex-warning-face ((t (:foreground ,aero-bright-red :weight bold))))
    `(preview-face ((t (:background ,aero-grey0))))
 
    ;; mu4e
-   `(mu4e-header-key-face ((t (:foreground ,aero-faded-green :weight 'bold ))))
-   `(mu4e-unread-face ((t (:foreground ,aero-faded-blue :weight 'bold ))))
+   `(mu4e-header-key-face ((t (:foreground ,aero-faded-green :weight bold ))))
+   `(mu4e-unread-face ((t (:foreground ,aero-faded-blue :weight bold ))))
    `(mu4e-highlight-face ((t (:foreground ,aero-faded-green))))
 
    ;; shell script
@@ -516,9 +516,9 @@
    `(eshell-prompt ((t (:foreground ,aero-faded-blue))))
    `(eshell-ls-archive-face ((t (:foreground ,aero-grey4))))
    `(eshell-ls-backup-face ((t (:foreground ,aero-grey3))))
-   `(eshell-ls-clutter-face ((t (:foreground ,aero-bright-yellow :weight 'bold))))
+   `(eshell-ls-clutter-face ((t (:foreground ,aero-bright-yellow :weight bold))))
    `(eshell-ls-directory-face ((t (:foreground ,aero-bright-yellow))))
-   `(eshell-ls-executable-face ((t (:weight 'bold))))
+   `(eshell-ls-executable-face ((t (:weight bold))))
    `(eshell-ls-missing-face ((t (:foreground ,aero-bright-red :bold t))))
    `(eshell-ls-product-face ((t (:foreground ,aero-bright-red))))
    `(eshell-ls-readonly-face ((t (:foreground ,aero-grey4))))
@@ -529,16 +529,16 @@
    ;; wgrep
    `(wgrep-delete-face ((t (:strike-through ,aero-bright-red))))
    `(wgrep-done-face ((t (:foreground ,aero-faded-blue))))
-   `(wgrep-face ((t (:underline (:color ,aero-bright-yellow :style 'line)))))
-   `(wgrep-file-face ((t (:inherit 'highlight))))
+   `(wgrep-face ((t (:underline (:color ,aero-bright-yellow :style line)))))
+   `(wgrep-file-face ((t (:inherit highlight))))
    `(wgrep-reject-face ((t (:foreground ,aero-bright-red :bold t))))
 
    ;; hydra
-   `(hydra-face-red ((t (:foreground ,aero-bright-red :weight 'bold))))
-   `(hydra-face-blue ((t (:foreground ,aero-faded-blue :weight 'bold))))
-   `(hydra-face-amaranth ((t (:foreground ,aero-bright-yellow :weight 'bold))))
-   `(hydra-face-pink ((t (:foreground ,aero-faded-magenta :weight 'bold))))
-   `(hydra-face-teal ((t (:foreground ,aero-faded-blue :weight 'bold))))
+   `(hydra-face-red ((t (:foreground ,aero-bright-red :weight bold))))
+   `(hydra-face-blue ((t (:foreground ,aero-faded-blue :weight bold))))
+   `(hydra-face-amaranth ((t (:foreground ,aero-bright-yellow :weight bold))))
+   `(hydra-face-pink ((t (:foreground ,aero-faded-magenta :weight bold))))
+   `(hydra-face-teal ((t (:foreground ,aero-faded-blue :weight bold))))
 
    ;; which-function-mode
    `(which-func ((t (:foreground ,aero-faded-blue))))
