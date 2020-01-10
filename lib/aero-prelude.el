@@ -674,8 +674,7 @@ just been killed (which happens during Emacs shutdown)."
  "S" '(:ignore t :which-key "shell/sql")
  "Se" 'eshell
  "SE" '(:ignore t :which-key "eshell")
- "St" 'term
- "ST" '(:ignore t :which-key "term")
+ "St" '(:ignore t :wk "term")
 
  "w" '(:ignore t :which-key "window/web")
  "w=" 'balance-windows

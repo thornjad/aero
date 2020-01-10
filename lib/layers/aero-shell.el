@@ -133,6 +133,21 @@
     (kbd "M-l") 'windmove-right
     (kbd "M-p") 'term-previous-input
     (kbd "M-n") 'term-next-input)
+
+  (dolist (x '("bash" "zsh" "cicada"))
+    (eval
+     `(defun ,(intern (concat "term-" x)) ()
+        (interactive)
+        (funcall-interactively 'term ,x))))
+
+  (general-define-key
+   :states '(normal)
+   :prefix "SPC"
+    "Stt" 'term
+    "Stb" 'term-bash
+    "Stz" 'term-zsh
+    "Stc" 'term-cicada))
+
 
 ;;; shell scripting
 
