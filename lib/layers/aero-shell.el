@@ -148,10 +148,10 @@
   (general-define-key
    :states '(normal)
    :prefix "SPC"
-    "Stt" 'term
-    "Stb" 'term-bash
-    "Stz" 'term-zsh
-    "Stc" 'term-cicada))
+   "Stt" 'term
+   "Stb" 'term-bash
+   "Stz" 'term-zsh
+   "Stc" 'term-cicada))
 
 
 ;;; shell scripting
