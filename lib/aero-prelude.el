@@ -694,6 +694,5 @@ just been killed (which happens during Emacs shutdown)."
  "tni" 'increment-number-at-point
  "tnd" 'decrement-number-at-point
  )
-
 
 (provide 'aero-prelude)
