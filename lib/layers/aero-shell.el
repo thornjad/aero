@@ -50,19 +50,24 @@
   (defun eshell/cds ()
     "Change directory to git project root."
     (eshell/cd (locate-dominating-file default-directory ".git")))
-  (defalias 'eshell/la 'eshell/ls)
-  (defun eshell/ec (pattern)
-    (if (stringp pattern)
-        (find-file pattern)
-      (mapc #'find-file (mapcar #'expand-file-name pattern))))
-  (defalias 'e 'eshell/ec)
-  (defalias 'ee 'find-file-other-window)
   (defun eshell/clear ()
     (recenter 0))
   (defun eshell/magit ()
     "Open magit-status in the current directory."
     (interactive)
-    (magit-status default-directory)))
+    (magit-status default-directory))
+
+  (dolist (x
+           '(('e . (lambda (pattern)
+                     (if (stringp pattern)
+                         (find-file pattern)
+                       (mapc #'find-file
+                             (mapcar #'expand-file-name pattern)))))
+
+             ('ee . #'find-file-other-window)
+             ('eshell/la . #'eshell/ls)))
+    (eval `(defalias ,(car x) ,(cdr x))))
+  )
 
 (use-package xterm-color
   :disabled t
