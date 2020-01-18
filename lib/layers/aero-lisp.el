@@ -25,14 +25,16 @@
   :commands slime
   :init
   (setq-default
-   inferior-lisp-program "sbcl")
+   inferior-lisp-program "ecl"
+   slime-contribs '(slime-fancy))
   ;; Load SBCL faster by using preset socket and POSIX shit.
   ;; NOTE: this requires some set-up beforehand in the SBCL REPL:
   ;;   * (mapc 'require '(sb-bsd-sockets sb-posix sb-introspect sb-cltl2 asdf))
   ;;   * (save-lisp-and-die "sbcl.core-for-slime")
   (defvar slime-lisp-implementations)
   (setq slime-lisp-implementations
-        '((sbcl ("sbcl" "--core" "sbcl.core-for-slime")))))
+        '((sbcl ("sbcl" "--core" "sbcl.core-for-slime"))
+          (ecl ("ecl")))))
 
 (defun indent-defun ()
   "Indent current defun"
