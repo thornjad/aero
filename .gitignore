@@ -42,6 +42,7 @@ nov-places
 .ignore
 .projectile
 .lsp-*
+flycheck_*
 
 # Ignore local init
 init.local.el
