@@ -38,9 +38,7 @@
 
 (use-package scss-mode :straight t
   :load-path "lib/packages/emmet-mode"
-  :mode "\\.s?css\\'"
-  :ensure-system-package
-  (sass-lint . "npm i -g sass-lint"))
+  :mode "\\.s?css\\'")
 
 
 ;; js and jsx
