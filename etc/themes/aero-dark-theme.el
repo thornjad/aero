@@ -34,7 +34,7 @@
       (aero-faded-black    "#262626")
       (aero-faded-white    "#dfdfaf")
       (aero-faded-red      "#d7875f")
-      (aero-faded-orange   "#ff8700")
+      (aero-faded-orange   "#875f00")
       (aero-faded-yellow   "#ECBE7B")
       (aero-faded-green    "#99bb66")
       (aero-faded-blue     "#a7afaf")
@@ -57,7 +57,7 @@
       (aero-hard-black     "#000000")
       (aero-hard-white     "#ffffff")
       (aero-hard-green     "#005f00")
-      (aero-hard-blue      "#00005f")
+      ;; (aero-hard-blue      "#00005f")
       (aero-hard-red       "#5f0000"))
   (custom-theme-set-faces
    'aero-dark
@@ -176,11 +176,12 @@
    `(diff-indicator-removed ((t (:inherit diff-removed))))
 
    ;; smerge
-   `(smerge-lower ((t (:inherit diff-added))))
-   `(smerge-upper ((t (:inherit diff-removed))))
-   `(smerge-refined-added ((t (:inherit diff-refine-added))))
-   `(smerge-refined-removed ((t (:inherit diff-refine-removed))))
-   `(smerge-base ((t (:background ,aero-hard-blue))))
+   `(smerge-upper ((t (:background nil))))
+   `(smerge-lower ((t (:background nil))))
+   `(smerge-refined-added ((t (:background ,aero-hard-green))))
+   `(smerge-refined-changed ((t (:background ,aero-faded-orange))))
+   `(smerge-refined-removed ((t (:background ,aero-hard-red))))
+   `(smerge-base ((t (:background nil))))
    `(smerge-markers
      ((t (:inherit font-lock-comment-face :weight bold :background ,aero-grey0))))
 
