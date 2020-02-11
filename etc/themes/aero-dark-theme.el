@@ -34,7 +34,7 @@
       (aero-faded-black    "#262626")
       (aero-faded-white    "#dfdfaf")
       (aero-faded-red      "#d7875f")
-      ;; (aero-faded-orange   "#ff8700")
+      (aero-faded-orange   "#ff8700")
       (aero-faded-yellow   "#ECBE7B")
       (aero-faded-green    "#99bb66")
       (aero-faded-blue     "#a7afaf")
@@ -176,10 +176,13 @@
    `(diff-indicator-removed ((t (:inherit diff-removed))))
 
    ;; smerge
-   `(smerge-lower ((t (:background ,aero-hard-green))))
-   `(smerge-upper ((t (:background ,aero-bright-red))))
+   `(smerge-lower ((t (:inherit diff-added))))
+   `(smerge-upper ((t (:inherit diff-removed))))
+   `(smerge-refined-added ((t (:inherit diff-refine-added))))
+   `(smerge-refined-removed ((t (:inherit diff-refine-removed))))
    `(smerge-base ((t (:background ,aero-hard-blue))))
-   `(smerge-markers ((t (:inherit font-lock-comment-face :weight bold))))
+   `(smerge-markers
+     ((t (:inherit font-lock-comment-face :weight bold :background ,aero-grey0))))
 
    ;; js2
    `(js2-warning ((t (:underline (:color ,aero-bright-yellow :style wave)))))
