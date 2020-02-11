@@ -609,6 +609,7 @@ just been killed (which happens during Emacs shutdown)."
  "bl" 'ibuffer
  "bL" 'list-buffers
  "bm" 'switch-to-messages-buffer
+ "br" 'revert-buffer
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
