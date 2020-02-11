@@ -147,15 +147,14 @@
   (when (require 'evil nil 'noerror)
     (declare-function evil-state-property "evil")
     (defvar evil-state)
-    (let* ((state (string-trim (evil-state-property evil-state :tag t)))
-           (formed-state (format " %s " state)))
+    (let* ((state (evil-state-property evil-state :tag t)))
       (cond
-       ((string= state "<N>") (propertize formed-state 'face 'aero/modeline-evil-normal))
-       ((string= state "<I>") (propertize formed-state 'face 'aero/modeline-evil-insert))
-       ((string= state "<V>") (propertize formed-state 'face 'aero/modeline-evil-visual))
-       ((string= state "<R>") (propertize formed-state 'face 'aero/modeline-evil-replace))
-       ((string= state "<E>") (propertize formed-state 'face 'aero/modeline-evil-emacs))
-       (t formed-state)))))
+       ((functionp state) (propertize (funcall state) 'face 'aero/modeline-evil-visual))
+       ((string= state " <N> ") (propertize state 'face 'aero/modeline-evil-normal))
+       ((string= state " <I> ") (propertize state 'face 'aero/modeline-evil-insert))
+       ((string= state " <R> ") (propertize state 'face 'aero/modeline-evil-replace))
+       ((string= state " <E> ") (propertize state 'face 'aero/modeline-evil-emacs))
+       (t state)))))
 
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
@@ -220,7 +219,7 @@
 
     ;; Setup window update hooks
     (add-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
-    (add-hook 'focus-in-hook #'aero/modeline--update-selected-window)
+    (add-hook 'after-focus-change-function #'aero/modeline--update-selected-window)
     (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
     (advice-add #'select-window :after #'aero/modeline--update-selected-window)
 
