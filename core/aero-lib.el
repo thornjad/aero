@@ -264,6 +264,11 @@ This is equivalent to SPC U M-x eshell"
 
 ;;; files
 
+(defun aero/reopen-file-at-buffer ()
+  "Re-open the file at buffer, replacing buffer."
+  (interactive)
+  (find-alternate-file (buffer-file-name)))
+
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
