@@ -39,6 +39,7 @@
 	 "gfS" 'magit-stage-file
 	 "gfU" 'magit-unstage-file
    "gm" '(:ignore t :which-key "Smerge")
+   "gmm" 'smerge-mode
    "gmc" 'smerge-keep-current
    "gmn" 'smerge-next
    "gmp" 'smerge-prev
@@ -148,6 +149,5 @@ board_ticket_branch_name."
   :config
   (setq ediff-split-window-function #'split-window-horizontally
         ediff-window-setup-function #'ediff-setup-windows-plain))
-
 
 (provide 'aero-git)
