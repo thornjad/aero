@@ -38,16 +38,26 @@
 	 "gb" 'magit-blame
 	 "gfS" 'magit-stage-file
 	 "gfU" 'magit-unstage-file
-   "gm" '(:ignore t :which-key "Smerge")
-   "gmm" 'smerge-mode
+   "gm" '(:ignore t :which-key "smerge")
+   "gmm" 'smerge-start-session
    "gmc" 'smerge-keep-current
+   "gmu" 'smerge-keep-upper
+   "gml" 'smerge-keep-lower
+   "gmb" 'smerge-keep-base
    "gmn" 'smerge-next
    "gmp" 'smerge-prev
    "gmo" 'smerge-keep-other
    "gma" 'smerge-keep-all
    "gmE" 'smerge-ediff
    "gmC" 'smerge-combine-with-next
-   "gmr" 'smerge-refine)
+   "gmr" 'smerge-refine
+   "gmR" 'smerge-resolve
+   "gmd" '(:ignore t :wk "diff")
+   "gmdu" '(:ignore t :wk "upper")
+   "gmdul" 'smerge-diff-upper-lower
+   "gmdb" '(:ignore t :wk "base")
+   "gmdbu" 'smerge-diff-base-upper
+   "gmdbl" 'smerge-diff-base-lower)
 
   :config/el-patch
   ;; prevent Emacs asking if we're sure we want to exit, if a
