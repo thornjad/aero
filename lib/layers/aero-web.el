@@ -84,9 +84,6 @@
 ;; the rest
 
 (use-package coffee-mode :straight t
-  :mode "\\.coffee\\'"
-  :ensure-system-package
-  ((coffee . "npm i -g coffeescript")
-   (coffeelint . "npm i -g coffeelint")))
+  :mode "\\.coffee\\'")
 
 (provide 'aero-web)
