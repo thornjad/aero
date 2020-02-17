@@ -43,31 +43,20 @@
 
 ;; js and jsx
 
-;; (use-package js2-mode
-;;   :load-path "lib/packages/js2-mode/"
-;;   :defer t)
+(use-package js2-mode
+  :load-path "lib/packages/js2-mode/"
+  :defer t)
 
-;; (use-package rjsx-mode
-;;   :load-path "lib/packages/rjsx-mode/"
-;;   :mode "\\.jsx?\\'"
+(use-package rjsx-mode :defer t
+  :load-path "lib/packages/rjsx-mode/"
+  ;; :mode "\\.jsx?\\'"
 
-;;   ;; ensure flycheck can run properly
-;;   :ensure-system-package
-;;   ((eslint . "npm i -g eslint")
-;;    (tern . "npm i -g tern"))
-
-;;   :config
-;;   (add-to-list
-;;    'load-path
-;;    "/Users/jade.thornton/.nvm/versions/node/v13.1.0/lib/node_modules/tern/emacs/")
-;;   (autoload 'tern-mode "tern.el" nil t)
-;;   (add-hook 'rjsx-mode #'tern-mode)
-
-;;   ;; because we want C-d to scroll ups normally
-;;   (evil-define-key 'insert rjsx-mode-map
-;;     (kbd "C-d") 'rjsx-delete-creates-full-tag)
-;;   (evil-define-key 'normal rjsx-mode-map
-;;     (kbd "C-d") 'evil-scroll-down))
+  :config
+  ;; because we want C-d to scroll up normally
+  (evil-define-key 'insert rjsx-mode-map
+    (kbd "C-d") 'rjsx-delete-creates-full-tag)
+  (evil-define-key 'normal rjsx-mode-map
+    (kbd "C-d") 'evil-scroll-down))
 
 (use-package js :straight nil
   :mode ("\\.jsx?\\'" . js-mode))
