@@ -27,7 +27,7 @@
 
 (use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
-  :hook ((web-mode html-mode css-mode scss-mode rjsx-mode) . emmet-mode)
+  :hook ((web-mode html-mode css-mode scss-mode rjsx-mode js-mode) . emmet-mode)
 	:init
 	(setq emmet-self-closing-tag-style " /")
 
