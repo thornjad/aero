@@ -23,7 +23,7 @@
 (use-package web-mode :straight t
   :load-path "lib/packages/web-mode/"
   :mode
-  "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\)\\'")
+  "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\)\\'")
 
 (use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
