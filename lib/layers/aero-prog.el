@@ -108,12 +108,20 @@
    flyspell-issue-message-flag nil
    ispell-personal-dictionary (expand-file-name "ispell/personal_dictionary.aws"
                                                 aero-etc-dir))
+
+	(use-package flyspell-correct-popup
+		:straight t :defer t
+		:commands flyspell-correct-wrapper
+		:init
+		(setq flyspell-correct-interface #'flyspell-correct-popup))
+
   (aero-leader-def
    "ps" '(:ignore t :wk "spelling")
    "psP" 'flyspell-prog-mode
-   "psc" 'flyspell-correct-word
-   "psC" 'flyspell-correct-word-before-point
-   "psn" 'flyspell-goto-next-error
+   "psc" 'flyspell-correct-wrapper
+	 "psC" 'flyspell-correct-at-point
+	 "psp" 'flyspell-correct-previous
+   "psn" 'flyspell-correct-next
    "psw" 'flyspell-word
    "psb" 'flyspell-buffer
    "psr" 'flyspell-region))
