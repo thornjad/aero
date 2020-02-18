@@ -267,6 +267,19 @@ Local bindings (`counsel-mode-map'):
   ;;         ivy-posframe-width 140)
   ;;   (ivy-posframe-mode 1))
 
+	(use-package ivy-prescient
+		:straight t
+		:hook (ivy-mode . ivy-prescient-mode)
+		:defines (prescient-filter-method
+							prescient-save-file
+							ivy-prescient-retain-classic-highlighting)
+		:commands (prescient-persist-mode)
+		:init
+		(setq prescient-filter-method '(fuzzy literal regexp initialism))
+		:config
+		(setq prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
+		(prescient-persist-mode +1))
+
   (use-package ivy-rich :straight t
     :config
     (ivy-rich-mode 1)))
