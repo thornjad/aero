@@ -73,25 +73,17 @@ more cycles but less space.")
   (setq user-emacs-directory
         (file-name-directory user-init-file))
 
-  (defconst aero-core-dir
-    (expand-file-name (format "%s/%s" user-emacs-directory "core/")))
-  (defconst aero-lib-dir
-    (expand-file-name (format "%s/%s" user-emacs-directory "lib/")))
-  (defconst aero-packages-dir
-    (expand-file-name (format "%s/%s" aero-lib-dir "packages/")))
-  (defconst aero-layers-dir
-    (expand-file-name (format "%s/%s" aero-lib-dir "layers/")))
-  (defconst aero-private-dir
-    (expand-file-name (format "%s/%s" aero-lib-dir "private/")))
-  (defconst aero-cache-dir
-    (expand-file-name (format "%s/%s" user-emacs-directory ".cache/")))
-  (defconst aero-autosave-dir
-    (expand-file-name (format "%s/%s" aero-cache-dir "auto-save/")))
+	(defconst aero-core-dir (expand-file-name "core/" user-emacs-directory))
+	(defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
+	(defconst aero-packages-dir (expand-file-name "packages/" aero-lib-dir))
+	(defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
+	(defconst aero-cache-dir (expand-file-name ".cache/" user-emacs-directory))
+	(defconst aero-autosave-dir (expand-file-name "auto-save/" aero-cache-dir))
+	(defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
 
   (unless (file-exists-p aero-cache-dir)
     (make-directory aero-cache-dir))
-  (defconst pcache-directory
-    (concat aero-cache-dir "pcache/"))
+  (defconst pcache-directory (expand-file-name "pcache/" aero-cache-dir))
 
   (mapc 'add-to-load-path-if-exists
         `(,aero-core-dir
@@ -100,13 +92,10 @@ more cycles but less space.")
           ,aero-lib-dir
           ,aero-packages-dir))
 
-  (setq custom-theme-directory
-        (expand-file-name
-         (format "%s/%s" user-emacs-directory "etc/themes/")))
+  (setq custom-theme-directory (expand-file-name "themes/" aero-etc-dir))
 
   ;; also add all packages to load path
-  (let ((default-directory
-          (format "%s/%s" user-emacs-directory "lib/packages/")))
+  (let ((default-directory aero-packages-dir))
     (normal-top-level-add-subdirs-to-load-path))
 
   ;; burn baby burn
