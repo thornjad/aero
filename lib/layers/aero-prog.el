@@ -110,7 +110,8 @@
    "pci" 'flycheck-manual))
 
 (use-package flyspell
-  :hook (prog-mode . flyspell-prog-mode)
+  :hook ((prog-mode . flyspell-prog-mode)
+				 (text-mode . flyspell-mode))
   :config
   (setq
    flyspell-issue-message-flag nil
