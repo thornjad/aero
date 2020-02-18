@@ -116,10 +116,6 @@
    (set-char-table-range auto-fill-chars c t))
  "!-=+]};:'\",.?")
 
-;; display changes
-(add-hook 'before-save-hook
-          (lambda () (delete-trailing-whitespace)))
-
 ;; type to get rid of active selection
 (delete-selection-mode t)
 

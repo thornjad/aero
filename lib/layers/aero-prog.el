@@ -235,6 +235,15 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;;; whitespace and indentation
 
+(use-package ws-butler
+	:straight t
+	:commands (ws-butler-global-mode)
+	:init (ws-butler-global-mode)
+	:config
+	(setq ws-butler-global-exempt-modes
+				(append ws-butler-global-exempt-modes
+								'(special-mode comint-mode term-mode eshell-mode))))
+
 (global-display-fill-column-indicator-mode 1)
 
 (use-package indent-indicator ; local
