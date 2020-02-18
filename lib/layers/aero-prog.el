@@ -100,6 +100,23 @@
    "pce" 'flycheck-explain-error-at-point
    "pcl" 'flycheck-list-errors
    "pci" 'flycheck-manual))
+
+(use-package flyspell
+  :hook (prog-mode . flyspell-prog-mode)
+  :config
+  (setq
+   flyspell-issue-message-flag nil
+   ispell-personal-dictionary (expand-file-name "ispell/personal_dictionary.aws"
+                                                aero-etc-dir))
+  (aero-leader-def
+   "ps" '(:ignore t :wk "spelling")
+   "psP" 'flyspell-prog-mode
+   "psc" 'flyspell-correct-word
+   "psC" 'flyspell-correct-word-before-point
+   "psn" 'flyspell-goto-next-error
+   "psw" 'flyspell-word
+   "psb" 'flyspell-buffer
+   "psr" 'flyspell-region))
 
 ;;; parens
 
