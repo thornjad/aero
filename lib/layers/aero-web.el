@@ -75,4 +75,10 @@
 (use-package coffee-mode :straight t
   :mode "\\.coffee\\'")
 
+(use-package restclient
+	:straight t
+  :defer t
+  :commands (restclient-mode)
+  :mode ("\\.http\\'" . restclient-mode))
+
 (provide 'aero-web)
