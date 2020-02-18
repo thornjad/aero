@@ -65,6 +65,11 @@
   (setq-default general-override-states
                 '(insert hybrid normal visual motion operator replace))
   :config
+	(general-create-definer aero-leader-def
+		:states '(normal visual emacs)
+		:prefix "SPC"
+		:non-normal-prefix "C-SPC")
+
   (general-define-key
    :states '(normal visual motion)
    :keymaps 'override
