@@ -24,7 +24,15 @@
         company-minimum-prefix-length 2
         company-require-match nil
         company-show-numbers t
-				company-tooltip-align-annotations t))
+				company-tooltip-align-annotations t)
+	:config
+	(use-package company-prescient
+		:straight t
+		:hook (company-mode . company-prescient-mode)
+		:defines (prescient-save-file)
+		:commands (prescient-persist-mode)
+		:config
+		(setq prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))))
 
 (use-package counsel-gtags :straight t
   :commands (counsel-gtags-dwim)
