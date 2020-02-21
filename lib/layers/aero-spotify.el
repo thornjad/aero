@@ -11,6 +11,7 @@
 ;; This file is not part of GNU Emacs
 
 (use-package counsel-spotify
+	:disabled t
   :load-path "lib/packages/counsel-spotify"
   :after counsel
   :commands counsel-spotify-play
