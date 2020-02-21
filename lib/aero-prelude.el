@@ -528,7 +528,7 @@ Local bindings (`counsel-mode-map'):
 ;;     (setq lsp-restart nil))
 
   ;; `lsp-mode' doesn't know about LaTeX yet.
-  (add-to-list 'lsp-language-id-configuration '(latex-mode . "latex"))
+  ;; (add-to-list 'lsp-language-id-configuration '(latex-mode . "latex"))
 
   ;; fix some bad regexps
   ;; (setq lsp-language-id-configuration
