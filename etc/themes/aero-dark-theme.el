@@ -22,7 +22,7 @@
 
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#000000")
+      (aero-bg             "#1b1b1b")
       (aero-fg             "#eceff4")
 
       (aero-grey0          "#3f3f3f")
