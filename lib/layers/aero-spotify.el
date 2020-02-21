@@ -15,7 +15,6 @@
   :after counsel
   :commands counsel-spotify-play
   :config
-  (require 'aero-private-hidden) ; for spotify client id
   (general-define-key
    :states 'normal
    :prefix "SPC"

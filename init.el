@@ -88,7 +88,6 @@ more cycles but less space.")
   (mapc 'add-to-load-path-if-exists
         `(,aero-core-dir
           ,aero-layers-dir
-          ,aero-private-dir
           ,aero-lib-dir
           ,aero-packages-dir))
 
