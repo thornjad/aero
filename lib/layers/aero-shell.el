@@ -35,7 +35,8 @@
                             "ncftp" "pine" "tin" "trn" "elm" "vim"
                             "nmtui" "alsamixer" "htop" "el" "elinks"
                             "ssh" "nethack" "dtop" "dstat")
-   eshell-visual-subcommands '(("git" "log" "diff" "show")))
+   eshell-visual-subcommands '(("git" "log" "diff" "show"))
+   pcomplete-ignore-case t)
 
   ;; doesn't handle less too well
   (setenv "PAGER" "cat")
