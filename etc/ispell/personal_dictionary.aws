@@ -1,8 +1,11 @@
-personal_ws-1.1 en 7 
+personal_ws-1.1 en 10 
+FlightAware
 aws
+ajax
 Aero
 callsign
 eshell
 flycheck
+config
 SPC
 Signup
