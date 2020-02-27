@@ -58,17 +58,15 @@
     (interactive)
     (magit-status default-directory))
 
-  (dolist (x
-           '(('e . (lambda (pattern)
-                     (if (stringp pattern)
-                         (find-file pattern)
-                       (mapc #'find-file
-                             (mapcar #'expand-file-name pattern)))))
+  (dolist (x '(('e . (lambda (pattern)
+                       (if (stringp pattern)
+                           (find-file pattern)
+                         (mapc #'find-file
+                               (mapcar #'expand-file-name pattern)))))
 
-             ('ee . #'find-file-other-window)
-             ('eshell/la . #'eshell/ls)))
-    (eval `(defalias ,(car x) ,(cdr x))))
-  )
+               ('ee . #'find-file-other-window)
+               ('eshell/la . #'eshell/ls)))
+    (eval `(defalias ,(car x) ,(cdr x)))))
 
 (use-package xterm-color
   :disabled t
