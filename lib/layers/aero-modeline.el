@@ -30,6 +30,11 @@
   "A minimal mode-line configuration inspired by doom-modeline."
   :group 'mode-line)
 
+(defface aero/modeline-window-number
+  '((t (:inherit (font-lock-keyword-face))))
+  "Window number."
+  :group 'aero/modeline)
+
 (defface aero/modeline-status-grayed-out
   '((t (:inherit (font-lock-doc-face) :slant italic)))
   "Face used for neutral or inactive status indicators in the mode-line."
@@ -88,6 +93,16 @@
 (defface aero/modeline-evil-emacs
   '((t (:inherit (font-lock-keyword-face))))
   "Face used for Emacs Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-major-mode-active
+  '((t (:bold t)))
+  "Face used for major mode in an active buffer."
+  :group 'aero/modeline)
+
+(defface aero/modeline-major-mode-inactive
+  '((t (:inherit (font-lock-doc-face))))
+  "Face used for major mode in an inactive buffer."
   :group 'aero/modeline)
 
 ;;; Helper functions
@@ -163,12 +178,12 @@
         (buffer-modified-p)
         (not (string-match-p "\\*.*\\*" (buffer-name))))
        " ✧ "
-     "   ")
+     "  ")
    'face 'aero/modeline-modified))
 
 (defun aero/modeline-segment-buffer-name-and-size ()
   "Displays the name and size of the current buffer in the mode-line."
-  (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) "  "))
+  (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) " "))
 
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
@@ -191,16 +206,17 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (propertize " %m  "
-              'face (if (aero/modeline-is-active)
-                        'bold
-                      'aero/modeline-status-grayed-out)))
+  (if (aero/modeline-is-active)
+      (propertize " %m " 'face 'aero/modeline-major-mode-active)
+    (propertize " %m " 'face 'aero/modeline-major-mode-inactive)))
 
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'."
   (when (require 'winum nil 'noerror)
     (declare-function winum-get-number "winum")
-    (concat (format "|%d| " (winum-get-number)))))
+    (propertize
+     (format " %d " (winum-get-number))
+     'face 'aero/modeline-window-number)))
 
 ;;; Activation function
 
@@ -218,8 +234,8 @@
     (add-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
 
     ;; Setup window update hooks
-    (add-hook 'window-configuration-change-hook #'aero/modeline--update-selected-window)
-    (add-hook 'after-focus-change-function #'aero/modeline--update-selected-window)
+    ;; (add-function :after 'window-configuration-change-hook #'aero/modeline--update-selected-window)
+    ;; (add-function :after 'after-focus-change-function #'aero/modeline--update-selected-window)
     (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
     (advice-add #'select-window :after #'aero/modeline--update-selected-window)
 
