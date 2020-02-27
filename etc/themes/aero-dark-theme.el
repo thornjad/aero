@@ -109,6 +109,9 @@
    `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-faded-green))))
    `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange))))
    `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red))))
+   `(aero/modeline-window-number ((t (:foreground ,aero-grey4 :background ,aero-grey2))))
+   `(aero/modeline-major-mode-active ((t (:foreground ,aero-fg :bold t :background ,aero-grey1))))
+   `(aero/modeline-major-mode-inactive ((t (:foreground ,aero-grey1 :bold t :background ,aero-grey0))))
 
    ;; Customize faces
    `(widget-field ((t (:background ,aero-grey1))))
