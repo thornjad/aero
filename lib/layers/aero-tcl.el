@@ -17,10 +17,12 @@
 ;; performance of this software.
 
 (use-package tcl
+  :straight (tcl :host gitlab :repo "thornjad/tcl-mode")
   :mode "\\.(tcl|test)\\'"
   :init
 	;; make inferior-tcl use tclsh (default is wish)
-	(setq tcl-application "tclsh"))
+	(setq tcl-application "tclsh")
+  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
 
 (use-package testbackend ; local
   :defer t
