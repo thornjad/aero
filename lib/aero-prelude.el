@@ -458,6 +458,7 @@ Local bindings (`counsel-mode-map'):
   :commands pomp
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)
+  (global-set-key (kbd "<f12>") 'pomp)
   (general-define-key
    :states 'normal
    :prefix "SPC"
