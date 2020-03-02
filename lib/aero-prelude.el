@@ -623,8 +623,8 @@ Local bindings (`counsel-mode-map'):
  "foD" '(aero/reload-tweaks :which-key "reload tweaks")
 
  "h" '(:ignore t :which-key "help/manual")
- "hm" 'woman
- "hM" 'man
+ "hM" 'woman
+ "hm" 'man
  "hi" 'info
  "hI" 'info-apropos
  "hd" '(:ignore t :which-key "describe")
