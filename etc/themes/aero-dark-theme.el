@@ -22,7 +22,7 @@
 
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#1b1b1b")
+      (aero-bg             "#1d2021")
       (aero-fg             "#eceff4")
 
       (aero-grey0          "#3f3f3f")
@@ -33,10 +33,10 @@
 
       (aero-faded-black    "#262626")
       (aero-faded-white    "#dfdfaf")
-      (aero-faded-red      "#d7875f")
+      (aero-faded-red      "#9d0006")
       (aero-faded-orange   "#875f00")
-      (aero-faded-yellow   "#ECBE7B")
-      (aero-faded-green    "#99bb66")
+      (aero-faded-yellow   "#f2e5bc")
+      (aero-faded-green    "#79740e")
       (aero-faded-blue     "#a7afaf")
       (aero-faded-cyan     "#5dabab")
       (aero-faded-magenta  "#d787af")
@@ -47,9 +47,9 @@
       (aero-bright-orange  "#ba7e63")
       (aero-bright-yellow  "#d7af00")
       (aero-bright-green   "#afaf00")
-      (aero-bright-blue    "#51afef")
+      (aero-bright-blue    "#83a598")
       ;; (aero-bright-cyan    "#46D9FF")
-      (aero-bright-magenta "#c678dd")
+      (aero-bright-magenta "#d3869b")
 
       ;; (aero-intense-green  "#5f875f")
       ;; (aero-intense-yellow "#d7d7af")
