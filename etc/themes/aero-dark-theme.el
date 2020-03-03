@@ -23,13 +23,13 @@
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
       (aero-bg             "#1d2021")
-      (aero-fg             "#eceff4")
+      (aero-fg             "#dfdfdf")
 
       (aero-grey0          "#3f3f3f")
       (aero-grey1          "#525252")
       (aero-grey2          "#6b6b6b")
       (aero-grey3          "#979797")
-      (aero-grey4          "#dfdfdf")
+      (aero-grey4          "#d5c4a1")
 
       (aero-faded-black    "#262626")
       (aero-faded-white    "#dfdfaf")
@@ -63,7 +63,7 @@
    'aero-dark
    `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150))))
    `(cursor ((t (:background ,aero-fg))))
-   `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-grey4 :box nil))))
+   `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-fg :box nil))))
    `(mode-line-inactive ((t (:background ,aero-faded-black :foreground ,aero-grey3 :box nil))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
@@ -109,7 +109,7 @@
    `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-faded-green))))
    `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange))))
    `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red))))
-   `(aero/modeline-window-number ((t (:foreground ,aero-grey4 :background ,aero-grey2))))
+   `(aero/modeline-window-number ((t (:foreground ,aero-fg :background ,aero-grey2))))
    `(aero/modeline-major-mode-active ((t (:foreground ,aero-fg :bold t :background ,aero-grey1))))
    `(aero/modeline-major-mode-inactive ((t (:foreground ,aero-grey1 :bold t :background ,aero-grey0))))
 
