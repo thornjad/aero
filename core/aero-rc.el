@@ -68,6 +68,7 @@
  indent-tabs-mode t
  tab-width 2                ; onglet affiché sous forme de 2
  c-basic-offset 2
+ sh-basic-offset 2
  cperl-indent-level 2
  js2-basic-offset 2
  js-basic-offset 2
