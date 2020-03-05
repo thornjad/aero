@@ -265,9 +265,14 @@ This is equivalent to SPC U M-x eshell"
 ;;; files
 
 (defun aero/reopen-file-at-buffer ()
-  "Re-open the file at buffer, replacing buffer."
+  "Re-open the file at buffer, replacing buffer.
+
+After reopening, cursor will attempt to return to the point it was previously
+on. This may cause a jump if the file has changed significantly."
   (interactive)
-  (find-alternate-file (buffer-file-name)))
+  (let ((line (point)))
+    (find-alternate-file (buffer-file-name))
+    (goto-char line)))
 
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
