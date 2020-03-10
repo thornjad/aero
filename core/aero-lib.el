@@ -270,9 +270,21 @@ This is equivalent to SPC U M-x eshell"
 After reopening, cursor will attempt to return to the point it was previously
 on. This may cause a jump if the file has changed significantly."
   (interactive)
-  (let ((line (point)))
+  (let ((initial-line (line-beginning-position))
+        (initial-point (point))
+        (initial-total-lines (count-lines (point-min) (point-max))))
     (find-alternate-file (buffer-file-name))
-    (goto-char line)))
+    (if (= initial-total-lines (count-lines (point-min) (point-max)))
+        ;; If total lines have not changed, we can reasonably guess that the
+        ;; content has not changed significantly (if at all), so we can jump
+        ;; right back to the initial point.
+        (goto-char initial-point)
+      ;; If total lines /have/ changed, we can reasonably guess that the initial
+      ;; point is contextually not where we were before. The best thing we can
+      ;; do now is return to the same line number, and hope it's close. Getting
+      ;; closer than this would require text parsing, which is more complex than
+      ;; we need for a simple file replacement.
+      (goto-char initial-line))))
 
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
