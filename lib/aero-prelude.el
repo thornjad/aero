@@ -678,7 +678,6 @@ Local bindings (`counsel-mode-map'):
  "j" '(:ignore t :which-key "jump")
  "s" '(:ignore t :which-key "sexp")
  "m" '(:ignore t :which-key "mode")
- "j" '(:ignore t :which-key "jump")
 
  "p" '(:ignore t :which-key "project")
  "pr" '(xref-find-definitions :which-key "find ref")
