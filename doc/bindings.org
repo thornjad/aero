@@ -1,16 +1,80 @@
-#+TITLE: Aero Emacs key bindings
+#+Title: Aero Emacs key bindings
+#+Author: Jade Michael Thornton
+#+Options: toc:nil
 
 /Please note that Aero changes often, and these bindings are not guaranteed to
-be up to date. The core/most important bindings should be consistent, however./
+be up to date. However, the core/most important bindings should be consistent./
 
-* Synonyms
+This file is organized first by global and modal bindings, then by chord
+sequences.
 
-The following table summarizes keys which are the same in Aero, Emacs and Evil
-modes. They may /not/ be synonyms in /every/ state.
+Here's some important bindings for quick start:
 
-| key/chord | key/chord | key/chord |
-|-----------+-----------+-----------|
-| M-x       | SPC SPC   |           |
+| chord   | function      | description                                            |
+|---------+---------------+--------------------------------------------------------|
+| C-x C-c | kill-emacs    | this is how you quit                                   |
+| SPC SPC | M-x           | all interactive functions are available from this menu |
+| [hjkl]  | evil motion   | left, down, up, right                                  |
+| C-g     | keyboard-quit |                                                        |
+| SPC ESC | keyboard-quit |                                                        |
+
+#+TOC: headlines 3
+
+* Global
+
+| chord | function | description                                    |
+|-------+----------+------------------------------------------------|
+| SPC   | /prefix/ | Primary prefix, see Aero prefix chords section |
+|       |          |                                                |
+
+** Aero prefix chords (SPC)
+
+| chord   | function                    | description                           |
+|---------+-----------------------------+---------------------------------------|
+| SPC SPC | M-x                         |                                       |
+| SPC ESC | keyboard-quit               |                                       |
+| SPC C-g | keyboard-quit               |                                       |
+| SPC TAB | aero/alternate-buffer       | Switch to alternate buffer (previous) |
+| SPC !   | shell-command               |                                       |
+| SPC "   | aero/eshell-new             | Start new eshell                      |
+| SPC '   | eshell                      | Start or switch to eshell             |
+| SPC :   | eval-expression             | Eval Elisp expression in echo area    |
+| SPC ;   | comment-or-uncomment-region |                                       |
+| SPC =   | quick-calc                  |                                       |
+| SPC U   | universal-argument          |                                       |
+| SPC u   | undo-tree-visualize         |                                       |
+| SPC z   | repeat                      |                                       |
+| SPC ,   | /prefix/                    | Reserved for mode-specific bindings   |
+| SPC F   | /prefix/                    | Frame prefix                          |
+| SPC S   | /prefix/                    | Shell/SQL prefix                      |
+| SPC a   | /prefix/                    | Applications prefix                   |
+| SPC b   | /prefix/                    | Buffers prefix                        |
+| SPC c   | /prefix/                    | Compilation prefix                    |
+| SPC e   | /prefix/                    | Emacs prefix                          |
+| SPC e   | /prefix/                    | Errors prefix                         |
+| SPC f   | /prefix/                    | Files prefix                          |
+| SPC g   | /prefix/                    | Git prefix                            |
+| SPC h   | /prefix/                    | Help/manual prefix                    |
+| SPC j   | /prefix/                    | Jump prefix                           |
+| SPC m   | /prefix/                    | Mode prefix                           |
+| SPC p   | /prefix/                    | Project prefix                        |
+| SPC q   | /prefix/                    | Quoted insert prefix                  |
+| SPC r   | /prefix/                    | Rings prefix                          |
+| SPC s   | /prefix/                    | Sexp prefix                           |
+| SPC t   | /prefix/                    | Text prefix                           |
+| SPC w   | /prefix/                    | Window/Web prefix                     |
+
+*** Frame prefix chords (SPC F)
+
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+| SPC F d | delete-frame          |             |
+| SPC F o | other-frame           |             |
+| SPC F f | find-file-other-frame |             |
+| SPC F n | make-frame            | "New" frame |
+
+* Modal
+
 
 
 * Cursor motion
