@@ -274,6 +274,7 @@ on. This may cause a jump if the file has changed significantly."
         (initial-point (point))
         (initial-total-lines (count-lines (point-min) (point-max))))
     (find-alternate-file (buffer-file-name))
+    ;; TODO this calculation does not always seem reliable
     (if (= initial-total-lines (count-lines (point-min) (point-max)))
         ;; If total lines have not changed, we can reasonably guess that the
         ;; content has not changed significantly (if at all), so we can jump
