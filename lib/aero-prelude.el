@@ -691,8 +691,8 @@ Local bindings (`counsel-mode-map'):
 
  "w" '(:ignore t :which-key "window/web")
  "w=" 'balance-windows
- "w2" 'aero/layout-two-columns
- "w3" 'aero/layout-three-columns
+ ;; "w2" 'aero/layout-two-columns
+ ;; "w3" 'aero/layout-three-columns
  "wB" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
