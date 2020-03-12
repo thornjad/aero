@@ -1,4 +1,4 @@
-personal_ws-1.1 en 35 
+personal_ws-1.1 en 37 
 LLC
 FlightAware
 eval
@@ -19,6 +19,7 @@ callsign
 ESC
 https
 eshell
+TODO
 idents
 flycheck
 el
@@ -28,6 +29,7 @@ config
 jmthornton
 SPC
 typeof
+dicts
 css
 itcl
 HH
