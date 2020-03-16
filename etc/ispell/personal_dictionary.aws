@@ -1,8 +1,7 @@
-personal_ws-1.1 en 37 
+personal_ws-1.1 en 40 
 LLC
 FlightAware
 eval
-Eval
 tcl
 rvt
 aws
@@ -11,12 +10,13 @@ ajax
 utils
 Elisp
 aero
-Aero
 ident
+proc
 edu
 Sexp
 callsign
 ESC
+proration
 https
 eshell
 TODO
@@ -27,6 +27,7 @@ thornjad
 backend
 config
 jmthornton
+submodule
 SPC
 typeof
 dicts
@@ -35,4 +36,6 @@ itcl
 HH
 json
 signup
+taskwarrior
+NSR
 dev
