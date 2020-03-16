@@ -105,7 +105,11 @@ the process passing the value of that options as argument."
         magit-buffer-name-format "%x%M%v: %t%x"
         magit-diff-paint-whitespace-lines 'both
         magit-diff-refine-hunk 'all
-        magit-diff-refine-ignore-whitespace t)
+        magit-diff-refine-ignore-whitespace t
+        git-commit-style-convention-checks '(non-empty-second-line
+                                             overlong-summary-line)
+        git-commit-summary-max-length 50
+        git-commit-fill-column 72)
 	(global-git-commit-mode t)
   (magit-auto-revert-mode nil)
   (defadvice magit-diff (after switch-to-diff activate)
