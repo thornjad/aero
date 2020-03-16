@@ -558,7 +558,9 @@ Local bindings (`counsel-mode-map'):
 (general-def
   ;; Emacs chose ^? for the help system for some despicable reason. Fuck that.
   (kbd "C-h") 'delete-backward-char
-  (kbd "C-w") 'aero/smarter-backward-kill-word)
+  (kbd "C-w") 'aero/smarter-backward-kill-word
+  (kbd "C-TAB") 'insert-tab
+  (kbd "M-TAB") 'aero/alternate-buffer)
 
 (evil-define-key 'normal 'global
   ;; Run macro in register q
@@ -634,8 +636,8 @@ Local bindings (`counsel-mode-map'):
  "bi" 'indent-buffer
  "bP" 'aero/toggle-prettify-this-buffer
 
- "e" '(:ignore t :which-key "emacs")
- "ea" 'aero/apologize-to-emacs
+ "E" '(:ignore t :which-key "emacs")
+ "Ea" 'aero/apologize-to-emacs
 
  "a" '(:ignore t :which-key "applications")
  "ad" 'counsel-dired
