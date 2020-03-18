@@ -1,6 +1,6 @@
 #+Title: Aero Emacs key bindings
 #+Author: Jade Michael Thornton
-#+Options: toc:nil
+#+Options: toc:3
 
 /Please note that Aero changes often, and these bindings are not guaranteed to
 be up to date. However, the core/most important bindings should be consistent./
@@ -17,8 +17,6 @@ Here's some important bindings for quick start:
 | [hjkl]  | evil motion   | left, down, up, right                                  |
 | C-g     | keyboard-quit |                                                        |
 | SPC ESC | keyboard-quit |                                                        |
-
-#+TOC: headlines 3
 
 * Global
 
@@ -45,12 +43,12 @@ Here's some important bindings for quick start:
 | SPC u   | undo-tree-visualize         |                                       |
 | SPC z   | repeat                      |                                       |
 | SPC ,   | /prefix/                    | Reserved for mode-specific bindings   |
+| SPC E   | /prefix/                    | Emacs prefix                          |
 | SPC F   | /prefix/                    | Frame prefix                          |
 | SPC S   | /prefix/                    | Shell/SQL prefix                      |
 | SPC a   | /prefix/                    | Applications prefix                   |
 | SPC b   | /prefix/                    | Buffers prefix                        |
 | SPC c   | /prefix/                    | Compilation prefix                    |
-| SPC e   | /prefix/                    | Emacs prefix                          |
 | SPC e   | /prefix/                    | Errors prefix                         |
 | SPC f   | /prefix/                    | Files prefix                          |
 | SPC g   | /prefix/                    | Git prefix                            |
@@ -62,8 +60,9 @@ Here's some important bindings for quick start:
 | SPC r   | /prefix/                    | Rings prefix                          |
 | SPC s   | /prefix/                    | Sexp prefix                           |
 | SPC t   | /prefix/                    | Text prefix                           |
-| SPC w   | /prefix/                    | Window/Web prefix                     |
+| SPC w   | /prefix/                    | Window/web prefix                     |
 
+*** Emacs prefix (SPC E)
 *** Frame prefix chords (SPC F)
 
 | chord   | function              | description |
@@ -72,6 +71,55 @@ Here's some important bindings for quick start:
 | SPC F o | other-frame           |             |
 | SPC F f | find-file-other-frame |             |
 | SPC F n | make-frame            | "New" frame |
+
+*** Shell/SQL prefix (SPC S)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Applications prefix (SPC a)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Buffers prefix (SPC b)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Compilation prefix (SPC c)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Errors prefix (SPC e)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Files prefix (SPC f)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Git prefix (SPC g)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Help/manual prefix (SPC h)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Jump prefix (SPC j)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Mode prefix (SPC m)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Project prefix (SPC p)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Quoted insert prefix (SPC q)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Rings prefix (SPC r)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Sexp prefix (SPC s)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Text prefix (SPC t)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
+*** Window/web prefix (SPC w)
+| chord   | function              | description |
+|---------+-----------------------+-------------|
 
 * Modal
 
