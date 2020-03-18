@@ -1,4 +1,4 @@
-personal_ws-1.1 en 40 
+personal_ws-1.1 en 44 
 LLC
 FlightAware
 eval
@@ -8,6 +8,7 @@ aws
 YYYY
 ajax
 utils
+SSHFS
 Elisp
 aero
 ident
@@ -21,6 +22,7 @@ https
 eshell
 TODO
 idents
+umount
 flycheck
 el
 thornjad
@@ -38,4 +40,6 @@ json
 signup
 taskwarrior
 NSR
+diskutil
 dev
+sudo
