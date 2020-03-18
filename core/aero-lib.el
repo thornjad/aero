@@ -164,9 +164,13 @@ emacs with sigusr2"
 	(toggle-debug-on-quit))
 
 (defun aero/thornlog ()
-	"Personal persistent log"
+	"Personal persistent log."
 	(interactive)
 	(find-file (expand-file-name "~/doc/thornlog.org")))
+(defun aero/thornorg ()
+  "Personal organization."
+  (interactive)
+  (find-file (expand-file-name "~/doc/thorn.org")))
 
 (defun aero/stop-auto-revert-buffers ()
 	(cancel-function-timers 'auto-revert-buffers))

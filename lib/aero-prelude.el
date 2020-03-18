@@ -609,6 +609,7 @@ Local bindings (`counsel-mode-map'):
  "fo" '(:ignore t :which-key "open special files")
  "fod" '(aero/open-tweaks :which-key "tweaks")
  "fot" '(aero/thornlog :which-key "thornlog")
+ "fog" '(aero/thornorg :wk "thornorg")
  "foD" '(aero/reload-tweaks :which-key "reload tweaks")
 
  "h" '(:ignore t :which-key "help/manual")
