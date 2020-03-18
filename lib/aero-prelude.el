@@ -94,8 +94,8 @@
    :states 'normal
    :prefix "SPC"
    "fW" 'evil-write-all
-   "w/" '(evil-window-vsplit :which-key "split vertical")
-   "w-" '(evil-window-split :which-key "split horizontal")
+   "w/" '(evil-window-vsplit :wk "split vertical")
+   "w-" '(evil-window-split :wk "split horizontal")
    "cm" 'evil-make)
 
   ;; default states
@@ -215,11 +215,11 @@ Local bindings (`counsel-mode-map'):
    "fl" 'counsel-locate
    "fr" 'counsel-recentf
    "?" 'counsel-rg
-   "gg" '(counsel-git-grep :which-key "git grep")
-   "gff" '(counsel-git :which-key "find git file")
-   "ry" '(counsel-yank-pop :which-key "search kill ring")
-   "hda" '(counsel-apropos :which-key "apropos")
-   "qu" '(aero/counsel-unicode-char-after :which-key "unicode char")
+   "gg" '(counsel-git-grep :wk "git grep")
+   "gff" '(counsel-git :wk "find git file")
+   "ry" '(counsel-yank-pop :wk "search kill ring")
+   "hda" '(counsel-apropos :wk "apropos")
+   "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
    "qU" 'counsel-unicode-char))
 
 (use-package recentf
@@ -285,7 +285,7 @@ Local bindings (`counsel-mode-map'):
    :states '(normal)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
-   "/" '(counsel-grep-or-swiper :which-key "search")))
+   "/" '(counsel-grep-or-swiper :wk "search")))
 
 (use-package flx :straight t)
 
@@ -295,9 +295,9 @@ Local bindings (`counsel-mode-map'):
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
-   "jl" '(avy-goto-line :which-key "jump to line")
-   "jc" '(avy-goto-char :which-key "jump to char")
-   "jw" '(avy-goto-word-1 :which-key "jump to word")))
+   "jl" '(avy-goto-line :wk "jump to line")
+   "jc" '(avy-goto-char :wk "jump to char")
+   "jw" '(avy-goto-word-1 :wk "jump to word")))
 
 
 ;;; system
@@ -345,17 +345,17 @@ Local bindings (`counsel-mode-map'):
   (general-define-key
    :states 'normal
    :prefix "SPC"
-   "0" '(winum-select-window-0 :which-key "window-0")
-   "1" '(winum-select-window-1 :which-key "window-1")
-   "2" '(winum-select-window-2 :which-key "window-2")
-   "3" '(winum-select-window-3 :which-key "window-3")
-   "4" '(winum-select-window-4 :which-key "window-4")
-   "5" '(winum-select-window-5 :which-key "window-5")
-   "6" '(winum-select-window-6 :which-key "window-6")
-   "7" '(winum-select-window-7 :which-key "window-7")
-   "8" '(winum-select-window-8 :which-key "window-8")
-   "9" '(winum-select-window-9 :which-key "window-9")
-   "wg" '(winum-select-window-by-number :which-key "select window by number"))
+   "0" '(winum-select-window-0 :wk "window-0")
+   "1" '(winum-select-window-1 :wk "window-1")
+   "2" '(winum-select-window-2 :wk "window-2")
+   "3" '(winum-select-window-3 :wk "window-3")
+   "4" '(winum-select-window-4 :wk "window-4")
+   "5" '(winum-select-window-5 :wk "window-5")
+   "6" '(winum-select-window-6 :wk "window-6")
+   "7" '(winum-select-window-7 :wk "window-7")
+   "8" '(winum-select-window-8 :wk "window-8")
+   "9" '(winum-select-window-9 :wk "window-9")
+   "wg" '(winum-select-window-by-number :wk "select window by number"))
 
   ;; collapse all those window commands to one summary
   (push '(("\\(.*\\) 0" . "winum-select-window-0") . ("\\1 0..9" . "window 0..9"))
@@ -579,47 +579,47 @@ Local bindings (`counsel-mode-map'):
  "" nil
 
  ;; independent keys
- "TAB" '(aero/alternate-buffer :which-key "alternate buffer")
+ "TAB" '(aero/alternate-buffer :wk "alternate buffer")
  (kbd "ESC") 'keyboard-quit
  (kbd "C-g") 'keyboard-quit
  "'" 'eshell
- "\"" '(aero/eshell-new :which-key "eshell-new")
+ "\"" '(aero/eshell-new :wk "eshell-new")
  ":" 'eval-expression
  ";" 'comment-or-uncomment-region
  "!" 'shell-command
  "=" 'quick-calc
- "," '(:ignore t :which-key "mode") ; reserved for mode-specific
+ "," '(:ignore t :wk "mode") ; reserved for mode-specific
 
  "U" 'universal-argument
  "z" 'repeat
 
- "q" '(:ignore t :which-key "quoted insert")
+ "q" '(:ignore t :wk "quoted insert")
  "qq" 'quoted-insert
  "ql" 'insert-lambda
 
- "f" '(:ignore t :which-key "files")
- "fw" '(save-buffer :which-key "write buffer")
- "fC" '(:ignore t :which-key "convert")
- "fCd" '(aero/unix2dos :which-key "unix2dos")
- "fCu" '(aero/dos2unix :which-key "dos2unix")
- "fD" '(aero/delete-this-file :which-key "delete this file")
- "fE" '(aero/sudo-edit :which-key "sudo edit")
- "fR" '(aero/rename-this-file-and-buffer :which-key "rename this file")
+ "f" '(:ignore t :wk "files")
+ "fw" '(save-buffer :wk "write buffer")
+ "fC" '(:ignore t :wk "convert")
+ "fCd" '(aero/unix2dos :wk "unix2dos")
+ "fCu" '(aero/dos2unix :wk "dos2unix")
+ "fD" '(aero/delete-this-file :wk "delete this file")
+ "fE" '(aero/sudo-edit :wk "sudo edit")
+ "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
  "fT" 'counsel-load-theme
- "fo" '(:ignore t :which-key "open special files")
- "fod" '(aero/open-tweaks :which-key "tweaks")
- "fot" '(aero/thornlog :which-key "thornlog")
+ "fo" '(:ignore t :wk "open special files")
+ "fod" '(aero/open-tweaks :wk "tweaks")
+ "fot" '(aero/thornlog :wk "thornlog")
  "fog" '(aero/thornorg :wk "thornorg")
- "foD" '(aero/reload-tweaks :which-key "reload tweaks")
+ "foD" '(aero/reload-tweaks :wk "reload tweaks")
 
- "h" '(:ignore t :which-key "help/manual")
+ "h" '(:ignore t :wk "help/manual")
  "hM" 'woman
  "hm" 'man
  "hi" 'info
  "hI" 'info-apropos
- "hd" '(:ignore t :which-key "describe")
+ "hd" '(:ignore t :wk "describe")
 
- "b" '(:ignore t :which-key "buffers")
+ "b" '(:ignore t :wk "buffers")
  "bn" 'next-buffer
  "bp" 'previous-buffer
  "bl" 'ibuffer
@@ -631,26 +631,26 @@ Local bindings (`counsel-mode-map'):
  "bx" 'kill-buffer-and-window
  "bD" '(:ignore t :wk "display")
  "bDw" '(whitespace-mode :wk "whitespace")
- "bt" '(:ignore t :which-key "tabify")
+ "bt" '(:ignore t :wk "tabify")
  "btu" 'untabify-buffer
  "btt" 'tabify-buffer
  "bi" 'indent-buffer
  "bP" 'aero/toggle-prettify-this-buffer
 
- "E" '(:ignore t :which-key "emacs")
+ "E" '(:ignore t :wk "emacs")
  "Ea" 'aero/apologize-to-emacs
 
- "a" '(:ignore t :which-key "applications")
+ "a" '(:ignore t :wk "applications")
  "ad" 'counsel-dired
 
- "c" '(:ignore t :which-key "compile")
+ "c" '(:ignore t :wk "compile")
  "cc" 'compile
  "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
  "ck" 'kill-compilation
  "cr" 'recompile
  "cR" 'byte-recompile-file
- "ce" '(:ignore t :which-key "elisp")
- "cei" '(ielm :which-key "ielm repl")
+ "ce" '(:ignore t :wk "elisp")
+ "cei" '(ielm :wk "ielm repl")
  "cer" 'eval-region
  "ceb" 'eval-buffer
  "ced" 'eval-defun
@@ -661,49 +661,49 @@ Local bindings (`counsel-mode-map'):
  "cecF" '(async-byte-compile-file :wk "other file async")
  "cecd" '(byte-recompile-directory :wk "directory")
 
- "e" '(:ignore t :which-key "errors")
+ "e" '(:ignore t :wk "errors")
  "en" 'next-error
  "ep" 'previous-error
 
- "F" '(:ignore t :which-key "frame")
+ "F" '(:ignore t :wk "frame")
  "Fd" 'delete-frame
  "Fo" 'other-frame
  "Ff" 'find-file-other-frame
  "Fn" 'make-frame
 
- "r" '(:ignore t :which-key "rings")
+ "r" '(:ignore t :wk "rings")
  "rp" 'aero/clipboard-paste
  "rc" 'aero/clipboard-copy
 
- "g" '(:ignore t :which-key "git")
- "gf" '(:ignore t :which-key "files")
+ "g" '(:ignore t :wk "git")
+ "gf" '(:ignore t :wk "files")
 
- "j" '(:ignore t :which-key "jump")
- "s" '(:ignore t :which-key "sexp")
- "m" '(:ignore t :which-key "mode")
+ "j" '(:ignore t :wk "jump")
+ "s" '(:ignore t :wk "sexp")
+ "m" '(:ignore t :wk "mode")
 
- "p" '(:ignore t :which-key "project")
- "pr" '(xref-find-definitions :which-key "find ref")
+ "p" '(:ignore t :wk "project")
+ "pr" '(xref-find-definitions :wk "find ref")
 
  "u" 'undo-tree-visualize
 
- "S" '(:ignore t :which-key "shell/sql")
+ "S" '(:ignore t :wk "shell/sql")
  "Se" 'eshell
- "SE" '(:ignore t :which-key "eshell")
+ "SE" '(:ignore t :wk "eshell")
  "St" '(:ignore t :wk "term")
 
- "w" '(:ignore t :which-key "window/web")
+ "w" '(:ignore t :wk "window/web")
  "w=" 'balance-windows
  ;; "w2" 'aero/layout-two-columns
  ;; "w3" 'aero/layout-three-columns
- "wB" '(aero/switch-to-minibuffer-window :which-key "switch to minibuffer")
+ "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
  "wx" 'kill-buffer-and-window
  "w{" 'shrink-window
  "w}" 'enlarge-window
 
- "t" '(:ignore t :which-key "text")
+ "t" '(:ignore t :wk "text")
  "tU" 'upcase-dwim
  "tD" 'downcase-dwim
  "tn" '(:ignore :wk "number")
