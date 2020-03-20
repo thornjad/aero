@@ -167,10 +167,17 @@ emacs with sigusr2"
 	"Personal persistent log."
 	(interactive)
 	(find-file (expand-file-name "~/doc/thornlog.org")))
-(defun aero/thornorg ()
-  "Personal organization."
+
+(defun aero/eshell-taskwarrior ()
+  "Open a specialized eshell buffer for taskwarrior."
   (interactive)
-  (find-file (expand-file-name "~/doc/thorn.org")))
+  (let ((default-directory (expand-file-name "~")))
+    (switch-to-buffer (get-buffer-create "*aero taskwarrior*"))
+    (eshell-mode)
+    (eshell-return-to-prompt)
+    (insert "task")
+    (eshell-send-input)))
+(defalias 'aero/task #'aero/eshell-taskwarrior)
 
 (defun aero/stop-auto-revert-buffers ()
 	(cancel-function-timers 'auto-revert-buffers))
