@@ -29,23 +29,21 @@
 (use-package counsel-projectile :straight t
 	:after projectile
 	:config
+
 	(general-define-key
 	 :states 'normal
 	 :prefix "SPC"
-    "p/" '(counsel-projectile-rg :wk "find with rg")
-	  "pf" '(counsel-projectile-find-file :wk "find file")
-    "pF" '(counsel-projectile-find-file-dwim :wk "find file dwim")
-    "pb" '(counsel-projectile-switch-to-buffer :wk "switch to buffer")
-    "pd" '(counsel-projectile-find-dir :wk "find project dir")
-    "pp" '(counsel-projectile-switch-project :wk "switch project")
-    "p:" '(projectile-run-shell-command-in-root :wk "shell command in root")
-    "p&" '(projectile-run-async-shell-command-in-root :wk "async shell command in root")
-    "p'" '(projectile-run-shell :wk "run shell in root")
-    "p%" '(projectile-replace-regexp :wk "regex replace")
-    "pC" '(projectile-compile-project :wk "compile")
-    "pt" '(projectile-find-tag :wk "find tag")
-    "pG" 'projectile-regenerate-tags
-    "pI" 'projectile-invalidate-cache))
+   "p/" '(counsel-projectile-rg :wk "find with rg")
+   "pf" '(counsel-projectile-find-file-dwim :wk "find file dwim")
+   "pp" '(counsel-projectile-switch-project :wk "switch project")
+   "p:" '(projectile-run-shell-command-in-root :wk "shell command in root")
+   "p&" '(projectile-run-async-shell-command-in-root :wk "async shell command in root")
+   "p'" '(projectile-run-shell :wk "run shell in root")
+   "p%" '(projectile-replace-regexp :wk "regex replace")
+   "pC" '(projectile-compile-project :wk "compile")
+   "pt" '(projectile-find-tag :wk "find tag")
+   "pG" 'projectile-regenerate-tags
+   "pI" 'projectile-invalidate-cache))
 
 (defun aero/ack-project ()
   "Search for a string in the current project."

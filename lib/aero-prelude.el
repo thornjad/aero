@@ -605,12 +605,15 @@ Local bindings (`counsel-mode-map'):
  "fD" '(aero/delete-this-file :wk "delete this file")
  "fE" '(aero/sudo-edit :wk "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
- "fT" 'counsel-load-theme
  "fo" '(:ignore t :wk "open special files")
- "fod" '(aero/open-tweaks :wk "tweaks")
  "fot" '(aero/thornlog :wk "thornlog")
- "fog" '(aero/thornorg :wk "thornorg")
- "foD" '(aero/reload-tweaks :wk "reload tweaks")
+
+ "o" '(:ignore t :wk "org")
+ "oa" 'org-agenda
+ "ot" 'aero/task
+ "oe" '(:ignore t :wk "org edit")
+ "oet" '(:ignore t :wk "org table")
+ "oets" 'org-table-sort-lines
 
  "h" '(:ignore t :wk "help/manual")
  "hM" 'woman
@@ -629,8 +632,7 @@ Local bindings (`counsel-mode-map'):
  "bs" 'switch-to-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
- "bD" '(:ignore t :wk "display")
- "bDw" '(whitespace-mode :wk "whitespace")
+ "bw" '(whitespace-mode :wk "whitespace")
  "bt" '(:ignore t :wk "tabify")
  "btu" 'untabify-buffer
  "btt" 'tabify-buffer
@@ -638,6 +640,7 @@ Local bindings (`counsel-mode-map'):
  "bP" 'aero/toggle-prettify-this-buffer
 
  "E" '(:ignore t :wk "emacs")
+ "Et" 'counsel-load-theme
  "Ea" 'aero/apologize-to-emacs
 
  "a" '(:ignore t :wk "applications")
@@ -670,10 +673,6 @@ Local bindings (`counsel-mode-map'):
  "Fo" 'other-frame
  "Ff" 'find-file-other-frame
  "Fn" 'make-frame
-
- "r" '(:ignore t :wk "rings")
- "rp" 'aero/clipboard-paste
- "rc" 'aero/clipboard-copy
 
  "g" '(:ignore t :wk "git")
  "gf" '(:ignore t :wk "files")

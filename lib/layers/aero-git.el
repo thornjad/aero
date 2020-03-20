@@ -40,13 +40,10 @@
 	 "gfU" 'magit-unstage-file
    "gm" '(:ignore t :which-key "smerge")
    "gmm" 'smerge-start-session
-   "gmc" 'smerge-keep-current
    "gmu" 'smerge-keep-upper
    "gml" 'smerge-keep-lower
-   "gmb" 'smerge-keep-base
    "gmn" 'smerge-next
    "gmp" 'smerge-prev
-   "gmo" 'smerge-keep-other
    "gma" 'smerge-keep-all
    "gmE" 'smerge-ediff
    "gmC" 'smerge-combine-with-next

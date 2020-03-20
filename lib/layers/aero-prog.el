@@ -104,10 +104,9 @@
    "pcb" 'flycheck-buffer
    "pcy" '(flycheck-copy-errors-as-kill :which-key "yank as kill")
    "pch" 'flycheck-display-error-at-point
-   "pcH" 'flycheck-display-error-at-point-soon
    "pce" 'flycheck-explain-error-at-point
    "pcl" 'flycheck-list-errors
-   "pci" 'flycheck-manual))
+   "pcH" 'flycheck-manual))
 
 (use-package flyspell
   :hook ((prog-mode . flyspell-prog-mode)
@@ -196,7 +195,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
-   "s0" '(sp-beginning-of-sexp :which-key "beginning of sexp")
+   "s^" '(sp-beginning-of-sexp :which-key "beginning of sexp")
    "s$" '(sp-end-of-sexp :which-key "end of sexp")
    "sk" '(sp-up-sexp :which-key "up")
    "sj" '(sp-down-sexp :which-key "down")
@@ -252,7 +251,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (general-define-key
    :states 'normal
    :prefix "SPC"
-    "bDi" 'indent-indicator-mode))
+    "bI" 'indent-indicator-mode))
 
 
 
