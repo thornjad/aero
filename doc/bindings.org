@@ -10,261 +10,302 @@ sequences.
 
 Here's some important bindings for quick start:
 
-| chord   | function      | description                                            |
-|---------+---------------+--------------------------------------------------------|
-| C-x C-c | kill-emacs    | this is how you quit                                   |
-| SPC SPC | M-x           | all interactive functions are available from this menu |
-| [hjkl]  | evil motion   | left, down, up, right                                  |
-| C-g     | keyboard-quit |                                                        |
-| SPC ESC | keyboard-quit |                                                        |
+| chord          | function      | description                                            |
+|----------------+---------------+--------------------------------------------------------|
+| C-x C-c        | kill-emacs    | this is how you quit                                   |
+| SPC SPC        | M-x           | all interactive functions are available from this menu |
+| [hjkl]         | evil motion   | left, down, up, right                                  |
+| C-g            | keyboard-quit |                                                        |
+| SPC ESC        | keyboard-quit |                                                        |
 
-* Global
+* Aero prefix chords (SPC)
 
-| chord | function | description                                    |
-|-------+----------+------------------------------------------------|
-| SPC   | /prefix/ | Primary prefix, see Aero prefix chords section |
-|       |          |                                                |
+| chord     | function                    | description                           |
+|-----------+-----------------------------+---------------------------------------|
+| SPC SPC   | M-x                         |                                       |
+| SPC ESC   | keyboard-quit               |                                       |
+| SPC C-g   | keyboard-quit               |                                       |
+| SPC TAB   | aero/alternate-buffer       | Switch to alternate buffer (previous) |
+| SPC ]     | counsel-gtags-dwim          |                                       |
+| SPC [1-9] |                             | Switch to window N                    |
+| SPC !     | shell-command               |                                       |
+| SPC "     | aero/eshell-new             | Start new eshell                      |
+| SPC '     | eshell                      | Start or switch to eshell             |
+| SPC :     | eval-expression             | Eval Elisp expression in echo area    |
+| SPC ;     | comment-or-uncomment-region |                                       |
+| SPC =     | quick-calc                  |                                       |
+| SPC U     | universal-argument          |                                       |
+| SPC u     | undo-tree-visualize         |                                       |
+| SPC z     | repeat                      |                                       |
+| SPC ,     | /prefix/                    | Reserved for mode-specific bindings   |
+| SPC E     | /prefix/                    | Emacs prefix                          |
+| SPC F     | /prefix/                    | Frame prefix                          |
+| SPC S     | /prefix/                    | Shell/SQL prefix                      |
+| SPC a     | /prefix/                    | Applications prefix                   |
+| SPC b     | /prefix/                    | Buffers prefix                        |
+| SPC c     | /prefix/                    | Compilation prefix                    |
+| SPC e     | /prefix/                    | Errors prefix                         |
+| SPC f     | /prefix/                    | Files prefix                          |
+| SPC g     | /prefix/                    | Git prefix                            |
+| SPC h     | /prefix/                    | Help/manual prefix                    |
+| SPC j     | /prefix/                    | Jump prefix                           |
+| SPC m     | /prefix/                    | Mode prefix                           |
+| SPC o     | /prefix/                    | Org prefix                            |
+| SPC p     | /prefix/                    | Project prefix                        |
+| SPC q     | /prefix/                    | Quoted insert prefix                  |
+| SPC s     | /prefix/                    | Sexp prefix                           |
+| SPC t     | /prefix/                    | Text prefix                           |
+| SPC w     | /prefix/                    | Window/web prefix                     |
 
-** Aero prefix chords (SPC)
+** Emacs prefix (SPC E)
 
-| chord   | function                    | description                           |
-|---------+-----------------------------+---------------------------------------|
-| SPC SPC | M-x                         |                                       |
-| SPC ESC | keyboard-quit               |                                       |
-| SPC C-g | keyboard-quit               |                                       |
-| SPC TAB | aero/alternate-buffer       | Switch to alternate buffer (previous) |
-| SPC !   | shell-command               |                                       |
-| SPC "   | aero/eshell-new             | Start new eshell                      |
-| SPC '   | eshell                      | Start or switch to eshell             |
-| SPC :   | eval-expression             | Eval Elisp expression in echo area    |
-| SPC ;   | comment-or-uncomment-region |                                       |
-| SPC =   | quick-calc                  |                                       |
-| SPC U   | universal-argument          |                                       |
-| SPC u   | undo-tree-visualize         |                                       |
-| SPC z   | repeat                      |                                       |
-| SPC ,   | /prefix/                    | Reserved for mode-specific bindings   |
-| SPC E   | /prefix/                    | Emacs prefix                          |
-| SPC F   | /prefix/                    | Frame prefix                          |
-| SPC S   | /prefix/                    | Shell/SQL prefix                      |
-| SPC a   | /prefix/                    | Applications prefix                   |
-| SPC b   | /prefix/                    | Buffers prefix                        |
-| SPC c   | /prefix/                    | Compilation prefix                    |
-| SPC e   | /prefix/                    | Errors prefix                         |
-| SPC f   | /prefix/                    | Files prefix                          |
-| SPC g   | /prefix/                    | Git prefix                            |
-| SPC h   | /prefix/                    | Help/manual prefix                    |
-| SPC j   | /prefix/                    | Jump prefix                           |
-| SPC m   | /prefix/                    | Mode prefix                           |
-| SPC p   | /prefix/                    | Project prefix                        |
-| SPC q   | /prefix/                    | Quoted insert prefix                  |
-| SPC r   | /prefix/                    | Rings prefix                          |
-| SPC s   | /prefix/                    | Sexp prefix                           |
-| SPC t   | /prefix/                    | Text prefix                           |
-| SPC w   | /prefix/                    | Window/web prefix                     |
+| chord   | function                | description                                    |
+|---------+-------------------------+------------------------------------------------|
+| SPC E t | counsel-load-theme      | Change theme (from file)                       |
+| SPC E a | aero/apologize-to-emacs | Disable debug on error, use after =smackemacs= |
 
-*** Emacs prefix (SPC E)
-*** Frame prefix chords (SPC F)
+** Frame prefix chords (SPC F)
 
 | chord   | function              | description |
 |---------+-----------------------+-------------|
 | SPC F d | delete-frame          |             |
-| SPC F o | other-frame           |             |
 | SPC F f | find-file-other-frame |             |
 | SPC F n | make-frame            | "New" frame |
+| SPC F o | other-frame           |             |
 
-*** Shell/SQL prefix (SPC S)
+** Shell/SQL prefix (SPC S)
+
+| chord     | function    | description       |
+|-----------+-------------+-------------------|
+| SPC S E   | /prefix/    | Eshell prefix     |
+| SPC S e   | eshell      |                   |
+| SPC S t   | /prefix/    | Term(inal) prefix |
+| SPC S t b | term-bash   |                   |
+| SPC S t c | term-cicada |                   |
+| SPC S t t | term        |                   |
+| SPC S t z | term-zsh    |                   |
+| SPC S c   | sql-connect |                   |
+
+** Applications prefix (SPC a)
+
+| chord     | function                          | description            |
+|-----------+-----------------------------------+------------------------|
+| SPC a R   | /prefix/                          | Pocket (reader) prefix |
+| SPC a R r | pocket-reader                     |                        |
+| SPC a R s | pocket-reader-add-link            |                        |
+| SPC a d   | counsel-dired                     | Open dired             |
+| SPC a f   | elfeed                            | Open elfeed            |
+| SPC a r   | pocket-reader                     |                        |
+| SPC a s   | /prefix/                          | Spotify prefix         |
+| SPC a s A | counsel-spotify-search-album      |                        |
+| SPC a s a | counsel-spotify-search-artist     |                        |
+| SPC a s l | counsel-spotify-previous          | Last track             |
+| SPC a s n | counsel-spotify-next              | Next track             |
+| SPC a s p | counsel-spotify-toggle-play-pause | Play/pause             |
+| SPC a s s | counsel-spotify-search-track      | Search                 |
+
+** Buffers prefix (SPC b)
+
+| chord     | function                         | description          |
+|-----------+----------------------------------+----------------------|
+| SPC b I   | indent-indicator-mode            |                      |
+| SPC b P   | aero/toggle-prettify-this-buffer |                      |
+| SPC b d   | kill-this-buffer                 |                      |
+| SPC b i   | indent-buffer                    |                      |
+| SPC b l   | ibuffer                          | List buffers         |
+| SPC b m   | switch-to-messages-buffer        |                      |
+| SPC b n   | next-buffer                      |                      |
+| SPC b p   | previous-buffer                  |                      |
+| SPC b r   | aero/reopen-file-at-buffer       | Reopen this file     |
+| SPC b s   | switch-to-scratch-buffer         |                      |
+| SPC b t   | /prefix/                         | Buffer tabify prefix |
+| SPC b t t | tabify-buffer                    |                      |
+| SPC b t u | untabify-buffer                  |                      |
+| SPC b w   | whitespace-mode                  |                      |
+| SPC b x   | kill-this-buffer-and-window      |                      |
+
+** Compilation prefix (SPC c)
+
+| chord       | function                           | description                         |
+|-------------+------------------------------------+-------------------------------------|
+| SPC c C     | aero/byte-recompile-file-at-buffer |                                     |
+| SPC c R     | byte-recompile-file                |                                     |
+| SPC c c     | compile                            |                                     |
+| SPC c e     | /prefix/                           | Elisp prefix                        |
+| SPC c e b   | eval-buffer                        |                                     |
+| SPC c e c   | /prefix/                           | Byte compile prefix                 |
+| SPC c e c F | async-byte-compile-file            | Choose file to byte compile (async) |
+| SPC c e c b | aero/byte-compile-file-at-buffer   |                                     |
+| SPC c e c d | byte-recompile-directory         |                                     |
+| SPC c e c f | byte-compile-file                  | Choose file to byte compile         |
+| SPC c e c r | aero/byte-recompile-file-at-buffer |                                     |
+| SPC c e d   | eval-defun                         | Eval the defun point is in          |
+| SPC c e i   | ielm                               | Open ielm buffer                    |
+| SPC c e r   | eval-region                        |                                     |
+| SPC c k     | kill-compilation                   |                                     |
+| SPC c r     | recompile                          |                                     |
+
+** Errors prefix (SPC e)
+
+| chord   | function       | description |
+|---------+----------------+-------------|
+| SPC e n | next-error     |             |
+| SPC e p | previous-error |             |
+
+** Files prefix (SPC f)
+
+| chord     | function                         | description                                  |
+|-----------+----------------------------------+----------------------------------------------|
+| SPC f D   | aero/delete-this-file            | Delete file in this buffer                   |
+| SPC f E   | aero/sudo-edit                   | Edit this file with sudo                     |
+| SPC f R   | aero/rename-this-file-and-buffer | Rename file in this buffer                   |
+| SPC f w   | save-buffer                      | "file write"                                 |
+| SPC f C   | /prefix/                         | File Convert prefix                          |
+| SPC f C d | aero/unix2dos                    |                                              |
+| SPC f C u | aero/dos2unix                    |                                              |
+| SPC f o   | /prefix/                         | File Open (special files) prefix             |
+| SPC f o t | aero/thornlog                    | Open thornlog (default "~/doc/thornlog.org") |
+
+** Git prefix (SPC g)
+
+| chord         | function                 | description              |
+|---------------+--------------------------+--------------------------|
+| SPC g b       | magit-blame              |                          |
+| SPC g f       | /prefix/                 | Git files prefix         |
+| SPC g f S     | magit-stage-file         |                          |
+| SPC g f U     | magit-unstage-file       |                          |
+| SPC g m       | /prefix/                 | Smerge prefix            |
+| SPC g m C     | smerge-combine-with-next |                          |
+| SPC g m R     | smerge-resolve           |                          |
+| SPC g m a     | smerge-keep-all          |                          |
+| SPC g m b l   | smerge-diff-base-lower   | Diff base with lower     |
+| SPC g m b u   | smerge-diff-base-upper   | Diff base with upper     |
+| SPC g m d     | /prefix/                 | Smerge diff prefix       |
+| SPC g m d b   | /prefix/                 | Smerge diff base prefix  |
+| SPC g m d u   | /prefix/                 | Smerge diff upper prefix |
+| SPC g m d u l | smerge-diff-upper-lower  | Diff upper with lower    |
+| SPC g m e     | smerge-ediff             |                          |
+| SPC g m l     | smerge-keep-lower        |                          |
+| SPC g m m     | smerge-start-session     |                          |
+| SPC g m n     | smerge-next              |                          |
+| SPC g m p     | smerge-prefix            |                          |
+| SPC g m r     | smerge-refine            |                          |
+| SPC g m u     | smerge-keep-upper        |                          |
+| SPC g p       | aero/fetch-pr            | Fetch by PR number       |
+| SPC g s       | magit-status             |                          |
+
+** Help/manual prefix (SPC h)
+
+| chord   | function     | description                                         |
+|---------+--------------+-----------------------------------------------------|
+| SPC h M | woman        | Browse Unix man pages without using the Man program |
+| SPC h i | info         | Browse documentation                                |
+| SPC h m | man          | Browse Unix man pages                               |
+| SPC h I | info-apropos | Grovel indices of all known Info files              |
+| SPC h d | /prefix/     | Describe prefix                                     |
+
+** Jump prefix (SPC j)
 | chord   | function              | description |
 |---------+-----------------------+-------------|
-*** Applications prefix (SPC a)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Buffers prefix (SPC b)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Compilation prefix (SPC c)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Errors prefix (SPC e)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Files prefix (SPC f)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Git prefix (SPC g)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Help/manual prefix (SPC h)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Jump prefix (SPC j)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Mode prefix (SPC m)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Project prefix (SPC p)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Quoted insert prefix (SPC q)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Rings prefix (SPC r)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Sexp prefix (SPC s)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Text prefix (SPC t)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
-*** Window/web prefix (SPC w)
-| chord   | function              | description |
-|---------+-----------------------+-------------|
 
-* Modal
+** Org prefix (SPC o)
 
+| chord       | function             | description                            |
+|-------------+----------------------+----------------------------------------|
+| SPC o a     | org-agenda           |                                        |
+| SPC o t     | aero/task            | Open special taskwarrior eshell buffer |
+| SPC o e     | /prefix/             | Org edit                               |
+| SPC o e t   | /prefix/             | Org edit table                         |
+| SPC o e t s | org-table-sort-lines |                                        |
 
+** Project prefix (SPC p)
 
-* Cursor motion
+| chord     | function                                   | description                       |
+|-----------+--------------------------------------------+-----------------------------------|
+| SPC p %   | projectile-replace-regexp                  |                                   |
+| SPC p &   | projectile-run-async-shell-command-in-root |                                   |
+| SPC p '   | projectile-run-shell                       |                                   |
+| SPC p /   | counsel-projectile-rg                      | Search project with ripgrep       |
+| SPC p :   | projectile-run-shell-command-in-root       |                                   |
+| SPC p C   | projectile-compile-project                 |                                   |
+| SPC p G   | projectile-regenerate-tags                 |                                   |
+| SPC p I   | projectile-invalidate-cache               |                                   |
+| SPC p c   | /prefix/                                   | Flycheck prefix ("project check") |
+| SPC p c H | flycheck-manual                            |                                   |
+| SPC p c b | flycheck-buffer                            |                                   |
+| SPC p c c | flycheck-clear                             |                                   |
+| SPC p c e | flycheck-explain-error-at-point            |                                   |
+| SPC p c h | flycheck-display-error-at-point            |                                   |
+| SPC p c l | flycheck-list-errors                       |                                   |
+| SPC p c n | flycheck-next-error                        |                                   |
+| SPC p c p | flycheck-previous-error                    |                                   |
+| SPC p c y | flycheck-copy-errors-as-kill               | "Project check yank"              |
+| SPC p f   | counsel-projectile-find-file-dwim          | Find file in project              |
+| SPC p p   | counsel-projectile-switch-project          | Switch (or open) project          |
+| SPC p r   | xref-find-definition                       | Can also use C-[                  |
+| SPC p s   | /prefix/                                   | Spellcheck (Flyspell)             |
+| SPC p s C | flyspell-correct-at-point                  |                                   |
+| SPC p s P | flyspell-prog-mode                         |                                   |
+| SPC p s b | flyspell-buffer                            |                                   |
+| SPC p s c | flyspell-correct-wrapper                   |                                   |
+| SPC p s n | flyspell-correct-next                      |                                   |
+| SPC p s p | flyspell-correct-previous                  |                                   |
+| SPC p s r | flyspell-region                            |                                   |
+| SPC p s w | flyspell-word                              |                                   |
+| SPC p t   | projectile-find-tag                        |                                   |
 
-| key/chord  | states | description                                            |
-|------------+--------+--------------------------------------------------------|
-| hjkl       | NVM    | move cursor left/down/up/right                         |
-| w (W)      | NVM    | jump forward to start of a word (skip punctuation)     |
-| e (E)      | NVM    | jump forward to end of a word (skip punctuation)       |
-| b (B)      | NVM    | jump back to start of a word (skip punctuation)        |
-| 0          | NVM    | jump to start of the line                              |
-| \$         | NVM    | jump to end of the line                                |
-| \^         | NVM    | jump to first non-blank char of the line               |
-| G          | NVM    | jump to last line of document                          |
-| nG, ngg :n | NVM    | jump to line n                                         |
-| ''         | NVM    | jump to last mark                                      |
-| fx (Fx)    | NVM    | jump to next (last) occurence of char x                |
-| tx (Tx)    | NVM    | jump to one char before (after) the next (last) char x |
-| }          | NVM    | jump to next paragraph                                 |
-| {          | NVM    | jump to previous paragraph                             |
-| H          | NVM    | jump to top/home of screen                             |
-| L          | NVM    | jump to last line of screen                            |
-| M          | NVM    | jump to middle of screen                               |
+** Quoted insert prefix (SPC q)
 
-* Buffer and screen motion
+| chord   | function                | description               |
+|---------+-------------------------+---------------------------|
+| SPC q l | insert-lambda           | Insert a lambda character |
+| SPC q q | quoted-insert           |                           |
+| SPC q w | aero/insert-jira-ticket | Insert web ticket number  |
 
-| key/chord | states | description                        |
-|-----------+--------+------------------------------------|
-| C-u       | NVM    | move screen up half page           |
-| C-b       | NVM    | move screen up full page           |
-| C-d       | NVM    | move screen down half page         |
-| C-f       | NVM    | move screen down full page         |
-| zz        | NVM    | center screen on cursor            |
-| zt        | NVM    | align top of screen with cursor    |
-| zb        | NVM    | align bottom of screen with cursor |
+** Sexp prefix (SPC s)
 
-* Window motion
+| chord     | function             | description |
+|-----------+----------------------+-------------|
+| SPC s $   | sp-end-of-sexp       |             |
+| SPC s K   | sp-kill-sexp         |             |
+| SPC s ^   | sp-beginning-of-sexp |             |
+| SPC s h   | sp-backward-sexp     |             |
+| SPC s j   | sp-down-sexp         |             |
+| SPC s k   | sp-up-sexp           |             |
+| SPC s l   | sp-forawrd-sexp      |             |
+| SPC s u   | sp-unwrap-sexp       |             |
+| SPC s w   | /prefix/             | Sexp wrap   |
+| SPC s w ( | sp-wrap-round        |             |
+| SPC s w [ | sp-wrap-square       |             |
+| SPC s w { | sp-wrap-curly        |             |
 
-| key/chord | states | description                       |
-|-----------+--------+-----------------------------------|
-| M-hjkl    | all    | move to window left/down/up/right |
+** Text prefix (SPC t)
 
+| chord     | function                  | description   |
+|-----------+---------------------------+---------------|
+| SPC t U   | upcase-dwim               |               |
+| SPC t D   | downcase-dwim             |               |
+| SPC t n   | /prefix/                  | Number prefix |
+| SPC t n i | increment-number-at-point |               |
+| SPC t n d | decrement-number-at-point |               |
 
-* General keys
+** Window/web prefix (SPC w)
 
-| key/chord | states      | description                                              |
-|-----------+-------------+----------------------------------------------------------|
-| C-j       | all         | return immediate; with emmet mode, activate emmet return |
-| C-z       | all         | switch between Emacs and Evil states                     |
-
-* General editing
-
-| key/chord | states | description   |
-|-----------+--------+---------------|
-| TAB       | NVMEI  | indent (dwim) |
-
-* Visual editing
-
-| key/chord | states | description                                  |
-|-----------+--------+----------------------------------------------|
-| v         | N      | enter visual state                           |
-| V         | N      | mark line then enter visual state            |
-| C-v       | N      | enter visual block state                     |
-| vaw       | N      | mark word, enter visual                      |
-| vab (vaB) | N      | mark round (curly) block, enter visual       |
-| vib (viB) | N      | mark inner round (curly) block, enter visual |
-| vo        | V      | move to other end of region                  |
-| > (<)     | V      | shift region right (left)                    |
-| y         | V      | yank region                                  |
-| \~        | V      | switch case                                  |
-| d         | V      | delete selection                             |
-| ESC       | V      | enter normal state                           |
-
-* Insert editing
-
-| key/chord | states | description                                   |
-|-----------+--------+-----------------------------------------------|
-| i (a)     | N      | enter insert state before (after) cursor      |
-| I (A)     | N      | enter insert state at beginning (end) of line |
-| o (O)     | N      | open a new line below (above) current line    |
-| ea        | N      | append at end of word                         |
-| C-f (C-b) | I      | move cursor forward (back) char               |
-| ESC       | I      | enter normal state                            |
-
-* Normal editing
-
-| key/chord | states | description                          |
-|-----------+--------+--------------------------------------|
-| r         | N      | replace char                         |
-| J         | N      | join line with line below            |
-| cc, S     | N      | change/replace line                  |
-| cw        | N      | change/replace to end of word        |
-| c$        | N      | change/replace to end of line        |
-| s         | N      | delete char and substitute text      |
-| xp        | N      | transpose two letters/kill and paste |
-| u (C-r)   | N      | undo (redo)                          |
-| .         | N      | repeat last command                  |
-
-* Yanking
-
-Yanking means opposite things in the Evil and Holy camps. In Vi, one yanks /from
-the buffer to a register/, while in Emacs (natively), one yanks /from the kill
-ring to the buffer/. This is very confusing. Here we consider yanking and
-killing synonyms, while pulling from the kill ring is putting. So, in Aero, one
-kills from the buffer to the kill ring, then puts from the kill ring to the
-buffer. However, since "k" is a movement command, we stick with the Vi keys
-based on "y". Putting could also be thought of as pasting.
-
-| key/chord | states | description               |
-|-----------+--------+---------------------------|
-| y         | V      | kill region               |
-| yy        | N      | kill line                 |
-| nyy       | N      | kill n lines              |
-| :n,Ny     | N      | kill lines n to N         |
-| yw        | N      | kill word                 |
-| y$        | N      | kill to end of line       |
-| dd        | N      | kill line                 |
-| ndd       | N      | kill n lines              |
-| :n,Nd     | N      | kill lines n to N         |
-| dw        | N      | kill word                 |
-| D, d$     | N      | kill to end of line       |
-| x         | N      | kill char                 |
-| p (P)     | N      | put after (before) cursor |
-
-* Searching
-
-| key/chord      | states | description             |
-|----------------+--------+-------------------------|
-| \*             | N      | search for word         |
-| /pattern       | N      | search pattern          |
-| ?pattern       | N      | search pattern backward |
-| n              | N      | repeat search forward   |
-| N              | N      | repeat search backward  |
-| :n,Ns/old/new/ | N      | replace in lines n to N |
-| :%s/old/new/   | N      | replace in buffer       |
-| :s/old/new/    | V      | replace in region       |
-
-
-* Exiting, quitting, interrupting
-
-| key/chord      | states | description                                       |
-|----------------+--------+---------------------------------------------------|
-| C-x C-c        | all    | exit with confirmation and unwritten buffer check |
-| M-x kill-emacs | all    | exit immediate                                    |
-| C-g            | all    | quit/interrupt                                   |
+| chord       | function                         | description                   |
+|-------------+----------------------------------+-------------------------------|
+| SPC w =     | balance-windows                  |                               |
+| SPC w B     | aero/switch-to-minibuffer-window | Switch to minibuffer          |
+| SPC w F     | make-frame                       |                               |
+| SPC w b     | /prefix/                         | Web browse prefix             |
+| SPC w b d   | aero/ddg                         | Search DDG                    |
+| SPC w b n   | /prefix/                         | News sites prefix             |
+| SPC w b n n | aero/npr-news                    | Open NPR news                 |
+| SPC w b n n | aero/wiki-news                   | Open Wikipedia current events |
+| SPC w b w   | aero/wiki                        | Search Wikipedia              |
+| SPC w d     | delete-window                    |                               |
+| SPC w p     | browse-url-at-point              |                               |
+| SPC w s     | eww-search-words                 | Web search with eww           |
+| SPC w w     | eww                              |                               |
+| SPC w x     | kill-buffer-and-window           |                               |
+| SPC w {     | shrink-window                    |                               |
+| SPC w }     | enlarge-window                   |                               |
