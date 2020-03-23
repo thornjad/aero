@@ -1,4 +1,4 @@
-personal_ws-1.1 en 55 
+personal_ws-1.1 en 57 
 jmthornton
 umounted
 aero
@@ -9,6 +9,7 @@ thornjad
 json
 Elisp
 tcl
+tty
 config
 utils
 proration
@@ -37,13 +38,13 @@ elfeed
 proc
 ajax
 sexp
-Sexp
 eshell
 backend
 YYYY
 css
 sudo
 rvt
+boolean
 eval
 signup
 umount
@@ -52,5 +53,6 @@ callsign
 taskwarrior
 submodule
 typeof
+nw
 ESC
 Spotify
