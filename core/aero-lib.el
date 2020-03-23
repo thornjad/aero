@@ -55,6 +55,45 @@ DOCSTRING and BODY are as in `defun'."
        (dolist (hook ',hooks)
          (add-hook hook ',name)))))
 
+(defun aero/guess-startup-directory-using-proc ()
+  "Get the startup directory of current Emacs session from /proc."
+  (when (file-exists-p (format "/proc/%d/cwd" (emacs-pid)))
+    (file-chase-links (format "/proc/%d/cwd" (emacs-pid)))))
+
+(defun aero/guess-startup-directory-using-lsof ()
+  "Get the startup directory of the current Emacs session using`lsof'."
+  (when (executable-find "lsof")
+    (let* ((default-directory "/")
+           (lsof-op (shell-command-to-string (format "lsof -d cwd -a -Fn -p %d"
+                                                     (emacs-pid))))
+           (raw-cwd (car (last (split-string lsof-op "\n" t))))
+           (cwd (substring raw-cwd 1)))
+      (when (< 0 (length cwd))
+        cwd))))
+
+(defun aero/guess-startup-directory-using-buffers ()
+  "Guess the startup directory for current Emacs session from some buffer.
+This tries to get Emacs startup directory from the *Messages* or *scratch*
+buffer, needless to say this would be wrong if the user has killed and recreated
+these buffers."
+  (or (and (get-buffer "*Messages*")
+           (with-current-buffer "*Messages*" default-directory))
+      (and (get-buffer "*scratch*")
+           (with-current-buffer "*scratch*" default-directory))))
+
+(defun aero/guess-startup-directory ()
+  "Guess the directory the new Emacs instance should start from.
+On Linux it figures out the startup directory by reading /proc entry for current
+Emacs instance. Otherwise it falls back to guessing the startup directory by
+reading `default-directory' of *Messages* or *scratch* buffers falling back to
+the HOME environment variable and finally just using whatever is the current
+`default-directory'."
+  (or (aero/guess-startup-directory-using-proc)
+      (aero/guess-startup-directory-using-lsof)
+      (aero/guess-startup-directory-using-buffers)
+      (getenv "HOME")
+      default-directory))
+
 (defmacro aero/defadvice (name arglist where place docstring &rest body)
   "Define an advice called NAME and add it to a function. ARGLIST is as in
 `defun'. WHERE is a keyword as passed to `advice-add', and PLACE is the function
@@ -171,12 +210,16 @@ emacs with sigusr2"
 (defun aero/eshell-taskwarrior ()
   "Open a specialized eshell buffer for taskwarrior."
   (interactive)
-  (let ((default-directory (expand-file-name "~")))
+  (when (require 'eshell nil 'no-error)
+    (declare-function eshell-return-to-prompt "eshell.el")
+    (declare-function eshell-send-input "eshell.el")
+    (declare)
+    (let ((default-directory (expand-file-name "~")))
     (switch-to-buffer (get-buffer-create "*aero taskwarrior*"))
     (eshell-mode)
     (eshell-return-to-prompt)
     (insert "task")
-    (eshell-send-input)))
+    (eshell-send-input))))
 (defalias 'aero/task #'aero/eshell-taskwarrior)
 
 (defun aero/stop-auto-revert-buffers ()
@@ -376,6 +419,14 @@ on. This may cause a jump if the file has changed significantly."
   (interactive)
   (find-file (concat user-emacs-directory "init.local.el")))
 
+(defun aero/restclient-scratch ()
+  "Open a restclient scratch buffer."
+  (interactive)
+  (when (require 'restclient nil 'noerror)
+    (switch-to-buffer (get-buffer-create "restclient-scratch"))
+    (insert "# -*- restclient -*-\n")
+    (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
+    (restclient-mode)))
 
 ;;; editing et cetera
 

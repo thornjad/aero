@@ -30,6 +30,7 @@
            aero-prog
            aero-project
            aero-python
+           aero-restart
            aero-rust
            aero-shell
            aero-spotify
