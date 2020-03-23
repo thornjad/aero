@@ -2,7 +2,7 @@
 ;;
 ;; web, js, cs, etc.
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2020 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -19,6 +19,8 @@
 ;; performance of this software.
 ;;
 ;;; Code:
+
+(require 'aero-lib)
 
 (use-package web-mode :straight t
   :load-path "lib/packages/web-mode/"
@@ -79,6 +81,28 @@
 	:straight t
   :defer t
   :commands (restclient-mode)
-  :mode ("\\.http\\'" . restclient-mode))
+  :mode ("\\.http\\'" . restclient-mode)
+
+  :init
+  (aero-leader-def
+    "wR" 'restclient-mode
+    "wr" 'aero/restclient-scratch)
+
+  :config
+  (use-package company-restclient :straight t
+    :config
+    (add-to-list 'company-backends 'company-restclient))
+
+  (general-define-key
+   :prefix "SPC"
+   :states '(normal visual)
+   :keymaps 'restclient-mode-map
+    ", RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
+    ",c" '(restclient-http-send-current :wk "Run query at point and focus")
+    ",r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
+    ",n" 'restclient-jump-next
+    ",p" 'restclient-jump-prev
+    ",." 'restclient-mark-current
+    ",y" 'restclient-copy-curl-command))
 
 (provide 'aero-web)
