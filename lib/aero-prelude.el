@@ -409,7 +409,7 @@ Local bindings (`counsel-mode-map'):
   (put 'temporary-file-directory 'standard-value '("/tmp"))
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
         tramp-persistency-file-name "~/.config/emacs/data/tramp"
-
+        tramp-default-method "rsync"
         ;; my dev server is bsd, which tramp seems to forget
         shell-file-name "/usr/local/bin/bash")
 
