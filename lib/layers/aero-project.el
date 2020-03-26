@@ -21,10 +21,10 @@
 (use-package projectile :straight t
 	:config
 	(projectile-mode 1)
-	(setq projectile-indexing-method 'alien
+	(setq projectile-indexing-method 'native
 				projectile-enable-caching t
-				;; fix sub-projects bug https://github.com/bbatsov/projectile/issue/1302
-				projectile-git-submodule-command nil))
+				projectile-git-submodule-command nil
+				projectile-mode-line nil))
 
 (use-package counsel-projectile :straight t
 	:after projectile
