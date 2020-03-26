@@ -81,14 +81,14 @@
    `(shadow ((t (:foreground ,aero-grey2))))
 
    ;; Built-in syntax
-   `(font-lock-builtin-face ((t (:foreground ,aero-bright-yellow :slant italic))))
+   `(font-lock-builtin-face ((t (:foreground ,aero-bright-blue :slant italic))))
    `(font-lock-constant-face ((t (:foreground ,aero-normal-magenta :slant italic))))
    `(font-lock-comment-face ((,class (:foreground ,aero-grey3 :slant italic))))
    `(font-lock-function-name-face ((t (:foreground ,aero-bright-orange))))
-   `(font-lock-keyword-face ((t (:foreground ,aero-bright-blue))))
+   `(font-lock-keyword-face ((t (:foreground ,aero-bright-yellow))))
    `(font-lock-string-face ((t (:foreground ,aero-bright-green))))
-   `(font-lock-variable-name-face ((t (:foreground ,aero-normal-white))))
-   `(font-lock-type-face ((t (:foreground ,aero-bright-yellow))))
+   `(font-lock-variable-name-face ((t (:foreground ,aero-normal-blue))))
+   `(font-lock-type-face ((t (:foreground ,aero-bright-blue))))
    `(font-lock-warning-face ((t (:foreground ,aero-bright-red :bold t))))
    `(font-lock-doc-face ((t (:foreground ,aero-grey3 :bold t))))
 
