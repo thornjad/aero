@@ -35,6 +35,7 @@ tmp/
 /srecode-map.el
 /recentf
 etc/todo.org
+etc/recentf
 /backups
 tmp.*
 *~

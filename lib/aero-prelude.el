@@ -224,10 +224,8 @@ Local bindings (`counsel-mode-map'):
 
 (use-package recentf
   :defines (recentf-mode)
-  :commands (recentf-mode
-             counsel-recentf)
   :config
-  (setq recentf-save-file (expand-file-name "~/.recentf")
+  (setq recentf-save-file (expand-file-name "recentf" aero-etc-dir)
         recentf-max-saved-items 500
         ;; never cleanup, this will get rid of tramp files
         recentf-auto-cleanup 'never)
