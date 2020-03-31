@@ -20,6 +20,8 @@
 ;;
 ;;; Code:
 
+(use-package all-the-icons :straight t)
+
 ;; in etc/themes/
 (load-theme 'aero-dark t)
 
@@ -113,8 +115,6 @@
 
 (use-package fireplace :straight t
   :commands fireplace)
-
-(use-package all-the-icons :straight t)
 
 ;; TODO absorb this into aero
 (use-package dashboard :straight t
