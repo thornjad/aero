@@ -1,4 +1,4 @@
-personal_ws-1.1 en 58 
+personal_ws-1.1 en 62 
 jmthornton
 umounted
 aero
@@ -12,6 +12,7 @@ tcl
 tty
 config
 utils
+deprovision
 proration
 Flyspell
 dev
@@ -41,11 +42,13 @@ sexp
 eshell
 backend
 YYYY
+Voici
 rsync
 css
 sudo
 boolean
 rvt
+vraie
 eval
 signup
 umount
@@ -55,5 +58,6 @@ taskwarrior
 submodule
 typeof
 nw
+env
 ESC
 Spotify
