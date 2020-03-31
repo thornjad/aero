@@ -443,8 +443,7 @@ Local bindings (`counsel-mode-map'):
 	:defer t
   :after general
   :commands (lsp lsp-deferred)
-  :defines (lsp-prefer-flymake
-						lsp-session-file
+  :defines (lsp-session-file
             lsp-enable-snippet
             lsp-resolve-final-function
             lsp-restart
@@ -452,8 +451,7 @@ Local bindings (`counsel-mode-map'):
 	:init
 	(setq lsp-session-file (expand-file-name "lsp-session" aero-etc-dir)
 				lsp-auto-guess-root t
-				lsp-keep-workspace-alive nil
-				lsp-prefer-flymake nil)
+				lsp-keep-workspace-alive nil)
 
 ;;   (defun aero--advice-lsp-mode-silence (format &rest args)
 ;;     "Silence needless diagnostic messages from `lsp-mode'. This is a
@@ -536,6 +534,9 @@ Local bindings (`counsel-mode-map'):
 (use-package beacon :straight t
   :config
   (beacon-mode 1))
+
+
+;;; General crap
 
 
 ;;; general bindings
