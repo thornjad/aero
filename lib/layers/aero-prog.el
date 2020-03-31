@@ -244,8 +244,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 				(append ws-butler-global-exempt-modes
 								'(special-mode comint-mode term-mode eshell-mode))))
 
-(global-display-fill-column-indicator-mode 1)
-
 (use-package indent-indicator ; local
   :config
   (general-define-key
