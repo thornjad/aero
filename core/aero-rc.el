@@ -36,6 +36,8 @@
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
+ mouse-wheel-scroll-amount '(1 ((shift) . 1)) ; scroll one line at a time
+ pixel-resolution-fine-flag 1
 
  ;; startup with scratch
  inhibit-startup-screen t
@@ -124,6 +126,8 @@
 (delete-selection-mode t)
 
 (blink-cursor-mode 0)
+
+(pixel-scroll-mode 1)
 
 (when (string= system-type "darwin")
 	(setq-default dired-use-ls-dired nil))
