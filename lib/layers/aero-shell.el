@@ -38,6 +38,9 @@
    eshell-visual-subcommands '(("git" "log" "diff" "show"))
    pcomplete-ignore-case t)
 
+  (let ((default-directory (expand-file-name "~")))
+    (setq eshell-path-env (getenv "PATH")))
+
   ;; doesn't handle less too well
   (setenv "PAGER" "cat")
   (setenv "TERM" "xterm-256color")
