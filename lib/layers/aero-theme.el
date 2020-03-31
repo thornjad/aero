@@ -81,4 +81,6 @@
   :load-path "lib/packages/todo-light/"
   :hook ((prog-mode text-mode) . todo-light-mode))
 
+(use-package fireplace :straight t
+  :commands fireplace)
 (provide 'aero-theme)
