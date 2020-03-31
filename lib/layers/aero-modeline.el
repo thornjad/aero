@@ -20,6 +20,8 @@
 ;;
 ;;; Code:
 
+(require 'all-the-icons)
+
 (defvar aero/modeline--current-window)
 (defvar flycheck-current-errors)
 (declare-function flycheck-count-errors "flycheck" (errors))
@@ -143,17 +145,18 @@
           ('finished (if flycheck-current-errors
                          (let-alist (flycheck-count-errors flycheck-current-errors)
                            (let ((sum (+ (or .error 0) (or .warning 0))))
-                             (propertize (concat " "
-                                                 (number-to-string sum)
-                                                 " Issues ")
+                             (propertize (concat (number-to-string sum)
+                                                 " ! ")
                                          'face (if .error
                                                    'aero/modeline-status-error
                                                  'aero/modeline-status-warning))))
-                       (propertize "✔  " 'face 'aero/modeline-status-success)))
-          ('running (propertize "Checking  " 'face 'aero/modeline-status-info))
-          ('no-checker "")
+                       (propertize "✓  "
+                                   'face 'aero/modeline-status-success)))
+          ('running (propertize "✓  "
+                                'face 'aero/modeline-status-info))
+          ('no-checker "   ")
           ('errored (propertize "✘  " 'face 'aero/modeline-status-error))
-          ('interrupted (propertize "⏸  " 'face 'aero/modeline-status-grayed-out)))))
+          ('interrupted (propertize "   " 'face 'aero/modeline-status-grayed-out)))))
 
 ;;; Segments
 
@@ -187,7 +190,7 @@
 
 (defun aero/modeline-segment-position ()
   "Displays the current cursor position in the mode-line."
-  (concat "%l:%c"
+  (concat "L%l"
           " %p%%"
           (when (use-region-p)
             (concat
@@ -206,9 +209,10 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (if (aero/modeline-is-active)
-      (propertize " %m " 'face 'aero/modeline-major-mode-active)
-    (propertize " %m " 'face 'aero/modeline-major-mode-inactive)))
+  (propertize
+   (format "  %s  " (all-the-icons-icon-for-buffer))
+   'face `(:family ,(all-the-icons-fileicon-family) :height 1.2)
+   'display '(raise -0.16)))
 
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'."
@@ -256,6 +260,6 @@
                          (:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
                          (:eval (aero/modeline-segment-window-number))
-                         " "))))))))
+                         ))))))))
 
 (provide 'aero-modeline)
