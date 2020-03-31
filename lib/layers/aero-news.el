@@ -131,7 +131,6 @@
 (use-package hackernews
   ;; local
   :commands hackernews)
-
 
 (use-package pocket-reader :straight t
 	:commands pocket-reader
@@ -146,5 +145,8 @@
   :config
   (evil-set-initial-state 'pocket-reader-mode 'emacs)
   (setq pocket-reader-open-url-default-function 'eww))
+
+(use-package xkcd :straight t
+  :commands xkcd)
 
 (provide 'aero-news)
