@@ -38,6 +38,7 @@
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  mouse-wheel-scroll-amount '(1 ((shift) . 1)) ; scroll one line at a time
  pixel-resolution-fine-flag 1
+ frame-title-format `("Aero Emacs")
 
  ;; startup with scratch
  inhibit-startup-screen t
@@ -47,6 +48,7 @@
  initial-buffer-choice (lambda () (get-buffer "*scratch*"))
  initial-major-mode 'text-mode
  initial-scratch-message ";; Aero Emacs\n\n"
+
 
  ;; version control and saving
  use-package-verbose nil
