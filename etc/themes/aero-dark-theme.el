@@ -63,7 +63,7 @@
       (aero-brilliant-red       "#5f0000"))
   (custom-theme-set-faces
    'aero-dark
-   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150))))
+   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :family "Victor Mono" :height 150))))
    `(cursor ((t (:background ,aero-fg))))
    `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-grey5 :box nil))))
    `(mode-line-inactive ((t (:background ,aero-normal-black :foreground ,aero-grey3 :box nil))))
@@ -79,6 +79,13 @@
    `(link ((t (:foreground ,aero-normal-blue :underline t))))
    `(link-visited ((t (:foreground ,aero-normal-magenta :underline t))))
    `(shadow ((t (:foreground ,aero-grey2))))
+   `(trailing-whitespace ((t (:background ,aero-bright-red))))
+   `(escape-glyph ((t (:foreground ,aero-normal-blue))))
+   `(header-line ((t (:background ,aero-normal-black :foreground ,aero-grey4 :box nil :inherit nil))))
+   `(highlight ((t (:background ,aero-grey2 :foreground ,aero-fg))))
+   `(homoglyph ((t (:foreground ,aero-bright-yellow))))
+   `(match
+     ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
 
    ;; Built-in syntax
    `(font-lock-builtin-face ((t (:foreground ,aero-bright-blue :slant italic))))
@@ -96,14 +103,6 @@
    `(error ((t (:foreground ,aero-bright-red :bold t))))
    `(success ((t (:foreground ,aero-normal-green :bold t))))
    `(warning ((t (:foreground ,aero-bright-yellow :bold t))))
-
-   ;; Basic faces
-   `(trailing-whitespace ((t (:background ,aero-bright-red))))
-   `(escape-glyph ((t (:foreground ,aero-normal-blue))))
-   `(header-line ((t (:background ,aero-normal-black :foreground ,aero-grey4 :box nil :inherit nil))))
-   `(highlight ((t (:background ,aero-grey2 :foreground ,aero-fg))))
-   `(homoglyph ((t (:foreground ,aero-bright-yellow))))
-   `(match ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
 
    ;; Aero modeline
    `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-cyan))))
@@ -216,7 +215,7 @@
    `(popup-tip-face ((t (:underline nil :foreground ,aero-grey4 :background ,aero-grey1))))
 
    ;; counsel
-   `(counsel-M-x-key ((t (:foreground ,aero-bright-yellow ))))
+   `(counsel-M-x-key ((t (:foreground ,aero-bright-yellow))))
    `(counsel-action ((t (:foreground ,aero-normal-yellow :underline t))))
    `(counsel-bookmark-addressbook ((t (:foreground ,aero-bright-red))))
    `(counsel-bookmark-directory ((t (:foreground ,aero-normal-magenta))))
@@ -241,7 +240,7 @@
    `(counsel-grep-file ((t (:foreground ,aero-normal-magenta))))
    `(counsel-grep-finish ((t (:foreground ,aero-normal-blue))))
    `(counsel-grep-lineno ((t (:foreground ,aero-bright-yellow))))
-   `(counsel-grep-match ((t (:foreground ,aero-bright-yellow))))
+   `(counsel-grep-match ((t (:inherit match))))
    `(counsel-grep-running ((t (:foreground ,aero-bright-red))))
    `(counsel-header ((t (:foreground ,aero-bright-magenta))))
    `(counsel-helper ((t (:foreground ,aero-normal-green))))
@@ -250,7 +249,7 @@
    `(counsel-lisp-completion-info ((t (:foreground ,aero-bright-yellow))))
    `(counsel-lisp-show-completion ((t (:foreground ,aero-bright-red))))
    `(counsel-locate-finish ((t (:foreground ,aero-brilliant-white :background ,aero-normal-green))))
-   `(counsel-match ((t (:foreground ,aero-bright-yellow))))
+   `(counsel-match ((t (:inherit match))))
    `(counsel-moccur-buffer ((t (:foreground ,aero-normal-blue :underline t))))
    `(counsel-prefarg ((t (:foreground ,aero-normal-blue))))
    `(counsel-selection ((t (:foreground ,aero-brilliant-white :background ,aero-grey1))))
@@ -406,16 +405,22 @@
    `(show-paren-match ((t (:background ,aero-grey1 :foreground ,aero-normal-blue  :weight bold))))
    `(show-paren-mismatch ((t (:background ,aero-bright-red :foreground ,aero-grey1 :weight bold))))
 
+   ;; swiper
+   `(swiper-match-face-1 ((t (:inherit match))))
+   `(swiper-match-face-2 ((t (:inherit swiper-match-face-1))))
+   `(swiper-match-face-3 ((t (:inherit swiper-match-face-1))))
+   `(swiper-match-face-4 ((t (:inherit swiper-match-face-1))))
+
    ;; ivy
    `(ivy-current-match ((t (:foreground ,aero-bright-cyan :weight bold :underline t))))
    `(ivy-minibuffer-match-face-1 ((t (:foreground ,aero-bright-yellow))))
-   `(ivy-minibuffer-match-face-2 ((t (:foreground ,aero-bright-yellow))))
-   `(ivy-minibuffer-match-face-3 ((t (:foreground ,aero-bright-yellow))))
-   `(ivy-minibuffer-match-face-4 ((t (:foreground ,aero-bright-yellow))))
+   `(ivy-minibuffer-match-face-2 ((t (:foreground ,aero-bright-orange))))
+   `(ivy-minibuffer-match-face-3 ((t (:foreground ,aero-bright-red))))
+   `(ivy-minibuffer-match-face-4 ((t (:foreground ,aero-bright-magenta))))
 
    ;; ivy-posframe
    `(ivy-posframe ((t (:background ,aero-normal-black))))
-   `(ivy-posframe-border ((t (:background ,aero-normal-cyan :foreground ,aero-normal-cyan))))
+   `(ivy-posframe-border ((t (:box ,aero-normal-red))))
 
    ;; magit
    `(magit-bisect-bad ((t (:foreground ,aero-bright-red))))
