@@ -83,4 +83,37 @@
 
 (use-package fireplace :straight t
   :commands fireplace)
+
+(use-package all-the-icons :straight t)
+
+;; TODO absorb this into aero
+(use-package dashboard :straight t
+  :functions (dashboard-modify-heading-icons
+              dashboard-setup-startup-hook)
+  :defines (dashboard-banner-logo-title
+            dashboard-startup-banner
+            dashboard-center-content
+            dashboard-items
+            dashboard-set-heading-icons
+            dashboard-set-file-icons
+            dashboard-set-init-info)
+  :config
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))
+        dashboard-banner-logo-title "Aero Emacs"
+        dashboard-startup-banner (expand-file-name "logo/aero-logo.png" aero-etc-dir)
+        dashboard-center-content t
+        dashboard-page-separator "\n\n"
+        dashboard-items '((recents  . 5)
+                          ;; (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          (registers . 5))
+        dashboard-set-heading-icons t
+        dashboard-set-file-icons t
+        dashboard-set-init-info t)
+  (dashboard-modify-heading-icons '((recents . "file-text")))
+  (add-hook 'dashboard-mode-hook
+            (lambda () (display-fill-column-indicator-mode -1)))
+  (dashboard-setup-startup-hook))
+
 (provide 'aero-theme)
