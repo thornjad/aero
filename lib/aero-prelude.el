@@ -257,20 +257,6 @@ Local bindings (`counsel-mode-map'):
 
    "bb" 'ivy-switch-buffer)
 
-	;; (when (display-graphic-p)
-	;; 	(use-package ivy-posframe :straight t
-	;; 	:commands (ivy-posframe-mode)
-	;; 	:defines (ivy-posframe-display-functions-alist
-	;; 						ivy-posframe-height-alist
-	;; 						ivy-posframe-parameters
-	;; 						ivy-posframe-width)
-  ;;   :config
-  ;;   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center))
-  ;;         ivy-posframe-height-alist '((t . 20))
-  ;;         ivy-posframe-parameters '((internal-border-width . 10))
-  ;;         ivy-posframe-width 140)
-  ;;   (ivy-posframe-mode 1)))
-
   (use-package ivy-rich :straight t
     :config
     (ivy-rich-mode 1)))
