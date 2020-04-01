@@ -118,7 +118,6 @@
       ad-do-it)))
 
 ;; Trigger auto-fill after punctutation characters, not just whitespace.
-(auto-fill-mode 1)
 (mapc
  (lambda (c)
    (set-char-table-range auto-fill-chars c t))

@@ -225,6 +225,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (add-to-list 'auto-mode-alist '("\\README\\'" . text-mode))
 
+(add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
+
 (defun aero/strip-namespace-from-xref (arg)
   "Remove namespace qualifiers from xref call."
   ;; Split up by mode because qualifiers are different all over
