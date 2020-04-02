@@ -11,16 +11,15 @@
 ;; This file is not part of GNU Emacs
 
 (use-package counsel-spotify
-	:disabled t
-  :load-path "lib/packages/counsel-spotify"
+  :straight t
   :after counsel
-  :commands counsel-spotify-play
-  :config
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
+  :commands counsel-spotify-toggle-play-pause
+  :init
+  (aero-leader-def
     "as" '(:ignore t :which-key "spotify")
-    "asp" '(counsel-spotify-toggle-play-pause :which-key "play/pause")
+    "asp" '(counsel-spotify-toggle-play-pause :which-key "play/pause"))
+  :config
+  (aero-leader-def
     "asn" '(counsel-spotify-next :which-key "next")
     "asP" '(counsel-spotify-previous :which-key "previous")
     "ass" 'counsel-spotify-search-track
