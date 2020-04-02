@@ -45,7 +45,9 @@
  inhibit-splash-screen t
  initial-buffer-choice t
  inhibit-startup-echo-area-message t
- initial-buffer-choice (lambda () (get-buffer "*scratch*"))
+ initial-buffer-choice (lambda ()
+                         (unless (get-buffer "*dashboard*")
+                           (get-buffer "*scratch*")))
  initial-major-mode 'text-mode
  initial-scratch-message ";; Aero Emacs\n\n"
 
