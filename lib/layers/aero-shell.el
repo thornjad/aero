@@ -126,9 +126,9 @@
 ;;; term
 
 (use-package term
-  :commands (term)
-  :config
-
+  :commands (term
+             term-bash)
+  :init
   (add-hook
    'term-mode-hook
    (lambda ()
@@ -147,13 +147,12 @@
         (interactive)
         (funcall-interactively 'term ,x))))
 
-  (general-define-key
-   :states '(normal)
-   :prefix "SPC"
-   "Stt" 'term
-   "Stb" 'term-bash
-   "Stz" 'term-zsh
-   "Stc" 'term-cicada))
+  (aero-leader-def
+    "\"" 'term-bash
+    "Stt" 'term
+    "Stb" 'term-bash
+    "Stz" 'term-zsh
+    "Stc" 'term-cicada))
 
 
 ;;; shell scripting
