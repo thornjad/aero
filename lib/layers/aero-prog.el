@@ -197,8 +197,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    :prefix "SPC"
    "s^" '(sp-beginning-of-sexp :which-key "beginning of sexp")
    "s$" '(sp-end-of-sexp :which-key "end of sexp")
-   "sk" '(sp-up-sexp :which-key "up")
-   "sj" '(sp-down-sexp :which-key "down")
    "sh" '(sp-backward-sexp :which-key "back")
    "sl" '(sp-forward-sexp :which-key "forward")
    "sw" '(:ignore t :which-key "wrap")
@@ -206,7 +204,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sw{" 'sp-wrap-curly
    "sw[" 'sp-wrap-square
    "su" '(sp-unwrap-sexp :which-key "unwrap")
-   "sK" '(sp-kill-sexp :which-key "kill"))
+   "sk" '(sp-kill-sexp :which-key "kill"))
 
   (sp-local-pair 'web-mode "<?" "?>")
   (sp-local-pair 'web-mode "{" "}")
