@@ -128,8 +128,7 @@
             dashboard-set-file-icons
             dashboard-set-init-info)
   :config
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))
-        dashboard-banner-logo-title "Aero Emacs"
+  (setq dashboard-banner-logo-title "Aero Emacs"
         dashboard-startup-banner (expand-file-name "logo/aero-logo.png" aero-etc-dir)
         dashboard-center-content t
         dashboard-page-separator "\n\n"
