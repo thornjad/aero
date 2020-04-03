@@ -20,8 +20,6 @@
 ;;
 ;;; Code:
 
-(require 'all-the-icons)
-
 (defvar aero/modeline--current-window)
 (defvar flycheck-current-errors)
 (declare-function flycheck-count-errors "flycheck" (errors))
@@ -209,10 +207,7 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (propertize
-   (format "  %s  " (all-the-icons-icon-for-buffer))
-   'face `(:family ,(all-the-icons-fileicon-family) :height 1.2)
-   'display '(raise -0.16)))
+  (propertize "  %m  " 'face 'aero/modeline-major-mode-active))
 
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'."
