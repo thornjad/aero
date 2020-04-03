@@ -21,8 +21,6 @@
 ;;; Code:
 
 (defvar aero/modeline--current-window)
-(defvar flycheck-current-errors)
-(declare-function flycheck-count-errors "flycheck" (errors))
 
 ;;; Config
 
@@ -134,28 +132,6 @@
       (unless (minibuffer-window-active-p win)
         (setq aero/modeline--current-window win)))))
 
-;; Flycheck update function
-(defvar-local aero/modeline--flycheck-text nil)
-(defun aero/modeline--update-flycheck-segment (&optional status)
-  "Update `aero/modeline--flycheck-text' against the reported flycheck STATUS."
-  (setq aero/modeline--flycheck-text
-        (pcase status
-          ('finished (if flycheck-current-errors
-                         (let-alist (flycheck-count-errors flycheck-current-errors)
-                           (let ((sum (+ (or .error 0) (or .warning 0))))
-                             (propertize (concat (number-to-string sum)
-                                                 " ! ")
-                                         'face (if .error
-                                                   'aero/modeline-status-error
-                                                 'aero/modeline-status-warning))))
-                       (propertize "✓  "
-                                   'face 'aero/modeline-status-success)))
-          ('running (propertize "✓  "
-                                'face 'aero/modeline-status-info))
-          ('no-checker "   ")
-          ('errored (propertize "✘  " 'face 'aero/modeline-status-error))
-          ('interrupted (propertize "   " 'face 'aero/modeline-status-grayed-out)))))
-
 ;;; Segments
 
 (defun aero/modeline-segment-evil-state ()
@@ -196,10 +172,6 @@
              ":" (number-to-string (abs (- (point) (mark))))))
           "  "))
 
-(defun aero/modeline-segment-flycheck ()
-  "Displays color-coded flycheck information in the mode-line (if available)."
-  aero/modeline--flycheck-text)
-
 (defun aero/modeline-segment-process ()
   "Displays the current value of `mode-line-process' in the mode-line."
   (when mode-line-process
@@ -228,10 +200,6 @@
   :global t
   :lighter nil
   (progn
-    ;; Setup flycheck hooks
-    (add-hook 'flycheck-status-changed-functions #'aero/modeline--update-flycheck-segment)
-    (add-hook 'flycheck-mode-hook #'aero/modeline--update-flycheck-segment)
-
     ;; Setup window update hooks
     ;; (add-function :after 'window-configuration-change-hook #'aero/modeline--update-selected-window)
     ;; (add-function :after 'after-focus-change-function #'aero/modeline--update-selected-window)
@@ -251,8 +219,7 @@
 
                       ;; Right
                       (format-mode-line
-                       '((:eval (aero/modeline-segment-flycheck))
-                         (:eval (aero/modeline-segment-process))
+                       '((:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
                          (:eval (aero/modeline-segment-window-number))
                          ))))))))
