@@ -31,6 +31,10 @@
 (use-package memoize
   :straight (memoize :host gitlab :repo "thornjad/memoize"))
 
+(defun aero/applescript-escape (str)
+  "Escape STR to make it suitable for using is applescripts."
+  (replace-regexp-in-string "\"" "\\\\\"" str))
+
 (defmacro aero/defhook (name arglist hooks docstring &rest body)
   "Define a function called NAME and add it to a hook. ARGLIST is as in `defun'.
 HOOKS is a list of hooks to which to add the function, or just a single hook.
@@ -393,6 +397,67 @@ on. This may cause a jump if the file has changed significantly."
   "Converts the current buffer to DOS file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
+
+(defun aero/run-osascript (script-content)
+  "Run an SCRIPT-CONTENT as AppleScript/osascipt."
+  (interactive "sContent of AppleScript/osascript:")
+  (let ((file (make-temp-file "aero-temp-osa-" nil ".applescript")))
+    (with-temp-file file
+      (insert script-content)
+      (insert "\ndo shell script \"rm -rf \" & the quoted form of POSIX path of (path to me)"))
+    (aero/run-osascript-file file)))
+(defalias 'aero/run-applescript #'aero/run-osascript)
+
+(defun aero/run-osascript-file (file)
+  "Run an AppleScript/osascipt FILE."
+  (with-current-buffer (get-buffer-create "*OsaScript*")
+    (insert "Going to run file: " file))
+  (start-process "OsaScript" "*OsaScript*" "osascript" file))
+(defalias 'aero/run-applescript-file #'aero/run-osascript-file)
+
+(defun aero/osx-notify2 (title message)
+  "Create a notification with TITLE and MESSAGE."
+  (aero/run-osascript
+   (concat "display notification \""
+	         (aero/applescript-escape message)
+	         "\" with title  \""
+	         (aero/applescript-escape title)
+	         "\"")))
+
+(defun aero/osx-notify3 (title subtitle message)
+  "Create a notification with TITLE, SUBTITLE and MESSAGE."
+  (aero/run-osascript
+   (concat "display notification \""
+	         (aero/applescript-escape message)
+	         "\" with title  \""
+	         (aero/applescript-escape title)
+	         "\" subtitle \""
+	         (aero/applescript-escape subtitle)
+	         "\"")))
+
+(defun aero/osx-beep ()
+  "Play beep sound."
+  (aero/run-applescript "beep"))
+
+(defun aero/reveal-in-finder-as (file)
+  "Reveal the supplied file FILE in Finder.
+
+To call interactively, use [aero/open-in-finder]."
+  (let ((script (concat
+                 "set thePath to POSIX file \"" (shell-quote-argument file) "\"\n"
+                 "tell application \"Finder\"\n"
+                 " set frontmost to true\n"
+                 " reveal thePath \n"
+                 "end tell\n")))
+    (aero/run-osascript script)))
+
+(defun aero/open-in-finder ()
+  "Reveal the file associated with the current buffer in the OSX Finder.
+In a dired buffer, it will open the current file."
+  (interactive)
+  (aero/reveal-in-finder-as
+   (or (buffer-file-name)
+       (expand-file-name (or (dired-file-name-at-point) ".")))))
 
 (defun aero/sudo-edit (&optional arg)
   (interactive "P")
