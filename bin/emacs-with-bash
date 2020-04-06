@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source $HOME/.bashrc
+emacs &> /dev/null &
+exit;
