@@ -18,6 +18,7 @@
 
 (use-package sql :defer t
   :commands (sql-connect)
+  :mode "\\.(sqlite_)?sql"
 
   :init
   (general-define-key
