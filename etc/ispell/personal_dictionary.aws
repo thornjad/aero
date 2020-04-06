@@ -1,4 +1,4 @@
-personal_ws-1.1 en 62 
+personal_ws-1.1 en 63 
 jmthornton
 umounted
 aero
@@ -11,6 +11,7 @@ Elisp
 tcl
 tty
 config
+applescript
 utils
 deprovision
 proration
@@ -41,8 +42,8 @@ ajax
 sexp
 eshell
 backend
-YYYY
 Voici
+YYYY
 rsync
 css
 sudo
