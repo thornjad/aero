@@ -18,7 +18,7 @@
 
 (use-package sql :defer t
   :commands (sql-connect)
-  :mode "\\.(sqlite_)?sql"
+  :mode ("\\.\\(sqlite_\\)?sql\\'" . sql-mode)
 
   :init
   (general-define-key
