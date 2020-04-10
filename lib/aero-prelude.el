@@ -69,6 +69,9 @@
 		:states '(normal visual emacs)
 		:prefix "SPC"
 		:non-normal-prefix "C-SPC")
+	(general-create-definer aero-mode-leader-def
+		:states '(normal visual emacs)
+		:prefix ",")
 
   (general-define-key
    :states '(normal visual motion)
@@ -557,6 +560,13 @@ Local bindings (`counsel-mode-map'):
   ;; repeat on region
   "." (kbd ":norm . RET"))
 
+;; mode-specific overrides
+(general-define-key
+ :states '(normal insert motion)
+ :keymaps 'override
+ :prefix ","
+  "" nil)
+
 (general-define-key
  :states '(normal insert motion)
  :keymaps 'override
@@ -574,6 +584,8 @@ Local bindings (`counsel-mode-map'):
  ";" 'comment-or-uncomment-region
  "!" 'shell-command
  "=" 'quick-calc
+
+ ;; NOTE deprecated, use the top-level "," prefix instead
  "," '(:ignore t :wk "mode") ; reserved for mode-specific
 
  "U" 'universal-argument
