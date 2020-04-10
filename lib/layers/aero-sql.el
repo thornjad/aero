@@ -21,12 +21,21 @@
   :mode ("\\.\\(sqlite_\\)?sql\\'" . sql-mode)
 
   :init
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
+  (aero-leader-def
    "Sc" 'sql-connect)
 
   :config
+  (aero-mode-leader-def
+    :keymaps 'sql-mode-map
+    "b" 'sql-send-buffer
+    "B" 'aero/sql-send-buffer-and-focus
+    "r" 'sql-send-region
+    "R" 'aero/sql-send-region-and-focus
+    "p" 'sql-send-paragraph
+    "P" 'aero/sql-send-paragraph-and-focus
+    "s" 'sql-send-string
+    "S" 'aero/sql-send-string-and-focus)
+
 	;; for sql comint
 	(add-to-list 'same-window-buffer-names "*SQL: *")
   (add-hook 'sql-interactive-mode-hook #'evil-insert-state)
