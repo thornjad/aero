@@ -24,20 +24,17 @@
 	(setq tcl-application "tclsh")
   (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
 
-(use-package testbackend ; local
-  :defer t
-  :general
-  (:states 'normal
+(use-package testbackend
   :load-path "lib/packages/testbackend"
+  :init
+  (aero-mode-leader-def
    :keymaps 'tcl-mode-map
-   :prefix "SPC"
-   ",t" '(:ignore t :which-key "testbackend")
-   ",tr" 'testbackend/run-tests
-   ",tR" 'testbackend/run-tests-no-cache
-   ",tw" 'testbackend/run-tests-on-write
-   ",tS" 'testbackend/stop-run-tests-on-write
-   ",tt" 'testbackend/set-test-target
-   ",tT" 'testbackend/clear-test-target))
+   "t" '(:ignore t :which-key "testbackend")
+   "tt" '(testbackend/run-tests-dwim :wk "Run tests")
+   "tr" '(testbackend/run-tests :wk "Prompt for run")
+   "tR" '(testbackend/re-run-tests :wk "Re-run tests")
+   "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
+   "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
 
 (use-package rivet-mode ; local
   :mode "\\.rvt\\'")
