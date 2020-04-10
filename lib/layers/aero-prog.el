@@ -224,7 +224,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (add-to-list 'auto-mode-alist '("\\(README|readme\\)\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(applescript\\)\\'" . prog-mode))
 
-(add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
+(add-hook 'prog-mode-hook (lambda ()
+                            (setq comment-auto-fill-only-comments t)
+                            (auto-fill-mode 1)))
 
 (defun aero/strip-namespace-from-xref (arg)
   "Remove namespace qualifiers from xref call."
