@@ -28,6 +28,7 @@
   :defer t
   :general
   (:states 'normal
+  :load-path "lib/packages/testbackend"
    :keymaps 'tcl-mode-map
    :prefix "SPC"
    ",t" '(:ignore t :which-key "testbackend")
