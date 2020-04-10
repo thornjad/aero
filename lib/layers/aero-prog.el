@@ -222,6 +222,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 
 (add-to-list 'auto-mode-alist '("\\README\\'" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(applescript\\)\\'" . prog-mode))
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
