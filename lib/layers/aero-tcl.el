@@ -22,6 +22,7 @@
   :init
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
+  :config
   (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
 
 (use-package testbackend
