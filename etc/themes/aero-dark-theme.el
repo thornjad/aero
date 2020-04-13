@@ -63,7 +63,8 @@
       (aero-brilliant-red       "#5f0000"))
   (custom-theme-set-faces
    'aero-dark
-   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :family "Victor Mono" :height 150))))
+   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
+      :family "Victor Mono" :height 150))))
    `(cursor ((t (:background ,aero-fg))))
    `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-grey5 :box nil))))
    `(mode-line-inactive ((t (:background ,aero-normal-black :foreground ,aero-grey3 :box nil))))
