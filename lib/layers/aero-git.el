@@ -97,7 +97,7 @@ the process passing the value of that options as argument."
                    #'magit-maybe-start-credential-cache-daemon)))))))
 
 	:config
-  (add-hook 'with-editor-mode-hook 'evil-insert-state)
+  (add-hook 'with-editor-mode-hook #'evil-insert-state)
   (setq magit-completing-read-function 'ivy-completing-read
         magit-buffer-name-format "%x%M%v: %t%x"
         magit-diff-paint-whitespace-lines 'both

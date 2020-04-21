@@ -90,7 +90,7 @@
      (setq font-lock-function (lambda (_) nil))
      (add-hook
       'comint-preoutput-filter-functions
-      'xterm-color-filter nil t)))
+      #'xterm-color-filter nil t)))
 
   (add-hook
    'eshell-mode-hook

@@ -97,8 +97,8 @@
 (line-number-mode 1)
 (column-number-mode 1)
 (global-display-fill-column-indicator-mode 1)
-(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-(add-hook 'fundamental-mode-hook 'turn-on-visual-line-mode)
+(add-hook 'text-mode-hook #'turn-on-visual-line-mode)
+(add-hook 'fundamental-mode-hook #'turn-on-visual-line-mode)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (use-package formfeeder
