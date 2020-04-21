@@ -18,12 +18,9 @@
 ;;
 ;;; Code:
 
-(use-package python
-  :straight python-mode
-  :mode
-  (("\\.py\\'" . python-mode)
-   ("\\.pyx\\'" . python-mode)
-   ("\\.wsgi$" . python-mode)))
+(use-package python-mode :straight t
+  :mode "\\.py\\'"
+  :interpreter "python3")
 
 (use-package hy-mode :straight t
   :mode "\\.hy\\'")
