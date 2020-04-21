@@ -129,4 +129,7 @@ does not specify a special indentation."
 (use-package package-lint :straight t
   :commands (package-lint-current-buffer))
 
+(use-package el2md
+  :straight (:host gitlab :repo "thornjad/el2md"))
+
 (provide 'aero-lisp)
