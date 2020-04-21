@@ -71,15 +71,14 @@
                ('eshell/la . #'eshell/ls)))
     (eval `(defalias ,(car x) ,(cdr x)))))
 
-(use-package xterm-color
-  :disabled t
-  :load-path "lib/packages/xterm-color/"
+(use-package xterm-color :straight t
   :after eshell
   :commands (xterm-color-filter)
   :init
   (setq comint-output-filter-functions
         (remove 'ansi-color-process-output comint-output-filter-functions))
 
+  ;; for shell mode
   (add-hook
    'shell-mode-hook
    (lambda ()
@@ -92,18 +91,18 @@
       'comint-preoutput-filter-functions
       #'xterm-color-filter nil t)))
 
+  ;; for eshell
   (add-hook
    'eshell-mode-hook
    (lambda ()
-     (setq xterm-color-preserve-properties t)
-     (setenv "TERM" "xterm-256color")
-     (add-to-list
-      'eshell-preoutput-filter-functions
-      'xterm-color-filter)
-     (setq eshell-output-filter-functions
-           (remove
-            'eshell-handle-ansi-color
-            eshell-output-filter-functions))))
+     (setq xterm-color-preserve-properties t)))
+  (add-to-list
+   'eshell-preoutput-filter-functions
+   'xterm-color-filter)
+  (setq eshell-output-filter-functions
+        (remove
+         'eshell-handle-ansi-color
+         eshell-output-filter-functions))
 
   (setq-default compilation-environment '("TERM=xterm-256color"))
 
