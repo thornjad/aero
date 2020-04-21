@@ -17,11 +17,13 @@
 
   (let ((aero-layer-list
          '(aero-c
+           aero-docker
            aero-eww
            aero-git
            aero-haskell
            aero-heap
            aero-lisp
+           aero-lsp
            aero-markup
            aero-ml
            aero-news
