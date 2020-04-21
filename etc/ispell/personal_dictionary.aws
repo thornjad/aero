@@ -1,5 +1,6 @@
-personal_ws-1.1 en 68 
+personal_ws-1.1 en 75 
 jmthornton
+webkit
 umounted
 aero
 FlightAware
@@ -8,7 +9,6 @@ async
 thornjad
 json
 elisp
-Elisp
 namespace
 tcl
 tty
@@ -17,8 +17,10 @@ config
 utils
 deprovision
 proration
+gitlab
 Flyspell
 dev
+ACL
 dired
 flycheck
 ident
@@ -26,7 +28,7 @@ dicts
 el
 aws
 hacky
-TODO
+todo
 edu
 eww
 diskutil
@@ -49,7 +51,9 @@ YYYY
 Voici
 rsync
 css
+mc
 sudo
+md
 boolean
 rvt
 vraie
@@ -59,10 +63,13 @@ umount
 idents
 OSX
 callsign
+svg
 taskwarrior
 tclsh
 submodule
 typeof
+readme
+backquote
 nw
 env
 ESC
