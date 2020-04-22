@@ -13,6 +13,7 @@
 
 ;;; eshell
 
+
 (use-package eshell
   :commands eshell
   :config
@@ -60,6 +61,8 @@
     "Open magit-status in the current directory."
     (interactive)
     (magit-status default-directory))
+
+  (eshell/alias "g" "git")
 
   (dolist (x '(('e . (lambda (pattern)
                        (if (stringp pattern)
