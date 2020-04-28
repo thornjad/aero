@@ -1,4 +1,4 @@
-personal_ws-1.1 en 75 
+personal_ws-1.1 en 76 
 jmthornton
 webkit
 umounted
@@ -15,9 +15,9 @@ tty
 applescript
 config
 utils
+gitlab
 deprovision
 proration
-gitlab
 Flyspell
 dev
 ACL
@@ -45,10 +45,11 @@ elfeed
 proc
 ajax
 sexp
+instantiation
 eshell
 backend
-YYYY
 Voici
+YYYY
 rsync
 css
 mc
