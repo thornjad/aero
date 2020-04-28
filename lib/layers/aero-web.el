@@ -93,16 +93,14 @@
     :config
     (add-to-list 'company-backends 'company-restclient))
 
-  (general-define-key
-   :prefix "SPC"
-   :states '(normal visual)
+  (aero-mode-leader-def
    :keymaps 'restclient-mode-map
-    ", RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
-    ",c" '(restclient-http-send-current :wk "Run query at point and focus")
-    ",r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
-    ",n" 'restclient-jump-next
-    ",p" 'restclient-jump-prev
-    ",." 'restclient-mark-current
-    ",y" 'restclient-copy-curl-command))
+    "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
+    "c" '(restclient-http-send-current :wk "Run query at point and focus")
+    "r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
+    "n" 'restclient-jump-next
+    "p" 'restclient-jump-prev
+    "." 'restclient-mark-current
+    "y" 'restclient-copy-curl-command))
 
 (provide 'aero-web)
