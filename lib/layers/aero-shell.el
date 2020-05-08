@@ -62,6 +62,7 @@
     (interactive)
     (magit-status default-directory))
 
+  (declare-function eshell/alias "eshell")
   (eshell/alias "g" "git")
 
   (dolist (x '(('e . (lambda (pattern)
@@ -75,6 +76,7 @@
     (eval `(defalias ,(car x) ,(cdr x)))))
 
 (use-package xterm-color :straight t
+  :disabled t
   :after eshell
   :commands (xterm-color-filter)
   :init
@@ -150,7 +152,7 @@
         (funcall-interactively 'term ,x))))
 
   (aero-leader-def
-    "\"" 'term-bash
+    "M-'" 'term-bash
     "Stt" 'term
     "Stb" 'term-bash
     "Stz" 'term-zsh
