@@ -36,6 +36,9 @@
   :config
   (add-hook
    'rjsx-mode-hook
+   (lambda () (setq emmet-expand-jsx-className? t)))
+  (add-hook
+   'js-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package scss-mode :straight t
@@ -49,9 +52,12 @@
   :load-path "lib/packages/js2-mode/"
   :defer t)
 
+(use-package javascript-mode
+  :mode "\\.jsx?\\'")
+
 (use-package rjsx-mode
   :load-path "lib/packages/rjsx-mode/"
-  :mode "\\.jsx?\\'"
+  ;; :mode "\\.jsx?\\'"
 
   :config
   ;; because we want C-d to scroll up normally
@@ -60,11 +66,11 @@
   (evil-define-key 'normal rjsx-mode-map
     (kbd "C-d") 'evil-scroll-down))
 
-;; (use-package js :straight nil
-;;   :mode ("\\.jsx?\\'" . js-mode))
-
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
+
+(use-package npm :straight t
+  :mode "\\.jsx?\\'")
 
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
