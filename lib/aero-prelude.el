@@ -598,6 +598,16 @@ Local bindings (`counsel-mode-map'):
  "p" '(:ignore t :wk "project")
  "pr" '(xref-find-definitions :wk "find ref")
 
+ "P" '(:ignore t :wk "packages")
+ "Pp" 'straight-pull-package-and-deps
+ "PF" 'straight-fetch-all
+ "PP" 'straight-pull-all
+ "Pg" 'straight-get-recipe
+ "PC" 'straight-check-all
+ "Pr" 'straight-rebuild-package
+ "PR" 'straight-rebuild-all
+ "Px" 'straight-prune-build
+
  "u" 'undo-tree-visualize
 
  "S" '(:ignore t :wk "shell/sql")
