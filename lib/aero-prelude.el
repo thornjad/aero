@@ -518,7 +518,9 @@ Local bindings (`counsel-mode-map'):
  "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
  "fo" '(:ignore t :wk "open special files")
  "fot" '(aero/thornlog :wk "thornlog")
+ "foi" 'aero/open-local-init
  "foP" 'aero/open-emacs-problems
+ "fof" 'aero/open-in-finder
 
  "o" '(:ignore t :wk "org")
  "oa" 'org-agenda
