@@ -76,23 +76,24 @@
  indent-tabs-mode t
  tab-width 2                ; onglet affiché sous forme de 2
  c-basic-offset 2
- sh-basic-offset 2
  cperl-indent-level 2
- js2-basic-offset 2
+ css-indent-offset 2
+ evil-shift-width 2
  js-basic-offset 2
  js-indent-level 2
  js-switch-indent-offset 2
  js-syntactic-mode-name nil ; just use normal mode name
+ js2-basic-offset 2
+ python-indent-offset 4 ; the one weirdo
+ rust-indent-offset 2
  sgml-basic-offset 2
+ sh-basic-offset 2
  tcl-indent-level 2
  tcl-tab-always-indent t
- css-indent-offset 2
- rust-indent-offset 2
- evil-shift-width 2
- web-mode-markup-indent-offset 2
- web-mode-css-indent-offset 2
- web-mode-code-indent-offset 2
  web-mode-attr-indent-offset 2
+ web-mode-code-indent-offset 2
+ web-mode-css-indent-offset 2
+ web-mode-markup-indent-offset 2
  tab-stop-list (number-sequence 2 200 2)
  auto-window-vscroll nil)
 
