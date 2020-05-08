@@ -483,6 +483,10 @@ In a dired buffer, it will open the current file."
   "Open local init file for editing."
   (interactive)
   (find-file (concat user-emacs-directory "init.local.el")))
+(defun aero/open-emacs-problems ()
+  "Open Emacs PROBLEMS file from GitHub mirror."
+  (interactive)
+  (eww "https://github.com/emacs-mirror/emacs/blob/master/etc/PROBLEMS"))
 
 (defun aero/restclient-scratch ()
   "Open a restclient scratch buffer."
