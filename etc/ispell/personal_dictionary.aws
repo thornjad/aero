@@ -1,4 +1,4 @@
-personal_ws-1.1 en 76 
+personal_ws-1.1 en 78 
 jmthornton
 webkit
 umounted
@@ -21,6 +21,7 @@ proration
 Flyspell
 dev
 ACL
+falsy
 dired
 flycheck
 ident
@@ -44,12 +45,12 @@ NSR
 elfeed
 proc
 ajax
-sexp
 instantiation
+sexp
 eshell
 backend
-Voici
 YYYY
+Voici
 rsync
 css
 mc
@@ -57,6 +58,7 @@ sudo
 md
 boolean
 rvt
+href
 vraie
 eval
 signup
