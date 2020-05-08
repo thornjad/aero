@@ -30,8 +30,8 @@ bookmarks
 crown/
 elnode/
 elpa/
-eshell/history
-eshell/lastdir
+elpy/
+eshell/*
 etc/recentf
 etc/todo.org
 flycheck_*
