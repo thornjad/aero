@@ -69,9 +69,6 @@
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
-(use-package npm :straight t
-  :mode "\\.jsx?\\'")
-
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
@@ -100,7 +97,7 @@
     (add-to-list 'company-backends 'company-restclient))
 
   (aero-mode-leader-def
-   :keymaps 'restclient-mode-map
+    :keymaps 'restclient-mode-map
     "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
     "c" '(restclient-http-send-current :wk "Run query at point and focus")
     "r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
@@ -109,4 +106,118 @@
     "." 'restclient-mark-current
     "y" 'restclient-copy-curl-command))
 
+
+;;; aero/npm commands
+;; NPM commands based on npm-mode (https://github.com/mojochao/npm-mode)
+
+(require 'json)
+
+(defun aero/npm--project-file ()
+  "Return the path to project file or nil."
+  (let ((dir (locate-dominating-file default-directory "package.json")))
+    (unless dir
+      (aero/log-error "Aero/npm error: cannot find package.json"))
+    (expand-file-name "package.json" dir)))
+
+(defun aero/npm--get-project-property (prop)
+  "Get the given PROP from the current project file."
+  (let* ((project-file (aero/npm--project-file))
+         (json-object-type 'hash-table)
+         (json-contents
+          (with-temp-buffer
+            (insert-file-contents project-file)
+            (buffer-string)))
+         (json-hash (json-read-from-string json-contents))
+         (value (gethash prop json-hash))
+         (commands (list)))
+    (cond ((hash-table-p value)
+           (maphash
+            (lambda (key value)
+              (setq commands
+                    (append
+                     commands
+                     (list (list key (format "%s %s" "npm" key))))))
+            value)
+           commands)
+          (t value))))
+
+(defun aero/npm--exec (cmd &optional comint)
+  "Execute CMD in COMINT or new process."
+  (let ((compilation-buffer-name-function
+         (lambda (mode)
+           (format "*npm:%s - %s*"
+                   (aero/npm--get-project-property "name") cmd))))
+    (aero/log-info (concat "Running npm " cmd))
+    (compile (format "npm %s" cmd) comint)))
+
+(defun aero/npm-init ()
+  "Run npm init."
+  (interactive)
+  (aero/npm--exec "init"))
+
+(defun aero/npm-install ()
+  "Run npm install."
+  (interactive)
+  (aero/npm--exec "install"))
+
+(defun aero/npm-install-save (deps)
+  "Run npm install and save DEPS."
+  (interactive "sPackage to save as deps: ")
+  (aero/npm--exec (format "install %s --save" deps)))
+
+(defun aero/npm-install-save-dev (deps)
+  "Run npm install and save DEPS."
+  (interactive "sPackage to save as dev deps: ")
+  (aero/npm--exec (format "install %s --save-dev" deps)))
+
+(defun aero/npm-uninstall (deps)
+  "Run npm uninstall on DEPS."
+  (interactive
+   (list (completing-read "Uninstall deps: " (aero/npm--get-project-property "dependencies"))))
+  (aero/npm--exec (format "uninstall %s" deps)))
+
+(defun aero/npm-list ()
+  "List npm dependencies."
+  (interactive)
+  (aero/npm--exec "list --depth=0"))
+
+(defun aero/npm-run (script &optional comint)
+  "Run npm SCRIPT in COMINT."
+  (interactive
+   (list (completing-read "Run script: " (aero/npm--get-project-property "scripts"))
+         (consp current-prefix-arg)))
+  (aero/npm--exec (format "run %s" script) comint))
+
+(defun aero/npm-run-test (&optional comint)
+  "Run npm test in COMINT."
+  (interactive (list (consp current-prefix-arg)))
+  (aero/npm--exec "test" comint))
+
+(defun aero/npm-run-start (&optional comint)
+  "Run start in COMINT."
+  (interactive (list (consp current-prefix-arg)))
+  (aero/npm--exec "start" comint))
+
+(defun aero/npm-open-package-json ()
+  "Open project's package.json."
+  (interactive)
+  (find-file (aero/npm--project-file)))
+
+(aero-mode-leader-def
+  :keymaps 'js-mode-map
+  "n" '(:ignore t :wk "npm")
+  "nI" 'aero/npm-init
+  "ni" 'aero/npm-install
+  "nS" 'aero/npm-install-save
+  "nd" 'aero/npm-install-save-dev
+  "nu" 'aero/npm-uninstall
+  "nl" 'aero/npm-list
+  "nr" 'aero/npm-run
+  "nt" 'aero/npm-run-test
+  "ns" 'aero/npm-run-start
+  "np" 'aero/npm-open-package-json
+  "t" 'aero/npm-run-test
+  "s" 'aero/npm-run-start)
+
+
 (provide 'aero-web)
