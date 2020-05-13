@@ -376,8 +376,12 @@
    `(org-habit-overdue-face ((t (:background ,aero-bright-red))))
    `(org-habit-overdue-future-face ((t (:background ,aero-bright-red))))
 
+   ;; jupyter via ein
+   `(ein:cell-input-area ((t (:background ,aero-bg))))
+   `(ein:cell-input-prompt ((t (:foreground ,aero-normal-blue :slant italic :box ,aero-grey1))))
+
    ;; elfeed
-   `(elfeed-search-title-face ((t (:foreground ,aero-grey2  ))))
+   `(elfeed-search-title-face ((t (:foreground ,aero-grey2))))
    `(elfeed-search-unread-title-face ((t (:foreground ,aero-fg))))
    `(elfeed-search-date-face ((t (:inherit font-lock-builtin-face :underline t))))
    `(elfeed-search-feed-face ((t (:inherit font-lock-variable-name-face))))
