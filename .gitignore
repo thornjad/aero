@@ -38,6 +38,7 @@ flycheck_*
 nov-places
 projectile-bookmarks.eld
 projectile.cache
+request/
 straight/
 tmp.*
 tmp/
