@@ -214,15 +214,17 @@
                   (unless (string-empty-p completions)
                     (list start end (split-string completions ";")))))))))))
 
-  (add-hook 'inferior-python-mode-hook (lambda ()
-                                         (add-hook 'completion-at-point-functions
-                                                   'pdb-completion-at-point-function nil t))))
+  (add-hook
+   'inferior-python-mode-hook
+   (lambda ()
+     (add-hook 'completion-at-point-functions
+               'pdb-completion-at-point-function nil t))))
 
 (use-package hy-mode :straight t
   :mode "\\.hy\\'"
   :config
   (aero-mode-leader-def
-    :keymaps hy-mode-map
+    :keymaps 'hy-mode-map
     "h" 'run-hy
     "p" 'run-python))
 
