@@ -204,7 +204,7 @@
   (find-file (aero/npm--project-file)))
 
 (aero-mode-leader-def
-  :keymaps 'js-mode-map
+  :keymaps '(js-mode-map web-mode-map)
   "n" '(:ignore t :wk "npm")
   "nI" 'aero/npm-init
   "ni" 'aero/npm-install
