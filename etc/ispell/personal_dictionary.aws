@@ -1,4 +1,4 @@
-personal_ws-1.1 en 80 
+personal_ws-1.1 en 91 
 jmthornton
 webkit
 umounted
@@ -7,6 +7,7 @@ FlightAware
 dwim
 async
 thornjad
+noopener
 json
 elisp
 namespace
@@ -15,6 +16,7 @@ tty
 applescript
 config
 utils
+Javascript
 gitlab
 deprovision
 proration
@@ -46,6 +48,9 @@ https
 NSR
 elfeed
 proc
+JSX
+Verix
+merchantability
 ajax
 instantiation
 sexp
@@ -54,6 +59,7 @@ backend
 Voici
 YYYY
 rsync
+bitwise
 css
 mc
 sudo
@@ -61,14 +67,18 @@ md
 boolean
 rvt
 href
+enum
 vraie
 eval
 signup
 umount
 idents
+noreferrer
 OSX
 callsign
 svg
+RET
+println
 taskwarrior
 tclsh
 submodule
@@ -77,5 +87,6 @@ readme
 backquote
 nw
 env
+jupyter
 ESC
 Spotify
