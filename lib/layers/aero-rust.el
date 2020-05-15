@@ -58,6 +58,6 @@
   :hook (rust-mode . cargo-minor-mode))
 
 (use-package toml-mode :straight t
-  :mode "\\.toml\\'")
+  :mode "\\(\\.toml\\|Cargo\\.lock\\)\\'")
 
 (provide 'aero-rust)
