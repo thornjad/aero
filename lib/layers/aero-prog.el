@@ -221,7 +221,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     'aero/smart-closing-parenthesis))
 
 
-(add-to-list 'auto-mode-alist '("\\(README|readme\\)\\'" . text-mode))
+(add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(applescript\\)\\'" . prog-mode))
 
 (add-hook 'prog-mode-hook (lambda ()
