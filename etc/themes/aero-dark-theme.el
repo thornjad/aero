@@ -379,6 +379,7 @@
    ;; jupyter via ein
    `(ein:cell-input-area ((t (:background ,aero-bg))))
    `(ein:cell-input-prompt ((t (:foreground ,aero-normal-blue :slant italic :box ,aero-grey1))))
+   `(ein:cell-output-prompt ((t (:foreground ,aero-normal-cyan :slant italic :box ,aero-grey1))))
 
    ;; elfeed
    `(elfeed-search-title-face ((t (:foreground ,aero-grey2))))
