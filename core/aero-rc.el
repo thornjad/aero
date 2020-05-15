@@ -24,7 +24,7 @@
  ring-bell-function 'ignore ; supprime cette putain de cloche.
  sentence-end-double-space nil ; the world will not go to shit today
  default-fill-column 80 ; i am mortal, not arthur whitney
- fill-column 80 ; same, bro
+ fill-column 80
  help-window-select t ; focus help window when opened
  kill-ring-max 5000 ; truncate kill ring after 5000 entries
  mark-ring-max 5000 ; truncate mark ring after 5000 entries
