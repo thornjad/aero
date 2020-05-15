@@ -31,8 +31,10 @@
   (aero-mode-leader-def
    :keymaps 'tcl-mode-map
    "t" '(:ignore t :which-key "testbackend")
-   "tt" '(testbackend/run-tests-dwim :wk "Run tests")
-   "tr" '(testbackend/run-tests :wk "Prompt for run")
+   "tt" '(testbackend/run-tests-dwim-focus :wk "Run tests and focus")
+   "tT" '(testbackend/run-tests-dwim :wk "Run tests")
+   "tr" '(testbackend/run-tests-focus :wk "Prompt for run and focus")
+   "tR" '(testbackend/run-tests :wk "Prompt for run")
    "tR" '(testbackend/re-run-tests :wk "Re-run tests")
    "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
    "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
