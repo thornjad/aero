@@ -21,10 +21,10 @@
   (aero/ddg (format "!w %s" (or term ""))))
 
 (defun aero/wiki-news () (interactive)
-  (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
+       (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
 
 (defun aero/npr-news () (interactive)
-  (eww-browse-url "https://text.npr.org/"))
+       (eww-browse-url "https://text.npr.org/"))
 
 (use-package eww
   :commands (eww
@@ -35,15 +35,15 @@
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
-    "ws" '(eww-search-words :which-key "web search")
-    "wb" '(:ignore t :wk "browse")
-    "wbd" '(aero/ddg :wk "duckduckgo")
-    "wbw" '(aero/wiki :wk "wikipedia")
-    "wbn" '(:ignore t :wk "news sites")
-    "wbnw" '(aero/wiki-news :wk "wikipedia")
-    "wbnn" '(aero/npr-news :wk "npr")
-    "ww" 'eww
-    "wp" 'browse-url-at-point)
+   "ws" '(eww-search-words :which-key "web search")
+   "wb" '(:ignore t :wk "browse")
+   "wbd" '(aero/ddg :wk "duckduckgo")
+   "wbw" '(aero/wiki :wk "wikipedia")
+   "wbn" '(:ignore t :wk "news sites")
+   "wbnw" '(aero/wiki-news :wk "wikipedia")
+   "wbnn" '(aero/npr-news :wk "npr")
+   "ww" 'eww
+   "wp" 'browse-url-at-point)
 
 	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
@@ -51,23 +51,23 @@
 	(add-hook
    'eww-after-render-hook
    (lambda ()
-		"Rename eww mode buffer so the title of the page is displayed, making
+		 "Rename eww mode buffer so the title of the page is displayed, making
 		 fake-tabbed-browsing easier"
-		(let ((title (plist-get eww-data :title)))
-			(when (eq major-mode 'eww-mode)
-				(if title
-						(rename-buffer (concat "eww - " title) t)
-					(rename-buffer "eww" t))))))
+		 (let ((title (plist-get eww-data :title)))
+			 (when (eq major-mode 'eww-mode)
+				 (if title
+						 (rename-buffer (concat "eww - " title) t)
+					 (rename-buffer "eww" t))))))
 
   (defun aero/eww-open-in-new-buffer (url)
-  "Fetch URL in a new EWW buffer."
-  (interactive
-   (let* ((uris (eww-suggested-uris))
-      (prompt (concat "Enter URL or keywords"
-                      (if uris (format " (default %s)" (car uris)) "")
-                      ": ")))
-     (list (read-string prompt nil nil uris))))
-  (setq url (eww--dwim-expand-url url))
+    "Fetch URL in a new EWW buffer."
+    (interactive
+     (let* ((uris (eww-suggested-uris))
+            (prompt (concat "Enter URL or keywords"
+                            (if uris (format " (default %s)" (car uris)) "")
+                            ": ")))
+       (list (read-string prompt nil nil uris))))
+    (setq url (eww--dwim-expand-url url))
     (with-current-buffer
         (if (eq major-mode 'eww-mode) (clone-buffer)
           (generate-new-buffer "*eww*"))
