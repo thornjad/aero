@@ -473,6 +473,8 @@ Local bindings (`counsel-mode-map'):
   ;; repeat on region
   "." (kbd ":norm . RET"))
 
+(global-set-key [remap keyboard-quit] #'aero/keyboard-quit-context)
+
 ;; mode-specific overrides
 (general-define-key
  :states '(normal insert motion)
