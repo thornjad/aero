@@ -150,10 +150,13 @@
     (aero/log-info (concat "Running npm " cmd))
     (compile (format "npm %s" cmd) comint)))
 
-(defun aero/npm-init ()
+(defun aero/npm-init (&optional comint)
   "Run npm init."
   (interactive)
-  (aero/npm--exec "init"))
+  (aero/log-info "Initializing npm project...")
+  (let ((compilation-buffer-name-function
+         (lambda (mode) "" "npm init")))
+    (compile "npm init" comint)))
 
 (defun aero/npm-install ()
   "Run npm install."
