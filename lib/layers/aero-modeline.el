@@ -186,7 +186,7 @@
   (when (require 'winum nil 'noerror)
     (declare-function winum-get-number "winum")
     (propertize
-     (format " %d " (winum-get-number))
+     (format " %d  " (winum-get-number))
      'face 'aero/modeline-window-number)))
 
 ;;; Activation function
