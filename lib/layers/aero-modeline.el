@@ -179,7 +179,11 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (propertize "  %m  " 'face 'aero/modeline-major-mode-active))
+  (propertize
+   (format "  %s  " (format-mode-line mode-name))
+   'face (if (aero/modeline-is-active)
+             'aero/modeline-major-mode-active
+           'aero/modeline-major-mode-inactive)))
 
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'."
