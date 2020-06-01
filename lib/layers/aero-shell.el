@@ -62,9 +62,6 @@
     (interactive)
     (magit-status default-directory))
 
-  (declare-function eshell/alias "eshell")
-  (eshell/alias "g" "git")
-
   (dolist (x '(('e . (lambda (pattern)
                        (if (stringp pattern)
                            (find-file pattern)
@@ -72,7 +69,8 @@
                                (mapcar #'expand-file-name pattern)))))
 
                ('ee . #'find-file-other-window)
-               ('eshell/la . #'eshell/ls)))
+               ('eshell/la . #'eshell/ls)
+               ('eshell/g . #'eshell/git)))
     (eval `(defalias ,(car x) ,(cdr x)))))
 
 (use-package xterm-color :straight t
