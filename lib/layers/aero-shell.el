@@ -143,14 +143,14 @@
     (kbd "M-p") 'term-previous-input
     (kbd "M-n") 'term-next-input)
 
-  (dolist (x '("bash" "zsh" "cicada"))
+  (dolist (x '("bash" "zsh" "ion" "cicada"))
     (eval
      `(defun ,(intern (concat "term-" x)) ()
         (interactive)
         (funcall-interactively 'term ,x))))
 
   (aero-leader-def
-    "M-'" 'term-bash
+    "C-s" 'term-ion
     "Stt" 'term
     "Stb" 'term-bash
     "Stz" 'term-zsh
@@ -168,5 +168,11 @@
     (interactive)
     (save-excursion
       (mark-paragraph) (indent-region (region-beginning) (region-end)))))
+
+(use-package ion-mode
+  :straight (ion-mode
+             :host github :repo "iwahbe/ion-mode")
+  :mode (("\\.ion\\'" . ion-mode)
+         ("ion/initrc\\'" . ion-mode)))
 
 (provide 'aero-shell)
