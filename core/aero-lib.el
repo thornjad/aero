@@ -156,6 +156,10 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
      (advice-add ',place ',where #',name)
      ',name))
 
+(defmacro aero/local! (&rest body)
+  `(let ((default-directory user-emacs-directory))
+     ,@body))
+
 (defun aero/path-join (path &rest segments)
   "Join PATH with SEGMENTS using `expand-file-name'.
 First `expand-file-name' is called on the first member of SEGMENTS, with PATH as
