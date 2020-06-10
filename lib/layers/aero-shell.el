@@ -147,7 +147,7 @@
     (eval
      `(defun ,(intern (concat "term-" x)) ()
         (interactive)
-        (funcall-interactively 'term ,x))))
+        (funcall-interactively #'term ,x))))
 
   (aero-leader-def
     "C-s" 'term-ion
