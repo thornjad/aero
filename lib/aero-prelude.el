@@ -558,6 +558,9 @@ Local bindings (`counsel-mode-map'):
  "E" '(:ignore t :wk "emacs")
  "Et" 'counsel-load-theme
  "Ea" 'aero/apologize-to-emacs
+ "Ed" '(:ignore t :wk "debug")
+ "Ede" 'toggle-debug-on-error
+ "Edq" 'toggle-debug-on-quit
 
  "a" '(:ignore t :wk "applications")
  "ad" 'counsel-dired
