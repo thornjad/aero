@@ -389,7 +389,7 @@ Local bindings (`counsel-mode-map'):
   (setq reb-re-syntax 'string))
 
 (use-package tramp
-  :straight (tramp :repo "git://git.savannah.gnu.org/tramp.git")
+  :straight (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
   :defer t
   :functions tramp-cleanup-all-connection
   :config
