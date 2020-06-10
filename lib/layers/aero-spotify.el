@@ -1,29 +1,47 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019 Jade Michael Thornton
-;;
-;; This program is free software; you may redistribute it and/or modify it under
-;; the terms of the GNU General Public License version 3, as published by the
-;; Free Software Foundation. This program carries no warranty whatsoever,
-;; without even the implied warranty of merchantability or fitness for a
-;; particular purpose. See </license> for more details.
+;; Copyright (c) 2019-2020 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
+;;
+;; Permission to use, copy, modify, and/or distribute this software for any
+;; purpose with or without fee is hereby granted, provided that the above
+;; copyright notice and this permission notice appear in all copies.
+;;
+;; The software is provided "as is" and the author disclaims all warranties with
+;; regard to this software including all implied warranties of merchantability
+;; and fitness. In no event shall the author be liable for any special, direct,
+;; indirect, or consequential damages or any damages whatsoever resulting from
+;; loss of use, data or profits, whether in an action of contract, negligence or
+;; other tortious action, arising out of or in connection with the use or
+;; performance of this software.
 
-(use-package counsel-spotify
-  :straight t
+(require 'aero-lib)
+
+(use-package counsel-spotify :straight t :defer 5
   :after counsel
-  :commands counsel-spotify-toggle-play-pause
-  :init
+  :config
+  (dolist (x '("toggle-play-pause" "next" "previous"
+               "search-playlist" "search-track" "search-artist" "search-album"
+               "search-tracks-by-artist" "search-tracks-by-album"))
+    (eval
+     `(defun ,(intern (concat "aero/spotify-" x)) ()
+        (interactive)
+        (aero/local! (funcall-interactively #',(intern (concat "counsel-spotify-" x))))
+        (aero/log-info (concat "aero/spotify " ,x)))))
+
   (aero-leader-def
     "as" '(:ignore t :which-key "spotify")
-    "asp" '(counsel-spotify-toggle-play-pause :which-key "play/pause"))
-  :config
-  (aero-leader-def
-    "asn" '(counsel-spotify-next :which-key "next")
-    "asP" '(counsel-spotify-previous :which-key "previous")
-    "ass" 'counsel-spotify-search-track
-    "asa" 'counsel-spotify-search-artist
-    "asA" 'counsel-spotify-search-album))
+    "asp" '(aero/spotify-toggle-play-pause :which-key "play/pause")
+    "asn" '(aero/spotify-next :which-key "next")
+    "asP" '(aero/spotify-previous :which-key "previous")
+    "ass" '(:ignore t :wk "search")
+    "assp" '(aero/spotify-search-playlist :wk "playlist")
+    "asst" '(aero/spotify-search-track :wk "track")
+    "assT" '(:ignore t :wk "search tracks by")
+    "assTa" '(aero/spotify-search-track-by-artist :wk "search tracks by artist")
+    "assTb" '(aero/spotify-search-track-by-album :wk "search tracks by album")
+    "assa" '(aero/spotify-search-artist :wk "artist")
+    "assb" '(aero/spotify-search-album :wk "album")))
 
 (provide 'aero-spotify)
