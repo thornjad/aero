@@ -78,11 +78,14 @@
   :group 'starter-kit
   :prefix 'aero/)
 
-(defvar aero-local-init-file
-  (expand-file-name "init.local.el" user-emacs-directory)
+(defvar aero-local-init-file-c
+  (expand-file-name "init.local.elc" user-emacs-directory)
   "Local init file, loaded at the end of init.
 Useful for adding or overriding settings and functions for the local environment
 only. This file is not part of Aero proper, and is not shared.")
+(defvar aero-local-init-file
+  (expand-file-name "init.local.el" user-emacs-directory)
+  "Non-compiled version of `aero-local-init-file-c'")
 
 
 ;;; init functions
@@ -108,7 +111,8 @@ only. This file is not part of Aero proper, and is not shared.")
   (require 'aero-rc)
 
   ;; Load local init
-  (load aero-local-init-file 'noerror 'nomessage)
+  (unless (load aero-local-init-file-c 'noerror 'nomessage)
+    (load aero-local-init-file 'noerror 'nomessage))
 
   (global-font-lock-mode)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
