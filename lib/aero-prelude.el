@@ -525,6 +525,12 @@ Local bindings (`counsel-mode-map'):
 
 ;;; General crap
 
+(use-package powerthesaurus :straight t
+  :commands powerthesaurus-lookup-word-dwim
+  :init
+  (aero-leader-def
+    "tt" '(powerthesaurus-lookup-word-dwim :wk "thesaurus")))
+
 
 ;;; general bindings
 
