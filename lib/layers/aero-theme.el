@@ -39,8 +39,11 @@
   :config
   (setq tao-theme-use-boxes nil
         tao-theme-use-height nil))
+
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
+
+(setq x-underline-at-descent-line t)
 (require 'aero-modeline)
 (aero/modeline-mode 1)
 
