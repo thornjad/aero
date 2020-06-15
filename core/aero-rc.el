@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2020 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -32,7 +32,8 @@
  apropos-do-all t ; apropos is apropos
  global-display-line-numbers-mode nil ; fuck line numbers
  gnutls-min-prime-bits 4096 ; 256 est absurde
- confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate file
+ confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate
+                                 ; file
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
@@ -56,7 +57,8 @@
 
  ;; version control and saving
  use-package-verbose nil
- delete-old-versions -1 ; supprime les vieilles versions des fichiers sauvegardés
+ delete-old-versions -1 ; supprime les vieilles versions des fichiers
+                        ; sauvegardés
  backup-directory-alist `(("." . "~/.config/emacs/backups"))
  version-control t
  vc-follow-symlinks t
@@ -69,14 +71,15 @@
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
  require-final-newline t
  load-prefer-newer t
- read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
+ read-file-name-completion-ignore-case t ; ignorer la capitalisation des
+                                        ; fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
  org-agenda-files (file-expand-wildcards "~/doc/org/*.org")
 
  ;; indentation
  indent-tabs-mode t
- tab-width 2                ; onglet affiché sous forme de 2
+ tab-width 2
  c-basic-offset 2
  cperl-indent-level 2
  css-indent-offset 2
