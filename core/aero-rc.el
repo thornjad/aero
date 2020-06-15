@@ -38,7 +38,9 @@
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  mouse-wheel-scroll-amount '(1 ((shift) . 1)) ; scroll one line at a time
  pixel-resolution-fine-flag 1
- frame-title-format `("Aero Emacs")
+ frame-title-format "\n" ; effectively no title, anything added is pushed to
+                         ; invisible second line
+ ns-use-proxy-icon nil ; remove icon from frame title in ns
 
  ;; startup with scratch
  inhibit-startup-screen t
