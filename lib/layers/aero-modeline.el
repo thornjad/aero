@@ -20,6 +20,8 @@
 ;;
 ;;; Code:
 
+(require 'all-the-icons)
+
 (defvar aero/modeline--current-window)
 
 ;;; Config
@@ -139,7 +141,7 @@
   (when (require 'evil nil 'noerror)
     (declare-function evil-state-property "evil")
     (defvar evil-state)
-    (let* ((state (evil-state-property evil-state :tag t)))
+    (let ((state (evil-state-property evil-state :tag t)))
       (cond
        ((functionp state) (propertize (funcall state) 'face 'aero/modeline-evil-visual))
        ((string= state " <N> ") (propertize state 'face 'aero/modeline-evil-normal))
