@@ -702,10 +702,10 @@ Local bindings (`counsel-mode-map'):
  "w{" 'shrink-window
  "w}" 'enlarge-window
 
- "t" '(:ignore t :wk "text")
+ "t" '(:ignore t :wk "tabs/text")
  "tU" 'upcase-dwim
  "tD" 'downcase-dwim
- "tn" '(:ignore :wk "number")
+ "tn" '(:ignore t :wk "number")
  "tni" 'increment-number-at-point
  "tnd" 'decrement-number-at-point
  )
