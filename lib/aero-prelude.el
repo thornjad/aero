@@ -616,6 +616,7 @@ Local bindings (`counsel-mode-map'):
  "bm" 'switch-to-messages-buffer
  "br" '(aero/reopen-file-at-buffer :wk "reopen file")
  "bs" 'switch-to-scratch-buffer
+ "bS" 'switch-to-new-scratch-buffer
  "bd" 'kill-this-buffer
  "bx" 'kill-buffer-and-window
  "bw" '(whitespace-mode :wk "whitespace")
