@@ -92,38 +92,6 @@
 
 ;;; additional tweaks and packages
 
-;; (when (boundp 'global-prettify-symbols-mode)
-;;   (add-hook
-;;    'prog-mode-hook
-;;    (lambda ()
-;;      (setq prettify-symbols-alist
-;;            (append prettify-symbols-alist
-;;                    '(
-;;                      ;; add all greek
-;;                      ("lambda" . ?λ)
-
-;;                      ;; mathematics
-;;                      ("and" . ?∧)
-;;                      ("&&" . ?∧)
-;;                      ("or" . ?∨)
-;;                      ("||" . ?∨)
-
-;;                      ;; relational algebra
-;;                      ("in" . ?∈)
-;;                      ("not in" . ?∉)
-
-;;                      ;; arrows and similar
-;;                      ("<=" . ?≤)
-;;                      (">=" . ?≥)
-;;                      ("=>" . ?⇒)
-;;                      ("->" . ?→)
-;;                      ("!=" . ?≠)
-;;                      ("===" . ?≡)
-;;                      ("!==" . ?≢)
-;;                      ("<<" . ?≪)
-;;                      (">>" . ?≫))))))
-;;   (global-prettify-symbols-mode t))
-
 (when (window-system)
   (set-frame-font "Victor Mono"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
