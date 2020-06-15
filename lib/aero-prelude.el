@@ -516,7 +516,7 @@ Local bindings (`counsel-mode-map'):
   (general-define-key
    :states '(normal visual motion replace emacs)
    :keymaps 'override
-    (kbd "C-e") 'er/expand-region))
+   (kbd "C-e") 'er/expand-region))
 
 (use-package beacon :straight t
   :config
@@ -557,7 +557,7 @@ Local bindings (`counsel-mode-map'):
  :states '(normal insert motion)
  :keymaps 'override
  :prefix ","
-  "" nil)
+ "" nil)
 
 (general-define-key
  :states '(normal insert motion)
