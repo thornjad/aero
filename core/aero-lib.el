@@ -290,6 +290,10 @@ emacs with sigusr2"
 	(interactive)
 	(switch-to-buffer "*Scratch*"))
 
+(defun switch-to-new-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer (generate-new-buffer "*Scratch*")))
+
 ;; from spacemacs
 (defun aero/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
