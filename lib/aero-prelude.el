@@ -121,7 +121,7 @@
 
   (evil-mode 1))
 
-(use-package evil-matchit :straight t
+(use-package evil-matchit :straight t :defer 1
   :after evil
   :defines global-evil-matchit-mode
   :config
