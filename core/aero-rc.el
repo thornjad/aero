@@ -37,8 +37,25 @@
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
- mouse-wheel-scroll-amount '(1 ((shift) . 1)) ; scroll one line at a time
+
+ ;; Scrolling
+ ;; Emacs spends too much effort recentering the screen if you scroll the
+ ;; cursor more than N lines past window edges (where N is the settings of
+ ;; `scroll-conservatively'). This is especially slow in larger files
+ ;; during large-scale scrolling commands. If kept over 100, the window is
+ ;; never automatically recentered.
+ scroll-conservatively 101
+ scroll-margin 0
+ scroll-preserve-screen-position t
+ mouse-wheel-scroll-amount '(3 ((shift) . 1))
  pixel-resolution-fine-flag 1
+ hscroll-margin 5
+ hscroll-step 1
+ ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
+ ;; for tall lines.
+ auto-window-vscroll nil
+ mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
+
  frame-title-format "\n" ; effectively no title, anything added is pushed to
                          ; invisible second line
  ns-use-proxy-icon nil ; remove icon from frame title in ns
@@ -99,8 +116,7 @@
  web-mode-code-indent-offset 2
  web-mode-css-indent-offset 2
  web-mode-markup-indent-offset 2
- tab-stop-list (number-sequence 2 200 2)
- auto-window-vscroll nil)
+ tab-stop-list (number-sequence 2 200 2))
 
 ;; ensure lang is set properly
 (setenv "LANG" "en_US.UTF-8")
