@@ -22,8 +22,6 @@
 
 (require 'all-the-icons)
 
-(defvar aero/modeline--current-window)
-
 ;;; Config
 
 (defgroup aero/modeline nil
@@ -96,13 +94,8 @@
   :group 'aero/modeline)
 
 (defface aero/modeline-major-mode-active
-  '((t (:bold t)))
-  "Face used for major mode in an active buffer."
-  :group 'aero/modeline)
-
-(defface aero/modeline-major-mode-inactive
-  '((t (:inherit (font-lock-doc-face))))
-  "Face used for major mode in an inactive buffer."
+  '((t (:inherit mode-line-buffer-id)))
+  "Face used for major mode."
   :group 'aero/modeline)
 
 ;;; Helper functions
@@ -117,22 +110,6 @@
       " " 'display
       `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
      right)))
-
-;; Define a helper function to determine whether or not the current window is active.
-(defsubst aero/modeline-is-active ()
-  "Return \"t\" if the current window is active, \"nil\" if it is not."
-  (eq (selected-window) aero/modeline--current-window))
-
-;;; Update functions
-
-;; Window update function
-(defvar-local aero/modeline--current-window (frame-selected-window))
-(defun aero/modeline--update-selected-window (&rest _)
-  "Update the `aero/modeline--current-window' variable."
-  (when (frame-selected-window)
-    (let ((win (frame-selected-window)))
-      (unless (minibuffer-window-active-p win)
-        (setq aero/modeline--current-window win)))))
 
 ;;; Segments
 
@@ -156,8 +133,8 @@
    (if (and
         (buffer-modified-p)
         (not (string-match-p "\\*.*\\*" (buffer-name))))
-       " ✧ "
-     "  ")
+       " * "
+     "   ")
    'face 'aero/modeline-modified))
 
 (defun aero/modeline-segment-buffer-name-and-size ()
@@ -183,16 +160,14 @@
   "Displays the current major mode in the mode-line."
   (propertize
    (format "  %s  " (format-mode-line mode-name))
-   'face (if (aero/modeline-is-active)
-             'aero/modeline-major-mode-active
-           'aero/modeline-major-mode-inactive)))
+   'face 'aero/modeline-major-mode))
 
 (defun aero/modeline-segment-window-number ()
   "Displays the current window number as provided by `winum'."
   (when (require 'winum nil 'noerror)
     (declare-function winum-get-number "winum")
     (propertize
-     (format " %d  " (winum-get-number))
+     (format " %d " (winum-get-number))
      'face 'aero/modeline-window-number)))
 
 ;;; Activation function
