@@ -43,10 +43,11 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-(setq x-underline-at-descent-line t)
+(setq x-underline-at-descent-line t
+      line-spacing 0.1)
 
 ;; TODO do we really want this??
-(use-package centaur-tabs :straight t :disabled
+(use-package centaur-tabs :straight t :disabled t
   :demand
   :config
   (centaur-tabs-mode t)
@@ -92,8 +93,6 @@
 
 ;;; additional tweaks and packages
 
-(when (window-system)
-  (set-frame-font "Victor Mono"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
