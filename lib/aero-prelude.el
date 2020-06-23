@@ -274,11 +274,9 @@ Local bindings (`counsel-mode-map'):
   :after general
   :commands swiper
   :init
-  (general-define-key
-   :states '(normal)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "/" '(counsel-grep-or-swiper :wk "search")))
+  (aero-leader-def
+    "/" '(counsel-grep-or-swiper :wk "search")
+    "?" '(swiper-thing-at-point :wk "search thing at point")))
 
 (use-package flx :straight t)
 
