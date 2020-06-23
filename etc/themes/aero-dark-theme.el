@@ -20,37 +20,43 @@
 ;;
 ;;; Code:
 
+(defgroup aero/dark-theme nil
+  "Supergroup for theme options"
+  :group 'faces)
+
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#1b1b1b")
-      (aero-fg             "#ebdbb2")
+      (aero-bg             "#292617")
+      (aero-fg             "#ece9e0")
 
-      (aero-grey0          "#3f3f3f")
-      (aero-grey1          "#525252")
+      (aero-grey           "#201d0e")
+      (aero-grey0          "#373426")
+      (aero-grey1          "#4E4B3D")
       (aero-grey2          "#6b6b6b")
       (aero-grey3          "#979797")
-      (aero-grey4          "#d5c4a1")
-      (aero-grey5          "#dfdfdf")
+      (aero-grey4          "#b0ada2")
+      (aero-grey5          "#d5d2c8")
 
       (aero-normal-black    "#282828")
       (aero-normal-white    "#dfdfaf")
       (aero-normal-red      "#d7875f")
       (aero-normal-orange   "#875f00")
-      (aero-normal-yellow   "#fabd2f")
-      (aero-normal-green    "#98971a")
+      (aero-normal-yellow   "#eead0e")
+      (aero-normal-green    "#a3be8c")
       (aero-normal-blue     "#87afaf")
+      (aero-normal-teal     "#8EBCBB")
       (aero-normal-cyan     "#8ec07c")
       (aero-normal-magenta  "#d3869b")
 
-      (aero-bright-black    "#928374")
+      ;; (aero-bright-black    "#928374")
       ;; (aero-bright-white    "#ffffd7")
       (aero-bright-red      "#dd8844")
-      (aero-bright-orange   "#ba7e63")
+      (aero-bright-orange   "#d2876d")
       (aero-bright-yellow   "#d7af00")
       (aero-bright-green    "#b8bb26")
       (aero-bright-blue     "#83a598")
       (aero-bright-cyan     "#8ec07c")
-      (aero-bright-magenta  "#d3869b")
+      (aero-bright-magenta  "#5d4d7a")
 
       ;; (aero-intense-green  "#5f875f")
 
@@ -63,16 +69,15 @@
       (aero-brilliant-red       "#5f0000"))
   (custom-theme-set-faces
    'aero-dark
-   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
-      :family "Victor Mono" :height 150))))
+   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150 :weight light))))
    `(cursor ((t (:background ,aero-fg))))
-   `(mode-line ((t (:background ,aero-grey0 :foreground ,aero-grey5 :box nil))))
-   `(mode-line-inactive ((t (:background ,aero-normal-black :foreground ,aero-grey3 :box nil))))
+   `(mode-line ((t (:background ,aero-grey :foreground ,aero-grey5 :box (:line-width 4 :color ,aero-grey)))))
+   `(mode-line-inactive ((t (:background ,aero-bg :foreground ,aero-grey3 :box (:line-width 4 :color ,aero-bg)))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
    `(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :slant italic))))
    `(hl-line ((t (:background ,aero-grey0))))
-   `(region ((t (:background ,aero-grey1))))
+   `(region ((t (:background ,aero-grey1 :background ,aero-grey5))))
    `(secondary-selection ((t (:background ,aero-grey0))))
    `(minibuffer-prompt ((t (:background ,aero-bg :foreground ,aero-normal-green :bold t))))
    `(vertical-border ((t (:foreground ,aero-grey1))))
@@ -89,31 +94,40 @@
      ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
 
    ;; Built-in syntax
-   `(font-lock-builtin-face ((t (:foreground ,aero-bright-blue :slant italic))))
-   `(font-lock-constant-face ((t (:foreground ,aero-normal-magenta :slant italic))))
-   `(font-lock-comment-face ((,class (:foreground ,aero-grey3 :slant italic))))
-   `(font-lock-function-name-face ((t (:foreground ,aero-bright-orange))))
-   `(font-lock-keyword-face ((t (:foreground ,aero-bright-yellow))))
-   `(font-lock-string-face ((t (:foreground ,aero-bright-green))))
-   `(font-lock-variable-name-face ((t (:foreground ,aero-normal-blue))))
-   `(font-lock-type-face ((t (:foreground ,aero-bright-blue))))
-   `(font-lock-warning-face ((t (:foreground ,aero-bright-red :bold t))))
+   `(font-lock-builtin-face ((t (:foreground ,aero-grey5 :slant italic))))
+   `(font-lock-constant-face ((t (:foreground ,aero-grey5 :weight bold))))
+   `(font-lock-comment-face ((,class (:foreground ,aero-grey4 :slant italic))))
+   `(font-lock-function-name-face ((t (:foreground ,aero-normal-teal))))
+   `(font-lock-keyword-face ((t (:foreground ,aero-normal-green))))
+   `(font-lock-string-face ((t (:foreground ,aero-bright-green :slant italic))))
+   `(font-lock-variable-name-face ((t (:foreground ,aero-bright-blue))))
+   `(font-lock-type-face ((t (:foreground ,aero-grey5 :slant italic))))
+   `(font-lock-warning-face ((t (:foreground ,aero-normal-yellow :bold t))))
    `(font-lock-doc-face ((t (:foreground ,aero-grey3 :bold t))))
 
    ;; special
-   `(error ((t (:foreground ,aero-bright-red :bold t))))
-   `(success ((t (:foreground ,aero-normal-green :bold t))))
-   `(warning ((t (:foreground ,aero-bright-yellow :bold t))))
+   `(error ((t (:foreground ,aero-bright-red :weight bold :background ,aero-grey0))))
+   `(success ((t (:foreground ,aero-normal-green :weight bold))))
+   `(warning ((t (:foreground ,aero-bright-yellow :weight bold))))
 
    ;; Aero modeline
-   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-cyan))))
-   `(aero/modeline-evil-insert ((t (:foreground ,aero-bg :background ,aero-normal-magenta))))
-   `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-normal-green))))
-   `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange))))
-   `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red))))
-   `(aero/modeline-window-number ((t (:foreground ,aero-fg :background ,aero-grey2))))
-   `(aero/modeline-major-mode-active ((t (:foreground ,aero-grey5 :bold t :background ,aero-grey1))))
-   `(aero/modeline-major-mode-inactive ((t (:foreground ,aero-grey3 :bold t :background ,aero-grey1))))
+   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-grey4 :box (:line-width 4 :color ,aero-grey4)))))
+   `(aero/modeline-evil-insert ((t (:foreground ,aero-bg :background ,aero-normal-blue :box (:line-width 4 :color ,aero-normal-blue)))))
+   `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-normal-green :box (:line-width 4 :color ,aero-normal-green)))))
+   `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange :box (:line-width 4 :color ,aero-bright-orange)))))
+   `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red :box (:line-width 4 :color ,aero-bright-red)))))
+   `(aero/modeline-modified ((t (:foreground ,aero-bright-red :background nil :weight bold))))
+   `(aero/modeline-window-number ((t (:foreground ,aero-fg :background ,aero-grey2 :box (:line-width 4 :color ,aero-grey2)))))
+   `(aero/modeline-major-mode ((t (:inherit mode-line-buffer-id))))
+
+   ;; centaur tabs
+   `(centaur-tabs-default ((t (:background ,aero-grey0 :foreground ,aero-grey4))))
+   `(centaur-tabs-selected ((t (:inherit mode-line :background ,aero-bg))))
+   `(centaur-tabs-unselected ((t (:inherit mode-line-inactive))))
+   `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected))))
+   `(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected))))
+   `(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground ,aero-bright-red))))
+   `(centaur-tabs-modified-marker-unselected ((t (:inherit centaur-tabs-unselected :foreground ,aero-bright-red))))
 
    ;; Customize faces
    `(widget-field ((t (:background ,aero-grey1))))
@@ -261,7 +275,7 @@
 
    ;; avy
    `(avy-lead-face
-     ((t (:foreground ,aero-bright-black :background ,aero-normal-cyan :slant normal))))
+     ((t (:foreground ,aero-normal-black :background ,aero-normal-cyan :slant normal))))
    `(avy-lead-face-0
      ((t (:foreground ,aero-normal-black :background ,aero-bright-blue :slant normal))))
    `(avy-lead-face-1
