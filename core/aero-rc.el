@@ -56,8 +56,8 @@
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
 
- frame-title-format "\n" ; effectively no title, anything added is pushed to
-                         ; invisible second line
+ ;; The newline pushes everything else to a non-rendered second line
+ frame-title-format "Aero Emacs\n"
  ns-use-proxy-icon nil ; remove icon from frame title in ns
 
  ;; startup with scratch
