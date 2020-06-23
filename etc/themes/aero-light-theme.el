@@ -22,7 +22,7 @@
 
 (deftheme aero-light)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#f9f5d7")
+      (aero-bg             "#fbf8ef")
       (aero-fg             "#1b1b1b")
 
       (aero-grey0          "#fbf1c7")
@@ -31,12 +31,21 @@
       (aero-grey3          "#bdae93")
       (aero-grey4          "#a89984")
       (aero-grey5          "#7c6f64")
+      (aero-base0          "#fafafa")
+      (aero-base1          "#f5f5f5")
+      (aero-base2          "#eeeeee")
+      (aero-base3          "#e0e0e0")
+      (aero-base4          "#bdbdbd")
+      (aero-base5          "#9e9e9e")
+      (aero-base6          "#757575")
+      (aero-base7          "#616161")
+      (aero-base8          "424242")
 
       (aero-normal-black    "#282828")
       (aero-normal-white    "#dfdfaf")
       (aero-normal-red      "#ff6655")
       (aero-normal-orange   "#ff8700")
-      (aero-normal-yellow   "#ECBE7B")
+      (aero-normal-yellow   "#eead0e")
       (aero-normal-green    "#98971a")
       (aero-normal-blue     "#458588")
       (aero-normal-cyan     "#5699AF")
@@ -61,7 +70,7 @@
    'aero-light
    `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
       :family "Victor Mono" :height 150))))
-   `(cursor ((t (:background ,aero-bg :foreground ,aero-fg))))
+   `(cursor ((t (:background ,aero-fg :foreground ,aero-bg))))
    `(mode-line ((t (:background ,aero-grey2 :foreground ,aero-grey5 :box nil))))
    `(mode-line-inactive ((t (:background ,aero-grey1 :foreground ,aero-grey4 :box nil))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
@@ -80,9 +89,9 @@
    `(escape-glyph ((t (:foreground ,aero-bright-blue))))
    `(header-line ((t (:background ,aero-bright-black :foreground ,aero-grey4 :box nil :inherit nil))))
    `(highlight ((t (:background ,aero-grey2 :foreground ,aero-fg))))
+   `(lazy-highlight ((t (:background ,aero-normal-blue :foreground ,aero-base8 :distant-foreground ,aero-grey2 :weight bold))))
    `(homoglyph ((t (:foreground ,aero-normal-yellow))))
-   `(match
-     ((t (:foreground ,aero-bright-black :background ,aero-bright-blue))))
+   `(match ((t (:foreground ,aero-normal-green :background ,aero-base0))))
 
    ;; Built-in syntax
    `(font-lock-builtin-face ((t (:foreground ,aero-normal-blue :slant italic))))
@@ -105,12 +114,10 @@
    `(trailing-whitespace ((t (:background ,aero-bright-red))))
    `(escape-glyph ((t (:foreground ,aero-normal-blue))))
    `(header-line ((t (:background ,aero-normal-black :foreground ,aero-grey4 :box nil :inherit nil))))
-   `(highlight ((t (:background ,aero-bright-blue :foreground ,aero-fg))))
    `(homoglyph ((t (:foreground ,aero-bright-yellow))))
-   `(match ((t (:foreground ,aero-bright-blue :background ,aero-normal-blue))))
 
    ;; Aero modeline
-   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-cyan))))
+   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-yellow))))
    `(aero/modeline-evil-insert ((t (:foreground ,aero-bg :background ,aero-normal-magenta))))
    `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-normal-green))))
    `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange))))
@@ -250,7 +257,7 @@
    `(counsel-lisp-completion-info ((t (:foreground ,aero-bright-yellow))))
    `(counsel-lisp-show-completion ((t (:foreground ,aero-bright-red))))
    `(counsel-locate-finish ((t (:foreground ,aero-brilliant-white :background ,aero-normal-green))))
-   `(counsel-match ((t (:foreground ,aero-bright-yellow))))
+   `(counsel-match ((t (:inherit match))))
    `(counsel-moccur-buffer ((t (:foreground ,aero-normal-blue :underline t))))
    `(counsel-prefarg ((t (:foreground ,aero-normal-blue))))
    `(counsel-selection ((t (:foreground ,aero-brilliant-white :background ,aero-grey1))))
