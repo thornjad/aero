@@ -1,4 +1,5 @@
-personal_ws-1.1 en 140 
+personal_ws-1.1 en 156 
+tcllib
 webpack
 utils
 fontconfig
@@ -30,7 +31,9 @@ CLI
 el
 dev
 elisp
+BSc
 HiDPI
+tooltip
 Brotli
 IMDb
 callsign
@@ -39,7 +42,9 @@ HH
 aws
 ncurses
 sexp
+rollout
 enum
+dir
 dicts
 href
 tclsh
@@ -55,8 +60,11 @@ jupyter
 cron
 JSX
 mc
+JS
 md
+CTE
 namespace
+CTEs
 Javascript
 symlink
 backquote
@@ -65,6 +73,7 @@ elfeed
 Wayland
 viewport
 Nvidia
+allowlist
 termios
 css
 destructuring
@@ -72,11 +81,13 @@ rvt
 minibuffer
 aero
 https
+vhost
 noopener
 formfeeds
 nw
 dwim
 svg
+subheader
 px
 webkit
 env
@@ -88,6 +99,7 @@ init
 UI
 SSHFS
 taskwarrior
+PCI
 localhost
 async
 jmthornton
@@ -107,8 +119,10 @@ proc
 npm
 FlighAware
 Voici
+hardcode
 falsy
 flycheck
+callsigns
 dired
 vraie
 eval
@@ -120,7 +134,9 @@ umounted
 Gzip
 NSR
 hacky
+struct
 proration
+NVM
 println
 unicode
 backend
