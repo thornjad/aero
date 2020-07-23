@@ -17,19 +17,36 @@
 ;; performance of this software.
 
 (use-package lsp-mode :straight t
-  :disabled t
   :defer t
   :after general
-  :commands (lsp lsp-deferred)
-  :defines (lsp-session-file
-            lsp-enable-snippet
-            lsp-resolve-final-function
-            lsp-restart
-            lsp-language-id-configuration)
+  :commands (lsp-install-server lsp lsp-deferred)
+
   :init
   (setq lsp-session-file (expand-file-name "lsp-session" aero-etc-dir)
+        lsp-server-install-dir (expand-file-name "lsp/" aero-etc-dir)
+        lsp-intelephense-storage-path (expand-file-name "lsp-intelephense/" aero-cache-dir)
         lsp-auto-guess-root t
         lsp-keep-workspace-alive nil)
+
+  ;; Disable LSP's superfluous, expensive and/or debatably unnecessary features.
+  ;; Some servers implement these poorly. Better to just rely on Emacs' native
+  ;; mechanisms and make these opt-in.
+  (setq lsp-enable-folding nil
+        ;; HACK Fix https://github.com/hlissner/doom-emacs/issues/2911, until it
+        ;; is resolved upstream. Links come in asynchronously from the server,
+        ;; but lsp makes no effort to "select" the original buffer before laying
+        ;; them down, so they could be rendered in the wrong buffer (like the
+        ;; minibuffer).
+        lsp-enable-links nil
+        ;; Potentially slow
+        lsp-enable-file-watchers nil
+        lsp-enable-text-document-color nil
+        lsp-enable-semantic-highlighting nil
+        ;; Don't modify our code without our permission
+        lsp-enable-indentation nil
+        lsp-enable-on-type-formatting nil
+        ;; capf is the preferred completion mechanism for lsp-mode
+        lsp-prefer-capf t)
 
 ;;   (defun aero--advice-lsp-mode-silence (format &rest args)
 ;;     "Silence needless diagnostic messages from `lsp-mode'. This is a
