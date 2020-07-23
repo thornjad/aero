@@ -181,12 +181,6 @@
   :global t
   :lighter nil
   (progn
-    ;; Setup window update hooks
-    ;; (add-function :after 'window-configuration-change-hook #'aero/modeline--update-selected-window)
-    ;; (add-function :after 'after-focus-change-function #'aero/modeline--update-selected-window)
-    (advice-add #'handle-switch-frame :after #'aero/modeline--update-selected-window)
-    (advice-add #'select-window :after #'aero/modeline--update-selected-window)
-
     ;; Set the new mode-line-format
     (setq-default mode-line-format
                   '((:eval
