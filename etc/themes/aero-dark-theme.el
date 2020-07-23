@@ -26,7 +26,7 @@
 
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#292617")
+      (aero-bg             "#292929")
       (aero-fg             "#ece9e0")
 
       (aero-grey           "#201d0e")
@@ -41,7 +41,7 @@
       (aero-normal-white    "#dfdfaf")
       (aero-normal-red      "#d7875f")
       (aero-normal-orange   "#875f00")
-      (aero-normal-yellow   "#eead0e")
+      (aero-normal-yellow   "#efabd2f")
       (aero-normal-green    "#a3be8c")
       (aero-normal-blue     "#87afaf")
       (aero-normal-teal     "#8EBCBB")
