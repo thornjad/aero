@@ -52,12 +52,12 @@
   :load-path "lib/packages/js2-mode/"
   :defer t)
 
-(use-package javascript-mode
-  :mode "\\.jsx?\\'")
+;; (use-package javascript-mode
+;;   :mode "\\.jsx?\\'")
 
 (use-package rjsx-mode
   :load-path "lib/packages/rjsx-mode/"
-  ;; :mode "\\.jsx?\\'"
+  :mode "\\.jsx?\\'"
 
   :config
   ;; because we want C-d to scroll up normally
