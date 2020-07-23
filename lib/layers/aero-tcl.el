@@ -23,7 +23,8 @@
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
   :config
-  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
+  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands))
+	(add-hook 'tcl-mode-hook (lambda () (setq-local indent-tabs-mode t))))
 
 (use-package testbackend
   :load-path "lib/packages/testbackend"
