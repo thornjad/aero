@@ -709,6 +709,7 @@ Local bindings (`counsel-mode-map'):
  "t" '(:ignore t :wk "tabs/text")
  "tU" 'upcase-dwim
  "tD" 'downcase-dwim
+ "ts" 'sort-lines
  "tn" '(:ignore t :wk "number")
  "tni" 'increment-number-at-point
  "tnd" 'decrement-number-at-point
