@@ -95,7 +95,7 @@
  org-agenda-files (file-expand-wildcards "~/doc/org/*.org")
 
  ;; indentation
- indent-tabs-mode t
+ indent-tabs-mode nil
  tab-width 2
  c-basic-offset 2
  cperl-indent-level 2
