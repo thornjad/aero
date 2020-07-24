@@ -469,8 +469,7 @@ Local bindings (`counsel-mode-map'):
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
         tramp-persistency-file-name "~/.config/emacs/data/tramp"
         tramp-default-method "rsync"
-        ;; my dev server is bsd, which tramp seems to forget
-        shell-file-name "/usr/local/bin/bash")
+        tramp-terminal-type "tramp")
 
   ;; push projectile in the right direction
   (defadvice projectile-project-root (around ignore-remote first activate)
