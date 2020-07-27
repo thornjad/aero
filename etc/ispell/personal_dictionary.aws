@@ -1,4 +1,4 @@
-personal_ws-1.1 en 156 
+personal_ws-1.1 en 157 
 tcllib
 webpack
 utils
@@ -51,6 +51,7 @@ tclsh
 edu
 touchpad
 Changelog
+homebrew
 LLC
 SPC
 appstream
