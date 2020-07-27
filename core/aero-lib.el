@@ -606,6 +606,13 @@ If called with prefix argument, or with nothing under point, prompt for tag."
     (right-char)
     (insert "λ")))
 
+(defmacro aero/insert-text-at-point (text)
+  `(progn
+     (save-excursion
+       (unless (eobp) (right-char))
+       (insert ,text))
+     (forward-sexp 1)))
+
 (defun alter-number-at-point (offset)
   (save-excursion
     (skip-chars-backward "0-9")
