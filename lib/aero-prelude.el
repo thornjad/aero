@@ -586,6 +586,7 @@ Local bindings (`counsel-mode-map'):
 
  "f" '(:ignore t :wk "files")
  "fw" '(save-buffer :wk "write buffer")
+ "fW" '(aero/async-write-buffer :wk "async write buffer (experimental)")
  "fC" '(:ignore t :wk "convert")
  "fCd" '(aero/unix2dos :wk "unix2dos")
  "fCu" '(aero/dos2unix :wk "dos2unix")

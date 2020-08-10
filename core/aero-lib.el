@@ -30,6 +30,8 @@
 ;; Load in external libs
 (use-package memoize
   :straight (memoize :host gitlab :repo "thornjad/memoize"))
+(use-package async :straight t
+  :commands (async-save))
 
 (defun aero/keyboard-quit-context ()
   "Quit current context.
@@ -491,6 +493,19 @@ To call interactively, use [aero/open-in-finder]."
                  " reveal thePath \n"
                  "end tell\n")))
     (aero/run-osascript script)))
+
+(defun aero/async-write-buffer ()
+  "Asynchronously write the current buffer to disk.
+
+Really just an async wrapper around `save-buffer'"
+  (interactive)
+  (let* ((buf buffer-file-name)
+         (fun (lambda ()
+                (message (or buf "wtf"))
+                (funcall #'basic-save-buffer))))
+
+    (async-start fun
+     )))
 
 (defun aero/open-in-finder ()
   "Reveal the file associated with the current buffer in the OSX Finder.
