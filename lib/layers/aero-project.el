@@ -24,7 +24,6 @@
 				projectile-enable-caching t
 				projectile-git-submodule-command nil
 				projectile-mode-line nil)
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
   (projectile-mode 1))
 
 (use-package counsel-projectile :straight t
