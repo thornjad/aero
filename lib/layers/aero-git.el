@@ -144,7 +144,7 @@ board_ticket_branch_name."
           (insert (format "\n%s-%s" board ticket))))))
 
   ;; Auto-add ticket number when opening commit message
-  (add-hook 'git-commit-setup-hook #'aero/insert-jira-ticket)
+  ;; (add-hook 'git-commit-setup-hook #'aero/insert-jira-ticket)
 
   (general-define-key
    :states 'normal
