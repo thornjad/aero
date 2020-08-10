@@ -108,7 +108,7 @@
      " "
      (propertize
       " " 'display
-      `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
+      `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 1)))))
      right)))
 
 ;;; Segments
