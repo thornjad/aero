@@ -197,8 +197,7 @@
     "C-c" '(ein:notebook-kernel-interrupt-command-km :wk "kernel interrupt")
     "n" '(ein:worksheet-goto-next-input-km :wk "next input")
     "p" '(ein:worksheet-goto-previous-input-km :wk "previous input")
-    "w" '(ein:markdown-follow-thing-at-point :wk "follow thing at point")
-    ))
+    "w" '(ein:markdown-follow-thing-at-point :wk "follow thing at point")))
 
 (use-package hy-mode :straight t
   :mode "\\.hy\\'"
@@ -208,10 +207,9 @@
     "h" 'run-hy
     "p" 'run-python))
 
-(use-package elpy :straight t
-  :hook ((python-mode
-          ein-mode)
-         . elpy-mode)
+(use-package elpy
+  :straight (:host github :url "jorgenschaefer/elpy")
+  :hook ((python-mode ein-mode) . elpy-mode)
   :config
   (elpy-enable)
 
