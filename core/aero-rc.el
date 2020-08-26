@@ -33,7 +33,7 @@
  global-display-line-numbers-mode nil ; fuck line numbers
  gnutls-min-prime-bits 4096 ; 256 est absurde
  confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate
-                                 ; file
+                                        ; file
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
@@ -75,7 +75,7 @@
  ;; version control and saving
  use-package-verbose nil
  delete-old-versions -1 ; supprime les vieilles versions des fichiers
-                        ; sauvegardés
+                                        ; sauvegardés
  backup-directory-alist `(("." . "~/.config/emacs/backups"))
  version-control t
  vc-follow-symlinks t
@@ -88,8 +88,7 @@
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
  require-final-newline t
  load-prefer-newer t
- read-file-name-completion-ignore-case t ; ignorer la capitalisation des
-                                        ; fichiers
+ read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
  org-agenda-files (file-expand-wildcards "~/doc/org/*.org")
