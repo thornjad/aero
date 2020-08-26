@@ -26,12 +26,11 @@
 
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#181818")
-      (aero-fg             "#ece9e0")
+      (aero-bg             "#1e1e1e")
+      (aero-fg             "#ede6d3")
 
-      (aero-grey           "#201d0e")
       (aero-grey0          "#373426")
-      (aero-grey1          "#4E4B3D")
+      (aero-grey1          "#4e4b3d")
       (aero-grey2          "#6b6b6b")
       (aero-grey3          "#979797")
       (aero-grey4          "#b0ada2")
@@ -42,11 +41,12 @@
       (aero-normal-red      "#d7875f")
       (aero-normal-orange   "#875f00")
       (aero-normal-yellow   "#efabd2f")
-      (aero-normal-green    "#a3be8c")
+      (aero-normal-green    "#819a2c")
       (aero-normal-blue     "#87afaf")
-      (aero-normal-teal     "#8EBCBB")
+      (aero-normal-teal     "#8ebcbb")
       (aero-normal-cyan     "#8ec07c")
       (aero-normal-magenta  "#d3869b")
+      ;; (aero-normal-mint     "#a3be8c")
 
       ;; (aero-bright-black    "#928374")
       ;; (aero-bright-white    "#ffffd7")
@@ -71,7 +71,7 @@
    'aero-dark
    `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150 :weight light))))
    `(cursor ((t (:background ,aero-fg))))
-   `(mode-line ((t (:background ,aero-grey :foreground ,aero-grey5 :box (:line-width 4 :color ,aero-grey)))))
+   `(mode-line ((t (:background ,aero-normal-black :foreground ,aero-grey5 :box (:line-width 4 :color ,aero-normal-black)))))
    `(mode-line-inactive ((t (:background ,aero-bg :foreground ,aero-grey3 :box (:line-width 4 :color ,aero-bg)))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
@@ -106,7 +106,7 @@
    `(font-lock-doc-face ((t (:foreground ,aero-grey3 :bold t))))
 
    ;; special
-   `(error ((t (:foreground ,aero-bright-red :weight bold :background ,aero-grey0))))
+   `(error ((t (:foreground ,aero-bright-red :weight bold))))
    `(success ((t (:foreground ,aero-normal-green :weight bold))))
    `(warning ((t (:foreground ,aero-bright-yellow :weight bold))))
 
