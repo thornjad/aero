@@ -19,7 +19,7 @@
 ;; performance of this software.
 
 (use-package docker :straight t
-  :commands docker
+  :commands (docker)
   :bind ("C-c d" . docker)
   :init
   (use-package docker-image     :commands docker-images)
@@ -29,14 +29,14 @@
   (use-package docker-machine   :commands docker-machines)
   (use-package docker-compose   :commands docker-compose))
 
-(use-package docker-compose-mode
+(use-package docker-compose-mode :straight t
   :mode "docker-compose.*\.yml\\'")
 
-(use-package docker-tramp
+(use-package docker-tramp :straight t
   :after tramp
   :defer 5)
 
-(use-package dockerfile-mode
+(use-package dockerfile-mode :straight t
   :mode "Dockerfile[a-zA-Z.-]*\\'")
 
 (provide 'aero-docker)
