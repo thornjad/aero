@@ -40,13 +40,13 @@
       (aero-normal-white    "#dfdfaf")
       (aero-normal-red      "#d7875f")
       (aero-normal-orange   "#875f00")
-      (aero-normal-yellow   "#efabd2f")
+      (aero-normal-yellow   "#fabd2f")
       (aero-normal-green    "#819a2c")
       (aero-normal-blue     "#87afaf")
       (aero-normal-teal     "#8ebcbb")
       (aero-normal-cyan     "#8ec07c")
       (aero-normal-magenta  "#d3869b")
-      ;; (aero-normal-mint     "#a3be8c")
+      (aero-normal-mint     "#a3be8c")
 
       ;; (aero-bright-black    "#928374")
       ;; (aero-bright-white    "#ffffd7")
@@ -90,8 +90,7 @@
    `(header-line ((t (:background ,aero-normal-black :foreground ,aero-grey4 :box nil :inherit nil))))
    `(highlight ((t (:background ,aero-grey2 :foreground ,aero-fg))))
    `(homoglyph ((t (:foreground ,aero-bright-yellow))))
-   `(match
-     ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
+   `(match ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
 
    ;; Built-in syntax
    `(font-lock-builtin-face ((t (:foreground ,aero-grey5 :slant italic))))
@@ -224,7 +223,7 @@
    `(rjsx-attr ((t (:inherit js2-object-property :slant italic))))
 
    ;; popup
-   `(popup-face ((t (:underline nil :foreground ,aero-normal-yellow :background ,aero-grey0))))
+   `(popup-face ((t (:underline nil :foreground ,aero-normal-mint :background ,aero-grey0))))
    `(popup-menu-mouse-face ((t (:underline nil :foreground ,aero-fg :background ,aero-normal-green))))
    `(popup-menu-selection-face ((t (:underline nil :foreground ,aero-fg :background ,aero-normal-green))))
    `(popup-tip-face ((t (:underline nil :foreground ,aero-grey4 :background ,aero-grey1))))
