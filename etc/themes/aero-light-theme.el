@@ -25,8 +25,8 @@
       (aero-bg             "#fdf6e3")
       (aero-fg             "#556b72")
 
-      (aero-base0          "#fffbf0")
-      (aero-base1          "#fcf8ed")
+      (aero-base0          "#f7f1de")
+      (aero-base1          "#f4ebd7")
       (aero-base2          "#fcf7e8")
       (aero-base3          "#96a7a9")
       (aero-base4          "#788484")
@@ -41,9 +41,9 @@
       (aero-normal-red      "#dc322f")
       (aero-normal-orange   "#cb4b16")
       (aero-normal-yellow   "#b58900")
-      (aero-normal-green    "#758900")
+      (aero-normal-green    "#859900")
       (aero-normal-teal     "#35a69c")
-      (aero-normal-blue     "#458588")
+      (aero-normal-blue     "#2aa198")
       (aero-normal-cyan     "#2aa198")
       (aero-normal-magenta  "#d33682")
 
@@ -70,9 +70,9 @@
    'aero-light
    `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
       :family "Victor Mono" :height 150))))
-   `(cursor ((t (:background ,aero-fg))))
-   `(mode-line ((t (:background ,aero-base0 :foreground ,aero-base4 :box nil))))
-   `(mode-line-inactive ((t (:background ,aero-base1 :foreground ,aero-base3 :box nil))))
+   `(cursor ((t (:background ,aero-bright-blue))))
+   `(mode-line ((t (:background ,aero-base1 :foreground ,aero-base4 :box nil))))
+   `(mode-line-inactive ((t (:background ,aero-base0 :foreground ,aero-base3 :box nil))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
    `(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :slant italic))))
@@ -95,11 +95,11 @@
 
    ;; Built-in syntax
    `(font-lock-builtin-face ((t (:foreground ,aero-bright-blue :slant italic))))
-   `(font-lock-constant-face ((t (:foreground ,aero-normal-magenta :slant italic))))
+   `(font-lock-constant-face ((t (:foreground ,aero-normal-magenta :weight bold))))
    `(font-lock-comment-face ((,class (:foreground ,aero-normal-teal :slant italic))))
    `(font-lock-function-name-face ((t (:foreground ,aero-bright-orange))))
-   `(font-lock-keyword-face ((t (:foreground ,aero-bright-yellow))))
-   `(font-lock-string-face ((t (:foreground ,aero-normal-green))))
+   `(font-lock-keyword-face ((t (:foreground ,aero-normal-green))))
+   `(FONT-lock-string-face ((t (:foreground ,aero-normal-teal :slant italic))))
    `(font-lock-variable-name-face ((t (:foreground ,aero-normal-blue))))
    `(font-lock-type-face ((t (:foreground ,aero-bright-blue))))
    `(font-lock-warning-face ((t (:foreground ,aero-bright-red :bold t))))
@@ -188,9 +188,9 @@
    ;; smerge
    `(smerge-upper ((t (:background nil))))
    `(smerge-lower ((t (:background nil))))
-   `(smerge-refined-added ((t (:background ,aero-brilliant-green))))
-   `(smerge-refined-changed ((t (:background ,aero-normal-orange))))
-   `(smerge-refined-removed ((t (:background ,aero-brilliant-red))))
+   `(smerge-refined-added ((t (:box ,aero-brilliant-green))))
+   `(smerge-refined-changed ((t (:box ,aero-normal-orange))))
+   `(smerge-refined-removed ((t (:box ,aero-brilliant-red))))
    `(smerge-base ((t (:background nil))))
    `(smerge-markers
      ((t (:inherit font-lock-comment-face :weight bold :background ,aero-base0))))
