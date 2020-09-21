@@ -238,9 +238,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;;; whitespace and indentation
 
-(use-package ws-butler
-	:straight t
-	:commands (ws-butler-global-mode)
+(use-package ws-butler :straight t
 	:init (ws-butler-global-mode)
 	:config
 	(setq ws-butler-global-exempt-modes
