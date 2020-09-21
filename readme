@@ -52,7 +52,7 @@ INSTALLATION
   mirrors to choose from:
 
   GitLab (best)     https://gitlab.com/thornjad/aero.git
-  Framagit (better) https://framagit.org/thornjad/aero.git
+  Framagit (good)   https://framagit.org/thornjad/aero.git
   GitHub (ok)       https://github.com/thornjad/aero.git
 
   Then, install and compile required submodules with =make=
