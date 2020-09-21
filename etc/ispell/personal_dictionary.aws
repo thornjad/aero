@@ -1,18 +1,21 @@
-personal_ws-1.1 en 165 
+personal_ws-1.1 en 171 
 ACL
 Aireon
 Alacritty
 BSc
+Bing
 Brotli
 CLI
 CORS
 CTE
 CTEs
 Changelog
+Donal
 ESC
 FlighAware
 FlightAware
 Flyspell
+Framagit
 GTK
 Gzip
 HH
@@ -33,6 +36,7 @@ OpenType
 PCI
 Prebuilt
 RET
+ResNet
 SPC
 SSHFS
 Spotify
@@ -57,6 +61,7 @@ backend
 backquote
 bitwise
 boolean
+booleans
 borked
 callsign
 callsigns
@@ -121,6 +126,7 @@ noreferrer
 npm
 nw
 pixelation
+pre
 println
 proc
 proration
