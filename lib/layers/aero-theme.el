@@ -43,8 +43,8 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-(setq x-underline-at-descent-line t
-      line-spacing 0.1)
+(setq-default x-underline-at-descent-line t
+              line-spacing 0.1)
 
 ;; TODO do we really want this??
 (use-package centaur-tabs :straight t :disabled t
