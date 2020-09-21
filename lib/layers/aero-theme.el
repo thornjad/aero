@@ -35,6 +35,9 @@
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
+(use-package spacemacs-theme :straight t :defer 10)
+(use-package spaceline :straight t)
+
 (use-package tao-theme :straight t :defer 10
   :config
   (setq tao-theme-use-boxes nil
