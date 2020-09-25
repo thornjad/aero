@@ -54,11 +54,14 @@
 
 ;;; the general is here
 
-(use-package which-key ;; local
+(use-package which-key :straight t
   :defines which-key-mode
   :config
   (which-key-mode)
-  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
+  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL"))
+  (aero-leader-def
+    "hw" '(:ignore t :wk "which-key")
+    "hwm" '(which-key-show-major-mode :wk "major mode map")))
 
 (use-package general :straight t
   :init
