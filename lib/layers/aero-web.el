@@ -220,7 +220,8 @@
   "ns" 'aero/npm-run-start
   "np" 'aero/npm-open-package-json
   "t" 'aero/npm-run-test
-  "s" 'aero/npm-run-start)
+  "s" 'aero/npm-run-start
+  "f" 'css-cycle-color-format)
 
 
 (provide 'aero-web)
