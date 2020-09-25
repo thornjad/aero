@@ -63,7 +63,6 @@
  ;; startup with scratch
  inhibit-startup-screen t
  inhibit-splash-screen t
- initial-buffer-choice t
  inhibit-startup-echo-area-message t
  initial-buffer-choice (lambda ()
                          (unless (get-buffer "*dashboard*")
