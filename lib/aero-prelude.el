@@ -290,6 +290,14 @@ Local bindings (`counsel-mode-map'):
    "jc" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
+(use-package dumb-jump :straight t
+  :init
+  (setq dumb-jump-prefer-searcher 'rg)
+  (general-define-key
+   :states '(normal visual)
+   :prefix "SPC"
+    "jj" '(dumb-jump-go :wk "go")))
+
 
 ;;; system
 
