@@ -34,9 +34,6 @@
 [submodule "lib/packages/scss-mode"]
 	path = lib/packages/scss-mode
 	url = git@github.com:antonj/scss-mode.git
-[submodule "lib/packages/emacs-which-key"]
-	path = lib/packages/emacs-which-key
-	url = git@github.com:justbur/emacs-which-key.git
 [submodule "lib/packages/evil"]
 	path = lib/packages/evil
 	url = git@github.com:emacs-evil/evil.git
