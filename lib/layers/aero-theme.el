@@ -94,7 +94,7 @@
 (aero/modeline-mode 1)
 
 
-;;; additional tweaks and packages
+;;; get ligatures to actually work
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
@@ -123,6 +123,9 @@
   (dolist (char-regexp alist)
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
+
+
+;;; additional tweaks and packages
 
 (show-paren-mode 1)
 (line-number-mode 1)
