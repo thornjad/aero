@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019 Jade Michael Thornton
+;; Copyright (c) 2019-2020 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -15,10 +15,6 @@
 ;; This is simply a heap of miscellaneous, low-config packages.
 ;;
 ;; Code:
-
-(use-package whitespace-cleanup-mode
-	:straight t
-	:config (global-whitespace-cleanup-mode))
 
 (use-package esup :straight t
   :commands esup)
