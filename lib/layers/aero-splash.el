@@ -40,10 +40,10 @@
          (recover-session (and auto-save-list-file-prefix
                                (file-directory-p (file-name-directory
                                                   auto-save-list-file-prefix))))
-         (height         (- (window-body-height nil) 7))
+         (height         (- (window-body-height nil) 1))
          (width          (window-body-width nil))
          (padding-center (- (/ height 2) 1))
-         (padding-bottom (- height padding-center 3)))
+         (padding-bottom (- height padding-center 6)))
 
     (with-current-buffer splash-buffer
       (read-only-mode -1) (erase-buffer)
@@ -82,15 +82,10 @@
                             'help-echo "Recover previous session"
                             'face 'warning
                             'follow-link t)
-        (center-line) (insert "\n") (insert "\n"))
+        (center-line) (insert "\n\n"))
 
 
       (insert (aero-splash--init-info))
-      ;; (insert (propertize
-      ;;          "GNU Emacs comes with ABSOLUTELY NO WARRANTY" 'face 'shadow))
-      (center-line) (insert "\n")
-      ;; (insert (propertize
-      ;;          "Copyright (C) 2020 Free Software Foundation, Inc." 'face 'shadow))
       (center-line) (insert "\n")
 
       (goto-char 0)
