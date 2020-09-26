@@ -122,8 +122,7 @@
 (when (and (not (member "-no-splash"  command-line-args))
            (not (member "--file"      command-line-args))
            (not (member "--insert"    command-line-args))
-           (not (member "--find-file" command-line-args))
-           (not inhibit-startup-screen))
+           (not (member "--find-file" command-line-args)))
   (progn
     (add-hook 'window-setup-hook #'aero-splash-mode)
     (setq inhibit-startup-screen t
