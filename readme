@@ -13,10 +13,6 @@
   the several web languages. Other languages like C and ML have some light
   configuration as well.
 
-  Emacs changes the way you think about programming, as does Lisp itself. The
-  sheer power of advanced usage makes IDEs look like clunky lemons. It is backed
-  by decades of rich experience and a fantastic culture.
-
   "Emacs outshines all other editing software in the same way that the noonday
   sun does the stars. It is not just bigger and brighter; it simply makes
   everything else vanish." — Neal Stephenson
@@ -26,7 +22,7 @@
 
   "The reasonable man adapts himself to Emacs; the unreasonable one persists in
   trying to adapt Emacs to himself. Therefore all progress depends on the
-  unreasonable man." — G.B. Shaw
+  unreasonable man." — G.B. Shaw, probably
 
   "An infinite number of monkeys typing into GNU Emacs would never make a good
   program." — Linus Torvalds
@@ -42,9 +38,8 @@ REQUIREMENTS
 
   Aero is maintained as a cutting-edge tool, and focuses on working best with
   the latest minor version of Emacs, and should keep parity with the latest
-  Remacs. Aero is optimized for a TTY environment with 256 colors. It looks best
-  with the font Victor Mono, but Dank Mono and Source Code Pro look pretty sick
-  too.
+  Remacs. Aero looks best with the font Victor Mono, but Dank Mono and Source
+  Code Pro look pretty sick too.
 
 INSTALLATION
 
@@ -53,7 +48,7 @@ INSTALLATION
 
   GitLab (best)     https://gitlab.com/thornjad/aero.git
   Framagit (good)   https://framagit.org/thornjad/aero.git
-  GitHub (ok)       https://github.com/thornjad/aero.git
+  GitHub (okay)     https://github.com/thornjad/aero.git
 
   Then, install and compile required submodules with =make=
 
@@ -67,6 +62,9 @@ BINDINGS
   is prefixed under SPC, so hit SPC while in Normal mode and which-key will
   display all your options.
 
+  Most importantly, use ESC to escape from most things, use C-g to escape when
+  that doesn't work. Use C-x C-v to quit Emacs.
+
 LOCAL CONFIG
 
   Local settings, functions, et cetera can be put into an untracked
@@ -79,6 +77,8 @@ WARNING
   and packages change all the time with no warning or documentation. Use at your
   own risk. If you want to use anything, it may be safer to copy what your want
   to your own configuration, or to make a stable fork.
+
+  To get started with Emacs, I highly recommend https://spacemacs.org.
 
 CREDITS
 
