@@ -34,10 +34,9 @@
         doom-themes-enable-italic t)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
-
+(use-package poet-theme :straight t :defer 10)
 (use-package spacemacs-theme :straight t :defer 10)
 (use-package spaceline :straight t)
-
 (use-package tao-theme :straight t :defer 10
   :config
   (setq tao-theme-use-boxes nil
