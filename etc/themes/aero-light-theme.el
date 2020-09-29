@@ -128,6 +128,9 @@
    `(aero/modeline-window-number ((t (:foreground ,aero-act1 :background ,aero-space-base :box (:line-width 3 :color ,aero-space-base)))))
    `(aero/modeline-major-mode-active ((t (:foreground ,aero-space-base :bold t :background nil))))
    `(aero/modeline-major-mode-inactive ((t (:inherit aero/modeline-major-mode-active))))
+   `(aero/modeline-modified ((t (:inherit error :height 180))))
+   `(aero/modeline-not-modified ((t (:inherit success :height 180))))
+   `(aero/modeline-read-only ((t (:inherit warning :height 180))))
 
    ;; Customize faces
    `(widget-field ((t (:background ,aero-base1))))

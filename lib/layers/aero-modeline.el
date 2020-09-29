@@ -68,6 +68,16 @@
   "Face used for the 'modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
+(defface aero/modeline-not-modified
+  '((t (:inherit (success))))
+  "Face used for the 'not modified' indicator symbol in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-read-only
+  '((t (:inherit (warning))))
+  "Face used for the 'buffer read-only' indicator symbol in the mode-line."
+  :group 'aero/modeline)
+
 (defface aero/modeline-evil-normal
   '((t (:inherit (font-lock-keyword-face))))
   "Face used for Normal Evil state message."
@@ -131,13 +141,12 @@
 
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
-  (propertize
-   (if (and
-        (buffer-modified-p)
-        (not (string-match-p "\\*.*\\*" (buffer-name))))
-       " * "
-     "   ")
-   'face 'aero/modeline-modified))
+  (if (or (and buffer-read-only (buffer-file-name))
+           (string-match-p "\\*.*\\*" (buffer-name)))
+      (propertize "  " 'face 'aero/modeline-read-only)
+    (if (buffer-modified-p)
+        (propertize " ● " 'face 'aero/modeline-modified)
+      (propertize " ○ " 'face 'aero/modeline-not-modified))))
 
 (defun aero/modeline-segment-buffer-name-and-size ()
   "Displays the name and size of the current buffer in the mode-line."
@@ -198,7 +207,6 @@
                       (format-mode-line
                        '((:eval (aero/modeline-segment-process))
                          (:eval (aero/modeline-segment-major-mode))
-                         (:eval (aero/modeline-segment-window-number))
                          ))))))))
 
 (provide 'aero-modeline)
