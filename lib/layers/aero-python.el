@@ -208,7 +208,7 @@
     "p" 'run-python))
 
 (use-package elpy
-  :straight (:host github :url "jorgenschaefer/elpy")
+  :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
   (elpy-enable)
