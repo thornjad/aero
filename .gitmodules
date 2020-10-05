@@ -34,9 +34,6 @@
 [submodule "lib/packages/scss-mode"]
 	path = lib/packages/scss-mode
 	url = git@github.com:antonj/scss-mode.git
-[submodule "lib/packages/evil"]
-	path = lib/packages/evil
-	url = git@github.com:emacs-evil/evil.git
 [submodule "lib/packages/helpful"]
 	path = lib/packages/helpful
 	url = git@github.com:Wilfred/helpful.git

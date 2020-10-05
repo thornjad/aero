@@ -54,15 +54,6 @@
 
 ;;; the general is here
 
-(use-package which-key :straight t
-  :defines which-key-mode
-  :config
-  (which-key-mode)
-  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL"))
-  (aero-leader-def
-    "hw" '(:ignore t :wk "which-key")
-    "hwm" '(which-key-show-major-mode :wk "major mode map")))
-
 (use-package general :straight t
   :init
   (setq-default general-override-states
@@ -83,11 +74,19 @@
    :non-normal-prefix "C-SPC"
    "" nil))
 
+(use-package which-key :straight t
+  :defines which-key-mode
+  :config
+  (which-key-mode)
+  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL"))
+  (aero-leader-def
+    "hw" '(:ignore t :wk "which-key")
+    "hwm" '(which-key-show-major-mode :wk "major mode map")))
+
 
 ;; we descend to hell
 
-(use-package evil
-  ;; local
+(use-package evil :straight t
   :after general
   :init
   (setq evil-want-keybinding nil
