@@ -1,4 +1,4 @@
-personal_ws-1.1 en 172 
+personal_ws-1.1 en 178 
 ACL
 Aireon
 Alacritty
@@ -7,6 +7,7 @@ Bing
 Brotli
 CLI
 CORS
+CSRF
 CTE
 CTEs
 Changelog
@@ -40,10 +41,12 @@ RET
 ResNet
 SPC
 SSHFS
+Shopify
 Spotify
 Tabstops
 Tmux
 UI
+USD
 UTF
 Verix
 Voici
@@ -99,6 +102,7 @@ fullscreen
 fullscreening
 gitlab
 glyphs
+grey
 hacky
 hardcode
 homebrew
@@ -128,6 +132,7 @@ npm
 nw
 pixelation
 pre
+prepend
 println
 proc
 proration
@@ -136,6 +141,7 @@ px
 readme
 repl
 rgb
+rgba
 rollout
 rsync
 rvt
