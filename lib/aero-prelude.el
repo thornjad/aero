@@ -243,6 +243,8 @@ Local bindings (`counsel-mode-map'):
   :after general
   :functions ivy-mode
   :config
+  (use-package flx :straight t)
+
   (ivy-mode 1)
   (setq ivy-initial-inputs-alist nil ; screw the regex
         ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
@@ -277,8 +279,6 @@ Local bindings (`counsel-mode-map'):
     "/" '(counsel-grep-or-swiper :wk "search")
     "?" '(swiper-thing-at-point :wk "search thing at point")))
 
-(use-package flx :straight t)
-
 (use-package avy :straight t
   :commands (avy-goto-line avy-goto-char avy-goto-word-1)
   :init
@@ -295,7 +295,7 @@ Local bindings (`counsel-mode-map'):
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
-    "jj" '(dumb-jump-go :wk "go")))
+   "jj" '(dumb-jump-go :wk "go")))
 
 
 ;;; system
