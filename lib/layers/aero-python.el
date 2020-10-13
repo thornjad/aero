@@ -211,6 +211,7 @@
   :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
+  (setq elpy-rpc-virtualenv-path 'current)
   (elpy-enable)
 
   (defun elpy-switch-to-cpython ()
