@@ -36,6 +36,7 @@
 (defun aero-splash ()
   "Aero splash screen."
   (interactive)
+  (toggle-frame-maximized) ; ensure we're at the desired size
   (let* ((splash-buffer (get-buffer-create aero-splash-buffer-name))
          (recover-session (and auto-save-list-file-prefix
                                (file-directory-p (file-name-directory
@@ -49,11 +50,12 @@
       (read-only-mode -1) (erase-buffer)
 
       ;; Buffer local settings
-      (setq-local mode-line-format nil)
-      (setq cursor-type nil)
-      (setq vertical-scroll-bar nil)
-      (setq horizontal-scroll-bar nil)
-      (setq fill-column width)
+      (setq-local mode-line-format nil
+                  cursor-type nil
+                  vertical-scroll-bar nil
+                  horizontal-scroll-bar nil
+                  fill-column width)
+      (when (fboundp 'beacon-mode) (beacon-mode -1))
       (face-remap-add-relative 'link :underline nil)
 
       ;; Vertical padding to center
@@ -119,7 +121,7 @@
            (not (member "--insert"    command-line-args))
            (not (member "--find-file" command-line-args)))
   (progn
-    (add-hook 'window-setup-hook #'aero-splash-mode)
+    (add-hook 'window-setup-hook #'aero-splash)
     (setq inhibit-startup-screen t
           inhibit-startup-message t
           inhibit-startup-echo-area-message t)))
