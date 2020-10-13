@@ -469,10 +469,6 @@ Local bindings (`counsel-mode-map'):
   :defer t
   :functions tramp-cleanup-all-connection
   :config
-  ;; From jwiegley: Without this change, tramp ends up sending
-  ;; hundreds of shell commands to the remote side to ask what the
-  ;; temporary directory is.
-  (put 'temporary-file-directory 'standard-value '("/tmp"))
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
         tramp-persistency-file-name "~/.config/emacs/data/tramp"
         tramp-default-method "rsync"
