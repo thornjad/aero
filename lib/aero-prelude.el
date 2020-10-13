@@ -36,10 +36,7 @@
 
 ;;; get ready to patch at any time
 
-(use-package el-patch
-  :straight (:host github
-             :repo "raxod502/el-patch"
-             :branch "develop")
+(use-package el-patch :straight t
   :init
   (setq el-patch-enable-use-package-integration t))
 ;; Only needed at compile time
