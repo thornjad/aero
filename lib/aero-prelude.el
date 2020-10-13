@@ -476,17 +476,7 @@ Local bindings (`counsel-mode-map'):
 
   ;; push projectile in the right direction
   (defadvice projectile-project-root (around ignore-remote first activate)
-    (unless (file-remote-p default-directory) ad-do-it))
-
-  (defun aero/tramp-buffer-p (buffer)
-    (let ((name (buffer-name buffer)))
-      (string-match "^\\*tramp" name)))
-  (defun aero/kill-tramp ()
-    "Kill and cleanup all Tramp connections. Useful for stale connections."
-    (interactive)
-    (cl-loop for buffer being the buffers
-             do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
-    (tramp-cleanup-all-connections)))
+    (unless (file-remote-p default-directory) ad-do-it)))
 
 (use-package ranger :straight t
   :after general
