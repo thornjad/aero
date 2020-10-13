@@ -149,6 +149,4 @@
 (use-package fireplace :straight t
   :commands fireplace)
 
-(require 'aero-splash)
-
 (provide 'aero-theme)
