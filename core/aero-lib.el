@@ -504,8 +504,7 @@ Really just an async wrapper around `save-buffer'"
                 (message (or buf "wtf"))
                 (funcall #'basic-save-buffer))))
 
-    (async-start fun
-     )))
+    (async-start fun)))
 
 (defun aero/open-in-finder ()
   "Reveal the file associated with the current buffer in the OSX Finder.
@@ -534,6 +533,17 @@ In a dired buffer, it will open the current file."
                 (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
               (buffer-string)))
            (t (concat "/sudo:root@localhost:" fname))))))
+
+(declare-function tramp-cleanup-all-connections "tramp.el")
+(defun aero/tramp-buffer-p (buffer)
+  (let ((name (buffer-name buffer)))
+    (string-match "^\\*tramp" name)))
+(defun aero/kill-tramp ()
+  "Kill and cleanup all Tramp connections. Useful for stale connections."
+  (interactive)
+  (cl-loop for buffer being the buffers
+           do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
+  (tramp-cleanup-all-connections))
 
 (defun aero/open-local-init ()
   "Open local init file for editing."
