@@ -64,6 +64,7 @@
       (aero-bright-magenta "#b76cc4")
 
       (aero-intense-green "#5f875f")
+      (aero-intense-burgundy "#5f081e")
       (aero-brilliant-black "#000000")
       (aero-brilliant-white "#ffffff")
       (aero-brilliant-green "#005f00")
@@ -203,7 +204,7 @@
    `(smerge-upper ((t (:background nil))))
    `(smerge-lower ((t (:background nil))))
    `(smerge-refined-added ((t (:background ,aero-brilliant-green))))
-   `(smerge-refined-changed ((t (:background ,aero-normal-orange))))
+   `(smerge-refined-changed ((t (:background ,aero-intense-burgundy))))
    `(smerge-refined-removed ((t (:background ,aero-brilliant-red))))
    `(smerge-base ((t (:background nil))))
    `(smerge-markers
