@@ -636,6 +636,9 @@ Local bindings (`counsel-mode-map'):
 
  "a" '(:ignore t :wk "applications")
  "ad" 'counsel-dired
+ "ag" '(:ignore t :wk "games")
+ "agt" 'tetris
+ "agd" 'dunnet
 
  "c" '(:ignore t :wk "compile")
  "cc" 'compile
