@@ -219,6 +219,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            '(:add (aero/smartparens-pair-newline-and-indent "RET")))
   (define-key evil-insert-state-map ")"
     'aero/smart-closing-parenthesis))
+
+(use-package rainbow-delimiters :straight t
+  :hook ((prog-mode . rainbow-delimiters-mode)))
 
 
 (add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
