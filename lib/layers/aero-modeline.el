@@ -28,11 +28,6 @@
   "A minimal mode-line configuration inspired by doom-modeline."
   :group 'mode-line)
 
-(defface aero/modeline-window-number
-  '((t (:inherit (font-lock-keyword-face))))
-  "Window number."
-  :group 'aero/modeline)
-
 (defface aero/modeline-status-grayed-out
   '((t (:inherit (font-lock-doc-face) :slant italic)))
   "Face used for neutral or inactive status indicators in the mode-line."
@@ -93,6 +88,16 @@
   "Face used for Visual Evil state message."
   :group 'aero/modeline)
 
+(defface aero/modeline-evil-operator
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Visual Evil state message."
+  :group 'aero/modeline)
+
+(defface aero/modeline-evil-motion
+  '((t (:inherit (font-lock-keyword-face))))
+  "Face used for Visual Evil state message."
+  :group 'aero/modeline)
+
 (defface aero/modeline-evil-replace
   '((t (:inherit (font-lock-keyword-face))))
   "Face used for Replace Evil state message."
@@ -120,7 +125,7 @@
       " " 'display
       `((space :align-to
           (- (+ right right-fringe right-margin)
-             ,(+ reserve (if (display-graphic-p) 0 1))))))
+             ,(+ reserve (if (display-graphic-p) 1 2))))))
      right)))
 
 ;;; Segments
@@ -136,6 +141,8 @@
        ((string= state " <N> ") (propertize state 'face 'aero/modeline-evil-normal))
        ((string= state " <I> ") (propertize state 'face 'aero/modeline-evil-insert))
        ((string= state " <R> ") (propertize state 'face 'aero/modeline-evil-replace))
+       ((string= state " <O> ") (propertize state 'face 'aero/modeline-evil-operator))
+       ((string= state " <M> ") (propertize state 'face 'aero/modeline-evil-motion))
        ((string= state " <E> ") (propertize state 'face 'aero/modeline-evil-emacs))
        (t state)))))
 
@@ -170,16 +177,8 @@
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
   (propertize
-   (format "  %s  " (format-mode-line mode-name))
+   (format " %s " (format-mode-line mode-name))
    'face 'aero/modeline-major-mode-active))
-
-(defun aero/modeline-segment-window-number ()
-  "Displays the current window number as provided by `winum'."
-  (when (require 'winum nil 'noerror)
-    (declare-function winum-get-number "winum")
-    (propertize
-     (format " %d " (winum-get-number))
-     'face 'aero/modeline-window-number)))
 
 ;;; Activation function
 
