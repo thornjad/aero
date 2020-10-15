@@ -664,6 +664,10 @@ Local bindings (`counsel-mode-map'):
  "g" '(:ignore t :wk "git")
  "gf" '(:ignore t :wk "files")
 
+ "l" '(:ignore t :wk "lsp")
+
+ "L" '(:ignore t :wk "local")
+
  "j" '(:ignore t :wk "jump")
  "s" '(:ignore t :wk "sexp")
  "m" '(:ignore t :wk "mode")

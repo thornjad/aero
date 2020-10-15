@@ -117,7 +117,8 @@ only. This file is not part of Aero proper, and is not shared.")
   (global-font-lock-mode)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
-        gc-cons-percentage (cadr (cadr aero/gc-cons))))
+        gc-cons-percentage (cadr (cadr aero/gc-cons)))
+  (setq read-process-output-max #x1000000))
 
 
 (provide 'aero-core)

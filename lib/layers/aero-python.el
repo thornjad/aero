@@ -30,11 +30,6 @@
   :config
   (use-package pyvenv :straight t)
 
-  (use-package lsp-python :straight t :disabled
-    :config
-    (require 'lsp-python)
-    (add-hook 'python-mode-hook #'lsp-python-enable))
-
   (defvar python-mode-initialized nil)
 
   (defun my-python-mode-hook ()
