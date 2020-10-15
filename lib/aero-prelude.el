@@ -264,7 +264,7 @@ Local bindings (`counsel-mode-map'):
                                 (counsel-git-grep . ivy--regex-plus)
                                 (projectile-ripgrep . ivy--regex-plus)
                                 (swiper . ivy--regex-plus)
-                                (t . ivy--regex-fuzzy)))
+                                (t . ivy--regex-plus)))
   (general-define-key
    :states '(normal)
    :prefix "SPC"
