@@ -29,7 +29,7 @@
 
 ;; verifier les erreurs dans ce fichier
 (setq debug-on-error t)
-(defvar aero/gc-cons '((#x20000000 0.6) (#x100000 0.1))
+(defvar aero/gc-cons '((#x20000000 0.6) (#x1000000 0.1))
   "High and normal values for gc.
 
 During init and while the minibuffer is in use, gc is set to the high
