@@ -86,7 +86,7 @@
    `(region ((t (:background ,aero-grey1 :background ,aero-grey5))))
    `(secondary-selection ((t (:background ,aero-grey0))))
    `(minibuffer-prompt ((t (:background ,aero-bg :foreground ,aero-normal-green :bold t))))
-   `(vertical-border ((t (:foreground ,aero-grey1))))
+   `(vertical-border ((t (:foreground ,aero-grey1 :background ,aero-grey1))))
    `(window-divider ((t (:foreground ,aero-grey1))))
    `(link ((t (:foreground ,aero-normal-blue :underline t))))
    `(link-visited ((t (:foreground ,aero-normal-magenta :underline t))))
