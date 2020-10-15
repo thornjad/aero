@@ -48,47 +48,6 @@
 (setq-default x-underline-at-descent-line t
               line-spacing 0.1)
 
-;; TODO do we really want this??
-(use-package centaur-tabs :straight t :disabled t
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  (setq centaur-tabs-set-icons t
-        centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-set-bar 'under
-        centaur-tabs-set-bar 'left
-        centaur-tabs-set-modified-marker t
-        centaur-tabs-close-button "✕"
-        centaur-tabs-modified-marker "✧"
-        centaur-tabs-cycle-scope 'tabs)
-
-  (define-key evil-normal-state-map (kbd "g t") 'centaur-tabs-forward)
-  (define-key evil-normal-state-map (kbd "g T") 'centaur-tabs-backward)
-  (aero-leader-def
-    "tn" 'centaur-tabs-forward
-    "tp" 'centaur-tabs-backward
-    "ts" '(centaur-tabs-counsel-switch-group :wk "switch group")
-    "tg" '(:ignore t :wk "group tabs by")
-    "tgp" '(centaur-tabs-group-by-projectile-project :wk "project")
-    "tgn" '(centaur-tabs-group-buffer-groups :wk "normal"))
-
-  (centaur-tabs-group-by-projectile-project)
-
-  (defun centaur-tabs-hide-tab (x)
-    (let ((name (format "%s" x)))
-      (or
-       (string-prefix-p "*epc" name)
-       (string-prefix-p "*helm" name)
-       (string-prefix-p "*Helm" name)
-       (string-prefix-p "*Compile-Log*" name)
-       (string-prefix-p "*lsp" name)
-       (and (string-prefix-p "magit" name)
-            (not (file-name-extension name))))))
-
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward))
-
 (require 'aero-modeline)
 (aero/modeline-mode 1)
 
