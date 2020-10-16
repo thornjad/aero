@@ -48,8 +48,8 @@
 
       (aero-normal-black    "#fffbea")
       (aero-normal-white    "#7b8787")
-      (aero-normal-red      "#dc322f")
-      (aero-normal-orange   "#cb4b16")
+      (aero-normal-red      "#5f081e")
+      (aero-normal-orange   "#c38152")
       (aero-normal-yellow   "#b58900")
       (aero-normal-green    "#859900")
       (aero-normal-teal     "#35a69c")
@@ -82,6 +82,7 @@
    `(cursor ((t (:background ,aero-bright-blue))))
    `(mode-line ((t (:background ,aero-act1 :foreground ,aero-space-base :box (:line-width 3 :color ,aero-act1)))))
    `(mode-line-inactive ((t (:background ,aero-base2 :foreground ,aero-space-base :box (:line-width 3 :color ,aero-base2)))))
+   `(header-line ((t (:inherit mode-line :height 120))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
    `(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :slant italic))))
@@ -96,7 +97,6 @@
    `(shadow ((t (:foreground ,aero-base2))))
    `(trailing-whitespace ((t (:background ,aero-bright-red))))
    `(escape-glyph ((t (:foreground ,aero-normal-blue))))
-   `(header-line ((t (:background ,aero-normal-black :foreground ,aero-base4 :box nil :inherit nil))))
    `(highlight ((t (:background ,aero-base6 :foreground ,aero-fg))))
    `(lazy-highlight ((t (:background ,aero-normal-blue :foreground ,aero-base7 :distant-foreground ,aero-base8 :weight bold))))
    `(match ((t (:foreground ,aero-space-base :background ,aero-act1 :weight bold))))
@@ -105,13 +105,13 @@
    ;; Built-in syntax
    `(font-lock-builtin-face ((t (:foreground ,aero-bright-blue :slant italic))))
    `(font-lock-constant-face ((t (:foreground ,aero-normal-magenta :weight bold))))
-   `(font-lock-comment-face ((,class (:foreground ,aero-comment :background ,aero-comment-bg :slant italic))))
-   `(font-lock-function-name-face ((t (:foreground ,aero-bright-orange))))
+   `(font-lock-comment-face ((t (:foreground ,aero-comment :background ,aero-comment-bg :slant italic))))
+   `(font-lock-function-name-face ((t (:foreground ,aero-normal-orange))))
    `(font-lock-keyword-face ((t (:foreground ,aero-normal-green))))
    `(font-lock-string-face ((t (:foreground ,aero-normal-teal :slant italic))))
-   `(font-lock-variable-name-face ((t (:foreground ,aero-normal-blue))))
+   `(font-lock-variable-name-face ((t (:foreground ,aero-base5))))
    `(font-lock-type-face ((t (:foreground ,aero-bright-blue))))
-   `(font-lock-warning-face ((t (:foreground ,aero-bright-red :bold t))))
+   `(font-lock-warning-face ((t (:foreground ,aero-bright-yellow :bold t))))
    `(font-lock-doc-face ((t (:foreground ,aero-base3 :bold t))))
 
    ;; special
@@ -148,6 +148,10 @@
    `(whitespace-indentation ((t (:foreground ,aero-base0))))
    `(whitespace-empty ((t (:foreground ,aero-base0))))
    `(whitespace-space-after-tab ((t (:foreground ,aero-base0))))
+
+   ;; LSP
+   `(lsp-ui-doc-background ((t (:background ,aero-act1 :box (:line-width 1 :color ,aero-space-base)))))
+   `(lsp-ui-doc-header ((t (:foreground ,aero-space-base :background ,aero-act1 :underline ,aero-space-base))))
 
    ;; Displaying formfeed chars
    `(page-break-lines ((t (:foreground ,aero-base2))))
@@ -201,7 +205,7 @@
    `(smerge-upper ((t (:background nil))))
    `(smerge-lower ((t (:background nil))))
    `(smerge-refined-added ((t (:box ,aero-brilliant-green))))
-   `(smerge-refined-changed ((t (:box ,aero-normal-orange))))
+   `(smerge-refined-changed ((t (:box ,aero-normal-red))))
    `(smerge-refined-removed ((t (:box ,aero-brilliant-red))))
    `(smerge-base ((t (:background nil))))
    `(smerge-markers

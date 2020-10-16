@@ -153,6 +153,10 @@
    `(whitespace-empty ((t (:foreground ,aero-grey0))))
    `(whitespace-space-after-tab ((t (:foreground ,aero-grey0))))
 
+   ;; LSP
+   `(lsp-ui-doc-background ((t (:background ,aero-act1))))
+   `(lsp-ui-doc-header ((t (:foreground ,aero-space-base :background ,aero-act1 :underline ,aero-space-base))))
+
    ;; Displaying formfeed chars
    `(page-break-lines ((t (:foreground ,aero-grey2))))
    `(formfeeder-line ((t (:strike-through ,aero-grey2))))
