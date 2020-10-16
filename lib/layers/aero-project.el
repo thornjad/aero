@@ -43,7 +43,8 @@
    "pC" '(projectile-compile-project :wk "compile")
    "pt" '(projectile-find-tag :wk "find tag")
    "pG" 'projectile-regenerate-tags
-   "pI" 'projectile-invalidate-cache))
+   "pI" 'projectile-invalidate-cache
+   "pC" 'projectile-cache-current-file))
 
 (defun aero/ack-project ()
   "Search for a string in the current project."
