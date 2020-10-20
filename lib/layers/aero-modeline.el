@@ -20,7 +20,7 @@
 ;;
 ;;; Code:
 
-(require 'all-the-icons)
+(require 'cl-lib)
 
 ;;; Config
 
@@ -71,6 +71,11 @@
 (defface aero/modeline-read-only
   '((t (:inherit (warning))))
   "Face used for the 'buffer read-only' indicator symbol in the mode-line."
+  :group 'aero/modeline)
+
+(defface aero/modeline-remote
+  '((t (:inherit (font-lock-keyword-face :weight bold))))
+  "Face used for the 'not modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
 (defface aero/modeline-evil-normal
@@ -149,11 +154,16 @@
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
   (if (or (and buffer-read-only (buffer-file-name))
-           (string-match-p "\\*.*\\*" (buffer-name)))
+          (string-match-p "\\*.*\\*" (buffer-name)))
       (propertize "  " 'face 'aero/modeline-read-only)
     (if (buffer-modified-p)
         (propertize " ● " 'face 'aero/modeline-modified)
       (propertize " ○ " 'face 'aero/modeline-not-modified))))
+
+(defun aero/modeline-segment-remote ()
+  "Displays a symbol if buffer is remote"
+  (when-let* ((host (file-remote-p (buffer-file-name) 'host)))
+    (concat " @" (propertize host 'face 'aero/modeline-remote) " ")))
 
 (defun aero/modeline-segment-buffer-name-and-size ()
   "Displays the name and size of the current buffer in the mode-line."
@@ -192,20 +202,21 @@
   :lighter nil
   (progn
     ;; Set the new mode-line-format
-    (setq-default mode-line-format
-                  '((:eval
-                     (aero-info-line-format
-                      ;; Left
-                      (format-mode-line
-                       '((:eval (aero/modeline-segment-evil-state))
-                         (:eval (aero/modeline-segment-modified))
-                         (:eval (aero/modeline-segment-buffer-name-and-size))
-                         (:eval (aero/modeline-segment-position))))
+    (setq mode-line-format
+          '((:eval
+             (aero-info-line-format
+              ;; Left
+              (format-mode-line
+               '((:eval (aero/modeline-segment-evil-state))
+                 (:eval (aero/modeline-segment-modified))
+                 (:eval (aero/modeline-segment-buffer-name-and-size))
+                 (:eval (aero/modeline-segment-position))))
 
-                      ;; Right
-                      (format-mode-line
-                       '((:eval (aero/modeline-segment-process))
-                         (:eval (aero/modeline-segment-major-mode))
-                         ))))))))
+              ;; Right
+              (format-mode-line
+               '((:eval (aero/modeline-segment-process))
+                 (:eval (aero/modeline-segment-remote))
+                 (:eval (aero/modeline-segment-major-mode))
+                 ))))))))
 
 (provide 'aero-modeline)
