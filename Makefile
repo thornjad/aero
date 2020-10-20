@@ -3,6 +3,16 @@
 # override to use something like, say, a local version of remacs
 EMACS ?= emacs
 
+update-gccemacs:
+	cd $HOME/lib/emacs/
+	git stash
+	git clean -xfd
+	git checkout feature/native-comp
+	git pull origin feature/native-comp
+	$HOME/.config/emacs/bin/config_gccemacs
+	make -j4 NATIVE_FAST_BOOT=1
+	make install
+
 all: update-packages compile-packages update-elpa
 
 # update all submodule packages, byte-compile submodule packages, then update
