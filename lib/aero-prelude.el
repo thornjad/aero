@@ -89,7 +89,8 @@
   (setq evil-want-keybinding nil
         evil-want-fine-undo t
         evil-want-C-i-jump nil
-        evil-want-C-u-scroll t)
+        evil-want-C-u-scroll t
+        evil-undo-system 'undo-tree)
 
   :config
   (general-define-key
