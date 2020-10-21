@@ -118,6 +118,7 @@
   "Face used for major mode."
   :group 'aero/modeline)
 
+;; TODO could this be memoized?
 (defun aero-info-line-format (left right)
   "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
   (let ((reserve (length right)))
@@ -160,14 +161,13 @@
   (when-let* ((host (file-remote-p (buffer-file-name) 'host)))
     (concat " @" (propertize host 'face 'aero/modeline-remote) " ")))
 
-(defun aero/modeline-segment-buffer-name-and-size ()
+(defun aero/modeline-segment-buffer-name ()
   "Displays the name and size of the current buffer in the mode-line."
-  (concat (propertize "%b (%I)" 'face 'mode-line-buffer-id) " "))
+  (concat (propertize "%b" 'face 'mode-line-buffer-id) " "))
 
-(defun aero/modeline-segment-position ()
+(defun aero/modeline-segment-size-and-position ()
   "Displays the current cursor position in the mode-line."
-  (concat "L%l"
-          " %p%%"
+  (concat "(%I) L%l %o%%"
           (when (use-region-p)
             (concat
              "  " (number-to-string (count-lines (point) (mark)))
@@ -181,15 +181,14 @@
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
-  (propertize
-   (format " %s " (format-mode-line mode-name))
-   'face 'aero/modeline-major-mode-active))
+  (format " %s " (format-mode-line mode-name)))
 
 ;;; Activation function
 
 ;; Store the default mode-line format
 (defvar aero/modeline--default-mode-line mode-line-format)
 
+;;;###autoload
 (define-minor-mode aero/modeline-mode
   "Toggle aero/modeline on or off."
   :group 'aero/modeline
@@ -204,8 +203,8 @@
               (format-mode-line
                '((:eval (aero/modeline-segment-evil-state))
                  (:eval (aero/modeline-segment-modified))
-                 (:eval (aero/modeline-segment-buffer-name-and-size))
-                 (:eval (aero/modeline-segment-position))))
+                 (:eval (aero/modeline-segment-buffer-name))
+                 (:eval (aero/modeline-segment-size-and-position))))
 
               ;; Right
               (format-mode-line
