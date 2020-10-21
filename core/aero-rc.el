@@ -69,8 +69,11 @@
                          (unless (get-buffer "*dashboard*")
                            (get-buffer "*scratch*")))
  initial-major-mode 'text-mode
- initial-scratch-message ";; Aero Emacs\n\n"
-
+ initial-scratch-message (concat ";; Aero Emacs v" emacs-version
+																 "b" (number-to-string emacs-build-number)
+                                 "\n"
+                                 ";; finally, a good fucking editor"
+                                 "\n\n")
 
  ;; version control and saving
  use-package-verbose nil
