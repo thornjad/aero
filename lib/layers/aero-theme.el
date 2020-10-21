@@ -23,7 +23,10 @@
 (use-package all-the-icons :straight t)
 
 ;; in etc/themes/
-(load-theme 'aero-dark t)
+(load-theme 'aero-light t)
+
+(require 'aero-modeline)
+(aero/modeline-mode +1)
 
 ;; Other themes to browse from time to time
 (use-package doom-themes :straight t
@@ -46,7 +49,8 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (setq-default x-underline-at-descent-line t
-              line-spacing 0.1)
+              line-spacing 0.1
+              widget-image-enable nil)
 
 (require 'aero-modeline)
 (aero/modeline-mode 1)
@@ -85,13 +89,16 @@
 
 ;;; additional tweaks and packages
 
+(blink-cursor-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
 (show-paren-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
+(pixel-scroll-mode 1)
 (global-display-fill-column-indicator-mode 1)
 (add-hook 'text-mode-hook #'turn-on-visual-line-mode)
 (add-hook 'fundamental-mode-hook #'turn-on-visual-line-mode)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (use-package formfeeder
   :load-path "lib/packages/formfeeder/"

@@ -152,9 +152,7 @@
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
-(blink-cursor-mode 0)
-
-(pixel-scroll-mode 1)
+(save-place-mode 1)
 
 (when (string= system-type "darwin")
 	(setq-default dired-use-ls-dired nil))
