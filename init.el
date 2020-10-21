@@ -105,8 +105,6 @@ more cycles but less space.")
   ;; no more debug please
   (setq debug-on-error nil)
   ;; after init, this will just cause unnecessary slowness
-  (setq load-prefer-newer nil)
-  (declare-function aero/log-info "aero-util")
-  (aero/log-info "Aero has initialized"))
+  (setq load-prefer-newer nil))
 
 ;;; init.el ends here
