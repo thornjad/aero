@@ -88,7 +88,7 @@
   :init
   (setq evil-want-keybinding nil
         ;; to change undo-system without restart, use SPC-: `evil-set-undo-system'
-        evil-undo-system 'undo-redo
+        evil-undo-system 'undo-tree
         evil-want-fine-undo t
         evil-want-C-i-jump nil
         evil-want-C-u-scroll t)
