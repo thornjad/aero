@@ -118,20 +118,15 @@
   "Face used for major mode."
   :group 'aero/modeline)
 
-;;; Helper functions
-
 (defun aero-info-line-format (left right)
   "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
   (let ((reserve (length right)))
-    (concat
-     left
-     " "
-     (propertize
-      " " 'display
-      `((space :align-to
-          (- (+ right right-fringe right-margin)
-             ,(+ reserve (if (display-graphic-p) 1 2))))))
-     right)))
+    (concat left " " (propertize
+                      " " 'display
+                      `((space :align-to
+                          (- (+ right right-fringe right-margin)
+                             ,(+ reserve (if (display-graphic-p) 1 2))))))
+            right)))
 
 ;;; Segments
 
