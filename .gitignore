@@ -51,3 +51,5 @@ xkcd/
 
 # Ignore local init
 init.local.el
+.extension/
+places
