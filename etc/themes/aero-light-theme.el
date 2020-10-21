@@ -610,7 +610,24 @@
    `(which-func ((t (:foreground ,aero-normal-blue))))
 
    ;; auto-dim-other-buffers
-   `(auto-dim-other-buffers-face ((t (:background ,aero-normal-black))))
-   ))
+   `(auto-dim-other-buffers-face ((t (:background ,aero-normal-black)))))
+
+  (defun package-make-button (text &rest properties)
+    "Insert button labeled TEXT with button PROPERTIES at point.
+PROPERTIES are passed to `insert-text-button', for which this function is a
+convenience wrapper used by `describe-package-1'."
+    (let ((button-text (if (display-graphic-p) text (concat "[" text "]")))
+          (button-face (if (display-graphic-p)
+                           '(:box `(:line-width 1
+                                    :color "#999999":style nil)
+                             :foreground "#999999"
+                             :background "#F0F0F0")
+                         'link)))
+      (apply #'insert-text-button button-text
+             'face button-face 'follow-link t properties)))
+
+  (setq window-divider-default-right-width 1)
+  (setq window-divider-default-places 'right-only)
+  (window-divider-mode))
 
 (provide-theme 'aero-light)
