@@ -669,6 +669,8 @@ Local bindings (`counsel-mode-map'):
  "Fo" 'other-frame
  "Ff" 'find-file-other-frame
  "Fn" 'make-frame
+ "FM" 'toggle-frame-maximized
+ "FF" 'toggle-frame-fullscreen
 
  "g" '(:ignore t :wk "git")
  "gf" '(:ignore t :wk "files")
