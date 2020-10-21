@@ -22,14 +22,14 @@
 
 (deftheme aero-light)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg             "#F7F6F2")
+      (aero-bg             "#edeceb")
       (aero-fg             "#525C5A")
 
       (aero-space-base     "#655370")
       (aero-space-base-dim "#a094a2")
       (aero-base0          "#FAF7EE")
       (aero-base1          "#f4ebd7")
-      (aero-base2          "#EBE9E9")
+      (aero-base2          "#e4e2e2")
       (aero-base3          "#96a7a9")
       (aero-base4          "#718388")
       (aero-base5          "#626c6c")
@@ -83,11 +83,15 @@
   (custom-theme-set-faces
    'aero-light
    `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
-      :family "Victor Mono" :height 150))))
+                  :family "Victor Mono" :height 150))))
    `(cursor ((t (:background ,aero-cursor-bg))))
-   `(mode-line ((t (:background ,aero-act1 :foreground ,aero-space-base :box (:line-width 3 :color ,aero-act1)))))
-   `(mode-line-inactive ((t (:background ,aero-base2 :foreground ,aero-space-base :box (:line-width 3 :color ,aero-base2)))))
-   `(header-line ((t (:inherit mode-line :height 120))))
+   `(mode-line
+     ((t (:background ,aero-bg :foreground ,aero-space-base
+          :underline nil :overline ,aero-fg :box nil))))
+   `(mode-line-inactive ((t (:inherit mode-line :foreground ,aero-space-base-dim))))
+   `(header-line
+     ((t (:inherit mode-line :height 120
+          :background ,aero-act1 :underline nil :overline nil))))
    `(tab-bar ((t (:inherit mode-line-inactive))))
    `(tab-bar-tab ((t (:inherit mode-line))))
    `(tab-bar-tab-inactive ((t (:inherit mode-line-inactive :slant italic))))
@@ -96,8 +100,10 @@
    `(highlight ((t (:background ,aero-base11 :foreground ,aero-bg))))
    `(secondary-selection ((t (:background ,aero-base0))))
    `(minibuffer-prompt ((t (:background ,aero-bg :foreground ,aero-normal-green :bold t))))
-   `(vertical-border ((t (:foreground ,aero-base6))))
+   `(vertical-border ((t (:foreground ,aero-base2 :background ,aero-bg))))
    `(window-divider ((t (:inherit vertical-border))))
+   `(window-divider-first-pixel ((t (:inherit vertical-border :foreground ,aero-bg))))
+   `(window-divider-last-pixel ((t (:inherit vertical-border :foreground ,aero-bg))))
    `(link ((t (:foreground ,aero-normal-blue :underline t))))
    `(link-visited ((t (:foreground ,aero-normal-magenta :underline t))))
    `(shadow ((t (:foreground ,aero-base2))))
@@ -449,7 +455,7 @@
    `(swiper-match-face-4 ((t (:inherit swiper-match-face-1))))
 
    ;; ivy
-   `(ivy-current-match ((t (:inherit highlight))))
+   `(ivy-current-match ((t (:inherit highlight :foreground ,aero-bg))))
    `(ivy-minibuffer-match-face-1 ((t (:foreground ,aero-fg))))
    `(ivy-minibuffer-match-face-2 ((t (:foreground ,aero-fg :weight bold))))
    `(ivy-minibuffer-match-face-3 ((t (:foreground ,aero-fg :weight bold))))
