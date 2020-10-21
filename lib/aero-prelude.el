@@ -682,6 +682,7 @@ Local bindings (`counsel-mode-map'):
  "j" '(:ignore t :wk "jump")
  "s" '(:ignore t :wk "sexp")
  "m" '(:ignore t :wk "mode")
+ "d" '(:ignore t :wk "debug")
 
  "p" '(:ignore t :wk "project")
  "pr" '(xref-find-definitions :wk "find ref")
@@ -705,14 +706,18 @@ Local bindings (`counsel-mode-map'):
 
  "w" '(:ignore t :wk "window/web")
  "w=" 'balance-windows
- ;; "w2" 'aero/layout-two-columns
- ;; "w3" 'aero/layout-three-columns
  "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
  "wd" 'delete-window
  "wF" 'make-frame
  "wx" 'kill-buffer-and-window
  "w{" 'shrink-window
  "w}" 'enlarge-window
+ "wm" 'maximize-window
+ "wi" 'minimize-window
+
+ "wL" '(:ignore t :wk "layout")
+ "wL2" 'aero/layout-two-columns
+ "wL3" 'aero/layout-three-columns
 
  "t" '(:ignore t :wk "tabs/text")
  "tU" 'upcase-dwim
