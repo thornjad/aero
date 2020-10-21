@@ -34,6 +34,7 @@ install-lsp-servers:
 	npm i -g bash-language-server
 	npm i -g javascript-typescript-langserver
 	pip install python-language-server
+	pip install "ptvsd>=4.2"
 	rustup component add rls rust-analysis rust-src
 
 update-elpa:

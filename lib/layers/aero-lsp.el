@@ -57,7 +57,7 @@
 
   (use-package lsp-ui :straight t
     :hook ((lsp-mode . lsp-ui-mode)
-          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
+           (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
     :config
     (setq lsp-ui-doc-position 'top
           lsp-ui-doc-delay 1
@@ -77,8 +77,15 @@
     (aero-leader-def
       "fs" '(lsp-ivy-workspace-symbol :wk "find symbols"))))
 
-;; (use-package dap-mode :straight t
-;;   :config
-;;   (use-package dap-python))
+(use-package dap-mode :straight t
+  :config
+  (require 'dap-firefox)
+  (dap-firefox-setup)
+  (require 'dap-node)
+  (dap-node-setup)
+  (require 'dap-python)
+
+  (aero-leader-def
+    "dd" 'dap-debug))
 
 (provide 'aero-lsp)
