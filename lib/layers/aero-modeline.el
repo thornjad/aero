@@ -158,7 +158,8 @@
 
 (defun aero/modeline-segment-remote ()
   "Displays a symbol if buffer is remote"
-  (when-let* ((host (file-remote-p (buffer-file-name) 'host)))
+  (when-let* ((filename (buffer-file-name))
+              (host (file-remote-p filename 'host)))
     (concat " @" (propertize host 'face 'aero/modeline-remote) " ")))
 
 (defun aero/modeline-segment-buffer-name ()
