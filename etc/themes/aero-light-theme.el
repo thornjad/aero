@@ -28,7 +28,7 @@
       (aero-space-base     "#655370")
       (aero-space-base-dim "#a094a2")
       (aero-base0          "#FAF7EE")
-      (aero-base1          "#f4ebd7")
+      (aero-base1          "#ece3cf")
       (aero-base2          "#e4e2e2")
       (aero-base3          "#96a7a9")
       (aero-base4          "#718388")
