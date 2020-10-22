@@ -213,5 +213,9 @@
                  (:eval (aero/modeline-segment-remote))
                  (:eval (aero/modeline-segment-major-mode))
                  ))))))))
+(define-globalized-minor-mode aero/modeline-global-mode
+  aero/modeline-mode
+  (lambda ()
+    (aero/modeline-mode 1)))
 
 (provide 'aero-modeline)

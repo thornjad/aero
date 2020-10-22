@@ -22,11 +22,11 @@
 
 (use-package all-the-icons :straight t)
 
+(require 'aero-modeline)
+(aero/modeline-global-mode +1)
+
 ;; in etc/themes/
 (load-theme 'aero-light t)
-
-(require 'aero-modeline)
-(aero/modeline-mode +1)
 
 ;; Other themes to browse from time to time
 (use-package doom-themes :straight t
