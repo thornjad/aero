@@ -130,7 +130,8 @@ advice."
       (progn
         ;; Log actual message without echo
         (when message-log-max
-          (let ((inhibit-message t)) (apply orig-fun (list msg))))
+          (let ((inhibit-message t))
+            (apply orig-fun (list msg))))
         ;; Display enhanced message without log. Replace any straggling
         ;; format-like strings from the original message so Emacs doesn't get
         ;; confused.
