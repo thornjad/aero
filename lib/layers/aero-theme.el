@@ -120,7 +120,6 @@ advice."
                               :inherit mode-line-inactive)))
               (width (- (frame-width) (length right) -4))
               (msg (if (car args) (apply 'format-message args) ""))
-              (msg (replace-regexp-in-string "%" "%%" msg))
               (msg (car (split-string msg " ")))
               (msg (string-trim msg))
               (left (truncate-string-to-width msg width nil nil "…"))
@@ -132,8 +131,11 @@ advice."
         ;; Log actual message without echo
         (when message-log-max
           (let ((inhibit-message t)) (apply orig-fun (list msg))))
-        ;; Display enhanced message without log
-        (let ((message-truncate-lines t) (message-log-max nil))
+        ;; Display enhanced message without log. Replace any straggling
+        ;; format-like strings from the original message so Emacs doesn't get
+        ;; confused.
+        (let ((message-truncate-lines t) (message-log-max nil)
+              (full (replace-regexp-in-string "%" "%%" full)))
           (apply orig-fun (list full)))
         ;; Set current message explicitely
         (setq current-message msg)))))
