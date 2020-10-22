@@ -29,17 +29,17 @@
 (load-theme 'aero-light t)
 
 ;; Other themes to browse from time to time
-(use-package doom-themes :straight t
-  :defer 10
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
-(use-package poet-theme :straight t :defer 10)
-(use-package spacemacs-theme :straight t :defer 10)
-(use-package spaceline :straight t)
+;; (use-package doom-themes :straight t
+;;   :defer 10
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t
+;;         doom-themes-enable-italic t)
+;;   (doom-themes-neotree-config)
+;;   (doom-themes-org-config))
+;; (use-package poet-theme :straight t :defer 10)
+;; (use-package spacemacs-theme :straight t :defer 10)
+;; (use-package spaceline :straight t)
 (use-package tao-theme :straight t :defer 10
   :config
   (setq tao-theme-use-boxes nil
