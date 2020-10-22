@@ -19,6 +19,8 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'subr-x)
+(require 'cl-lib)
 
 (use-package all-the-icons :straight t)
 
@@ -41,9 +43,9 @@
 ;; (use-package spacemacs-theme :straight t :defer 10)
 ;; (use-package spaceline :straight t)
 (use-package tao-theme :straight t :defer 10
-  :config
-  (setq tao-theme-use-boxes nil
-        tao-theme-use-height nil))
+             :config
+             (setq tao-theme-use-boxes nil
+                   tao-theme-use-height nil))
 
 (setq default-frame-alist
       (append (list '(width  . 120) '(height . 45)
@@ -97,8 +99,8 @@
           ("|[0-9a-zA-Z- ]+?|"          . svg-tag-keyboard)))
   (svg-tag-mode 1))
 
-;; date in echo area
-(require 'subr-x)
+
+;;; date in echo area
 
 ;; Improved version of enhanced-message.el
 ;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
@@ -107,29 +109,29 @@
 This enhanced message displays a regular message in the echo area and adds a
 specific text on the right part of the echo area. This is to be used as an
 advice."
-  (let* ((right
-          (propertize
-           ;; HACK The first space is a thin space, not a regular space. We'll
-           ;; split on the thin space later so-as not to inadvertently break up
-           ;; a real message
-           (format-time-string "   %A %d %B %Y, %H:%M  ")
-           'face '(:height 0.85
-                   :overline t
-                   :family "Futura"
-                   :inherit mode-line-inactive)))
-         (width (- (frame-width) (length right) -4))
-         (msg (if (car args) (apply 'format-message args) ""))
-         (msg (car (split-string msg " ")))
-         (msg (string-trim msg))
-         (left (truncate-string-to-width msg width nil nil "…"))
-         (full (format (format "%%-%ds %%s" width) left right)))
+  (when-let* ((right (propertize
+                      ;; HACK The first space is a thin space, not a regular
+                      ;; space. We'll split on the thin space later so-as not to
+                      ;; inadvertently break up a real message
+                      (format-time-string "   %A %d %B %Y, %H:%M   ")
+                      'face '(:height 0.85
+                              :overline t
+                              :family "Futura"
+                              :inherit mode-line-inactive)))
+              (width (- (frame-width) (length right) -4))
+              (msg (if (car args) (apply 'format-message args) ""))
+              (msg (replace-regexp-in-string "%" "%%" msg))
+              (msg (car (split-string msg " ")))
+              (msg (string-trim msg))
+              (left (truncate-string-to-width msg width nil nil "…"))
+              (full (format (format "%%-%ds %%s" width) left right)))
     (if (active-minibuffer-window)
         ;; Regular log and display when minibuffer is active
         (apply orig-fun args)
       (progn
         ;; Log actual message without echo
-        (if message-log-max
-            (let ((inhibit-message t)) (apply orig-fun (list msg))))
+        (when message-log-max
+          (let ((inhibit-message t)) (apply orig-fun (list msg))))
         ;; Display enhanced message without log
         (let ((message-truncate-lines t) (message-log-max nil))
           (apply orig-fun (list full)))
@@ -178,12 +180,12 @@ advice."
 (defface fallback '((t :family "Fira Code Light"
                        :inherit 'default)) "Fallback")
 ;; TODO these aren't working, they say "wrong-type-argument char-table-p nil" and show that standard-display-table is nil? Do we need to wait for somethign to eval?
-;(set-display-table-slot standard-display-table 'truncation
-;                        (make-glyph-code ?… 'fallback))
-;(set-display-table-slot standard-display-table 'wrap
-;                        (make-glyph-code ?↩ 'fallback))
-;(set-display-table-slot standard-display-table 'selective-display
-;                        (string-to-vector " …"))
+                                        ;(set-display-table-slot standard-display-table 'truncation
+                                        ;                        (make-glyph-code ?… 'fallback))
+                                        ;(set-display-table-slot standard-display-table 'wrap
+                                        ;                        (make-glyph-code ?↩ 'fallback))
+                                        ;(set-display-table-slot standard-display-table 'selective-display
+                                        ;                        (string-to-vector " …"))
 
 
 ;;; additional tweaks and packages
@@ -212,6 +214,6 @@ advice."
   :hook ((prog-mode text-mode) . todo-light-mode))
 
 (use-package fireplace :straight t
-  :commands fireplace)
+             :commands fireplace)
 
 (provide 'aero-theme)
