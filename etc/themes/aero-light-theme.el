@@ -131,12 +131,12 @@
    `(warning ((t (:foreground ,aero-bright-yellow :bold t))))
 
    ;; Aero modeline
-   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-cyan :box (:line-width 3 :color ,aero-normal-cyan)))))
-   `(aero/modeline-evil-insert ((t (:foreground ,aero-bg :background ,aero-normal-magenta :box (:line-width 3 :color ,aero-normal-magenta)))))
-   `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-normal-green :box (:line-width 3 :color ,aero-normal-green)))))
-   `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange :box (:line-width 3 :color ,aero-bright-orange)))))
-   `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red :box (:line-width 3 :color ,aero-bright-red)))))
-   `(aero/modeline-window-number ((t (:foreground ,aero-act1 :background ,aero-space-base :box (:line-width 3 :color ,aero-space-base)))))
+   `(aero/modeline-evil-normal ((t (:foreground ,aero-bg :background ,aero-normal-cyan))))
+   `(aero/modeline-evil-insert ((t (:foreground ,aero-bg :background ,aero-normal-magenta))))
+   `(aero/modeline-evil-visual ((t (:foreground ,aero-bg :background ,aero-normal-green))))
+   `(aero/modeline-evil-replace ((t (:foreground ,aero-bg :background ,aero-bright-orange))))
+   `(aero/modeline-evil-emacs ((t (:foreground ,aero-bg :background ,aero-bright-red))))
+   `(aero/modeline-window-number ((t (:foreground ,aero-act1 :background ,aero-space-base))))
    `(aero/modeline-major-mode-active ((t (:foreground ,aero-space-base :bold t :background nil))))
    `(aero/modeline-major-mode-inactive ((t (:inherit aero/modeline-major-mode-active))))
    `(aero/modeline-modified ((t (:inherit error :height 180))))
