@@ -1,7 +1,8 @@
-personal_ws-1.1 en 180 
+personal_ws-1.1 en 198 
 ACL
 Aireon
 Alacritty
+Analytics
 BSc
 Bing
 Brotli
@@ -18,6 +19,7 @@ FlighAware
 FlightAware
 Flyspell
 Framagit
+Frontend
 GDPR
 GTK
 Gzip
@@ -31,6 +33,8 @@ Jira
 KDE
 LLC
 LMB
+MELPA
+Memoization
 NSR
 NVM
 Nvidia
@@ -46,6 +50,7 @@ SSHFS
 Shopify
 Spotify
 Tabstops
+Theming
 Tmux
 UI
 USD
@@ -58,6 +63,7 @@ YYYY
 aero
 ajax
 allowlist
+analytics
 applescript
 appstream
 async
@@ -73,9 +79,11 @@ callsign
 callsigns
 cget
 config
+counterintuitive
 cron
 css
 decrement
+defund
 deprovision
 destructuring
 dev
@@ -100,6 +108,8 @@ falsy
 flycheck
 fontconfig
 formfeeds
+frontend
+frontend's
 fullscreen
 fullscreening
 gitlab
@@ -124,9 +134,14 @@ localhost
 macOS
 mc
 md
+memoization
+memoize
+memoized
+memoizing
 merchantability
 minibuffer
 namespace
+namespace's
 ncurses
 noopener
 noreferrer
@@ -135,8 +150,10 @@ nw
 pixelation
 pre
 prepend
+preprocessor
 println
 proc
+procs
 proration
 proxied
 px
@@ -162,6 +179,7 @@ tcllib
 tclsh
 terminfo
 termios
+theming
 thornjad
 todo
 tooltip
