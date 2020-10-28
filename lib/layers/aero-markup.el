@@ -13,6 +13,9 @@
 (use-package markdown-mode :straight t
   :mode "\\.\\(md\\|markdown\\)")
 
+(use-package markdown-toc :straight t
+  :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
+
 (use-package nov :straight t
   :mode ("\\.epub\\'" . nov-mode)
   :init
