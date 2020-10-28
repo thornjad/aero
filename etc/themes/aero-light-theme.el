@@ -111,7 +111,7 @@
    `(window-divider-last-pixel ((t (:inherit vertical-border :foreground ,aero-bg))))
    `(link ((t (:foreground ,aero-normal-blue :underline t))))
    `(link-visited ((t (:foreground ,aero-normal-magenta :underline t))))
-   `(shadow ((t (:foreground ,aero-base2))))
+   `(shadow ((t (:foreground ,aero-space-base-dim))))
    `(trailing-whitespace ((t (:background ,aero-bright-red))))
    `(escape-glyph ((t (:foreground ,aero-normal-blue))))
    `(lazy-highlight ((t (:background ,aero-normal-blue :foreground ,aero-base7 :distant-foreground ,aero-base8 :weight bold))))
@@ -480,7 +480,7 @@
    `(magit-branch-remote ((t (:foreground ,aero-normal-magenta))))
    `(magit-cherry-equivalent ((t (:foreground ,aero-normal-magenta))))
    `(magit-cherry-unmatched ((t (:foreground ,aero-normal-blue))))
-   `(magit-diff-added ((t (:foreground ,aero-bright-green))))
+   `(magit-diff-added ((t (:foreground ,aero-faded-green))))
    `(magit-diff-added-highlight ((t (:foreground ,aero-faded-green :background ,aero-faded-green-dim))))
    `(magit-diff-base
      ((t (:background ,aero-bright-yellow :foreground ,aero-base4))))
@@ -496,8 +496,7 @@
      ((t (:background ,aero-base1 :foreground ,aero-bright-yellow))))
    `(magit-diff-lines-heading
      ((t (:background ,aero-bright-yellow :foreground ,aero-fg))))
-   `(magit-diff-removed
-     ((t (:foreground ,aero-bright-red))))
+   `(magit-diff-removed ((t (:foreground ,aero-faded-red))))
    `(magit-diff-removed-highlight
      ((t (:foreground ,aero-faded-red :background ,aero-faded-red-dim))))
    `(magit-diffstat-added ((t (:foreground ,aero-bright-green))))
