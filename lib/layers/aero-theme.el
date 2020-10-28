@@ -21,6 +21,8 @@
 ;;; Code:
 (require 'subr-x)
 (require 'cl-lib)
+(require 'memoize)
+(require 'request)
 
 (use-package all-the-icons :straight t)
 
@@ -100,25 +102,68 @@
   (svg-tag-mode 1))
 
 
-;;; date in echo area
+;;; weather and date in echo area
+
+(defvar aero/weather-location "KDWH"
+  "Location to display current weather for.")
+(defvar aero/weather-update-interval "30 min"
+  "The time interval at which to update the weather.")
+(defvar aero/current-weather ""
+  "Current weather at `aero/weather-location'.")
+(defvar aero--current-weather-update-timer ""
+  "Timer for updating the current weather.")
 
 ;; Improved version of enhanced-message.el
 ;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
+(defun aero--update-weather-line ()
+  ;; TODO include sunrise/set if somewhat near that time
+  "Set the current weather into `aero/current-location'."
+  (request
+    (concat "http://wttr.in/" aero/weather-location)
+    :params '(("format" . "%t %C"))
+    :success (cl-function (lambda (&key data &allow-other-keys)
+                            (setq aero/current-weather data))))
+
+  ;; Reset the auto-update timer
+  (when (timerp aero--current-weather-update-timer)
+    (cancel-timer aero--current-weather-update-timer))
+  (setq aero--current-weather-update-timer
+        (run-at-time aero/weather-update-interval nil
+                     #'aero--update-weather-line)))
+
+(defun aero/update-weather ()
+  "Force update the weather."
+  (interactive)
+  (aero--update-weather-line))
+
+(defun aero/stop-weather ()
+  "Stop the weather."
+  (interactive)
+  (when (timerp aero--current-weather-update-timer)
+    (cancel-timer aero--current-weather-update-timer))
+  (setq aero/current-weather ""))
+
+;; TODO memoize?
 (defun enhanced-message (orig-fun &rest args)
   "Message ORIG-FUN with ARGS, but add additional text.
 This enhanced message displays a regular message in the echo area and adds a
 specific text on the right part of the echo area. This is to be used as an
 advice."
   (when-let* ((right (propertize
-                      ;; HACK The first space is a thin space, not a regular
-                      ;; space. We'll split on the thin space later so-as not to
-                      ;; inadvertently break up a real message
-                      (format-time-string "   %A %d %B %Y, %H:%M   ")
+                      ;; HACK The first and last spaces are thin spaces, not
+                      ;; regular spaces. We'll split on the thin space later
+                      ;; so-as not to inadvertently break up a real message
+                      (concat
+                       "   "
+                       (or aero/current-weather "")
+                       "   "
+                       (format-time-string " %A %d %B %Y, %H:%M")
+                       "   ")
                       'face '(:height 0.85
                               :overline t
                               :family "Futura"
                               :inherit mode-line-inactive)))
-              (width (- (frame-width) (length right) -4))
+              (width (- (frame-width) (length right) -5))
               (msg (if (car args) (apply 'format-message args) ""))
               (msg (car (split-string msg " ")))
               (msg (string-trim msg))
@@ -141,11 +186,14 @@ advice."
         ;; Set current message explicitely
         (setq current-message msg)))))
 
+;; Initialize weather
+(aero--update-weather-line)
+
+;; Activate enhanced message
 (advice-add 'message :around #'enhanced-message)
 (add-hook 'post-command-hook
           (lambda () (let ((message-log-max nil))
                        (message (current-message)))))
-
 
 ;;; get ligatures to actually work
 
