@@ -546,6 +546,12 @@ In a dired buffer, it will open the current file."
            do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
   (tramp-cleanup-all-connections))
 
+(defun aero/kill-tags ()
+  "Kill the currently-loaded TAGS file."
+  (interactive)
+  (when (get-buffer "TAGS")
+    (kill-buffer "TAGS")))
+
 (defun aero/open-local-init ()
   "Open local init file for editing."
   (interactive)
