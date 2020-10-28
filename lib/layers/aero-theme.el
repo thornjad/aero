@@ -113,13 +113,12 @@
 (defvar aero--current-weather-update-timer ""
   "Timer for updating the current weather.")
 
-;; Improved version of enhanced-message.el
-;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
 (defun aero--update-weather-line ()
   ;; TODO include sunrise/set if somewhat near that time
   "Set the current weather into `aero/current-location'."
   (request
     (concat "http://wttr.in/" aero/weather-location)
+    ;; format is detailed at https://github.com/chubin/wttr.in#one-line-output
     :params '(("format" . "%t %C"))
     :success (cl-function (lambda (&key data &allow-other-keys)
                             (setq aero/current-weather data))))
@@ -144,6 +143,8 @@
   (setq aero/current-weather ""))
 
 ;; TODO memoize?
+;; Improved version of enhanced-message.el
+;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
 (defun enhanced-message (orig-fun &rest args)
   "Message ORIG-FUN with ARGS, but add additional text.
 This enhanced message displays a regular message in the echo area and adds a
