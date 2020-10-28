@@ -192,6 +192,11 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (require 'smartparens-config)
   (show-smartparens-global-mode t)
 
+  (defun aero/copy-sexp-as-kill (&optional arg)
+    "Copy the sexp to the kill ring without killing."
+    (interactive)
+    (funcall #'sp-kill-sexp arg t))
+
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
@@ -204,7 +209,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sw{" 'sp-wrap-curly
    "sw[" 'sp-wrap-square
    "su" '(sp-unwrap-sexp :which-key "unwrap")
-   "sk" '(sp-kill-sexp :which-key "kill"))
+   "sk" '(sp-kill-sexp :which-key "kill")
+   "sK" '(aero/copy-sexp-as-kill :wk "copy as kill"))
 
   (sp-local-pair 'web-mode "<?" "?>")
   (sp-local-pair 'web-mode "{" "}")
