@@ -32,6 +32,7 @@
   :straight (memoize :host gitlab :repo "thornjad/memoize"))
 (use-package async :straight t
   :commands (async-save))
+(use-package request :straight t)
 
 (defun aero/keyboard-quit-context ()
   "Quit current context.
