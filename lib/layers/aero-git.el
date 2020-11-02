@@ -65,36 +65,36 @@ If such a process is already running or if the value of option
 `magit-credential-cache-daemon-socket' is nil, then do nothing. Otherwise start
 the process passing the value of that options as argument."
     (unless (or (not magit-credential-cache-daemon-socket)
-               (process-live-p magit-credential-cache-daemon-process)
-               (memq magit-credential-cache-daemon-process
-                     (list-system-processes)))
+                (process-live-p magit-credential-cache-daemon-process)
+                (memq magit-credential-cache-daemon-process
+                      (list-system-processes)))
       (setq magit-credential-cache-daemon-process
             (or (--first (let* ((attr (process-attributes it))
-                               (comm (cdr (assq 'comm attr)))
-                               (user (cdr (assq 'user attr))))
-                          (and (string= comm "git-credential-cache--daemon")
-                             (string= user user-login-name)))
-                        (list-system-processes))
-               (condition-case nil
-                   (el-patch-wrap 2
-                     (with-current-buffer
-                         (get-buffer-create " *git-credential-cache--daemon*")
-                       (start-process "git-credential-cache--daemon"
-                                      (el-patch-swap
-                                        " *git-credential-cache--daemon*"
-                                        (current-buffer))
-                                      magit-git-executable
-                                      "credential-cache--daemon"
-                                      magit-credential-cache-daemon-socket)
-                       (el-patch-add
-                         (set-process-query-on-exit-flag
-                          (get-buffer-process (current-buffer)) nil))))
-                 ;; Some Git implementations (e.g. Windows) won't have
-                 ;; this program; if we fail the first time, stop trying.
-                 ((debug error)
-                  (remove-hook
-                   'magit-credential-hook
-                   #'magit-maybe-start-credential-cache-daemon)))))))
+                                (comm (cdr (assq 'comm attr)))
+                                (user (cdr (assq 'user attr))))
+                           (and (string= comm "git-credential-cache--daemon")
+                                (string= user user-login-name)))
+                         (list-system-processes))
+                (condition-case nil
+                    (el-patch-wrap 2
+                      (with-current-buffer
+                          (get-buffer-create " *git-credential-cache--daemon*")
+                        (start-process "git-credential-cache--daemon"
+                                       (el-patch-swap
+                                         " *git-credential-cache--daemon*"
+                                         (current-buffer))
+                                       magit-git-executable
+                                       "credential-cache--daemon"
+                                       magit-credential-cache-daemon-socket)
+                        (el-patch-add
+                          (set-process-query-on-exit-flag
+                           (get-buffer-process (current-buffer)) nil))))
+                  ;; Some Git implementations (e.g. Windows) won't have
+                  ;; this program; if we fail the first time, stop trying.
+                  ((debug error)
+                   (remove-hook
+                    'magit-credential-hook
+                    #'magit-maybe-start-credential-cache-daemon)))))))
 
 	:config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
