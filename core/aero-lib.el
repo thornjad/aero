@@ -28,8 +28,8 @@
 ;;; utilities
 
 ;; Load in external libs
-(use-package memoize
-  :straight (memoize :host gitlab :repo "thornjad/memoize"))
+(use-package memo
+  :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
 (use-package async :straight t
   :commands (async-save))
 (use-package request :straight t)
