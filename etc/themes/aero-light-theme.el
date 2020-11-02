@@ -27,6 +27,7 @@
 
       (aero-space-base     "#655370")
       (aero-space-base-dim "#a094a2")
+      (aero-space-base-dimmer "#D2CFD2")
       (aero-base0          "#FAF7EE")
       (aero-base1          "#ece3cf")
       (aero-base2          "#e4e2e2")
@@ -51,7 +52,7 @@
       (aero-comment "#829293")
       (aero-comment-bg "#E8E7E6")
 
-      (aero-normal-black    "#fffbea")
+      (aero-normal-black    "#4E4B3D")
       (aero-normal-white    "#7b8787")
       (aero-normal-red      "#5f081e")
       (aero-normal-orange   "#AB7146")
@@ -212,7 +213,7 @@
    `(diff-changed ((t (:foreground ,aero-fg))))
    `(diff-added ((t (:foreground ,aero-fg))))
    `(diff-refine-added ((t (:inherit diff-added :weight bold))))
-   `(diff-removed ((t (:foreground ,aero-bright-red))))
+   `(diff-removed ((t (:foreground ,aero-normal-black))))
    `(diff-refine-removed ((t (:inherit diff-removed :weight bold))))
    `(diff-indicator-changed ((t (:inherit diff-changed))))
    `(diff-indicator-added ((t (:inherit diff-added))))
@@ -299,24 +300,24 @@
 
    ;; avy
    `(avy-lead-face
-     ((t (:foreground ,aero-normal-black :background ,aero-normal-cyan :slant normal))))
+     ((t (:foreground ,aero-normal-white :background ,aero-normal-cyan :slant normal))))
    `(avy-lead-face-0
-     ((t (:foreground ,aero-normal-black :background ,aero-bright-blue :slant normal))))
+     ((t (:foreground ,aero-normal-white :background ,aero-bright-blue :slant normal))))
    `(avy-lead-face-1
-     ((t (:foreground ,aero-normal-black :background ,aero-base0 :slant normal))))
+     ((t (:foreground ,aero-normal-white :background ,aero-base0 :slant normal))))
    `(avy-lead-face-2
-     ((t (:foreground ,aero-normal-black :background ,aero-normal-blue :slant normal))))
+     ((t (:foreground ,aero-normal-white :background ,aero-normal-blue :slant normal))))
 
    ;; hi-lock-mode
    `(hi-black-b ((t (:foreground ,aero-brilliant-black :weight bold))))
    `(hi-black-hb ((t (:foreground ,aero-brilliant-black :weight bold :height 1.5))))
-   `(hi-blue ((t (:foreground ,aero-normal-black :background ,aero-normal-blue))))
+   `(hi-blue ((t (:foreground ,aero-normal-white :background ,aero-normal-blue))))
    `(hi-blue-b ((t (:foreground ,aero-normal-blue :weight bold))))
-   `(hi-green ((t (:foreground ,aero-normal-black :background ,aero-normal-green))))
+   `(hi-green ((t (:foreground ,aero-normal-white :background ,aero-normal-green))))
    `(hi-green-b ((t (:foreground ,aero-normal-green :weight bold))))
-   `(hi-pink ((t (:foreground ,aero-normal-black :background ,aero-normal-magenta))))
+   `(hi-pink ((t (:foreground ,aero-normal-white :background ,aero-normal-magenta))))
    `(hi-red-b ((t (:foreground ,aero-bright-red :weight bold))))
-   `(hi-yellow ((t (:foreground ,aero-normal-black :background ,aero-bright-yellow))))
+   `(hi-yellow ((t (:foreground ,aero-normal-white :background ,aero-bright-yellow))))
 
    ;; company-mode
    `(company-scrollbar-bg ((t (:background ,aero-ttip-bg))))
@@ -467,7 +468,7 @@
    `(ivy-minibuffer-match-face-4 ((t (:foreground ,aero-fg :weight bold))))
 
    ;; ivy-posframe
-   `(ivy-posframe ((t (:background ,aero-normal-black))))
+   `(ivy-posframe ((t (:background ,aero-normal-white))))
    `(ivy-posframe-border ((t (:box ,aero-normal-red))))
 
    ;; magit
@@ -483,19 +484,22 @@
    `(magit-diff-added ((t (:foreground ,aero-faded-green))))
    `(magit-diff-added-highlight ((t (:foreground ,aero-faded-green :background ,aero-faded-green-dim))))
    `(magit-diff-base
-     ((t (:background ,aero-bright-yellow :foreground ,aero-base4))))
+     ((t (:background ,aero-space-base-dimmer :foreground ,aero-space-base))))
    `(magit-diff-base-highlight
-     ((t (:background ,aero-bright-yellow :foreground ,aero-fg))))
-   `(magit-diff-context ((t (:foreground "grey50" :extend t))))
-   `(magit-diff-context-highlight ((t (:inherit magit-diff-context :background "grey95" :extend t))))
+     ((t (:weight bold))))
+   `(magit-diff-context ((t (:foreground "grey50" :background "grey95" :extend t))))
+   `(magit-diff-context-highlight ((t (:inherit magit-diff-context :background ,aero-base12 :extend t))))
+   `(magit-diff-file-heading ((t (:weight normal))))
+   `(magit-diff-file-heading-highlight ((t (:weight bold))))
+   `(magit-diff-file-heading-selection ((t (:inherit magit-diff-file-heading-highlight :foreground "salmon4"))))
    `(magit-diff-hunk-heading
-     ((t (:background ,aero-base1 :foreground ,aero-base4))))
+     ((t (:background ,aero-space-base-dimmer :foreground ,aero-space-base))))
    `(magit-diff-hunk-heading-highlight
-     ((t (:background "grey75" :foreground "grey30"))))
+     ((t (:weight bold))))
    `(magit-diff-hunk-heading-selection
-     ((t (:background ,aero-base1 :foreground ,aero-bright-yellow))))
+     ((t (:inherit magit-diff-hunk-heading-highlight :foreground "salmon4"))))
    `(magit-diff-lines-heading
-     ((t (:background ,aero-bright-yellow :foreground ,aero-fg))))
+     ((t (:inherit magit-diff-hunk-heading-highlight :background "LightSalmon3"))))
    `(magit-diff-removed ((t (:foreground ,aero-faded-red))))
    `(magit-diff-removed-highlight
      ((t (:foreground ,aero-faded-red :background ,aero-faded-red-dim))))
@@ -518,9 +522,9 @@
    `(magit-reflog-remote ((t (:foreground ,aero-normal-blue))))
    `(magit-reflog-reset ((t (:foreground ,aero-bright-red))))
    `(magit-refname ((t (:foreground ,aero-base3))))
-   `(magit-section-heading ((t (:foreground ,aero-bright-yellow :weight bold))))
-   `(magit-section-heading-selection ((t (:foreground ,aero-bright-yellow))))
-   `(magit-section-highlight ((t (:inherit region))))
+   `(magit-section-heading ((t (:foreground ,aero-normal-green :weight bold))))
+   `(magit-section-heading-selection ((t (:foreground ,aero-bright-yellow :weight bold))))
+   `(magit-section-highlight ((t (:inherit magit-diff-file-heading-highlight :weight bold))))
    `(magit-sequence-drop ((t (:foreground ,aero-bright-yellow))))
    `(magit-sequence-head ((t (:foreground ,aero-normal-blue))))
    `(magit-sequence-part ((t (:foreground ,aero-bright-yellow))))
