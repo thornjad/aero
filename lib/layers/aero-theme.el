@@ -21,7 +21,6 @@
 ;;; Code:
 (require 'subr-x)
 (require 'cl-lib)
-(require 'memoize)
 (require 'request)
 
 (use-package all-the-icons :straight t)
