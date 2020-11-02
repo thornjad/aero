@@ -1,13 +1,15 @@
 *.db
-*.pyc
 *.elc
+*.pyc
 *.stackdump
 *~
 .DS_Store
 .cache
+.dap-breakpoints
 .directory
 .emacs.desktop
 .emacs.desktop.lock
+.extension/
 .ignore
 .last-package-update-day
 .lsp-*
@@ -33,11 +35,12 @@ elnode/
 elpa/
 elpy/
 eshell/*
+etc/lsp-session
 etc/recentf
 etc/todo.org
-etc/lsp-session
 flycheck_*
 nov-places
+places
 projectile-bookmarks.eld
 projectile.cache
 request/
@@ -51,5 +54,3 @@ xkcd/
 
 # Ignore local init
 init.local.el
-.extension/
-places
