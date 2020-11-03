@@ -41,7 +41,6 @@
    (lambda () (setq emmet-expand-jsx-className? t))))
 
 (use-package scss-mode :straight t
-  :load-path "lib/packages/emmet-mode"
   :mode "\\.s?css\\'")
 
 
