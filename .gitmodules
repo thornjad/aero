@@ -22,9 +22,6 @@
 [submodule "lib/packages/js2-mode"]
 	path = lib/packages/js2-mode
 	url = git@github.com:mooz/js2-mode.git
-[submodule "lib/packages/web-mode"]
-	path = lib/packages/web-mode
-	url = git@github.com:fxbois/web-mode.git
 [submodule "lib/packages/scss-mode"]
 	path = lib/packages/scss-mode
 	url = git@github.com:antonj/scss-mode.git

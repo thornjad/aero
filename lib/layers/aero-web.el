@@ -23,7 +23,6 @@
 (require 'aero-lib)
 
 (use-package web-mode :straight t
-  :load-path "lib/packages/web-mode/"
   :mode
   "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|rvt\\)\\'")
 
