@@ -25,9 +25,6 @@
 [submodule "lib/packages/web-mode"]
 	path = lib/packages/web-mode
 	url = git@github.com:fxbois/web-mode.git
-[submodule "lib/packages/emmet-mode"]
-	path = lib/packages/emmet-mode
-	url = git@github.com:smihica/emmet-mode.git
 [submodule "lib/packages/scss-mode"]
 	path = lib/packages/scss-mode
 	url = git@github.com:antonj/scss-mode.git
