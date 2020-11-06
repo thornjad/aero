@@ -593,7 +593,10 @@ Local bindings (`counsel-mode-map'):
  "fE" '(aero/sudo-edit :wk "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
  "fo" '(:ignore t :wk "open special files")
- "fot" '(aero/thornlog :wk "thornlog")
+ "fot" '(:ignore t :wk "thornlog")
+ "fott" '(aero/thornlog-dir :wk "thornlog all")
+ "fotl" '(aero/thornlog-log :wk "thornlog log")
+ "fotd" '(aero/thornlog-todo :wk "thornlog todo")
  "foP" 'aero/open-emacs-problems
  "fof" 'aero/open-in-finder
 
