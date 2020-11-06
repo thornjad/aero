@@ -113,6 +113,8 @@
 (defun aero--update-weather-line ()
   ;; TODO include sunrise/set if somewhat near that time
   "Set the current weather into `aero/current-location'."
+  ;; Ensure enhanced-message is active
+  (aero/activate-enhanced-message)
   (request
     (concat "http://wttr.in/" aero/weather-location)
     ;; format is detailed at https://github.com/chubin/wttr.in#one-line-output
@@ -139,7 +141,6 @@
     (cancel-timer aero--current-weather-update-timer))
   (setq aero/current-weather ""))
 
-;; TODO memoize?
 ;; Improved version of enhanced-message.el
 ;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
 (defun enhanced-message (orig-fun &rest args)
@@ -184,14 +185,21 @@ advice."
         ;; Set current message explicitely
         (setq current-message msg)))))
 
-;; Initialize weather
-(aero--update-weather-line)
+(defun aero/show-enhanced-message ()
+  (let ((message-log-max nil))
+    (message (current-message))))
 
-;; Activate enhanced message
-(advice-add 'message :around #'enhanced-message)
-(add-hook 'post-command-hook
-          (lambda () (let ((message-log-max nil))
-                       (message (current-message)))))
+(defun aero/activate-enhanced-message ()
+  "Ensure `enhanced-message' is active."
+  (unless (advice-member-p #'message #'enhanced-message)
+    (advice-add 'message :around #'enhanced-message))
+  (unless (memq #'aero/show-enhanced-message post-command-hook)
+    (add-hook 'post-command-hook #'aero/show-enhanced-message)))
+
+;; Initialize enhanced-message
+(aero--update-weather-line)
+(aero/activate-enhanced-message)
+
 
 ;;; get ligatures to actually work
 
