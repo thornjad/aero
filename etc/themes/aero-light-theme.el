@@ -53,7 +53,7 @@
       (aero-comment-bg "#E8E7E6")
 
       (aero-normal-black    "#4E4B3D")
-      (aero-normal-white    "#7b8787")
+      (aero-normal-white    "#ECF3F3")
       (aero-normal-red      "#5f081e")
       (aero-normal-orange   "#AB7146")
       (aero-normal-yellow   "#b58900")
