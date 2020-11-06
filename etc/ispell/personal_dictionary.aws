@@ -1,4 +1,4 @@
-personal_ws-1.1 en 198 
+personal_ws-1.1 en 217 
 ACL
 Aireon
 Alacritty
@@ -12,9 +12,13 @@ CSRF
 CTE
 CTEs
 Changelog
+Chocolatiers
+Comeet
 Donal
 ESC
+FBO
 FIXME
+FOSS
 FlighAware
 FlightAware
 Flyspell
@@ -22,6 +26,8 @@ Framagit
 Frontend
 GDPR
 GTK
+GitLab
+GitLab's
 Gzip
 HH
 HiDPI
@@ -41,14 +47,17 @@ Nvidia
 OSX
 OpenType
 PCI
+PRs
 Postgres
 Prebuilt
 RET
+Reddit
 ResNet
 SPC
 SSHFS
 Shopify
 Spotify
+Standup
 Tabstops
 Theming
 Tmux
@@ -57,6 +66,7 @@ USD
 UTF
 Verix
 Voici
+WFH
 WTF
 Wayland
 YYYY
@@ -78,10 +88,13 @@ borked
 callsign
 callsigns
 cget
+chocolatiers
 config
 counterintuitive
+coworking
 cron
 css
+de
 decrement
 defund
 deprovision
@@ -104,6 +117,7 @@ eshell
 eval
 evcxr
 eww
+facto
 falsy
 flycheck
 fontconfig
@@ -118,6 +132,7 @@ grey
 hacky
 hardcode
 homebrew
+homebrewed
 href
 http
 https
@@ -143,6 +158,7 @@ minibuffer
 namespace
 namespace's
 ncurses
+nerf
 noopener
 noreferrer
 npm
@@ -166,6 +182,9 @@ rsync
 rvt
 sexp
 signup
+sitdown
+standup
+standups
 struct
 subheader
 submodule
