@@ -95,9 +95,7 @@
           ("FIXME"                    . svg-tag-fixme)
           ("NOTE"                     . svg-tag-note)
           ("HACK"                     . svg-tag-hack)
-          ("\([0-9a-zA-Z]\)"            . svg-tag-round)
-          ("\([0-9a-zA-Z][0-9a-zA-Z]\)" . svg-tag-quasi-round)
-          ("|[0-9a-zA-Z- ]+?|"          . svg-tag-keyboard)))
+          (":[0-9a-zA-Z][0-9a-zA-Z]:" . svg-tag-quasi-round)))
   (svg-tag-mode 1))
 
 
