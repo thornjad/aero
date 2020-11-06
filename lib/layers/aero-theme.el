@@ -44,9 +44,9 @@
 ;; (use-package spacemacs-theme :straight t :defer 10)
 ;; (use-package spaceline :straight t)
 (use-package tao-theme :straight t :defer 10
-             :config
-             (setq tao-theme-use-boxes nil
-                   tao-theme-use-height nil))
+  :config
+  (setq tao-theme-use-boxes nil
+        tao-theme-use-height nil))
 
 (setq default-frame-alist
       (append (list '(width  . 120) '(height . 45)
@@ -271,6 +271,6 @@ advice."
   :hook ((prog-mode text-mode) . todo-light-mode))
 
 (use-package fireplace :straight t
-             :commands fireplace)
+  :commands fireplace)
 
 (provide 'aero-theme)
