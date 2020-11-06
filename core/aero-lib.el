@@ -246,10 +246,20 @@ emacs with sigusr2"
   (interactive)
   (toggle-debug-on-quit))
 
-(defun aero/thornlog ()
+(defun aero/thornlog-dir ()
   "Personal persistent log."
   (interactive)
-  (find-file (expand-file-name "~/doc/thornlog.org")))
+  (deer (expand-file-name "~/doc/thornlog/")))
+
+(defun aero/thornlog-log ()
+  "Personal persistent log."
+  (interactive)
+  (find-file (expand-file-name "~/doc/thornlog/log.org")))
+
+(defun aero/thornlog-todo ()
+  "Personal persistent log todo."
+  (interactive)
+  (find-file (expand-file-name "~/doc/thornlog/todo.org")))
 
 (defun aero/eshell-taskwarrior ()
   "Open a specialized eshell buffer for taskwarrior."
