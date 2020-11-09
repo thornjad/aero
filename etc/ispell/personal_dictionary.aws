@@ -1,5 +1,6 @@
-personal_ws-1.1 en 217 
+personal_ws-1.1 en 220 
 ACL
+APIs
 Aireon
 Alacritty
 Analytics
@@ -48,6 +49,7 @@ OSX
 OpenType
 PCI
 PRs
+PoC
 Postgres
 Prebuilt
 RET
@@ -126,6 +128,7 @@ frontend
 frontend's
 fullscreen
 fullscreening
+geolocation
 gitlab
 glyphs
 grey
