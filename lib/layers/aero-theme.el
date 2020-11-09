@@ -19,11 +19,6 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'subr-x)
-(require 'cl-lib)
-(require 'request)
-
-(use-package all-the-icons :straight t)
 
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
@@ -60,13 +55,13 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 10)
 
-(setq-default x-underline-at-descent-line t
-              line-spacing 0.1
-              widget-image-enable nil)
-
 (use-package svg-tag-mode
   :straight (:host github :repo "rougier/svg-tag-mode" :branch "main")
   :defer 3
+  :init
+  (setq-default x-underline-at-descent-line t
+                line-spacing 0.1
+                widget-image-enable nil)
   :config
   (defface svg-tag-note-face
     '((t :foreground "black" :background "white" :box "black"
@@ -96,10 +91,13 @@
           ("NOTE"                     . svg-tag-note)
           ("HACK"                     . svg-tag-hack)
           (":[0-9a-zA-Z][0-9a-zA-Z]:" . svg-tag-quasi-round)))
-  (svg-tag-mode 1))
+  (svg-tag-mode +1))
 
 
 ;;; weather and date in echo area
+
+(require 'cl-lib)
+(require 'request)
 
 (defvar aero/weather-location "KDWH"
   "Location to display current weather for.")
@@ -182,7 +180,7 @@ advice."
         (let ((message-truncate-lines t) (message-log-max nil)
               (full (replace-regexp-in-string "%" "%%" full)))
           (apply orig-fun (list full)))
-        ;; Set current message explicitely
+        ;; Set current message explicitly
         (setq current-message msg)))))
 
 (defun aero/show-enhanced-message ()
@@ -257,6 +255,8 @@ advice."
 (global-display-fill-column-indicator-mode 1)
 (add-hook 'text-mode-hook #'turn-on-visual-line-mode)
 (add-hook 'fundamental-mode-hook #'turn-on-visual-line-mode)
+
+(use-package all-the-icons :straight t)
 
 (use-package formfeeder
   :load-path "lib/packages/formfeeder/"
