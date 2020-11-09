@@ -53,7 +53,7 @@ packages change no warning and little to no documentation. This repository
 is not intended to be used as a prebuilt configuration like Spacemacs, but
 rather as a reference or source of ideas. Use at your own risk.
 
-To get started with Emacs, I highly recommend https://www.spacemacs.org.
+To get started with Emacs, I highly recommend [[https://spacemacs.org][Spacemacs]].
 
 * Credits
 Like the Borg, Aero amalgamates macros, functions, bindings and packages
