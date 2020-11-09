@@ -1,0 +1,86 @@
+#+title: Aero Emacs
+#+author: Jade Michael Thornton
+
+Aero is my own Emacs configuration, blending all the best shit I can find. It
+is built in the style of a distribution like Prelude or Spacemacs, but it's
+not intended for widespread use; Aero is highly tailored to me, what I want
+and what I use. Special focus is put on writing Lisps, Python, TCL, Node and
+the several web languages. Other languages like C and ML have some light
+configuration as well.
+
+"Emacs outshines all other editing software in the same way that the noonday
+sun does the stars. It is not just bigger and brighter; it simply makes
+everything else vanish." — Neal Stephenson
+
+"While any text editor can save your files, only Emacs can save your soul." —
+Per Abrahamsen
+
+"The reasonable man adapts himself to Emacs; the unreasonable one persists in
+trying to adapt Emacs to himself. Therefore all progress depends on the
+unreasonable man." — G.B. Shaw, probably
+
+"An infinite number of monkeys typing into GNU Emacs would never make a good
+program." — Linus Torvalds
+
+"You could be a total lunatic, and Emacs has to make you happy" — Steve Yegge
+
+"Emacs is the ground. We run around and act silly on top of it, and when we
+die, may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
+
+"Emacs is a great operating system, lacking only a decent editor." — ancient
+Vi proverb
+
+"Thou shalt not cross 80 columns in thy file" — Linus Torvalds
+
+* Requirements
+Aero is maintained as a cutting-edge tool, and focuses on working best with
+the latest minor version of Emacs, and should keep parity with the latest
+Remacs. Aero looks best with the font Victor Mono, but Dank Mono and Source
+Code Pro look pretty sick too.
+
+* Local config
+Local settings, functions, et cetera can be put into an untracked
+~/.config/emacs/init.local.el file, which will be evaluated near the end of
+the initialization process, after all other layers and settings.
+
+* Note
+Aero is maintained as a cutting-edge tool. It focuses on working best with
+the latest minor version of Emacs, and should keep parity with the latest
+version of Remacs (if I can get it to compile).
+
+Additionally, this configuration is ever-evolving. Bindings, settings and
+packages change no warning and little to no documentation. This repository
+is not intended to be used as a prebuilt configuration like Spacemacs, but
+rather as a reference or source of ideas. Use at your own risk.
+
+To get started with Emacs, I highly recommend https://www.spacemacs.org.
+
+* Credits
+Like the Borg, Aero amalgamates macros, functions, bindings and packages
+modified from or inspired by a plethora of developers. Special thanks to these
+fantastic people:
+
+- James Sulak
+- John Wiegley
+- Lee Hinman
+- Michael Markert
+- Sacha Chua
+- Samuel Barreto
+- Steve Purcell
+- Wilfred Hughes
+- Xah Lee
+
+* Copying
+Copyright © 2017-2020 Jade Michael Thornton
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+The software is provided "as is" and the author disclaims all warranties with
+regard to this software including all implied warranties of merchantability
+and fitness. In no event shall the author be liable for any special, direct,
+indirect, or consequential damages or any damages whatsoever resulting from
+loss of use, data or profits, whether in an action of contract, negligence or
+other tortious action, arising out of or in connection with the use or
+performance of this software.
