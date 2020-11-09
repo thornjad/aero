@@ -1,5 +1,5 @@
    _______                     _______
-  (_______)                   (_______) Finally, a good editor
+  (_______)                   (_______) 
    _______ _____  ____ ___     _____   ____  _____  ____  ___
   |  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
   | |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
@@ -44,42 +44,22 @@ REQUIREMENTS
   Remacs. Aero looks best with the font Victor Mono, but Dank Mono and Source
   Code Pro look pretty sick too.
 
-INSTALLATION
-
-  Clone or download this repository into your ~/.config/emacs/. There are three
-  mirrors to choose from:
-
-  GitLab (best)     https://gitlab.com/thornjad/aero.git
-  Framagit (good)   https://framagit.org/thornjad/aero.git
-  GitHub (okay)     https://github.com/thornjad/aero.git
-
-  Then, install and compile required submodules with =make=
-
-BINDINGS
-
-  There are many bindings, and I've tried to document most of them in
-  ./doc/bindings.org. However, please note that I'm not great at keeping that
-  file up-to-date.
-
-  For always-up-to-date info, use which-key to find bindings. Nearly everything
-  is prefixed under SPC, so hit SPC while in Normal mode and which-key will
-  display all your options.
-
-  Most importantly, use ESC to escape from most things, use C-g to escape when
-  that doesn't work. Use C-x C-v to quit Emacs.
-
 LOCAL CONFIG
 
   Local settings, functions, et cetera can be put into an untracked
   ~/.config/emacs/init.local.el file, which will be evaluated near the end of
   the initialization process, after all other layers and settings.
 
-WARNING
+NOTE
 
-  As stated above, this is not intended for widespread usage. Bindings, settings
-  and packages change all the time with no warning or documentation. Use at your
-  own risk. If you want to use anything, it may be safer to copy what your want
-  to your own configuration, or to make a stable fork.
+  Aero is maintained as a cutting-edge tool. It focuses on working best with
+  the latest minor version of Emacs, and should keep parity with the latest
+  version of Remacs (if I can get it to compile).
+
+	Additionally, this configuration is ever-evolving. Bindings, settings and
+  packages change no warning and little to no documentation. This repository
+  is not intended to be used as a prebuilt configuration like Spacemacs, but
+  rather as a reference or source of ideas. Use at your own risk.
 
   To get started with Emacs, I highly recommend https://www.spacemacs.org.
 
@@ -114,6 +94,3 @@ COPYING
   loss of use, data or profits, whether in an action of contract, negligence or
   other tortious action, arising out of or in connection with the use or
   performance of this software.
-
-  The Aero Emacs logo (both short and long versions) are released into the
-  public domain under the terms of the CC0 license, no rights reserved.

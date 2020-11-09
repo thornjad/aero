@@ -32,10 +32,9 @@
 
   (use-package toc-org :straight t)
 
-  (aero-mode-leader-def
-    :keymaps 'org-mode-map
-    "h" 'org-hide-block-all)
-  )
+  (use-package org-bullets :straight t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 
 (defvar aero/org-eval-safe-list
   '(expand-file-name "~/doc/thornlog/")
