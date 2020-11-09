@@ -73,8 +73,8 @@ more cycles but less space.")
   (setq user-emacs-directory
         (file-name-directory user-init-file))
 
-	(defconst aero-core-dir (expand-file-name "core/" user-emacs-directory))
 	(defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
+	(defconst aero-core-dir (expand-file-name "core/" aero-lib-dir))
 	(defconst aero-packages-dir (expand-file-name "packages/" aero-lib-dir))
 	(defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
 	(defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
