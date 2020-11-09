@@ -38,6 +38,7 @@
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  pop-up-windows nil ; make new window for pop-ups
+ shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
 
  ;; Scrolling
  ;; Emacs spends too much effort recentering the screen if you scroll the
