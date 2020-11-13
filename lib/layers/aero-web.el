@@ -24,7 +24,10 @@
 
 (use-package web-mode :straight t
   :mode
-  "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|rvt\\)\\'")
+  "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|rvt\\)\\'"
+  :config
+  (setq web-mode-engines-alist
+      '(("ctemplate" . "\\.tpl\\'"))))
 
 (use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
