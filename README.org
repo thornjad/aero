@@ -8,29 +8,45 @@ and what I use. Special focus is put on writing Lisps, Python, TCL, Node and
 the several web languages. Other languages like C and ML have some light
 configuration as well.
 
+#+begin_quote
 "Emacs outshines all other editing software in the same way that the noonday
 sun does the stars. It is not just bigger and brighter; it simply makes
 everything else vanish." — Neal Stephenson
+#+end_quote
 
+#+begin_quote
 "While any text editor can save your files, only Emacs can save your soul." —
 Per Abrahamsen
+#+end_quote
 
+#+begin_quote
 "The reasonable man adapts himself to Emacs; the unreasonable one persists in
 trying to adapt Emacs to himself. Therefore all progress depends on the
 unreasonable man." — G.B. Shaw, probably
+#+end_quote
 
+#+begin_quote
 "An infinite number of monkeys typing into GNU Emacs would never make a good
 program." — Linus Torvalds
+#+end_quote
 
+#+begin_quote
 "You could be a total lunatic, and Emacs has to make you happy" — Steve Yegge
+#+end_quote
 
+#+begin_quote
 "Emacs is the ground. We run around and act silly on top of it, and when we
 die, may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
+#+end_quote
 
+#+begin_quote
 "Emacs is a great operating system, lacking only a decent editor." — ancient
 Vi proverb
+#+end_quote
 
+#+begin_quote
 "Thou shalt not cross 80 columns in thy file" — Linus Torvalds
+#+end_quote
 
 * Requirements
 Aero is maintained as a cutting-edge tool, and focuses on working best with
