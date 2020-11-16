@@ -9,9 +9,9 @@ the several web languages. Other languages like C and ML have some light
 configuration as well.
 
 #+begin_quote
-"Emacs outshines all other editing software in the same way that the noonday
-sun does the stars. It is not just bigger and brighter; it simply makes
-everything else vanish." — Neal Stephenson
+"Emacs outshines all other editing software in the same way that the noonday sun
+does the stars. It is not just bigger and brighter; it simply makes everything
+else vanish." — Neal Stephenson
 #+end_quote
 
 #+begin_quote
@@ -35,13 +35,12 @@ program." — Linus Torvalds
 #+end_quote
 
 #+begin_quote
-"Emacs is the ground. We run around and act silly on top of it, and when we
-die, may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
+"Emacs is the ground. We run around and act silly on top of it, and when we die,
+may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
 #+end_quote
 
 #+begin_quote
-"Emacs is a great operating system, lacking only a decent editor." — ancient
-Vi proverb
+"Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 #+end_quote
 
 #+begin_quote
