@@ -15,19 +15,13 @@ else vanish." — Neal Stephenson
 #+end_quote
 
 #+begin_quote
-"While any text editor can save your files, only Emacs can save your soul." —
-Per Abrahamsen
-#+end_quote
-
-#+begin_quote
-"The reasonable man adapts himself to Emacs; the unreasonable one persists in
-trying to adapt Emacs to himself. Therefore all progress depends on the
-unreasonable man." — G.B. Shaw, probably
-#+end_quote
-
-#+begin_quote
 "An infinite number of monkeys typing into GNU Emacs would never make a good
 program." — Linus Torvalds
+#+end_quote
+
+#+begin_quote
+"While any text editor can save your files, only Emacs can save your soul." —
+Per Abrahamsen
 #+end_quote
 
 #+begin_quote
@@ -35,8 +29,9 @@ program." — Linus Torvalds
 #+end_quote
 
 #+begin_quote
-"Emacs is the ground. We run around and act silly on top of it, and when we die,
-may our remnants grace its ongoing incrementation." — Thien-Thi Nguyen
+"The reasonable man adapts himself to Emacs; the unreasonable one persists in
+trying to adapt Emacs to himself. Therefore all progress depends on the
+unreasonable man." — G.B. Shaw, probably
 #+end_quote
 
 #+begin_quote
