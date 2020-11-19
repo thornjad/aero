@@ -159,8 +159,8 @@ board_ticket_branch_name."
 
 (use-package ediff
   :commands (ediff ediff3)
-  :config
-  (setq ediff-split-window-function #'split-window-horizontally
-        ediff-window-setup-function #'ediff-setup-windows-plain))
+  :custom
+  (ediff-split-window-function #'split-window-horizontally)
+  (ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (provide 'aero-git)
