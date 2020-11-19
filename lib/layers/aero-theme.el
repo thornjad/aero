@@ -55,44 +55,6 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 10)
 
-(use-package svg-tag-mode
-  :straight (:host github :repo "rougier/svg-tag-mode" :branch "main")
-  :defer 3
-  :init
-  (setq-default x-underline-at-descent-line t
-                line-spacing 0.1
-                widget-image-enable nil)
-  :config
-  (defface svg-tag-note-face
-    '((t :foreground "black" :background "white" :box "black"
-         :family "Victor Mono" :weight light :height 120))
-    "Face for note tag" :group nil)
-
-  (defface svg-tag-keyboard-face
-    '((t :foreground "#333333" :background "#f9f9f9" :box "#333333"
-         :family "Victor Mono" :weight light :height 120))
-    "Face for keyboard bindings tag" :group nil)
-
-  (setq svg-tag-todo (svg-tag-make "TODO" nil 1 1 3))
-  (setq svg-tag-fixme (svg-tag-make "FIXME" nil 1 1 3))
-  (setq svg-tag-note (svg-tag-make "NOTE" 'svg-tag-note-face 1 1 3))
-  (setq svg-tag-hack (svg-tag-make "HACK" 'svg-tag-note-face 1 1 3))
-
-  (defun svg-tag-round (text)
-    (svg-tag-make (substring text 1 -1) 'svg-tag-note-face 1 1 12))
-  (defun svg-tag-quasi-round (text)
-    (svg-tag-make (substring text 1 -1) 'svg-tag-note-face 1 1 8))
-  (defun svg-tag-keyboard (text)
-    (svg-tag-make (substring text 1 -1) 'svg-tag-keyboard-face 1 1 2))
-
-  (setq svg-tag-tags
-        '(("TODO"                     . svg-tag-todo)
-          ("FIXME"                    . svg-tag-fixme)
-          ("NOTE"                     . svg-tag-note)
-          ("HACK"                     . svg-tag-hack)
-          (":[0-9a-zA-Z][0-9a-zA-Z]:" . svg-tag-quasi-round)))
-  (svg-tag-mode +1))
-
 
 ;;; weather and date in echo area
 
