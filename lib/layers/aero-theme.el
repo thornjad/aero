@@ -273,4 +273,22 @@ advice."
 (use-package fireplace :straight t
   :commands fireplace)
 
+(defun pulse-line (&rest _)
+  "Briefly pulse a highlight of the line at point.
+This function, when bound to certain commands like scrolling, acts as a native
+alternative to the beacon package."
+  (pulse-momentary-highlight-one-line (point)))
+(dolist (cmd '(scroll-up-command
+               scroll-down-command
+               recenter-top-bottom
+               other-window))
+  (advice-add cmd :after #'pulse-line))
+(when (require 'evil nil 'no-error)
+  (dolist (cmd '(evil-goto-first-line
+                 evil-goto-line
+                 evil-window-top
+                 evil-window-middle
+                 evil-window-bottom))
+    (advice-add cmd :after #'pulse-line)))
+
 (provide 'aero-theme)
