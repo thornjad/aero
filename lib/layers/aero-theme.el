@@ -194,15 +194,18 @@ advice."
 ;; Better fringe wrap symbols. Victor Mono doesn't provide these symbols, so use
 ;; Fira Code
 (fringe-mode '(0 . 0))
-(defface fallback '((t :family "Fira Code Light"
-                       :inherit 'default)) "Fallback")
+(defface fallback
+  '((t :family "Fira Code Light"
+       :inherit 'default
+       :group 'faces))
+  "Fallback font")
 ;; TODO these aren't working, they say "wrong-type-argument char-table-p nil" and show that standard-display-table is nil? Do we need to wait for somethign to eval?
-                                        ;(set-display-table-slot standard-display-table 'truncation
-                                        ;                        (make-glyph-code ?… 'fallback))
-                                        ;(set-display-table-slot standard-display-table 'wrap
-                                        ;                        (make-glyph-code ?↩ 'fallback))
-                                        ;(set-display-table-slot standard-display-table 'selective-display
-                                        ;                        (string-to-vector " …"))
+(set-display-table-slot standard-display-table 'truncation
+                        (make-glyph-code ?… 'fallback))
+(set-display-table-slot standard-display-table 'wrap
+                        (make-glyph-code ?↩ 'fallback))
+(set-display-table-slot standard-display-table 'selective-display
+                        (string-to-vector " …"))
 
 
 ;;; additional tweaks and packages
