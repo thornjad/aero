@@ -33,6 +33,7 @@
 (use-package async :straight t
   :commands (async-save))
 (use-package request :straight t)
+(use-package deadgrep :straight t)
 
 (defun aero/keyboard-quit-context ()
   "Quit current context.
