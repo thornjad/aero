@@ -71,10 +71,10 @@ modified from or inspired by a plethora of developers. Special thanks to these
 fantastic people:
 
 - James Sulak
-- John Wiegley
+- [[https://github.com/jwiegley/dot-emacs][John Wiegley]]
 - Lee Hinman
-- Michael Markert
-- Sacha Chua
+- [[https://github.com/cofi/dotfiles][Michael Markert]]
+- [[https://github.com/sachac/.emacs.d][Sacha Chua]]
 - Samuel Barreto
 - Steve Purcell
 - Wilfred Hughes
