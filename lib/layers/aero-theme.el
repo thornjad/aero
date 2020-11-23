@@ -251,6 +251,9 @@ alternative to the beacon package."
 (when (require 'evil nil 'no-error)
   (dolist (cmd '(evil-goto-first-line
                  evil-goto-line
+                 evil-scroll-line-to-center
+                 evil-scroll-line-to-top
+                 evil-scroll-line-to-bottom
                  evil-window-top
                  evil-window-middle
                  evil-window-bottom))
