@@ -261,7 +261,9 @@ appropriate.  In tables, insert a new row or end the table."
 
   (aero-mode-leader-def
     :keymaps 'org-mode-map
-    (kbd "RET") 'aero/org-return-dwim))
+    (kbd "RET") 'aero/org-return-dwim
+    "c" '(:ignore t :wk "cell")
+    "cc" '(org-babel-execute-src-block :wk "exec cell")))
 
 (defvar aero/org-eval-safe-list
   '(expand-file-name "~/doc/thornlog/")
