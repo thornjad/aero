@@ -195,10 +195,9 @@ advice."
 ;; Fira Code
 (fringe-mode '(0 . 0))
 (defface fallback
-  '((t :family "Fira Code Light"
-       :inherit 'default
-       :group 'faces))
-  "Fallback font")
+  '((t :family "Fira Code Light" :inherit 'default))
+  "Fallback font"
+  :group 'faces)
 ;; TODO these aren't working, they say "wrong-type-argument char-table-p nil" and show that standard-display-table is nil? Do we need to wait for somethign to eval?
 (set-display-table-slot standard-display-table 'truncation
                         (make-glyph-code ?… 'fallback))
