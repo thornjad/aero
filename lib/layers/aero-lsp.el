@@ -17,6 +17,7 @@
 ;; performance of this software.
 
 (use-package lsp-mode :straight t
+  :disabled t
   :hook ((sh-mode . lsp) ;; bash-language-server
          (rjsx-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
