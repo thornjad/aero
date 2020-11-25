@@ -88,8 +88,12 @@
       (aero-brilliant-red       "#5f0000"))
   (custom-theme-set-faces
    'aero-light
-   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono"
-                  :family "Victor Mono" :height 150))))
+   ;;`(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150))))
+   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font 
+			            ,(cond
+				            ((member "Victor Mono" (font-family-list)) "Victor Mono")
+				            ((member "Ubuntu Mono" (font-family-list)) "Ubuntu Mono")
+				            (t "monospace")) :height 120))))
    `(cursor ((t (:background ,aero-cursor-bg))))
    `(mode-line
      ((t (:background ,aero-bg :foreground ,aero-space-base
