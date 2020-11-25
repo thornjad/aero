@@ -1,30 +1,12 @@
-[submodule "lib/packages/formfeeder"]
-	path = lib/packages/formfeeder
-	url = git@gitlab.com:thornjad/formfeeder.git
-[submodule "lib/packages/todo-light"]
-	path = lib/packages/todo-light
-	url = git@gitlab.com:thornjad/todo-light.git
 [submodule "lib/packages/rjsx-mode"]
 	path = lib/packages/rjsx-mode
 	url = git@github.com:thornjad/rjsx-mode.git
-[submodule "lib/packages/pbcopier"]
-	path = lib/packages/pbcopier
-	url = git@gitlab.com:thornjad/pbcopier.git
-[submodule "lib/packages/pomp"]
-	path = lib/packages/pomp
-	url = git@gitlab.com:thornjad/pomp.git
 [submodule "lib/packages/xterm-color"]
 	path = lib/packages/xterm-color
 	url = git@github.com:atomontage/xterm-color.git
 [submodule "lib/packages/auto-package-update.el"]
 	path = lib/packages/auto-package-update.el
 	url = git@github.com:rranelli/auto-package-update.el.git
-[submodule "lib/packages/js2-mode"]
-	path = lib/packages/js2-mode
-	url = git@github.com:mooz/js2-mode.git
-[submodule "lib/packages/quick-restart"]
-	path = lib/packages/quick-restart
-	url = git@gitlab.com:thornjad/quick-restart.git
 [submodule "lib/packages/rivet-mode"]
 	path = lib/packages/rivet-mode
 	url = git@gitlab.com:thornjad/rivet-mode.git
@@ -34,6 +16,3 @@
 [submodule "lib/packages/hackernews"]
 	path = lib/packages/hackernews
 	url = git@gitlab.com:thornjad/hackernews.git
-[submodule "lib/packages/indent-indicator"]
-	path = lib/packages/indent-indicator
-	url = git@github.com:thornjad/indent-indicator.git
