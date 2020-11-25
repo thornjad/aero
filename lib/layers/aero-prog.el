@@ -261,7 +261,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 				(append ws-butler-global-exempt-modes
 								'(special-mode comint-mode term-mode eshell-mode))))
 
-(use-package indent-indicator ; local
+(use-package indent-indicator
+  :straight (:host gitlab :repo "thornjad/indent-indicator")
   :config
   (general-define-key
    :states 'normal

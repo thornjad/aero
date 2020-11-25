@@ -218,13 +218,12 @@ advice."
 (column-number-mode 1)
 (pixel-scroll-mode 1)
 (global-display-fill-column-indicator-mode 1)
-(add-hook 'text-mode-hook #'turn-on-visual-line-mode)
-(add-hook 'fundamental-mode-hook #'turn-on-visual-line-mode)
+(global-visual-line-mode +1)
 
 (use-package all-the-icons :straight t)
 
 (use-package formfeeder
-  :load-path "lib/packages/formfeeder/"
+  :straight (:host gitlab :repo "thornjad/formfeeder")
   :hook (text-mode . formfeeder-mode)
   :config
   (setq formfeeder-line-width 80)
@@ -232,7 +231,7 @@ advice."
   (global-formfeeder-mode 1))
 
 (use-package todo-light
-  :load-path "lib/packages/todo-light/"
+  :straight (:host gitlab :repo "thornjad/todo-light")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
 (use-package fireplace :straight t

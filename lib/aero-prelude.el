@@ -460,10 +460,10 @@ Local bindings (`counsel-mode-map'):
     "q" 'kill-this-buffer
     "?" 'describe-mode))
 
-(use-package pbcopier
-  ;; local
-  :config
-  (turn-on-pbcopier))
+(when (eq system-type "darwin")
+  (use-package pbcopier
+    :straight (:host gitlab :repo "thornjad/pbcopier")
+    :config (turn-on-pbcopier)))
 
 (use-package re-builder
   :commands re-builder
@@ -495,8 +495,8 @@ Local bindings (`counsel-mode-map'):
    "fd" 'deer))
 
 (use-package pomp
+  :straight (:host gitlab :repo "thornjad/pomp")
   :after general
-  ;; local
   :commands pomp
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)

@@ -49,9 +49,7 @@
 
 ;; js and jsx
 
-(use-package js2-mode
-  :load-path "lib/packages/js2-mode/"
-  :defer t)
+(use-package js2-mode :straight t :defer t)
 
 ;; (use-package javascript-mode
 ;;   :mode "\\.jsx?\\'")

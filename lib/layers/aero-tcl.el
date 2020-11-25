@@ -27,6 +27,7 @@
 	(add-hook 'tcl-mode-hook (lambda () (setq-local indent-tabs-mode t))))
 
 (use-package testbackend
+  :disabled t ;; TODO need to get this working properly
   :load-path "lib/packages/testbackend"
   :init
   (aero-mode-leader-def
