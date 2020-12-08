@@ -1,4 +1,4 @@
-personal_ws-1.1 en 229 
+personal_ws-1.1 en 232 
 ACL
 APIs
 Aireon
@@ -62,6 +62,8 @@ Prebuilt
 RET
 Reddit
 ResNet
+SEO
+SHA
 SPC
 SSHFS
 Shopify
@@ -102,6 +104,7 @@ config
 counterintuitive
 coworking
 cron
+cryptographic
 css
 de
 decrement
