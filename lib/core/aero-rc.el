@@ -59,7 +59,7 @@
  mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
 
  ;; The newline pushes everything else to a non-rendered second line
- frame-title-format "Aero Emacs\n"
+ frame-title-format "Aero Emacs"
  ns-use-proxy-icon nil ; remove icon from frame title in ns
 
  ;; startup with scratch
@@ -71,7 +71,7 @@
                            (get-buffer "*scratch*")))
  initial-major-mode 'text-mode
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
-																 "b" (number-to-string emacs-build-number)
+																 " build " (number-to-string emacs-build-number)
                                  "\n"
                                  ";; finally, a good fucking editor"
                                  "\n\n")
