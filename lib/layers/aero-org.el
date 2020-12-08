@@ -303,7 +303,7 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
           (setq-local org-confirm-babel-evaluate nil)
           (org-babel-goto-named-src-block name)
           (org-babel-execute-src-block))))))
-(add-hook 'org-mode-hook 'aero/org-eval-startblock)
+(add-hook 'org-mode-hook #'aero/org-eval-startblock)
 
 ;; evaluation the save-block on save
 (defun aero/org-mode-before-save-hook-eval ()
