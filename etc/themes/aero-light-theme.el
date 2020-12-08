@@ -472,8 +472,8 @@
    `(ivy-minibuffer-match-face-4 ((t (:foreground ,aero-fg :weight bold))))
 
    ;; ivy-posframe
-   `(ivy-posframe ((t (:background ,aero-normal-white))))
-   `(ivy-posframe-border ((t (:box ,aero-normal-red))))
+   `(ivy-posframe ((t (:background ,aero-space-base-dimmer))))
+   `(ivy-posframe-border ((t (:box (:color ,aero-space-base :width 2) :background ,aero-space-base))))
 
    ;; magit
    `(magit-bisect-bad ((t (:foreground ,aero-bright-red))))
