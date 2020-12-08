@@ -116,7 +116,7 @@ advice."
                        "   "
                        (or aero/current-weather "")
                        "   "
-                       (format-time-string " %A %d %B %Y, %H:%M")
+                       (format-time-string " %A %d %B %Y  %H:%M")
                        "   ")
                       'face '(:height 0.85
                               :overline t
@@ -127,7 +127,8 @@ advice."
               (msg (car (split-string msg " ")))
               (msg (string-trim msg))
               (left (truncate-string-to-width msg width nil nil "…"))
-              (full (format (format "%%-%ds %%s" width) left right)))
+              (full (format (format "%%-%ds %%s" width) left right))
+              (full (replace-regexp-in-string " " "" full)))
     (if (active-minibuffer-window)
         ;; Regular log and display when minibuffer is active
         (apply orig-fun args)
