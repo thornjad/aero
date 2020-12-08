@@ -44,16 +44,16 @@
         tao-theme-use-height nil))
 
 (setq default-frame-alist
-      (append (list '(width  . 120) '(height . 45)
+      (append (list '(width  . 250) '(height . 64)
                     '(tool-bar-lines . 0)
-                    '(menu-bar-lines . 1)
-                    '(internal-border-width . 10)
+                    '(menu-bar-lines . 0)
+                    '(internal-border-width . 20)
                     '(left-fringe . 0) '(right-fringe . 0)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . dark))))
 (set-frame-parameter (selected-frame)
-                     'internal-border-width 10)
+                     'internal-border-width 20)
 
 
 ;;; weather and date in echo area
