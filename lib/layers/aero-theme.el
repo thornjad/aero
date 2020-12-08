@@ -223,9 +223,7 @@ advice."
 
 (use-package all-the-icons :straight t)
 
-(use-package formfeeder
-  :straight (:host gitlab :repo "thornjad/formfeeder")
-  :hook (text-mode . formfeeder-mode)
+(use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
   :config
   (setq formfeeder-line-width 80)
   (declare-function global-formfeeder-mode "formfeeder")
