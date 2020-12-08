@@ -254,6 +254,10 @@ alternative to the beacon package."
                  evil-scroll-line-to-center
                  evil-scroll-line-to-top
                  evil-scroll-line-to-bottom
+                 evil-yank
+                 evil-yank-line
+                 evil-yank-rectangle
+                 evil-yank-characters
                  evil-window-top
                  evil-window-middle
                  evil-window-bottom))
