@@ -29,9 +29,9 @@
              magit-status
              magit-unstage-file
              magit-blame-mode)
-  :custom
-  (magit-git-executable "/usr/local/bin/git") ; speed up macOS usage
   :init
+  (when (system-is-mac)
+    (setq magit-git-executable "/usr/local/bin/git"))
 	(general-define-key
 	 :states '(normal)
 	 :prefix "SPC"
