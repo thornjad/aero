@@ -462,6 +462,7 @@ Local bindings (`counsel-mode-map'):
 
 (when (eq system-type "darwin")
   (use-package pbcopier
+    :defines (turn-on-pbcopier)
     :straight (:host gitlab :repo "thornjad/pbcopier")
     :config (turn-on-pbcopier)))
 
@@ -666,10 +667,10 @@ Local bindings (`counsel-mode-map'):
  "F" '(:ignore t :wk "frame")
  "Fd" 'delete-frame
  "Fo" 'other-frame
- "Ff" 'find-file-other-frame
+ "FF" 'find-file-other-frame
  "Fn" 'make-frame
- "FM" 'toggle-frame-maximized
- "FF" 'toggle-frame-fullscreen
+ "Fm" 'toggle-frame-maximized
+ "Ff" 'toggle-frame-fullscreen
 
  "g" '(:ignore t :wk "git")
  "gf" '(:ignore t :wk "files")
