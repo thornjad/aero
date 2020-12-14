@@ -47,8 +47,7 @@
               (format "%s.%s" (match-string 2 item)
                       (match-string 1 item)))))))))
 
-    (set (make-local-variable 'parens-require-spaces) nil)
-    (setq indent-tabs-mode nil))
+    (set (make-local-variable 'parens-require-spaces) nil))
 
   (add-hook 'python-mode-hook #'my-python-mode-hook)
 
