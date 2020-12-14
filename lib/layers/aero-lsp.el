@@ -17,7 +17,6 @@
 ;; performance of this software.
 
 (use-package lsp-mode :straight t
-  :disabled t
   :hook ((sh-mode . lsp) ;; bash-language-server
          (rjsx-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
@@ -27,13 +26,16 @@
          (lsp-mode . lsp-headerline-breadcrumb-mode))
   :commands (lsp)
   :config
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-tramp-connection "javascript-language-server.js")
-    :major-modes '(rjsx-mode js-mode)
-    :remote? t
-    :priority -1
-    :server-id 'javascript-remote))
+
+  ;; FIXME this created a dozen or so language server processes on hopnu which
+  ;; used a shit-ton of resources. Disabled until it can be addressed.
+  ;; (lsp-register-client
+  ;;  (make-lsp-client
+  ;;   :new-connection (lsp-tramp-connection "javascript-language-server.js")
+  ;;   :major-modes '(rjsx-mode js-mode)
+  ;;   :remote? t
+  ;;   :priority -1
+  ;;   :server-id 'javascript-remote))
 
   (aero-leader-def
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
