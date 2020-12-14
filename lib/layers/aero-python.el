@@ -25,8 +25,6 @@
   (setq-default python-indent-offset 4)
 
   :config
-  (use-package pyvenv :straight t)
-
   (defvar python-mode-initialized nil)
 
   (defun my-python-mode-hook ()
