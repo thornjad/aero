@@ -199,13 +199,13 @@ advice."
   '((t :family "Fira Code Light" :inherit 'default))
   "Fallback font"
   :group 'faces)
-;; TODO these aren't working, they say "wrong-type-argument char-table-p nil" and show that standard-display-table is nil? Do we need to wait for somethign to eval?
-(set-display-table-slot standard-display-table 'truncation
-                        (make-glyph-code ?… 'fallback))
-(set-display-table-slot standard-display-table 'wrap
-                        (make-glyph-code ?↩ 'fallback))
-(set-display-table-slot standard-display-table 'selective-display
-                        (string-to-vector " …"))
+(when (and (require 'disp-table nil 'noerror) standard-display-table)
+  (set-display-table-slot standard-display-table 'truncation
+                          (make-glyph-code ?… 'fallback))
+  (set-display-table-slot standard-display-table 'wrap
+                          (make-glyph-code ?↩ 'fallback))
+  (set-display-table-slot standard-display-table 'selective-display
+                          (string-to-vector " …")))
 
 
 ;;; additional tweaks and packages
