@@ -21,10 +21,7 @@
 (use-package python-mode :straight t
   :mode "\\.py\\'"
   :init
-  (if (executable-find "ipython")
-      (setq python-shell-interpreter "ipython"
-            python-shell-interpreter-args "--simple-prompt -i --pprint")
-    (setq python-shell-interpreter "python3"))
+  (setq python-shell-interpreter "python3")
   (setq-default python-indent-offset 4)
 
   :config
