@@ -256,24 +256,24 @@
     :keymaps 'elpy-mode-map
     "p" 'run-python
     "s" '(:ignore t :wk "shell send")
-    "sd" 'elpy-shell-send-defun
-    "sD" 'elpy-shell-send-defun-and-go
-    "sb" 'elpy-shell-send-buffer
-    "sB" 'elpy-shell-send-buffer-and-go
-    "sr" 'elpy-shell-send-region-or-buffer
-    "sR" 'elpy-shell-send-region-or-buffer-and-go
-    "sc" 'elpy-shell-send-defclass
-    "sC" 'elpy-shell-send-defclass-and-go
+    "ss" '(elpy-shell-send-region-or-buffer :wk "send region or buffer")
+    "sS" '(elpy-shell-send-region-or-buffer-and-go :wk "send region or buffer and go")
+    "sd" '(elpy-shell-send-defun :wk "send defun")
+    "sD" '(elpy-shell-send-defun-and-go :wk "send defun and go")
+    "sb" '(elpy-shell-send-buffer :wk "send buffer")
+    "sB" '(elpy-shell-send-buffer-and-go :wk "send buffer and go")
+    "sc" '(elpy-shell-send-defclass :wk "send defclass")
+    "sC" '(elpy-shell-send-defclass-and-go :wk "send defclass and go")
     "e" '(:ignore t :wk "change executable")
-    "ey" 'elpy-switch-to-pypy
-    "ec" 'elpy-switch-to-cpython
-    "ei" 'elpy-switch-to-ipithon
-    "ej" 'elpy-switch-to-jupyter
+    "ey" '(elpy-switch-to-pypy :wk "pypy")
+    "ec" '(elpy-switch-to-cpython :wk "cpython")
+    "ei" '(elpy-switch-to-ipython :wk "ipython")
+    "ej" '(elpy-switch-to-jupyter :wk "jupyter")
     "k" '(:ignore t :wk "kill")
-    "kk" 'elpy-shell-kill
-    "kA" 'elpy-shell-kill-all
+    "kk" '(elpy-shell-kill :wk "kill shell")
+    "kA" '(elpy-shell-kill-all :wk "kill all shells")
     "g" '(:ignore t :wk "go")
-    "ge" 'elpy-shell-goto-last-error
-    "gi" 'elpy-shell-goto-import-header))
+    "ge" '(elpy-shell-goto-last-error :wk "goto last error")
+    "gi" '(elpy-shell-goto-import-header :wk "goto import header")))
 
 (provide 'aero-python)
