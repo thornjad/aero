@@ -200,7 +200,9 @@
   :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
-  (setq elpy-rpc-virtualenv-path 'current)
+  (setq elpy-rpc-virtualenv-path 'current
+        elpy-rpc-python-command "python3"
+        py-return-key #'py-newline-and-indent)
   (elpy-enable)
 
   (defun elpy-switch-to-cpython ()
