@@ -11,7 +11,6 @@
 ;; This file is not part of GNU Emacs
 
 (use-package org
-	:defer t
 	:straight org-plus-contrib
 	:commands org-mode
 	:mode ("\\.org\\'" . org-mode)
@@ -29,6 +28,9 @@
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
+
+  ;; start with all levels collapsed
+  (add-hook 'org-mode-hook #'org-hide-block-all)
 
   ;; Patch to ensure org-return always inserts an item /after/ the current item.
   ;; Default behavior inserts before the current item depending on pointer
@@ -255,60 +257,183 @@ appropriate.  In tables, insert a new row or end the table."
 
   (use-package toc-org :straight t)
 
-  (use-package org-bullets :straight t
+  (use-package org-superstar :straight t
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
   (aero-mode-leader-def
     :keymaps 'org-mode-map
     (kbd "RET") 'aero/org-return-dwim
     "c" '(:ignore t :wk "cell")
-    "cc" '(org-babel-execute-src-block :wk "exec cell")))
+    "cc" '(org-babel-execute-src-block :wk "exec cell"))
 
-(defvar aero/org-eval-safe-list
-  '(expand-file-name "~/doc/thornlog/")
-  "Directories which will have their contents evaluated without prompting.")
+  (defvar aero/org-eval-safe-list
+    '(expand-file-name "~/doc/thornlog/")
+    "Directories which will have their contents evaluated without prompting.")
 
-(defun aero/safe-org-file-p (file)
-  "Determine if given filename is in a safe org path.
+  (defun aero/safe-org-file-p (file)
+    "Determine if given filename is in a safe org path.
 Safe org paths are determined by `aero/org-eval-safe-list'."
-  (let ((file-path (file-name-directory file)))
-    (seq-some (lambda (x) (string= x file-path)) aero/org-eval-safe-list)))
+    (let ((file-path (file-name-directory file)))
+      (seq-some (lambda (x) (string= x file-path)) aero/org-eval-safe-list)))
 
-(defun aero/org-eval-startblock ()
-  "Evaluate the content of a code-block named 'aero/startblock' in the current
+  (defun aero/org-eval-startblock ()
+    "Evaluate the content of a code-block named 'aero/startblock' in the current
   org-document, if present.
 
   Emacs would usually prompt for permission as a safety precaution, but if the
   buffer is associated with a filename matching any of the patterns inside the
   list aero/org-eval-safe-list we just allow it. "
-  (aero/org-eval-named-block "aero/startblock"))
+    (aero/org-eval-named-block "aero/startblock"))
 
-(defun aero/org-eval-saveblock ()
-  "Evaluate the content of a code-block named 'aero/saveblock' in the current
+  (defun aero/org-eval-saveblock ()
+    "Evaluate the content of a code-block named 'aero/saveblock' in the current
   org-document, if present.
 
   Emacs would usually prompt for permission as a safety precaution, but if the
   buffer is associated with a filename matching any of the patterns inside the
   list aero/org-eval-safe-list we just allow it."
-  (aero/org-eval-named-block "aero/saveblock"))
+    (aero/org-eval-named-block "aero/saveblock"))
 
-(defun aero/org-eval-named-block (name)
-  "Execute the named block, if it exists, from within the current file."
-  (save-excursion
-    (org-save-outline-visibility t
-      (when (and (aero/safe-org-file-p (buffer-file-name))
-                 (member name (org-babel-src-block-names)))
-        (progn
-          (setq-local org-confirm-babel-evaluate nil)
-          (org-babel-goto-named-src-block name)
-          (org-babel-execute-src-block))))))
-(add-hook 'org-mode-hook #'aero/org-eval-startblock)
+  (defun aero/org-eval-named-block (name)
+    "Execute the named block, if it exists, from within the current file."
+    (save-excursion
+      (org-save-outline-visibility t
+        (when (and (aero/safe-org-file-p (buffer-file-name))
+                   (member name (org-babel-src-block-names)))
+          (progn
+            (setq-local org-confirm-babel-evaluate nil)
+            (org-babel-goto-named-src-block name)
+            (org-babel-execute-src-block))))))
+  (add-hook 'org-mode-hook #'aero/org-eval-startblock)
 
-;; evaluation the save-block on save
-(defun aero/org-mode-before-save-hook-eval ()
-  (when (eq major-mode 'org-mode)
-    (aero/org-eval-saveblock)))
-(add-hook 'before-save-hook #'aero/org-mode-before-save-hook-eval)
+  ;; evaluation the save-block on save
+  (defun aero/org-mode-before-save-hook-eval ()
+    (when (eq major-mode 'org-mode)
+      (aero/org-eval-saveblock)))
+  (add-hook 'before-save-hook #'aero/org-mode-before-save-hook-eval))
+
+;; org-mode seems to never call its own hook??
+(add-hook
+ 'prog-mode-hook
+ (lambda ()
+   (when (eq major-mode "org-mode")
+     (message "okay")
+     (run-hooks 'org-mode-hook)
+     (message "wtf"))))
+
+
+;; thornlog (agenda) helpers
+
+;; FIXME these are supposed to live in the thornlog itself, but for some reason
+;; they aren't being evaluated. Re-enable here as a last ditch effort
+
+;; (defun new-day ()
+;;   "Create a new entry for today, if one isn't already present."
+;;   (interactive)
+;;   (if (today)
+;;       (message "Entry for today already present")
+;;     (new-day-insert)))
+
+;; ;; List of things we expand inside the templated-section of this file.
+;; ;; The pairs are "regexp" + "replacement" which is invoked via "apply".
+;; (setq new-day-template-variables
+;;       '(("YYYY"        . (format-time-string "%Y"))
+;;         ("MM"          . (format-time-string "%m"))
+;;         ("DD"          . (format-time-string "%d"))
+;;         ("MONTH"       . (format-time-string "%B"))
+;;         ("MONTH3"      . (format-time-string "%b"))
+;;         ("DAY"         . (format-time-string "%A"))
+;;         ("DAY3"        . (format-time-string "%a"))
+;;         ("HOUR"        . (format-time-string "%H"))
+;;         ("MINUTE"      . (format-time-string "%M"))
+;;         ("TEMPLATE"    . (format-time-string "%A, %B %d (%Y-%m-%d)"))
+;;         (":noexport:"  . (format ""))))
+
+;; (defun new-day-insert ()
+;;   "Insert the contents of a template into the document, for a new day's work.
+;; This function inserts the block found between '* TEMPLATE' and
+;; 'END' then fills in the date nicely."
+;;   (let ((start nil)
+;;         (text nil)
+;;         (case-fold-search nil) ; This ensures our replacements match "HOURS" not "Worked Hours"
+;;         (end nil))
+;;     (save-excursion
+;;       (outline-show-all)
+;;       (goto-line 0)
+;;       (re-search-forward "^\* TEMPLATE" )
+;;       (beginning-of-line)
+;;       (backward-char 1)
+;;       (setq start (point))
+;;       (next-line 2)
+;;       (re-search-forward "END$")
+;;       (beginning-of-line)
+;;       (backward-char 1)
+;;       (setq end (point))
+;;       (setq text (buffer-substring start end))
+;;       (goto-char start)
+
+;;       ;; Replace all our template-pairs
+;;       (dolist (item new-day-template-variables)
+;;         (setq text (replace-regexp-in-string (car item) (apply (cdr item)) text t)))
+;;       ;; Skip the weekend on Monday
+;;       (when (string-match "^\* Monday " text)
+;;         (setq text (replace-regexp-in-string "Yesterday:" "Friday:" text t)))
+
+;;       ;; Done, insert
+;;       (insert text "\n"))
+;;     (goto-char start)
+;;     (next-line 1)
+;;     (outline-hide-sublevels 1)))
+
+;; ;; Jump to today's entry.
+;; (defun today ()
+;;   "Visit today's entry, if it exists.  Otherwise show a message."
+;;   (interactive)
+;;   (let ((pos nil))
+;;     (save-excursion
+;;       (org-save-outline-visibility t
+;;         (outline-show-all)
+;;         (goto-line 0)
+;;         (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
+;;             (setq pos (point))
+;;           (message "No entry for today found."))))
+;;     (if pos
+;;         (progn
+;;           (outline-show-all)
+;;           (goto-char pos)
+;;           (outline-hide-sublevels 1)
+;;           t)
+;;       nil)))
+
+;; (defun clear-subtree ()
+;;   "Delete the subtree we're inside.
+
+;;     We move to the start of the heading, record our position, then the
+;;     end of the tree and work backwards until we've gone too far."
+;;   (let (start)
+;;     (save-excursion
+;;       (org-back-to-heading t)
+;;       (setq start (point))
+;;       (org-end-of-subtree t)
+;;       (while (>= (point) start)
+;;         (delete-char -1)))))
+
+;; (defun remove-empty-sections (backend)
+;;   "If there are any headings which contain only 'empty' content
+;;     then don't show them on export
+
+;;     Empty here means either literally empty, or having the content
+;;     'None' or 'None.'."
+;;   (save-excursion
+;;     (outline-show-all)
+;;     (goto-line 0)
+
+;;     (org-map-entries
+;;      '(lambda ()
+;;         (if (or (equalp "None." (format "%s" (org-get-entry)))
+;;                 (equalp "None" (format "%s" (org-get-entry)))
+;;                 (equalp "" (format "%s" (org-get-entry))))
+;;             (clear-subtree))))))
 
 (provide 'aero-org)
