@@ -43,8 +43,11 @@
   (setq tao-theme-use-boxes nil
         tao-theme-use-height nil))
 
+;; Start the initial frame maximized
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;; Subsequent frames will be smaller
 (setq default-frame-alist
-      (append (list '(width  . 250) '(height . 64)
+      (append (list '(width  . 120) '(height . 50)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 20)
