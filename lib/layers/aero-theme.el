@@ -106,6 +106,8 @@
 
 ;; Improved version of enhanced-message.el
 ;; https://gist.github.com/rougier/baaf4ff6e0461680e3f070c5c32b64a2
+;; FIXME BUG: occasionally this will show the enhanced message twice in the echo
+;; area. This can be reliably reproduced after using `evil-delete'
 (defun enhanced-message (orig-fun &rest args)
   "Message ORIG-FUN with ARGS, but add additional text.
 This enhanced message displays a regular message in the echo area and adds a
