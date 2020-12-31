@@ -687,15 +687,16 @@ Local bindings (`counsel-mode-map'):
  "p" '(:ignore t :wk "project")
  "pr" '(xref-find-definitions :wk "find ref")
 
- "P" '(:ignore t :wk "packages")
- "Pp" 'straight-pull-package-and-deps
- "PF" 'straight-fetch-all
- "PP" 'straight-pull-all
- "Pg" 'straight-get-recipe
- "PC" 'straight-check-all
- "Pr" 'straight-rebuild-package
- "PR" 'straight-rebuild-all
- "Px" 'straight-prune-build
+ "P" '(:ignore t :wk "packages/perspective")
+ "PP" '(:ignore t :wk "packages")
+ "PPp" 'straight-pull-package-and-deps
+ "PPF" 'straight-fetch-all
+ "PPP" 'straight-pull-all
+ "PPg" 'straight-get-recipe
+ "PPC" 'straight-check-all
+ "PPr" 'straight-rebuild-package
+ "PPR" 'straight-rebuild-all
+ "PPx" 'straight-prune-build
 
  "u" 'undo-tree-visualize
 
