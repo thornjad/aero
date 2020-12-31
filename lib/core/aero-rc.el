@@ -47,7 +47,7 @@
  ;; during large-scale scrolling commands. If kept over 100, the window is
  ;; never automatically recentered.
  scroll-conservatively 101
- scroll-margin 5
+ scroll-margin 0
  scroll-preserve-screen-position t
  mouse-wheel-scroll-amount '(3 ((shift) . 1))
  pixel-resolution-fine-flag 1
