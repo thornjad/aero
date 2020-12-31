@@ -226,6 +226,11 @@ advice."
 (global-display-fill-column-indicator-mode 1)
 (global-visual-line-mode +1)
 
+(use-package good-scroll
+  :straight (:host github :repo "io12/good-scroll.el")
+  :config
+  (good-scroll-mode +1))
+
 (use-package all-the-icons :straight t)
 
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
