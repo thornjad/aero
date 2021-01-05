@@ -264,6 +264,9 @@ appropriate.  In tables, insert a new row or end the table."
   (aero-mode-leader-def
     :keymaps 'org-mode-map
     (kbd "RET") 'aero/org-return-dwim
+    "i" '(:ignore t :wk "insert")
+    "il" '(org-insert-link :wk "link")
+    "id" '(org-insert-drawer :wk "drawer")
     "c" '(:ignore t :wk "cell")
     "cc" '(org-babel-execute-src-block :wk "exec cell"))
 
