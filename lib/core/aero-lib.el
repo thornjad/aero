@@ -189,11 +189,11 @@ See `sort-regexp-fields'."
 ;;; system and logging
 
 (defun system-is-mac ()
-  (eq system-type 'darwin))
+  (string= system-type 'darwin))
 (defun system-is-linux ()
-  (eq system-type 'gnu/linux))
+  (string= system-type 'gnu/linux))
 (defun system-is-mswindows ()
-  (eq system-type 'windows-nt))
+  (string= system-type 'windows-nt))
 (defun window-system-is-mac ()
   (memq (window-system) '(mac ns)))
 
