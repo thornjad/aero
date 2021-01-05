@@ -460,7 +460,7 @@ Local bindings (`counsel-mode-map'):
     "q" 'kill-this-buffer
     "?" 'describe-mode))
 
-(when (eq system-type "darwin")
+(when (system-is-mac)
   (use-package pbcopier
     :defines (turn-on-pbcopier)
     :straight (:host gitlab :repo "thornjad/pbcopier")
