@@ -715,6 +715,7 @@ Local bindings (`counsel-mode-map'):
  "w}" 'enlarge-window
  "wm" 'maximize-window
  "wi" 'minimize-window
+ "wo" 'browse-url-xdg-open
 
  "wL" '(:ignore t :wk "layout")
  "wL2" 'aero/layout-two-columns
