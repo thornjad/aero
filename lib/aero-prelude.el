@@ -466,6 +466,10 @@ Local bindings (`counsel-mode-map'):
     :straight (:host gitlab :repo "thornjad/pbcopier")
     :config (turn-on-pbcopier)))
 
+(when (system-is-linux)
+  (setq select-enable-clipboard t)
+  (setq interprogram-paste-function #'gui-selection-value))
+
 (use-package re-builder
   :commands re-builder
   :config
