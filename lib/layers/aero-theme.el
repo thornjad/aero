@@ -163,8 +163,8 @@ advice."
     (add-hook 'post-command-hook #'aero/show-enhanced-message)))
 
 ;; Initialize enhanced-message
-(aero--update-weather-line)
-(aero/activate-enhanced-message)
+;; (aero--update-weather-line)
+;; (aero/activate-enhanced-message)
 
 
 ;;; get ligatures to actually work
