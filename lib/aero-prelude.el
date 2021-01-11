@@ -192,6 +192,7 @@ Local bindings (`counsel-mode-map'):
 \\{counsel-mode-map}"
     :global t
     :keymap counsel-mode-map
+    :group 'counsel
     (if counsel-mode
         (progn
           (when (and (fboundp 'advice-add)
