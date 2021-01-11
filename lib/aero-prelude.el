@@ -463,7 +463,7 @@ Local bindings (`counsel-mode-map'):
 
 (when (system-is-mac)
   (use-package pbcopier
-    :defines (turn-on-pbcopier)
+    :functions (turn-on-pbcopier)
     :straight (:host gitlab :repo "thornjad/pbcopier")
     :config (turn-on-pbcopier)))
 
