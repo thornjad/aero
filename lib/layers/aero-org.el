@@ -360,12 +360,12 @@ This function inserts the block found between '* TEMPLATE' and
         (end nil))
     (save-excursion
       (outline-show-all)
-      (goto-line 0)
+      (goto-char (point-min))
       (re-search-forward "^\* TEMPLATE" )
       (beginning-of-line)
       (backward-char 1)
       (setq start (point))
-      (next-line 2)
+      (forward-line 2)
       (re-search-forward "END$")
       (beginning-of-line)
       (backward-char 1)
@@ -383,7 +383,7 @@ This function inserts the block found between '* TEMPLATE' and
       ;; Done, insert
       (insert text "\n"))
     (goto-char start)
-    (next-line 1)
+    (forward-line 1)
     (outline-hide-sublevels 1)))
 
 ;; Jump to today's entry.
@@ -394,7 +394,7 @@ This function inserts the block found between '* TEMPLATE' and
     (save-excursion
       (org-save-outline-visibility t
         (outline-show-all)
-        (goto-line 0)
+        (goto-char (point-min))
         (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
             (setq pos (point))
           (message "No entry for today found."))))
@@ -427,7 +427,7 @@ This function inserts the block found between '* TEMPLATE' and
     'None' or 'None.'."
   (save-excursion
     (outline-show-all)
-    (goto-line 0)
+    (goto-char (point-min))
 
     (org-map-entries
      '(lambda ()
