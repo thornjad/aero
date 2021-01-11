@@ -406,34 +406,4 @@ This function inserts the block found between '* TEMPLATE' and
           t)
       nil)))
 
-(defun clear-subtree ()
-  "Delete the subtree we're inside.
-
-    We move to the start of the heading, record our position, then the
-    end of the tree and work backwards until we've gone too far."
-  (let (start)
-    (save-excursion
-      (org-back-to-heading t)
-      (setq start (point))
-      (org-end-of-subtree t)
-      (while (>= (point) start)
-        (delete-char -1)))))
-
-(defun remove-empty-sections (backend)
-  "If there are any headings which contain only 'empty' content
-    then don't show them on export
-
-    Empty here means either literally empty, or having the content
-    'None' or 'None.'."
-  (save-excursion
-    (outline-show-all)
-    (goto-char (point-min))
-
-    (org-map-entries
-     '(lambda ()
-        (if (or (equalp "None." (format "%s" (org-get-entry)))
-                (equalp "None" (format "%s" (org-get-entry)))
-                (equalp "" (format "%s" (org-get-entry))))
-            (clear-subtree))))))
-
 (provide 'aero-org)
