@@ -529,6 +529,9 @@ Local bindings (`counsel-mode-map'):
   (aero-leader-def
     "tt" '(powerthesaurus-lookup-word-dwim :wk "thesaurus")))
 
+;; Ensure emacsclient frames open with focus
+(add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
+
 
 ;;; general bindings
 
