@@ -328,115 +328,112 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
 
 ;; thornlog (agenda) helpers
 
-;; FIXME these are supposed to live in the thornlog itself, but for some reason
-;; they aren't being evaluated. Re-enable here as a last ditch effort
+(defun new-day ()
+  "Create a new entry for today, if one isn't already present."
+  (interactive)
+  (if (today)
+      (message "Entry for today already present")
+    (new-day-insert)))
 
-;; (defun new-day ()
-;;   "Create a new entry for today, if one isn't already present."
-;;   (interactive)
-;;   (if (today)
-;;       (message "Entry for today already present")
-;;     (new-day-insert)))
+;; List of things we expand inside the templated-section of this file.
+;; The pairs are "regexp" + "replacement" which is invoked via "apply".
+(setq new-day-template-variables
+      '(("YYYY"        . (format-time-string "%Y"))
+        ("MM"          . (format-time-string "%m"))
+        ("DD"          . (format-time-string "%d"))
+        ("MONTH"       . (format-time-string "%B"))
+        ("MONTH3"      . (format-time-string "%b"))
+        ("DAY"         . (format-time-string "%A"))
+        ("DAY3"        . (format-time-string "%a"))
+        ("HOUR"        . (format-time-string "%H"))
+        ("MINUTE"      . (format-time-string "%M"))
+        ("TEMPLATE"    . (format-time-string "%A, %B %d (%Y-%m-%d)"))
+        (":noexport:"  . (format ""))))
 
-;; ;; List of things we expand inside the templated-section of this file.
-;; ;; The pairs are "regexp" + "replacement" which is invoked via "apply".
-;; (setq new-day-template-variables
-;;       '(("YYYY"        . (format-time-string "%Y"))
-;;         ("MM"          . (format-time-string "%m"))
-;;         ("DD"          . (format-time-string "%d"))
-;;         ("MONTH"       . (format-time-string "%B"))
-;;         ("MONTH3"      . (format-time-string "%b"))
-;;         ("DAY"         . (format-time-string "%A"))
-;;         ("DAY3"        . (format-time-string "%a"))
-;;         ("HOUR"        . (format-time-string "%H"))
-;;         ("MINUTE"      . (format-time-string "%M"))
-;;         ("TEMPLATE"    . (format-time-string "%A, %B %d (%Y-%m-%d)"))
-;;         (":noexport:"  . (format ""))))
+(defun new-day-insert ()
+  "Insert the contents of a template into the document, for a new day's work.
+This function inserts the block found between '* TEMPLATE' and
+'END' then fills in the date nicely."
+  (let ((start nil)
+        (text nil)
+        (case-fold-search nil) ; This ensures our replacements match "HOURS" not "Worked Hours"
+        (end nil))
+    (save-excursion
+      (outline-show-all)
+      (goto-line 0)
+      (re-search-forward "^\* TEMPLATE" )
+      (beginning-of-line)
+      (backward-char 1)
+      (setq start (point))
+      (next-line 2)
+      (re-search-forward "END$")
+      (beginning-of-line)
+      (backward-char 1)
+      (setq end (point))
+      (setq text (buffer-substring start end))
+      (goto-char start)
 
-;; (defun new-day-insert ()
-;;   "Insert the contents of a template into the document, for a new day's work.
-;; This function inserts the block found between '* TEMPLATE' and
-;; 'END' then fills in the date nicely."
-;;   (let ((start nil)
-;;         (text nil)
-;;         (case-fold-search nil) ; This ensures our replacements match "HOURS" not "Worked Hours"
-;;         (end nil))
-;;     (save-excursion
-;;       (outline-show-all)
-;;       (goto-line 0)
-;;       (re-search-forward "^\* TEMPLATE" )
-;;       (beginning-of-line)
-;;       (backward-char 1)
-;;       (setq start (point))
-;;       (next-line 2)
-;;       (re-search-forward "END$")
-;;       (beginning-of-line)
-;;       (backward-char 1)
-;;       (setq end (point))
-;;       (setq text (buffer-substring start end))
-;;       (goto-char start)
+      ;; Replace all our template-pairs
+      (dolist (item new-day-template-variables)
+        (setq text (replace-regexp-in-string (car item) (apply (cdr item)) text t)))
+      ;; Skip the weekend on Monday
+      (when (string-match "^\* Monday " text)
+        (setq text (replace-regexp-in-string "Yesterday:" "Friday:" text t)))
 
-;;       ;; Replace all our template-pairs
-;;       (dolist (item new-day-template-variables)
-;;         (setq text (replace-regexp-in-string (car item) (apply (cdr item)) text t)))
-;;       ;; Skip the weekend on Monday
-;;       (when (string-match "^\* Monday " text)
-;;         (setq text (replace-regexp-in-string "Yesterday:" "Friday:" text t)))
+      ;; Done, insert
+      (insert text "\n"))
+    (goto-char start)
+    (next-line 1)
+    (outline-hide-sublevels 1)))
 
-;;       ;; Done, insert
-;;       (insert text "\n"))
-;;     (goto-char start)
-;;     (next-line 1)
-;;     (outline-hide-sublevels 1)))
+;; Jump to today's entry.
+(defun today ()
+  "Visit today's entry, if it exists.  Otherwise show a message."
+  (interactive)
+  (let ((pos nil))
+    (save-excursion
+      (org-save-outline-visibility t
+        (outline-show-all)
+        (goto-line 0)
+        (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
+            (setq pos (point))
+          (message "No entry for today found."))))
+    (if pos
+        (progn
+          (outline-show-all)
+          (goto-char pos)
+          (outline-hide-sublevels 1)
+          t)
+      nil)))
 
-;; ;; Jump to today's entry.
-;; (defun today ()
-;;   "Visit today's entry, if it exists.  Otherwise show a message."
-;;   (interactive)
-;;   (let ((pos nil))
-;;     (save-excursion
-;;       (org-save-outline-visibility t
-;;         (outline-show-all)
-;;         (goto-line 0)
-;;         (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
-;;             (setq pos (point))
-;;           (message "No entry for today found."))))
-;;     (if pos
-;;         (progn
-;;           (outline-show-all)
-;;           (goto-char pos)
-;;           (outline-hide-sublevels 1)
-;;           t)
-;;       nil)))
+(defun clear-subtree ()
+  "Delete the subtree we're inside.
 
-;; (defun clear-subtree ()
-;;   "Delete the subtree we're inside.
+    We move to the start of the heading, record our position, then the
+    end of the tree and work backwards until we've gone too far."
+  (let (start)
+    (save-excursion
+      (org-back-to-heading t)
+      (setq start (point))
+      (org-end-of-subtree t)
+      (while (>= (point) start)
+        (delete-char -1)))))
 
-;;     We move to the start of the heading, record our position, then the
-;;     end of the tree and work backwards until we've gone too far."
-;;   (let (start)
-;;     (save-excursion
-;;       (org-back-to-heading t)
-;;       (setq start (point))
-;;       (org-end-of-subtree t)
-;;       (while (>= (point) start)
-;;         (delete-char -1)))))
+(defun remove-empty-sections (backend)
+  "If there are any headings which contain only 'empty' content
+    then don't show them on export
 
-;; (defun remove-empty-sections (backend)
-;;   "If there are any headings which contain only 'empty' content
-;;     then don't show them on export
+    Empty here means either literally empty, or having the content
+    'None' or 'None.'."
+  (save-excursion
+    (outline-show-all)
+    (goto-line 0)
 
-;;     Empty here means either literally empty, or having the content
-;;     'None' or 'None.'."
-;;   (save-excursion
-;;     (outline-show-all)
-;;     (goto-line 0)
-
-;;     (org-map-entries
-;;      '(lambda ()
-;;         (if (or (equalp "None." (format "%s" (org-get-entry)))
-;;                 (equalp "None" (format "%s" (org-get-entry)))
-;;                 (equalp "" (format "%s" (org-get-entry))))
-;;             (clear-subtree))))))
+    (org-map-entries
+     '(lambda ()
+        (if (or (equalp "None." (format "%s" (org-get-entry)))
+                (equalp "None" (format "%s" (org-get-entry)))
+                (equalp "" (format "%s" (org-get-entry))))
+            (clear-subtree))))))
 
 (provide 'aero-org)
