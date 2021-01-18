@@ -57,11 +57,11 @@
                 '(insert hybrid normal visual motion operator replace))
   :config
 	(general-create-definer aero-leader-def
-		:states '(normal visual emacs)
+		:states '(normal visual emacs motion)
 		:prefix "SPC"
 		:non-normal-prefix "C-SPC")
 	(general-create-definer aero-mode-leader-def
-		:states '(normal visual emacs)
+		:states '(normal visual emacs motion)
 		:prefix ",")
 
   (general-define-key
@@ -75,10 +75,7 @@
   :defines which-key-mode
   :config
   (which-key-mode)
-  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL"))
-  (aero-leader-def
-    "hw" '(:ignore t :wk "which-key")
-    "hwm" '(which-key-show-major-mode :wk "major mode map")))
+  (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
 
 ;; we descend to hell
@@ -94,6 +91,7 @@
         evil-want-C-u-scroll t)
 
   :config
+  (define-key evil-motion-state-map " " nil)
   (general-define-key
    :states 'normal
    :prefix "SPC"
@@ -220,11 +218,7 @@ Local bindings (`counsel-mode-map'):
         counsel-git-cmd "rg --files"
         counsel-rg-base-command "rg --with-filename --smart-case --no-heading --line-number --color never %s")
 
-  (general-define-key
-   :states '(normal visual insert replace)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-
+  (aero-leader-def
    "SPC" 'counsel-M-x
    "ff" 'counsel-find-file
    "fl" 'counsel-locate
@@ -618,6 +612,8 @@ Local bindings (`counsel-mode-map'):
  "hi" 'info
  "hI" 'info-apropos
  "hd" '(:ignore t :wk "describe")
+ "hw" '(:ignore t :wk "which-key")
+ "hwm" '(which-key-show-major-mode :wk "major mode map")
 
  "b" '(:ignore t :wk "buffers")
  "bn" 'next-buffer
@@ -737,5 +733,6 @@ Local bindings (`counsel-mode-map'):
  "tni" 'increment-number-at-point
  "tnd" 'decrement-number-at-point
  )
+
 
 (provide 'aero-prelude)
