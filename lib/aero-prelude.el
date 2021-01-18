@@ -381,7 +381,7 @@ Local bindings (`counsel-mode-map'):
              neotree-find
              neo-global--with-buffer
              neo-global--window-exists-p)
-  :defines (off-p)
+  :functions off-p
   :init
   (setq neo-create-file-auto-open nil
         neo-auto-indent-point t
