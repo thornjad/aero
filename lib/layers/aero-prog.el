@@ -270,5 +270,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     "bI" 'indent-indicator-mode))
 
 
+;;; additional packages which might not fit elsewhere
+
+(use-package nix-mode :straight t
+  :mode "\\.nix\\'")
+
+
+;;; end
 
 (provide 'aero-prog)
