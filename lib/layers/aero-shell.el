@@ -111,7 +111,9 @@
 (use-package sh-script :defer t
   :mode "\\.sh\\'\\.bash\\'\\.zsh\\'"
   :config
-  (setq shell-file-name "/usr/local/bin/bash")
+  (setq shell-file-name (cond
+                         ((string= system-type "darwin") "/usr/local/bin/zsh")
+                         (t "/usr/bin/zsh")))
 
   (defun indent-paragraph ()
     (interactive)
