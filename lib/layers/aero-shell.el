@@ -60,7 +60,7 @@
   (defun eshell/magit ()
     "Open magit-status in the current directory."
     (interactive)
-    (magit-status default-directory))
+    (magit-status-setup-buffer default-directory))
 
   (dolist (x '(('e . (lambda (pattern)
                        (if (stringp pattern)
