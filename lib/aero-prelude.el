@@ -603,7 +603,7 @@ Local bindings (`counsel-mode-map'):
  "fotl" '(aero/thornlog-log :wk "thornlog log")
  "fotd" '(aero/thornlog-todo :wk "thornlog todo")
  "foP" 'aero/open-emacs-problems
- "fof" 'aero/open-in-finder
+ "fof" 'aero/open-local-init
 
  "o" '(:ignore t :wk "org")
  "oa" 'org-agenda
