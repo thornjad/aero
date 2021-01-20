@@ -377,7 +377,7 @@ This function inserts the block found between '* TEMPLATE' and
       (dolist (item new-day-template-variables)
         (setq text (replace-regexp-in-string (car item) (apply (cdr item)) text t)))
       ;; Skip the weekend on Monday
-      (when (string-match "^\* Monday " text)
+      (when (string-match "^\* Monday" text)
         (setq text (replace-regexp-in-string "Yesterday:" "Friday:" text t)))
 
       ;; Done, insert
