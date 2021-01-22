@@ -1,9 +1,10 @@
-personal_ws-1.1 en 243 
+personal_ws-1.1 en 248 
 ACL
 APIs
 Aireon
 Alacritty
 Analytics
+BCAT
 BSc
 Bing
 Brotli
@@ -36,15 +37,18 @@ Gzip
 HH
 HiDPI
 Hyperfeed
+IFR
 IMDb
 JS
 JSX
 Javascript
 Jira
 KDE
+LIFR
 LLC
 LMB
 MELPA
+MVFR
 Memoization
 NSR
 NVM
@@ -77,6 +81,7 @@ UI
 USD
 UTF
 UX
+VFR
 Verix
 Voici
 WFH
