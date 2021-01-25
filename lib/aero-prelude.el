@@ -591,6 +591,7 @@ Local bindings (`counsel-mode-map'):
  "fD" '(aero/delete-this-file :wk "delete this file")
  "fE" '(aero/sudo-edit :wk "sudo edit")
  "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
+ "fx" '(aero/xdg-open :wk "xdg-open")
  "fo" '(:ignore t :wk "open special files")
  "fot" '(:ignore t :wk "thornlog")
  "fott" '(aero/thornlog-dir :wk "thornlog all")

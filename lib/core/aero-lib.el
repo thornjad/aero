@@ -585,13 +585,26 @@ In a dired buffer, it will open the current file."
     (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
     (restclient-mode)))
 
+(defun aero/xdg-open (arg)
+  "Pass the specified ARG to \"xdg-open\".
+This can be used to open Nautilus/Finder, the default browser, etc. See \"man
+xdg-open\" for more."
+  (interactive (list (read-string "xdg-open: ")))
+  (call-process "xdg-open" nil 0 nil arg))
+
+(defun aero/xdg-open-dwim (&optional arg)
+  "Guess what you mean to xdg-open if ARG is nil."
+  (interactive)
+  (if (use-region-p)
+      (aero/xdg-open (filter-buffer-substring (mark) (point)))
+    (cl-loop for type in '(url email symbol)
+             do (when (thing-at-point type) (aero/xdg-open (thing-at-point type 'noproperties))))))
+
 
 ;;; patches
 
 (with-eval-after-load 'el-patch
   (with-eval-after-load 'url-http
-
-
     (el-patch-feature url-http)
     (el-patch-defun url-http-parse-headers ()
       "Parse and handle HTTP specific headers.

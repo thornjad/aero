@@ -71,7 +71,7 @@
                            (get-buffer "*scratch*")))
  initial-major-mode 'text-mode
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
-																 " build " (number-to-string emacs-build-number)
+																 "." (number-to-string emacs-build-number)
                                  "\n"
                                  ";; finally, a good fucking editor"
                                  "\n\n")
