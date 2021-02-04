@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -46,10 +46,10 @@
      (sort (split-string (shell-command-to-string command) "\0" t)
            #'string<))))
 
-
-(use-package projectile :straight t
+(use-package projectile
+  :straight (:host github :repo "bbatsov/projectile")
 	:config
-	(setq projectile-indexing-method 'alien
+	(setq projectile-indexing-method 'native
 				projectile-enable-caching t
 				projectile-git-submodule-command nil
 				projectile-mode-line nil)
