@@ -1,4 +1,4 @@
-personal_ws-1.1 en 248 
+personal_ws-1.1 en 261 
 ACL
 APIs
 Aireon
@@ -47,8 +47,13 @@ KDE
 LIFR
 LLC
 LMB
+MBTiles
 MELPA
 MVFR
+MapBox's
+MapServer
+MapTiler
+Mapbox
 Memoization
 NSR
 NVM
@@ -57,6 +62,7 @@ OSX
 OpenType
 Ortho
 PCI
+PNG
 POSTed
 POSTs
 PRs
@@ -115,6 +121,7 @@ cron
 cryptographic
 css
 customizations
+dataset
 de
 decrement
 defund
@@ -163,6 +170,7 @@ https
 ident
 idents
 incrementation
+ingester
 ingestible
 init
 instantiation
@@ -173,6 +181,7 @@ jupyter
 loblolly
 localhost
 macOS
+mbtiles
 mc
 md
 memoization
@@ -205,6 +214,7 @@ readme
 repl
 rgb
 rgba
+roadmap
 rollout
 rsync
 rvt
@@ -229,6 +239,7 @@ terminfo
 termios
 theming
 thornjad
+timebox
 todo
 tooltip
 touchpad
@@ -239,6 +250,8 @@ typeof
 umount
 umounted
 unicode
+usr
+util
 utils
 vhost
 viewport
