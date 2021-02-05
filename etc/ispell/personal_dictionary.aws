@@ -1,4 +1,4 @@
-personal_ws-1.1 en 261 
+personal_ws-1.1 en 264 
 ACL
 APIs
 Aireon
@@ -53,11 +53,13 @@ MVFR
 MapBox's
 MapServer
 MapTiler
+MapTiler's
 Mapbox
 Memoization
 NSR
 NVM
 Nvidia
+OSM
 OSX
 OpenType
 Ortho
@@ -240,6 +242,7 @@ termios
 theming
 thornjad
 timebox
+titlebar
 todo
 tooltip
 touchpad
