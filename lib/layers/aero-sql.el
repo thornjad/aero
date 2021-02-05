@@ -18,13 +18,13 @@
 
 (use-package sql :defer t
   :commands (sql-connect)
-  :mode ("\\.\\(sqlite_\\)?sql\\'" . sql-mode)
-
   :init
   (aero-leader-def
     "Sc" 'sql-connect)
 
   :config
+  (setq sql-sqlite-program "sqlite3")
+
   (aero-mode-leader-def
     :keymaps 'sql-mode-map
     "b" 'sql-send-buffer
