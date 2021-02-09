@@ -26,7 +26,7 @@
 
 (deftheme aero-dark)
 (let ((class '((class color) (min-colors #xFF)))
-      (aero-bg "#292b2e")
+      (aero-bg "#343334")
       (aero-fg "#d1c8b2")
 
       (aero-grey0 "#373426")
@@ -74,7 +74,7 @@
       (aero-brilliant-red "#5f0000"))
   (custom-theme-set-faces
    'aero-dark
-   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 150 :weight light))))
+   `(default ((t (:background ,aero-bg :foreground ,aero-fg :font "Victor Mono" :height 120 :weight light))))
    `(cursor ((t (:background ,aero-fg))))
    `(mode-line ((t (:background ,aero-act1 :foreground ,aero-space-base :box (:line-width 3 :color ,aero-act1)))))
    `(mode-line-inactive ((t (:background ,aero-bg :foreground ,aero-space-base-dim :box (:line-width 3 :color ,aero-bg)))))
@@ -348,7 +348,7 @@
    `(message-mml ((t (:foreground ,aero-normal-green :weight bold))))
 
    ;; org-mode
-   `(org-hide ((t (:foreground ,aero-normal-black))))
+   `(org-hide ((t (:foreground ,aero-bg))))
    `(org-level-1 ((t (:foreground ,aero-normal-blue))))
    `(org-level-2 ((t (:foreground ,aero-bright-yellow))))
    `(org-level-3 ((t (:foreground ,aero-normal-magenta))))
