@@ -372,7 +372,7 @@
    `(message-mml ((t (:foreground ,aero-normal-green :weight bold))))
 
    ;; org-mode
-   `(org-hide ((t (:foreground ,aero-normal-black))))
+   `(org-hide ((t (:foreground ,aero-bg))))
    `(org-level-1 ((t (:foreground ,aero-normal-blue))))
    `(org-level-2 ((t (:foreground ,aero-bright-yellow))))
    `(org-level-3 ((t (:foreground ,aero-normal-magenta))))
