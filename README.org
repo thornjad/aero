@@ -50,7 +50,7 @@ Local settings, functions, et cetera can be put into an untracked
 the initialization process, after all other layers and settings.
 
 * Major features, changes and decisions
-** Evil
+*** Evil
 #+begin_quote
 "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 #+end_quote
@@ -62,7 +62,7 @@ work for RMS, but I can only keep my sanity for so long while holding down
 Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly
 modifier-key-free modal editing.
 
-** Ivy and Counsel
+*** Ivy and Counsel
 Despite using Helm for a few years, I chose to use Counsel and Ivy when I
 created this project. In my experience, they are smaller, lighter, faster and
 just as powerful as Helm.
@@ -70,7 +70,7 @@ just as powerful as Helm.
 That being said, Helm is now a dead project, so I guess this section may not be
 so necessary for much longer.
 
-** Spacemacs-inspired leader keys
+*** Spacemacs-inspired leader keys
 When I first started using Emacs, it was through Spacemacs, so the architecture
 of that project has shaped the way I think about editing. As such, the majority
 of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC=
@@ -82,7 +82,7 @@ that mode. For example, in Python mode, =, s b= sends the entire buffer to
 Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs
 the HTTP query at point.
 
-** Custom theme, including a simplified mode line
+*** Custom theme, including a simplified mode line
 There is little disagreement in the Emacs community that the default color
 scheme is an abomination. Luckily, it's very easy to change, and not much more
 difficult to create one's own.
@@ -100,7 +100,7 @@ saved, locked), filename, file size, line number at point, progression through
 the file (percentage), the remote hostname (if using TRAMP) and the current
 major mode.
 
-** Source-controlled Flycheck dictionary
+*** Source-controlled Flycheck dictionary
 The built-in Flycheck dictionary is woefully lacking in technical terms. Rather
 than keep my personal dictionary secret, it is included here in
 =etc/ispell/personal_dictionary.aws=. I haven't dug into the implementation of
