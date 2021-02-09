@@ -18,7 +18,7 @@
 
 (use-package tcl
   ;; :straight (tcl :host gitlab :repo "thornjad/tcl-mode")
-  :mode "\\.\\(tcl\\|test\\)\\'"
+  :mode ("\\.\\(tcl\\|test\\)\\'" . tcl-mode)
   :init
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
