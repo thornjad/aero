@@ -109,7 +109,7 @@
 ;;; shell scripting
 
 (use-package sh-script :defer t
-  :mode "\\.sh\\'\\.bash\\'\\.zsh\\'"
+  :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
   :config
   (setq shell-file-name (cond
                          ((string= system-type "darwin") "/usr/local/bin/zsh")
