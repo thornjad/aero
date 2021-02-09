@@ -35,10 +35,6 @@ unreasonable man." — G.B. Shaw, probably
 #+end_quote
 
 #+begin_quote
-"Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
-#+end_quote
-
-#+begin_quote
 "Thou shalt not cross 80 columns in thy file" — Linus Torvalds
 #+end_quote
 
@@ -53,15 +49,72 @@ Local settings, functions, et cetera can be put into an untracked
 ~/.config/emacs/init.local.el file, which will be evaluated near the end of
 the initialization process, after all other layers and settings.
 
-* Note
-Aero is maintained as a cutting-edge tool. It focuses on working best with
-the latest minor version of Emacs, and should keep parity with the latest
-version of Remacs (if I can get it to compile).
+* Major features, changes and decisions
+** Evil
+#+begin_quote
+"Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
+#+end_quote
 
-Additionally, this configuration is ever-evolving. Bindings, settings and
-packages change no warning and little to no documentation. This repository
-is not intended to be used as a prebuilt configuration like Spacemacs, but
-rather as a reference or source of ideas. Use at your own risk.
+Emacs keybindings are, in my humble opinion, a pile of horseshit. They might
+work for RMS, but I can only keep my sanity for so long while holding down
+=CTRL=.
+
+Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly
+modifier-key-free modal editing.
+
+** Ivy and Counsel
+Despite using Helm for a few years, I chose to use Counsel and Ivy when I
+created this project. In my experience, they are smaller, lighter, faster and
+just as powerful as Helm.
+
+That being said, Helm is now a dead project, so I guess this section may not be
+so necessary for much longer.
+
+** Spacemacs-inspired leader keys
+When I first started using Emacs, it was through Spacemacs, so the architecture
+of that project has shaped the way I think about editing. As such, the majority
+of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC=
+leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w=
+(for file write) saves the buffer to disk.
+
+The other leader, =,= is available in some major modes and contains bindings for
+that mode. For example, in Python mode, =, s b= sends the entire buffer to
+Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs
+the HTTP query at point.
+
+** Custom theme, including a simplified mode line
+There is little disagreement in the Emacs community that the default color
+scheme is an abomination. Luckily, it's very easy to change, and not much more
+difficult to create one's own.
+
+By default, Aero uses a custom built-in theme called =aero-light= which is
+loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern
+Minnesota in Autumn. Also available is =aero-dark=, which pulls further
+inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
+
+Aero is also packaged with a custom and mostly original reduced mode line which
+works with any theme (at least it looks great with =aero-light= and
+=aero-dark=). Rather than getting cluttered with info from every mode under the
+sun, the Aero mode line displays the current editing mode, file status (changed,
+saved, locked), filename, file size, line number at point, progression through
+the file (percentage), the remote hostname (if using TRAMP) and the current
+major mode.
+
+** Source-controlled Flycheck dictionary
+The built-in Flycheck dictionary is woefully lacking in technical terms. Rather
+than keep my personal dictionary secret, it is included here in
+=etc/ispell/personal_dictionary.aws=. I haven't dug into the implementation of
+this library, but due to the way it reshuffles itself occasionally, I presume
+it's some type of tree structure. As such, if you want to merge my dictionary
+with your own, it's probably not a simple copy-paste procedure. Then again,
+maybe it will self-correct itself. And maybe one day I'll get off my ass and
+find out for myself. Maybe.
+
+* Note
+This configuration is ever-evolving. Bindings, settings and packages change no
+warning and little to no documentation. This repository is not intended to be
+used as a prebuilt configuration like Spacemacs, but rather as a reference or
+source of ideas. Use at your own risk.
 
 To get started with Emacs, I highly recommend [[https://spacemacs.org][Spacemacs]].
 
@@ -81,7 +134,7 @@ fantastic people:
 - Xah Lee
 
 * Copying
-Copyright © 2017-2021 Jade Michael Thornton
+Copyright © 2016-2021 Jade Michael Thornton
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
