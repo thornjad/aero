@@ -1,6 +1,6 @@
 ;;; init.el --- Aero Emacs -*- lexical-binding: t; coding: utf-8; mode: emacs-lisp; -*-
 ;;
-;; Copyright (c) 2017-2020 Jade Michael Thornton
+;; Copyright (c) 2016-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -21,8 +21,9 @@
 ;;; Code:
 
 ;; Catch-all version check
-(when (version< emacs-version "28")
-  (error "Aero requires at least Emacs version 28"))
+(when (or (member "--no-version-check" command-line-args)
+          (version< emacs-version "28"))
+  (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
 
 
 ;;; optimizations and fixes
