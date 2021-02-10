@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2018-2020 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
