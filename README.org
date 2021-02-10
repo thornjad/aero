@@ -82,6 +82,9 @@ that mode. For example, in Python mode, =, s b= sends the entire buffer to
 Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs
 the HTTP query at point.
 
+*** No tagged versioning
+As mentioned above, Aero is not meant to be a widespread project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no benefit; source control with git is enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
+
 *** Custom theme, including a simplified mode line
 There is little disagreement in the Emacs community that the default color
 scheme is an abomination. Luckily, it's very easy to change, and not much more
