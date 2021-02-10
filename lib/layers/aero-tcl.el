@@ -17,14 +17,11 @@
 ;; performance of this software.
 
 (use-package tcl
-  ;; :straight (tcl :host gitlab :repo "thornjad/tcl-mode")
-  :mode ("\\.\\(tcl\\|test\\)\\'" . tcl-mode)
   :init
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
   :config
-  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands))
-	(add-hook 'tcl-mode-hook (lambda () (setq-local indent-tabs-mode t))))
+  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
 
 (use-package testbackend
   :disabled t ;; TODO need to get this working properly
