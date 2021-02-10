@@ -219,17 +219,17 @@ Local bindings (`counsel-mode-map'):
         counsel-rg-base-command "rg --with-filename --smart-case --no-heading --line-number --color never %s")
 
   (aero-leader-def
-   "SPC" 'counsel-M-x
-   "ff" 'counsel-find-file
-   "fl" 'counsel-locate
-   "fr" 'counsel-recentf
-   "?" 'counsel-rg
-   "gg" '(counsel-git-grep :wk "git grep")
-   "gff" '(counsel-git :wk "find git file")
-   "ry" '(counsel-yank-pop :wk "search kill ring")
-   "hda" '(counsel-apropos :wk "apropos")
-   "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
-   "qU" 'counsel-unicode-char))
+    "SPC" 'counsel-M-x
+    "ff" 'counsel-find-file
+    "fl" 'counsel-locate
+    "fr" 'counsel-recentf
+    "?" 'counsel-rg
+    "gg" '(counsel-git-grep :wk "git grep")
+    "gff" '(counsel-git :wk "find git file")
+    "ry" '(counsel-yank-pop :wk "search kill ring")
+    "hda" '(counsel-apropos :wk "apropos")
+    "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
+    "qU" 'counsel-unicode-char))
 
 (use-package recentf
   :defines (recentf-mode)
