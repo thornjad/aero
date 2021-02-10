@@ -114,8 +114,8 @@ maybe it will self-correct itself. And maybe one day I'll get off my ass and
 find out for myself. Maybe.
 
 * Note
-This configuration is ever-evolving. Bindings, settings and packages change no
-warning and little to no documentation. This repository is not intended to be
+This configuration is ever-evolving. Bindings, settings and packages change with
+no warning and little to no documentation. This repository is not intended to be
 used as a prebuilt configuration like Spacemacs, but rather as a reference or
 source of ideas. Use at your own risk.
 
