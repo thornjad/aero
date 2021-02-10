@@ -83,7 +83,7 @@
 (use-package evil :straight t
   :after general
   :init
-  (setq evil-want-keybinding nil
+  (setq evil-want-keybinding nil ; handled by evil-collection
         ;; to change undo-system without restart, use SPC-: `evil-set-undo-system'
         evil-undo-system 'undo-tree
         evil-want-fine-undo t
