@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2017-2020 Jade Michael Thornton
+;; Copyright (c) 2017-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -96,12 +96,21 @@ only. This file is not part of Aero proper, and is not shared.")
   (require 'subr-x)
   (require 'aero-lib))
 
+(defun aero/load-layers ()
+  "Load all Aero layers"
+  (require 'aero-prelude)
+
+  (if (boundp 'aero-layers-dir)
+      ;; Run through all existing layers and load them by name. NOTE: this
+      ;; assumes that all layers provide a package identical to their file name.
+      (dolist (layer (directory-files aero-layers-dir nil "\\.el$"))
+        (require (intern (string-trim-right layer ".el"))))
+    (error "Cannot load layers because `aero-layers-dir' is not bound! This should never happen, what have you done??")))
+
 (defun aero/init ()
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
   (aero/load-libs)
-  (require 'aero-layers)
-  (eval-when-compile (declare-function aero/load-layers "aero-layers"))
   (aero/load-layers)
 
   ;; baise cette merde
