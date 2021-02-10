@@ -56,11 +56,9 @@ the initialization process, after all other layers and settings.
 #+end_quote
 
 Emacs keybindings are, in my humble opinion, a pile of horseshit. They might
-work for RMS, but I can only keep my sanity for so long while holding down
-=CTRL=.
-
-Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly
-modifier-key-free modal editing.
+work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes
+extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly modifier-key-free modal
+editing.
 
 *** Ivy and Counsel
 Despite using Helm for a few years, I chose to use Counsel and Ivy when I
