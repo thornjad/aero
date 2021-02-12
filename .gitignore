@@ -51,6 +51,7 @@ tramp
 transient/
 var/
 xkcd/
+eln-cache/
 
 # Ignore local init
 init.local.el
