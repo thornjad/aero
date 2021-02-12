@@ -39,10 +39,11 @@ unreasonable man." — G.B. Shaw, probably
 #+end_quote
 
 * Requirements
-Aero is maintained as a cutting-edge tool, and focuses on working best with
-the latest minor version of Emacs, and should keep parity with the latest
-Remacs. Aero looks best with the font Victor Mono, but Dank Mono and Source
-Code Pro look pretty sick too.
+Aero is maintained as a cutting-edge tool, and focuses on working best with the
+latest minor version of Emacs, and should keep parity with the latest Remacs.
+Aero is tested and ready for the merge of =feature/native-comp=, which I support
+wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and
+Source Code Pro look pretty sick too.
 
 * Local config
 Local settings, functions, et cetera can be put into an untracked
