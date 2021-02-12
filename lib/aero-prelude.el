@@ -137,11 +137,6 @@
   :config
   (global-evil-visualstar-mode t))
 
-(use-package origami :straight t :defer 4 :after evil
-  :config
-  (global-origami-mode 1)
-  (define-key evil-normal-state-map "zf" #'origami-recursively-toggle-node))
-
 
 ;; abo-abo!
 
