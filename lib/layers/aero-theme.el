@@ -38,10 +38,10 @@
 ;; (use-package poet-theme :straight t :defer 10)
 ;; (use-package spacemacs-theme :straight t :defer 10)
 ;; (use-package spaceline :straight t)
-(use-package tao-theme :straight t :defer 10
-  :config
-  (setq tao-theme-use-boxes nil
-        tao-theme-use-height nil))
+;; (use-package tao-theme :straight t :defer 10
+;;   :config
+;;   (setq tao-theme-use-boxes nil
+;;         tao-theme-use-height nil))
 
 ;; Start the initial frame maximized
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
