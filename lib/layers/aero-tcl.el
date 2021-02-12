@@ -16,6 +16,8 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 
+(require 'use-package)
+
 (use-package tcl
   :init
 	;; make inferior-tcl use tclsh (default is wish)
