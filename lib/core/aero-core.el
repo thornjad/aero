@@ -67,8 +67,12 @@
   (setq use-package-expand-minimally byte-compile-current-file
         use-package-verbose init-file-debug)
 
-  (use-package use-package-ensure-system-package :straight t)
-  (use-package gnu-elpa-keyring-update :straight t))
+  ;; (use-package use-package-ensure-system-package :straight t)
+  (use-package gnu-elpa-keyring-update :straight t)
+  (use-package exec-path-from-shell :straight t
+    :config
+    (when (or (memq window-system '(mac ns x)) (daemonp))
+      (exec-path-from-shell-initialize))))
 
 
 ;;; groups and vars
