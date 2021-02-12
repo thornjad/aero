@@ -1,4 +1,4 @@
-personal_ws-1.1 en 266 
+personal_ws-1.1 en 267 
 ACL
 APIs
 Aireon
@@ -165,6 +165,7 @@ goto
 grey
 hacky
 hardcode
+hardcoded
 homebrew
 homebrewed
 hostname
