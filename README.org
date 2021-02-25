@@ -139,17 +139,17 @@ To get started with Emacs, I highly recommend [[https://spacemacs.org][Spacemacs
 ** Credits
 Like the Borg, Aero amalgamates macros, functions, bindings and packages
 modified from or inspired by a plethora of developers. Special thanks to these
-fantastic people:
+fantastic people, with links to the invaluable resource they provide:
 
-- James Sulak
+- [[https://github.com/jsulak/.emacs.d][James Sulak]]
 - [[https://github.com/jwiegley/dot-emacs][John Wiegley]]
-- Lee Hinman
+- [[https://github.com/dakrone/.emacs.d][Lee Hinman]]
 - [[https://github.com/cofi/dotfiles][Michael Markert]]
 - [[https://github.com/sachac/.emacs.d][Sacha Chua]]
-- Samuel Barreto
-- Steve Purcell
-- Wilfred Hughes
-- Xah Lee
+- [[https://github.com/sam217pa/emacs-config][Samuel Barreto]]
+- [[https://github.com/purcell/emacs.d][Steve Purcell]]
+- [[https://github.com/Wilfred/.emacs.d][Wilfred Hughes]]
+- [[http://ergoemacs.org][Xah Lee]]
 
 ** Copying
 Copyright © 2016-2021 Jade Michael Thornton
