@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -12,8 +12,8 @@
 
 (require 'aero-prelude)
 
-(use-package magit :straight t
-  :after (el-patch general)
+(use-package magit
+  :after (general)
 	:commands (magit-blame
              magit-commit
              magit-commit-popup
@@ -29,76 +29,32 @@
              magit-status
              magit-unstage-file
              magit-blame-mode)
-  :init
+	:init
   (when (system-is-mac)
     (setq magit-git-executable "/usr/local/bin/git"))
-	(general-define-key
-	 :states '(normal)
-	 :prefix "SPC"
-	 :non-normal-prefix "C-SPC"
-	 "gs" 'magit-status
-	 "gb" 'magit-blame
-	 "gfS" 'magit-stage-file
-	 "gfU" 'magit-unstage-file
-   "gm" '(:ignore t :which-key "smerge")
-   "gmm" 'smerge-start-session
-   "gmu" 'smerge-keep-upper
-   "gml" 'smerge-keep-lower
-   "gmn" 'smerge-next
-   "gmp" 'smerge-prev
-   "gma" 'smerge-keep-all
-   "gmE" 'smerge-ediff
-   "gmC" 'smerge-combine-with-next
-   "gmr" 'smerge-refine
-   "gmR" 'smerge-resolve
-   "gmd" '(:ignore t :wk "diff")
-   "gmdu" '(:ignore t :wk "upper")
-   "gmdul" 'smerge-diff-upper-lower
-   "gmdb" '(:ignore t :wk "base")
-   "gmdbu" 'smerge-diff-base-upper
-   "gmdbl" 'smerge-diff-base-lower)
+	(aero-leader-def
+	  "gs" 'magit-status
+	  "gb" 'magit-blame
+	  "gfS" 'magit-stage-file
+	  "gfU" 'magit-unstage-file
+    "gm" '(:ignore t :which-key "smerge")
+    "gmm" 'smerge-start-session
+    "gmu" 'smerge-keep-upper
+    "gml" 'smerge-keep-lower
+    "gmn" 'smerge-next
+    "gmp" 'smerge-prev
+    "gma" 'smerge-keep-all
+    "gmE" 'smerge-ediff
+    "gmC" 'smerge-combine-with-next
+    "gmr" 'smerge-refine
+    "gmR" 'smerge-resolve
+    "gmd" '(:ignore t :wk "diff")
+    "gmdu" '(:ignore t :wk "upper")
+    "gmdul" 'smerge-diff-upper-lower
+    "gmdb" '(:ignore t :wk "base")
+    "gmdbu" 'smerge-diff-base-upper
+    "gmdbl" 'smerge-diff-base-lower)
 
-  :config/el-patch
-  ;; prevent Emacs asking if we're sure we want to exit, if a
-  ;; Magit-spawned git-credential-cache process is running.
-  (defun magit-maybe-start-credential-cache-daemon ()
-    "Maybe start a `git-credential-cache--daemon' process.
-If such a process is already running or if the value of option
-`magit-credential-cache-daemon-socket' is nil, then do nothing. Otherwise start
-the process passing the value of that options as argument."
-    (unless (or (not magit-credential-cache-daemon-socket)
-                (process-live-p magit-credential-cache-daemon-process)
-                (memq magit-credential-cache-daemon-process
-                      (list-system-processes)))
-      (setq magit-credential-cache-daemon-process
-            (or (--first (let* ((attr (process-attributes it))
-                                (comm (cdr (assq 'comm attr)))
-                                (user (cdr (assq 'user attr))))
-                           (and (string= comm "git-credential-cache--daemon")
-                                (string= user user-login-name)))
-                         (list-system-processes))
-                (condition-case nil
-                    (el-patch-wrap 2
-                      (with-current-buffer
-                          (get-buffer-create " *git-credential-cache--daemon*")
-                        (start-process "git-credential-cache--daemon"
-                                       (el-patch-swap
-                                         " *git-credential-cache--daemon*"
-                                         (current-buffer))
-                                       magit-git-executable
-                                       "credential-cache--daemon"
-                                       magit-credential-cache-daemon-socket)
-                        (el-patch-add
-                          (set-process-query-on-exit-flag
-                           (get-buffer-process (current-buffer)) nil))))
-                  ;; Some Git implementations (e.g. Windows) won't have
-                  ;; this program; if we fail the first time, stop trying.
-                  ((debug error)
-                   (remove-hook
-                    'magit-credential-hook
-                    #'magit-maybe-start-credential-cache-daemon)))))))
-
-	:config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
   (setq magit-completing-read-function 'ivy-completing-read
         magit-buffer-name-format "%x%M%v: %t%x"
@@ -144,15 +100,6 @@ board_ticket_branch_name."
         (save-excursion
           (forward-line)
           (insert (format "\n%s-%s" board ticket))))))
-
-  ;; Auto-add ticket number when opening commit message
-  ;; (add-hook 'git-commit-setup-hook #'aero/insert-jira-ticket)
-
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "gp" 'aero/fetch-pr
-   "qw" 'aero/insert-jira-ticket)
 
 	(use-package magit-todos :straight t)
 	(use-package evil-magit :straight t))
