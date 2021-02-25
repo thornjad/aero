@@ -11,6 +11,6 @@
 ;; This file is not part of GNU Emacs
 
 (use-package tuareg :straight t
-  :mode "\\.mli?\\'")
+  :mode ("\\.mli?\\'" . tuareg-mode))
 
 (provide 'aero-ml)
