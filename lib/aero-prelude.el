@@ -598,8 +598,9 @@ Local bindings (`counsel-mode-map'):
         neo-show-updir-line t
         neo-theme (if (display-graphic-p) 'icons 'arrow)
         neo-banner-message nil
-        neo-confirm-create-file #'off-p
-        neo-confirm-create-directory #'off-p
+        ;; these fake-use MSG to sidestep the unused var compiler warning
+        neo-confirm-create-file (lambda (msg) (let ((_ msg)) t))
+        neo-confirm-create-directory (lambda (msg) (let ((_ msg)) t))
         neo-show-hidden-files t
         neo-keymap-style 'concise
         neo-show-hidden-files t
