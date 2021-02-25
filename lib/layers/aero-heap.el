@@ -13,7 +13,9 @@
 ;; Commentary:
 ;;
 ;; This is simply a heap of miscellaneous, low-config packages.
-;;
+
+(require 'aero-prelude)
+
 ;; Code:
 
 (use-package esup :straight t
