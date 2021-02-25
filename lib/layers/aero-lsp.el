@@ -16,7 +16,9 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 
-(use-package lsp-mode :straight t
+(require 'aero-prelude)
+
+(use-package lsp-mode :after (general)
   :hook ((sh-mode . lsp) ;; bash-language-server
          (rjsx-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
@@ -80,7 +82,7 @@
     (aero-leader-def
       "fs" '(lsp-ivy-workspace-symbol :wk "find symbols"))))
 
-(use-package dap-mode :straight t
+(use-package dap-mode :after (general)
   :config
   (require 'dap-firefox)
   (dap-firefox-setup)
