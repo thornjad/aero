@@ -608,6 +608,19 @@ Return t if and only if the current buffer is still active and
 should be shown to the user."
       ;; The comments after each status code handled are taken from RFC
       ;; 2616 (HTTP/1.1)
+      (el-patch-add
+        ;; make the compiler happy
+        (defvar url-callback-arguments)
+        (defvar url-callback-function)
+        (defvar url-http-codes)
+        (defvar url-http-data)
+        (defvar url-http-end-of-headers)
+        (defvar url-http-extra-headers)
+        (defvar url-http-method)
+        (defvar url-http-process)
+        (defvar url-http-response-status)
+        (defvar url-http-response-version)
+        (defvar url-http-target-url))
       (url-http-mark-connection-as-free (url-host url-current-object)
                                         (url-port url-current-object)
                                         url-http-process)
