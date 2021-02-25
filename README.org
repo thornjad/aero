@@ -1,6 +1,9 @@
 #+title: Aero Emacs
 #+author: Jade Michael Thornton
 
+#+caption: Aero Emacs
+[[./etc/images/aero-preview.png]]
+
 Aero is my own Emacs configuration, blending all the best shit I can find. It
 is built in the style of a distribution like Prelude or Spacemacs, but it's
 not intended for widespread use; Aero is highly tailored to me, what I want
