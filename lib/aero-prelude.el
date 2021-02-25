@@ -20,7 +20,8 @@
 ;;
 
 (require 'cl-lib)
-(require 'aero-core)
+(require 'straight)
+(require 'use-package)
 (require 'aero-lib)
 
 ;;; Code:
@@ -30,8 +31,17 @@
 ;; depend on Org, they will not accidentally cause the Emacs-provided
 ;; (outdated and duplicated) version of Org to be loaded before the
 ;; real one is registered.
-(eval-when-compile (declare-function straight-use-package "straight"))
+(declare-function straight-use-package "straight.el")
 (straight-use-package 'org)
+
+
+;;; Set up core packages
+(use-package use-package-ensure-system-package :straight t)
+(use-package gnu-elpa-keyring-update :straight t)
+(use-package exec-path-from-shell :straight t
+  :config
+  (when (or (memq window-system '(mac ns x)) (daemonp))
+    (exec-path-from-shell-initialize)))
 
 
 ;;; get ready to patch at any time
