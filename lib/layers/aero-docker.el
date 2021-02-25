@@ -22,12 +22,12 @@
   :commands (docker)
   :bind ("C-c d" . docker)
   :init
-  (use-package docker-image     :commands docker-images)
-  (use-package docker-container :commands docker-containers)
-  (use-package docker-volume    :commands docker-volumes)
-  (use-package docker-network   :commands docker-containers)
-  (use-package docker-machine   :commands docker-machines)
-  (use-package docker-compose   :commands docker-compose))
+  (use-package docker-image :straight nil :commands docker-images)
+  (use-package docker-container :straight nil :commands docker-containers)
+  (use-package docker-volume :straight nil :commands docker-volumes)
+  (use-package docker-network :straight nil :commands docker-containers)
+  (use-package docker-machine :straight nil :commands docker-machines)
+  (use-package docker-compose :straight nil :commands docker-compose))
 
 (use-package docker-compose-mode :straight t
   :mode "docker-compose.*\.yml\\'")
