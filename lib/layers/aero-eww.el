@@ -10,7 +10,7 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(require 'evil)
+(require 'aero-prelude)
 
 (defun aero/ddg (&optional term)
   (interactive "sSearch DuckDuckGo: ")
@@ -26,12 +26,13 @@
 (defun aero/npr-news () (interactive)
        (eww-browse-url "https://text.npr.org/"))
 
-(use-package eww
+(use-package eww :straight nil
   :commands (eww
              eww-browse-url
              eww-search-words)
   :init
   (setq browse-url-browser-function #'eww-browse-url)
+	:config
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
