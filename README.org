@@ -98,6 +98,12 @@ loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao th
 Minnesota in Autumn. Also available is =aero-dark=, which pulls further
 inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
 
+#+caption: Aero-Light theme
+[[./etc/images/aero-light-preview.png]]
+
+#+caption: Aero-Dark theme
+[[./etc/images/aero-dark-preview.png]]
+
 Aero is also packaged with a custom and mostly original reduced mode line which
 works with any theme (at least it looks great with =aero-light= and
 =aero-dark=). Rather than getting cluttered with info from every mode under the
@@ -105,6 +111,9 @@ sun, the Aero mode line displays the current editing mode, file status (changed,
 saved, locked), filename, file size, line number at point, progression through
 the file (percentage), the remote hostname (if using TRAMP) and the current
 major mode.
+
+#+caption: Aero's mode line
+[[./etc/images/modeline-preview.png]]
 
 **** Source-controlled Flycheck dictionary
 The built-in Flycheck dictionary is woefully lacking in technical terms. Rather
