@@ -38,7 +38,7 @@
                             "nmtui" "alsamixer" "htop" "el" "elinks"
                             "ssh" "nethack" "dtop" "dstat")
    eshell-visual-subcommands '(("git" "log" "diff" "show"))
-   pcomplete-ignore-case t)
+   completion-ignore-case t)
 
   (let ((default-directory (expand-file-name "~")))
     (setq eshell-path-env (getenv "PATH")))
