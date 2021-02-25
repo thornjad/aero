@@ -84,6 +84,9 @@ that mode. For example, in Python mode, =, s b= sends the entire buffer to
 Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs
 the HTTP query at point.
 
+#+caption: Aero space leader with Ivy completion
+[[./etc/images/aero-leader-preview.png]]
+
 **** No tagged versioning
 As mentioned above, Aero is not meant  to be a widespread project like Spacemacs
 or Prelude. This project is my personal configuration, pure and simple. As such,
