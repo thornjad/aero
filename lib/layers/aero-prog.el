@@ -246,13 +246,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    ((equal major-mode "tcl-mode")
     (last (split-string arg "::")))))
 
-(use-package dash-at-point :straight (:host github :repo "stanaka/dash-at-point")
-  :commands (dash-at-point dash-at-point-with-docset)
-  :init
-  (aero-leader-def
-    "hp" 'dash-at-point
-    "hp" 'dash-at-point-with-docset))
-
 
 ;;; whitespace and indentation
 
