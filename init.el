@@ -25,7 +25,114 @@
           (version< emacs-version "28"))
   (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
 
-
+
+;;; Core functionality
+
+(defgroup aero nil
+  "Aero customizations"
+  :group 'starter-kit
+  :prefix 'aero/)
+
+(defvar aero-local-init-file-c
+  (expand-file-name "init.local.elc" user-emacs-directory)
+  "Local init file, loaded at the end of init.
+Useful for adding or overriding settings and functions for the local environment
+only. This file is not part of Aero proper, and is not shared.")
+(defvar aero-local-init-file
+  (expand-file-name "init.local.el" user-emacs-directory)
+  "Non-compiled version of `aero-local-init-file-c'")
+
+(defun aero/bootstrap ()
+  "Bootstrap `straight', `use-package' and major components, and set up for use"
+
+  (with-eval-after-load 'gnutls
+    (eval-when-compile (require 'gnutls))
+
+    ;; Do not allow insecure TLS connections.
+    (setq gnutls-verify-error t)
+
+    ;; Bump the required security level for TLS to an acceptably modern
+    ;; value.
+    (setq gnutls-min-prime-bits 3072))
+
+  ;; if watchexec and Python are installed, use file watchers to detect package
+  ;; modifications. This saves time at startup. Otherwise, use the ever-reliable
+  ;; find(1).
+  (eval-when-compile (defvar straight-check-for-modifications))
+  (if (and (executable-find "watchexec")
+         (executable-find "python3"))
+      (setq straight-check-for-modifications '(watch-files find-when-checking))
+    (setq straight-check-for-modifications
+          '(find-at-startup find-when-checking)))
+
+  ;; Bootstrap straight.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  (require 'straight)
+  (declare-function straight-use-package "straight.el")
+  (defvar straight-use-package-by-default)
+  (straight-use-package 'use-package)
+  (require 'use-package)
+	(setq straight-use-package-by-default t)
+
+  (eval-when-compile
+    (defvar use-package-expand-minimally)
+    (defvar use-package-verbose))
+  (setq use-package-expand-minimally byte-compile-current-file
+        use-package-verbose init-file-debug))
+
+(defun aero/load-libs ()
+  "Load Aero libraries and utilities, which will be required later"
+
+  (require 'subr-x)
+  (require 'aero-lib))
+
+(defun aero/load-layers ()
+  "Load all Aero layers"
+  (require 'aero-prelude)
+
+  (if (boundp 'aero-layers-dir)
+      ;; Run through all existing layers and load them by name. NOTE: this
+      ;; assumes that all layers provide a package identical to their file name.
+      (dolist (layer (directory-files aero-layers-dir nil "\\.el$"))
+        (require (intern (string-trim-right layer ".el"))))
+    (error "Cannot load layers because `aero-layers-dir' is not bound! This should never happen, what have you done??")))
+
+(defun aero/init ()
+  "Perform startup initialization, including all comilation and loading"
+  (aero/bootstrap)
+  (aero/load-libs)
+  (aero/load-layers)
+
+  ;; baise cette merde
+  (setq-default custom-file "/dev/null")
+
+  ;; settings
+  (require 'aero-rc)
+
+  ;; Load local init
+  (unless (load aero-local-init-file-c 'noerror 'nomessage)
+    (load aero-local-init-file 'noerror 'nomessage))
+
+  (global-font-lock-mode)
+  (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
+  (setq gc-cons-threshold (car (cadr aero/gc-cons))
+        gc-cons-percentage (cadr (cadr aero/gc-cons)))
+  (setq read-process-output-max #x1000000)
+	(server-start))
+
+
 ;;; optimizations and fixes
 
 ;; verifier les erreurs dans ce fichier
@@ -99,8 +206,6 @@ more cycles but less space.")
     (normal-top-level-add-subdirs-to-load-path))
 
   ;; burn baby burn
-  (require 'aero-core)
-  (declare-function aero/init "aero-core")
   (aero/init)
 
   ;; no more debug please
