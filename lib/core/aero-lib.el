@@ -202,16 +202,19 @@ See `sort-regexp-fields'."
   "Display MSG as an error message in `*Messages*' buffer"
   (let ((msg (apply 'format msg args)))
     (message "(aero) Error: %s" msg)))
+(defalias 'aero/error #'aero/log-error)
 
 (defun aero/log-warning (msg &rest args)
   "Display MSG as a warning message in buffer `*Messages*'"
   (let ((msg (apply 'format msg args)))
     (message "(aero) Warning: %s" msg)))
+(defalias 'aero/warning #'aero/log-warning)
 
 (defun aero/log-info (msg &rest args)
   "Display MSG as an info message in buffer `*Messages'"
   (let ((msg (apply 'format msg args)))
     (message "(aero) Info: %s" msg)))
+(defalias 'aero/info #'aero/log-info)
 
 (defun aero/echo (msg &rest args)
   "Display MSG in echo-area without logging it in `*Messages' buffer."
