@@ -21,6 +21,7 @@
 ;; A home for utilities
 
 (require 'cl-lib)
+(require 'use-package)
 
 ;; Code:
 
