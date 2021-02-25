@@ -596,14 +596,6 @@ xdg-open\" for more."
   (interactive (list (read-string "xdg-open: ")))
   (call-process "xdg-open" nil 0 nil arg))
 
-(defun aero/xdg-open-dwim (&optional arg)
-  "Guess what you mean to xdg-open if ARG is nil."
-  (interactive)
-  (if (use-region-p)
-      (aero/xdg-open (filter-buffer-substring (mark) (point)))
-    (cl-loop for type in '(url email symbol)
-             do (when (thing-at-point type) (aero/xdg-open (thing-at-point type 'noproperties))))))
-
 
 ;;; patches
 
