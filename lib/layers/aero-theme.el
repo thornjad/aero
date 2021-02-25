@@ -151,6 +151,8 @@
 (use-package fireplace :straight t
   :commands fireplace)
 
+;; TODO zone-when-idle??
+
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
 This function, when bound to certain commands like scrolling, acts as a native
