@@ -53,9 +53,6 @@
      (setq-local evil-move-cursor-back nil)
      (setq-local scroll-margin 0)))
 
-  (defun eshell/cds ()
-    "Change directory to git project root."
-    (eshell/cd (locate-dominating-file default-directory ".git")))
   (defun eshell/clear ()
     (recenter 0))
   (defun eshell/magit ()
