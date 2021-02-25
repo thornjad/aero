@@ -26,24 +26,6 @@
   ;; local
   :commands hackernews)
 
-(use-package perspective :straight t
-  :config
-  (persp-mode)
-  (aero-leader-def
-    "Ps" 'persp-switch
-    "Pk" 'persp-remove-buffer
-    "Pc" 'persp-kill
-    "Pr" 'persp-rename
-    "Pa" 'persp-add-buffer
-    "PA" 'persp-set-buffer
-    "Pb" 'persp-switch-to-buffer
-    "Pf" '(persp-counsel-switch-buffer :wk "persp find buffer")
-    "Pi" 'persp-import
-    "Pn" 'persp-next
-    "Pp" 'persp-prev
-    "Pw" '(persp-state-save :wk "persp write")
-    "Po" '(persp-state-load :wk "persp open")))
-
 (defun no-pdf ()
   "Run pdftotext on the entire buffer."
   (interactive)
