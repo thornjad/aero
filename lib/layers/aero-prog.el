@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2020 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -15,6 +15,8 @@
 ;; performance of this software.
 ;;
 ;; This file is not part of GNU Emacs
+
+(require 'aero-prelude)
 
 (use-package company :straight t
 	:hook (prog-mode . company-mode)
@@ -34,7 +36,7 @@
 		:config
 		(setq prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))))
 
-(use-package counsel-gtags :straight t
+(use-package counsel-gtags :after (general)
   :commands (counsel-gtags-dwim)
   :init
   (general-define-key
@@ -47,7 +49,7 @@
 
 (defvar flycheck-idle-change-delay 3.0)
 (make-variable-buffer-local 'flycheck-idle-change-delay)
-(use-package flycheck :straight t
+(use-package flycheck :after (general)
   :commands flycheck-mode
   :hook ((web-mode
           tcl-mode
@@ -124,19 +126,19 @@
 		(setq flyspell-correct-interface #'flyspell-correct-popup))
 
   (aero-leader-def
-   "ps" '(:ignore t :wk "spelling")
-   "psP" 'flyspell-prog-mode
-   "psc" 'flyspell-correct-wrapper
-	 "psC" 'flyspell-correct-at-point
-	 "psp" 'flyspell-correct-previous
-   "psn" 'flyspell-correct-next
-   "psw" 'flyspell-word
-   "psb" 'flyspell-buffer
-   "psr" 'flyspell-region))
+    "ps" '(:ignore t :wk "spelling")
+    "psP" 'flyspell-prog-mode
+    "psc" 'flyspell-correct-wrapper
+	  "psC" 'flyspell-correct-at-point
+	  "psp" 'flyspell-correct-previous
+    "psn" 'flyspell-correct-next
+    "psw" 'flyspell-word
+    "psb" 'flyspell-buffer
+    "psr" 'flyspell-region))
 
 ;;; parens
 
-(use-package smartparens :straight t
+(use-package smartparens :after (general)
   :functions (sp-pair
               sp-local-pairs
               sp-up-sexp)
@@ -263,11 +265,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package indent-indicator
   :straight (:host gitlab :repo "thornjad/indent-indicator")
+	:after (general)
   :config
   (general-define-key
    :states 'normal
    :prefix "SPC"
-    "bI" 'indent-indicator-mode))
+   "bI" 'indent-indicator-mode))
 
 
 ;;; additional packages which might not fit elsewhere
