@@ -299,7 +299,6 @@
 ;; we descend to hell
 
 (use-package evil :straight t
-  :after general
   :init
   (setq evil-want-keybinding nil ; handled by evil-collection
         ;; to change undo-system without restart, use SPC-: `evil-set-undo-system'
