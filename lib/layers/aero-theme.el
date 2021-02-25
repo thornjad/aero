@@ -17,7 +17,9 @@
 ;; performance of this software.
 ;;
 ;;; Commentary:
-;;
+
+(require 'use-package)
+
 ;;; Code:
 
 (require 'aero-modeline)
@@ -120,11 +122,11 @@
 
 (use-package good-scroll
   :straight (:host github :repo "io12/good-scroll.el")
-  :config
-  (good-scroll-mode +1))
+  :config (good-scroll-mode +1))
 
 (use-package all-the-icons :straight t)
 
+;; TODO doesn't seem to be working?
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
   :config
   (setq formfeeder-line-width 80)

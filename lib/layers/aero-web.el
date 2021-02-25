@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'aero-lib)
+(require 'aero-prelude)
 
 (use-package web-mode :straight t
   :mode
@@ -79,9 +80,8 @@
 (use-package coffee-mode :straight t
   :mode "\\.coffee\\'")
 
-(use-package restclient
-	:straight t
-  :defer t
+(use-package restclient :defer t
+						 :after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
 
@@ -205,6 +205,7 @@
   (interactive)
   (find-file (aero/npm--project-file)))
 
+(with-eval-after-load 'general
 (aero-mode-leader-def
   :keymaps '(js-mode-map web-mode-map)
   "n" '(:ignore t :wk "npm")
@@ -220,7 +221,7 @@
   "np" 'aero/npm-open-package-json
   "t" 'aero/npm-run-test
   "s" 'aero/npm-run-start
-  "f" 'css-cycle-color-format)
+  "f" 'css-cycle-color-format))
 
 
 (provide 'aero-web)

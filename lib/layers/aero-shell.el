@@ -10,9 +10,10 @@
 ;;
 ;; This file is not part of GNU Emacs
 
+(require 'aero-prelude)
+
 
 ;;; eshell
-
 
 (use-package eshell
   :commands eshell
@@ -76,9 +77,8 @@
 
 ;;; term
 
-(use-package term
-  :commands (term
-             term-bash)
+(use-package term :straight nil :after (general)
+  :commands (term term-bash)
   :init
   (add-hook
    'term-mode-hook
@@ -121,8 +121,7 @@
       (mark-paragraph) (indent-region (region-beginning) (region-end)))))
 
 (use-package ion-mode
-  :straight (ion-mode
-             :host github :repo "iwahbe/ion-mode")
+  :straight (ion-mode :host github :repo "iwahbe/ion-mode")
   :mode (("\\.ion\\'" . ion-mode)
          ("ion/initrc\\'" . ion-mode)))
 

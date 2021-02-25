@@ -16,9 +16,10 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 
+(require 'aero-prelude)
 (require 'use-package)
 
-(use-package tcl
+(use-package tcl :straight nil
   :init
 	;; make inferior-tcl use tclsh (default is wish)
 	(setq tcl-application "tclsh")
@@ -30,15 +31,15 @@
   :load-path "lib/packages/testbackend"
   :init
   (aero-mode-leader-def
-   :keymaps 'tcl-mode-map
-   "t" '(:ignore t :which-key "testbackend")
-   "tt" '(testbackend/run-tests-dwim-focus :wk "Run tests and focus")
-   "tT" '(testbackend/run-tests-dwim :wk "Run tests")
-   "tr" '(testbackend/run-tests-focus :wk "Prompt for run and focus")
-   "tR" '(testbackend/run-tests :wk "Prompt for run")
-   "tR" '(testbackend/re-run-tests :wk "Re-run tests")
-   "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
-   "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
+    :keymaps 'tcl-mode-map
+    "t" '(:ignore t :which-key "testbackend")
+    "tt" '(testbackend/run-tests-dwim-focus :wk "Run tests and focus")
+    "tT" '(testbackend/run-tests-dwim :wk "Run tests")
+    "tr" '(testbackend/run-tests-focus :wk "Prompt for run and focus")
+    "tR" '(testbackend/run-tests :wk "Prompt for run")
+    "tR" '(testbackend/re-run-tests :wk "Re-run tests")
+    "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
+    "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
 
 (use-package rivet-mode ; local
   :mode "\\.rvt\\'")
@@ -51,32 +52,33 @@ instead. After this command, point is moved to the end of the `mc' call for the
 insertion of arguments, if applicable.
 
 This function will not do anything unless tcl-mode is the current major mode."
-   (interactive "sMC key: ")
-   (if (string= major-mode "tcl-mode")
-       (progn
-         (when (or (not key) (string= key ""))
-           (setq key "TODO_ADD_KEY"))
+  (interactive "sMC key: ")
+  (if (string= major-mode "tcl-mode")
+      (progn
+        (when (or (not key) (string= key ""))
+          (setq key "TODO_ADD_KEY"))
 
-         (let ((open (format "[mc %s " key))
-               (close "]"))
-           (if (and transient-mark-mode mark-active)
-               (progn
-                 (save-excursion
-                   (goto-char (region-end))
-                   (insert close))
-                 (goto-char (region-beginning))
-                 (insert open))
-             (skip-chars-forward " \t")
-             (insert open)
-             (save-excursion
-               (forward-sexp 1)
-               (insert close))
-             (forward-sexp 1))))
-     (message "Must be in TCL mode!")))
+        (let ((open (format "[mc %s " key))
+              (close "]"))
+          (if (and transient-mark-mode mark-active)
+              (progn
+                (save-excursion
+                  (goto-char (region-end))
+                  (insert close))
+                (goto-char (region-beginning))
+                (insert open))
+            (skip-chars-forward " \t")
+            (insert open)
+            (save-excursion
+              (forward-sexp 1)
+              (insert close))
+            (forward-sexp 1))))
+    (message "Must be in TCL mode!")))
 
-(general-define-key
- :states 'normal
- :prefix "SPC"
-  "sm" 'mc-string-at-point)
+(with-eval-after-load 'general
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "sm" 'mc-string-at-point))
 
 (provide 'aero-tcl)

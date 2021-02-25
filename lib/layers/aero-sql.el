@@ -16,7 +16,10 @@
 ;;
 ;; This file is not part of GNU Emacs
 
-(use-package sql :defer t
+(require 'aero-prelude)
+
+(use-package sql :straight nil :defer t
+						 :after (general)
   :commands (sql-connect)
   :init
   (aero-leader-def
