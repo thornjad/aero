@@ -25,8 +25,19 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-;; in etc/themes/
-(load-theme 'aero-light t)
+;; default themes
+;; TODO this causes all frames to change, we only want frame-local if possible
+(defun aero/load-default-theme (&optional frame)
+  "Set FRAME-local theme."
+  (with-selected-frame (or frame (selected-frame))
+    (if (display-graphic-p)
+        (load-theme 'aero-light t)
+      (load-theme 'aero-dark t))))
+;; Run immediately for the new frame
+(aero/load-default-theme)
+;; Set up for emacsclient
+(add-hook 'after-make-frame-functions #'aero/load-default-theme)
+
 
 ;; Other themes to browse from time to time
 ;; (use-package doom-themes :straight t
