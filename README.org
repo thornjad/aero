@@ -94,10 +94,12 @@ versioning provides no  benefit; source control with git is  enough. If you want
 to use this entire project for your own Emacs configuration, I recommend forking
 to avoid unexpected changes.
 
-**** Custom theme, including a simplified mode line
+**** Custom theme and a simplified mode line
 There is little disagreement in the Emacs community that the default color
 scheme is an abomination. Luckily, it's very easy to change, and not much more
 difficult to create one's own.
+
+In my case, I've created a custom theme as its own package, which Aero includes as a submodule. The original is available for perusing [[https://gitlab.com/thornjad/aero-theme][on GitLab]].
 
 By default, Aero uses a custom built-in theme called =aero-light= which is
 loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern
