@@ -199,8 +199,6 @@ more cycles but less space.")
           ,aero-lib-dir
           ,aero-packages-dir))
 
-  (setq custom-theme-directory (expand-file-name "themes/" aero-etc-dir))
-
   ;; also add all packages to load path
   (let ((default-directory aero-packages-dir))
     (normal-top-level-add-subdirs-to-load-path))

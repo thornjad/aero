@@ -25,18 +25,23 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
+(use-package aero-theme :straight nil
+  :load-path "lib/packages/aero-theme/"
+  :config
+  (load-theme 'aero t))
+
 ;; default themes
 ;; TODO this causes all frames to change, we only want frame-local if possible
-(defun aero/load-default-theme (&optional frame)
-  "Set FRAME-local theme."
-  (with-selected-frame (or frame (selected-frame))
-    (if (display-graphic-p)
-        (load-theme 'aero-light t)
-      (load-theme 'aero-dark t))))
-;; Run immediately for the new frame
-(aero/load-default-theme)
-;; Set up for emacsclient
-(add-hook 'after-make-frame-functions #'aero/load-default-theme)
+;; (defun aero/load-default-theme (&optional frame)
+;;   "Set FRAME-local theme."
+;;   (with-selected-frame (or frame (selected-frame))
+;;     (if (display-graphic-p)
+;;         (load-theme 'aero-light t)
+;;       (load-theme 'aero-dark t))))
+;; ;; Run immediately for the new frame
+;; (aero/load-default-theme)
+;; ;; Set up for emacsclient
+;; (add-hook 'after-make-frame-functions #'aero/load-default-theme)
 
 
 ;; Other themes to browse from time to time
