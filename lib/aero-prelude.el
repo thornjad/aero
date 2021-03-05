@@ -583,8 +583,8 @@ Local bindings (`counsel-mode-map'):
 (global-set-key (kbd "M-k") #'windmove-up)
 (global-set-key (kbd "M-l") #'windmove-right)
 
-(use-package neotree :straight t
-  :after winum
+(use-package neotree
+  :after (winum evil general)
   :commands (neotree-show
              neotree-hide
              neotree-toggle
@@ -729,7 +729,7 @@ Local bindings (`counsel-mode-map'):
   (general-define-key
    :states '(normal visual motion replace emacs)
    :keymaps 'override
-   (kbd "C-e") 'er/expand-region))
+   (kbd "M-e") 'er/expand-region))
 
 
 ;;; General crap
