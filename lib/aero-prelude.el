@@ -334,6 +334,10 @@
   (evil-ex-define-cmd "q" 'kill-this-buffer)
   ;; Need to type out :quit to close emacs
   (evil-ex-define-cmd "quit" 'evil-quit)
+  (evil-define-key '(normal visual motion) global-map
+    (kbd "C-e") #'evil-backward-word-end)
+  (evil-define-key '(normal visual motion) global-map
+    (kbd "C-M-e") #'evil-backward-WORD-end)
 
   (evil-define-key 'normal 'global
     ;; Run macro in register q
