@@ -101,8 +101,7 @@ board_ticket_branch_name."
           (forward-line)
           (insert (format "\n%s-%s" board ticket))))))
 
-	(use-package magit-todos :straight t)
-	(use-package evil-magit :straight t))
+	(use-package magit-todos :straight t))
 
 (use-package ediff
   :commands (ediff ediff3)

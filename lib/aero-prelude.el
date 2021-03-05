@@ -308,6 +308,9 @@
         evil-want-C-u-scroll t)
 
   :config
+  (use-package evil-collection
+    :config (evil-collection-init))
+
   (define-key evil-motion-state-map " " nil)
 
   ;; default states
