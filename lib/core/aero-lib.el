@@ -31,7 +31,7 @@
 ;; Load in external libs
 (use-package memo
   :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
-(use-package async :straight t
+(use-package async :straight (:host github :repo "jwiegley/emacs-async")
   :commands (async-save))
 (use-package request :straight t)
 (use-package deadgrep :straight t)
