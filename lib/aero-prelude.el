@@ -558,7 +558,9 @@ Local bindings (`counsel-mode-map'):
    "wk" 'windmove-up
    "wl" 'windmove-right))
 
-(use-package winum :straight t
+(use-package winum
+  :straight t
+  :after (general)
   :init
   (winum-mode)
   :config
@@ -715,6 +717,9 @@ Local bindings (`counsel-mode-map'):
    :prefix "SPC"
    "fd" 'deer))
 
+
+;;; General crap
+
 (use-package pomp
   :straight (:host gitlab :repo "thornjad/pomp")
   :after general
@@ -736,7 +741,6 @@ Local bindings (`counsel-mode-map'):
    (kbd "M-e") 'er/expand-region))
 
 
-;;; General crap
 
 (use-package powerthesaurus :straight t
   :commands powerthesaurus-lookup-word-dwim
