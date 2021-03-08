@@ -589,73 +589,8 @@ Local bindings (`counsel-mode-map'):
 (global-set-key (kbd "M-k") #'windmove-up)
 (global-set-key (kbd "M-l") #'windmove-right)
 
-(use-package neotree
-  :after (winum evil general)
-  :commands (neotree-show
-             neotree-hide
-             neotree-toggle
-             neotree-dir
-             neotree-find
-             neo-global--with-buffer
-             neo-global--window-exists-p)
-  :init
-  (setq neo-create-file-auto-open nil
-        neo-auto-indent-point t
-        neo-autorefresh t
-        neo-mode-line-type 'none
-        neo-window-width 35
-        neo-show-updir-line t
-        neo-theme (if (display-graphic-p) 'icons 'arrow)
-        neo-banner-message nil
-        ;; these fake-use MSG to sidestep the unused var compiler warning
-        neo-confirm-create-file (lambda (msg) (let ((_ msg)) t))
-        neo-confirm-create-directory (lambda (msg) (let ((_ msg)) t))
-        neo-show-hidden-files t
-        neo-keymap-style 'concise
-        neo-show-hidden-files t
-        neo-hidden-regexp-list
-        '(;; vcs folders
-          "^\\.\\(?:git\\|hg\\|svn\\)$"
-          ;; compiled files
-          "\\.\\(?:pyc\\|o\\|elc\\|lock\\|css.map\\|class\\)$"
-          ;; generated files, caches or local pkgs
-          "^\\(?:node_modules\\|vendor\\|.\\(project\\|cask\\|yardoc\\|sass-cache\\)\\)$"
-          ;; org-mode folders
-          "^\\.\\(?:sync\\|export\\|attach\\)$"
-          ;; temp files
-          "~$"
-          "^#.*#$"))
-
-  :config
-  (defun neotree-project-dir ()
-    "Open NeoTree using the git root."
-    (interactive)
-    (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
-      (neotree-toggle)
-      (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
-                (neotree-dir project-dir)
-                (neotree-find file-name)))
-        (message "Could not find git project root."))))
-
-  (aero-leader-def
-    "0" 'neotree-toggle
-    ")" 'neotree-project-dir)
-
-  ;; Fix for evil
-  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
-
-(use-package helpful :straight t
+(use-package helpful
+  :straight t
   :after (evil general)
   :config
   (general-define-key
