@@ -678,20 +678,21 @@ Local bindings (`counsel-mode-map'):
     "q" 'kill-this-buffer
     "?" 'describe-mode))
 
+
+;;; Mac needs some extra hand-holding to connect the kill-ring to the system
+;;; clipboard.
 (when (system-is-mac)
-  (use-package pbcopier
-    :functions (turn-on-pbcopier)
-    :straight (:host gitlab :repo "thornjad/pbcopier")
-    :config (turn-on-pbcopier)))
+  (declare-function aero/pbcopier-select-text "aero-lib.el")
+  (declare-function aero/pbcopier-selection-value "aero-lib.el")
+	(setq interprogram-cut-function #'aero/pbcopier-select-text)
+	(setq interprogram-paste-function #'aero/pbcopier-selection-value))
 
 (when (system-is-linux)
   (setq select-enable-clipboard t)
   (setq interprogram-paste-function #'gui-selection-value))
 
-(use-package re-builder
-  :commands re-builder
-  :config
-  (setq reb-re-syntax 'string))
+
+;; File navigation
 
 (use-package tramp
   :straight (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
