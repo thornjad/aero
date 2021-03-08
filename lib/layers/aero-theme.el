@@ -18,6 +18,7 @@
 ;;
 ;;; Commentary:
 
+(require 'aero-prelude)
 (require 'use-package)
 
 ;;; Code:
@@ -142,7 +143,6 @@
 
 (use-package all-the-icons :straight t)
 
-;; TODO doesn't seem to be working?
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
   :config
   (setq formfeeder-line-width 80)
@@ -155,8 +155,6 @@
 
 (use-package fireplace :straight t
   :commands fireplace)
-
-;; TODO zone-when-idle??
 
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
