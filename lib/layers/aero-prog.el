@@ -122,7 +122,9 @@
 	(use-package flyspell-correct-popup
 		:straight t :defer t
 		:commands flyspell-correct-wrapper
+    :functions (flyspell-correct-popup)
 		:init
+    (defvar flyspell-correct-interface)
 		(setq flyspell-correct-interface #'flyspell-correct-popup))
 
   (aero-leader-def
@@ -139,8 +141,9 @@
 ;;; parens
 
 (use-package smartparens :after (general)
-  :functions (sp-pair
-              sp-local-pairs
+  :functions (show-smartparens-global-mode
+              sp-kill-sexp sp-local-pair
+              sp-local-pairs sp-pair
               sp-up-sexp)
   :commands smartparens-global-mode
   :after evil
@@ -148,6 +151,7 @@
   :init
   ;; fix highlighting in normal mode
   (setq sp-show-pair-from-inside t)
+  (smartparens-global-mode +1)
   :config
 
   (defun aero/smartparens-pair-newline-and-indent ()
@@ -173,6 +177,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            (current-pos (point))
            (current-line (line-number-at-pos current-pos))
            next-pos next-line)
+      ;; HACK pretend we're using this var so the byte compiler chills out
+      (and sp-navigate-close-if-unbalanced t)
       (save-excursion
         (let ((buffer-undo-list)
               (modified (buffer-modified-p)))
@@ -225,8 +231,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            '(:add (aero/smartparens-pair-newline-and-indent "RET")))
   (sp-pair "[" nil :post-handlers
            '(:add (aero/smartparens-pair-newline-and-indent "RET")))
-  (define-key evil-insert-state-map ")"
-    'aero/smart-closing-parenthesis))
+  (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
 (use-package siege-mode :straight (:host github :repo "tslilc/siege-mode")
   :after (general)
@@ -256,8 +261,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;;; whitespace and indentation
 
 (use-package ws-butler :straight t
+  :functions (ws-butler-global-mode)
 	:init (ws-butler-global-mode)
 	:config
+  (defvar ws-butler-global-exempt-modes)
 	(setq ws-butler-global-exempt-modes
 				(append ws-butler-global-exempt-modes
 								'(special-mode comint-mode term-mode eshell-mode))))
