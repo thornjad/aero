@@ -150,7 +150,7 @@
   (global-formfeeder-mode 1))
 
 (use-package todo-light
-  :straight (:host gitlab :repo "thornjad/todo-light")
+  :straight (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
 (use-package fireplace :straight t
