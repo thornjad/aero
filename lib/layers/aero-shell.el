@@ -27,9 +27,17 @@
   (defvar eshell-visual-commands)
   (defvar eshell-visual-subcommands)
 
+  ;; Ensure eshell doesn't override these
+  (general-def term-mode-map
+    (kbd "M-h") 'windmove-left
+    (kbd "M-l") 'windmove-right
+    (kbd "M-p") 'eshell-previous-input
+    (kbd "M-n") 'eshell-next-input)
+
   (setq
    eshell-save-history-on-exit t
    eshell-buffer-maximum-lines 12000
+   eshell-aliases-file (expand-file-name "eshell-alias" aero-etc-dir)
    eshell-history-size 500
    eshell-ls-initial-args "-lah"
    eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'"
