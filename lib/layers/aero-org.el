@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2019, 2021 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -257,9 +257,9 @@ appropriate.  In tables, insert a new row or end the table."
 
   (use-package toc-org :straight t)
 
-  (use-package org-superstar :straight t
+  (use-package org-bullets :straight t
     :config
-    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
   (aero-mode-leader-def
     :keymaps 'org-mode-map
