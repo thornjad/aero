@@ -615,17 +615,87 @@ Local bindings (`counsel-mode-map'):
     "?" 'describe-mode))
 
 
-;;; Mac needs some extra hand-holding to connect the kill-ring to the system
-;;; clipboard.
+;;; Notifications and events
+
+(use-package alert
+  :config
+  (when (system-is-mac)
+    (setq alert-default-style 'notifier))
+  (when (system-is-linux)
+    (setq alert-default-style 'notifications)))
+
+
+(defun aero/compilation-finish (buffer msg)
+  "Send a sauron notification for compilation completing"
+  (interactive)
+  (when (require 'sauron nil t)
+    (declare-function sauron-add-event "sauron.el")
+    (sauron-add-event
+     'compilation
+     3
+     (format "[%s]: %s" buffer msg)
+     (lambda () (switch-to-buffer-other-window "*compilation*"))
+     nil)))
+
+(use-package sauron
+  :init
+  (when (not (boundp 'dbus-compiled-version))
+    ;; Remove dbus if it is not compiled
+    (require 'sauron)
+    (setq sauron-modules (remove 'sauron-dbus sauron-modules)))
+
+  (setq sauron-max-line-length 120
+        sauron-watch-patterns '("dakrone" "thnetos" "okenezak")
+        sauron-watch-nicks '("dakrone" "thnetos")
+        sauron-nick-insensitivity 20
+        sauron-prio-twittering-new-tweets 2
+        sauron-frame-geometry "120x36+0+0")
+
+  (sauron-start-hidden)
+  ;; Need to stop tracking notifications, because sauron will be sending
+  ;; notifications!
+  (sauron-notifications-stop)
+  (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter)
+  :commands (sauron-toggle-hide-show)
+  :bind ("M-o" . sauron-toggle-hide-show)
+  :config
+  ;; Add the unread sauron notification count to the modeline
+  ;;(add-to-list 'global-mode-string '(cdr (sauron-count-events)))
+  (add-to-list 'compilation-finish-functions #'aero/compilation-finish)
+
+  (defun finish ()
+    "Generic function for signaling something is \"done\"."
+    (interactive)
+    (sauron-add-event
+     major-mode
+     3
+     (concat "Finished command in " (buffer-name))
+     (lambda () (switch-to-buffer-other-window (buffer-name)))
+     nil)))
+
+
+;;; System-specifics
+
+;; Mac needs some extra hand-holding to connect the kill-ring to the system
+;; clipboard.
 (when (system-is-mac)
   (declare-function aero/pbcopier-select-text "aero-lib.el")
   (declare-function aero/pbcopier-selection-value "aero-lib.el")
 	(setq interprogram-cut-function #'aero/pbcopier-select-text)
-	(setq interprogram-paste-function #'aero/pbcopier-selection-value))
+	(setq interprogram-paste-function #'aero/pbcopier-selection-value)
+
+  (setq-default ns-use-native-fullscreen nil)
+  (if (executable-find "gls")
+      (progn
+        (setq insert-directory-program "gls")
+        (setq dired-listing-switches "-lFaGh1v --group-directories-first"))
+    (setq dired-listing-switches "-ahlF")))
 
 (when (system-is-linux)
-  (setq select-enable-clipboard t)
-  (setq interprogram-paste-function #'gui-selection-value))
+  (setq select-enable-clipboard t
+        interprogram-paste-function #'gui-selection-value
+        x-gtk-use-system-tooltips t
+        dired-listing-switches "-lFaGh1v --group-directories-first"))
 
 
 ;; File navigation
@@ -676,14 +746,6 @@ Local bindings (`counsel-mode-map'):
    :states '(normal visual motion replace emacs)
    :keymaps 'override
    (kbd "M-e") 'er/expand-region))
-
-
-
-(use-package powerthesaurus :straight t
-  :commands powerthesaurus-lookup-word-dwim
-  :init
-  (aero-leader-def
-    "tt" '(powerthesaurus-lookup-word-dwim :wk "thesaurus")))
 
 ;; Ensure emacsclient frames open with focus
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
