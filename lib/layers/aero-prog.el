@@ -283,6 +283,24 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    :prefix "SPC"
    "bI" 'indent-indicator-mode))
 
+(defun aero/so-long-hook () "Used in `so-long-hook'.")
+(when (require 'so-long nil :noerror)
+  (defvar so-long-threshold)
+  (defvar so-long-minor-modes)
+
+  ;; 750 columns means it's too long! (default is 250)
+  (setq so-long-threshold 750)
+  (add-to-list 'so-long-minor-modes 'rainbow-delimiters-mode)
+  (add-to-list 'so-long-minor-modes 'paren-face-mode)
+  (add-to-list 'so-long-minor-modes 'electric-indent-mode)
+  (add-to-list 'so-long-minor-modes 'electric-pair-mode)
+  (add-to-list 'so-long-minor-modes 'electric-layout-mode)
+  (add-to-list 'so-long-minor-modes 'idle-highlight-mode)
+  (add-to-list 'so-long-minor-modes 'show-paren-mode)
+  (add-to-list 'so-long-minor-modes 'git-gutter-mode)
+  (so-long-enable)
+  (add-hook 'so-long-hook #'aero/so-long-hook))
+
 
 ;;; additional packages which might not fit elsewhere
 
