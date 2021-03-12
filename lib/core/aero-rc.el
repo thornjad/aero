@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2020 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -32,13 +32,22 @@
  apropos-do-all t ; apropos is apropos
  global-display-line-numbers-mode nil ; fuck line numbers
  gnutls-min-prime-bits 4096 ; 256 est absurde
- confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alternate
-                                        ; file
+ confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alt file
+ switch-to-buffer-preserve-window-point t
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  pop-up-windows nil ; make new window for pop-ups
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
+ idle-update-delay 2 ; default is 0.5
+ bidi-display-reordering nil ; no need for bidirectional display
+
+ ;; Defaults:
+ ;; '("gnutls-cli --insecure -p %p %h"
+ ;;   "gnutls-cli --insecure -p %p %h --protocols ssl3"
+ ;;   "openssl s_client -connect %h:%p -no_ssl2 -ign_eof")
+ tls-program '("gnutls-cli -p %p %h"
+               "openssl s_client -connect %h:%p -no_ssl2 -no_ssl3 -ign_eof")
 
  ;; Scrolling
  ;; Emacs spends too much effort recentering the screen if you scroll the
@@ -57,6 +66,10 @@
  ;; for tall lines.
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
+ comint-scroll-to-bottom-on-input t ; insert at bottom
+ comint-scroll-to-bottom-on-output nil ; don't scroll on output
+ comint-input-ignoredups t
+ comint-prompt-read-only nil ; breaks shell-command sometimes
 
  ;; The newline pushes everything else to a non-rendered second line
  frame-title-format "Aero Emacs"
@@ -92,6 +105,7 @@
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
  require-final-newline t
  load-prefer-newer t
+ completion-ignore-case t ; ignorer la capitalisation
  read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
@@ -182,5 +196,8 @@
 (add-to-list 'display-buffer-alist
              '("*Help*" display-buffer-same-window)
              '("*helpful*" display-buffer-same-window))
+
+;; If we leave a buffer, set its mark as inactive
+(transient-mark-mode 1)
 
 (provide 'aero-rc)
