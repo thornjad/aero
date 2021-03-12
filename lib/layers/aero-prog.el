@@ -119,6 +119,11 @@
    ispell-personal-dictionary (expand-file-name "ispell/personal_dictionary.aws"
                                                 aero-etc-dir))
 
+  (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+"))
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
+
 	(use-package flyspell-correct-popup
 		:straight t :defer t
 		:commands flyspell-correct-wrapper
@@ -258,7 +263,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     (last (split-string arg "::")))))
 
 
-;;; whitespace and indentation
+;;; whitespace and indentation and stuff
 
 (use-package ws-butler :straight t
   :functions (ws-butler-global-mode)
