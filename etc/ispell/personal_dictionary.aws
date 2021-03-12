@@ -1,4 +1,4 @@
-personal_ws-1.1 en 273 
+personal_ws-1.1 en 276 
 ACL
 APIs
 Aireon
@@ -119,6 +119,7 @@ borked
 callsign
 callsigns
 cget
+changelog
 chocolatiers
 config
 counterintuitive
@@ -198,6 +199,7 @@ memoize
 memoized
 memoizing
 merchantability
+middot
 minibuffer
 misconfiguration
 namespace
@@ -223,6 +225,7 @@ proxied
 px
 readme
 repl
+requries
 rgb
 rgba
 roadmap
