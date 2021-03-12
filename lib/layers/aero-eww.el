@@ -27,15 +27,30 @@
        (eww-browse-url "https://text.npr.org/"))
 
 (use-package eww :straight nil
+  :after (general evil)
   :commands (eww
              eww-browse-url
              eww-search-words)
   :init
-  (setq browse-url-browser-function #'eww-browse-url)
+
+  ;; Open everything in eww, except for these few sites which just don't work in
+  ;; eww
+  (setq browse-url-browser-function
+        '((".*google.*maps.*" . browse-url-generic)
+          ("docs.google.com" . browse-url-generic)
+          ("http.*\/\/github.com" . browse-url-generic)
+          ("melpa.org" . browse-url-generic)
+          ("zoom.us" . browse-url-generic)
+          ("t.co" . browse-url-generic)
+          ("twitter.com" . browse-url-generic)
+          ("youtube.com" . browse-url-generic)
+          ("." . eww-browse-url)))
+  (setq shr-external-browser 'browse-url-generic)
+
 	:config
-  (general-define-key
-   :states '(normal visual)
-   :prefix "SPC"
+  (add-hook 'eww-mode-hook #'toggle-word-wrap)
+  (add-hook 'eww-mode-hook #'visual-line-mode)
+  (aero-leader-def
    "ws" '(eww-search-words :which-key "web search")
    "wb" '(:ignore t :wk "browse")
    "wbd" '(aero/ddg :wk "duckduckgo")
@@ -46,7 +61,6 @@
    "ww" 'eww
    "wp" 'browse-url-at-point)
 
-	:config
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
 
 	(add-hook
@@ -120,6 +134,13 @@
     "D" 'eww-bookmark-kill
     "P" 'eww-bookmark-yank
     (kbd "RET") 'eww-bookmark-browse
-    "q" 'quit-window))
+    "q" 'quit-window)
+
+  (use-package link-hint
+    :after (general)
+    :defines (link-hint-open-link)
+    :commands (link-hint-open-link)
+    :init
+    (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
 
 (provide 'aero-eww)
