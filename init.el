@@ -132,7 +132,7 @@ only. This file is not part of Aero proper, and is not shared.")
   (setq read-process-output-max #x1000000)
 
   (require 'server nil t)
-  (use-package server
+  (use-package server :defer 3
     :if window-system
     :init
     (when (not (server-running-p server-name))
