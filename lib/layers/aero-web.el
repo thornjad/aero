@@ -2,7 +2,7 @@
 ;;
 ;; web, js, cs, etc.
 ;;
-;; Copyright (c) 2018-2020 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -56,6 +56,7 @@
 ;;   :mode "\\.jsx?\\'")
 
 (use-package rjsx-mode
+  :disabled t
   :load-path "lib/packages/rjsx-mode/"
   :mode "\\.jsx?\\'"
 
@@ -72,8 +73,6 @@
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
-(use-package yaml-mode :straight t
-  :mode "\\.ya?ml\\'")
 
 ;; the rest
 
