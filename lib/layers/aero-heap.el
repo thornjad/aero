@@ -1,6 +1,6 @@
-;; -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2020 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -10,13 +10,13 @@
 ;;
 ;; This file is not part of GNU Emacs
 ;;
-;; Commentary:
+;;; Commentary:
 ;;
 ;; This is simply a heap of miscellaneous, low-config packages.
 
-(require 'aero-prelude)
+;;; Code:
 
-;; Code:
+(require 'aero-prelude)
 
 (use-package esup :straight t
   :commands esup)
