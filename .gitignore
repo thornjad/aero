@@ -18,6 +18,7 @@
 .recentf
 .recentf~
 .smex-items
+.sx/
 /*.zip
 /.cask/
 /backups
