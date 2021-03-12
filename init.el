@@ -60,7 +60,7 @@ only. This file is not part of Aero proper, and is not shared.")
   ;; find(1).
   (eval-when-compile (defvar straight-check-for-modifications))
   (if (and (executable-find "watchexec")
-         (executable-find "python3"))
+           (executable-find "python3"))
       (setq straight-check-for-modifications '(watch-files find-when-checking))
     (setq straight-check-for-modifications
           '(find-at-startup find-when-checking)))
@@ -125,12 +125,18 @@ only. This file is not part of Aero proper, and is not shared.")
   (unless (load aero-local-init-file-c 'noerror 'nomessage)
     (load aero-local-init-file 'noerror 'nomessage))
 
-  (global-font-lock-mode)
+  (global-font-lock-mode t)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
         gc-cons-percentage (cadr (cadr aero/gc-cons)))
   (setq read-process-output-max #x1000000)
-	(server-start))
+
+  (require 'server nil t)
+  (use-package server
+    :if window-system
+    :init
+    (when (not (server-running-p server-name))
+      (server-start))))
 
 
 ;;; optimizations and fixes
