@@ -4,12 +4,7 @@
 #+caption: Aero Emacs
 [[./etc/images/aero-preview.png]]
 
-Aero is my own Emacs configuration, blending all the best shit I can find. It
-is built in the style of a distribution like Prelude or Spacemacs, but it's
-not intended for widespread use; Aero is highly tailored to me, what I want
-and what I use. Special focus is put on writing Lisps, Python, TCL, Node and
-the several web languages. Other languages like C and ML have some light
-configuration as well.
+Aero is my own Emacs configuration, blending all the best shit I can find. It is built in the style of a distribution like Prelude or Spacemacs, but it's not intended for widespread use; Aero is highly tailored to me, what I want and what I use. Special focus is put on writing Lisps, Python, TCL, Node and the several web languages. Other languages like C and ML have some light configuration as well.
 
 #+begin_quote
 "Emacs outshines all other editing software in the same way that the noonday sun
@@ -42,16 +37,10 @@ unreasonable man." — G.B. Shaw, probably
 #+end_quote
 
 ** Requirements
-Aero is maintained as a cutting-edge tool, and focuses on working best with the
-latest minor version of Emacs, and should keep parity with the latest Remacs.
-Aero is tested and ready for the merge of =feature/native-comp=, which I support
-wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and
-Source Code Pro look pretty sick too.
+Aero is maintained as a cutting-edge tool, and focuses on working best with the latest minor version of Emacs, and should keep parity with the latest Remacs. Aero is tested and ready for the merge of =feature/native-comp=, which I support wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and Source Code Pro look pretty sick too.
 
 ** Local config
-Local settings, functions, et cetera can be put into an untracked
-=init.local.el= file, which will be evaluated near the end of
-the initialization process, after all other layers and settings.
+Local settings, functions, et cetera can be put into an untracked =init.local.el= file, which will be evaluated near the end of the initialization process, after all other layers and settings.
 
 ** Major features, changes and decisions
 **** Evil
@@ -59,52 +48,31 @@ the initialization process, after all other layers and settings.
 "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 #+end_quote
 
-Emacs keybindings are, in my humble opinion, a pile of horseshit. They might
-work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes
-extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly modifier-key-free modal
+Emacs keybindings are, in my humble opinion, a pile of horseshit. They might work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly modifier-key-free modal
 editing.
 
 **** Ivy and Counsel
-Despite using Helm for a few years, I chose to use Counsel and Ivy when I
-created this project. In my experience, they are smaller, lighter, faster and
-just as powerful as Helm.
+Despite using Helm for a few years, I chose to use Counsel and Ivy when I created this project. In my experience, they are smaller, lighter, faster and just as powerful as Helm.
 
-That being said, Helm is now a dead project, so I guess this section may not be
-so necessary for much longer.
+That being said, Helm is now a dead project, so I guess this section may not be so necessary for much longer.
 
 **** Spacemacs-inspired leader keys
-When I first started using Emacs, it was through Spacemacs, so the architecture
-of that project has shaped the way I think about editing. As such, the majority
-of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC=
-leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w=
-(for file write) saves the buffer to disk.
+When I first started using Emacs, it was through Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC= leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w= (for file write) saves the buffer to disk.
 
-The other leader, =,= is available in some major modes and contains bindings for
-that mode. For example, in Python mode, =, s b= sends the entire buffer to
-Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs
-the HTTP query at point.
+The other leader, ~,~ is available in some major modes and contains bindings for that mode. For example, in Python mode, ~, s b~ sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, ~, RET~ runs the HTTP query at point.
 
 #+caption: Aero space leader with Ivy completion
 [[./etc/images/aero-leader-preview.png]]
 
 **** No tagged versioning
-As mentioned above, Aero is not meant  to be a widespread project like Spacemacs
-or Prelude. This project is my personal configuration, pure and simple. As such,
-versioning provides no  benefit; source control with git is  enough. If you want
-to use this entire project for your own Emacs configuration, I recommend forking
-to avoid unexpected changes.
+As mentioned above, Aero is not meant  to be a widespread project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no  benefit; source control with git is  enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
 
 **** Custom theme and a simplified mode line
-There is little disagreement in the Emacs community that the default color
-scheme is an abomination. Luckily, it's very easy to change, and not much more
-difficult to create one's own.
+There is little disagreement in the Emacs community that the default color scheme is an abomination. Luckily, it's very easy to change, and not much more difficult to create one's own.
 
 In my case, I've created a custom theme as its own package, which Aero includes as a submodule. The original is available for perusing [[https://gitlab.com/thornjad/aero-theme][on GitLab]].
 
-By default, Aero uses a custom built-in theme called =aero-light= which is
-loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern
-Minnesota in Autumn. Also available is =aero-dark=, which pulls further
-inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
+By default, Aero uses my packages default light theme, =aero= which is loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern Minnesota in Autumn. Also available is =aero-dark=, which pulls further inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
 
 #+caption: Aero-Light theme
 [[./etc/images/aero-light-preview.png]]
@@ -112,39 +80,21 @@ inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax]
 #+caption: Aero-Dark theme
 [[./etc/images/aero-dark-preview.png]]
 
-Aero is also packaged with a custom and mostly original reduced mode line which
-works with any theme (at least it looks great with =aero-light= and
-=aero-dark=). Rather than getting cluttered with info from every mode under the
-sun, the Aero mode line displays the current editing mode, file status (changed,
-saved, locked), filename, file size, line number at point, progression through
-the file (percentage), the remote hostname (if using TRAMP) and the current
-major mode.
+Aero is also packaged with a custom and mostly original reduced mode line which works with any theme (at least it looks great with =aero-light= and =aero-dark=). Rather than getting cluttered with info from every mode under the sun, the Aero mode line displays the current editing mode, file status (changed, saved, locked), filename, file size, line number at point, progression through the file (percentage), the remote hostname (if using TRAMP) and the current major mode.
 
 #+caption: Aero's mode line
 [[./etc/images/modeline-preview.png]]
 
 **** Source-controlled Flycheck dictionary
-The built-in Flycheck dictionary is woefully lacking in technical terms. Rather
-than keep my personal dictionary secret, it is included here in
-=etc/ispell/personal_dictionary.aws=. I haven't dug into the implementation of
-this library, but due to the way it reshuffles itself occasionally, I presume
-it's some type of tree structure. As such, if you want to merge my dictionary
-with your own, it's probably not a simple copy-paste procedure. Then again,
-maybe it will self-correct itself. And maybe one day I'll get off my ass and
-find out for myself. Maybe.
+The built-in Flycheck dictionary is woefully lacking in technical terms. Rather than keep my personal dictionary secret, it is included here in =etc/ispell/personal_dictionary.aws=. I haven't dug into the implementation of this library, but due to the way it reshuffles itself occasionally, I presume it's some type of tree structure. As such, if you want to merge my dictionary with your own, it's probably not a simple copy-paste procedure. Then again, maybe it will self-correct itself. And maybe one day I'll get off my ass and find out for myself. Maybe.
 
 ** Note
-This configuration is ever-evolving. Bindings, settings and packages change with
-no warning and little to no documentation. This repository is not intended to be
-used as a prebuilt configuration like Spacemacs, but rather as a reference or
-source of ideas. Use at your own risk.
+This configuration is ever-evolving. Bindings, settings and packages change with no warning and little to no documentation. This repository is not intended to be used as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
 
 To get started with Emacs, I highly recommend [[https://spacemacs.org][Spacemacs]].
 
 ** Credits
-Like the Borg, Aero amalgamates macros, functions, bindings and packages
-modified from or inspired by a plethora of developers. Special thanks to these
-fantastic people, with links to the invaluable resource they provide:
+Like the Borg, Aero amalgamates macros, functions, bindings and packages modified from or inspired by a plethora of developers. Special thanks to these fantastic people, with links to the invaluable resource they provide:
 
 - [[https://github.com/jsulak/.emacs.d][James Sulak]]
 - [[https://github.com/jwiegley/dot-emacs][John Wiegley]]
