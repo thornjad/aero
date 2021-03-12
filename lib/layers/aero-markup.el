@@ -28,6 +28,18 @@
 (use-package markdown-toc :straight t
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
 
+(use-package yaml-mode :straight t
+  :mode "\\.ya?ml\\'")
+
+(use-package synosaurus
+  :after (general)
+  :init
+  (setq-default synosaurus-backend 'synosaurus-backend-wordnet)
+  (add-hook 'after-init-hook #'synosaurus-mode)
+  :config
+  (aero-leader-def
+    "tt"))
+
 (use-package nov :straight t
   :mode ("\\.epub\\'" . nov-mode)
   :init
