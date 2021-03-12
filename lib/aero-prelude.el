@@ -268,7 +268,6 @@
    "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
    "wd" 'delete-window
    "wF" 'make-frame
-   "wx" 'kill-buffer-and-window
    "w{" 'shrink-window
    "w}" 'enlarge-window
    "wm" 'maximize-window
