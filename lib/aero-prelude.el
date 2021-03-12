@@ -280,6 +280,7 @@
    "wL3" 'aero/layout-three-columns
 
    "t" '(:ignore t :wk "tabs/text")
+   "tf" 'fill-paragraph
    "tU" 'upcase-dwim
    "tD" 'downcase-dwim
    "ts" 'sort-lines
