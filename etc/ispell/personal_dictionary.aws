@@ -1,10 +1,11 @@
-personal_ws-1.1 en 276 
+personal_ws-1.1 en 278 
 ACL
 APIs
 Aireon
 Alacritty
 Analytics
 BCAT
+BRE
 BSc
 Bing
 Brotli
@@ -242,6 +243,7 @@ struct
 subheader
 submodule
 subprocess
+substring
 sudo
 svg
 symlink
