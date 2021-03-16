@@ -124,20 +124,13 @@
 
   (defun eshell/icat (&rest args)
     "Display image(s)."
-    (let ((elems (eshell-flatten-list args)))
+    (let ((elems (flatten-list args)))
       (while elems
         (eshell-printn
          (propertize " "
                      'display (create-image (expand-file-name (car elems)))))
         (setq elems (cdr elems))))
     nil)
-
-  (use-package eshell-prompt-extras
-    :init
-    (progn
-      (setq eshell-highlight-prompt nil
-            epe-git-dirty-char " *"
-            eshell-prompt-function 'epe-theme-multiline-with-status)))
 
   ;; So the history vars are defined
   (require 'em-hist)
@@ -169,6 +162,14 @@
                                    "ssh" "nethack" "dtop" "dstat"))
     (setq eshell-visual-subcommands '(("git" "log" "diff" "show")
                                       ("vagrant" "ssh")))))
+
+(use-package eshell-prompt-extras
+  :after (eshell esh-opt)
+  :init
+  (setq eshell-highlight-prompt nil
+        epe-git-dirty-char " *"
+        eshell-prompt-function 'epe-theme-multiline-with-status)
+  (autoload 'epe-theme-multiline-with-status "eshell-prompt-extras"))
 
 ;; Ensures editor commands open in the current Emacs session
 (use-package with-editor
