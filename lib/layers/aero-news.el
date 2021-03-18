@@ -17,15 +17,18 @@
 ;; performance of this software.
 
 
+(require 'aero-prelude)
+
 (use-package elfeed :straight t
   :commands elfeed
+  :after (general)
   :init
   (general-define-key
    :states 'normal
    :prefix "SPC"
     "af" 'elfeed)
-  (setq elfeed-use-curl t)
-  (setq
+  (setq-default elfeed-use-curl t)
+  (setq-default
    elfeed-feeds
    '(
      ;; emacs blogs
@@ -112,7 +115,7 @@
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
 
   ;; increase title width for papers
-  (setq elfeed-search-title-max-width 120)
+  (setq-default elfeed-search-title-max-width 120)
 
   (general-define-key
    :keymaps 'elfeed-search-mode-map
