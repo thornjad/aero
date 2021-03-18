@@ -168,11 +168,12 @@
 
 (defun aero/modeline-segment-size-and-position ()
   "Displays the current cursor position in the mode-line."
-  (concat "(%I) L%l %o%%"
+  (concat "(%I) %l:%C %o%%"
           (when (use-region-p)
             (concat
-             "  " (number-to-string (count-lines (point) (mark)))
-             ":" (number-to-string (abs (- (point) (mark))))))
+             "  (" (number-to-string (count-lines (point) (mark)))
+             ":" (number-to-string (abs (- (point) (mark))))
+             ")"))
           "  "))
 
 (defun aero/modeline-segment-process ()
