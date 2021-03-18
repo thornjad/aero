@@ -19,9 +19,10 @@
 ;;; Code:
 
 (use-package python-mode :straight t
+  :after (general flycheck)
   :mode "\\.py\\'"
   :init
-  (setq python-shell-interpreter "python3")
+  (setq-default python-shell-interpreter "python3")
   (setq-default python-indent-offset 4)
 
   :config
@@ -114,6 +115,7 @@
     "Complete at point if in pdb prompt."
     (let* ((buffer (current-buffer))
            (process (get-buffer-process buffer)))
+      (defvar python-shell-prompt-pdb-regexp)
       ;; Get completion only if there are process and we are at pdb prompt
       (when (and
              process
@@ -142,7 +144,7 @@
                 (with-current-buffer buffer
                   (while (null comint-redirect-completed)
                     (accept-process-output nil 0.1)))
-                (goto-char (point-min))
+                (setf (point) (point-min))
                 ;; Skip first line in case process echoes input
                 (unless (= (count-lines (point-min) (point-max)) 1)
                   (forward-line 1))
@@ -274,6 +276,18 @@
     "kA" '(elpy-shell-kill-all :wk "kill all shells")
     "g" '(:ignore t :wk "go")
     "ge" '(elpy-shell-goto-last-error :wk "goto last error")
-    "gi" '(elpy-shell-goto-import-header :wk "goto import header")))
+    "gi" '(elpy-shell-goto-import-header :wk "goto import header"))
+
+  ;; Use mypy for typechecking
+  (flycheck-define-checker
+      python-mypy ""
+      :command ("mypy"
+                "--ignore-missing-imports" "--fast-parser"
+                source-original)
+      :error-patterns
+      ((error line-start (file-name) ":" line ": error:" (message) line-end))
+      :modes python-mode)
+  (add-to-list 'flycheck-checkers 'python-mypy t)
+  (flycheck-add-next-checker 'python-pylint 'python-mypy t))
 
 (provide 'aero-python)
