@@ -166,7 +166,7 @@
 (use-package eshell-prompt-extras
   :after (eshell esh-opt)
   :init
-  (setq eshell-highlight-prompt nil
+  (setq eshell-highlight-prompt t
         epe-git-dirty-char " *"
         eshell-prompt-function 'epe-theme-multiline-with-status)
   (autoload 'epe-theme-multiline-with-status "eshell-prompt-extras"))
