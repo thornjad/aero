@@ -1186,8 +1186,7 @@ Requires the utility date to be installed."
      (call-process "env" nil t nil
                    "LC_ALL=C" "LANGUAGE=" "date" "-d"
                    human-string)
-     (or (bobp) (delete-char 1))
-     (buffer-string))))
+     (replace-regexp-in-string "\n\\'" "" (buffer-string)))))
 
 (defun day-of-week (&optional date)
   "Returns the day of the week for DATE.
@@ -1199,9 +1198,8 @@ Requires the utility date to be installed."
     (call-process "env" nil t nil
                   "LC_ALL=C" "LANGUAGE=" "date"
                   (if date
-                      (concat "-d " date " +'%A'")
-                    "+'%A'"))
-    (or (bobp) (delete-char 1))
-    (string-trim (buffer-string) "'" "'")))
+                      (concat "-d " date " +%A")
+                    "+%A"))
+    (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (provide 'aero-lib)
