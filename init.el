@@ -75,7 +75,7 @@ only. This file is not part of Aero proper, and is not shared.")
           (url-retrieve-synchronously
            "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
            'silent 'inhibit-cookies)
-        (goto-char (point-max))
+        (setf (point) (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 

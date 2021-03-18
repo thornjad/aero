@@ -63,9 +63,9 @@ This function will not do anything unless tcl-mode is the current major mode."
           (if (and transient-mark-mode mark-active)
               (progn
                 (save-excursion
-                  (goto-char (region-end))
+                  (setf (point) (region-end))
                   (insert close))
-                (goto-char (region-beginning))
+                (setf (point) (region-beginning))
                 (insert open))
             (skip-chars-forward " \t")
             (insert open)

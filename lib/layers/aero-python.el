@@ -237,7 +237,7 @@
     "Jump to the import header."
     (interactive)
     (evil-set-jump)
-    (goto-char (point-min))
+    (setf (point) (point-min))
     (re-search-forward "^import"))
 
   (defun elpy-shell-goto-last-error ()
@@ -245,7 +245,7 @@
     (interactive)
     (let ((filename (buffer-file-name)))
       (elpy-shell-switch-to-shell)
-      (goto-char (point-max))
+      (setf (point) (point-max))
       (search-backward filename nil t)
       (while (condition-case nil
                  (progn (compile-goto-error) nil)

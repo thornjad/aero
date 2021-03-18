@@ -398,13 +398,13 @@ on. This may cause a jump if the file has changed significantly."
         ;; If total lines have not changed, we can reasonably guess that the
         ;; content has not changed significantly (if at all), so we can jump
         ;; right back to the initial point.
-        (goto-char initial-point)
+        (setf (point) initial-point)
       ;; If total lines /have/ changed, we can reasonably guess that the initial
       ;; point is contextually not where we were before. The best thing we can
       ;; do now is return to the same line number, and hope it's close. Getting
       ;; closer than this would require text parsing, which is more complex than
       ;; we need for a simple file replacement.
-      (goto-char initial-line))))
+      (setf (point) initial-line))))
 
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
@@ -633,7 +633,7 @@ should be shown to the user."
       (if (or (not (boundp 'url-http-end-of-headers))
               (not url-http-end-of-headers))
           (error "Trying to parse headers in odd buffer: %s" (buffer-name)))
-      (goto-char (point-min))
+      (setf (point) (point-min))
       (url-http-debug "url-http-parse-headers called in (%s)" (buffer-name))
       (url-http-parse-response)
       (mail-narrow-to-head)
@@ -1006,7 +1006,7 @@ should be shown to the user."
           (url-handle-content-transfer-encoding))
         (url-http-debug "Finished parsing HTTP headers: %S" success)
         (widen)
-        (goto-char (point-min))
+        (setf (point) (point-min))
         success))))
 
 

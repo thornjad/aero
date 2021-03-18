@@ -64,7 +64,7 @@ This function modifies STRUCT."
 	         (item-end-no-blank (org-list-get-item-end-before-blank item struct))
 	         (beforep
 	          (progn
-	            (goto-char item)
+	            (setf (point) item)
 	            (looking-at org-list-full-item-re)
 	            (<= pos
 		              (cond
@@ -74,7 +74,7 @@ This function modifies STRUCT."
 		                (match-beginning 4))
 		               (t (el-patch-swap
                         (save-excursion
-		                      (goto-char (match-end 4))
+		                      (setf (point) (match-end 4))
 		                      (skip-chars-forward " \t")
 		                      (point))
                         (point)))))))
@@ -96,7 +96,7 @@ This function modifies STRUCT."
 	          (and (not beforep)
 	               split-line-p
 	               (progn
-		               (goto-char pos)
+		               (setf (point) pos)
 		               ;; If POS is greater than ITEM-END, then point is in
 		               ;; some white lines after the end of the list.  Those
 		               ;; must be removed, or they will be left, stacking up
@@ -121,7 +121,7 @@ This function modifies STRUCT."
 	         (item-size (+ ind-size (length body) (length item-sep)))
 	         (size-offset (- item-size (length text-cut))))
       ;; Insert effectively item into buffer.
-      (goto-char item)
+      (setf (point) item)
       (indent-to-column ind)
       (insert body item-sep)
       ;; Add new item to STRUCT.
@@ -162,10 +162,10 @@ This function modifies STRUCT."
       ;; ITEM with the next item in list.  Position cursor after bullet,
       ;; counter, checkbox, and label.
       (if beforep
-	        (goto-char item)
+	        (setf (point) item)
         (setq struct (org-list-swap-items item (+ item item-size) struct))
-        (goto-char (org-list-get-next-item
-		                item struct (org-list-prevs-alist struct))))
+        (setf (point) (org-list-get-next-item
+		                   item struct (org-list-prevs-alist struct))))
       struct))
 
   (defun aero/org-element-descendant-of (type element)
@@ -194,7 +194,7 @@ appropriate.  In tables, insert a new row or end the table."
         ;; Heading: Move to position after entry content.
         ;; NOTE: This is probably the most interesting feature of this function.
         (let ((heading-start (org-entry-beginning-position)))
-          (goto-char (org-entry-end-position))
+          (setf (point) (org-entry-end-position))
           (cond ((and (org-at-heading-p)
                       (= heading-start (org-entry-beginning-position)))
                  ;; Entry ends on its heading; add newline after
@@ -354,16 +354,16 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
 
 (defun goto-last-day ()
   "Move point to the most recent entry."
-  (goto-char (point-max))
+  (setf (point) (point-max))
   (re-search-backward "^\\* [[:alpha:]]+, [[:alpha:]]" nil t))
 
 (defun last-day-date-string ()
   "Get the date of the most recent entry."
   (save-excursion
     (goto-last-day)
-    (setq line (thing-at-point 'line t))
-    (string-match "(\\([0-9]+-[0-9]+-[0-9]+\\))" line)
-    (match-string 1 line)))
+    (let ((line (thing-at-point 'line t)))
+      (string-match "(\\([0-9]+-[0-9]+-[0-9]+\\))" line)
+      (match-string 1 line))))
 
 (defun last-day-was-last-workday-p ()
   "Returns true if the most recent entry was the previous workday."
@@ -403,7 +403,7 @@ This function inserts the block found between '* TEMPLATE' and
         (case-fold-search nil) ; This ensures our replacements match "HOURS" not "Worked Hours"
         (end nil))
     (save-excursion
-      (goto-char (point-max))
+      (setf (point) (point-max))
       (re-search-backward "^\\* TEMPLATE" )
       (beginning-of-line)
       (backward-char 1)
@@ -414,7 +414,7 @@ This function inserts the block found between '* TEMPLATE' and
       (backward-char 1)
       (setq end (point))
       (setq text (buffer-substring start end))
-      (goto-char start)
+      (setf (point) start)
 
       ;; Replace all our template-pairs
       (dolist (item new-day-template-variables)
@@ -429,7 +429,7 @@ This function inserts the block found between '* TEMPLATE' and
 
       ;; Done, insert
       (insert text "\n"))
-    (goto-char start)
+    (setf (point) start)
     (forward-line 1)
     (outline-hide-sublevels 1)
     (outline-show-subtree)))
@@ -440,16 +440,18 @@ This function inserts the block found between '* TEMPLATE' and
   (let ((pos nil))
     (save-excursion
       (org-save-outline-visibility t
-        (goto-char (point-min))
+        (setf (point) (point-min))
         (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
             (setq pos (point))
           (message "No entry for today found."))))
     (if pos
         (progn
-          (goto-char pos)
+          (setf (point) pos)
           (beginning-of-line)
           (outline-hide-sublevels 1)
           (outline-show-subtree)
+          (when (require 'evil nil t)
+            (evil-scroll-line-to-center (line-number-at-pos)))
           t)
       nil)))
 
