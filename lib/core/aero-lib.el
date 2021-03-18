@@ -557,11 +557,13 @@ In a dired buffer, it will open the current file."
   (let ((name (buffer-name buffer)))
     (string-match "^\\*tramp" name)))
 (defun aero/kill-tramp ()
-  "Kill and cleanup all Tramp connections. Useful for stale connections."
+  "Kill all Tramp connections. Useful for stale connections.
+This function does NOT remove remote buffers, only their connections."
   (interactive)
-  (cl-loop for buffer being the buffers
-           do (and (aero/tramp-buffer-p buffer) (kill-buffer buffer)))
-  (tramp-cleanup-all-connections))
+  (password-reset)
+  (cancel-function-timers 'tramp-timeout-session)
+  (dolist (name (tramp-list-tramp-buffers))
+    (when (processp (get-buffer-process name)) (delete-process name))))
 
 (defun aero/kill-tags ()
   "Kill the currently-loaded TAGS file."
