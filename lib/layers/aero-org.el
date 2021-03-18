@@ -13,7 +13,6 @@
 (require 'aero-lib)
 
 (use-package org
-	:straight org-plus-contrib
 	:commands org-mode
 	:mode ("\\.org\\'" . org-mode)
 
@@ -317,6 +316,12 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
     (when (eq major-mode 'org-mode)
       (aero/org-eval-saveblock)))
   (add-hook 'before-save-hook #'aero/org-mode-before-save-hook-eval))
+
+(use-package org-toc
+  :straight (:host github :repo "snosov1/toc-org")
+  :after (org)
+  :commands (toc-org-mode)
+  :init (add-hook 'org-mode-hook #'toc-org-mode))
 
 ;; org-mode seems to never call its own hook??
 (add-hook
