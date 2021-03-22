@@ -22,7 +22,7 @@
   :after (general flycheck)
   :mode "\\.py\\'"
   :init
-  (setq-default python-shell-interpreter "python3")
+  (setq-default python-shell-interpreter "/home/jmt/.pyenv/shims/python3")
   (setq-default python-indent-offset 4)
 
   :config
