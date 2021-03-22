@@ -1192,12 +1192,9 @@ If DATE is nil, check today instead.
 
 Requires the utility date to be installed."
   (with-temp-buffer
-    ;; We use env to ensure that the format can be parsed
-    (call-process "env" nil t nil
-                  "LC_ALL=C" "LANGUAGE=" "date"
-                  (if date
-                      (concat "-d " date " +%A")
-                    "+%A"))
+    (if date
+        (call-process "date" nil t nil "-d" date "+%A")
+      (call-process "date" nil t nil "+%A"))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (provide 'aero-lib)
