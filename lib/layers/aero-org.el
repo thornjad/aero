@@ -338,9 +338,12 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
 (defun new-day ()
   "Create a new entry for today, if one isn't already present."
   (interactive)
-  (if (today)
+  (if (today t)
       (message "Entry for today already present")
-    (new-day-insert)))
+    (progn
+      (new-day-insert)
+      (when (require 'evil nil t)
+        (evil-scroll-line-to-center (line-number-at-pos))))))
 
 ;; List of things we expand inside the templated-section of this file.
 ;; The pairs are "regexp" + "replacement" which is invoked via "apply".
@@ -372,9 +375,10 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
 
 (defun last-day-was-last-workday-p ()
   "Returns true if the most recent entry was the previous workday."
-  (let ((last-workday (if (string= (day-of-week) "Monday")
-                          (human-date "last Friday")
-                        (human-date "yesterday"))))
+  (let ((last-workday
+         (string-to-number (if (string= (day-of-week) "Monday")
+                               (human-date "last Friday" t)
+                             (human-date "yesterday" t)))))
     (string= (format-time-string "%Y-%m-%d" last-workday)
              (last-day-date-string))))
 
@@ -383,7 +387,9 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
   (interactive)
   (outline-hide-sublevels 1)
   (goto-last-day)
-  (outline-show-subtree))
+  (outline-show-subtree)
+  (when (require 'evil nil t)
+    (evil-scroll-line-to-center (line-number-at-pos))))
 
 (defun last-days-today ()
   "Get the last-day's today field"
@@ -392,12 +398,12 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
     (re-search-forward "Today:" nil t)
     (forward-line 1)
     (beginning-of-line)
-    (setq start (point))
-    (re-search-forward "** Meetings" nil t)
-    (beginning-of-line)
-    (backward-char 1)
-    (setq end (point))
-    (buffer-substring start end)))
+    (let ((start (point)))
+      (re-search-forward "** Meetings" nil t)
+      (beginning-of-line)
+      (backward-char 1)
+      (let ((end (point)))
+        (buffer-substring start end)))))
 
 (defun new-day-insert ()
   "Insert the contents of a template into the document, for a new day's work.
@@ -427,7 +433,9 @@ This function inserts the block found between '* TEMPLATE' and
       ;; Fill in yesterday's status as a head start
       (when (last-day-was-last-workday-p)
         (setq text (replace-regexp-in-string
-                    "Yesterday:" (concat "Yesterday:\n" (last-days-today)) text t)))
+                    "\\(Yesterday\\|Friday\\):"
+                    (concat "Yesterday:\n" (last-days-today))
+                    text t)))
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
         (setq text (replace-regexp-in-string "Yesterday:" "Friday:" text t)))
@@ -439,8 +447,8 @@ This function inserts the block found between '* TEMPLATE' and
     (outline-hide-sublevels 1)
     (outline-show-subtree)))
 
-(defun today ()
-  "Visit today's entry, if it exists.  Otherwise show a message."
+(defun today (&optional nomsg)
+  "Visit today's entry, if it exists, message if NOMSG is nil."
   (interactive)
   (let ((pos nil))
     (save-excursion
@@ -448,7 +456,7 @@ This function inserts the block found between '* TEMPLATE' and
         (setf (point) (point-min))
         (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
             (setq pos (point))
-          (message "No entry for today found."))))
+          (unless nomsg (message "No entry for today found.")))))
     (if pos
         (progn
           (setf (point) pos)
