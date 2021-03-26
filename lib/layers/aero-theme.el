@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2020 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -31,42 +31,9 @@
   :config
   (load-theme 'aero t))
 
-;; default themes
-;; TODO this causes all frames to change, we only want frame-local if possible
-;; (defun aero/load-default-theme (&optional frame)
-;;   "Set FRAME-local theme."
-;;   (with-selected-frame (or frame (selected-frame))
-;;     (if (display-graphic-p)
-;;         (load-theme 'aero-light t)
-;;       (load-theme 'aero-dark t))))
-;; ;; Run immediately for the new frame
-;; (aero/load-default-theme)
-;; ;; Set up for emacsclient
-;; (add-hook 'after-make-frame-functions #'aero/load-default-theme)
-
-
-;; Other themes to browse from time to time
-;; (use-package doom-themes :straight t
-;;   :defer 10
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold t
-;;         doom-themes-enable-italic t)
-;;   (doom-themes-neotree-config)
-;;   (doom-themes-org-config))
-;; (use-package poet-theme :straight t :defer 10)
-;; (use-package spacemacs-theme :straight t :defer 10)
-;; (use-package spaceline :straight t)
-;; (use-package tao-theme :straight t :defer 10
-;;   :config
-;;   (setq tao-theme-use-boxes nil
-;;         tao-theme-use-height nil))
-
-;; Start the initial frame maximized
-;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;; Subsequent frames will be smaller
 (setq default-frame-alist
-      (append (list '(width  . 200) '(height . 60)
+      (append (list '(width  . 190) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 20)
@@ -76,6 +43,7 @@
                     '(ns-appearance . dark))))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 20)
+(split-window-horizontally)
 
 
 ;;; get ligatures to actually work
