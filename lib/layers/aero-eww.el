@@ -45,7 +45,7 @@
           ("twitter.com" . browse-url-generic)
           ("youtube.com" . browse-url-generic)
           ("." . eww-browse-url)))
-  (setq shr-external-browser 'browse-url-generic)
+  (setq browse-url-secondary-browser-function 'browse-url-generic)
 
 	:config
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
