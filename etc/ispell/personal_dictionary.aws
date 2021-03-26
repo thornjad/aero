@@ -1,4 +1,4 @@
-personal_ws-1.1 en 280 
+personal_ws-1.1 en 285 
 ACL
 APIs
 Aireon
@@ -21,7 +21,9 @@ Comeet
 Comeet's
 Donal
 ESC
+FATV
 FBO
+FBOs
 FIXME
 FOSS
 FlashBack
@@ -39,6 +41,7 @@ Gzip
 HH
 HiDPI
 Hyperfeed
+IETF
 IFR
 IMDb
 JS
@@ -157,6 +160,7 @@ evcxr
 eww
 facto
 falsy
+firehose
 flycheck
 fontconfig
 formdata
@@ -193,6 +197,7 @@ jupyter
 libertarianism
 loblolly
 localhost
+lon
 macOS
 mbtiles
 mc
