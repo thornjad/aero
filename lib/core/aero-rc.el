@@ -72,7 +72,7 @@
  comint-prompt-read-only nil ; breaks shell-command sometimes
 
  ;; The newline pushes everything else to a non-rendered second line
- frame-title-format "Aero Emacs"
+ frame-title-format "Emacs"
  ns-use-proxy-icon nil ; remove icon from frame title in ns
 
  ;; startup with scratch
