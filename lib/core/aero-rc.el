@@ -109,8 +109,6 @@
  read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
 
- org-agenda-files (file-expand-wildcards "~/doc/org/*.org")
-
  ;; indentation
  indent-tabs-mode nil
  tab-width 2
