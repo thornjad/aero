@@ -1,4 +1,4 @@
-personal_ws-1.1 en 285 
+personal_ws-1.1 en 292 
 ACL
 APIs
 Aireon
@@ -26,6 +26,7 @@ FBO
 FBOs
 FIXME
 FOSS
+FTB
 FlashBack
 FlighAware
 FlightAware
@@ -44,6 +45,7 @@ Hyperfeed
 IETF
 IFR
 IMDb
+JDT
 JS
 JSX
 Javascript
@@ -95,6 +97,7 @@ Tabstops
 Theming
 Tmux
 UI
+URI
 USD
 UTF
 UX
@@ -113,6 +116,7 @@ allowlist
 analytics
 applescript
 appstream
+architecting
 async
 autocorrect
 aws
@@ -171,6 +175,7 @@ fullscreen
 fullscreening
 geolocation
 gitlab
+globals
 glyphs
 goto
 grey
@@ -262,6 +267,8 @@ terminfo
 termios
 theming
 thornjad
+tileset
+tilesets
 timebox
 titlebar
 todo
