@@ -24,6 +24,7 @@
          (python-mode . lsp) ;; python-language-server
          (rust-mode . lsp) ;; rls
          (scss-mode . lsp) ;; vscode-css-languageserver-bin
+         (java-mode . lsp) ;; eclipse JDT language server
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
   :commands (lsp)
@@ -59,6 +60,9 @@
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil
         lsp-headerline-breadcrumb-segments '(path-up-to-project symbols))
+
+  (use-package lsp-java
+    :hook ((java-mode . lsp)))
 
   (use-package lsp-ui :straight t
     :hook ((lsp-mode . lsp-ui-mode)
