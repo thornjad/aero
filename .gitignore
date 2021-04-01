@@ -32,6 +32,8 @@
 auto-save-list/
 bookmarks
 crown/
+eclipse*
+eln-cache/
 elnode/
 elpa/
 elpy/
@@ -51,8 +53,8 @@ tmp/
 tramp
 transient/
 var/
+workspace/
 xkcd/
-eln-cache/
 
 # Ignore local init
 init.local.el
