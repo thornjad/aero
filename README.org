@@ -57,9 +57,9 @@ Despite using Helm for a few years, I chose to use Counsel and Ivy when I create
 That being said, Helm is now a dead project, so I guess this section may not be so necessary for much longer.
 
 **** Spacemacs-inspired leader keys
-When I first started using Emacs, it was through Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC= leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w= (for file write) saves the buffer to disk.
+When I first started using Emacs, it was through Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero is built around one of two leader keys, =SPC= and =\,= (comma). =SPC= leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w= (for file write) saves the buffer to disk.
 
-The other leader, ~,~ is available in some major modes and contains bindings for that mode. For example, in Python mode, ~, s b~ sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, ~, RET~ runs the HTTP query at point.
+The other leader, =\,= is available in some major modes and contains bindings for that mode. For example, in Python mode, =\, s b= sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, =\, RET= runs the HTTP query at point.
 
 #+caption: Aero space leader with Ivy completion
 [[./etc/images/aero-leader-preview.png]]
