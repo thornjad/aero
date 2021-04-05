@@ -560,10 +560,12 @@ In a dired buffer, it will open the current file."
   "Kill all Tramp connections. Useful for stale connections.
 This function does NOT remove remote buffers, only their connections."
   (interactive)
-  (password-reset)
-  (cancel-function-timers 'tramp-timeout-session)
-  (dolist (name (tramp-list-tramp-buffers))
-    (when (processp (get-buffer-process name)) (delete-process name))))
+  (when (require 'tramp nil t)
+    (password-reset)
+    (cancel-function-timers 'tramp-timeout-session)
+    (declare-function tramp-list-tramp-buffers "tramp.el")
+    (dolist (name (tramp-list-tramp-buffers))
+      (when (processp (get-buffer-process name)) (delete-process name)))))
 
 (defun aero/kill-tags ()
   "Kill the currently-loaded TAGS file."
