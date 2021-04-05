@@ -318,6 +318,14 @@
   (evil-set-initial-state 'dired-mode 'emacs)
   (evil-set-initial-state 'message-mode 'motion)
 
+  ;; Make movement keys work like they should
+  (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+  ;; Ensure horizontal movement doesn't cross lines
+  (setq-default evil-cross-lines nil)
+
   (defun aero/evil-shift-right ()
     (interactive)
     (evil-shift-right evil-visual-beginning evil-visual-end)
