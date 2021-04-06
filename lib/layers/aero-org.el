@@ -405,27 +405,27 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
       (let ((end (point)))
         (buffer-substring start end)))))
 
+(defvar aero/thornlog-template
+  "* TEMPLATE
+** Sync summary
+Yesterday:
+
+Today:
+** Meetings
+*** 1015-1030 - Core sitdown standup
+** TODO :noexport: [0%] [0/1]
+*** TODO Prep sync summary
+** Notes
+None."
+  "Template for a new day in the thornlog")
+
 (defun new-day-insert ()
-  "Insert the contents of a template into the document, for a new day's work.
-This function inserts the block found between '* TEMPLATE' and
-'END' then fills in the date nicely."
-  (let ((start nil)
-        (text nil)
-        (case-fold-search nil) ; This ensures our replacements match "HOURS" not "Worked Hours"
-        (end nil))
+  "Insert the contents of the template into the document, for a new day's work."
+  (let ((text nil)
+        (case-fold-search nil)) ; This ensures our replacements match "HOURS" not "Worked Hours"
+    (setf (point) (point-max))
     (save-excursion
-      (setf (point) (point-max))
-      (re-search-backward "^\\* TEMPLATE" )
-      (beginning-of-line)
-      (backward-char 1)
-      (setq start (point))
-      (forward-line 2)
-      (re-search-forward "END$")
-      (beginning-of-line)
-      (backward-char 1)
-      (setq end (point))
-      (setq text (buffer-substring start end))
-      (setf (point) start)
+      (setq text aero/thornlog-template)
 
       ;; Replace all our template-pairs
       (dolist (item new-day-template-variables)
@@ -442,7 +442,6 @@ This function inserts the block found between '* TEMPLATE' and
 
       ;; Done, insert
       (insert text "\n"))
-    (setf (point) start)
     (forward-line 1)
     (outline-hide-sublevels 1)
     (outline-show-subtree)))
