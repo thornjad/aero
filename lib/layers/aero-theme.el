@@ -124,6 +124,11 @@
 (use-package fireplace :straight t
   :commands fireplace)
 
+(use-package highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
+              highlight-indent-guides-responsive 'top))
+
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
 This function, when bound to certain commands like scrolling, acts as a native
