@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -15,6 +15,8 @@
 ;; performance of this software.
 ;;
 ;; This file is not part of GNU Emacs
+
+(require 'aero-prelude)
 
 (use-package common-lisp-mode :straight nil
   :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'")
