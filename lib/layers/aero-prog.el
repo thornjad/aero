@@ -145,7 +145,7 @@
 
 ;;; parens
 
-(use-package smartparens :after (general)
+(use-package smartparens :straight t :after (general)
   :functions (show-smartparens-global-mode
               sp-kill-sexp sp-local-pair
               sp-local-pairs sp-pair
