@@ -285,9 +285,7 @@
    "ts" 'sort-lines
    "tn" '(:ignore t :wk "number")
    "tni" 'increment-number-at-point
-   "tnd" 'decrement-number-at-point
-   )
-	)
+   "tnd" 'decrement-number-at-point))
 
 (use-package which-key :straight t
   :defines which-key-mode
@@ -368,8 +366,7 @@
 (use-package evil-matchit :straight t :defer 1
   :after evil
   :defines global-evil-matchit-mode
-  :config
-  (global-evil-matchit-mode 1))
+  :config (global-evil-matchit-mode 1))
 
 (use-package evil-visualstar :straight t
   :after evil

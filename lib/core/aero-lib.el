@@ -253,10 +253,12 @@ emacs with sigusr2"
   (expand-file-name "~/store/doc/thornlog/")
   "Location of the thornlog on this filesystem.")
 
-(defun aero/thornlog-dir ()
-  "Personal persistent log."
-  (interactive)
-  (deer aero/thornlog-path))
+(when (require 'ranger nil t)
+  (defun aero/thornlog-dir ()
+    "Personal persistent log."
+    (interactive)
+    (declare-function deer "ranger.el")
+    (deer aero/thornlog-path)))
 
 (defun aero/thornlog-log ()
   "Personal persistent log."
@@ -512,22 +514,24 @@ To call interactively, use [aero/open-in-finder]."
                  "end tell\n")))
     (aero/run-osascript script)))
 
-(defun aero/async-write-buffer ()
-  "Asynchronously write the current buffer to disk.
+(when (require 'async nil t)
+  (defun aero/async-write-buffer ()
+    "Asynchronously write the current buffer to disk.
 
 Really just an async wrapper around `save-buffer'"
-  (interactive)
-  (let* ((buf buffer-file-name)
-         (fun (lambda ()
-                (message (or buf "wtf"))
-                (funcall #'basic-save-buffer))))
-
-    (async-start fun)))
+    (interactive)
+    (let* ((buf buffer-file-name)
+           (fun (lambda ()
+                  (message (or buf "wtf"))
+                  (funcall #'basic-save-buffer))))
+      (declare-function async-start "async.el")
+      (async-start fun))))
 
 (defun aero/open-in-finder ()
   "Reveal the file associated with the current buffer in the OSX Finder.
 In a dired buffer, it will open the current file."
   (interactive)
+  (declare-function dired-file-name-at-point "dired.el")
   (aero/reveal-in-finder-as
    (or (buffer-file-name)
        (expand-file-name (or (dired-file-name-at-point) ".")))))
@@ -561,6 +565,7 @@ In a dired buffer, it will open the current file."
 This function does NOT remove remote buffers, only their connections."
   (interactive)
   (when (require 'tramp nil t)
+    (declare-function password-reset "password-cache.el")
     (password-reset)
     (cancel-function-timers 'tramp-timeout-session)
     (declare-function tramp-list-tramp-buffers "tramp.el")
@@ -582,14 +587,16 @@ This function does NOT remove remote buffers, only their connections."
   (interactive)
   (eww "https://github.com/emacs-mirror/emacs/blob/master/etc/PROBLEMS"))
 
-(defun aero/restclient-scratch ()
-  "Open a restclient scratch buffer."
-  (interactive)
-  (when (require 'restclient nil 'noerror)
-    (switch-to-buffer (get-buffer-create "restclient-scratch"))
-    (insert "# -*- restclient -*-\n")
-    (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
-    (restclient-mode)))
+(when (require 'restclient nil t)
+  (declare-function restclient-mode "restclient.el")
+  (defun aero/restclient-scratch ()
+    "Open a restclient scratch buffer."
+    (interactive)
+    (when (require 'restclient nil 'noerror)
+      (switch-to-buffer (get-buffer-create "restclient-scratch"))
+      (insert "# -*- restclient -*-\n")
+      (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
+      (restclient-mode))))
 
 (defun aero/xdg-open (arg)
   "Pass the specified ARG to \"xdg-open\".
@@ -703,6 +710,7 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   (interactive "P")
   (when (fboundp 'xref-find-definitions)
     (let ((xref-prompt-for-identifier arg))
+      (and xref-prompt-for-identifier t)  ; HACK appease native compiler
       (call-interactively #'xref-find-definitions))))
 
 (defun aero/byte-compile-file-at-buffer ()
