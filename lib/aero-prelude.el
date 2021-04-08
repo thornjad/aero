@@ -36,7 +36,6 @@
 
 
 ;;; Set up core packages
-(use-package use-package-ensure-system-package :straight t)
 (use-package gnu-elpa-keyring-update :straight t)
 (use-package exec-path-from-shell :straight t
   :config
