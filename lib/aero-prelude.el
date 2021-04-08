@@ -46,8 +46,7 @@
 ;;; get ready to patch at any time
 
 (use-package el-patch :straight t
-  :init
-  (setq el-patch-enable-use-package-integration t))
+  :init (setq el-patch-enable-use-package-integration t))
 ;; Only needed at compile time
 (eval-when-compile
   (require 'el-patch))
@@ -361,6 +360,7 @@
     :after evil
     :functions (evil-terminal-cursor-changer-activate)
     :config (evil-terminal-cursor-changer-activate)))
+
 
 (use-package evil-matchit :straight t :defer 1
   :after evil
@@ -726,6 +726,10 @@ Local bindings (`counsel-mode-map'):
    :states '(normal visual motion replace emacs)
    :keymaps 'override
    (kbd "M-e") 'er/expand-region))
+
+(use-package editorconfig
+  :functions (editorconfig-mode)
+  :config (editorconfig-mode +1))
 
 ;; Ensure emacsclient frames open with focus
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
