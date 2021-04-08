@@ -168,8 +168,16 @@
   :init
   (setq eshell-highlight-prompt t
         epe-git-dirty-char " *"
-        eshell-prompt-function 'epe-theme-multiline-with-status)
-  (autoload 'epe-theme-multiline-with-status "eshell-prompt-extras"))
+        eshell-prompt-function 'epe-theme-lambda)
+  (autoload 'epe-theme-lambda "eshell-prompt-extras"))
+
+(use-package eshell-did-you-mean
+  :after (eshell)
+  :config (eshell-did-you-mean-setup))
+
+(use-package esh-autosuggest
+  :hook (eshell-mode . esh-autosuggest-mode)
+  :functions (esh-autosuggest-mode))
 
 ;; Ensures editor commands open in the current Emacs session
 (use-package with-editor
