@@ -29,7 +29,9 @@
 (use-package aero-theme :straight nil
   :load-path "lib/packages/aero-theme/"
   :config
-  (load-theme 'aero t))
+  (if (display-graphic-p)
+      (load-theme 'aero t)
+    (load-theme 'aero-dark t)))
 
 ;; Subsequent frames will be smaller
 (setq default-frame-alist
