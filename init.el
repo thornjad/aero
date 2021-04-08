@@ -129,16 +129,9 @@ only. This file is not part of Aero proper, and is not shared.")
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
   (setq gc-cons-threshold (car (cadr aero/gc-cons))
         gc-cons-percentage (cadr (cadr aero/gc-cons)))
-  (setq read-process-output-max #x1000000)
+  (setq read-process-output-max #x1000000))
 
-  (require 'server nil t)
-  (use-package server :defer 3
-    :if window-system
-    :init
-    (when (not (server-running-p server-name))
-      (server-start))))
-
-
+
 ;;; optimizations and fixes
 
 ;; verifier les erreurs dans ce fichier
