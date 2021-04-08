@@ -109,11 +109,13 @@
 
 (use-package good-scroll
   :straight (:host github :repo "io12/good-scroll.el")
+  :functions (good-scroll-mode)
   :config (good-scroll-mode +1))
 
 (use-package all-the-icons :straight t)
 
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
+  :defines (formfeeder-line-width)
   :config
   (setq formfeeder-line-width 80)
   (declare-function global-formfeeder-mode "formfeeder")
