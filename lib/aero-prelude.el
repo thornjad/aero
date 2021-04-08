@@ -647,42 +647,6 @@ Local bindings (`counsel-mode-map'):
      (lambda () (switch-to-buffer-other-window "*compilation*"))
      nil)))
 
-(use-package sauron
-  :init
-  (when (not (boundp 'dbus-compiled-version))
-    ;; Remove dbus if it is not compiled
-    (require 'sauron)
-    (setq sauron-modules (remove 'sauron-dbus sauron-modules)))
-
-  (setq sauron-max-line-length 120
-        sauron-watch-patterns '("dakrone" "thnetos" "okenezak")
-        sauron-watch-nicks '("dakrone" "thnetos")
-        sauron-nick-insensitivity 20
-        sauron-prio-twittering-new-tweets 2
-        sauron-frame-geometry "120x36+0+0")
-
-  (sauron-start-hidden)
-  ;; Need to stop tracking notifications, because sauron will be sending
-  ;; notifications!
-  (sauron-notifications-stop)
-  (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter)
-  :commands (sauron-toggle-hide-show)
-  :bind ("M-o" . sauron-toggle-hide-show)
-  :config
-  ;; Add the unread sauron notification count to the modeline
-  ;;(add-to-list 'global-mode-string '(cdr (sauron-count-events)))
-  (add-to-list 'compilation-finish-functions #'aero/compilation-finish)
-
-  (defun finish ()
-    "Generic function for signaling something is \"done\"."
-    (interactive)
-    (sauron-add-event
-     major-mode
-     3
-     (concat "Finished command in " (buffer-name))
-     (lambda () (switch-to-buffer-other-window (buffer-name)))
-     nil)))
-
 
 ;;; System-specifics
 
