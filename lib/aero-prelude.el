@@ -358,6 +358,13 @@
 
   (evil-mode 1))
 
+;; Doesn't do anything for GUI, so don't bother
+(unless (display-graphic-p)
+  (use-package evil-terminal-cursor-changer
+    :after evil
+    :functions (evil-terminal-cursor-changer-activate)
+    :config (evil-terminal-cursor-changer-activate)))
+
 (use-package evil-matchit :straight t :defer 1
   :after evil
   :defines global-evil-matchit-mode
@@ -703,6 +710,12 @@ Local bindings (`counsel-mode-map'):
         interprogram-paste-function #'gui-selection-value
         x-gtk-use-system-tooltips t
         dired-listing-switches "-lFaGh1v --group-directories-first"))
+
+;; TTY also needs some clipboard help. Only works in certain term emulators,
+;; Alacritty is my preferred.
+(unless (display-graphic-p)
+  (use-package clipetty
+    :hook (after-init . global-clipetty-mode)))
 
 
 ;; File navigation

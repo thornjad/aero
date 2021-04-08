@@ -156,6 +156,9 @@
         (bury-buffer)
       ad-do-it)))
 
+;; Enable mouse in TTY
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
 ;; Trigger auto-fill after punctutation characters, not just whitespace.
 (mapc
  (lambda (c)
