@@ -298,7 +298,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (add-to-list 'so-long-minor-modes 'idle-highlight-mode)
   (add-to-list 'so-long-minor-modes 'show-paren-mode)
   (add-to-list 'so-long-minor-modes 'git-gutter-mode)
-  (so-long-enable)
+  (global-so-long-mode +1)
   (add-hook 'so-long-hook #'aero/so-long-hook))
 
 
