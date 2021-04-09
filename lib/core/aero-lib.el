@@ -253,11 +253,11 @@ emacs with sigusr2"
   (expand-file-name "~/store/doc/thornlog/")
   "Location of the thornlog on this filesystem.")
 
-(when (require 'ranger nil t)
-  (defun aero/thornlog-dir ()
-    "Personal persistent log."
-    (interactive)
-    (declare-function deer "ranger.el")
+(defun aero/thornlog-dir ()
+  "Personal persistent log."
+  (interactive)
+  (declare-function deer "ranger.el")
+  (when (require 'ranger nil t)
     (deer aero/thornlog-path)))
 
 (defun aero/thornlog-log ()
