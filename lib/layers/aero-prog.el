@@ -185,8 +185,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            (current-pos (point))
            (current-line (line-number-at-pos current-pos))
            next-pos next-line)
-      ;; HACK pretend we're using this var so the byte compiler chills out
-      (and sp-navigate-close-if-unbalanced t)
+      (aero/voidvar! sp-navigate-close-if-unbalanced)
       (save-excursion
         (let ((buffer-undo-list)
               (modified (buffer-modified-p)))

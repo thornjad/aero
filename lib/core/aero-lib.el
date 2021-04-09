@@ -163,6 +163,12 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
   `(let ((default-directory user-emacs-directory))
      ,@body))
 
+(defmacro aero/voidvar! (&rest body)
+  "Appease the compiler by pretending to use variables in BODY.
+
+Similar to C++'s void var construct."
+  `(and ,@body))
+
 (defun aero/path-join (path &rest segments)
   "Join PATH with SEGMENTS using `expand-file-name'.
 First `expand-file-name' is called on the first member of SEGMENTS, with PATH as
@@ -710,7 +716,7 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   (interactive "P")
   (when (fboundp 'xref-find-definitions)
     (let ((xref-prompt-for-identifier arg))
-      (and xref-prompt-for-identifier t)  ; HACK appease native compiler
+      (aero/voidvar! xref-prompt-for-identifier)
       (call-interactively #'xref-find-definitions))))
 
 (defun aero/byte-compile-file-at-buffer ()
