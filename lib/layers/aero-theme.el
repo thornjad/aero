@@ -133,6 +133,10 @@
   :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
               highlight-indent-guides-responsive 'top))
 
+(use-package solaire-mode
+  :functions (solaire-global-mode)
+  :config (solaire-global-mode +1))
+
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
 This function, when bound to certain commands like scrolling, acts as a native
