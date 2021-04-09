@@ -51,6 +51,7 @@
 (make-variable-buffer-local 'flycheck-idle-change-delay)
 (use-package flycheck :after (general)
   :commands flycheck-mode
+  :functions (flycheck-buffer-automatically)
   :hook ((web-mode
           tcl-mode
           json-mode
@@ -114,10 +115,12 @@
   :hook ((prog-mode . flyspell-prog-mode)
 				 (text-mode . flyspell-mode))
   :config
+  (defvar aero-etc-dir)
   (setq
    flyspell-issue-message-flag nil
-   ispell-personal-dictionary (expand-file-name "ispell/personal_dictionary.aws"
-                                                aero-etc-dir))
+   ispell-personal-dictionary (expand-file-name
+                               "ispell/personal_dictionary.aws"
+                               aero-etc-dir))
 
   (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+"))
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
