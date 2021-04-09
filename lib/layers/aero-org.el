@@ -189,30 +189,11 @@ appropriate.  In tables, insert a new row or end the table."
     (if default
         (org-return)
       (cond
-       ;; Act depending on context around point.
-
        ((org-at-heading-p)
-        ;; Heading: Move to position after entry content.
-        ;; NOTE: This is probably the most interesting feature of this function.
-        (let ((heading-start (org-entry-beginning-position)))
-          (setf (point) (org-entry-end-position))
-          (cond ((and (org-at-heading-p)
-                      (= heading-start (org-entry-beginning-position)))
-                 ;; Entry ends on its heading; add newline after
-                 (end-of-line)
-                 (insert "\n\n"))
-                (t
-                 ;; Entry ends after its heading; back up
-                 (forward-line -1)
-                 (end-of-line)
-                 (when (org-at-heading-p)
-                   ;; At the same heading
-                   (forward-line)
-                   (insert "\n")
-                   (forward-line -1))
-                 (while (not (looking-back (rx (repeat 3 (seq (optional blank) "\n"))) nil))
-                   (insert "\n"))
-                 (forward-line -1)))))
+        ;; Heading: insert heading after
+        (let ((current-prefix-arg '(4)))
+          (aero/voidvar! current-prefix-arg)
+          (call-interactively #'org-insert-heading)))
 
        ((org-at-item-checkbox-p)
         ;; Checkbox: Insert new item with checkbox.
