@@ -160,6 +160,7 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
      ',name))
 
 (defmacro aero/local! (&rest body)
+  "Execute BODY in local directory instead of TRAMP."
   `(let ((default-directory user-emacs-directory))
      ,@body))
 
