@@ -133,7 +133,7 @@
   :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
               highlight-indent-guides-responsive 'top))
 
-(use-package solaire-mode
+(use-package solaire-mode :straight t
   :functions (solaire-global-mode)
   :config (solaire-global-mode +1))
 

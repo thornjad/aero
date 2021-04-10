@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -136,6 +136,7 @@
   :commands hackernews)
 
 (use-package pocket-reader :straight t
+	:after (general)
 	:commands pocket-reader
   :init
   (general-define-key

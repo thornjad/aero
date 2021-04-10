@@ -706,7 +706,7 @@ Local bindings (`counsel-mode-map'):
    :keymaps 'override
    (kbd "M-e") 'er/expand-region))
 
-(use-package editorconfig
+(use-package editorconfig :straight t
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
