@@ -60,6 +60,8 @@
 ;;; the general is here
 
 (use-package general
+	:straight t
+  :functions (general-define-key)
   :init
   (setq-default general-override-states
                 '(insert hybrid normal visual motion operator replace))
@@ -466,6 +468,7 @@ Local bindings (`counsel-mode-map'):
 (use-package recentf
   :defines (recentf-mode)
   :config
+  (defvar aero-etc-dir)
   (setq recentf-save-file (expand-file-name "recentf" aero-etc-dir)
         recentf-max-saved-items 500
         ;; never cleanup, this will get rid of tramp files
