@@ -84,30 +84,6 @@
                ('eshell/g . #'eshell/git)))
     (eval `(defalias ,(car x) ,(cdr x))))
 
-  (setq aero/eshell-time-before-alert 5.0)
-
-  (defun aero/eshell-precommand ()
-    (interactive)
-    (setq-local aero/eshell-command-start-time (current-time)))
-
-  (defun aero/eshell-command-finished ()
-    (interactive)
-    (when (and (boundp 'aero/eshell-command-start-time)
-               (> (float-time (time-subtract (current-time)
-                                             aero/eshell-command-start-time))
-                  aero/eshell-time-before-alert))
-      (sauron-add-event major-mode
-                        (if (zerop eshell-last-command-status)
-                            3
-                          4)
-                        (format "EShell: command [%s] finished, status: %s"
-                                eshell-last-command-name
-                                eshell-last-command-status)
-                        (lambda () (switch-to-buffer-other-window (buffer-name)))
-                        nil)))
-  (add-hook 'eshell-pre-command-hook #'aero/eshell-precommand)
-  (add-hook 'eshell-post-command-hook #'aero/eshell-command-finished)
-
   (defun eshell/ec (pattern)
     (if (stringp pattern)
         (find-file pattern)
