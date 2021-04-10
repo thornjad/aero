@@ -626,30 +626,6 @@ Local bindings (`counsel-mode-map'):
   (evil-define-key 'normal helpful-mode-map
     "q" 'kill-this-buffer
     "?" 'describe-mode))
-
-
-;;; Notifications and events
-
-(use-package alert
-  :config
-  (when (system-is-mac)
-    (setq alert-default-style 'notifier))
-  (when (system-is-linux)
-    (setq alert-default-style 'notifications)))
-
-
-(defun aero/compilation-finish (buffer msg)
-  "Send a sauron notification for compilation completing"
-  (interactive)
-  (when (require 'sauron nil t)
-    (declare-function sauron-add-event "sauron.el")
-    (sauron-add-event
-     'compilation
-     3
-     (format "[%s]: %s" buffer msg)
-     (lambda () (switch-to-buffer-other-window "*compilation*"))
-     nil)))
-
 
 ;;; System-specifics
 
