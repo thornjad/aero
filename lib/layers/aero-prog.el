@@ -112,6 +112,7 @@
    "pcH" 'flycheck-manual))
 
 (use-package flyspell
+	:after (general)
   :hook ((prog-mode . flyspell-prog-mode)
 				 (text-mode . flyspell-mode))
   :config
