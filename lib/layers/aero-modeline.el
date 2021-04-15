@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'all-the-icons)
 
 ;;; Config
 
@@ -149,12 +150,25 @@
 
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
-  (if (or (and buffer-read-only (buffer-file-name))
-          (string-match-p "\\*.*\\*" (buffer-name)))
-      (propertize "  " 'face 'aero/modeline-read-only)
-    (if (buffer-modified-p)
-        (propertize " ● " 'face 'aero/modeline-modified)
-      (propertize " ○ " 'face 'aero/modeline-not-modified))))
+  (cond
+   ((and buffer-read-only (buffer-file-name)) ;; read-only
+    (propertize (all-the-icons-faicon "lock" :height 1.2 :v-adjust -0.0)
+                'face `(:family ,(all-the-icons-faicon-family)
+                        :inherit aero/modeline-read-only)))
+   ((string-match-p "\\*.*\\*" (buffer-name)) ;; special buffer
+    (propertize (all-the-icons-faicon "asterisk" :height 1.2 :v-adjust -0.0)
+                'face `(:family ,(all-the-icons-faicon-family)
+                        :inherit aero/modeline-read-only
+                        :height 0.7)))
+   ((buffer-modified-p)
+    (propertize (all-the-icons-faicon "chain-broken" :height 1.2 :v-adjust -0.0)
+                'face `(:family ,(all-the-icons-faicon-family)
+                        :inherit aero/modeline-modified
+                        :height 0.7)))
+   (t (propertize (all-the-icons-faicon "link" :height 1.2 :v-adjust -0.0)
+                  'face `(:family ,(all-the-icons-faicon-family)
+                          :inherit aero/modeline-not-modified
+                          :height 0.7)))))
 
 (defun aero/modeline-segment-remote ()
   "Displays a symbol if buffer is remote"
@@ -204,7 +218,7 @@
               ;; Left
               (format-mode-line
                '((:eval (aero/modeline-segment-evil-state))
-                 (:eval (aero/modeline-segment-modified))
+                 " " (:eval (aero/modeline-segment-modified)) " "
                  (:eval (aero/modeline-segment-buffer-name))
                  (:eval (aero/modeline-segment-size-and-position))))
 

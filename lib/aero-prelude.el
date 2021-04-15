@@ -504,8 +504,17 @@ Local bindings (`counsel-mode-map'):
    "bb" 'ivy-switch-buffer)
 
   (use-package ivy-rich :straight t
+    :defines (ivy-rich-path-style)
+    :functions (ivy-rich-mode)
     :config
-    (ivy-rich-mode 1)))
+    (setq ivy-rich-path-style 'abbrev)
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+    (ivy-rich-mode 1))
+
+  (use-package all-the-icons-ivy-rich :straight t
+    :after (ivy-rich)
+    :functions (all-the-icons-ivy-rich-mode)
+    :init (all-the-icons-ivy-rich-mode +1)))
 
 (use-package swiper :straight t
   :after general
@@ -546,7 +555,7 @@ Local bindings (`counsel-mode-map'):
   (setq undo-tree-enable-undo-in-region nil))
 
 (use-package winner
-  :after general
+  :after (general)
   :defines winner-boring-buffers
   :config
   (setq winner-boring-buffers
