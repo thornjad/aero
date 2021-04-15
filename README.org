@@ -32,10 +32,6 @@ trying to adapt Emacs to himself. Therefore all progress depends on the
 unreasonable man." — G.B. Shaw, probably
 #+end_quote
 
-#+begin_quote
-"Thou shalt not cross 80 columns in thy file" — Linus Torvalds
-#+end_quote
-
 ** Requirements
 Aero is maintained as a cutting-edge tool, and focuses on working best with the latest minor version of Emacs, and should keep parity with the latest Remacs. Aero is tested and ready for the merge of =feature/native-comp=, which I support wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and Source Code Pro look pretty sick too.
 
