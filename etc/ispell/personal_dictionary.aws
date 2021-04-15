@@ -1,4 +1,4 @@
-personal_ws-1.1 en 300 
+personal_ws-1.1 en 305 
 ACL
 APIs
 Aireon
@@ -34,6 +34,7 @@ Flyspell
 Framagit
 Frontend
 GDPR
+GHE
 GPL
 GTK
 GitLab
@@ -218,11 +219,14 @@ memoizing
 merchantability
 middot
 minibuffer
+minifies
 misconfiguration
+modeline
 namespace
 namespace's
 natively
 naïve
+naïvely
 ncurses
 nerf
 noopener
@@ -243,6 +247,7 @@ px
 readme
 rearchitecting
 repl
+repo
 requries
 rgb
 rgba
