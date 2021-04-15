@@ -276,7 +276,24 @@
     "kA" '(elpy-shell-kill-all :wk "kill all shells")
     "g" '(:ignore t :wk "go")
     "ge" '(elpy-shell-goto-last-error :wk "goto last error")
-    "gi" '(elpy-shell-goto-import-header :wk "goto import header"))
+    "gi" '(elpy-shell-goto-import-header :wk "goto import header")
+    "t" '(elpy-test :wk "run test")
+    "d" '(:ignore t :wk "debug")
+    "dd" '(elpy-pdb-debug-buffer :wk "debug buffer")
+    "db" '(elpy-pdb-toggle-breakpoint-at-point :wk "toggle breakpoint")
+    "r" '(:ignore t :wk "refactor")
+    "rb" '(elpy-black-fix-code :wk "black format")
+    "rr" '(elpy-refactor-rename :wk "rename")
+    "rv" '(elpy-refactor-extract-variable :wk "extract variable")
+    "rf" '(elpy-refactor-extract-function :wk "extract function")
+    "ri" '(elpy-refactor-inline :wk "inline variable")
+    "rF" '(elpy-format-code :wk "format buffer or region"))
+
+  ;; ;; Auto-format on save using black
+  (add-hook 'elpy-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook
+                        'elpy-black-fix-code nil t)))
 
   ;; Use mypy for typechecking
   (flycheck-define-checker
