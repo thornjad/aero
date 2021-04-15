@@ -148,7 +148,7 @@
    "fo" '(:ignore t :wk "open special files")
    "fot" '(:ignore t :wk "thornlog")
    "fott" '(aero/thornlog-dir :wk "thornlog all")
-   "fotl" '(aero/thornlog-log :wk "thornlog log")
+   "fotl" '(aero/thornlog-today :wk "thornlog log")
    "fotd" '(aero/thornlog-todo :wk "thornlog todo")
    "foP" 'aero/open-emacs-problems
    "fof" 'aero/open-local-init

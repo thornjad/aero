@@ -256,27 +256,6 @@ emacs with sigusr2"
   (interactive)
   (toggle-debug-on-quit))
 
-(defvar aero/thornlog-path
-  (expand-file-name "~/store/doc/thornlog/")
-  "Location of the thornlog on this filesystem.")
-
-(defun aero/thornlog-dir ()
-  "Personal persistent log."
-  (interactive)
-  (declare-function deer "ranger.el")
-  (when (require 'ranger nil t)
-    (deer aero/thornlog-path)))
-
-(defun aero/thornlog-log ()
-  "Personal persistent log."
-  (interactive)
-  (find-file (expand-file-name "log.org" aero/thornlog-path)))
-
-(defun aero/thornlog-todo ()
-  "Personal persistent log todo."
-  (interactive)
-  (find-file (expand-file-name "todo.org" aero/thornlog-path)))
-
 (defun aero/eshell-taskwarrior ()
   "Open a specialized eshell buffer for taskwarrior."
   (interactive)
