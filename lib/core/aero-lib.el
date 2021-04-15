@@ -420,7 +420,7 @@ on. This may cause a jump if the file has changed significantly."
 
 (defun aero/buffer-too-big-p ()
   "Is buffer longer than 5000"
-  (> (buffer-size) (* 5000 80)))
+  (> (buffer-size) (* 5000 fill-column)))
 
 (defun aero/file-too-big-p (file)
   "Is file larger than 5000 lines"

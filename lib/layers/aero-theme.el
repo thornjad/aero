@@ -35,11 +35,11 @@
 
 ;; Subsequent frames will be smaller
 (setq default-frame-alist
-      (append (list '(width  . 190) '(height . 60)
+      (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 20)
-                    '(left-fringe . 0) '(right-fringe . 0)
+                    '(left-fringe . 12) '(right-fringe . 12)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . dark))))
@@ -80,7 +80,6 @@
 
 ;; Better fringe wrap symbols. Victor Mono doesn't provide these symbols, so use
 ;; Fira Code
-(fringe-mode '(0 . 0))
 (defface fallback
   '((t :family "Fira Code Light" :inherit 'default))
   "Fallback font"
@@ -117,7 +116,7 @@
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
   :defines (formfeeder-line-width)
   :config
-  (setq formfeeder-line-width 80)
+  (setq formfeeder-line-width fill-column)
   (declare-function global-formfeeder-mode "formfeeder")
   (global-formfeeder-mode 1))
 

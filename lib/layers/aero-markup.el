@@ -40,6 +40,6 @@
 (use-package nov :straight t
   :mode ("\\.epub\\'" . nov-mode)
   :init
-  (setq nov-text-width 80))
+  (setq nov-text-width fill-column))
 
 (provide 'aero-markup)
