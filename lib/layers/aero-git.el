@@ -103,10 +103,18 @@ board_ticket_branch_name."
 
 	(use-package magit-todos :straight t))
 
+(use-package git-gutter :straight t
+  :config
+  (setq git-gutter:modified-sign " "
+        git-gutter:added-sign " "
+        git-gutter:deleted-sign " "
+        git-gutter:disabled-modes '(so-long-mode image-mode asm-mode))
+  (global-git-gutter-mode +1))
+
 (use-package ediff
   :commands (ediff ediff3)
   :custom
-  (ediff-split-window-function #'split-window-horizontally)
+  (ediff-split-window-function #'split-window-horizontally )
   (ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (provide 'aero-git)
