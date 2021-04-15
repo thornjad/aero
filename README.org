@@ -35,6 +35,13 @@ unreasonable man." — G.B. Shaw, probably
 ** Requirements
 Aero is maintained as a cutting-edge tool, and focuses on working best with the latest minor version of Emacs, and should keep parity with the latest Remacs. Aero is tested and ready for the merge of =feature/native-comp=, which I support wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and Source Code Pro look pretty sick too.
 
+** Installation
+
+#+begin_src sh
+git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
+make
+#+end_src
+
 ** Local config
 Local settings, functions, et cetera can be put into an untracked =init.local.el= file, which will be evaluated near the end of the initialization process, after all other layers and settings.
 
