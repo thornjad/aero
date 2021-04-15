@@ -33,7 +33,7 @@ install-dependencies: install-lsp-servers
 install-lsp-servers:
 	npm i -g bash-language-server
 	npm i -g javascript-typescript-langserver
-	pip3 install python-language-server
+	pip3 install python-language-server pyls-mypy black pyls-black pyls-isort flake8 jedi
 	pip3 install "ptvsd>=4.2"
 	rustup component add rls rust-analysis rust-src
 
