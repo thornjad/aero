@@ -1,4 +1,4 @@
-personal_ws-1.1 en 305 
+personal_ws-1.1 en 306 
 ACL
 APIs
 Aireon
@@ -154,6 +154,7 @@ dicts
 dir
 dired
 diskutil
+downloader
 dwim
 edu
 el
