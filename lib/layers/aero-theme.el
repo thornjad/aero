@@ -111,8 +111,6 @@
   :functions (good-scroll-mode)
   :config (good-scroll-mode +1))
 
-(use-package all-the-icons :straight t)
-
 (use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
   :defines (formfeeder-line-width)
   :config

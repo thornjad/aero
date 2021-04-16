@@ -21,9 +21,7 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'all-the-icons)
-
-;;; Config
+(use-package all-the-icons :straight t)
 
 (defgroup aero/modeline nil
   "A minimal mode-line configuration inspired by doom-modeline."
