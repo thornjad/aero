@@ -16,19 +16,19 @@
 ;;; eshell
 
 (use-package eshell
-  :after (general)
+  :after (general evil)
   :commands eshell
+  :defines (evil-move-cursor-back
+            eshell-save-history-on-exit
+            eshell-history-size
+            eshell-glob-case-insensitive
+            eshell-ls-initial-args
+            eshell-cmpl-dir-ignore
+            eshell-visual-commands
+            eshell-visual-subcommands)
   :init
   (require 'em-smart)
   :config
-  (require 'evil)
-  (defvar evil-move-cursor-back)
-  (defvar eshell-save-history-on-exit)
-  (defvar eshell-history-size)
-  (defvar eshell-ls-initial-args)
-  (defvar eshell-cmpl-dir-ignore)
-  (defvar eshell-visual-commands)
-  (defvar eshell-visual-subcommands)
 
   ;; Ensure eshell doesn't override these
   (general-def term-mode-map
@@ -40,6 +40,7 @@
   (setq
    eshell-save-history-on-exit t
    eshell-buffer-maximum-lines 12000
+   eshell-glob-case-insensitive t
    eshell-aliases-file (expand-file-name "eshell-alias" aero-etc-dir)
    eshell-history-size 500
    eshell-ls-initial-args "-lah"
@@ -169,10 +170,10 @@
   :commands (term term-bash)
   :init
   (add-hook
-  'term-mode-hook
-  (lambda ()
-    (setq-local evil-move-cursor-back nil)
-    (setq-local scroll-margin 0)))
+   'term-mode-hook
+   (lambda ()
+     (setq-local evil-move-cursor-back nil)
+     (setq-local scroll-margin 0)))
 
   (general-def term-mode-map
     (kbd "M-h") 'windmove-left
@@ -182,7 +183,7 @@
 
   (dolist (x '("bash" "zsh" "cicada"))
     (eval
-    `(defun ,(intern (concat "term-" x)) ()
+     `(defun ,(intern (concat "term-" x)) ()
         (interactive)
         (funcall-interactively #'term ,x))))
 
@@ -196,15 +197,15 @@
 ;;; shell scripting
 
 (use-package sh-script :defer t
-             :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
-             :config
-             (setq shell-file-name (cond
-                                    ((string= system-type "darwin") "/usr/local/bin/zsh")
-                                    (t "/usr/bin/zsh")))
+  :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
+  :config
+  (setq shell-file-name (cond
+                         ((string= system-type "darwin") "/usr/local/bin/zsh")
+                         (t "/usr/bin/zsh")))
 
-             (defun indent-paragraph ()
-               (interactive)
-               (save-excursion
-                 (mark-paragraph) (indent-region (region-beginning) (region-end)))))
+  (defun indent-paragraph ()
+    (interactive)
+    (save-excursion
+      (mark-paragraph) (indent-region (region-beginning) (region-end)))))
 
 (provide 'aero-shell)
