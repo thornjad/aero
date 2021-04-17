@@ -205,10 +205,7 @@ more cycles but less space.")
   ;; burn baby burn
   (aero/init)
 
-  ;; Now that we're through our config, don't pop up a boat load of warnings
-  ;; everytime something inits. This is much more of a problem during native
-  ;; compilation than at other times, because it complains about built-in and
-  ;; external packages I don't want to touch.
+  ;; Log warnings but don't display them
   (setq warning-minimum-level :error)
   ;; no more debug please
   (setq debug-on-error nil)
