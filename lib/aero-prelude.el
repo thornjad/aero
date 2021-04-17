@@ -506,6 +506,7 @@ Local bindings (`counsel-mode-map'):
    "bb" 'ivy-switch-buffer)
 
   (use-package ivy-rich :straight t
+    :after (counsel)
     :defines (ivy-rich-path-style)
     :functions (ivy-rich-mode)
     :config
