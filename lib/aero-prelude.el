@@ -211,12 +211,14 @@
    "cer" 'eval-region
    "ceb" 'eval-buffer
    "ced" 'eval-defun
-   "cec" '(:ignore t :wk "byte compile")
-   "cecb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
-   "cecr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
-   "cecf" '(byte-compile-file :wk "other file")
-   "cecF" '(async-byte-compile-file :wk "other file async")
-   "cecd" '(byte-recompile-directory :wk "directory")
+   "cec" '(:ignore t :wk "compile")
+   "cecb" '(aero/native-compile-file-at-buffer :wk "file at buffer")
+   "ceB" '(:ignore t :wk "byte compile")
+   "ceBb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
+   "ceBr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
+   "ceBf" '(byte-compile-file :wk "other file")
+   "ceBF" '(async-byte-compile-file :wk "other file async")
+   "ceBd" '(byte-recompile-directory :wk "directory")
 
    "e" '(:ignore t :wk "errors")
    "en" 'next-error
