@@ -28,10 +28,6 @@
   ;; local
   :commands hackernews)
 
-(use-package pdf-tools
-  :when window-system
-  :init (pdf-tools-install))
-
 (use-package twittering-mode
   :commands (twittering-mode twit)
   :after (general sauron)
