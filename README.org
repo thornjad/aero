@@ -7,33 +7,29 @@
 Aero is my own Emacs configuration, blending all the best shit I can find. It is built in the style of a distribution like Prelude or Spacemacs, but it's not intended for widespread use; Aero is highly tailored to me, what I want and what I use. Special focus is put on writing Lisps, Python, TCL, Node and the several web languages. Other languages like C and ML have some light configuration as well.
 
 #+begin_quote
+"An infinite number of monkeys typing into GNU Emacs would never make a good
+program." — Linus Torvalds
+#+end_quote
+
+#+begin_quote
 "Emacs outshines all other editing software in the same way that the noonday sun
 does the stars. It is not just bigger and brighter; it simply makes everything
 else vanish." — Neal Stephenson
 #+end_quote
 
 #+begin_quote
-"An infinite number of monkeys typing into GNU Emacs would never make a good
-program." — Linus Torvalds
-#+end_quote
-
-#+begin_quote
-"While any text editor can save your files, only Emacs can save your soul." —
-Per Abrahamsen
+"'He arche' in Greek means 'the beginning'.  John 1 starts off with
+'En arche en ho Logos': in the beginning, there was the word.  Now of
+course we all know that Emacs was there before Word, but this might
+have escaped John's notice." — David Kastrup
 #+end_quote
 
 #+begin_quote
 "You could be a total lunatic, and Emacs has to make you happy" — Steve Yegge
 #+end_quote
 
-#+begin_quote
-"The reasonable man adapts himself to Emacs; the unreasonable one persists in
-trying to adapt Emacs to himself. Therefore all progress depends on the
-unreasonable man." — G.B. Shaw, probably
-#+end_quote
-
 ** Requirements
-Aero is maintained as a cutting-edge tool, and focuses on working best with the latest minor version of Emacs, and should keep parity with the latest Remacs. Aero is tested and ready for the merge of =feature/native-comp=, which I support wholeheartedly. Aero looks best with the font Victor Mono, but Dank Mono and Source Code Pro look pretty sick too.
+Aero is maintained as a cutting-edge tool and focuses on working with the latest version of Emacs. Actual day-to-day usage is on a fork of GNU Emacs, hosted [[https://gitlab.com/thornjad/emacs][on GitLab]], and should keep pace with GNU Emacs.
 
 ** Installation
 
