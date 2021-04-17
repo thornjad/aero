@@ -699,6 +699,24 @@ If called with prefix argument, or with nothing under point, prompt for tag."
       (aero/voidvar! xref-prompt-for-identifier)
       (call-interactively #'xref-find-definitions))))
 
+(defun aero/native-compile-file-at-buffer ()
+  "Native compile the file in the current buffer."
+  (interactive)
+  (save-excursion
+    (native-compile-async buffer-file-name nil t)))
+
+;; (defun aero/native-compile-dir-at-buffer ()
+;;   "Native compile the directory of the file in current buffer."
+;;   (interactive)
+;;   (save-excursion
+;;     (native-compile-async (list (file-name-directory buffer-file-name)) t t)))
+
+;; (defun aero/native-compile-aero ()
+;;   "Native compile all of Aero Emacs."
+;;   (interactive)
+;;   (save-excursion
+;;     (native-compile-async (list (file-name-directory user-emacs-directory)) t t)))
+
 (defun aero/byte-compile-file-at-buffer ()
   "Byte compile the file open in the current buffer."
   (interactive)
