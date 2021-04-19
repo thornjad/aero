@@ -111,11 +111,12 @@
   :functions (good-scroll-mode)
   :config (good-scroll-mode +1))
 
-(use-package formfeeder :straight (:host gitlab :repo "thornjad/formfeeder")
+(use-package formfeeder
+  :straight (:host gitlab :repo "thornjad/formfeeder" :branch "main")
   :defines (formfeeder-line-width)
   :config
   (setq formfeeder-line-width fill-column)
-  (declare-function global-formfeeder-mode "formfeeder")
+  (declare-function global-formfeeder-mode "formfeeder.el")
   (global-formfeeder-mode 1))
 
 (use-package todo-light
