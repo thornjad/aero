@@ -318,7 +318,7 @@
   (evil-set-initial-state 'dired-mode 'emacs)
   (evil-set-initial-state 'message-mode 'motion)
 
-  ;; Make movement keys work like they should
+  ;; Make movement keys work like they should by remapping next to next-visual, etc.
   (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
   (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
@@ -346,6 +346,10 @@
     (kbd "C-e") #'evil-backward-word-end)
   (evil-define-key '(normal visual motion) global-map
     (kbd "C-M-e") #'evil-backward-WORD-end)
+  (evil-define-key '(insert) global-map
+    (kbd "C-y") #'evil-paste-after)
+  (evil-define-key '(insert) global-map
+    (kbd "C-S-y") #'evil-paste-before)
 
   (evil-define-key 'normal 'global
     ;; Run macro in register q
