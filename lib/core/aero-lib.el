@@ -702,8 +702,9 @@ If called with prefix argument, or with nothing under point, prompt for tag."
 (defun aero/native-compile-file-at-buffer ()
   "Native compile the file in the current buffer."
   (interactive)
-  (save-excursion
-    (native-compile-async buffer-file-name nil t)))
+  (let ((warning-minimum-level :warning))
+    (save-excursion
+      (native-compile-async buffer-file-name nil t))))
 
 ;; (defun aero/native-compile-dir-at-buffer ()
 ;;   "Native compile the directory of the file in current buffer."
