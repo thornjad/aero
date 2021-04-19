@@ -30,9 +30,9 @@
   :after (general evil)
   :commands (eww
              eww-browse-url
-             eww-search-words)
+             eww-search-words
+             browse-url-at-point)
   :init
-
   ;; Open everything in eww, except for these few sites which just don't work in
   ;; eww
   (setq browse-url-browser-function
@@ -45,11 +45,8 @@
           ("twitter.com" . browse-url-generic)
           ("youtube.com" . browse-url-generic)
           ("." . eww-browse-url)))
-  (setq browse-url-secondary-browser-function 'browse-url-generic)
+  (setq browse-url-generic-program "firefox")
 
-	:config
-  (add-hook 'eww-mode-hook #'toggle-word-wrap)
-  (add-hook 'eww-mode-hook #'visual-line-mode)
   (aero-leader-def
    "ws" '(eww-search-words :which-key "web search")
    "wb" '(:ignore t :wk "browse")
@@ -60,6 +57,10 @@
    "wbnn" '(aero/npr-news :wk "npr")
    "ww" 'eww
    "wp" 'browse-url-at-point)
+
+	:config
+  (add-hook 'eww-mode-hook #'toggle-word-wrap)
+  (add-hook 'eww-mode-hook #'visual-line-mode)
 
 	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
 
