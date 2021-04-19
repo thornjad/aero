@@ -133,6 +133,9 @@ does not specify a special indentation."
   :commands (package-lint-current-buffer))
 
 (use-package el2md
-  :straight (:host gitlab :repo "thornjad/el2md"))
+  :straight (:host gitlab :repo "thornjad/el2md")
+  :commands (el2md-write-readme
+             el2md-view-buffer
+             el2md-write-file))
 
 (provide 'aero-lisp)
