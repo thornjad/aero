@@ -53,6 +53,10 @@
   ;; Don't kill the twittering buffer, just bury it
   (define-key twittering-mode-map (kbd "q") 'bury-buffer))
 
+(use-package writegood-mode
+  :straight (:host github :repo "bnbeckwith/writegood-mode")
+  :hook ((text-mode) . writegood-mode))
+
 (use-package sx
   :after (general)
   :commands (sx-search)
