@@ -55,15 +55,16 @@ only. This file is not part of Aero proper, and is not shared.")
     ;; value.
     (setq gnutls-min-prime-bits 3072))
 
-  ;; if watchexec and Python are installed, use file watchers to detect package
-  ;; modifications. This saves time at startup. Otherwise, use the ever-reliable
-  ;; find(1).
-  (eval-when-compile (defvar straight-check-for-modifications))
-  (if (and (executable-find "watchexec")
-           (executable-find "python3"))
-      (setq straight-check-for-modifications '(watch-files find-when-checking))
-    (setq straight-check-for-modifications
-          '(find-at-startup find-when-checking)))
+  ;; Set up vars straight will use
+  (eval-when-compile
+    (defvar straight-repository-branch)
+    (defvar straight-check-for-modifications))
+  (setq straight-repository-branch "develop"
+        straight-check-for-modifications nil)
+
+  ;; Built-in since Emacs 26
+  (with-eval-after-load 'straight
+    (add-to-list 'straight-built-in-pseudo-packages 'let-alist))
 
   ;; Bootstrap straight.el
   (defvar bootstrap-version)
