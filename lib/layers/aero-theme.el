@@ -157,7 +157,8 @@ alternative to the beacon package."
                other-window))
   (advice-add cmd :after #'pulse-line))
 (when (require 'evil nil 'no-error)
-  (dolist (cmd '(evil-goto-first-line
+  (dolist (cmd '(aero/copy-sexp-as-kill
+                 evil-goto-first-line
                  evil-goto-line
                  evil-scroll-up
                  evil-scroll-down
