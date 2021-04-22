@@ -44,13 +44,13 @@
       (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
-                    '(internal-border-width . 20)
+                    '(internal-border-width . 6) ;; was 20
                     '(left-fringe . 12) '(right-fringe . 12)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . dark))))
 (set-frame-parameter (selected-frame)
-                     'internal-border-width 20)
+                     'internal-border-width 6)
 (split-window-horizontally)
 
 
