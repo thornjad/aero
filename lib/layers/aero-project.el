@@ -76,16 +76,11 @@
    "pI" 'projectile-invalidate-cache
    "pC" 'projectile-cache-current-file))
 
-(defun aero/ack-project ()
-  "Search for a string in the current project."
-  (interactive)
-
-  (require 'projectile)
-  (require 'counsel)
-
-  (let ((counsel-ag-base-command "ack --nopager --nocolor --nogroup %s")
-        (counsel--grep-tool-look-around t)
-        (root-dir (projectile-project-root)))
-    (counsel-ag "" root-dir)))
+(use-package find-file-in-project
+  :after (ivy general)
+  :straight (:host github :repo "redguardtoo/find-file-in-project")
+  :config
+  (aero-leader-def
+    "pF" 'find-file-in-project))
 
 (provide 'aero-project)
