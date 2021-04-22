@@ -203,6 +203,9 @@ See `sort-regexp-fields'."
 (defun window-system-is-mac ()
   (memq (window-system) '(mac ns)))
 
+(defun in-nix-shell-p ()
+  (string-equal (getenv "IN_NIX_SHELL") "1"))
+
 (defun aero/log-error (msg &rest args)
   "Display MSG as an error message in `*Messages*' buffer"
   (let ((msg (apply 'format msg args)))
