@@ -26,9 +26,15 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
+(use-package solaire-mode :straight t
+  :functions (solaire-global-mode)
+  :init (solaire-global-mode +1))
+
 (use-package aero-theme :straight nil
+  :after solaire-mode
   :load-path "lib/packages/aero-theme/"
   :config
+  (solaire-global-mode +1)
   (if (display-graphic-p)
       (load-theme 'aero t)
     (load-theme 'aero-dark t)))
@@ -130,10 +136,6 @@
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
               highlight-indent-guides-responsive 'top))
-
-(use-package solaire-mode :straight t
-  :functions (solaire-global-mode)
-  :config (solaire-global-mode +1))
 
 (when (display-graphic-p)
   (use-package minimap :defer t
