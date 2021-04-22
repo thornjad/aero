@@ -181,17 +181,36 @@
   "Override ridiculous built-in crap."
   (message "Aero est prêt"))
 
-;; If there were no compilation errors, delete the compilation window
-(setq-default compilation-exit-message-function
-              (lambda (status code msg)
-                ;; If M-x compile exists with a 0
-                (when (and (eq status 'exit) (zerop code))
-                  ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-                  (bury-buffer "*compilation*")
-                  ;; and return to whatever were looking at before
-                  (replace-buffer-in-windows "*compilation*"))
-                ;; Always return the anticipated result of compilation-exit-message-function
-                (cons msg code)))
+(defun aero/compilation-finish (buf status)
+  "Notify with status, then delete window and bury buffer if successful after 2 secs."
+  (call-process "notify-send" nil nil nil
+                "-t" "0" "-i" "emacs"
+                "Compilation finished in Emacs"
+                status)
+  (when (string= (string-trim status) "finished")
+    (bury-buffer buf)
+    (run-at-time "2 sec" nil #'aero/delete-windows-on-if-exist buf)))
+(setq compilation-finish-functions
+      (append compilation-finish-functions
+              '(aero/compilation-finish)))
+
+;; Small compilation window
+(defun aero/compilation-hook ()
+  (when (not (get-buffer-window "*compilation*"))
+    (save-selected-window
+      ;; select bottom window
+      (let ((bottom-window (selected-window))
+            window-below)
+        (while (setq window-below (window-in-direction 'below bottom-window))
+          (setq bottom-window window-below))
+        (select-window bottom-window))
+      (save-excursion
+        (let* ((w (split-window-vertically))
+               (h (window-height w)))
+          (select-window w)
+          (switch-to-buffer "*compilation*")
+          (shrink-window (- h (or compilation-window-height 12))))))))
+(add-hook 'compilation-mode-hook 'aero/compilation-hook)
 
 ;; open some buffers in the same window
 (add-to-list 'display-buffer-alist

@@ -338,6 +338,10 @@ emacs with sigusr2"
   (dotimes (_ 2) (split-window-right))
   (balance-windows))
 
+(defun aero/delete-windows-on-if-exist (buf)
+  (when (get-buffer buf)
+    (delete-windows-on buf)))
+
 (defun aero/eshell-new ()
   "Open a new Eshell window.
 
