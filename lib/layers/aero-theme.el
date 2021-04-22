@@ -139,10 +139,10 @@
   (use-package minimap :defer t
     :defines (minimap-window-location minimap-update-delay
               minimap-width-fraction minimap-minimum-width)
-    :config (setq minimap-window-location 'right
-                  minimap-update-delay 0
-                  minimap-width-fraction 0.09
-                  minimap-minimum-width 15)))
+    :custom (minimap-window-location 'right)
+            (minimap-update-delay 0)
+            (minimap-width-fraction 0.09)
+            (minimap-minimum-width 15)))
 
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
