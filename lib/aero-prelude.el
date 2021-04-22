@@ -541,6 +541,11 @@ Local bindings (`counsel-mode-map'):
    "jc" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
+(use-package ace-link :straight t
+  :after (avy)
+  :functions (ace-link-setup-default)
+  :init (ace-link-setup-default))
+
 (use-package dumb-jump :straight t
   :init
   (setq dumb-jump-prefer-searcher 'rg)

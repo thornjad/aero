@@ -27,7 +27,7 @@
        (eww-browse-url "https://text.npr.org/"))
 
 (use-package eww :straight nil
-  :after (general evil)
+  :after (general evil ace-link)
   :commands (eww
              eww-browse-url
              eww-search-words
@@ -105,6 +105,7 @@
     "L" 'eww-forward-url
     "&" 'eww-browse-with-external-browser
     "d" 'eww-download
+    "o" 'ace-link-eww
     "m" 'eww-add-bookmark
     "R" 'eww-readable
     "r" 'eww-reload
