@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Jade Michael Thornton
+;; Copyright (c) 2018-2021 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -52,6 +52,9 @@
    "wb" '(:ignore t :wk "browse")
    "wbd" '(aero/ddg :wk "duckduckgo")
    "wbw" '(aero/wiki :wk "wikipedia")
+   "wbm" 'eww-list-bookmarks
+   "wbb" 'eww-list-buffers
+   "wbh" 'eww-list-histories
    "wbn" '(:ignore t :wk "news sites")
    "wbnw" '(aero/wiki-news :wk "wikipedia")
    "wbnn" '(aero/npr-news :wk "npr")
@@ -106,6 +109,8 @@
     "R" 'eww-readable
     "r" 'eww-reload
     "gr" 'eww-reload
+    "J" 'eww-buffer-show-next
+    "K" 'eww-buffer-show-previous
     "T" 'aero/eww-open-in-new-buffer
     "q" 'kill-this-buffer
     "Q" 'quit-window
