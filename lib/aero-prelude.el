@@ -266,6 +266,9 @@
    "St" '(:ignore t :wk "term")
 
    "w" '(:ignore t :wk "window/web")
+   "ww" 'eww
+   "wp" 'browse-url-at-point
+   "ws" '(eww-search-words :which-key "web search")
    "w=" 'balance-windows
    "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
    "wd" 'delete-window
@@ -275,6 +278,10 @@
    "wm" 'maximize-window
    "wi" 'minimize-window
    "wo" 'browse-url-xdg-open
+   "wb" '(:ignore t :wk "browse")
+   "wbm" 'eww-list-bookmarks
+   "wbb" 'eww-list-buffers
+   "wbh" 'eww-list-histories
 
    "wL" '(:ignore t :wk "layout")
    "wL2" 'aero/layout-two-columns

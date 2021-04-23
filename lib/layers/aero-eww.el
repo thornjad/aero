@@ -15,11 +15,9 @@
 (defun aero/ddg (&optional term)
   (interactive "sSearch DuckDuckGo: ")
   (eww-browse-url (format "https://duckduckgo.com/lite?q=%s" (or term ""))))
-
 (defun aero/wiki (&optional term)
   (interactive "sSearch Wikipedia: ")
   (aero/ddg (format "!w %s" (or term ""))))
-
 (defun aero/wiki-news () (interactive)
        (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
 
@@ -33,8 +31,8 @@
              eww-search-words
              browse-url-at-point)
   :init
-  ;; Open everything in eww, except for these few sites which just don't work in
-  ;; eww
+
+  ;; Open everything in eww, except for these few sites which just don't work in eww
   (setq browse-url-browser-function
         '((".*google.*maps.*" . browse-url-generic)
           ("docs.google.com" . browse-url-generic)
@@ -48,24 +46,17 @@
   (setq browse-url-generic-program "firefox")
 
   (aero-leader-def
-   "ws" '(eww-search-words :which-key "web search")
-   "wb" '(:ignore t :wk "browse")
    "wbd" '(aero/ddg :wk "duckduckgo")
    "wbw" '(aero/wiki :wk "wikipedia")
-   "wbm" 'eww-list-bookmarks
-   "wbb" 'eww-list-buffers
-   "wbh" 'eww-list-histories
    "wbn" '(:ignore t :wk "news sites")
    "wbnw" '(aero/wiki-news :wk "wikipedia")
-   "wbnn" '(aero/npr-news :wk "npr")
-   "ww" 'eww
-   "wp" 'browse-url-at-point)
+   "wbnn" '(aero/npr-news :wk "npr"))
 
 	:config
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
   (add-hook 'eww-mode-hook #'visual-line-mode)
 
-	(setq eww-search-prefix "https://duckduckgo.com/lite?q=")
+	(setq eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
 
 	(add-hook
    'eww-after-render-hook
@@ -105,7 +96,8 @@
     "L" 'eww-forward-url
     "&" 'eww-browse-with-external-browser
     "d" 'eww-download
-    "o" 'ace-link-eww
+    "o" 'eww
+    "f" 'ace-link-eww
     "m" 'eww-add-bookmark
     "R" 'eww-readable
     "r" 'eww-reload
