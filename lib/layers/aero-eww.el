@@ -14,7 +14,7 @@
 
 (defun aero/ddg (&optional term)
   (interactive "sSearch DuckDuckGo: ")
-  (eww-browse-url (format "https://duckduckgo.com/lite?q=%s" (or term ""))))
+  (eww-browse-url (format "https://lite.duckduckgo.com/lite?q=%s" (or term ""))))
 (defun aero/wiki (&optional term)
   (interactive "sSearch Wikipedia: ")
   (aero/ddg (format "!w %s" (or term ""))))
@@ -44,6 +44,7 @@
           ("youtube.com" . browse-url-generic)
           ("." . eww-browse-url)))
   (setq browse-url-generic-program "firefox")
+	(setq eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
 
   (aero-leader-def
    "wbd" '(aero/ddg :wk "duckduckgo")
@@ -55,8 +56,6 @@
 	:config
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
   (add-hook 'eww-mode-hook #'visual-line-mode)
-
-	(setq eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
 
 	(add-hook
    'eww-after-render-hook

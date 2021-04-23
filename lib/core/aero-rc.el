@@ -70,6 +70,7 @@
  comint-scroll-to-bottom-on-output nil ; don't scroll on output
  comint-input-ignoredups t
  comint-prompt-read-only nil ; breaks shell-command sometimes
+ eww-search-prefix "https://lite.duckduckgo.com/lite?q="
 
  ;; The newline pushes everything else to a non-rendered second line
  frame-title-format "Emacs"
