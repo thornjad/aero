@@ -108,7 +108,14 @@ board_ticket_branch_name."
   (setq git-gutter:modified-sign " "
         git-gutter:added-sign " "
         git-gutter:deleted-sign " "
+        git-gutter:visual-line t
+        git-gutter:hide-gutter t
         git-gutter:disabled-modes '(so-long-mode image-mode asm-mode))
+
+  (when (display-graphic-p)
+    (use-package git-gutter-fringe :straight t
+      :config (setq git-gutter-fr:side 'right-fringe)))
+
   (global-git-gutter-mode +1))
 
 (use-package ediff

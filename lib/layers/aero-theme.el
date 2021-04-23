@@ -44,8 +44,8 @@
       (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
-                    '(internal-border-width . 6) ;; was 20
-                    '(left-fringe . 12) '(right-fringe . 12)
+                    '(internal-border-width . 6)
+                    '(left-fringe . 8) '(right-fringe . 8)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . dark))))
@@ -84,17 +84,10 @@
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
-;; Better fringe wrap symbols. Victor Mono doesn't provide these symbols, so use
-;; Fira Code
-(defface fallback
-  '((t :family "Fira Code Light" :inherit 'default))
-  "Fallback font"
-  :group 'faces)
+;; Better fringe symbols.
 (when (and (require 'disp-table nil 'noerror) standard-display-table)
-  (set-display-table-slot standard-display-table 'truncation
-                          (make-glyph-code ?… 'fallback))
-  (set-display-table-slot standard-display-table 'wrap
-                          (make-glyph-code ?↩ 'fallback))
+  (set-display-table-slot standard-display-table 'truncation ?…)
+  (set-display-table-slot standard-display-table 'wrap ?↩)
   (set-display-table-slot standard-display-table 'selective-display
                           (string-to-vector " …")))
 
