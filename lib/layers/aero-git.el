@@ -65,7 +65,6 @@
                                              overlong-summary-line)
         git-commit-summary-max-length 50
         git-commit-fill-column 72)
-	(global-git-commit-mode t)
   (magit-auto-revert-mode nil)
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
