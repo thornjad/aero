@@ -35,6 +35,7 @@ Aero is maintained as a cutting-edge tool and focuses on working with the latest
 
 #+begin_src sh
 git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
+cd ~/.config/emacs
 make
 #+end_src
 
@@ -62,6 +63,9 @@ The other leader, =,= is available in some major modes and contains bindings for
 
 #+caption: Aero space leader with Ivy completion
 [[./etc/images/aero-leader-preview.png]]
+
+**** LSP
+As far as I'm concerned, Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to as many protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python, OCaml and Javascript in particular, so they've received the most love.
 
 **** No tagged versioning
 As mentioned above, Aero is not meant  to be a widespread project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no  benefit; source control with git is  enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.

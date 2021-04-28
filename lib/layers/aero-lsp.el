@@ -25,6 +25,8 @@
          (rust-mode . lsp) ;; rls
          (scss-mode . lsp) ;; vscode-css-languageserver-bin
          (java-mode . lsp) ;; eclipse JDT language server
+         (nix-mode . lsp) ;; rnix-lsp
+         (tuareg-mode . lsp) ;; ocaml-lsp-server
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
   :commands (lsp)
@@ -70,21 +72,25 @@
     :config
     (setq lsp-ui-doc-position 'top
           lsp-ui-doc-delay 1
+          lsp-ui-doc-use-childframe t
+          lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
           lsp-ui-sideline-delay 1
           lsp-ui-sideline-show-hover t
           lsp-ui-sideline-show-symbol t
           lsp-ui-sideline-show-diagnostics t
           lsp-ui-sideline-show-code-actions t)
     (aero-leader-def
+      "li" 'lsp-ui-imenu
       "lp" '(:ignore t :wk "peek")
       "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
       "lpr" '(lsp-ui-peek-find-references :wk "peek references")))
 
   (use-package lsp-ivy :straight t
-    :commands lsp-ivy-workspace-symbol
     :config
     (aero-leader-def
-      "fs" '(lsp-ivy-workspace-symbol :wk "find symbols"))))
+      "lf" '(:ignore t :wk "find")
+      "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
+      "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols"))))
 
 (use-package dap-mode :after (general)
   :config

@@ -36,6 +36,8 @@ install-lsp-servers:
 	pip3 install python-language-server pyls-mypy black pyls-black pyls-isort flake8 jedi
 	pip3 install "ptvsd>=4.2"
 	rustup component add rls rust-analysis rust-src
+	opam install ocaml-lsp-server
+	nix-env -i rnix-lsp
 
 update-elpa:
 	$(EMACS) -batch --eval '(progn(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")(package-initialize)(auto-package-update-now))'
