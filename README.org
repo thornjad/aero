@@ -2,6 +2,7 @@
 #+author: Jade Michael Thornton
 
 #+caption: Aero Emacs
+#+attr_html: :width 100%
 [[./etc/images/aero-preview.png]]
 
 Aero is my own Emacs configuration, blending all the best shit I can find. It is built in the style of a distribution like Prelude or Spacemacs, but it's not intended for widespread use; Aero is highly tailored to me, what I want and what I use. Special focus is put on writing Lisps, Python, TCL, Node and the several web languages. Other languages like C and ML have some light configuration as well.
@@ -62,6 +63,7 @@ When I first started using Emacs, it was through Spacemacs, so the architecture 
 The other leader, =,= is available in some major modes and contains bindings for that mode. For example, in Python mode, =, s b= sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs the HTTP query at point.
 
 #+caption: Aero space leader with Ivy completion
+#+attr_html: :width 100%
 [[./etc/images/aero-leader-preview.png]]
 
 **** LSP
@@ -78,14 +80,17 @@ In my case, I've created a custom theme as its own package, which Aero includes 
 By default, Aero uses my packages default light theme, =aero= which is loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern Minnesota in Autumn. Also available is =aero-dark=, which pulls further inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
 
 #+caption: Aero-Light theme
+#+attr_html: :width 100%
 [[./etc/images/aero-light-preview.png]]
 
 #+caption: Aero-Dark theme
+#+attr_html: :width 100%
 [[./etc/images/aero-dark-preview.png]]
 
 Aero is also packaged with a custom and mostly original reduced mode line which works with any theme (at least it looks great with =aero-light= and =aero-dark=). Rather than getting cluttered with info from every mode under the sun, the Aero mode line displays the current editing mode, file status (changed, saved, locked), filename, file size, line number at point, progression through the file (percentage), the remote hostname (if using TRAMP) and the current major mode.
 
 #+caption: Aero's mode line
+#+attr_html: :width 100%
 [[./etc/images/modeline-preview.png]]
 
 **** Source-controlled Flycheck dictionary
