@@ -85,7 +85,7 @@ only. This file is not part of Aero proper, and is not shared.")
   (defvar straight-use-package-by-default)
   (straight-use-package 'use-package)
   (require 'use-package)
-	(setq straight-use-package-by-default t)
+  (setq straight-use-package-by-default t)
 
   (eval-when-compile
     (defvar use-package-expand-minimally)
@@ -137,14 +137,14 @@ only. This file is not part of Aero proper, and is not shared.")
 
 ;; verifier les erreurs dans ce fichier
 (setq debug-on-error t)
-(defvar aero/gc-cons '((#x20000000 0.6) (#x1000000 0.1))
+(defvar aero/gc-cons '((#x20000000 0.6) (#x3000000 0.1))
   "High and normal values for gc.
 
 During init and while the minibuffer is in use, gc is set to the high
-value (256 MB) to avoid collection, temporarily trading space for
-cycles. During normal execution, the normal value (1 MB) is used, only
-slightly above the default of 800 KiB, to reverse the trade so we use
-more cycles but less space.")
+value (512 MiB) to avoid collection, temporarily trading space for
+cycles. During normal execution, the normal value (48 MiB) is used, a bit
+above the default of 800 KiB, to reverse the trade so we use
+more cycles but less space, but not too little space.")
 
 ;; Avoid garbage collection during startup by increasing thresholds.
 ;; Also disable some other crap which would just slow us down.
@@ -181,13 +181,13 @@ more cycles but less space.")
   (setq user-emacs-directory
         (file-name-directory user-init-file))
 
-	(defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
-	(defconst aero-core-dir (expand-file-name "core/" aero-lib-dir))
-	(defconst aero-packages-dir (expand-file-name "packages/" aero-lib-dir))
-	(defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
-	(defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
-	(defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
-	(defconst aero-autosave-dir (expand-file-name "auto-save/" aero-cache-dir))
+  (defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
+  (defconst aero-core-dir (expand-file-name "core/" aero-lib-dir))
+  (defconst aero-packages-dir (expand-file-name "packages/" aero-lib-dir))
+  (defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
+  (defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
+  (defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
+  (defconst aero-autosave-dir (expand-file-name "auto-save/" aero-cache-dir))
 
   (unless (file-exists-p aero-cache-dir)
     (make-directory aero-cache-dir))
