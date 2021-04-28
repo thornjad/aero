@@ -21,7 +21,7 @@
 ;;; Code:
 
 (require 'cl-lib)
-(use-package all-the-icons :straight t)
+(use-package all-the-icons :straight (:host github :repo "domtronn/all-the-icons.el"))
 
 (defgroup aero/modeline nil
   "A minimal mode-line configuration inspired by doom-modeline."
