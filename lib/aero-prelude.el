@@ -526,7 +526,7 @@ Local bindings (`counsel-mode-map'):
     (ivy-rich-mode 1))
 
   (use-package all-the-icons-ivy-rich :straight t
-    :after (ivy-rich)
+    :after (all-the-icons ivy-rich)
     :functions (all-the-icons-ivy-rich-mode)
     :init (all-the-icons-ivy-rich-mode +1)))
 
