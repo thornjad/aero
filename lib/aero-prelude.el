@@ -539,7 +539,7 @@ Local bindings (`counsel-mode-map'):
     "?" '(swiper-thing-at-point :wk "search thing at point")))
 
 (use-package avy :straight t
-  :commands (avy-goto-line avy-goto-char avy-goto-word-1)
+  :functions (avy-goto-line avy-goto-char avy-goto-word-1)
   :init
   (general-define-key
    :states '(normal visual)
