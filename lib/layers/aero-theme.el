@@ -108,6 +108,9 @@
 (use-package good-scroll
   :straight (:host github :repo "io12/good-scroll.el")
   :functions (good-scroll-mode)
+  :init
+  ;; Avoid bug with evil-mode, https://github.com/io12/good-scroll.el/issues/16
+  (setq good-scroll-avoid-vscroll-reset nil)
   :config (good-scroll-mode +1))
 
 (use-package formfeeder
