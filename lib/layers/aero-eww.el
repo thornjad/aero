@@ -47,11 +47,11 @@
 	(setq eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
 
   (aero-leader-def
-   "wbd" '(aero/ddg :wk "duckduckgo")
-   "wbw" '(aero/wiki :wk "wikipedia")
-   "wbn" '(:ignore t :wk "news sites")
-   "wbnw" '(aero/wiki-news :wk "wikipedia")
-   "wbnn" '(aero/npr-news :wk "npr"))
+    "wbd" '(aero/ddg :wk "duckduckgo")
+    "wbw" '(aero/wiki :wk "wikipedia")
+    "wbn" '(:ignore t :wk "news sites")
+    "wbnw" '(aero/wiki-news :wk "wikipedia")
+    "wbnn" '(aero/npr-news :wk "npr"))
 
 	:config
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
