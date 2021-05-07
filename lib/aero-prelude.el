@@ -621,6 +621,25 @@ Local bindings (`counsel-mode-map'):
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
+(eval-after-load 'general
+  '(progn
+     (aero-leader-def
+       "T" '(:ignore t :wk "tab")
+       "TT" 'tab-bar-mode
+       "Tj" 'tab-next
+       "Tk" 'tab-previous
+       "Tc" '(tab-new :wk "create tab")
+       "TL" 'tab-list
+       "TL" 'tab-last
+       "T TAB" 'tab-recent
+       "T," 'tab-rename
+       "Ts" '(tab-duplicate :wk "tab duplicate split")
+       "Td" 'tab-close
+       "Tu" 'tab-undo
+       "Tg" '(tab-select :wk "tab go")
+       "Tb" 'switch-to-buffer-other-tab
+       "Tf" 'find-file-other-tab)))
+
 ;; windmove
 (global-set-key (kbd "M-h") #'windmove-left)
 (global-set-key (kbd "M-j") #'windmove-down)
