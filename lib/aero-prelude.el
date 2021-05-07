@@ -501,14 +501,17 @@ Local bindings (`counsel-mode-map'):
         ivy-wrap t
         ivy-height 8
         ;; don't bother counting candidates
-        ivy-count-format "")
+        ivy-count-format ""
+        ;; use fuzzy by default, but some searching is impossible without
+        ;; stricter regex's
+        ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
+                                (counsel-projectile-rg . ivy--regex-plus)
+                                (counsel-git-grep . ivy--regex-plus)
+                                (projectile-ripgrep . ivy--regex-plus)
+                                (swiper . ivy--regex-plus)
+                                (t . ivy--regex-plus)))
   (aero-leader-def
     "bb" 'ivy-switch-buffer)
-
-  (use-package ivy-prescient :straight t
-    :after counsel
-    :functions (ivy-prescient-mode)
-    :config (ivy-prescient-mode))
 
   (use-package ivy-rich :straight t
     :after (counsel)
