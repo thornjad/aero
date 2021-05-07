@@ -1,4 +1,4 @@
-personal_ws-1.1 en 312 
+personal_ws-1.1 en 317 
 ACL
 APIs
 Aireon
@@ -12,6 +12,7 @@ Brotli
 CLI
 CORS
 CSRF
+CSV
 CTE
 CTEs
 Chadd
@@ -61,6 +62,7 @@ Libertarianism
 MBTiles
 MELPA
 MVFR
+MacBook
 MapBox's
 MapServer
 MapTiler
@@ -71,6 +73,7 @@ Memoization
 MiB
 NSR
 NVM
+NVME
 Nvidia
 OCaml
 OSM
@@ -95,12 +98,14 @@ Roboto
 SEO
 SHA
 SPC
+SSD
 SSHFS
 Shopify
 Spacemacs
 Spotify
 Standup
 Starbound
+TSV
 Tabstops
 Theming
 Tmux
