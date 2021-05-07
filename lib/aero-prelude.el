@@ -604,19 +604,17 @@ Local bindings (`counsel-mode-map'):
   :init
   (winum-mode)
   :config
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "1" '(winum-select-window-1 :wk "window-1")
-   "2" '(winum-select-window-2 :wk "window-2")
-   "3" '(winum-select-window-3 :wk "window-3")
-   "4" '(winum-select-window-4 :wk "window-4")
-   "5" '(winum-select-window-5 :wk "window-5")
-   "6" '(winum-select-window-6 :wk "window-6")
-   "7" '(winum-select-window-7 :wk "window-7")
-   "8" '(winum-select-window-8 :wk "window-8")
-   "9" '(winum-select-window-9 :wk "window-9")
-   "wg" '(winum-select-window-by-number :wk "select window by number"))
+  (aero-leader-def
+    "1" '(winum-select-window-1 :wk "window-1")
+    "2" '(winum-select-window-2 :wk "window-2")
+    "3" '(winum-select-window-3 :wk "window-3")
+    "4" '(winum-select-window-4 :wk "window-4")
+    "5" '(winum-select-window-5 :wk "window-5")
+    "6" '(winum-select-window-6 :wk "window-6")
+    "7" '(winum-select-window-7 :wk "window-7")
+    "8" '(winum-select-window-8 :wk "window-8")
+    "9" '(winum-select-window-9 :wk "window-9")
+    "wg" '(winum-select-window-by-number :wk "select window by number"))
 
   ;; collapse all those window commands to one summary
   (push '(("\\(.*\\) 0" . "winum-select-window-0") . ("\\1 0..9" . "window 0..9"))
