@@ -63,8 +63,8 @@
   (add-hook
    'eshell-mode-hook
    (lambda ()
-     (setq-local evil-move-cursor-back nil)
-     (setq-local scroll-margin 0)))
+     (setq-local evil-move-cursor-back nil
+                 scroll-margin 0)))
 
   (defalias 'eshell/emacs 'find-file)
   (defun eshell/clear ()
@@ -111,15 +111,15 @@
 
   ;; So the history vars are defined
   (require 'em-hist)
-  (if (boundp 'eshell-save-history-on-exit)
-      ;; Don't ask, just save
-      (setq eshell-save-history-on-exit t))
+  (when (boundp 'eshell-save-history-on-exit)
+    ;; Don't ask, just save
+    (setq eshell-save-history-on-exit t))
 
-  (use-package esh-opt :straight nil
-    :config
-    (use-package em-cmpl :straight nil)
-    (use-package em-prompt :straight nil)
-    (use-package em-term :straight nil)
+  (eval-after-load 'esh-opt
+									 '(progn
+    (require 'em-cmpl)
+    (require 'em-prompt)
+    (require 'em-term)
 
     (setq eshell-cmpl-cycle-completions nil
           ;; auto truncate after 12k lines
@@ -138,7 +138,7 @@
                                    "nmtui" "alsamixer" "htop" "el" "elinks"
                                    "ssh" "nethack" "dtop" "dstat"))
     (setq eshell-visual-subcommands '(("git" "log" "diff" "show")
-                                      ("vagrant" "ssh")))))
+                                      ("vagrant" "ssh"))))))
 
 (use-package eshell-prompt-extras
   :after (eshell esh-opt)
