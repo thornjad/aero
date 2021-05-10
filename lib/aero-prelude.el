@@ -38,8 +38,9 @@
 ;;; Set up core packages
 (use-package gnu-elpa-keyring-update :straight t)
 (use-package exec-path-from-shell :straight t
+  :defer 3
   :config
-  (when (or (memq window-system '(mac ns x)) (daemonp))
+  (when (or (window-system) (daemonp))
     (exec-path-from-shell-initialize)))
 
 
