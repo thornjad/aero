@@ -43,6 +43,15 @@
   (when (or (window-system) (daemonp))
     (exec-path-from-shell-initialize)))
 
+(use-package no-littering
+  :after recentf
+  :straight (:host github :repo "emacscollective/no-littering")
+  :defines (no-littering-var-directory
+            no-littering-etc-directory)
+  :config
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory))
+
 
 ;;; get ready to patch at any time
 
