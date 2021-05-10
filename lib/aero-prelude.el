@@ -656,6 +656,78 @@ Local bindings (`counsel-mode-map'):
 (global-set-key (kbd "M-k") #'windmove-up)
 (global-set-key (kbd "M-l") #'windmove-right)
 
+(use-package treemacs :straight t
+  :after (general)
+  :init
+  (aero-leader-def
+    "0" '(treemacs-select-window :wk "treemacs"))
+
+  :config
+  (setq treemacs-collapse-dirs (if treemacs-python-executable 3 0)
+        treemacs-deferred-git-apply-delay 0.5
+        treemacs-directory-name-transformer #'identity
+        treemacs-display-in-side-window t
+        treemacs-eldoc-display t
+        treemacs-file-event-delay 5000
+        treemacs-file-extension-regex treemacs-last-period-regex-value
+        treemacs-file-follow-delay 0.1
+        treemacs-file-name-transformer #'identity
+        treemacs-follow-after-init t
+        treemacs-git-command-pipe ""
+        treemacs-goto-tag-strategy 'refetch-index
+        treemacs-indentation-string (propertize " | " 'face 'font-lock-comment-face)
+        treemacs-indentation 2
+        treemacs-indentation-string " "
+        treemacs-is-never-other-window nil
+        treemacs-max-git-entries 500
+        treemacs-missing-project-action 'ask
+        treemacs-move-forward-on-expand nil
+        treemacs-no-png-images nil
+        treemacs-no-delete-other-windows t
+        treemacs-project-follow-cleanup nil
+        treemacs-persist-file (expand-file-name ".cache/treemacs-persist" aero-etc-dir)
+        treemacs-position 'left
+        treemacs-read-string-input 'from-child-frame
+        treemacs-recenter-distance 0.1
+        treemacs-recenter-after-file-follow nil
+        treemacs-recenter-after-tag-follow nil
+        treemacs-recenter-after-project-jump 'always
+        treemacs-recenter-after-project-expand 'on-distance
+        treemacs-show-cursor nil
+        treemacs-show-hidden-files t
+        treemacs-silent-filewatch t
+        treemacs-silent-refresh t
+        treemacs-sorting 'alphabetic-case-insensitive-asc
+        treemacs-space-between-root-nodes t
+        treemacs-tag-follow-cleanup t
+        treemacs-tag-follow-delay 1.5
+        treemacs-user-mode-line-format '("Treemacs  %o%%")
+        treemacs-user-header-line-format nil
+        treemacs-width 35
+        treemacs-workspace-switch-cleanup nil)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
+
+  (use-package treemacs-evil :straight t
+    :after (treemacs evil)
+    :config
+    ;; Fix treemacs clobbering my shit
+    (evil-define-key 'normal 'treemacs-mode-map (kbd "M-l") #'windmove-right)
+    (evil-define-key 'normal 'treemacs-mode-map (kbd "M-h") #'windmove-left)
+    (evil-define-key 'normal 'treemacs-mode-map (kbd "M-k") #'windmove-up)
+    (evil-define-key 'normal 'treemacs-mode-map (kbd "M-j") #'windmove-down))
+  (use-package treemacs-projectile :straight t
+    :after (treemacs projectile))
+  (use-package treemacs-magit :straight t
+    :after (treemacs magit)))
+
 (use-package neotree
   :after (winum evil general)
   :commands (neotree-show
