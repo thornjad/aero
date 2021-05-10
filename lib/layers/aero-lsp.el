@@ -20,7 +20,8 @@
 
 (use-package lsp-mode :after (general)
   :hook ((sh-mode . lsp) ;; bash-language-server
-         (rjsx-mode . lsp) ;; javascript-typescript-langserver
+         ;; (rjsx-mode . lsp) ;; javascript-typescript-langserver
+         (js-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
          (rust-mode . lsp) ;; rls
          (scss-mode . lsp) ;; vscode-css-languageserver-bin
