@@ -26,22 +26,9 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-(use-package solaire-mode :straight t
-  :functions (solaire-global-mode)
-  :init (solaire-global-mode +1))
-
-(use-package aero-theme :straight nil
-  :after solaire-mode
-  :load-path "lib/packages/aero-theme/"
-  :config
-  (solaire-global-mode +1)
-  (if (display-graphic-p)
-      (load-theme 'aero t)
-    (load-theme 'aero-dark t)))
-
 ;; Subsequent frames will be smaller
 (setq default-frame-alist
-      (append (list '(width  . 212) '(height . 60)
+      (append (list '(width  . 247) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 6)
@@ -52,6 +39,21 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 (split-window-horizontally)
+(with-eval-after-load 'treemacs ;; must come after window split
+  (save-excursion (treemacs)))
+
+(use-package solaire-mode :straight t
+  :functions (solaire-global-mode)
+  :init (solaire-global-mode +1))
+
+(use-package aero-theme :straight nil
+  :load-path "lib/packages/aero-theme/"
+  :after (solaire-mode)
+  :config
+  (solaire-global-mode +1)
+  (if (display-graphic-p)
+      (load-theme 'aero t)
+    (load-theme 'aero-dark t)))
 
 
 ;;; get ligatures to actually work
@@ -134,13 +136,14 @@
               highlight-indent-guides-responsive 'top))
 
 (when (display-graphic-p)
-  (use-package minimap :defer t
+  (use-package minimap
+    :commands (minimap-mode)
     :defines (minimap-window-location minimap-update-delay
-              minimap-width-fraction minimap-minimum-width)
+                                      minimap-width-fraction minimap-minimum-width)
     :custom (minimap-window-location 'right)
-            (minimap-update-delay 0)
-            (minimap-width-fraction 0.09)
-            (minimap-minimum-width 15)))
+    (minimap-update-delay 0)
+    (minimap-width-fraction 0.09)
+    (minimap-minimum-width 15)))
 
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
