@@ -26,12 +26,20 @@
          (rust-mode . lsp) ;; rls
          (scss-mode . lsp) ;; vscode-css-languageserver-bin
          (java-mode . lsp) ;; eclipse JDT language server
+         (lua-mode . lsp) ;; lua-lsp
          (nix-mode . lsp) ;; rnix-lsp
          (tuareg-mode . lsp) ;; ocaml-lsp-server
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
   :commands (lsp)
   :config
+
+  ;; Lua
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "lua-lsp")
+    :major-modes '(lua-mode)
+    :server-id 'lua-lsp))
 
   ;; FIXME this created a dozen or so language server processes on hopnu which
   ;; used a shit-ton of resources. Disabled until it can be addressed.
