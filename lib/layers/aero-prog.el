@@ -307,11 +307,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;;; additional packages which might not fit elsewhere
 
-(use-package nix-mode :straight t
-  :mode "\\.nix\\'")
+(use-package nix-mode :straight t :mode "\\.nix\\'")
+(use-package lua-mode :straight t :mode "\\.lua\\'")
 
 ;; Improved version of `hexl-mode' for editing hex/binary
 (use-package nhexl-mode :straight t :defer t)
+
 
 
 ;;; end
