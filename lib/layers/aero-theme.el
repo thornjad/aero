@@ -170,4 +170,12 @@ alternative to the beacon package."
                  evil-window-bottom))
     (advice-add cmd :after #'pulse-line)))
 
+(use-package webkit-color-picker :straight t
+  :after general
+  :commands (webkit-color-picker-show)
+  :init
+  (aero-leader-def
+    "t" '(:ignore t :wk "tabs/text")
+    "tc" '(webkit-color-picker-show :wk "color picker")))
+
 (provide 'aero-theme)
