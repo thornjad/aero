@@ -87,7 +87,7 @@
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
 																 "." (number-to-string emacs-build-number)
                                  "\n"
-                                 ";; finally, a good fucking editor"
+                                 ";; enfin, un putain de bon éditeur."
                                  "\n\n")
 
  ;; version control and saving
