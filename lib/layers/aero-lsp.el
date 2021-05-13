@@ -34,12 +34,12 @@
   :commands (lsp)
   :config
 
-  ;; Lua
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection "lua-lsp")
-    :major-modes '(lua-mode)
-    :server-id 'lua-lsp))
+  ;; ;; Lua
+  ;; (lsp-register-client
+  ;;  (make-lsp-client
+  ;;   :new-connection (lsp-stdio-connection "lua-lsp")
+  ;;   :major-modes '(lua-mode)
+  ;;   :server-id 'lua-lsp))
 
   ;; FIXME this created a dozen or so language server processes on hopnu which
   ;; used a shit-ton of resources. Disabled until it can be addressed.

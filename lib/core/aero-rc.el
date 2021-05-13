@@ -128,6 +128,7 @@
  sh-basic-offset 2
  tcl-indent-level 2
  tcl-tab-always-indent t
+ lua-indent-level 2
  web-mode-attr-indent-offset 2
  web-mode-code-indent-offset 2
  web-mode-css-indent-offset 2
