@@ -19,13 +19,6 @@ else vanish." — Neal Stephenson
 #+end_quote
 
 #+begin_quote
-"'He arche' in Greek means 'the beginning'.  John 1 starts off with
-'En arche en ho Logos': in the beginning, there was the word.  Now of
-course we all know that Emacs was there before Word, but this might
-have escaped John's notice." — David Kastrup
-#+end_quote
-
-#+begin_quote
 "You could be a total lunatic, and Emacs has to make you happy" — Steve Yegge
 #+end_quote
 
