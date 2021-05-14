@@ -27,16 +27,15 @@
 (aero/modeline-global-mode +1)
 
 (use-package solaire-mode :straight t)
-  (with-eval-after-load 'solaire-mode
-(use-package aero-theme :straight nil
-  :after solaire-mode
-  :load-path "lib/packages/aero-theme/"
-  :config
-  (solaire-global-mode +1)
-  (if (display-graphic-p)
-      (load-theme 'aero t)
-    (load-theme 'aero-dark t)))
-    )
+(with-eval-after-load 'solaire-mode
+  (use-package aero-theme :straight nil
+    :after solaire-mode
+    :load-path "lib/packages/aero-theme/"
+    :config
+    (solaire-global-mode +1)
+    (if (display-graphic-p)
+        (load-theme 'aero t)
+      (load-theme 'aero-dark t))))
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
