@@ -26,9 +26,20 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-;; Subsequent frames will be smaller
+(use-package solaire-mode :straight t)
+  (with-eval-after-load 'solaire-mode
+(use-package aero-theme :straight nil
+  :after solaire-mode
+  :load-path "lib/packages/aero-theme/"
+  :config
+  (solaire-global-mode +1)
+  (if (display-graphic-p)
+      (load-theme 'aero t)
+    (load-theme 'aero-dark t)))
+    )
+
 (setq default-frame-alist
-      (append (list '(width  . 247) '(height . 60)
+      (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 6)
@@ -39,24 +50,9 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 (split-window-horizontally)
-(with-eval-after-load 'treemacs ;; must come after window split
-  (save-excursion (treemacs)))
-
-(use-package solaire-mode :straight t
-  :functions (solaire-global-mode)
-  :init (solaire-global-mode +1))
-
-(use-package aero-theme :straight nil
-  :load-path "lib/packages/aero-theme/"
-  :after (solaire-mode)
-  :config
-  (solaire-global-mode +1)
-  (if (display-graphic-p)
-      (load-theme 'aero t)
-    (load-theme 'aero-dark t)))
 
 
-;;; get ligatures to actually work
+;; get ligatures to actually work
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
