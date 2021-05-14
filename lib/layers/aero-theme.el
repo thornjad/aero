@@ -35,7 +35,7 @@
                     '(left-fringe . 8) '(right-fringe . 8)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
-                    '(ns-appearance . dark))))
+                    '(ns-appearance . (if (display-grapic-p) light dark)))))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 (split-window-horizontally)
