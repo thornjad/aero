@@ -21,7 +21,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(use-package all-the-icons :straight (:host github :repo "domtronn/all-the-icons.el"))
 
 (defgroup aero/modeline nil
   "A minimal mode-line configuration inspired by doom-modeline."
@@ -149,24 +148,14 @@
 (defun aero/modeline-segment-modified ()
   "Displays a color-coded buffer modification indicator in the mode-line."
   (cond
-   ((and buffer-read-only (buffer-file-name)) ;; read-only
-    (propertize (all-the-icons-faicon "lock" :height 1.2 :v-adjust -0.0)
-                'face `(:family ,(all-the-icons-faicon-family)
-                        :inherit aero/modeline-read-only)))
-   ((string-match-p "\\*.*\\*" (buffer-name)) ;; special buffer
-    (propertize (all-the-icons-faicon "asterisk" :height 1.2 :v-adjust -0.0)
-                'face `(:family ,(all-the-icons-faicon-family)
-                        :inherit aero/modeline-read-only
-                        :height 0.7)))
-   ((buffer-modified-p)
-    (propertize (all-the-icons-faicon "chain-broken" :height 1.2 :v-adjust -0.0)
-                'face `(:family ,(all-the-icons-faicon-family)
-                        :inherit aero/modeline-modified
-                        :height 0.7)))
-   (t (propertize (all-the-icons-faicon "link" :height 1.2 :v-adjust -0.0)
-                  'face `(:family ,(all-the-icons-faicon-family)
-                          :inherit aero/modeline-not-modified
-                          :height 0.7)))))
+   ((and buffer-read-only (buffer-file-name))  ;; read-only
+    (propertize "▢" 'face `(:inherit aero/modeline-read-only :height 0.7)))
+   ((string-match-p "\\*.*\\*" (buffer-name))  ;; special buffer
+    (propertize "*" 'face `(:inherit aero/modeline-read-only :height 0.7)))
+   ((buffer-modified-p)  ;; modified
+    (propertize "●" 'face `(:inherit aero/modeline-modified :height 0.7)))
+   (t  ;; not modified
+    (propertize "○" 'face `(:inherit aero/modeline-not-modified :height 0.7)))))
 
 (defun aero/modeline-segment-remote ()
   "Displays a symbol if buffer is remote"

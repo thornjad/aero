@@ -521,21 +521,23 @@ Local bindings (`counsel-mode-map'):
                                 (swiper . ivy--regex-plus)
                                 (t . ivy--regex-plus)))
   (aero-leader-def
-    "bb" 'ivy-switch-buffer)
+    "bb" 'ivy-switch-buffer))
 
-  (use-package ivy-rich :straight t
-    :after (counsel)
-    :defines (ivy-rich-path-style)
-    :functions (ivy-rich-mode)
-    :config
-    (setq ivy-rich-path-style 'abbrev)
-    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-    (ivy-rich-mode 1))
+(use-package ivy-rich :straight t
+  :after (counsel)
+  :defines (ivy-rich-path-style)
+  :functions (ivy-rich-mode)
+  :config
+  (setq ivy-rich-path-style 'abbrev)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  (ivy-rich-mode 1))
 
-  (use-package all-the-icons-ivy-rich :straight t
-    :after (all-the-icons ivy-rich)
-    :functions (all-the-icons-ivy-rich-mode)
-    :init (all-the-icons-ivy-rich-mode +1)))
+(use-package all-the-icons-ivy-rich :straight t
+  :after (all-the-icons ivy-rich)
+  :functions (all-the-icons-ivy-rich-mode)
+  :init (all-the-icons-ivy-rich-mode +1))
+
+(use-package all-the-icons :straight t)
 
 (use-package swiper :straight t
   :after general
