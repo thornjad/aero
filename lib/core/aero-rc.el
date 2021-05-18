@@ -159,7 +159,11 @@
       ad-do-it)))
 
 ;; Enable mouse in TTY
-(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+(unless (display-graphic-p)
+  ;; activate mouse-based scrolling
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
 ;; Trigger auto-fill after punctutation characters, not just whitespace.
 (mapc
