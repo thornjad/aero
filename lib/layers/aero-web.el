@@ -28,7 +28,7 @@
   "\\.\\(tpl\\|php\\|xml\\|html?\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\)\\'"
   :config
   (setq web-mode-engines-alist
-      '(("ctemplate" . "\\.tpl\\'"))))
+        '(("ctemplate" . "\\.tpl\\'"))))
 
 (use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
@@ -55,6 +55,12 @@
 ;; (use-package javascript-mode
 ;;   :mode "\\.jsx?\\'")
 
+(defun node-repl ()
+  "Launch a Node.js comint REPL."
+  (interactive)
+  (setenv "NODE_NO_READLINE" "1")  ; avoid fancy terminal codes
+  (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
+
 (use-package rjsx-mode
   :disabled t
   :load-path "lib/packages/rjsx-mode/"
@@ -80,7 +86,7 @@
   :mode "\\.coffee\\'")
 
 (use-package restclient :defer t
-						 :after (general)
+	:after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
 
@@ -205,22 +211,22 @@
   (find-file (aero/npm--project-file)))
 
 (with-eval-after-load 'general
-(aero-mode-leader-def
-  :keymaps '(js-mode-map web-mode-map)
-  "n" '(:ignore t :wk "npm")
-  "nI" 'aero/npm-init
-  "ni" 'aero/npm-install
-  "nS" 'aero/npm-install-save
-  "nd" 'aero/npm-install-save-dev
-  "nu" 'aero/npm-uninstall
-  "nl" 'aero/npm-list
-  "nr" 'aero/npm-run
-  "nt" 'aero/npm-run-test
-  "ns" 'aero/npm-run-start
-  "np" 'aero/npm-open-package-json
-  "t" 'aero/npm-run-test
-  "s" 'aero/npm-run-start
-  "f" 'css-cycle-color-format))
+  (aero-mode-leader-def
+    :keymaps '(js-mode-map web-mode-map)
+    "n" '(:ignore t :wk "npm")
+    "nI" 'aero/npm-init
+    "ni" 'aero/npm-install
+    "nS" 'aero/npm-install-save
+    "nd" 'aero/npm-install-save-dev
+    "nu" 'aero/npm-uninstall
+    "nl" 'aero/npm-list
+    "nr" 'aero/npm-run
+    "nt" 'aero/npm-run-test
+    "ns" 'aero/npm-run-start
+    "np" 'aero/npm-open-package-json
+    "t" 'aero/npm-run-test
+    "s" 'aero/npm-run-start
+    "f" 'css-cycle-color-format))
 
 
 (provide 'aero-web)
