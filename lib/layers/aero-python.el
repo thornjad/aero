@@ -198,6 +198,20 @@
     "h" 'run-hy
     "p" 'run-python))
 
+(defun pdb-poetry ()
+  "Like `py-pdb' but with poetry."
+  (interactive)
+  (require 'gud)
+  (let ((command-line
+         (read-from-minibuffer
+          "Run pdb like this: "
+          (concat
+           "poetry run python3 -m pdb "
+           (if (and (featurep 'tramp) (tramp-tramp-file-p (buffer-file-name)))
+               (tramp-file-name-localname (tramp-dssect-file-name (buffer-file-name)))
+             (buffer-file-name))))))
+    (if command-line (pdb command-line) (error "command required"))))
+
 (use-package elpy
   :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
