@@ -33,9 +33,7 @@
     :load-path "lib/packages/aero-theme/"
     :config
     (solaire-global-mode +1)
-    (if (display-graphic-p)
-        (load-theme 'aero t)
-      (load-theme 'aero-dark t))))
+    (load-theme 'aero t)))
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
