@@ -166,4 +166,4 @@ alternative to the beacon package."
                  evil-window-bottom))
     (advice-add cmd :after #'pulse-line)))
 
-(provide 'aero-theme)
+(provide 'aero-ui)
