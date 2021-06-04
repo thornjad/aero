@@ -30,8 +30,6 @@
              magit-unstage-file
              magit-blame-mode)
 	:init
-  (when (system-is-mac)
-    (setq magit-git-executable "/usr/local/bin/git"))
 	(aero-leader-def
 	  "gs" 'magit-status
 	  "gb" 'magit-blame
