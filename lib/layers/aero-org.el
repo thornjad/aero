@@ -400,9 +400,12 @@ Yesterday:
 
 Today:
 ** Meetings
-*** 1015-1030 - Core sitdown standup
-** TODO :noexport: [0%] [0/1]
+*** 0930-0945 - Nucleus standup
+*** 1015-1030 - Aviator standup
+** TODO :noexport: [0%] [0/3]
 *** TODO Prep sync summary
+*** TODO Email
+*** TODO Check on PRs
 ** Notes
 None."
   "Template for a new day in the thornlog")
