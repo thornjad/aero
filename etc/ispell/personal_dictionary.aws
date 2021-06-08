@@ -1,4 +1,4 @@
-personal_ws-1.1 en 320 
+personal_ws-1.1 en 324 
 ACL
 APIs
 Aireon
@@ -92,8 +92,10 @@ PoC
 Postgres
 Prebuilt
 QGIS
+RESTful
 RET
 Reddit
+Redux
 ResNet
 Roboto
 SEO
@@ -111,6 +113,7 @@ Tabstops
 Theming
 TileJSON
 Tmux
+Tohil
 UI
 URI
 USD
@@ -123,6 +126,7 @@ WFH
 WSL
 WTF
 Wayland
+WebGL
 Websockets
 XYZ
 YYYY
