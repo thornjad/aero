@@ -5,7 +5,7 @@
 #+attr_html: :width 100%
 [[./etc/images/aero-preview.png]]
 
-Aero is my own Emacs configuration, blending all the best shit I can find. It is built in the style of a distribution like Prelude or Spacemacs, but it's not intended for widespread use; Aero is highly tailored to me, what I want and what I use. Special focus is put on writing Lisps, Python, TCL, Node and the several web languages. Other languages like C and ML have some light configuration as well.
+My own Emacs configuration, blending all the best shit I can find. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; Aero is highly tailored to me, what I want and what I use. Configuration for Lisps, Python and web languages have special focus.
 
 #+begin_quote
 "An infinite number of monkeys typing into GNU Emacs would never make a good
@@ -23,7 +23,7 @@ else vanish." — Neal Stephenson
 #+end_quote
 
 ** Requirements
-Aero is maintained as a cutting-edge tool and focuses on working with the latest version of Emacs. Actual day-to-day usage is on a fork of GNU Emacs, hosted [[https://gitlab.com/thornjad/emacs][on GitLab]], and should keep pace with GNU Emacs.
+Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs. Actual day-to-day usage runs on a fork of GNU Emacs, hosted [[https://gitlab.com/thornjad/emacs][on GitLab]], which generally keeps pace with GNU Emacs.
 
 ** Installation
 
@@ -34,7 +34,7 @@ make
 #+end_src
 
 ** Local config
-Local settings, functions, et cetera can be put into an untracked =init.local.el= file, which will be evaluated near the end of the initialization process, after all other layers and settings.
+Local settings, functions, et cetera existing in an untracked =init.local.el= file will evaluate near the end of the initialization process, after all other layers and settings.
 
 ** Major features, changes and decisions
 **** Evil
@@ -42,11 +42,10 @@ Local settings, functions, et cetera can be put into an untracked =init.local.el
 "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 #+end_quote
 
-Emacs keybindings are, in my humble opinion, a pile of horseshit. They might work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with mostly modifier-key-free modal
-editing.
+Emacs keybindings are, in my humble opinion, a pile of horseshit. They might work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available..
 
 **** Ivy and Counsel
-Despite using Helm for a few years, I chose to use Counsel and Ivy when I created this project. In my experience, they are smaller, lighter, faster and just as powerful as Helm.
+Despite using Helm for a few years, I chose to use Counsel and Ivy when I created this project. In my experience, they run smaller, lighter, faster and just as powerful as Helm.
 
 That being said, Helm is now a dead project, so I guess this section may not be so necessary for much longer.
 
@@ -60,10 +59,10 @@ The other leader, =,= is available in some major modes and contains bindings for
 [[./etc/images/aero-leader-preview.png]]
 
 **** LSP
-As far as I'm concerned, Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to as many protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python, OCaml and Javascript in particular, so they've received the most love.
+Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python, OCaml and Javascript in particular, so they've received the most love.
 
 **** No tagged versioning
-As mentioned above, Aero is not meant  to be a widespread project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no  benefit; source control with git is  enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
+As mentioned above, Aero does intend to be a mainstream project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no  benefit; source control with git is  enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
 
 **** Custom theme and a simplified mode line
 There is little disagreement in the Emacs community that the default color scheme is an abomination. Luckily, it's very easy to change, and not much more difficult to create one's own.
@@ -110,14 +109,13 @@ Like the Borg, Aero amalgamates macros, functions, bindings and packages modifie
 ** Copying
 Copyright © 2016-2021 Jade Michael Thornton
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee
+is hereby granted, provided that the above copyright notice and this permission notice appear in all
+copies.
 
-The software is provided "as is" and the author disclaims all warranties with
-regard to this software including all implied warranties of merchantability
-and fitness. In no event shall the author be liable for any special, direct,
-indirect, or consequential damages or any damages whatsoever resulting from
-loss of use, data or profits, whether in an action of contract, negligence or
-other tortious action, arising out of or in connection with the use or
-performance of this software.
+The software is provided "as is" and the author disclaims all warranties with regard to this
+software including all implied warranties of merchantability and fitness. In no event shall the
+author be liable for any special, direct, indirect, or consequential damages or any damages
+whatsoever resulting from loss of use, data or profits, whether in an action of contract, negligence
+or other tortious action, arising out of or in connection with the use or performance of this
+software.
