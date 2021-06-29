@@ -92,7 +92,7 @@ board_ticket_branch_name."
            (parts (split-string branch "_"))
            (board (upcase (car parts)))
            (ticket (cadr parts))
-           (my-boards '("WEB")))
+           (my-boards '("WEB" "NUKE" "AV8R" "MOBILE" "BCK")))
       (when (member board my-boards)
         (save-excursion
           (forward-line)
