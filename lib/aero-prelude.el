@@ -724,8 +724,8 @@ Local bindings (`counsel-mode-map'):
 ;; TTY also needs some clipboard help. Only works in certain term emulators,
 ;; Alacritty is my preferred.
 (unless (display-graphic-p)
-  (use-package clipetty
-    :hook (after-init . global-clipetty-mode)))
+  (use-package xclip :straight t
+    :config (xclip-mode +1)))
 
 
 ;; File navigation
