@@ -627,8 +627,7 @@ Local bindings (`counsel-mode-map'):
    "wk" 'windmove-up
    "wl" 'windmove-right))
 
-;; Disabled for now to see if I miss it
-(use-package winum :disabled t
+(use-package winum
   :straight t
   :after (general)
   :init
