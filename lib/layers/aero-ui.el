@@ -47,6 +47,8 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 (split-window-horizontally)
+(aero/frame-recenter)
+(add-hook 'after-make-frame-functions #'aero/frame-recenter)
 
 
 ;; get ligatures to actually work

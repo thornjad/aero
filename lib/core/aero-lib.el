@@ -804,4 +804,22 @@ Requires the utility date to be installed."
       (call-process "date" nil t nil "+%A"))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
+(defun aero/frame-recenter (&optional frame)
+  "Center FRAME on the screen.
+FRAME can specify a frame name, a terminal name, or a frame.
+If FRAME is omitted or nil, use currently selected frame."
+  (interactive)
+  (unless (eq 'maximised (frame-parameter nil 'fullscreen))
+    (let* ((frame (or (and (boundp 'frame) frame) (selected-frame)))
+           (frame-w (frame-pixel-width frame))
+           (frame-h (frame-pixel-height frame))
+           (display (frame-parameter frame 'display))
+           (monitor-w (display-pixel-width display))
+           (monitor-h (display-pixel-height display))
+           ;; NS doesn't report menu bar as outside monitor
+           (monitor-h (if (eq window-system 'ns) (- monitor-h 22) monitor-h))
+           (center (list (/ (- monitor-w frame-w) 2)
+                         (/ (- monitor-h frame-h) 2))))
+      (apply 'set-frame-position (flatten-list (list frame center))))))
+
 (provide 'aero-lib)
