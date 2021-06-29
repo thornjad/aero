@@ -32,7 +32,7 @@
 ;; (outdated and duplicated) version of Org to be loaded before the
 ;; real one is registered.
 (declare-function straight-use-package "straight.el")
-(straight-use-package 'org)
+;(straight-use-package 'org)
 
 
 ;;; Set up core packages
