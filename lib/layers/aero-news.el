@@ -131,25 +131,6 @@
    "C-d" 'scroll-up))
 
 
-(use-package hackernews
-  ;; local
-  :commands hackernews)
-
-(use-package pocket-reader :straight t
-	:after (general)
-	:commands pocket-reader
-  :init
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-    "aR" '(:ignore t :which-key "pocket")
-    "aRr" 'pocket-reader
-    "ar" 'pocket-reader
-    "aRs" 'pocket-reader-add-link)
-  :config
-  (evil-set-initial-state 'pocket-reader-mode 'emacs)
-  (setq pocket-reader-open-url-default-function 'eww))
-
 (use-package xkcd :straight t
   :commands xkcd)
 
