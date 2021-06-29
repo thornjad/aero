@@ -82,9 +82,6 @@
 
 ;; the rest
 
-(use-package coffee-mode :straight t
-  :mode "\\.coffee\\'")
-
 (use-package restclient :defer t
 	:after (general)
   :commands (restclient-mode)
