@@ -523,7 +523,7 @@ Local bindings (`counsel-mode-map'):
   (aero-leader-def
     "bb" 'ivy-switch-buffer))
 
-(use-package ivy-posframe :straight t
+(use-package ivy-posframe :straight t :disabled t
   :after (ivy)
   :config
   (setq ivy-posframe-display-functions-alist
