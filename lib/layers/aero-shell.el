@@ -185,6 +185,7 @@
         (funcall-interactively #'term ,x))))
 
   (aero-leader-def
+    "S'" 'shell
     "Stt" 'term
     "Stb" 'term-bash
     "Stz" 'term-zsh
