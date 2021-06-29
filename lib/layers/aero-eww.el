@@ -141,4 +141,16 @@
     :init
     (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
 
+(use-package devdocs-browser :straight t
+  :after (general)
+  :config
+  (aero-leader-def
+    "hh" '(:ignore t :wk "devdocs")
+    "hho" 'devdocs-browser-open
+    "hhO" 'devdocs-browser-open-in
+    "hhi" 'devdocs-browser-install-doc
+    "hhl" 'devdocs-browser-list-docs
+    "hhU" 'devdocs-browser-uninstall-doc
+    "hhu" 'devdocs-browser-update-docs))
+
 (provide 'aero-eww)
