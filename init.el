@@ -67,6 +67,7 @@ only. This file is not part of Aero proper, and is not shared.")
     (add-to-list 'straight-built-in-pseudo-packages 'let-alist))
 
   ;; Bootstrap straight.el
+	(setq straight-repository-branch "develop")
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
