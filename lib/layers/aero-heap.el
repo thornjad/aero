@@ -58,6 +58,15 @@
   :straight (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
+;; Mark E′ violations
+(use-package eprime-mode
+  :load-path "~/src/thornjad/eprime-mode"
+  :after (general)
+  :hook ((text-mode) . eprime-mode)
+  :config
+  (aero-leader-def
+    "tp" 'eprime-check-buffer))
+
 (use-package sx
   :after (general)
   :commands (sx-search)
