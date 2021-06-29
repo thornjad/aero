@@ -128,8 +128,7 @@
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
 
-	(use-package flyspell-correct-popup
-		:straight t :defer t
+	(use-package flyspell-correct-popup :straight t
 		:commands flyspell-correct-wrapper
     :functions (flyspell-correct-popup)
 		:init
@@ -312,6 +311,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;; Improved version of `hexl-mode' for editing hex/binary
 (use-package nhexl-mode :straight t :defer t)
+
+
+
+;; Other tweaks
 
 
 
