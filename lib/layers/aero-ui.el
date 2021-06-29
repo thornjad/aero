@@ -26,14 +26,10 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-(use-package solaire-mode :straight t)
-(with-eval-after-load 'solaire-mode
-  (use-package aero-theme :straight nil
-    :after solaire-mode
-    :load-path "lib/packages/aero-theme/"
-    :config
-    (solaire-global-mode +1)
-    (load-theme 'aero t)))
+(use-package aero-theme :straight nil
+  :load-path "lib/packages/aero-theme/"
+  :config
+  (load-theme 'aero t))
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
