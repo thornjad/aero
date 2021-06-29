@@ -737,6 +737,7 @@ Local bindings (`counsel-mode-map'):
   :config
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
         tramp-persistency-file-name "~/.config/emacs/data/tramp"
+        tramp-use-ssh-controlmaster-options nil  ; use system settings instead
         tramp-default-method "rsync"
         tramp-terminal-type "tramp")
 
