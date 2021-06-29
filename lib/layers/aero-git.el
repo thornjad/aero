@@ -13,8 +13,12 @@
 (require 'aero-prelude)
 
 (use-package magit
-  :after (general)
+  :after (general ivy)
 	:commands (magit-blame
+             ivy-magit-todos
+             magit-log-buffer-file
+             magit-log-trace-definition
+             magit-log-head
              magit-commit
              magit-commit-popup
              magit-diff-popup
