@@ -760,7 +760,7 @@ Local bindings (`counsel-mode-map'):
 
 (use-package pomp
   :straight (:host gitlab :repo "thornjad/pomp")
-  :after general
+  :after (general evil)
   :commands pomp
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)
