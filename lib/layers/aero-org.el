@@ -306,6 +306,13 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
       (aero/org-eval-saveblock)))
   (add-hook 'before-save-hook #'aero/org-mode-before-save-hook-eval))
 
+(use-package company-org-block :straight (:host github :repo "xenodium/company-org-block")
+  :after (org company)
+  :custom (company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
+  :hook ((org-mode . (lambda ()
+                       (setq-local company-backends '(company-org-block))
+                       (company-mode +1)))))
+
 (use-package org-toc
   :straight (:host github :repo "snosov1/toc-org")
   :after (org)
