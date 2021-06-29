@@ -33,6 +33,11 @@
 	(aero-leader-def
 	  "gs" 'magit-status
 	  "gb" 'magit-blame
+    "gt" 'ivy-magit-todos
+    "gl" '(:ignore t :which-key "log")
+    "glb" 'magit-log-buffer-file
+    "gld" 'magit-log-trace-definition
+    "gll" 'magit-log-head
 	  "gfS" 'magit-stage-file
 	  "gfU" 'magit-unstage-file
     "gm" '(:ignore t :which-key "smerge")
