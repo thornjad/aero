@@ -107,7 +107,7 @@ only. This file is not part of Aero proper, and is not shared.")
   (if (boundp 'aero-layers-dir)
       ;; Run through all existing layers and load them by name. NOTE: this
       ;; assumes that all layers provide a package identical to their file name.
-      (dolist (layer (directory-files aero-layers-dir nil "\\.el$"))
+      (dolist (layer (directory-files aero-layers-dir nil "^[^#]*\\.el$"))
         (require (intern (string-trim-right layer ".el"))))
     (error "Cannot load layers because `aero-layers-dir' is not bound! This should never happen, what have you done??")))
 
