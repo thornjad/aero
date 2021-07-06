@@ -185,11 +185,34 @@
         (funcall-interactively #'term ,x))))
 
   (aero-leader-def
-    "S'" 'shell
+    "Sts" 'shell
     "Stt" 'term
     "Stb" 'term-bash
     "Stz" 'term-zsh
     "Stc" 'term-cicada))
+
+;; NOTE: vterm requires libvterm-dev, which may not be installed. See
+;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
+;; configuration.
+;; Requires that Emacs is compiled with modules
+(when (bound-and-true-p module-file-suffix)
+  (use-package vterm :straight t
+    :after (general)
+    :commands (vterm vterm-mode)
+    :init
+    ;; HACK vterm clumsily forces vterm-module.so to compile when the package is loaded. This is
+    ;; necessary to prevent compilation when use-package is evaluated during byte- or
+    ;; native-compilation of _this_ file.
+    (when noninteractive
+      (advice-add #'vterm-module-compile :override #'ignore)
+      (provide 'vterm-module))
+    (aero-leader-def
+      "Stv" 'vterm
+      "S'" 'vterm)
+
+    :config
+    (setq vterm-kill-buffer-on-exit t
+          vterm-max-scrollback 5000)))
 
 
 ;;; shell scripting
