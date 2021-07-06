@@ -532,20 +532,21 @@ Local bindings (`counsel-mode-map'):
   (ivy-rich-mode +1)
   (ivy-rich-project-root-cache-mode +1))
 
+(use-package all-the-icons :straight t)
 (use-package all-the-icons-ivy-rich :straight t
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :init (all-the-icons-ivy-rich-mode +1))
 
-(use-package all-the-icons :straight t)
-
 (use-package swiper :straight t
-  :after general
-  :commands swiper
+  :after (general counsel)
+  :commands (swiper counsel-grep-or-swiper swiper-thing-at-point)
   :init
   (aero-leader-def
     "/" '(counsel-grep-or-swiper :wk "search")
-    "?" '(swiper-thing-at-point :wk "search thing at point")))
+    "?" '(swiper-thing-at-point :wk "search thing at point"))
+  :config
+  (setq swiper-action-recenter t))
 
 (use-package avy :straight t
   :functions (avy-goto-line avy-goto-char avy-goto-word-1)
