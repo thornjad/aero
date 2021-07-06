@@ -510,37 +510,17 @@ Local bindings (`counsel-mode-map'):
         ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
         ivy-virtual-abbreviate 'full
         ivy-wrap t
-        ivy-height 10
+        ivy-height 12
+        ivy-fixed-height-minibuffer t
+        ;; ne pas quitter le minibuffer en cas de `delete-error`
+        ivy-on-del-error-function #'ignore
         ;; don't bother counting candidates
         ivy-count-format ""
         ;; use fuzzy by default, but some searching is impossible without
         ;; stricter regex's
-        ivy-re-builders-alist '((counsel-rg . ivy--regex-plus)
-                                (counsel-projectile-rg . ivy--regex-plus)
-                                (counsel-git-grep . ivy--regex-plus)
-                                (projectile-ripgrep . ivy--regex-plus)
-                                (swiper . ivy--regex-plus)
-                                (t . ivy--regex-plus)))
+        ivy-re-builders-alist '((t . ivy--regex-plus)))
   (aero-leader-def
     "bb" 'ivy-switch-buffer))
-
-(use-package ivy-posframe :straight t :disabled t
-  :after (ivy)
-  :config
-  (setq ivy-posframe-display-functions-alist
-        '((swiper          . ivy-display-function-fallback)
-          (complete-symbol . ivy-posframe-display-at-point)
-          (t               . ivy-posframe-display)))
-
-  ;; Fix atrocious width jumping
-  (defun aero/ivy-posframe-get-size ()
-    "Set the ivy-posframe size according to the current frame."
-    (let ((height (or ivy-posframe-height (or ivy-height 10)))
-          (width (min (or ivy-posframe-width 200) (round (* .75 (frame-width))))))
-      (list :height height :width width :min-height height :min-width width)))
-  (setq ivy-posframe-size-function 'aero/ivy-posframe-get-size)
-
-  (ivy-posframe-mode +1))
 
 (use-package ivy-rich :straight t
   :after (counsel ivy)
