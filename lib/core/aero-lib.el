@@ -363,16 +363,16 @@ This is equivalent to SPC U M-x eshell"
                color
                color)
        (apply #'concat
-              (cl-loop with idx = 0
-                       with len = (length data)
-                       for dl in data
-                       do (cl-incf idx)
-                       collect
-                       (concat "\""
-                               (cl-loop for d in dl
-                                        if (= d 0) collect (string-to-char " ")
-                                        else collect (string-to-char "."))
-                               (if (eq idx len) "\"};" "\",\n")))))
+                (cl-loop with idx = 0
+                         with len = (length data)
+                         for dl in data
+                         do (cl-incf idx)
+                         collect
+                         (concat "\""
+                                 (cl-loop for d in dl
+                                          if (= d 0) collect (string-to-char " ")
+                                          else collect (string-to-char "."))
+                                 (if (eq idx len) "\"};" "\",\n")))))
       'xpm t :ascent 'center))))
 
 
@@ -579,17 +579,6 @@ This function does NOT remove remote buffers, only their connections."
   "Open Emacs PROBLEMS file from GitHub mirror."
   (interactive)
   (eww "https://github.com/emacs-mirror/emacs/blob/master/etc/PROBLEMS"))
-
-(when (require 'restclient nil t)
-  (declare-function restclient-mode "restclient.el")
-  (defun aero/restclient-scratch ()
-    "Open a restclient scratch buffer."
-    (interactive)
-    (when (require 'restclient nil 'noerror)
-      (switch-to-buffer (get-buffer-create "restclient-scratch"))
-      (insert "# -*- restclient -*-\n")
-      (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
-      (restclient-mode))))
 
 (defun aero/xdg-open (arg)
   "Pass the specified ARG to \"xdg-open\".
