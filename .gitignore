@@ -41,6 +41,7 @@ eshell/*
 etc/lsp-session
 etc/recentf
 etc/todo.org
+etc/cache/
 flycheck_*
 nov-places
 places
@@ -48,6 +49,7 @@ projectile-bookmarks.eld
 projectile.cache
 request/
 straight/
+tags
 tmp.*
 tmp/
 tramp
