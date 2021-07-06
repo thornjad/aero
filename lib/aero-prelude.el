@@ -558,6 +558,9 @@ Local bindings (`counsel-mode-map'):
    "jc" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
+(use-package ivy-avy :straight t
+  :after (ivy avy))
+
 (use-package ace-link :straight (:host github :repo "abo-abo/ace-link")
   :after (avy)
   :functions (ace-link-setup-default)
