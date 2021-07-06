@@ -1,4 +1,4 @@
-personal_ws-1.1 en 330 
+personal_ws-1.1 en 338 
 ACL
 APIs
 Aireon
@@ -76,6 +76,7 @@ MiB
 NSR
 NVM
 NVME
+Nack
 Nvidia
 OCaml
 OSM
@@ -96,6 +97,7 @@ Prebuilt
 QGIS
 RESTful
 RET
+RMQ
 Reddit
 Redux
 ResNet
@@ -133,6 +135,7 @@ WebGL
 Websockets
 XYZ
 YYYY
+acking
 aero
 ajax
 allowlist
@@ -242,6 +245,7 @@ minibuffer
 minifies
 misconfiguration
 modeline
+nack
 namespace
 namespace's
 natively
@@ -265,10 +269,13 @@ procs
 proration
 proxied
 px
+pylint
 readme
 rearchitecting
 repl
 repo
+requeue
+requeued
 requries
 rgb
 rgba
@@ -278,6 +285,7 @@ rollout
 rsync
 runnable
 rvt
+scada
 sexp
 signup
 sitdown
