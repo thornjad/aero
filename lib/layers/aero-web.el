@@ -88,6 +88,15 @@
   :mode ("\\.http\\'" . restclient-mode)
 
   :init
+  (defun aero/restclient-scratch ()
+    "Open a restclient scratch buffer."
+    (interactive)
+    (when (require 'restclient nil 'noerror)
+      (switch-to-buffer (get-buffer-create "restclient-scratch"))
+      (insert "# -*- restclient -*-\n")
+      (insert "# File is not saved, use the comma (,) prefix menu for actions\n\n")
+      (restclient-mode)))
+
   (aero-leader-def
     "wR" 'restclient-mode
     "wr" 'aero/restclient-scratch)
