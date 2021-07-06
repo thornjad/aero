@@ -41,6 +41,7 @@
   :defer 3
   :config
   (when (or (window-system) (daemonp))
+    (setq exec-path-from-shell-arguments nil)
     (exec-path-from-shell-initialize)))
 
 (use-package no-littering
