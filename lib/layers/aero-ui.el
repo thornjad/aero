@@ -88,15 +88,16 @@
 ;;; additional tweaks and packages
 
 (blink-cursor-mode 0)
-(tool-bar-mode 0)
-(menu-bar-mode -1)
-(scroll-bar-mode 0)
 (show-paren-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
 (pixel-scroll-mode 1)
 (global-display-fill-column-indicator-mode 1)
 (global-visual-line-mode +1)
+
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (use-package good-scroll
   :straight (:host github :repo "io12/good-scroll.el")
@@ -146,6 +147,7 @@ alternative to the beacon package."
                recenter-top-bottom
                other-window))
   (advice-add cmd :after #'pulse-line))
+
 (when (require 'evil nil 'no-error)
   (dolist (cmd '(aero/copy-sexp-as-kill
                  evil-goto-first-line
