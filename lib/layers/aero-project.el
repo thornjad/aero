@@ -54,4 +54,26 @@
   (aero-leader-def
     "pF" 'find-file-in-project))
 
+(use-package citre :straight (:host github :repo "universal-ctags/citre")
+  :hook (prog-mode . citre-auto-enable-citre-mode)
+  :after (general ace)
+  :config
+  (aero-leader-def
+    "jj" 'citre-jump
+    "jb" 'citre-jump-back
+    "jp" 'citre-ace-peek
+    "jC" 'aero/ctags-create-tags)
+
+  ;; citre doesn't support tramp out of the box, tell it how to get the remote file
+  (defadvice citre-core--get-lines (around aero/citre-tramptags-reform activate)
+    (if (file-remote-p tagsfile)
+        (let ((default-directory (file-name-directory tagsfile))
+              (tagsfile (file-local-name tagsfile)))
+          ad-do-it)
+      ad-do-it))
+
+  (with-eval-after-load 'projectile
+    (setq citre-project-root-function #'projectile-project-root))
+  (with-eval-after-load 'cc-mode (require 'citre-lang-c)))
+
 (provide 'aero-project)
