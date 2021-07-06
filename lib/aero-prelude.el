@@ -563,14 +563,6 @@ Local bindings (`counsel-mode-map'):
   :functions (ace-link-setup-default)
   :init (ace-link-setup-default))
 
-(use-package dumb-jump :straight t
-  :init
-  (setq dumb-jump-prefer-searcher 'rg)
-  (general-define-key
-   :states '(normal visual)
-   :prefix "SPC"
-   "jj" '(dumb-jump-go :wk "go")))
-
 
 ;;; system
 
