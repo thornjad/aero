@@ -811,4 +811,17 @@ If FRAME is omitted or nil, use currently selected frame."
                          (/ (- monitor-h frame-h) 2))))
       (apply 'set-frame-position (flatten-list (list frame center))))))
 
+(defun aero/ctags-create-tags (rootdir &optional ctags-cmd)
+  "Generate tags database in ROOTDIR.
+NOTE this requires Universal Ctags. It may work with Exuberant Ctags, but no guarantees. Definitely
+does not work with GNU Ctags. If your installation of Ctags does not use the `ctags' command,
+specify it with CTAGS-CMD."
+  (interactive (list (read-directory-name "Root Directory: " nil nil t)))
+  (let ((default-directory rootdir)
+        (cmd (or ctags-cmd "ctags"))
+        (buf (get-buffer-create " *aero/ctags-create-tags*")))
+    (async-shell-command
+     (concat cmd " --kinds-all='*' --fields='*' --extras='*' --langmap=TCL:.tcl.rvt -R")
+     buf)))
+
 (provide 'aero-lib)
