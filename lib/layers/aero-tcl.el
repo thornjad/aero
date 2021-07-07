@@ -20,8 +20,9 @@
 (require 'use-package)
 
 (use-package tcl :straight nil
+  :mode ("\\(\\.tcl\\|\\.test\\)\\'" . tcl-mode)
   :init
-	;; make inferior-tcl use tclsh (default is wish)
+	;; make inferior-tcl use tclsh (default is wish in GNU Emacs, no effect in Aero Emacs)
 	(setq tcl-application "tclsh")
   :config
   (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
