@@ -86,7 +86,6 @@
 	:after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
-
   :init
   (defun aero/restclient-scratch ()
     "Open a restclient scratch buffer."
@@ -102,10 +101,6 @@
     "wr" 'aero/restclient-scratch)
 
   :config
-  (use-package company-restclient :straight t
-    :config
-    (add-to-list 'company-backends 'company-restclient))
-
   (aero-mode-leader-def
     :keymaps 'restclient-mode-map
     "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
@@ -115,6 +110,11 @@
     "p" 'restclient-jump-prev
     "." 'restclient-mark-current
     "y" 'restclient-copy-curl-command))
+
+(use-package company-restclient :straight t
+  :after (restclient company)
+  :config
+  (add-to-list 'company-backends 'company-restclient))
 
 
 ;;; aero/npm commands
