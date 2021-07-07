@@ -87,7 +87,19 @@
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
 																 "." (number-to-string emacs-build-number)
                                  "\n"
-                                 ";; enfin, un putain de bon éditeur."
+                                 ";; Enfin, un putain de bon éditeur"
+                                 "\n"
+                                 ";; Booted in "
+                                 (format "%.3f seconds"
+                                         (float-time (time-subtract
+                                                      after-init-time
+                                                      before-init-time)))
+                                 (when (boundp 'straight--profile-cache)
+                                   (format "\n;; %d packages initialized"
+                                           (+ (hash-table-size straight--profile-cache)
+                                              (if (bound-and-true-p package-alist)
+                                                  (length package-activated-list)
+                                                0))))
                                  "\n\n")
 
  ;; version control and saving
