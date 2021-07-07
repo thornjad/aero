@@ -46,10 +46,5 @@
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars))
 
-;; TEMP HACK it would appear that there's a bug in the native-comp branch which
-;; causes issues loading autoloads files. This skips native-comp for those
-;; files. Eventually the bug should be fixed and this should be removed.
-(setq comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)"))
-
 ;; One less file to load at startup, and we'll never use it
 (setq site-run-file nil)
