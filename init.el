@@ -138,14 +138,13 @@ only. This file is not part of Aero proper, and is not shared.")
 
 ;; verifier les erreurs dans ce fichier
 (setq debug-on-error t)
-(defvar aero/gc-cons '((#x20000000 1.0) (#x3000000 0.1))
+(defvar aero/gc-cons '((#x50000000 1.0) (#x3000000 0.1))
   "High and normal values for gc.
 
-During init and while the minibuffer is in use, gc is set to the high
-value (512 MiB) to avoid collection, temporarily trading space for
-cycles. During normal execution, the normal value (48 MiB) is used, a bit
-above the default of 800 KiB, to reverse the trade so we use
-more cycles but less space, but not too little space.")
+During init and while the minibuffer is in use, gc is set to the high value to avoid collection,
+temporarily trading space for cycles. During normal execution, the normal value (48 MiB) is used, a
+bit above the default of 800 KiB, to reverse the trade so we use more cycles but less space, but not
+too little space.")
 
 ;; Avoid garbage collection during startup by increasing thresholds.
 ;; Also disable some other crap which would just slow us down.
