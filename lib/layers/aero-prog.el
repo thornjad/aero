@@ -218,12 +218,11 @@
 
 ;;; parens
 
-(use-package smartparens :straight t :after (general)
+(use-package smartparens :straight t :after (general) :defer 5
   :functions (show-smartparens-global-mode
               sp-kill-sexp sp-local-pair
               sp-local-pairs sp-pair
               sp-up-sexp)
-  :commands smartparens-global-mode
   :after (evil)
   :hook ((after-init . smartparens-global-mode))
   :init

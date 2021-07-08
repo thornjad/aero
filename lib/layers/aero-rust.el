@@ -44,6 +44,7 @@
   (add-hook 'racer-mode-hook #'eldoc-mode))
 
 (use-package company-racer :straight t
+  :hook (rust-mode . racer-mode)
   :after company
   :config
   (require 'company)
@@ -51,7 +52,7 @@
   (push 'company-racer company-backends))
 
 (use-package flycheck-rust :straight t
-  :hook (flycheck-mode . flycheck-rust-setup))
+  :hook (rust-mode . flycheck-rust-setup))
 
 (use-package cargo :straight t
   :commands cargo-minor-mode
