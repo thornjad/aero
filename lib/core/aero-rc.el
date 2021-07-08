@@ -155,7 +155,8 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; make case statements indent properly
-(c-set-offset 'case-label '++)
+(with-eval-after-load 'prog-mode
+  (c-set-offset 'case-label '++))
 
 ;; prevent savehist cpu hogging
 (setq history-length 100)
