@@ -220,10 +220,6 @@
 (use-package sh-script :defer t
   :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
   :config
-  (setq shell-file-name (cond
-                         ((string= system-type "darwin") "/usr/local/bin/zsh")
-                         (t "/usr/bin/zsh")))
-
   (defun indent-paragraph ()
     (interactive)
     (save-excursion

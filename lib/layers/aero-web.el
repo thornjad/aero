@@ -50,28 +50,11 @@
 
 ;; js and jsx
 
-(use-package js2-mode :straight t :defer t)
-
-;; (use-package javascript-mode
-;;   :mode "\\.jsx?\\'")
-
 (defun node-repl ()
   "Launch a Node.js comint REPL."
   (interactive)
   (setenv "NODE_NO_READLINE" "1")  ; avoid fancy terminal codes
   (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
-
-(use-package rjsx-mode
-  :disabled t
-  :load-path "lib/packages/rjsx-mode/"
-  :mode "\\.jsx?\\'"
-
-  :config
-  ;; because we want C-d to scroll up normally
-  (evil-define-key 'insert rjsx-mode-map
-    (kbd "C-d") 'rjsx-delete-creates-full-tag)
-  (evil-define-key 'normal rjsx-mode-map
-    (kbd "C-d") 'evil-scroll-down))
 
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
@@ -112,127 +95,10 @@
     "y" 'restclient-copy-curl-command))
 
 (use-package company-restclient :straight t
+  :hook (restclient-mode-hook . company-restclient)
   :after (restclient company)
   :config
   (add-to-list 'company-backends 'company-restclient))
-
-
-;;; aero/npm commands
-;; NPM commands based on npm-mode (https://github.com/mojochao/npm-mode)
-
-(require 'json)
-
-(defun aero/npm--project-file ()
-  "Return the path to project file or nil."
-  (let ((dir (locate-dominating-file default-directory "package.json")))
-    (unless dir
-      (aero/log-error "Aero/npm error: cannot find package.json"))
-    (expand-file-name "package.json" dir)))
-
-(defun aero/npm--get-project-property (prop)
-  "Get the given PROP from the current project file."
-  (let* ((project-file (aero/npm--project-file))
-         (json-object-type 'hash-table)
-         (json-contents
-          (with-temp-buffer
-            (insert-file-contents project-file)
-            (buffer-string)))
-         (json-hash (json-read-from-string json-contents))
-         (value (gethash prop json-hash))
-         (commands (list)))
-    (cond ((hash-table-p value)
-           (maphash
-            (lambda (key value)
-              (setq commands
-                    (append
-                     commands
-                     (list (list key (format "%s %s" "npm" key))))))
-            value)
-           commands)
-          (t value))))
-
-(defun aero/npm--exec (cmd &optional comint)
-  "Execute CMD in COMINT or new process."
-  (let ((compilation-buffer-name-function
-         (lambda (mode)
-           (format "*npm:%s - %s*"
-                   (aero/npm--get-project-property "name") cmd))))
-    (aero/log-info (concat "Running npm " cmd))
-    (compile (format "npm %s" cmd) comint)))
-
-(defun aero/npm-init (&optional comint)
-  "Run npm init."
-  (interactive)
-  (aero/log-info "Initializing npm project...")
-  (let ((compilation-buffer-name-function
-         (lambda (mode) "" "npm init")))
-    (compile "npm init" comint)))
-
-(defun aero/npm-install ()
-  "Run npm install."
-  (interactive)
-  (aero/npm--exec "install"))
-
-(defun aero/npm-install-save (deps)
-  "Run npm install and save DEPS."
-  (interactive "sPackage to save as deps: ")
-  (aero/npm--exec (format "install %s --save" deps)))
-
-(defun aero/npm-install-save-dev (deps)
-  "Run npm install and save DEPS."
-  (interactive "sPackage to save as dev deps: ")
-  (aero/npm--exec (format "install %s --save-dev" deps)))
-
-(defun aero/npm-uninstall (deps)
-  "Run npm uninstall on DEPS."
-  (interactive
-   (list (completing-read "Uninstall deps: " (aero/npm--get-project-property "dependencies"))))
-  (aero/npm--exec (format "uninstall %s" deps)))
-
-(defun aero/npm-list ()
-  "List npm dependencies."
-  (interactive)
-  (aero/npm--exec "list --depth=0"))
-
-(defun aero/npm-run (script &optional comint)
-  "Run npm SCRIPT in COMINT."
-  (interactive
-   (list (completing-read "Run script: " (aero/npm--get-project-property "scripts"))
-         (consp current-prefix-arg)))
-  (aero/npm--exec (format "run %s" script) comint))
-
-(defun aero/npm-run-test (&optional comint)
-  "Run npm test in COMINT."
-  (interactive (list (consp current-prefix-arg)))
-  (aero/npm--exec "test" comint))
-
-(defun aero/npm-run-start (&optional comint)
-  "Run start in COMINT."
-  (interactive (list (consp current-prefix-arg)))
-  (aero/npm--exec "start" comint))
-
-(defun aero/npm-open-package-json ()
-  "Open project's package.json."
-  (interactive)
-  (find-file (aero/npm--project-file)))
-
-(with-eval-after-load 'general
-  (aero-mode-leader-def
-    :keymaps '(js-mode-map web-mode-map)
-    "n" '(:ignore t :wk "npm")
-    "nI" 'aero/npm-init
-    "ni" 'aero/npm-install
-    "nS" 'aero/npm-install-save
-    "nd" 'aero/npm-install-save-dev
-    "nu" 'aero/npm-uninstall
-    "nl" 'aero/npm-list
-    "nr" 'aero/npm-run
-    "nt" 'aero/npm-run-test
-    "ns" 'aero/npm-run-start
-    "np" 'aero/npm-open-package-json
-    "t" 'aero/npm-run-test
-    "s" 'aero/npm-run-start
-    "f" 'css-cycle-color-format))
 
 
 (provide 'aero-web)

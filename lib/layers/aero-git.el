@@ -109,7 +109,7 @@ board_ticket_branch_name."
 
 	(use-package magit-todos :straight t))
 
-(use-package git-gutter :straight t
+(use-package git-gutter :straight t :defer 5
   :config
   (setq git-gutter:modified-sign " "
         git-gutter:added-sign " "

@@ -143,8 +143,12 @@
 
 (use-package devdocs-browser
   :straight (devdocs-browser :host github :repo "blahgeek/emacs-devdocs-browser")
+  :commands (devdocs-browser-open
+             devdocs-browser-open-in
+             devdocs-browser-install-doc
+             devdocs-browser-update-docs)
   :after (general)
-  :config
+  :init
   (aero-leader-def
     "hh" '(:ignore t :wk "devdocs")
     "hho" 'devdocs-browser-open

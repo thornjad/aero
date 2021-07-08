@@ -67,18 +67,6 @@
   (aero-leader-def
     "tp" 'eprime-check-buffer))
 
-(use-package sx
-  :after (general)
-  :commands (sx-search)
-  :defines (sx-default-site)
-  :functions (sx-display)
-  :init
-  (aero-leader-def
-    "wx" 'sx-search)
-  :config
-  (setq sx-default-site "stackoverflow")
-  (evil-define-key 'normal sx-question-list-mode-map (kbd "RET") #'sx-display))
-
 
 ;;; games
 

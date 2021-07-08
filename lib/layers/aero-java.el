@@ -22,9 +22,10 @@
 
 (require 'aero-prelude)
 
-(use-package clojure-mode :straight t)
+(use-package clojure-mode :straight t
+  :mode "\\.clj\\'")
 (use-package cider :straight t
-  :hook ((clojure-mode) . cider-mode)
+  :hook (clojure-mode . cider-mode)
   :after (clojure-mode general)
   :commands (cider
              cider-jack-in)

@@ -30,7 +30,6 @@
 (use-package counsel-projectile 
 	:after (projectile general)
 	:config
-
 	(general-define-key
 	 :states 'normal
 	 :prefix "SPC"

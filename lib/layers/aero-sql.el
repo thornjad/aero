@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2020 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -19,7 +19,7 @@
 (require 'aero-prelude)
 
 (use-package sql :straight nil :defer t
-						 :after (general)
+	:after (general)
   :commands (sql-connect)
   :init
   (aero-leader-def

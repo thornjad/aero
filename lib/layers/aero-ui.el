@@ -119,9 +119,6 @@
   :straight (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
-(use-package fireplace :straight t
-  :commands fireplace)
-
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)

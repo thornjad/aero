@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2020 Jade Michael Thornton
+;; Copyright (c) 2019-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -18,8 +18,11 @@
 
 (require 'aero-lib)
 
-(use-package counsel-spotify :straight t :defer 5
+(use-package counsel-spotify :straight t
   :after counsel
+  :commands (counsel-spotify-toggle-play-pause
+             counsel-spotify-next
+             counsel-spotify-previous)
   :config
   (dolist (x '("toggle-play-pause" "next" "previous"
                "search-playlist" "search-track" "search-artist" "search-album"

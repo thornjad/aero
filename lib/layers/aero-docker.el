@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2020 Jade Michael Thornton
+;; Copyright (c) 2020-2021 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -33,7 +33,7 @@
   :mode "docker-compose.*\.yml\\'")
 
 (use-package docker-tramp :straight t
-  :after tramp
+  :after (tramp)
   :defer 5)
 
 (use-package dockerfile-mode :straight t

@@ -31,15 +31,4 @@
 (use-package yaml-mode :straight t
   :mode "\\.ya?ml\\'")
 
-(use-package synosaurus
-  :after (general)
-  :init
-  (setq-default synosaurus-backend 'synosaurus-backend-wordnet)
-  (add-hook 'after-init-hook #'synosaurus-mode))
-
-(use-package nov :straight t
-  :mode ("\\.epub\\'" . nov-mode)
-  :init
-  (setq nov-text-width fill-column))
-
 (provide 'aero-markup)

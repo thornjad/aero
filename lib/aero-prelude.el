@@ -32,19 +32,18 @@
 ;; (outdated and duplicated) version of Org to be loaded before the
 ;; real one is registered.
 (declare-function straight-use-package "straight.el")
-;(straight-use-package 'org)
+(straight-use-package 'org)
 
 
 ;;; Set up core packages
 (use-package gnu-elpa-keyring-update :straight t)
-(use-package exec-path-from-shell :straight t
-  :defer 3
+(use-package exec-path-from-shell :straight t :defer 1
   :config
   (when (or (window-system) (daemonp))
     (setq exec-path-from-shell-arguments nil)
     (exec-path-from-shell-initialize)))
 
-(use-package no-littering
+(use-package no-littering :defer 5
   :after recentf
   :straight (:host github :repo "emacscollective/no-littering")
   :defines (no-littering-var-directory
@@ -65,7 +64,7 @@
 
 ;;; used in several places
 
-(use-package ripgrep :straight t)
+(use-package ripgrep :straight t :defer 3)
 
 
 ;;; the general is here
@@ -276,6 +275,22 @@
    "SE" '(:ignore t :wk "eshell")
    "St" '(:ignore t :wk "term")
 
+   "T" '(:ignore t :wk "tab")
+   "TT" 'tab-bar-mode
+   "Tj" 'tab-next
+   "Tk" 'tab-previous
+   "Tc" '(tab-new :wk "create tab")
+   "TL" 'tab-list
+   "TL" 'tab-last
+   "T TAB" 'tab-recent
+   "T," 'tab-rename
+   "Ts" '(tab-duplicate :wk "tab duplicate split")
+   "Td" 'tab-close
+   "Tu" 'tab-undo
+   "Tg" '(tab-select :wk "tab go")
+   "Tb" 'switch-to-buffer-other-tab
+   "Tf" 'find-file-other-tab
+
    "w" '(:ignore t :wk "window/web")
    "ww" 'eww
    "wp" 'browse-url-at-point
@@ -388,12 +403,12 @@
     :config (evil-terminal-cursor-changer-activate)))
 
 
-(use-package evil-matchit :straight t :defer 1
+(use-package evil-matchit :straight t :defer 5
   :after evil
   :defines global-evil-matchit-mode
   :config (global-evil-matchit-mode 1))
 
-(use-package evil-visualstar :straight t
+(use-package evil-visualstar :straight t :defer 5
   :after evil
   :defines global-evil-visualstar-mode
 
@@ -549,7 +564,7 @@ Local bindings (`counsel-mode-map'):
   (setq swiper-action-recenter t))
 
 (use-package avy :straight t
-  :functions (avy-goto-line avy-goto-char avy-goto-word-1)
+  :commands (avy-goto-line avy-goto-char avy-goto-word-1)
   :init
   (general-define-key
    :states '(normal visual)
@@ -557,9 +572,6 @@ Local bindings (`counsel-mode-map'):
    "jl" '(avy-goto-line :wk "jump to line")
    "jc" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
-
-(use-package ivy-avy :straight t
-  :after (ivy avy))
 
 (use-package ace-link :straight (:host github :repo "abo-abo/ace-link")
   :after (avy)
@@ -570,6 +582,7 @@ Local bindings (`counsel-mode-map'):
 ;;; system
 
 (use-package undo-tree :straight t
+  :commands (undo-tree-mode global-undo-tree-mode)
   :config
   (global-undo-tree-mode +1)
 
@@ -603,10 +616,15 @@ Local bindings (`counsel-mode-map'):
    "wh" 'windmove-left
    "wj" 'windmove-down
    "wk" 'windmove-up
-   "wl" 'windmove-right))
+   "wl" 'windmove-right)
 
-(use-package winum
-  :straight t
+  ;; windmove
+  (global-set-key (kbd "M-h") #'windmove-left)
+  (global-set-key (kbd "M-j") #'windmove-down)
+  (global-set-key (kbd "M-k") #'windmove-up)
+  (global-set-key (kbd "M-l") #'windmove-right))
+
+(use-package winum :straight t :defer 5
   :after (general)
   :init
   (winum-mode)
@@ -628,34 +646,14 @@ Local bindings (`counsel-mode-map'):
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
-(eval-after-load 'general
-  '(progn
-     (aero-leader-def
-       "T" '(:ignore t :wk "tab")
-       "TT" 'tab-bar-mode
-       "Tj" 'tab-next
-       "Tk" 'tab-previous
-       "Tc" '(tab-new :wk "create tab")
-       "TL" 'tab-list
-       "TL" 'tab-last
-       "T TAB" 'tab-recent
-       "T," 'tab-rename
-       "Ts" '(tab-duplicate :wk "tab duplicate split")
-       "Td" 'tab-close
-       "Tu" 'tab-undo
-       "Tg" '(tab-select :wk "tab go")
-       "Tb" 'switch-to-buffer-other-tab
-       "Tf" 'find-file-other-tab)))
-
-;; windmove
-(global-set-key (kbd "M-h") #'windmove-left)
-(global-set-key (kbd "M-j") #'windmove-down)
-(global-set-key (kbd "M-k") #'windmove-up)
-(global-set-key (kbd "M-l") #'windmove-right)
-
 (use-package helpful :straight t
+  :commands (helpful-function
+             helpful-variable
+             helpful-macro
+             helpful-key
+             helpful-callable)
   :after (evil general)
-  :config
+  :init
   (general-define-key
    :states 'normal
    :prefix "SPC"
@@ -671,7 +669,7 @@ Local bindings (`counsel-mode-map'):
    "hdC" 'describe-char
    "hdp" 'describe-package)
 
-  (require 'evil)
+  :config
   (evil-define-key 'normal helpful-mode-map
     "q" 'kill-this-buffer
     "?" 'describe-mode))
@@ -724,8 +722,9 @@ Local bindings (`counsel-mode-map'):
     (unless (file-remote-p default-directory) ad-do-it)))
 
 (use-package ranger :straight t
+  :commands (deer)
   :after general
-  :config
+  :init
   (setq ranger-show-hidden t
         find-directory-functions 'deer)
   (general-define-key
@@ -739,7 +738,7 @@ Local bindings (`counsel-mode-map'):
 (use-package pomp
   :straight (:host gitlab :repo "thornjad/pomp")
   :after (general evil)
-  :commands pomp
+  :commands (pomp)
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)
   (global-set-key (kbd "<f12>") 'pomp)
@@ -748,15 +747,7 @@ Local bindings (`counsel-mode-map'):
    :prefix "SPC"
    "ap" 'pomp))
 
-(use-package expand-region :straight t
-  :defer nil
-  :config
-  (general-define-key
-   :states '(normal visual motion replace emacs)
-   :keymaps 'override
-   (kbd "M-e") 'er/expand-region))
-
-(use-package editorconfig :straight t
+(use-package editorconfig :straight t :defer 5
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
