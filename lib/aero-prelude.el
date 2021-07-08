@@ -582,7 +582,6 @@ Local bindings (`counsel-mode-map'):
 ;;; system
 
 (use-package undo-tree :straight t
-  :commands (undo-tree-mode global-undo-tree-mode)
   :config
   (global-undo-tree-mode +1)
 
