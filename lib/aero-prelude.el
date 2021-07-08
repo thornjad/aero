@@ -341,7 +341,7 @@
         evil-want-C-u-scroll t)
 
   :config
-  (use-package evil-collection
+  (use-package evil-collection :defer 3
     :config (evil-collection-init))
 
   (define-key evil-motion-state-map " " nil)
@@ -504,7 +504,7 @@ Local bindings (`counsel-mode-map'):
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
-(use-package recentf
+(use-package recentf :defer t
   :defines (recentf-mode)
   :config
   (defvar aero-etc-dir)
