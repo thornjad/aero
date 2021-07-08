@@ -54,6 +54,24 @@
     "wbnn" '(aero/npr-news :wk "npr"))
 
 	:config
+  (use-package shrface :defer t :straight t
+    :config
+    (shrface-basic)
+    (shrface-trial)
+    (shrface-default-keybindings) ; setup default keybindings
+    (setq shrface-href-versatile t))
+  (add-hook 'eww-after-render-hook #'shrface-mode)
+
+  (use-package shr-tag-pre-highlight :straight t
+    :after shr
+    :config
+    (add-to-list 'shr-external-rendering-functions
+                 '(pre . shr-tag-pre-highlight))
+    (when (version< emacs-version "26")
+      (with-eval-after-load 'eww
+        (advice-add 'eww-display-html :around
+                    'eww-display-html--override-shr-external-rendering-functions))))
+
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
   (add-hook 'eww-mode-hook #'visual-line-mode)
 
