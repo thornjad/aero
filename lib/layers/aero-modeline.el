@@ -149,7 +149,7 @@
   "Displays a color-coded buffer modification indicator in the mode-line."
   (cond
    ((and buffer-read-only (buffer-file-name))  ;; read-only
-    (propertize "⛔" 'face `(:inherit aero/modeline-read-only :height 0.6)))
+    (propertize "%" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((string-match-p "\\*.*\\*" (buffer-name))  ;; special buffer
     (propertize "*" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((buffer-modified-p)  ;; modified
