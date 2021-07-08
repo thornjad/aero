@@ -26,9 +26,8 @@
             eshell-cmpl-dir-ignore
             eshell-visual-commands
             eshell-visual-subcommands)
-  :init
-  (require 'em-smart)
   :config
+  (require 'em-smart)
 
   ;; Ensure eshell doesn't override these
   (general-def term-mode-map
@@ -147,18 +146,6 @@
         epe-git-dirty-char " *"
         eshell-prompt-function 'epe-theme-lambda)
   (autoload 'epe-theme-lambda "eshell-prompt-extras"))
-
-;; FIXME not working at all
-;; (use-package esh-autosuggest
-;;   :hook (eshell-mode . esh-autosuggest-mode)
-;;   :functions (esh-autosuggest-mode))
-
-;; Ensures editor commands open in the current Emacs session
-(use-package with-editor
-  :defines (with-editor-export-editor)
-  :init
-  (add-hook 'shell-mode-hook  'with-editor-export-editor)
-  (add-hook 'eshell-mode-hook 'with-editor-export-editor))
 
 
 ;;; term
