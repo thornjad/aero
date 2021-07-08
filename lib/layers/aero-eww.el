@@ -137,7 +137,6 @@
   (use-package link-hint
     :after (general)
     :defines (link-hint-open-link)
-    :commands (link-hint-open-link)
     :init
     (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
 
