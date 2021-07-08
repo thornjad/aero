@@ -89,7 +89,7 @@
                                  "\n"
                                  ";; Enfin, un putain de bon éditeur"
                                  "\n;;\n"
-                                 ";; Booted in " (emacs-init-time)
+                                 ";; Booted in " (emacs-init-time "%.3f seconds")
                                  (format " with %d garbage collections" gcs-done)
                                  (when (boundp 'straight--profile-cache)
                                    (format "\n;; %d packages initialized"
