@@ -42,7 +42,7 @@
                     '(ns-appearance . (if (display-grapic-p) light dark)))))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
-;; (split-window-horizontally)
+(split-window-horizontally)
 (aero/frame-recenter)
 (add-hook 'after-make-frame-functions #'aero/frame-recenter)
 
