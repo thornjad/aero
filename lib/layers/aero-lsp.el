@@ -107,15 +107,4 @@
       "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
       "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols"))))
 
-(use-package dap-mode :after (general)
-  :config
-  (require 'dap-firefox)
-  (dap-firefox-setup)
-  (require 'dap-node)
-  (dap-node-setup)
-  (require 'dap-python)
-
-  (aero-leader-def
-    "dd" 'dap-debug))
-
 (provide 'aero-lsp)
