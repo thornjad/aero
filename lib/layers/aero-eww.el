@@ -141,7 +141,8 @@
     :init
     (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
 
-(use-package devdocs-browser :straight t
+(use-package devdocs-browser
+  :straight (devdocs-browser :host github :repo "blahgeek/emacs/devdocs/browser")
   :after (general)
   :config
   (aero-leader-def
