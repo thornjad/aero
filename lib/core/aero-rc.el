@@ -88,7 +88,7 @@
 																 "." (number-to-string emacs-build-number)
                                  "\n"
                                  ";; Enfin, un putain de bon éditeur"
-                                 "\n"
+                                 "\n\n"
                                  ";; Booted in "
                                  (format "%.3f seconds"
                                          (float-time (time-subtract
