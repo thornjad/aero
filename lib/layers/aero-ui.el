@@ -124,16 +124,6 @@
   :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
               highlight-indent-guides-responsive 'top))
 
-(when (display-graphic-p)
-  (use-package minimap
-    :commands (minimap-mode)
-    :defines (minimap-window-location minimap-update-delay
-                                      minimap-width-fraction minimap-minimum-width)
-    :custom (minimap-window-location 'right)
-    (minimap-update-delay 0)
-    (minimap-width-fraction 0.09)
-    (minimap-minimum-width 15)))
-
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
 This function, when bound to certain commands like scrolling, acts as a native
