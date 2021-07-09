@@ -67,6 +67,35 @@
   (aero-leader-def
     "tp" 'eprime-check-buffer))
 
+(use-package counsel-spotify :straight t
+  :after (counsel general)
+  :commands (counsel-spotify-toggle-play-pause
+             counsel-spotify-next
+             counsel-spotify-previous)
+  :init
+  (dolist (x '("toggle-play-pause" "next" "previous"
+               "search-playlist" "search-track" "search-artist" "search-album"
+               "search-tracks-by-artist" "search-tracks-by-album"))
+    (eval
+     `(defun ,(intern (concat "aero/spotify-" x)) ()
+        (interactive)
+        (aero/local! (funcall-interactively #',(intern (concat "counsel-spotify-" x))))
+        (aero/log-info (concat "aero/spotify " ,x)))))
+
+  (aero-leader-def
+    "as" '(:ignore t :which-key "spotify")
+    "asp" '(aero/spotify-toggle-play-pause :which-key "play/pause")
+    "asn" '(aero/spotify-next :which-key "next")
+    "asP" '(aero/spotify-previous :which-key "previous")
+    "ass" '(:ignore t :wk "search")
+    "assp" '(aero/spotify-search-playlist :wk "playlist")
+    "asst" '(aero/spotify-search-track :wk "track")
+    "assT" '(:ignore t :wk "search tracks by")
+    "assTa" '(aero/spotify-search-track-by-artist :wk "search tracks by artist")
+    "assTb" '(aero/spotify-search-track-by-album :wk "search tracks by album")
+    "assa" '(aero/spotify-search-artist :wk "artist")
+    "assb" '(aero/spotify-search-album :wk "album")))
+
 
 ;;; games
 
