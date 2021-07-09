@@ -24,40 +24,7 @@
 
 (require 'aero-prelude)
 
-(use-package esup :straight t
-  :commands esup)
-
-(use-package rainbow-mode :straight t
-  :commands rainbow-mode)
-
-(use-package hackernews
-  ;; local
-  :commands hackernews)
-
-(use-package twittering-mode
-  :commands (twittering-mode twit)
-  :after (general sauron)
-  :init
-  (defun aero/turn-on-twittering-notifications ()
-    (setq sauron-prio-twittering-mention 4))
-
-  (defun aero/start-or-jump-to-twitter ()
-    "If twittering-mode is already active, jump to it, otherwise start it."
-    (interactive)
-    (if (get-buffer "(:home+@)")
-        (switch-to-buffer "(:home+@)")
-      ;; disable twitter notifications for ~10 seconds
-      (setq sauron-prio-twittering-mention 2)
-      (twittering-mode)
-      (run-at-time "10 sec" nil #'aero/turn-on-twittering-notifications)))
-
-  :config
-  (setq twittering-icon-mode t
-        twittering-use-master-password t
-        twittering-username "jmthorntonwhat"
-        twittering-timer-interval 600)
-  ;; Don't kill the twittering buffer, just bury it
-  (define-key twittering-mode-map (kbd "q") 'bury-buffer))
+(use-package esup :straight t :defer t)
 
 ;; Mark passive voice, duplicate words and weasel words
 (use-package writegood-mode
