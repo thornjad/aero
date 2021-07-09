@@ -213,7 +213,7 @@
     (if command-line (pdb command-line) (error "command required"))))
 
 ;; FIXME erroring in rpc sentinel
-(use-package elpy :disabled t
+(use-package elpy
   :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
@@ -221,13 +221,6 @@
         elpy-rpc-python-command "python3"
         py-return-key #'py-newline-and-indent)
   (elpy-enable)
-
-  ;; https://github.com/jorgenschaefer/elpy/issues/1729
-  (setenv "PYTHONIOENCODING" "utf-8")
-  (set-language-environment "UTF-8")
-  (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
-  (add-to-list 'process-coding-system-alist '("elpy" . (utf-8 . utf-8)))
-  (add-to-list 'process-coding-system-alist '("flake8" . (utf-8 . utf-8)))
 
   (defun elpy-switch-to-cpython ()
     "Switch to using CPython shell."
