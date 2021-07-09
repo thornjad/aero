@@ -92,7 +92,7 @@
                                  ";; Booted in " (emacs-init-time "%.3f seconds")
                                  (format " with %d garbage collections" gcs-done)
                                  (when (boundp 'straight--profile-cache)
-                                   (format "\n;; %d packages initialized"
+                                   (format "\n;; Initialized %d packages"
                                            (+ (hash-table-size straight--profile-cache)
                                               (if (bound-and-true-p package-alist)
                                                   (length package-activated-list)
