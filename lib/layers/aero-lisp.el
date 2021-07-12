@@ -134,8 +134,16 @@ does not specify a special indentation."
 
 (use-package el2md
   :straight (:host gitlab :repo "thornjad/el2md")
+  :after (general)
   :commands (el2md-write-readme
              el2md-view-buffer
-             el2md-write-file))
+             el2md-write-file)
+  :init
+  (aero-mode-leader-def
+    :keymaps 'emacs-lisp-mode-map
+    "m" '(:ignore t :wk "el2md")
+    "mr" 'el2md-write-readme
+    "mv" 'el2md-view-buffer
+    "mw" 'el2md-write-file))
 
 (provide 'aero-lisp)
