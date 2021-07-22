@@ -347,7 +347,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Improved version of `hexl-mode' for editing hex/binary
 (use-package nhexl-mode :straight t :defer t)
 
-
 
 ;; Other tweaks
 

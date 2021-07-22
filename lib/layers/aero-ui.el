@@ -94,7 +94,6 @@
 (pixel-scroll-mode 1)
 (global-display-fill-column-indicator-mode 1)
 (global-visual-line-mode +1)
-(global-hl-line-mode +1)
 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
