@@ -18,7 +18,7 @@
 
 (require 'aero-prelude)
 
-(use-package projectile :defer 5
+(use-package projectile :defer 2
   :straight (:host github :repo "bbatsov/projectile")
 	:config
 	(setq projectile-indexing-method 'native
@@ -30,9 +30,7 @@
 (use-package counsel-projectile 
 	:after (projectile general)
 	:config
-	(general-define-key
-	 :states 'normal
-	 :prefix "SPC"
+	(aero-leader-def
    "p/" '(counsel-projectile-rg :wk "find with rg")
    "pf" '(counsel-projectile-find-file-dwim :wk "find file dwim")
    "pp" '(counsel-projectile-switch-project :wk "switch project")

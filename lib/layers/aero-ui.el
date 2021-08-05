@@ -28,6 +28,9 @@
 
 (use-package aero-theme :straight nil
   :load-path "lib/packages/aero-theme/"
+  :init
+  (when (system-is-mac)
+    (setq aero-theme-font-height 140))
   :config
   (load-theme 'aero t))
 

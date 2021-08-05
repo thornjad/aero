@@ -277,7 +277,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (use-package siege-mode :straight (:host github :repo "tslilc/siege-mode")
   :after (general)
   :commands (siege-explicit-call)
-  :config
+  :init
   (aero-leader-def
     "sw RET" '(siege-explicit-call :wk "siege surround")))
 
