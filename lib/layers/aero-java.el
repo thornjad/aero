@@ -89,4 +89,6 @@
       "re" 'lsp-clojure-extract-function
       "rs" 'lsp-clojure-inline-symbol)))
 
+(use-package groovy-mode :straight t)
+
 (provide 'aero-java)
