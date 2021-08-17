@@ -414,8 +414,7 @@ Today:
 *** TODO Prep sync summary
 *** TODO Email
 *** TODO Check on PRs
-** Notes
-None."
+** Notes"
   "Template for a new day in the thornlog")
 
 (defun new-day-insert ()
