@@ -41,6 +41,9 @@
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
  idle-update-delay 2 ; default is 0.5
  bidi-display-reordering nil ; no need for bidirectional display
+ create-lockfiles nil
+ jit-lock-defer-time 0
+ ns-use-srgb-colorspace nil
 
  ;; Defaults:
  ;; '("gnutls-cli --insecure -p %p %h"
