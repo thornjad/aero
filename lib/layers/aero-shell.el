@@ -139,14 +139,6 @@
     (setq eshell-visual-subcommands '(("git" "log" "diff" "show")
                                       ("vagrant" "ssh"))))))
 
-(use-package eshell-prompt-extras
-  :after (eshell esh-opt)
-  :init
-  (setq eshell-highlight-prompt t
-        epe-git-dirty-char " *"
-        eshell-prompt-function 'epe-theme-lambda)
-  (autoload 'epe-theme-lambda "eshell-prompt-extras"))
-
 
 ;;; term
 
