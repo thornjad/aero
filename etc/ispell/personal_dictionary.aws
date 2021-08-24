@@ -1,9 +1,10 @@
-personal_ws-1.1 en 340 
+personal_ws-1.1 en 344 
 ACL
 APIs
 Aireon
 Alacritty
 Analytics
+AuthNet
 BCAT
 BRE
 BSc
@@ -56,6 +57,7 @@ Javascript
 Jira
 KDE
 KiB
+Kosovo
 LIFR
 LLC
 LMB
@@ -211,6 +213,7 @@ grey
 hacky
 hardcode
 hardcoded
+hoc
 homebrew
 homebrewed
 hostname
@@ -246,6 +249,7 @@ minibuffer
 minifies
 misconfiguration
 modeline
+multiplanetary
 nack
 nacking
 namespace
