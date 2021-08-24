@@ -71,7 +71,8 @@
   :config
   (setq company-dict-dir (expand-file-name "ispell" aero-etc-dir)))
 
-(use-package counsel-gtags :after (general)
+(use-package counsel-gtags
+  :after (general)
   :commands (counsel-gtags-dwim)
   :init
   (general-define-key
@@ -170,6 +171,7 @@
     (defvar flyspell-correct-interface)
 		(setq flyspell-correct-interface #'flyspell-correct-popup))
 
+  (declare-function aero-leader-def "aero-prelude.el")
   (aero-leader-def
     "ps" '(:ignore t :wk "spelling")
     "psP" 'flyspell-prog-mode
@@ -188,7 +190,7 @@
               sp-kill-sexp sp-local-pair
               sp-local-pairs sp-pair
               sp-up-sexp)
-  :after (evil)
+  :after (evil general)
   :hook ((after-init . smartparens-global-mode))
   :init
   ;; fix highlighting in normal mode
