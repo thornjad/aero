@@ -258,6 +258,8 @@ appropriate.  In tables, insert a new row or end the table."
     "c" '(:ignore t :wk "cell")
     "cc" '(org-babel-execute-src-block :wk "exec cell")
     "t" 'today
+    "h" '(outline-hide-body :wk "hide all")
+    "s" '(outline-show-all :wk "show all")
     "d" 'new-day)
 
   (defvar aero/org-eval-safe-list
