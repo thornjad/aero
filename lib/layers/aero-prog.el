@@ -54,8 +54,8 @@
 ;;         company-box-max-candidates 50
 ;;         x-gtk-resize-child-frames 'resize-mode)
 
-  ;; disable tab bar in company-box child frames. Will probably be PR'd upstream eventually
-  (add-to-list 'company-box-frame-parameters '(tab-bar-lines . 0)))
+;;   ;; disable tab bar in company-box child frames. Will probably be PR'd upstream eventually
+;;   (add-to-list 'company-box-frame-parameters '(tab-bar-lines . 0)))
 
 (use-package company-prescient :straight t
   :after (company)
