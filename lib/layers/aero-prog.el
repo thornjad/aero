@@ -45,14 +45,14 @@
                        'company-capf
                        'company-abort)))
 
-(use-package company-box :straight t
-  :after (company)
-  :hook (company-mode . company-box-mode)
-  :config
-  (setq company-box-show-single-candidate t
-        company-box-backends-colors nil
-        company-box-max-candidates 50
-        x-gtk-resize-child-frames 'resize-mode)
+;; (use-package company-box :straight t
+;;   :after (company)
+;;   :hook (company-mode . company-box-mode)
+;;   :config
+;;   (setq company-box-show-single-candidate t
+;;         company-box-backends-colors nil
+;;         company-box-max-candidates 50
+;;         x-gtk-resize-child-frames 'resize-mode)
 
   ;; disable tab bar in company-box child frames. Will probably be PR'd upstream eventually
   (add-to-list 'company-box-frame-parameters '(tab-bar-lines . 0)))
