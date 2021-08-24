@@ -28,57 +28,12 @@
   :config
   (defvar python-mode-initialized nil)
 
-  (defun my-python-mode-hook ()
-    (setq-local indent-tabs-mode nil)
-
-    (unless python-mode-initialized
-      (setq python-mode-initialized t)
-
-      (info-lookup-add-help
-       :mode 'python-mode
-       :regexp "[a-zA-Z_0-9.]+"
-       :doc-spec
-       '(("(python)Python Module Index" )
-         ("(python)Index"
-          (lambda
-            (item)
-            (cond
-             ((string-match
-               "\\([A-Za-z0-9_]+\\)() (in module \\([A-Za-z0-9_.]+\\))" item)
-              (format "%s.%s" (match-string 2 item)
-                      (match-string 1 item)))))))))
-
-    (set (make-local-variable 'parens-require-spaces) nil))
-
-  (add-hook 'python-mode-hook #'my-python-mode-hook)
-
-  (defun python-shell-send-line (&optional vis)
-    "send the current line to the inferior python process"
-    (interactive "P")
-    (save-excursion
-      (end-of-line)
-      (let ((end (point)))
-        (beginning-of-line)
-        (python-shell-send-region (point) end vis "eval line"))))
-
-  (defun current-line-empty-p ()
-    (save-excursion
-      (beginning-of-line)
-      (looking-at "[[:space:]]*$")))
-
-  (defun python-shell-send-line-and-go ()
-    (interactive)
-    (python-shell-send-line)
-    (python-shell-switch-to-shell))
-
   (aero-mode-leader-def
     :keymaps 'python-mode-map
     "p" 'run-python
     "s" '(:ignore t :wk "shell send")
     "sd" 'elpy-shell-send-defun
     "sD" 'elpy-shell-send-defun-and-go
-    "sl" 'python-shell-send-line
-    "sL" 'python-shell-send-line-and-go
     "sb" 'elpy-shell-send-buffer
     "sB" 'elpy-shell-send-buffer-and-go
     "sr" 'elpy-shell-send-region-or-buffer
@@ -212,43 +167,14 @@
              (buffer-file-name))))))
     (if command-line (pdb command-line) (error "command required"))))
 
-;; FIXME erroring in rpc sentinel
 (use-package elpy
   :straight (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
-  (setq elpy-rpc-virtualenv-path 'current
+  (setq elpy-rpc-virtualenv-path 'global
         elpy-rpc-python-command "python3"
         py-return-key #'py-newline-and-indent)
   (elpy-enable)
-
-  (defun elpy-switch-to-cpython ()
-    "Switch to using CPython shell."
-    (interactive)
-    (setq python-shell-interpreter "python3"
-          python-shell-interpreter-args "-i"
-          python-shell-prompt-detect-failure-warning t))
-  (defun elpy-switch-to-pypy ()
-    "Switch to using CPython shell."
-    (interactive)
-    (when (executable-find "pypy3")
-      (setq python-shell-interpreter "pypy3"
-            python-shell-interpreter-args "-i"
-            python-shell-prompt-detect-failure-warning t)))
-  (defun elpy-switch-to-ipython ()
-    "Switch to using IPython shell."
-    (interactive)
-    (when (executable-find "ipython")
-      (setq python-shell-interpreter "ipython"
-            python-shell-interpreter-args "-i --simple-prompt"
-            python-shell-prompt-detect-failure-warning t)))
-  (defun elpy-switch-to-jupyter ()
-    "Switch to using Jupyter shell."
-    (interactive)
-    (when (executable-find "jupyter")
-      (setq python-shell-interpreter "jupyter"
-            python-shell-interpreter-args "console --simple-prompt"
-            python-shell-prompt-detect-failure-warning nil)))
 
   (defun elpy-goto-import-header ()
     "Jump to the import header."
@@ -281,11 +207,6 @@
     "sB" '(elpy-shell-send-buffer-and-go :wk "send buffer and go")
     "sc" '(elpy-shell-send-defclass :wk "send defclass")
     "sC" '(elpy-shell-send-defclass-and-go :wk "send defclass and go")
-    "e" '(:ignore t :wk "change executable")
-    "ey" '(elpy-switch-to-pypy :wk "pypy")
-    "ec" '(elpy-switch-to-cpython :wk "cpython")
-    "ei" '(elpy-switch-to-ipython :wk "ipython")
-    "ej" '(elpy-switch-to-jupyter :wk "jupyter")
     "k" '(:ignore t :wk "kill")
     "kk" '(elpy-shell-kill :wk "kill shell")
     "kA" '(elpy-shell-kill-all :wk "kill all shells")
@@ -313,9 +234,7 @@
   ;; Use mypy for typechecking
   (flycheck-define-checker
       python-mypy ""
-      :command ("mypy"
-                "--ignore-missing-imports" "--fast-parser"
-                source-original)
+      :command ("mypy" "--ignore-missing-imports" source-original)
       :error-patterns
       ((error line-start (file-name) ":" line ": error:" (message) line-end))
       :modes python-mode)
