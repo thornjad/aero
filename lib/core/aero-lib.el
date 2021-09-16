@@ -71,94 +71,6 @@ with some parts omitted and some custom behavior added."
   "Escape STR to make it suitable for using is applescripts."
   (replace-regexp-in-string "\"" "\\\\\"" str))
 
-(defmacro aero/defhook (name arglist hooks docstring &rest body)
-  "Define a function called NAME and add it to a hook. ARGLIST is as in `defun'.
-HOOKS is a list of hooks to which to add the function, or just a single hook.
-DOCSTRING and BODY are as in `defun'."
-  (declare (indent 2)
-           (doc-string 4))
-  (unless (listp hooks)
-    (setq hooks (list hooks)))
-  (dolist (hook hooks)
-    (unless (string-match-p "-\\(hook\\|functions\\)$" (symbol-name hook))
-      (aero/log-error "symbol `%S' is not a hook" hook)))
-  (unless (stringp docstring)
-    (aero/log-error "no docstring provided for `aero/defhook'"))
-  (let ((hooks-str (format "`%S'" (car hooks))))
-    (dolist (hook (cdr hooks))
-      (setq hooks-str (format "%s\nand `%S'" hooks-str hook)))
-    `(progn
-       (defun ,name ,arglist
-         ,(format "%s\n\nThis function is for use in %s."
-                  docstring hooks-str)
-         ,@body)
-       (dolist (hook ',hooks)
-         (add-hook hook ',name)))))
-
-(defun aero/guess-startup-directory-using-proc ()
-  "Get the startup directory of current Emacs session from /proc."
-  (when (file-exists-p (format "/proc/%d/cwd" (emacs-pid)))
-    (file-chase-links (format "/proc/%d/cwd" (emacs-pid)))))
-
-(defun aero/guess-startup-directory-using-lsof ()
-  "Get the startup directory of the current Emacs session using`lsof'."
-  (when (executable-find "lsof")
-    (let* ((default-directory "/")
-           (lsof-op (shell-command-to-string (format "lsof -d cwd -a -Fn -p %d"
-                                                     (emacs-pid))))
-           (raw-cwd (car (last (split-string lsof-op "\n" t))))
-           (cwd (substring raw-cwd 1)))
-      (when (< 0 (length cwd))
-        cwd))))
-
-(defun aero/guess-startup-directory-using-buffers ()
-  "Guess the startup directory for current Emacs session from some buffer.
-This tries to get Emacs startup directory from the *Messages* or *scratch*
-buffer, needless to say this would be wrong if the user has killed and recreated
-these buffers."
-  (or (and (get-buffer "*Messages*")
-           (with-current-buffer "*Messages*" default-directory))
-      (and (get-buffer "*scratch*")
-           (with-current-buffer "*scratch*" default-directory))))
-
-(defun aero/guess-startup-directory ()
-  "Guess the directory the new Emacs instance should start from.
-On Linux it figures out the startup directory by reading /proc entry for current
-Emacs instance. Otherwise it falls back to guessing the startup directory by
-reading `default-directory' of *Messages* or *scratch* buffers falling back to
-the HOME environment variable and finally just using whatever is the current
-`default-directory'."
-  (or (aero/guess-startup-directory-using-proc)
-      (aero/guess-startup-directory-using-lsof)
-      (aero/guess-startup-directory-using-buffers)
-      (getenv "HOME")
-      default-directory))
-
-(defmacro aero/defadvice (name arglist where place docstring &rest body)
-  "Define an advice called NAME and add it to a function. ARGLIST is as in
-`defun'. WHERE is a keyword as passed to `advice-add', and PLACE is the function
-to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
-`defun'."
-  (declare (indent 2)
-           (doc-string 5))
-  (unless (stringp docstring)
-    (aero/log-error "no docstring provided for `aero/defadvice'"))
-  `(progn
-     (eval-and-compile
-       (defun ,name ,arglist
-         ,(let ((article (if (string-match-p "^:[aeiou]" (symbol-name where))
-                             "an"
-                           "a")))
-            (format "%s\n\nThis is %s `%S' advice for `%S'."
-                    docstring article where
-                    (if (and (listp place)
-                             (memq (car place) ''function))
-                        (cadr place)
-                      place)))
-         ,@body))
-     (advice-add ',place ',where #',name)
-     ',name))
-
 (defmacro aero/local! (&rest body)
   "Execute BODY in local directory instead of TRAMP."
   `(let ((default-directory user-emacs-directory))
@@ -169,16 +81,6 @@ to which to add the advice, like in `advice-add'. DOCSTRING and BODY are as in
 
 Similar to C++'s void var construct."
   `(and ,@body))
-
-(defun aero/path-join (path &rest segments)
-  "Join PATH with SEGMENTS using `expand-file-name'.
-First `expand-file-name' is called on the first member of SEGMENTS, with PATH as
-DEFAULT-DIRECTORY. Then `expand-file-name' is called on the second member, with
-the result of the first call as DEFAULT-DIRECTORY, and so on. If no SEGMENTS are
-passed, the return value is just PATH."
-  (while segments
-    (setq path (expand-file-name (pop segments) path)))
-  path)
 
 (defun aero/sort-words (reverse beg end)
   "Sort words in region alphabetically, in REVERSE if negative.
@@ -702,18 +604,6 @@ If called with prefix argument, or with nothing under point, prompt for tag."
     (save-excursion
       (native-compile-async buffer-file-name nil t))))
 
-;; (defun aero/native-compile-dir-at-buffer ()
-;;   "Native compile the directory of the file in current buffer."
-;;   (interactive)
-;;   (save-excursion
-;;     (native-compile-async (list (file-name-directory buffer-file-name)) t t)))
-
-;; (defun aero/native-compile-aero ()
-;;   "Native compile all of Aero Emacs."
-;;   (interactive)
-;;   (save-excursion
-;;     (native-compile-async (list (file-name-directory user-emacs-directory)) t t)))
-
 (defun aero/byte-compile-file-at-buffer ()
   "Byte compile the file open in the current buffer."
   (interactive)
@@ -768,10 +658,6 @@ If called with prefix argument, or with nothing under point, prompt for tag."
 (defun decrement-number-at-point ()
   (interactive)
   (alter-number-at-point -1))
-
-(defun lorem ()
-  (interactive)
-  (insert "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent libero orci, auctor sed, faucibus vestibulum, gravida vitae, arcu. Nunc posuere. Suspendisse potenti. Praesent in arcu ac nisl ultricies ultricies. Fusce eros. Sed pulvinar vehicula ante. Maecenas urna dolor, egestas vel, tristique et, porta eu, leo. Curabitur vitae sem eget arcu laoreet vulputate. Cras orci neque, faucibus et, rhoncus ac, venenatis ac, magna. Aenean eu lacus. Aliquam luctus facilisis augue. Nullam fringilla consectetuer sapien. Aenean neque augue, bibendum a, feugiat id, lobortis vel, nunc. Suspendisse in nibh quis erat condimentum pretium. Vestibulum tempor odio et leo. Sed sodales vestibulum justo. Cras convallis pellentesque augue. In eu magna. In pede turpis, feugiat pulvinar, sodales eget, bibendum consectetuer, magna. Pellentesque vitae augue."))
 
 (defun human-date (human-string &optional epoch)
   "Convert HUMAN-STRING to a date string or if EPOCH, seconds.
