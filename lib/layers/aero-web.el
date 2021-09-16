@@ -65,11 +65,12 @@
 
 ;; the rest
 
-(use-package restclient :defer t
+(use-package restclient
 	:after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
   :config
+  (require 'general)
   (aero-mode-leader-def
     :keymaps 'restclient-mode-map
     "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
