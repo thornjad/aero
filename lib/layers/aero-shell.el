@@ -26,14 +26,19 @@
             eshell-cmpl-dir-ignore
             eshell-visual-commands
             eshell-visual-subcommands)
+  :functions (eshell-previous-input
+              eshell-next-input)
   :config
   (require 'em-smart)
 
   ;; Ensure eshell doesn't override these
-  (general-def term-mode-map
-    (kbd "M-h") 'windmove-left
-    (kbd "M-l") 'windmove-right
-    (kbd "M-p") 'eshell-previous-input
+  (define-key term-mode-map
+    (kbd "M-h") 'windmove-left)
+  (define-key term-mode-map
+    (kbd "M-l") 'windmove-right)
+  (define-key term-mode-map
+    (kbd "M-p") 'eshell-previous-input)
+  (define-key term-mode-map
     (kbd "M-n") 'eshell-next-input)
 
   (setq
@@ -115,60 +120,32 @@
     (setq eshell-save-history-on-exit t))
 
   (eval-after-load 'esh-opt
-									 '(progn
-    (require 'em-cmpl)
-    (require 'em-prompt)
-    (require 'em-term)
+		'(progn
+       (require 'em-cmpl)
+       (require 'em-prompt)
+       (require 'em-term)
 
-    (setq eshell-cmpl-cycle-completions nil
-          ;; auto truncate after 12k lines
-          eshell-buffer-maximum-lines 12000
-          ;; history size
-          eshell-history-size 500
-          ;; buffer shorthand -> echo foo > #'buffer
-          eshell-buffer-shorthand t
-          ;; treat 'echo' like shell echo
-          eshell-plain-echo-behavior t
-          eshell-ls-initial-args "-lah")
+       (setq eshell-cmpl-cycle-completions nil
+             ;; auto truncate after 12k lines
+             eshell-buffer-maximum-lines 12000
+             ;; history size
+             eshell-history-size 500
+             ;; buffer shorthand -> echo foo > #'buffer
+             eshell-buffer-shorthand t
+             ;; treat 'echo' like shell echo
+             eshell-plain-echo-behavior t
+             eshell-ls-initial-args "-lah")
 
-    ;; Visual commands
-    (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-                                   "ncftp" "pine" "tin" "trn" "elm" "vim"
-                                   "nmtui" "alsamixer" "htop" "el" "elinks"
-                                   "ssh" "nethack" "dtop" "dstat"))
-    (setq eshell-visual-subcommands '(("git" "log" "diff" "show")
-                                      ("vagrant" "ssh"))))))
+       ;; Visual commands
+       (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                      "ncftp" "pine" "tin" "trn" "elm" "vim"
+                                      "nmtui" "alsamixer" "htop" "el" "elinks"
+                                      "ssh" "nethack" "dtop" "dstat"))
+       (setq eshell-visual-subcommands '(("git" "log" "diff" "show")
+                                         ("vagrant" "ssh"))))))
 
 
-;;; term
-
-(use-package term :straight nil :after (general)
-  :commands (term term-bash)
-  :init
-  (add-hook
-   'term-mode-hook
-   (lambda ()
-     (setq-local evil-move-cursor-back nil)
-     (setq-local scroll-margin 0)))
-
-  (general-def term-mode-map
-    (kbd "M-h") 'windmove-left
-    (kbd "M-l") 'windmove-right
-    (kbd "M-p") 'term-previous-input
-    (kbd "M-n") 'term-next-input)
-
-  (dolist (x '("bash" "zsh" "cicada"))
-    (eval
-     `(defun ,(intern (concat "term-" x)) ()
-        (interactive)
-        (funcall-interactively #'term ,x))))
-
-  (aero-leader-def
-    "Sts" 'shell
-    "Stt" 'term
-    "Stb" 'term-bash
-    "Stz" 'term-zsh
-    "Stc" 'term-cicada))
+;;; vterm
 
 ;; NOTE: vterm requires libvterm-dev, which may not be installed. See
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
@@ -177,7 +154,6 @@
 (when (bound-and-true-p module-file-suffix)
   (use-package vterm :straight t
     :after (general)
-    :commands (vterm vterm-mode)
     :init
     ;; HACK vterm clumsily forces vterm-module.so to compile when the package is loaded. This is
     ;; necessary to prevent compilation when use-package is evaluated during byte- or
@@ -192,6 +168,23 @@
     :config
     (setq vterm-kill-buffer-on-exit t
           vterm-max-scrollback 5000)))
+
+(use-package vterm-toggle :straight t
+  :after (vterm general)
+  :config
+  ;; Use bottom buffer (per project readme)
+  (setq vterm-toggle-fullscreen-p nil)
+  (add-to-list 'display-buffer-alist
+               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 ;;(dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3)))
+  (aero-leader-def
+    "'" 'vterm-toggle))
 
 
 ;;; shell scripting
