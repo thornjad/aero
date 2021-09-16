@@ -69,8 +69,7 @@
 
 ;;; the general is here
 
-(use-package general
-	:straight t
+(use-package general :straight t
   :functions (general-define-key)
   :init
   (setq-default general-override-states
@@ -606,6 +605,7 @@ Local bindings (`counsel-mode-map'):
           "*Ibuffer*"
           "*esh command on file*"))
   (winner-mode 1)
+  (declare-function general-define-key "general.el")
   (general-define-key
    :states '(normal)
    :prefix "SPC"
