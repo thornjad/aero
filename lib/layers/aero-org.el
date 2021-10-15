@@ -12,8 +12,7 @@
 
 (require 'aero-prelude)
 
-(straight-use-package 'org)
-(use-package org
+(use-package org :straight nil
 	:commands org-mode
 	:mode ("\\.org\\'" . org-mode)
 
@@ -33,143 +32,6 @@
 
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all)
-
-	;; TODO patch in main
-  ;; Patch to ensure org-return always inserts an item /after/ the current item.
-  ;; Default behavior inserts before the current item depending on pointer
-  ;; position.
-  ;;(when (and (require 'el-patch nil t) (require 'org nil t))
-  ;;  (require 'el-patch)
-  ;;  (el-patch-feature org-list)
-  ;;  (el-patch-defun org-list-insert-item (pos struct prevs &optional checkbox after-bullet)
-  ;;    "Insert a new list item at POS and return the new structure.
-  ;;STRUCT is the list structure.  PREVS is the alist of previous
-  ;;items, as returned by `org-list-prevs-alist'.
-
-  ;;Insert a checkbox if CHECKBOX is non-nil, and string AFTER-BULLET
-  ;;after the bullet.  Cursor will be after this text once the
-  ;;function ends.
-
-  ;;This function modifies STRUCT."
-                                        ;     (let* ((case-fold-search t)
-                                        ;            (item
-                                        ;             (catch :exit
-                                        ;               (let ((i nil))
-                                        ;                 (pcase-dolist (`(,start ,_ ,_ ,_ ,_ ,_ ,end) struct)
-                                        ;                   (cond
-                                        ;                    ((> start pos) (throw :exit i))
-                                        ;                    ((< end pos) nil)	;skip sub-lists before point
-                                        ;                    (t (setq i start))))
-                                        ;                 ;; If no suitable item is found, insert a sibling of the
-                                        ;                 ;; last item in buffer.
-                                        ;                 (or i (caar (reverse struct))))))
-                                        ;            (item-end (org-list-get-item-end item struct))
-                                        ;            (item-end-no-blank (org-list-get-item-end-before-blank item struct))
-                                        ;            (beforep
-                                        ;             (progn
-                                        ;               (setf (point) item)
-                                        ;               (looking-at org-list-full-item-re)
-                                        ;               (<= pos
-                                        ;                   (cond
-                                        ;                    ((not (match-beginning 4)) (match-end 0))
-                                        ;                    ;; Ignore tag in a non-descriptive list.
-                                        ;                    ((save-match-data (string-match "[.)]" (match-string 1)))
-                                        ;                     (match-beginning 4))
-                                        ;                    (t (el-patch-swap
-                                        ;                         (save-excursion
-                                        ;                           (setf (point) (match-end 4))
-                                        ;                           (skip-chars-forward " \t")
-                                        ;                           (point))
-                                        ;                         (point)))))))
-                                        ;            (split-line-p (org-get-alist-option org-M-RET-may-split-line 'item))
-                                        ;            (blank-nb (org-list-separating-blank-lines-number pos struct prevs))
-                                        ;            ;; Build the new item to be created.  Concatenate same bullet
-                                        ;            ;; as item, checkbox, text AFTER-BULLET if provided, and text
-                                        ;            ;; cut from point to end of item (TEXT-CUT) to form item's
-                                        ;            ;; BODY.  TEXT-CUT depends on BEFOREP and SPLIT-LINE-P.  The
-                                        ;            ;; difference of size between what was cut and what was
-                                        ;            ;; inserted in buffer is stored in SIZE-OFFSET.
-                                        ;            (ind (org-list-get-ind item struct))
-                                        ;            (ind-size (if indent-tabs-mode
-                                        ;                          (+ (/ ind tab-width) (mod ind tab-width))
-                                        ;                        ind))
-                                        ;            (bullet (org-list-bullet-string (org-list-get-bullet item struct)))
-                                        ;            (box (and checkbox "[ ]"))
-                                        ;            (text-cut
-                                        ;             (and (not beforep)
-                                        ;                  split-line-p
-                                        ;                  (progn
-                                        ;                    (setf (point) pos)
-                                        ;                    ;; If POS is greater than ITEM-END, then point is in
-                                        ;                    ;; some white lines after the end of the list.  Those
-                                        ;                    ;; must be removed, or they will be left, stacking up
-                                        ;                    ;; after the list.
-                                        ;                    (when (< item-end pos)
-                                        ;                      (delete-region (1- item-end) (point-at-eol)))
-                                        ;                    (skip-chars-backward " \r\t\n")
-                                        ;                    ;; Cut position is after any blank on the line.
-                                        ;                    (save-excursion
-                                        ;                      (skip-chars-forward " \t")
-                                        ;                      (setq pos (point)))
-                                        ;                    (delete-and-extract-region (point) item-end-no-blank))))
-                                        ;            (body
-                                        ;             (concat bullet
-                                        ;                     (and box (concat box " "))
-                                        ;                     after-bullet
-                                        ;                     (and text-cut
-                                        ;                          (if (string-match "\\`[ \t]+" text-cut)
-                                        ; 	                           (replace-match "" t t text-cut)
-                                        ; 	                         text-cut))))
-                                        ;            (item-sep (make-string  (1+ blank-nb) ?\n))
-                                        ;            (item-size (+ ind-size (length body) (length item-sep)))
-                                        ;            (size-offset (- item-size (length text-cut))))
-                                        ;       ;; Insert effectively item into buffer.
-                                        ;       (setf (point) item)
-                                        ;       (indent-to-column ind)
-                                        ;       (insert body item-sep)
-                                        ;       ;; Add new item to STRUCT.
-                                        ;       (dolist (e struct)
-                                        ;         (let ((p (car e)) (end (nth 6 e)))
-                                        ;           (cond
-                                        ;            ;; Before inserted item, positions don't change but an item
-                                        ;            ;; ending after insertion has its end shifted by SIZE-OFFSET.
-                                        ;            ((< p item)
-                                        ;             (when (> end item)
-                                        ;               (setcar (nthcdr 6 e) (+ end size-offset))))
-                                        ;            ;; Item where insertion happens may be split in two parts.
-                                        ;            ;; In this case, move start by ITEM-SIZE and end by
-                                        ;            ;; SIZE-OFFSET.
-                                        ;            ((and (= p item) (not beforep) split-line-p)
-                                        ;             (setcar e (+ p item-size))
-                                        ;             (setcar (nthcdr 6 e) (+ end size-offset)))
-                                        ;            ;; Items starting after modified item fall into two
-                                        ;            ;; categories.
-                                        ;            ;;
-                                        ;            ;; If modified item was split, and current sub-item was
-                                        ;            ;; located after split point, it was moved to the new item:
-                                        ;            ;; the part between body start and split point (POS) was
-                                        ;            ;; removed.  So we compute the length of that part and shift
-                                        ;            ;; item's positions accordingly.
-                                        ;            ;;
-                                        ;            ;; Otherwise, the item was simply shifted by SIZE-OFFSET.
-                                        ;            ((and split-line-p (not beforep) (>= p pos) (<= p item-end-no-blank))
-                                        ;             (let ((offset (- pos item ind (length bullet) (length after-bullet))))
-                                        ;               (setcar e (- p offset))
-                                        ;               (setcar (nthcdr 6 e) (- end offset))))
-                                        ;            (t
-                                        ;             (setcar e (+ p size-offset))
-                                        ;             (setcar (nthcdr 6 e) (+ end size-offset))))))
-                                        ;       (push (list item ind bullet nil box nil (+ item item-size)) struct)
-                                        ;       (setq struct (sort struct #'car-less-than-car))
-                                        ;       ;; If not BEFOREP, new item must appear after ITEM, so exchange
-                                        ;       ;; ITEM with the next item in list.  Position cursor after bullet,
-                                        ;       ;; counter, checkbox, and label.
-                                        ;       (if beforep
-                                        ;           (setf (point) item)
-                                        ;         (setq struct (org-list-swap-items item (+ item item-size) struct))
-                                        ;         (setf (point) (org-list-get-next-item
-                                        ;                        item struct (org-list-prevs-alist struct))))
-                                        ;       struct)))
 
   (defun aero/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -476,7 +338,7 @@ Today:
   (today))
 
 (defvar aero/thornlog-path
-  (expand-file-name "~/store/doc/thornlog/")
+  (expand-file-name "~/Documents/thornlog/")
   "Location of the thornlog on this filesystem.")
 
 (defun aero/thornlog-dir ()

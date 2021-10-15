@@ -26,14 +26,6 @@
 
 ;;; Code:
 
-;; Our real configuration for Org comes much later. Doing this now
-;; means that if any packages that are installed in the meantime
-;; depend on Org, they will not accidentally cause the Emacs-provided
-;; (outdated and duplicated) version of Org to be loaded before the
-;; real one is registered.
-(declare-function straight-use-package "straight.el")
-(straight-use-package 'org)
-
 
 ;;; Set up core packages
 (use-package gnu-elpa-keyring-update :straight t)
