@@ -1,4 +1,4 @@
-personal_ws-1.1 en 345 
+personal_ws-1.1 en 357 
 ACL
 APIs
 Aireon
@@ -6,9 +6,11 @@ Alacritty
 Analytics
 AuthNet
 BCAT
+BLE
 BRE
 BSc
 Bing
+Boids
 Brotli
 CLI
 CORS
@@ -93,6 +95,7 @@ POSTed
 POSTs
 PRs
 PSU
+PiAware
 PoC
 Postgres
 Prebuilt
@@ -151,6 +154,8 @@ aws
 backend
 backquote
 bitwise
+boid
+boids
 boolean
 booleans
 borked
@@ -161,6 +166,7 @@ cget
 changelog
 chocolatiers
 config
+configurator
 counterintuitive
 coworking
 cron
@@ -178,6 +184,7 @@ dicts
 dir
 dired
 diskutil
+doi
 downloader
 dwim
 edu
@@ -196,6 +203,7 @@ eww
 facto
 falsy
 firehose
+flockmates
 flycheck
 fontconfig
 formdata
@@ -264,6 +272,7 @@ noreferrer
 npm
 nw
 pbf
+performant
 pixelation
 pomodoro
 pre
@@ -275,6 +284,7 @@ procs
 proration
 proxied
 px
+pygame
 pylint
 readme
 rearchitecting
@@ -297,6 +307,7 @@ signup
 singlehandedly
 sitdown
 sortable
+spectre
 standup
 standups
 struct
@@ -324,6 +335,7 @@ todo
 tooltip
 tortious
 touchpad
+transpiled
 triaging
 truthy
 tty
