@@ -18,7 +18,7 @@
 
 (require 'aero-prelude)
 
-(use-package projectile :defer 2
+(use-package projectile
   :straight (:host github :repo "bbatsov/projectile")
 	:config
 	(setq projectile-indexing-method 'native
