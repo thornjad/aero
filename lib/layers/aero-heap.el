@@ -33,7 +33,7 @@
 
 ;; Mark E′ violations
 (use-package eprime-mode
-  :load-path "~/src/thornjad/eprime-mode"
+  :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
   :hook ((text-mode) . eprime-mode)
   :config
