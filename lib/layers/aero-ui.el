@@ -45,9 +45,13 @@
                     '(ns-appearance . (if (display-grapic-p) light dark)))))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
+
+;; set up initial window the way i want it
 (split-window-horizontally)
 (aero/frame-recenter)
 (add-hook 'after-make-frame-functions #'aero/frame-recenter)
+(when (require 'vterm-toggle nil t)
+  (vterm-toggle))
 
 
 ;; get ligatures to actually work
