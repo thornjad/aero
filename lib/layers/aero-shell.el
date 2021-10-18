@@ -171,7 +171,7 @@
 
 (use-package vterm-toggle :straight t
   :after (vterm general)
-  :config
+  :init
   ;; Use bottom buffer (per project readme)
   (setq vterm-toggle-fullscreen-p nil)
   (add-to-list 'display-buffer-alist
