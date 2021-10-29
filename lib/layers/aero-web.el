@@ -62,6 +62,8 @@
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
+(use-package typescript-mode :straight t)
+
 
 ;; the rest
 

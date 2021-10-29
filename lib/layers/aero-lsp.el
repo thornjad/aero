@@ -22,6 +22,7 @@
   :hook ((sh-mode . lsp) ;; bash-language-server
          ;; (rjsx-mode . lsp) ;; javascript-typescript-langserver
          (js-mode . lsp) ;; javascript-typescript-langserver
+         (typescript-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
          (clojure-mode . lsp)
          (clojurescript-mode . lsp)
