@@ -134,7 +134,8 @@
  js-switch-indent-offset 2
  js-syntactic-mode-name nil ; just use normal mode name
  js2-basic-offset 2
- python-indent-offset 4
+ typescript-indent-level 2
+ python-indent-offset 4 ; 2 would be a hassle
  rust-indent-offset 4
  sgml-basic-offset 2
  sh-basic-offset 2
