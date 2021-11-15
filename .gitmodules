@@ -1,6 +1,3 @@
-[submodule "lib/packages/xterm-color"]
-	path = lib/packages/xterm-color
-	url = git@github.com:atomontage/xterm-color.git
 [submodule "lib/packages/rivet-mode"]
 	path = lib/packages/rivet-mode
 	url = git@gitlab.com:thornjad/rivet-mode.git
