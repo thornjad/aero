@@ -42,8 +42,7 @@
     "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
     "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
 
-(use-package rivet-mode :straight nil
-  :mode "\\.rvt\\'")
+(use-package rivet-mode :straight t)
 
 (defun mc-string-at-point (&optional key)
   "Surround the current string at point with a call to `mc'.
