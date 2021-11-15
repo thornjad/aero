@@ -32,14 +32,11 @@
 
 (use-package emmet-mode :straight t
   :load-path "lib/packages/emmet-mode/"
-  :hook ((web-mode html-mode css-mode scss-mode rjsx-mode js-mode) . emmet-mode)
+  :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
 	:init
 	(setq emmet-self-closing-tag-style " /")
 
   :config
-  (add-hook
-   'rjsx-mode-hook
-   (lambda () (setq emmet-expand-jsx-className? t)))
   (add-hook
    'js-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))

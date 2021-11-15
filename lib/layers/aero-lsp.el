@@ -20,7 +20,6 @@
 
 (use-package lsp-mode :after (general)
   :hook ((sh-mode . lsp) ;; bash-language-server
-         ;; (rjsx-mode . lsp) ;; javascript-typescript-langserver
          (js-mode . lsp) ;; javascript-typescript-langserver
          (typescript-mode . lsp) ;; javascript-typescript-langserver
          (python-mode . lsp) ;; python-language-server
@@ -39,16 +38,6 @@
   :config
 
   (setq lsp-lens-enable t)
-
-  ;; FIXME this created a dozen or so language server processes on hopnu which
-  ;; used a shit-ton of resources. Disabled until it can be addressed.
-  ;; (lsp-register-client
-  ;;  (make-lsp-client
-  ;;   :new-connection (lsp-tramp-connection "javascript-language-server.js")
-  ;;   :major-modes '(rjsx-mode js-mode)
-  ;;   :remote? t
-  ;;   :priority -1
-  ;;   :server-id 'javascript-remote))
 
   ;; FIXME this does nothing at all??
   (lsp-register-client

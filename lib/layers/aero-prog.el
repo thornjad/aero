@@ -92,7 +92,6 @@
           tcl-mode
           json-mode
           js2-mode
-          rjsx-mode
           emacs-lisp-mode
           c-mode
           cpp-mode)
@@ -266,7 +265,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-local-pair 'web-mode "<?" "?>")
   (sp-local-pair 'web-mode "{" "}")
   (sp-local-pair 'web-mode "`" "`")
-  (sp-local-pair 'rjsx-mode "`" "`")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" )

@@ -1,6 +1,3 @@
-[submodule "lib/packages/rjsx-mode"]
-	path = lib/packages/rjsx-mode
-	url = git@github.com:thornjad/rjsx-mode.git
 [submodule "lib/packages/xterm-color"]
 	path = lib/packages/xterm-color
 	url = git@github.com:atomontage/xterm-color.git
