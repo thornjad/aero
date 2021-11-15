@@ -32,6 +32,7 @@
   (when (system-is-mac)
     (setq aero-theme-font-height 140))
   :config
+  (setq aero-theme-font "Victor Mono")
   (load-theme 'aero t))
 
 (setq default-frame-alist
