@@ -3,7 +3,7 @@
 # override to use something like, say, a local version of remacs
 EMACS ?= emacs
 
-all: update-packages compile-packages update-elpa
+all: update-packages compile-packages
 
 # update all submodule packages, byte-compile submodule packages, then update
 # *ELPA packages. The *ELPA update is separated from the byte-compile step
@@ -18,7 +18,7 @@ compile-packages:
 	$(EMACS) -batch -l ~/.config/emacs/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
 
 install-dependencies: install-lsp-servers
-	npm i -g sass-lint eslint tern coffeescript coffeelint
+	npm i -g sass-lint eslint tern
 
 install-lsp-servers:
 	npm i -g bash-language-server
