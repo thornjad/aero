@@ -14,7 +14,6 @@
 
 (use-package org :straight nil
 	:commands org-mode
-	:mode ("\\.org\\'" . org-mode)
 
 	:config
 	(setq org-src-preserve-indentation t
@@ -169,28 +168,6 @@ Safe org paths are determined by `aero/org-eval-safe-list'."
     (when (eq major-mode 'org-mode)
       (aero/org-eval-saveblock)))
   (add-hook 'before-save-hook #'aero/org-mode-before-save-hook-eval))
-
-(use-package company-org-block :straight (:host github :repo "xenodium/company-org-block")
-  :after (org company)
-  :custom (company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
-  :hook ((org-mode . (lambda ()
-                       (setq-local company-backends '(company-org-block))
-                       (company-mode +1)))))
-
-(use-package org-toc
-  :straight (:host github :repo "snosov1/toc-org")
-  :after (org)
-  :commands (toc-org-mode)
-  :init (add-hook 'org-mode-hook #'toc-org-mode))
-
-;; org-mode seems to never call its own hook??
-(add-hook
- 'prog-mode-hook
- (lambda ()
-   (when (eq major-mode "org-mode")
-     (message "okay")
-     (run-hooks 'org-mode-hook)
-     (message "wtf"))))
 
 
 ;; thornlog (agenda) helpers

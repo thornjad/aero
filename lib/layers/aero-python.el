@@ -115,44 +115,6 @@
      (add-hook 'completion-at-point-functions
                'pdb-completion-at-point-function nil t))))
 
-(use-package ein :straight t
-  :mode "\\.ipynb\\'"
-  :config
-  (aero-leader-def
-    "aj" '(:ignore t :wk "jupyter")
-    "ajn" '(ein:run :wk "notebook")
-    "ajl" '(ein:login :wk "log in to server"))
-  (aero-mode-leader-def
-    :keymaps 'ein:notebook-mode-map
-    "c" '(:ignore t :wk "cell")
-    "cc" '(ein:worksheet-execute-cell-km :wk "execute cell")
-    "ca" '(ein:worksheet-insert-cell-above-km :wk "insert cell above")
-    "cb" '(ein:worksheet-insert-cell-below-km :wk "insert cell below")
-    "cA" '(ein:worksheet-execute-all-cells :wk "execute all cells")
-    "ck" '(ein:worksheet-kill-cell-km :wk "kill cell")
-    "c/" '(ein:worksheet-split-cell-at-point-km :wk "split cell at point")
-    "ct" '(ein:worksheet-change-cell-type-km :wk "change cell type")
-    "cy" '(ein:worksheet-copy-cell-km :wk "copy cell")
-    "cp" '(ein:worksheet-yank-cell-km :wk "paste cell")
-    "f" '(:ignore t :wk "file")
-    "ff" '(ein:file-open-km :wk "find file")
-    "fw" '(ein:notebook-save-notebook-command-km :wk "file write")
-    "fR" '(ein:notebook-rename-command-km :wk "file rename")
-    "N" '(:ignore t :wk "notebook")
-    "Nr" '(ein:notebook-reconnect-session-command-km :wk "reconnect session")
-    "C-c" '(ein:notebook-kernel-interrupt-command-km :wk "kernel interrupt")
-    "n" '(ein:worksheet-goto-next-input-km :wk "next input")
-    "p" '(ein:worksheet-goto-previous-input-km :wk "previous input")
-    "w" '(ein:markdown-follow-thing-at-point :wk "follow thing at point")))
-
-(use-package hy-mode :straight t
-  :mode "\\.hy\\'"
-  :config
-  (aero-mode-leader-def
-    :keymaps 'hy-mode-map
-    "h" 'run-hy
-    "p" 'run-python))
-
 (defun pdb-poetry ()
   "Like `py-pdb' but with poetry."
   (interactive)

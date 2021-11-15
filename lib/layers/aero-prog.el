@@ -276,13 +276,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
            '(:add (aero/smartparens-pair-newline-and-indent "RET")))
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
-(use-package siege-mode :straight (:host github :repo "tslilc/siege-mode")
-  :after (general)
-  :commands (siege-explicit-call)
-  :init
-  (aero-leader-def
-    "sw RET" '(siege-explicit-call :wk "siege surround")))
-
 (use-package rainbow-delimiters :straight t
   :hook ((prog-mode . rainbow-delimiters-mode)))
 

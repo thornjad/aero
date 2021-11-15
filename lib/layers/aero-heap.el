@@ -69,26 +69,4 @@
     "assa" '(aero/spotify-search-artist :wk "artist")
     "assb" '(aero/spotify-search-album :wk "album")))
 
-
-;;; games
-
-(use-package 2048-game :straight t
-  :commands 2048-game
-  :config
-  (general-define-key
-   :modes '(normal emacs)
-   :keymaps '2048-mode-map
-   "h" '2048-left
-   "j" '2048-down
-   "k" '2048-up
-   "l" '2048-right
-   "r" '2048-random-move
-   (kbd "<up>") '2048-up
-   (kbd "<left>") '2048-left
-   (kbd "<right>") '2048-right
-   (kbd "<down>") '2048-down
-   "q" 'quit-window))
-
-(use-package landmark :straight t :defer t)
-
 (provide 'aero-heap)
