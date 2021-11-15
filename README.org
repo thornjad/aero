@@ -5,7 +5,7 @@
 #+attr_html: :width 100%
 [[./etc/images/aero-preview.png]]
 
-My own Emacs configuration, blending all the best shit I can find. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; Aero is highly tailored to me, what I want and what I use. Configuration for Lisps, Python and web languages have special focus.
+My own Emacs configuration, blending all the best shit I can find. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; I've tailored Aero to myself,, what I want and what I use. Configuration for Lisps, Python and web languages have special focus.
 
 #+begin_quote
 "An infinite number of monkeys typing into GNU Emacs would never make a good
@@ -23,7 +23,19 @@ else vanish." — Neal Stephenson
 #+end_quote
 
 ** Requirements
-Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs. Actual day-to-day usage runs on a fork of GNU Emacs, hosted [[https://gitlab.com/thornjad/emacs][on GitLab]], which generally keeps pace with GNU Emacs.
+Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs.
+
+To take full advantage of this project, install these tools:
+
+- Node.js
+- Python 3
+- Rust and rustup
+- Ocaml and opam
+- Nix
+
+Having cloned and met dependency requirements,, run =make= to set up dependencies.
+
+If you'd rather not install these dependencies, take a look at the Makefile and just install what you want to use.
 
 ** Installation
 
@@ -42,17 +54,12 @@ Local settings, functions, et cetera existing in an untracked =init.local.el= fi
 "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 #+end_quote
 
-Emacs keybindings are, in my humble opinion, a pile of horseshit. They might work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available..
-
-**** Ivy and Counsel
-Despite using Helm for a few years, I chose to use Counsel and Ivy when I created this project. In my experience, they run smaller, lighter, faster and just as powerful as Helm.
-
-That being said, Helm is now a dead project, so I guess this section may not be so necessary for much longer.
+Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold =CTRL= for so long. Instead, Aero makes extensive use of [[https://github.com/emacs-evil/evil][Evil]], providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available..
 
 **** Spacemacs-inspired leader keys
-When I first started using Emacs, it was through Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero is built around one of two leader keys, =SPC= and =,= (comma). =SPC= leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w= (for file write) saves the buffer to disk.
+When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around one of two leader keys, =SPC= and =,= (comma). =SPC= leads the vast majority of commands. =SPC SPC= is the same as =M-x=, =SPC f w= (for file write) saves the buffer to disk.
 
-The other leader, =,= is available in some major modes and contains bindings for that mode. For example, in Python mode, =, s b= sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs the HTTP query at point.
+The other leader, =,= contains bindings for specific major modes. For example, in Python mode, =, s b= sends the entire buffer to Elpy's inferior Python shell and executes it, and in =restclient=, =, RET= runs the HTTP query at point.
 
 #+caption: Aero space leader with Ivy completion
 #+attr_html: :width 100%
@@ -62,14 +69,10 @@ The other leader, =,= is available in some major modes and contains bindings for
 Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python, OCaml and Javascript in particular, so they've received the most love.
 
 **** No tagged versioning
-As mentioned above, Aero does intend to be a mainstream project like Spacemacs or Prelude. This project is my personal configuration, pure and simple. As such, versioning provides no  benefit; source control with git is  enough. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
+As mentioned above, Aero does intend to go mainstream like Spacemacs or Prelude. This project consists of personal configuration, pure and simple. As such, versioning provides no benefit; git provides plenty of control. If you want to use this entire project for your own Emacs configuration, I recommend forking to avoid unexpected changes.
 
 **** Custom theme and a simplified mode line
-There is little disagreement in the Emacs community that the default color scheme is an abomination. Luckily, it's very easy to change, and not much more difficult to create one's own.
-
-In my case, I've created a custom theme as its own package, which Aero includes as a submodule. The original is available for perusing [[https://gitlab.com/thornjad/aero-theme][on GitLab]].
-
-By default, Aero uses my packages default light theme, =aero= which is loosely inspired by the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern Minnesota in Autumn. Also available is =aero-dark=, which pulls further inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
+Aero replaces the default awful color scheme with the eponymous =aero-theme=, which pulls loose inspiration from the [[https://github.com/11111000000/tao-theme-emacs][Tao themes]] and colors inspired by the colors of northern Minnesota in Autumn. The theme package also contains =aero-dark=, which incorporates further inspiration from my own [[https://github.com/ClearNight/clearnight-retro-syntax][ClearNight Retro]] theme for [[https://atom.io][Atom]].
 
 #+caption: Aero-Light theme
 #+attr_html: :width 100%
@@ -79,17 +82,17 @@ By default, Aero uses my packages default light theme, =aero= which is loosely i
 #+attr_html: :width 100%
 [[./etc/images/aero-dark-preview.png]]
 
-Aero is also packaged with a custom and mostly original reduced mode line which works with any theme (at least it looks great with =aero-light= and =aero-dark=). Rather than getting cluttered with info from every mode under the sun, the Aero mode line displays the current editing mode, file status (changed, saved, locked), filename, file size, line number at point, progression through the file (percentage), the remote hostname (if using TRAMP) and the current major mode.
+With Aero, you'll also find a custom improved mode line which works with any theme (though it looks great with =aero-light= and =aero-dark=). Rather than getting cluttered with info from every mode under the sun, the Aero mode line displays the current editing mode, file status (changed, saved, locked), filename, file size, line number at point, progression through the file (percentage), the remote hostname (if using TRAMP) and the current major mode.
 
 #+caption: Aero's mode line
 #+attr_html: :width 100%
 [[./etc/images/modeline-preview.png]]
 
 **** Source-controlled Flycheck dictionary
-The built-in Flycheck dictionary is woefully lacking in technical terms. Rather than keep my personal dictionary secret, it is included here in =etc/ispell/personal_dictionary.aws=. I haven't dug into the implementation of this library, but due to the way it reshuffles itself occasionally, I presume it's some type of tree structure. As such, if you want to merge my dictionary with your own, it's probably not a simple copy-paste procedure. Then again, maybe it will self-correct itself. And maybe one day I'll get off my ass and find out for myself. Maybe.
+The built-in Flycheck dictionary lacks woefully in technical terms. Rather than keep my personal dictionary secret, it lives in =etc/ispell/personal_dictionary.aws=, under the normal source control. I haven't dug into the implementation of this library, but due to the way it reshuffles itself occasionally, I presume it uses some type of tree structure. As such, if you want to merge my dictionary with your own, you may not find it as easy as a simple copy-paste procedure. Then again, maybe it will self-correct itself. And maybe one day I'll bother to find out for myself. Maybe.
 
 ** Note
-This configuration is ever-evolving. Bindings, settings and packages change with no warning and little to no documentation. This repository is not intended to be used as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
+This configuration undergoes constant evolution. Bindings, settings and packages change with no warning and little to no documentation. This project does not exist as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
 
 To get started with Emacs, I highly recommend [[https://spacemacs.org][Spacemacs]].
 
