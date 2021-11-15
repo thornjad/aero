@@ -28,6 +28,3 @@ install-lsp-servers:
 	rustup component add rls rust-analysis rust-src
 	opam install ocaml-lsp-server
 	nix-env -i rnix-lsp
-
-update-elpa:
-	$(EMACS) -batch --eval '(progn(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")(package-initialize)(auto-package-update-now))'
