@@ -45,18 +45,6 @@
                        'company-capf
                        'company-abort)))
 
-;; (use-package company-box :straight t
-;;   :after (company)
-;;   :hook (company-mode . company-box-mode)
-;;   :config
-;;   (setq company-box-show-single-candidate t
-;;         company-box-backends-colors nil
-;;         company-box-max-candidates 50
-;;         x-gtk-resize-child-frames 'resize-mode)
-
-;;   ;; disable tab bar in company-box child frames. Will probably be PR'd upstream eventually
-;;   (add-to-list 'company-box-frame-parameters '(tab-bar-lines . 0)))
-
 (use-package company-prescient :straight t
   :after (company)
 	:hook (company-mode . company-prescient-mode)
@@ -81,7 +69,124 @@
    "]" 'counsel-gtags-dwim))
 
 
-;;; flycheck
+;; C
+
+(use-package cc-mode :straight t
+  :after flycheck
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.h\\'" . c-mode)
+         ("\\.cpp\\'" . cpp-mode)
+         ("\\.hpp\\'" . cpp-mode))
+  :preface
+  (defun aero/c-mode-common-hook ()
+    "Hook to run in all C modes"
+    (set (make-local-variable 'parens-require-spaces) nil))
+  :hook (c-mode-common . aero/c-mode-common-hook)
+  :config
+  (add-to-list 'flycheck-disabled-checkers 'c/c++-clang))
+
+
+;; Markup
+
+(use-package markdown-mode :straight t
+  :mode (("\\`README\\.md\\'" . gfm-mode)
+         ("github\\.com.*\\.txt\\'" . gfm-mode)
+         ("\\.md\\'"          . markdown-mode)
+         ("\\.markdown\\'"    . markdown-mode))
+  :init
+  (setq markdown-enable-wiki-links t
+        markdown-italic-underscore t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-gfm-additional-languages '("sh"))
+  (add-hook 'markdown-mode-hook #'flyspell-mode)
+  :config (add-hook 'markdown-mode-hook 'variable-pitch-mode))
+
+(use-package markdown-toc :straight t
+  :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
+
+(use-package yaml-mode :straight t
+  :mode "\\.ya?ml\\'")
+
+
+;; ML
+
+(use-package tuareg :straight t
+  :mode ("\\.mli?\\'" . tuareg-mode))
+
+
+;; Java/Clojure/Groovy
+
+(use-package clojure-mode :straight t
+  :mode "\\.clj\\'")
+(use-package cider :straight t
+  :hook (clojure-mode . cider-mode)
+  :after (clojure-mode general)
+  :commands (cider
+             cider-jack-in)
+  :config
+  (aero-mode-leader-def
+    :keymaps '(clojure-mode-map cider-mode-map)
+    "c" '(:ignore t :wk "cider")
+    "cj" 'cider-jack-in
+    "c'" 'cider-switch-to-repl-buffer
+    "c," 'cider-pop-back
+    "cQ" 'cider-quit
+    "cl" '(:ignore t :wk "load")
+    "clb" 'cider-load-buffer
+    "clf" 'cider-load-file
+    "cld" '(cider-load-all-files :wk "load directory")
+    "cR" 'cider-ns-refresh
+    "ch" '(:ignore t :wk "help")
+    "chd" 'cider-doc
+    "chj" 'cider-javadoc
+    "chc" 'cider-clojuredocs
+    "chC" 'cider-clojuredocs-web
+    "cha" 'cider-apropos
+    "chD" 'cider-apropos-documentation
+    "ct" '(:ignore t :wk "test")
+    "ctt" 'cider-test-run-test
+    "ctr" 'cider-test-rerun-test
+    "ctn" 'cider-test-run-ns-tests
+    "ctp" 'cider-test-run-project-tests
+    "ctf" 'cider-test-rerun-failed-tests
+    "ctp" 'cider-test-show-report
+    "cb" 'cider-load-buffer-and-switch-to-repl-buffer
+    "cd" 'cider-eval-defun-at-point
+    "cs" 'cider-eval-sexp-at-point
+    "cr" 'cider-eval-region
+    "cm" '(:ignore t :wk "macro expand")
+    "cmm" 'cider-macroexpand-1
+    "cma" 'cider-macroexpand-all
+    "cN" 'cider-eval-ns-form
+    "ce" '(:ignore t :wk "echo")
+    "cee" '(cider-eval-last-sexp :wk "echo last sexp")
+    "cer" '(cider-eval-last-sexp-to-repl :wk "eval last sexp to repl")
+    "cep" '(cider-pprint-eval-last-sexp :wk "pprint last sexp"))
+
+  (with-eval-after-load 'lsp-mode
+    (aero-mode-leader-def
+      :keymaps 'clojure-mode-map
+      "r" '(:ignore t :wk "refactor")
+      "rt" '(:ignore t :wk "thread")
+      "rtt" 'lsp-clojure-thread-first
+      "rtT" 'lsp-clojure-thread-first-all
+      "rtl" 'lsp-clojure-thread-last
+      "rtL" 'lsp-clojure-thread-last-all
+      "rL" 'lsp-clojure-add-missing-libspec
+      "rC" 'lsp-clojure-cycle-coll
+      "rl" '(:ignore t :wk "let")
+      "rle" 'lsp-clojure-expand-let
+      "rli" 'lsp-clojure-introduce-let
+      "rlm" 'lsp-clojure-move-to-let
+      "rU" 'lsp-clojure-unwind-all
+      "rp" 'lsp-clojure-cycle-privacy
+      "re" 'lsp-clojure-extract-function
+      "rs" 'lsp-clojure-inline-symbol)))
+
+(use-package groovy-mode :straight t)
+
+
+;; flycheck
 
 (defvar flycheck-idle-change-delay 3.0)
 (make-variable-buffer-local 'flycheck-idle-change-delay)
