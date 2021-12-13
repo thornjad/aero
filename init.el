@@ -22,10 +22,10 @@
 
 ;; Catch-all version check
 (when (or (member "--no-version-check" command-line-args)
-          (version< emacs-version "28"))
-  (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
+         (version< emacs-version "28"))
+ (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
 
-
+
 ;;; Core functionality
 
 (defgroup aero nil
@@ -103,7 +103,6 @@ only. This file is not part of Aero proper, and is not shared.")
 (defun aero/load-layers ()
   "Load all Aero layers"
   (require 'aero-prelude)
-
   (if (boundp 'aero-layers-dir)
       ;; Run through all existing layers and load them by name. NOTE: this
       ;; assumes that all layers provide a package identical to their file name.
