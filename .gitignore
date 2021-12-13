@@ -31,7 +31,7 @@
 \.#*
 auto-save-list/
 bookmarks
-build/*
+build-logs/
 crown/
 eclipse*
 eln-cache/
