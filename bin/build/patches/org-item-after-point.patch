@@ -1,0 +1,27 @@
+From 6db82edfdc38df2a9d4024d0fe439384f1da60cb Mon Sep 17 00:00:00 2001
+From: Jade Michael Thornton <jademichael@jmthornton.net>
+Date: Fri, 16 Apr 2021 08:15:16 -0500
+Subject: [PATCH] add org item after point, not before
+
+---
+ lisp/org/org-list.el | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/lisp/org/org-list.el b/lisp/org/org-list.el
+index 39122e7ce4..83be9b5e68 100644
+--- a/lisp/org/org-list.el
++++ b/lisp/org/org-list.el
+@@ -1263,10 +1263,7 @@ This function modifies STRUCT."
+ 		 ;; Ignore tag in a non-descriptive list.
+ 		 ((save-match-data (string-match "[.)]" (match-string 1)))
+ 		  (match-beginning 4))
+-		 (t (save-excursion
+-		      (goto-char (match-end 4))
+-		      (skip-chars-forward " \t")
+-		      (point)))))))
++		 (t (point))))))
+ 	 (split-line-p (org-get-alist-option org-M-RET-may-split-line 'item))
+ 	 (blank-nb (org-list-separating-blank-lines-number pos struct prevs))
+ 	 ;; Build the new item to be created.  Concatenate same bullet
+--
+GitLab

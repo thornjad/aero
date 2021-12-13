@@ -1,0 +1,26 @@
+From 78948751b4109922f8f9cb15b78657f324b91c03 Mon Sep 17 00:00:00 2001
+From: Jade Michael Thornton <jademichael@jmthornton.net>
+Date: Mon, 5 Apr 2021 10:00:06 -0500
+Subject: [PATCH] fix http 402 bug
+
+---
+ lisp/url/url-http.el | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/lisp/url/url-http.el b/lisp/url/url-http.el
+index e3c178630a..a24776a573 100644
+--- a/lisp/url/url-http.el
++++ b/lisp/url/url-http.el
+@@ -790,9 +790,7 @@ should be shown to the user."
+                 ;; Authorization header field.
+                 (url-http-handle-authentication nil))
+                ('payment-required              ; 402
+-                ;; This code is reserved for future use
+-                (url-mark-buffer-as-dead buffer)
+-                (error "Somebody wants you to give them money"))
++                t)
+                ('forbidden			; 403
+                 ;; The server understood the request, but is refusing to
+                 ;; fulfill it.  Authorization will not help and the request
+--
+GitLab
