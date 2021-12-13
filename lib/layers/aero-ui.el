@@ -30,10 +30,10 @@
   :load-path "lib/packages/aero-theme/"
   :init
   (when (system-is-mac)
-    (setq aero-theme-font-height 140))
+    (setq aero-theme-font-height 150))
   :config
   (setq aero-theme-font "Victor Mono")
-  (load-theme 'aero t))
+  (load-theme 'aero-dark t))
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
