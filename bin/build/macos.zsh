@@ -66,11 +66,12 @@ export OBJC=clang
 
 # throw the version into info files
 
-VERSION_FILES="
+VERSION_FILES=(
   nextstep/templates/Emacs.desktop.in
   nextstep/templates/Info-gnustep.plist.in
   nextstep/templates/Info.plist.in
-  nextstep/templates/InfoPlist.strings.in"
+  nextstep/templates/InfoPlist.strings.in
+)
 for f in $VERSION_FILES; do
   sed -e "s/@version@/@version@ $VERS/" -i '' $f
 done
