@@ -11,7 +11,7 @@ diff --git a/src/pdumper.c b/src/pdumper.c
 index dc893c59bf..3d97e0e559 100644
 --- a/src/pdumper.c
 +++ b/src/pdumper.c
-@@ -128,8 +128,7 @@ static struct
+@@ -128,7 +128,7 @@ static struct
  {
    void *mem;
    int sz;
