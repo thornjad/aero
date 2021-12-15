@@ -5,24 +5,10 @@
 # Derived from https://github.com/mclear-tools/build-emacs-macos
 # Patches from https://github.com/d12frosted/homebrew-emacs-plus
 
-prompt_confirm() {
-  while true; do
-    read -r -n 1 -p "${1:-Continue?} [Y/n]: " REPLY
-    case $REPLY in
-      [yY]) echo ; return 0 ;;
-      [nN]) echo ; return 1 ;;
-      *) echo ; return 0 ;;
-    esac
-  done
-}
-
 # Exit if something goes wrong
 set -e
 
-killall -q -0 emacs && prompt_confirm "Cannot build Emacs while it's running; kill Emacs?" && killall -9 emacs
-
 # variables
-ROOT_DIR="`pwd`"
 BUILD_DIR=/tmp/emacs-build
 
 # Use homebrew libxml and pkgconfig
@@ -47,20 +33,16 @@ echo "Collecting information from git..."
 REV=`git log -n 1 --no-color --pretty='format:%h' origin/master`
 TIMESTAMP=`git log -n 1 --no-color --pretty='format:%at' origin/master`
 
-cp ${ROOT_DIR}/emacs-version-git-commit.el ${BUILD_DIR}/
+cp ${HOME}/.config/emacs/bin/build/emacs-version-git-commit.el ${BUILD_DIR}/
 sed -e "s/@@GIT_COMMIT@@/$REV/" -i '' ${BUILD_DIR}/emacs-version-git-commit.el
 
 # patches
 
-DO_PATCHES=$(prompt_confirm "Apply patches?")
-if [[ $DO_PATCHES -eq 0 ]]; then
-  echo "Applying patches..."
-  PATCH_LIST=`find ${ROOT_DIR}/patches/ -name '*.patch'`
-  for f in ${PATCH_LIST}; do
-    echo "Applying patch `basename $f`"
-    patch -p1 -i $f
-  done
-fi
+echo "Applying patches..."
+for f in "${HOME}/.config/emacs/bin/build/patches"/* ; do
+	echo "Applying patch `basename $f`"
+	patch -p1 -i $f
+done
 
 # System info
 
@@ -108,7 +90,6 @@ echo "Configuring Emacs..."
 
 # Now we build
 
-prompt_confirm "Continue to building Emacs?" || exit 0
 echo "Building Emacs version ${VNUM}_${VERS}..."
 
 NCPU=$(getconf _NPROCESSORS_ONLN)
