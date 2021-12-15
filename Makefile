@@ -5,11 +5,9 @@ EMACS ?= emacs
 
 all: update-packages compile-packages
 
-requirements-macos:
-	./bin/build/macos-requirements.zsh
-
-build-emacs-macos: requirements-macos
-	./bin/build/macos.zsh
+build-emacs-macos: 
+	brew tap d12frosted/emacs-plus
+	brew install emacs-plus@29 --with-dbus --with-native-comp --with-modern-sexy-v1-icon
 
 requirements-linux:
 	./bin/build/linux-requirements.zsh
