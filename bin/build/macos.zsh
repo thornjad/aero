@@ -113,7 +113,7 @@ fi
 mv ${BUILD_DIR}/nextstep/Emacs.app /Applications
 
 # install better icon
-cp ${ROOT_DIR}/etc/logo/Emacs.icns /Applications/Emacs.app/Contents/Resources/Emacs.icns
+cp ${HOME}/.config/emacs/etc/logo/Emacs.icns /Applications/Emacs.app/Contents/Resources/Emacs.icns
 
 # Copy over source code
 cp -r ${BUILD_DIR}/src /Applications/Emacs.app/Contents/Resources/
@@ -121,13 +121,13 @@ cp -r ${BUILD_DIR}/src /Applications/Emacs.app/Contents/Resources/
 # Now cleanup
 
 echo "Cleaning up installation files"
-LOG_DIR=${ROOT_DIR}/build-logs/${DESCR}
+LOG_DIR=${HOME}/.config/emacs/bin/build/build-logs/${DESCR}
 mkdir -p ${LOG_DIR}
 mv ${BUILD_DIR}/config.log ${LOG_DIR}/config.log
 mv ${BUILD_DIR}/build-log.txt ${LOG_DIR}/build-log.txt
 mv ${BUILD_DIR}/bootstrap-log.txt ${LOG_DIR}/bootstrap-log.txt
 
-prompt_confirm "Remove temp Emacs build source?" && rm -rf ${BUILD_DIR}
+rm -rf ${BUILD_DIR}
 
 echo "Done!"
-echo "Log files available at ${ROOT_DIR}/build-logs/"
+echo "Log files available at ${HOME}/.config/emacs/bin/build/build-logs/"
