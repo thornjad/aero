@@ -7,7 +7,9 @@ all: update-packages compile-packages
 
 build-emacs-macos: 
 	brew tap d12frosted/emacs-plus
-	brew install emacs-plus@29 --with-dbus --with-native-comp --with-modern-sexy-v1-icon
+	# NOTE: native-comp isn't working on M1 yet. At least probably, and I don't have the time to track 
+	# down the problem right now. So we're just using the lisp engine.
+	brew install emacs-plus@29 --with-dbus --with-modern-sexy-v1-icon
 
 requirements-linux:
 	./bin/build/linux-requirements.zsh
