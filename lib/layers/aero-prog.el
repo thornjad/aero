@@ -99,13 +99,40 @@
         markdown-make-gfm-checkboxes-buttons t
         markdown-gfm-additional-languages '("sh"))
   (add-hook 'markdown-mode-hook #'flyspell-mode)
-  :config (add-hook 'markdown-mode-hook 'variable-pitch-mode))
+  :config
+  (add-hook 'markdown-mode-hook 'variable-pitch-mode)
+
+  (require 'aero-thornlog)
+  (aero-mode-leader-def
+    :keymaps 'markdown-mode-map
+    "t" 'today
+    "d" 'new-day))
 
 (use-package markdown-toc :straight t
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
 
 (use-package yaml-mode :straight t
   :mode "\\.ya?ml\\'")
+
+(use-package org :straight nil
+	:commands org-mode
+
+	:config
+	(setq org-src-preserve-indentation t
+				org-footnote-auto-adjust t
+				org-footnote-section nil
+				org-startup-with-inline-images t
+				org-startup-indented t)
+
+	;; rescale images to 400px if no with attribute is set (see
+	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
+	(setq org-image-actual-width '(400))
+
+  ;; org tries to take this binding back, so wrest control back once more
+  (define-key org-mode-map (kbd "M-h") #'windmove-left)
+
+  ;; start with all levels collapsed
+  (add-hook 'org-mode-hook #'org-hide-block-all))
 
 
 ;; ML
