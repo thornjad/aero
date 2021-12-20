@@ -32,7 +32,8 @@
 (use-package exec-path-from-shell :straight t :defer 1
   :config
   (when (or (window-system) (daemonp))
-    (setq exec-path-from-shell-arguments nil)
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+      (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize)))
 
 (use-package no-littering :defer 5
