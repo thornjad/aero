@@ -17,11 +17,12 @@
 ;; performance of this software.
 ;;
 ;;; Commentary:
+;;
+;;; Code:
 
 (require 'aero-prelude)
 (require 'use-package)
 
-;;; Code:
 
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
@@ -30,7 +31,7 @@
   :load-path "lib/packages/aero-theme/"
   :init
   (when (system-is-mac)
-    (setq aero-theme-font-height 150))
+    (setq aero-theme-font-height 140))
   :config
   (setq aero-theme-font "Victor Mono")
   (load-theme 'aero-dark t))
