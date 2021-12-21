@@ -1,3 +1,4 @@
+-- To install, run make install-aero-macos
 tell application "Terminal"
 	activate
 	if not (exists window 1) then reopen
