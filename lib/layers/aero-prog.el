@@ -411,7 +411,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 
 (add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
-(add-to-list 'auto-mode-alist '("\\.\\(applescript\\)\\'" . prog-mode))
 
 (add-hook 'prog-mode-hook (lambda ()
                             (setq comment-auto-fill-only-comments t)
@@ -454,11 +453,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Improved version of `hexl-mode' for editing hex/binary
 (use-package nhexl-mode :straight t :defer t)
 
-
-;; Other tweaks
-
-
-
-;;; end
+(use-package applescript-mode :straight t)
 
 (provide 'aero-prog)
