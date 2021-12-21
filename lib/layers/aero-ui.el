@@ -33,7 +33,7 @@
   (when (system-is-mac)
     (setq aero-theme-font-height 140))
   :config
-  (setq aero-theme-font "Victor Mono")
+  (setq aero-theme-font "IBM Plex Mono")
   (load-theme 'aero-dark t))
 
 (setq default-frame-alist
@@ -155,7 +155,7 @@
 
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
-  :init (setq highlight-indent-guides-method (if (window-system) 'bitmap 'character)
+  :init (setq highlight-indent-guides-method 'character
               highlight-indent-guides-responsive 'top))
 
 (defun pulse-line (&rest _)
