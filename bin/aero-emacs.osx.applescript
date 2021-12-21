@@ -1,7 +1,7 @@
 -- To install, run make install-aero-macos
+-- NOTE: Requires running in Zsh
+
 tell application "Terminal"
-	activate
-	if not (exists window 1) then reopen
-	do script "source ~/.zshrc && emacs" in window 1
+	do script "cd ~ && source ~/.zshrc && emacs &| exit"
 	activate
 end tell
