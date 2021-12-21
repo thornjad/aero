@@ -60,6 +60,7 @@
 	:mode "\\.json\\'")
 
 (use-package typescript-mode :straight t)
+(use-package ng2-mode :straight t)
 
 
 ;; the rest
