@@ -5,7 +5,8 @@ EMACS ?= emacs
 
 all: update-packages compile-packages
 
-build-emacs-macos: 
+build-emacs-macos:
+	brew install coreutils
 	brew tap d12frosted/emacs-plus
 	# NOTE: native-comp isn't working on M1 yet. At least probably, and I don't have the time to track 
 	# down the problem right now. So we're just using the lisp engine.

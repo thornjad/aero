@@ -51,7 +51,7 @@
 (defun goto-last-day ()
   "Move point to the most recent entry."
   (setf (point) (point-max))
-  (re-search-backward "^\\* [[:alpha:]]+, [[:alpha:]]" nil t))
+  (re-search-backward "^# [[:alpha:]]+, [[:alpha:]]" nil t))
 
 (defun last-day-date-string ()
   "Get the date of the most recent entry."
@@ -83,26 +83,27 @@
   "Get the last-day's today field"
   (save-excursion
     (last-day)
-    (re-search-forward "Today:" nil t)
-    (forward-line 1)
-    (beginning-of-line)
+    (re-search-forward "`T`" nil t)
+    (forward-char 1)
     (let ((start (point)))
-      (re-search-forward "** Meetings" nil t)
+      (re-search-forward "`B`" nil t)
       (beginning-of-line)
       (backward-char 1)
       (let ((end (point)))
         (buffer-substring start end)))))
 
 (defvar aero/thornlog-template
-  "## TEMPLATE
+  "# TEMPLATE
 
-### Sync summary
+## Sync summary
 
 `Y`
 `T`
 `B`
 
-### Notes"
+## Notes
+
+"
   "Template for a new day in the thornlog")
 
 (defun new-day-insert ()
@@ -120,7 +121,7 @@
       (when (last-day-was-last-workday-p)
         (setq text (replace-regexp-in-string
                     "\\(`Y`\\|`F`\\)"
-                    (concat "`Y` \n" (last-days-today))
+                    (concat "`Y` " (last-days-today))
                     text t)))
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
@@ -138,7 +139,7 @@
   (let ((pos nil))
     (save-excursion
       (setf (point) (point-min))
-      (if (re-search-forward (format-time-string "^\\*.* (%Y-%m-%d)") nil t)
+      (if (re-search-forward (format-time-string "^#.* (%Y-%m-%d)") nil t)
           (setq pos (point))
         (unless nomsg (message "No entry for today found."))))
     (if pos

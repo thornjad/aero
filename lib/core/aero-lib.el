@@ -663,9 +663,10 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   "Convert HUMAN-STRING to a date string or if EPOCH, seconds.
 Requires the utility date to be installed."
   (with-temp-buffer
-    (if epoch
-        (call-process "date" nil t nil "-d" human-string "+%s")
-      (call-process "date" nil t nil "-d" human-string))
+    (let ((dateProc (if (system-is-mac) "gdate" "date")))
+     (if epoch
+         (call-process dateProc nil t nil "-d" human-string "+%s")
+       (call-process dateProc nil t nil "-d" human-string)))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (defun day-of-week (&optional date)
@@ -674,9 +675,10 @@ If DATE is nil, check today instead.
 
 Requires the utility date to be installed."
   (with-temp-buffer
-    (if date
-        (call-process "date" nil t nil "-d" date "+%A")
-      (call-process "date" nil t nil "+%A"))
+    (let ((dateProc (if (system-is-mac) "gdate" "date")))
+     (if date
+         (call-process dateProc nil t nil "-d" date "+%A")
+       (call-process dateProc nil t nil "+%A")))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (defun aero/frame-recenter (&optional frame)
