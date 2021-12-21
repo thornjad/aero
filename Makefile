@@ -18,6 +18,7 @@ build-emacs-macos:
 install-aero-macos:
 	osacompile -o bin/Emacs\ \(Aero\).app bin/aero-emacs.osx.applescript
 	cp etc/logo/Emacs.icns bin/Emacs\ \(Aero\).app/Contents/Resources/applet.icns
+	[ -s /Applications/Emacs\ \(Aero\).app ] && rm -rf /Applications/Emacs\ \(Aero\).app
 	mv bin/Emacs\ \(Aero\).app /Applications/
 
 requirements-linux:
