@@ -183,7 +183,7 @@
                  (reusable-frames . visible)
                  (window-height . 0.4)))
   (aero-leader-def
-    "'" 'vterm-toggle))
+    "`" 'vterm-toggle))
 
 
 ;;; shell scripting

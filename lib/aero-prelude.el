@@ -120,6 +120,7 @@
    "TAB" '(aero/alternate-buffer :wk "alternate buffer")
    (kbd "ESC") 'keyboard-quit
    (kbd "C-g") 'keyboard-quit
+   "'" 'eshell
    "\"" '(aero/eshell-new :wk "eshell-new")
    ":" 'eval-expression
    ";" 'comment-or-uncomment-region
