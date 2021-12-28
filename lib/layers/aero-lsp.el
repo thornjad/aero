@@ -40,14 +40,6 @@
 
   (setq lsp-lens-enable t)
 
-  ;; FIXME this does nothing at all??
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-tramp-connection "pyls")
-    :major-modes '(python-mode)
-    :remote? t
-    :server-id 'python-remote))
-
   (aero-leader-def
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
     "lf" '(:ignore t :wk "find")
@@ -62,11 +54,6 @@
         company-idle-delay 0.0 ; default is 0.2
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
-        lsp-enable-folding nil ; not used
-        lsp-enable-snippet nil ; not used
-        lsp-enable-file-watchers nil
-        lsp-enable-text-document-color nil
-        lsp-enable-on-type-formatting nil
         lsp-headerline-breadcrumb-segments '(path-up-to-project symbols))
 
   (use-package lsp-java
