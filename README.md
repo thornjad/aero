@@ -12,19 +12,20 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 ## Requirements
 
-Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs.
+Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs, but you can generally assume support for the last version too.
 
-To take full advantage of this project, install these tools:
+### Required for LSP
 
-- Node.js
+Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. Only install what you need:
+
+- Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
+- Deno (Javascript and Typescript, superior to Node.js for these languages)
 - Python 3
 - Rust and rustup
+  - fd (improves project surfing performance)
+  - ripgrep (improves searching performance)
 - Ocaml and opam
-- Nix
-
-Having cloned and met dependency requirements,, run `make` to set up dependencies.
-
-If you'd rather not install these dependencies, take a look at the Makefile and just install what you want to use.
+- Nix 
 
 ## Installation
 
