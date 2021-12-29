@@ -19,27 +19,11 @@
 (require 'aero-prelude)
 
 (use-package lsp-mode :after (general)
-  :hook ((sh-mode . lsp) ;; bash-language-server
-         (js-mode . lsp) ;; javascript-typescript-langserver
-         (typescript-mode . lsp) ;; javascript-typescript-langserver
-         (ng2-mode . lsp) ;; javascript-typescript-langserver
-         (python-mode . lsp) ;; python-language-server
-         (clojure-mode . lsp)
-         (clojurescript-mode . lsp)
-         (clojurec-mode . lsp)
-         (rust-mode . lsp) ;; rls
-         (scss-mode . lsp) ;; vscode-css-languageserver-bin
-         (java-mode . lsp) ;; eclipse JDT language server
-         (lua-mode . lsp) ;; lua-lsp
-         (nix-mode . lsp) ;; rnix-lsp
-         (tuareg-mode . lsp) ;; ocaml-lsp-server
+  :hook ((prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
-  :commands (lsp)
+  :commands (lsp lsp-deferred)
   :config
-
-  (setq lsp-lens-enable t)
-
   (aero-leader-def
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
     "lf" '(:ignore t :wk "find")
