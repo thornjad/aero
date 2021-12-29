@@ -31,8 +31,6 @@ Emacs continues to lack native language server support, but Aero implements this
 
 ```sh
 git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
-cd ~/.config/emacs
-make
 ```
 
 ## Local config
