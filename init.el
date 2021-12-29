@@ -33,15 +33,6 @@
   :group 'starter-kit
   :prefix 'aero/)
 
-(defvar aero-local-init-file-c
-  (expand-file-name "init.local.elc" user-emacs-directory)
-  "Local init file, loaded at the end of init.
-Useful for adding or overriding settings and functions for the local environment
-only. This file is not part of Aero proper, and is not shared.")
-(defvar aero-local-init-file
-  (expand-file-name "init.local.el" user-emacs-directory)
-  "Non-compiled version of `aero-local-init-file-c'")
-
 (defun aero/bootstrap ()
   "Bootstrap `straight', `use-package' and major components, and set up for use"
 
@@ -114,6 +105,8 @@ only. This file is not part of Aero proper, and is not shared.")
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
   (aero/load-libs)
+  ;; Allow users to provide an optional "init-preload-local.el"
+  (require 'init-preload-local nil t)
   (aero/load-layers)
 
   ;; baise cette merde
@@ -122,9 +115,8 @@ only. This file is not part of Aero proper, and is not shared.")
   ;; settings
   (require 'aero-rc)
 
-  ;; Load local init
-  (unless (load aero-local-init-file-c 'noerror 'nomessage)
-    (load aero-local-init-file 'noerror 'nomessage))
+  ;; Load local init if it exists
+  (require 'local-init nil t)
 
   (global-font-lock-mode t)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el

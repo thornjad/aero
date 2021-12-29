@@ -476,7 +476,8 @@ This function does NOT remove remote buffers, only their connections."
 (defun aero/open-local-init ()
   "Open local init file for editing."
   (interactive)
-  (find-file (concat user-emacs-directory "init.local.el")))
+  (find-file (concat user-emacs-directory "init-local.el")))
+
 (defun aero/open-emacs-problems ()
   "Open Emacs PROBLEMS file from GitHub mirror."
   (interactive)
