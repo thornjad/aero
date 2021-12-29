@@ -54,6 +54,9 @@
   ;; duplicate setq with company-prescient
 	(setq prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir)))
 
+(use-package company-box :straight t
+  :hook (company-mode . company-box-mode))
+
 (use-package company-dict :straight t
   :after (company flyspell)
   :config
