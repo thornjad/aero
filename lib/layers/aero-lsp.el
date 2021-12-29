@@ -50,15 +50,18 @@
     :hook ((lsp-mode . lsp-ui-mode)
            (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
     :config
-    (setq lsp-ui-doc-position 'top
-          lsp-ui-doc-delay 1
-          lsp-ui-doc-use-childframe t
-          lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
-          lsp-ui-sideline-delay 1
-          lsp-ui-sideline-show-hover t
-          lsp-ui-sideline-show-symbol t
-          lsp-ui-sideline-show-diagnostics t
-          lsp-ui-sideline-show-code-actions t)
+    (setq
+     lsp-ui-doc-enable t
+     lsp-ui-doc-position 'top
+     lsp-ui-doc-delay 1
+     lsp-ui-doc-use-childframe t
+     lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+     lsp-ui-imenu-enable nil
+     lsp-ui-sideline-delay 1
+     lsp-ui-sideline-show-hover t
+     lsp-ui-sideline-show-symbol t
+     lsp-ui-sideline-show-diagnostics t
+     lsp-ui-sideline-show-code-actions t)
     (aero-leader-def
       "li" 'lsp-ui-imenu
       "lp" '(:ignore t :wk "peek")
