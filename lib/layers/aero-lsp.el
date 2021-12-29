@@ -36,9 +36,12 @@
 
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0 ; default is 0.2
+        lsp-lens-enable t
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
-        lsp-headerline-breadcrumb-segments '(path-up-to-project symbols))
+        lsp-headerline-breadcrumb-segments '(project symbols)
+        lsp-headerline-arrow "»"
+        lsp-enable-on-type-formatting t)
 
   (use-package lsp-java
     :hook ((java-mode . lsp)))
