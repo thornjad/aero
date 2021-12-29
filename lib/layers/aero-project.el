@@ -21,9 +21,8 @@
 (use-package projectile
   :straight (:host github :repo "bbatsov/projectile")
 	:config
-	(setq projectile-indexing-method 'native
+	(setq projectile-indexing-method 'alien
 				projectile-enable-caching t
-				projectile-git-submodule-command nil
 				projectile-mode-line nil)
   (projectile-mode 1))
 
