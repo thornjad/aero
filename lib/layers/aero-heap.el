@@ -35,10 +35,12 @@
 (use-package eprime-mode
   :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
-  :hook ((text-mode) . eprime-mode)
-  :config
+  :commands (eprime-check-buffer
+             eprime-mode)
+  :init
   (aero-leader-def
-    "tp" 'eprime-check-buffer))
+    "tp" 'eprime-check-buffer
+    "tP" 'eprime-mode))
 
 (use-package counsel-spotify :straight t
   :after (counsel general)
