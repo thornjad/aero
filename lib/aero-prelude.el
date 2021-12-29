@@ -529,6 +529,8 @@ Local bindings (`counsel-mode-map'):
   (aero-leader-def
     "bb" 'ivy-switch-buffer))
 
+;; Currently disabled but preserved because I can't decide whether I want it or not. Using it means
+;; the mode line doesn't jump up on every M-x but also takes some character away from Emacs.
 (use-package ivy-posframe :straight t :disabled t
   :after (ivy)
   :config
