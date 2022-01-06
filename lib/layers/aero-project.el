@@ -52,13 +52,19 @@
 
 (use-package treemacs :straight t
   :hook ((lsp . treemacs))
+  :after (lsp general)
   :config
   (use-package treemacs-evil :straight t)
   (use-package treemacs-projectile :straight t)
   (use-package treemacs-magit :straight t)
   (use-package treemacs-all-the-icons :straight t)
 
-  (setq treemacs-tag-follow-delay 0.5)
+  (aero-leader-def
+    "ft" 'treemacs)
+
+  (setq treemacs-tag-follow-delay 0.5
+        treemacs-recenter-after-tag-follow t
+        treemacs-recenter-after-file-follow t)
 
   ;; Follow me around
   (treemacs-project-follow-mode +1)
