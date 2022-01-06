@@ -44,8 +44,14 @@ install-dependencies: install-lsp-servers
 
 install-lsp-servers:
 	npm i -g bash-language-server
-	curl -fsSL https://deno.land/install.sh | sh
-	npm i -g @angular/language-service@next @angular/language-server
+	# Typescript does not allow file extensions in imports, but for some reason deno insists that they
+	# must exist, and then just ignores the error and makes its own. I can't understand why they made
+	# this decision, but it appears firm. I'm keeping this line commented out in the hopes that deno
+	# will release an update in the future which either fixes this or introduces a typescript
+	# compatibility mode. For now we'll use the node language server. See
+	# https://github.com/denoland/deno/issues/2506 for more discussion.
+	# curl -fsSL https://deno.land/install.sh | sh
+	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server
 	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi
 	pip3 install "ptvsd>=4.2"
 	rustup component add rls rust-analysis rust-src
