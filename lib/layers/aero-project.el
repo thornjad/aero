@@ -23,7 +23,8 @@
 	:config
 	(setq projectile-indexing-method 'alien
 				projectile-enable-caching t
-				projectile-mode-line nil)
+				projectile-mode-line nil
+        projectile-globally-ignored-directories '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd" "node_modules"))
   (projectile-mode 1))
 
 (use-package counsel-projectile 
