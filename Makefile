@@ -43,7 +43,7 @@ install-dependencies: install-lsp-servers
 	npm i -g sass-lint eslint tern
 
 install-lsp-servers:
-	npm i -g bash-language-server
+	npm i -g bash-language-server @types/node
 	# Typescript does not allow file extensions in imports, but for some reason deno insists that they
 	# must exist, and then just ignores the error and makes its own. I can't understand why they made
 	# this decision, but it appears firm. I'm keeping this line commented out in the hopes that deno
