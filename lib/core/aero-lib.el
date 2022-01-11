@@ -265,16 +265,16 @@ This is equivalent to SPC U M-x eshell"
                color
                color)
        (apply #'concat
-                (cl-loop with idx = 0
-                         with len = (length data)
-                         for dl in data
-                         do (cl-incf idx)
-                         collect
-                         (concat "\""
-                                 (cl-loop for d in dl
-                                          if (= d 0) collect (string-to-char " ")
-                                          else collect (string-to-char "."))
-                                 (if (eq idx len) "\"};" "\",\n")))))
+              (cl-loop with idx = 0
+                       with len = (length data)
+                       for dl in data
+                       do (cl-incf idx)
+                       collect
+                       (concat "\""
+                               (cl-loop for d in dl
+                                        if (= d 0) collect (string-to-char " ")
+                                        else collect (string-to-char "."))
+                               (if (eq idx len) "\"};" "\",\n")))))
       'xpm t :ascent 'center))))
 
 
@@ -665,9 +665,9 @@ If called with prefix argument, or with nothing under point, prompt for tag."
 Requires the utility date to be installed."
   (with-temp-buffer
     (let ((dateProc (if (system-is-mac) "gdate" "date")))
-     (if epoch
-         (call-process dateProc nil t nil "-d" human-string "+%s")
-       (call-process dateProc nil t nil "-d" human-string)))
+      (if epoch
+          (call-process dateProc nil t nil "-d" human-string "+%s")
+        (call-process dateProc nil t nil "-d" human-string)))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (defun day-of-week (&optional date)
@@ -677,9 +677,9 @@ If DATE is nil, check today instead.
 Requires the utility date to be installed."
   (with-temp-buffer
     (let ((dateProc (if (system-is-mac) "gdate" "date")))
-     (if date
-         (call-process dateProc nil t nil "-d" date "+%A")
-       (call-process dateProc nil t nil "+%A")))
+      (if date
+          (call-process dateProc nil t nil "-d" date "+%A")
+        (call-process dateProc nil t nil "+%A")))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
 (defun aero/frame-recenter (&optional frame)
