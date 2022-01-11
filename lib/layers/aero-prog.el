@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -72,7 +72,7 @@
    "]" 'counsel-gtags-dwim))
 
 
-;; C
+;; C lang
 
 (use-package cc-mode :straight t
   :after flycheck
@@ -280,6 +280,9 @@
    "pce" 'flycheck-explain-error-at-point
    "pcl" 'flycheck-list-errors
    "pcH" 'flycheck-manual))
+
+(use-package flycheck-pos-tip :straight t
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 (use-package flyspell
 	:after (general)
