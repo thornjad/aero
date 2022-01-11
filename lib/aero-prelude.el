@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -595,12 +595,13 @@ Local bindings (`counsel-mode-map'):
 
 (use-package undo-tree :straight t
   :config
-  (global-undo-tree-mode +1)
-
   ;; Disable undo-in-region. It sounds like a cool feature, but
   ;; unfortunately the implementation is very buggy and usually causes
   ;; you to lose your undo history if you use it by accident.
-  (setq undo-tree-enable-undo-in-region nil))
+  (setq undo-tree-enable-undo-in-region nil)
+  (setq undo-tree-auto-save-history t)
+
+  (global-undo-tree-mode +1))
 
 (use-package winner
   :after (general)
