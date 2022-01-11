@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -130,5 +130,10 @@ board_ticket_branch_name."
   :custom
   (ediff-split-window-function #'split-window-horizontally )
   (ediff-window-setup-function #'ediff-setup-windows-plain))
+
+(use-package git-link :straight t
+  :after (general)
+  :commands (git-link git-link-commit git-link-homepage)
+  :init (aero-leader-def "gL" 'git-link))
 
 (provide 'aero-git)
