@@ -461,4 +461,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package applescript-mode :straight t)
 
+(use-package smartscan :straight t
+  :after (general)
+  :hook (prog-mode . smartscan-mode))
+
 (provide 'aero-prog)
