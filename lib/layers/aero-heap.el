@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -70,5 +70,9 @@
     "assTb" '(aero/spotify-search-track-by-album :wk "search tracks by album")
     "assa" '(aero/spotify-search-artist :wk "artist")
     "assb" '(aero/spotify-search-album :wk "album")))
+
+(use-package unmodified-buffer :defer 1
+  :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
+  :hook (after-init . unmodified-buffer-mode))
 
 (provide 'aero-heap)
