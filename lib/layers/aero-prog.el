@@ -71,6 +71,10 @@
    :prefix "SPC"
    "]" 'counsel-gtags-dwim))
 
+(use-package company-tabnine :straight t
+  :after (company)
+  :init (add-to-list 'company-backends #'company-tabnine))
+
 
 ;; C lang
 
