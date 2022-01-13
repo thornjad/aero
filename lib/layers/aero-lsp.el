@@ -39,7 +39,7 @@
         lsp-lens-enable t
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
-        lsp-headerline-breadcrumb-segments '(project symbols)
+        lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-arrow "»"
         lsp-enable-on-type-formatting t)
 
