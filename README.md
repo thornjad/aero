@@ -72,7 +72,6 @@ Aero evolves as a cutting-edge tool and focuses on working with the latest versi
 Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. Only install what you need:
 
 - Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
-- Deno (Javascript and Typescript, superior to Node.js for these languages)
 - Python 3
 - Rust and rustup
   - fd (improves project surfing performance)
