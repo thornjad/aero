@@ -496,7 +496,7 @@ Local bindings (`counsel-mode-map'):
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
-(use-package recentf :defer t
+(use-package recentf
   :defines (recentf-mode)
   :config
   (defvar aero-etc-dir)
