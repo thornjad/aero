@@ -18,6 +18,8 @@
 ;;
 ;;; Commentary:
 ;;
+;; TODO automatically archive after 30 or 60 days
+;;
 ;;; Code:
 
 (require 'aero-prelude)
