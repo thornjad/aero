@@ -73,6 +73,6 @@
 
 (use-package unmodified-buffer :defer 1
   :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
-  :hook (after-init . unmodified-buffer-mode))
+  :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
 (provide 'aero-heap)
