@@ -504,7 +504,10 @@ Local bindings (`counsel-mode-map'):
         recentf-max-saved-items 500
         ;; never cleanup, this will get rid of tramp files
         recentf-auto-cleanup 'never)
-  (recentf-mode 1))
+  (recentf-mode 1)
+
+  ;; run recentf save every 5 minutes
+  (run-at-time nil (* 5 60) 'recentf-save-list))
 
 (use-package ivy :straight t
   :after general
