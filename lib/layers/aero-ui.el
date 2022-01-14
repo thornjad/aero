@@ -34,7 +34,7 @@
     (setq aero-theme-font-height 140))
   :config
   (setq aero-theme-font "IBM Plex Mono")
-  (load-theme 'aero t))
+  (load-theme 'aero-dark t))
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
