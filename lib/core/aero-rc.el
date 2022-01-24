@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -17,6 +17,8 @@
 ;; performance of this software.
 ;;
 ;;; Code:
+
+(require 'aero-lib)
 
 
 (setq-default
@@ -232,6 +234,12 @@
           (switch-to-buffer "*compilation*")
           (shrink-window (- h (or compilation-window-height 12))))))))
 (add-hook 'compilation-mode-hook 'aero/compilation-hook)
+
+(eval-after-load 'general
+  (general-define-key
+   :states '(normal visual motion)
+   :keymaps 'compilation-mode-map
+    "q" 'aero/bury-buffer-kill-window))
 
 ;; open some buffers in the same window
 (add-to-list 'display-buffer-alist
