@@ -34,6 +34,12 @@
 ;; sub-modules
 (require 'aero-pbcopier)
 
+;; basic helpers
+
+(defun rand-nth (coll)
+  "Return a random element of the list COLL."
+  (nth (random (length coll)) coll))
+
 
 ;; utilities
 
