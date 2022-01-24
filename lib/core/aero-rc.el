@@ -205,14 +205,16 @@
   (message "Aero est prêt"))
 
 (defun aero/compilation-finish (buf status)
-  "Notify with status, then delete window and bury buffer if successful after 2 secs."
-  (call-process "notify-send" nil nil nil
-                "-t" "0" "-i" "emacs"
-                "Compilation finished in Emacs"
-                status)
-  (when (string= (string-trim status) "finished")
-    (bury-buffer buf)
-    (run-at-time "2 sec" nil #'aero/delete-windows-on-if-exist buf)))
+  "Notify with status."
+  (let ((notify-program
+         (if (system-is-linux)
+             '("notify-send" nil nil nil
+               "-t" "0" "-i" "emacs"
+               "Compilation finished in Emacs"
+               status)
+           '("osascript" nil nil nil
+             "-e" "'display notification \"Compilation finished in Emacs\" with title \"Aero Emacs\" sound name \"default\"'"))))
+    (apply 'call-process notify-program)))
 (setq compilation-finish-functions
       (append compilation-finish-functions
               '(aero/compilation-finish)))
