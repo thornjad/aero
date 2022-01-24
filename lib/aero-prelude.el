@@ -74,7 +74,7 @@
 		:non-normal-prefix "C-SPC")
 	(general-create-definer aero-mode-leader-def
 		:states '(normal visual emacs motion)
-		:prefix ",")
+		:prefix "SPC ,")
 
   (general-define-key
    :states '(normal visual motion)
@@ -170,6 +170,8 @@
    "hd" '(:ignore t :wk "describe")
    "hw" '(:ignore t :wk "which-key")
    "hwm" '(which-key-show-major-mode :wk "major mode map")
+
+   "m" '(tmm-menubar :wk "Context menu")
 
    "b" '(:ignore t :wk "buffers")
    "bn" 'next-buffer

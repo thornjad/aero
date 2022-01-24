@@ -47,9 +47,9 @@ Emacs keybindings belong in the dark ages where they originated. They might work
 
 ### Spacemacs-like leader keys
 
-When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around one of two leader keys, `SPC` and `,` (comma). `SPC` leads the vast majority of commands. `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
+When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around one of two leader keys, `SPC` and ` SPC,` (space comma). `SPC` leads the vast majority of commands. `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
 
-The other leader, `,` contains bindings for specific major modes. For example, in Python mode, `, s b` sends the entire buffer to Elpy's inferior Python shell and executes it, and in `restclient`, `, RET` runs the HTTP query at point.
+The other leader, `SPC ,` contains bindings for specific major modes. For example, in Python mode, `SPC , s b` sends the entire buffer to Elpy's inferior Python shell and executes it, and in `restclient`, `SPC , RET` runs the HTTP query at point.
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
