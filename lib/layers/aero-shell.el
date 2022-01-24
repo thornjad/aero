@@ -1,16 +1,39 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019, 2021 Jade Michael Thornton
-;;
-;; This program is free software; you may redistribute it and/or modify it under
-;; the terms of the GNU General Public License version 3, as published by the
-;; Free Software Foundation. This program carries no warranty whatsoever,
-;; without even the implied warranty of merchantability or fitness for a
-;; particular purpose. See </license> for more details.
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
+;;
+;; Permission to use, copy, modify, and/or distribute this software for any
+;; purpose with or without fee is hereby granted, provided that the above
+;; copyright notice and this permission notice appear in all copies.
+;;
+;; The software is provided "as is" and the author disclaims all warranties with
+;; regard to this software including all implied warranties of merchantability
+;; and fitness. In no event shall the author be liable for any special, direct,
+;; indirect, or consequential damages or any damages whatsoever resulting from
+;; loss of use, data or profits, whether in an action of contract, negligence or
+;; other tortious action, arising out of or in connection with the use or
+;; performance of this software.
 
 (require 'aero-prelude)
+
+;; Allow ANSI color escapes in compilation mode
+;; (ignore-errors
+;;   (require 'ansi-color)
+;;   (defun colorize-compilation-buffer ()
+;;     (when (eq major-mode 'compilation-mode)
+;;       (let ((inhibit-read-only t))
+;;         (ansi-color-apply-on-region compilation-filter-start (point-max)))))
+;;   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
+
+(use-package xterm-color :straight t
+  :commands (xterm-color-filter)
+  :init
+  (setq compilation-environment '("TERM=xterm-256color"))
+  (defun aero/advice-compilation-filter (f proc string)
+    (funcall f proc (xterm-color-filter string)))
+  (advice-add 'compilation-filter :around #'aero/advice-compilation-filter))
 
 
 ;;; eshell
