@@ -2,7 +2,7 @@
 ;;
 ;; web, js, cs, etc.
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -22,6 +22,19 @@
 
 (require 'aero-lib)
 (require 'aero-prelude)
+
+
+(defun aero/yarn-lint () (interactive) (compile "yarn lint"))
+(defun aero/yarn-test () (interactive) (compile "yarn test"))
+
+(use-package npm :straight t)
+(use-package jest :straight t)
+
+;; not actually working because of webpack dashboard, but may be useful in the future
+;; (defun aero/yarn-start ()
+;;   (interactive)
+;;   (let ((buf (get-buffer-create " *yarn start*")))
+;;     (async-shell-command "yarn start" buf)))
 
 (use-package web-mode :straight t
   :mode
@@ -59,7 +72,15 @@
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
-(use-package typescript-mode :straight t)
+(use-package typescript-mode :straight t
+  :after (general)
+  :config
+
+  (aero-mode-leader-def
+    :keymaps 'typescript-mode
+    "l" '(aero/yarn-lint :wk "lint")
+    "t" '(aero/yarn-test :wk "test")))
+
 (use-package ng2-mode :straight t)
 
 
