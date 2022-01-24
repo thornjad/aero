@@ -210,6 +210,12 @@ emacs with sigusr2"
   (interactive)
   (switch-to-buffer (generate-new-buffer "*Scratch*")))
 
+(defun aero/bury-buffer-kill-window ()
+  "Bury the current buffer and kill its window."
+  (interactive)
+  (bury-buffer (current-buffer))
+  (delete-window))
+
 ;; from spacemacs
 (defun aero/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
