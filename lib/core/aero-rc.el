@@ -232,7 +232,7 @@
                (h (window-height w)))
           (select-window w)
           (switch-to-buffer "*compilation*")
-          (shrink-window (- h (or compilation-window-height 12))))))))
+          (shrink-window (- h (or compilation-window-height 20))))))))
 (add-hook 'compilation-mode-hook 'aero/compilation-hook)
 
 (eval-after-load 'general
