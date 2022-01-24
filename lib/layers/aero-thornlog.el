@@ -110,6 +110,13 @@
 "
   "Template for a new day in the thornlog")
 
+(defvar aero/thornlog-blocked-response-list
+  '("∅" "nada" "none" "none" "none" "none" "nothing" "nope" "nil" "zilch" "naught" "void")
+  "List of template responses for blocked, to be chosen randomly.
+
+'none' is included multiple times so as to give it increased weight, it being the 'normal'
+response.")
+
 (defun new-day-insert ()
   "Insert the contents of the template into the document, for a new day's work."
   (let ((text nil)
@@ -130,6 +137,12 @@
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
         (setq text (replace-regexp-in-string "`Y` " "`F` " text t)))
+
+      ;; Put in a random blocked message
+      (setq text (replace-regexp-in-string
+                  "∅"
+                  (rand-nth aero/thornlog-blocked-response-list)
+                  text t))
 
       ;; Done, insert
       (insert text "\n"))
