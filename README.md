@@ -49,9 +49,9 @@ Emacs keybindings belong in the dark ages where they originated. They might work
 
 ### Spacemacs-like leader keys
 
-When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around one of two leader keys, `SPC` and ` SPC,` (space comma). `SPC` leads the vast majority of commands. `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
+When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around a single leader key, `SPC`. For example, `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
 
-The other leader, `SPC ,` contains bindings for specific major modes. For example, in Python mode, `SPC , s b` sends the entire buffer to Elpy's inferior Python shell and executes it, and in `restclient`, `SPC , RET` runs the HTTP query at point.
+Aero also provides a "mode leader", `SPC ,`, which contains bindings for specific major modes. For example, in Python mode, `SPC , s b` sends the entire buffer to Elpy's inferior Python shell and executes it, and in `restclient`, `SPC , RET` runs the HTTP query at point.
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
@@ -87,7 +87,7 @@ Emacs continues to lack native language server support, but Aero implements this
 git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
 ```
 
-Upon starting up Emacs for the first time, further third-party packages will automatically download and install. Subsequent startups should take around one second. If you encounter any errors at this stage, try restarting Emacs.
+Upon starting up Emacs for the first time, further third-party packages will automatically download and install. Subsequent startups should take around one second. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
 ## Changing themes and adding your own customization
 
