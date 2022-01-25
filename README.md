@@ -8,13 +8,15 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 Why does Emacs need such a huge configuration project when VSCode/JetBrains/etc needs nothing like this? For the most part, configuration like Aero defines all the settings, plugins and plugin settings for the whole of the application. Configuration files enable version control, reproducibility and creativity. Why creativity? Because at the core of Emacs lies a complete Lisp machine which makes Emacs infinitely extensible and customizable.
 
-Why Emacs at all? Well, why use anything else? Emacs provides me with all the tools and features I could want (and even more, I mean, Emacs can browse the web and send email), packed in a powerful Lisp machine which runs as quickly as I can type. It empowers me to customize anything I want, including nixing functionality I don't want. Hell, it can even run in a terminal with _nearly_ full functionality, a feature I've actually made good use of a number of times. The level of refinement, maturity and optimization after nearly 50 years of development provides an excellent editing platform (the first version of Emacs, written for the PDP 10 by Stallman, Steele and Moon, released in 1976).
+Why Emacs at all? Well, why use anything else? Emacs provides me with all the tools and features I could want (and even more, I mean, Emacs can browse the web and send email), packed in a powerful Lisp machine which runs as quickly as I can type. It empowers me to customize anything I want, including nixing functionality I don't want. Hell, it can even run in a terminal with full functionality, and then run a fully-functional terminal inside Emacs, a feature I've actually made good use of a number of times. The level of refinement, maturity and optimization after nearly 50 years of development [^1] provides an unequaled editing platform.
 
 > "An infinite number of monkeys typing into GNU Emacs would never make a good program." — Linus Torvalds
 
 > "Emacs outshines all other editing software in the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish." — Neal Stephenson
 
 > "You could be a total lunatic, and Emacs has to make you happy" — Steve Yegge
+
+[^1]: The first version of Emacs, written for the PDP 10 by Stallman, Steele and Moon, released in 1976
 
 ## Features
 
