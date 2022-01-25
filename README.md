@@ -45,7 +45,7 @@ Emacs supports many languages out of the box, and Aero adds more. Full support e
 
 > "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 
-Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. Instead, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available..
+Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. Instead, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
 
 ### Spacemacs-like leader keys
 
