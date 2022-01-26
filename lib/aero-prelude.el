@@ -503,13 +503,11 @@ Local bindings (`counsel-mode-map'):
   :config
   (defvar aero-etc-dir)
   (setq recentf-save-file (expand-file-name "recentf" aero-etc-dir)
-        recentf-max-saved-items 500
-        ;; never cleanup, this will get rid of tramp files
-        recentf-auto-cleanup 'never)
+        recentf-max-saved-items 500)
   (recentf-mode 1)
 
   ;; run recentf save every 5 minutes
-  (run-at-time nil (* 5 60) 'recentf-save-list))
+  (run-at-time 60 (* 5 60) 'recentf-save-list))
 
 (use-package ivy :straight t
   :after general
