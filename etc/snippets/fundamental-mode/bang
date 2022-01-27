@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: bang
+# key: #!
+# uuid: #!
+# condition: (bolp)
+# insert a choice if you have more than one possibility
+# --
+#!/usr/bin/env ${1:bash}
+
+$0

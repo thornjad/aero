@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: (current time)
+# key: time
+# uuid: time
+# --
+`(current-time-string)`
