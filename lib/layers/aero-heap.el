@@ -75,4 +75,12 @@
   :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
+;; Games
+
+(use-package asm-blox
+  :straight (asm-blox :host github :repo "zkry/asm-blox")
+  :after (general)
+  :commands (asm-blox)
+  :init (aero-leader-def "aga" 'asm-blox))
+
 (provide 'aero-heap)
