@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -83,8 +83,8 @@ does not specify a special indentation."
        (cond
         ;; car of form doesn't seem to be a symbol, or is a keyword
         ((and (elt state 2)
-            (or (not (looking-at "\\sw\\|\\s_"))
-               (looking-at ":")))
+              (or (not (looking-at "\\sw\\|\\s_"))
+                  (looking-at ":")))
          (if (not (> (save-excursion (forward-line 1) (point))
                      calculate-lisp-indent-last-sexp))
              (progn (setf (point) calculate-lisp-indent-last-sexp)
@@ -98,26 +98,26 @@ does not specify a special indentation."
          (backward-prefix-chars)
          (current-column))
         ((and (save-excursion
-              (setf (point) indent-point)
-              (skip-syntax-forward " ")
-              (not (looking-at ":")))
-            (save-excursion
-              (setf (point) orig-point)
-              (looking-at ":")))
+                (setf (point) indent-point)
+                (skip-syntax-forward " ")
+                (not (looking-at ":")))
+              (save-excursion
+                (setf (point) orig-point)
+                (looking-at ":")))
          (save-excursion
            (setf (point) (+ 2 (elt state 1)))
            (current-column)))
         (t
          (let ((function (buffer-substring (point)
-                                    (progn (forward-sexp 1) (point))))
+                                           (progn (forward-sexp 1) (point))))
                method)
            (setq method (or (function-get (intern-soft function)
-                                         'lisp-indent-function)
-                           (get (intern-soft function) 'lisp-indent-hook)))
+                                          'lisp-indent-function)
+                            (get (intern-soft function) 'lisp-indent-hook)))
            (cond ((or (eq method 'defun)
-                     (and (null method)
-                        (> (length function) 3)
-                        (string-match "\\`def" function)))
+                      (and (null method)
+                           (> (length function) 3)
+                           (string-match "\\`def" function)))
                   (lisp-indent-defform state indent-point))
                  ((integerp method)
                   (lisp-indent-specform method state
