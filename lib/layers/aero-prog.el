@@ -27,7 +27,7 @@
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
-        company-tooltip-limit 14
+        company-tooltip-limit 10
         company-require-match nil
         company-show-numbers t
 				company-tooltip-align-annotations t
