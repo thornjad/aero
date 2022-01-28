@@ -121,6 +121,20 @@
 (use-package yaml-mode :straight t
   :mode "\\.ya?ml\\'")
 
+(use-package clue :defer t
+  :straight (:host github :repo "AmaiKinono/clue")
+  :after (general)
+  :hook (find-file-hook . clue-auto-enable-clue-mode)
+  :commands (clue-copy
+             clue-paste)
+  :custom
+  (clue-project-root-function #'projectile-project-root)
+  (clue-auto-enable-modes '(markdown-mode))
+  :init
+  (aero-leader-def
+    "Cc" 'clue-copy
+    "Cp" 'clue-paste))
+
 (use-package org :straight nil
 	:commands org-mode
 
