@@ -435,6 +435,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 
 (add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
+;; Use text mode for file that doesn't have an extension.
+(add-to-list 'auto-mode-alist '("/[^./]*\\'" . text-mode))
+;; Use conf-mode for dotfiles.
+(add-to-list 'auto-mode-alist '("/\\.[^/]*\\'" . conf-mode))
 
 (add-hook 'prog-mode-hook (lambda ()
                             (setq comment-auto-fill-only-comments t)
