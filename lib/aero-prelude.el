@@ -130,191 +130,193 @@
    ;; NOTE deprecated, use the top-level "," prefix instead
    "," '(:ignore t :wk "mode") ; reserved for mode-specific
 
-   "U" 'universal-argument
-   "z" 'repeat
+   "C" '(:ignore t :wk "clue")
 
-   "q" '(:ignore t :wk "quoted insert")
-   "qq" 'quoted-insert
-   "ql" 'insert-lambda
+   "E" '(:ignore t :wk "emacs")
+   "Ea" 'aero/apologize-to-emacs
+   "Ed" '(:ignore t :wk "debug")
+   "Ede" 'toggle-debug-on-error
+   "Edq" 'toggle-debug-on-quit
+   "Et" 'counsel-load-theme
+
+   "F" '(:ignore t :wk "frame")
+   "FF" 'find-file-other-frame
+   "Fd" 'delete-frame
+   "Ff" 'toggle-frame-fullscreen
+   "Fm" 'toggle-frame-maximized
+   "Fn" 'make-frame
+   "Fo" 'other-frame
+
+   "L" '(:ignore t :wk "local")
+
+   "P" '(:ignore t :wk "packages/perspective")
+   "PP" '(:ignore t :wk "packages")
+   "PPC" 'straight-check-all
+   "PPF" 'straight-fetch-all
+   "PPP" 'straight-pull-all
+   "PPR" 'straight-rebuild-all
+   "PPg" 'straight-get-recipe
+   "PPp" 'straight-pull-package-and-deps
+   "PPr" 'straight-rebuild-package
+   "PPx" 'straight-prune-build
+
+   "S" '(:ignore t :wk "shell/sql")
+   "SE" '(:ignore t :wk "eshell")
+   "Se" 'eshell
+   "St" '(:ignore t :wk "term")
+
+   "T TAB" 'tab-recent
+   "T" '(:ignore t :wk "tab")
+   "T," 'tab-rename
+   "TL" 'tab-last
+   "TL" 'tab-list
+   "TT" 'tab-bar-mode
+   "Tb" 'switch-to-buffer-other-tab
+   "Tc" '(tab-new :wk "create tab")
+   "Td" 'tab-close
+   "Tf" 'find-file-other-tab
+   "Tg" '(tab-select :wk "tab go")
+   "Tj" 'tab-next
+   "Tk" 'tab-previous
+   "Ts" '(tab-duplicate :wk "tab duplicate split")
+   "Tu" 'tab-undo
+
+   "U" 'universal-argument
+
+   "a" '(:ignore t :wk "applications")
+   "ad" 'counsel-dired
+   "ag" '(:ignore t :wk "games")
+   "agd" 'dunnet
+   "agt" 'tetris
+
+   "b" '(:ignore t :wk "buffers")
+   "bL" 'list-buffers
+   "bP" 'aero/toggle-prettify-this-buffer
+   "bS" 'switch-to-new-scratch-buffer
+   "bd" 'kill-this-buffer
+   "bi" 'indent-buffer
+   "bl" 'ibuffer
+   "bm" 'switch-to-messages-buffer
+   "bn" 'next-buffer
+   "bp" 'previous-buffer
+   "br" '(aero/reopen-file-at-buffer :wk "reopen file")
+   "bs" 'switch-to-scratch-buffer
+   "bt" '(:ignore t :wk "tabify")
+   "btt" 'tabify-buffer
+   "btu" 'untabify-buffer
+   "bw" '(whitespace-mode :wk "whitespace")
+   "bx" 'kill-buffer-and-window
+
+   "c" '(:ignore t :wk "compile")
+   "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
+   "cR" 'byte-recompile-file
+   "cc" 'compile
+   "ce" '(:ignore t :wk "elisp")
+   "ceB" '(:ignore t :wk "byte compile")
+   "ceBF" '(async-byte-compile-file :wk "other file async")
+   "ceBb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
+   "ceBd" '(byte-recompile-directory :wk "directory")
+   "ceBf" '(byte-compile-file :wk "other file")
+   "ceBr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
+   "ceb" 'eval-buffer
+   "cec" '(:ignore t :wk "compile")
+   "cecb" '(aero/native-compile-file-at-buffer :wk "file at buffer")
+   "ced" 'eval-defun
+   "cei" '(ielm :wk "ielm repl")
+   "cer" 'eval-region
+   "ck" 'kill-compilation
+   "cr" 'recompile
+
+   "d" '(:ignore t :wk "debug")
+
+   "e" '(:ignore t :wk "errors")
+   "en" 'next-error
+   "ep" 'previous-error
 
    "f" '(:ignore t :wk "files")
-   "fw" '(save-buffer :wk "write buffer")
-   "fW" '(aero/async-write-buffer :wk "async write buffer (experimental)")
    "fC" '(:ignore t :wk "convert")
    "fCd" '(aero/unix2dos :wk "unix2dos")
    "fCu" '(aero/dos2unix :wk "dos2unix")
    "fD" '(aero/delete-this-file :wk "delete this file")
    "fE" '(aero/sudo-edit :wk "sudo edit")
    "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
-   "fx" '(aero/xdg-open :wk "xdg-open")
+   "fW" '(aero/async-write-buffer :wk "async write buffer (experimental)")
    "fo" '(:ignore t :wk "open special files")
-   "fot" '(:ignore t :wk "thornlog")
-   "fott" '(aero/thornlog-dir :wk "thornlog all")
-   "fotl" '(aero/thornlog-today :wk "thornlog log")
-   "fotd" '(aero/thornlog-todo :wk "thornlog todo")
    "foP" 'aero/open-emacs-problems
    "fof" 'aero/open-local-init
-
-   "o" '(:ignore t :wk "org")
-   "oa" 'org-agenda
-   "ot" 'aero/task
-   "oe" '(:ignore t :wk "org edit")
-   "oet" '(:ignore t :wk "org table")
-   "oets" 'org-table-sort-lines
-
-   "h" '(:ignore t :wk "help/manual")
-   "hM" 'woman
-   "hm" 'man
-   "hi" 'info
-   "hI" 'info-apropos
-   "hd" '(:ignore t :wk "describe")
-   "hw" '(:ignore t :wk "which-key")
-   "hwm" '(which-key-show-major-mode :wk "major mode map")
-
-   "m" '(tmm-menubar :wk "Context menu")
-
-   "b" '(:ignore t :wk "buffers")
-   "bn" 'next-buffer
-   "bp" 'previous-buffer
-   "bl" 'ibuffer
-   "bL" 'list-buffers
-   "bm" 'switch-to-messages-buffer
-   "br" '(aero/reopen-file-at-buffer :wk "reopen file")
-   "bs" 'switch-to-scratch-buffer
-   "bS" 'switch-to-new-scratch-buffer
-   "bd" 'kill-this-buffer
-   "bx" 'kill-buffer-and-window
-   "bw" '(whitespace-mode :wk "whitespace")
-   "bt" '(:ignore t :wk "tabify")
-   "btu" 'untabify-buffer
-   "btt" 'tabify-buffer
-   "bi" 'indent-buffer
-   "bP" 'aero/toggle-prettify-this-buffer
-
-   "E" '(:ignore t :wk "emacs")
-   "Et" 'counsel-load-theme
-   "Ea" 'aero/apologize-to-emacs
-   "Ed" '(:ignore t :wk "debug")
-   "Ede" 'toggle-debug-on-error
-   "Edq" 'toggle-debug-on-quit
-
-   "a" '(:ignore t :wk "applications")
-   "ad" 'counsel-dired
-   "ag" '(:ignore t :wk "games")
-   "agt" 'tetris
-   "agd" 'dunnet
-
-   "c" '(:ignore t :wk "compile")
-   "cc" 'compile
-   "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
-   "ck" 'kill-compilation
-   "cr" 'recompile
-   "cR" 'byte-recompile-file
-   "ce" '(:ignore t :wk "elisp")
-   "cei" '(ielm :wk "ielm repl")
-   "cer" 'eval-region
-   "ceb" 'eval-buffer
-   "ced" 'eval-defun
-   "cec" '(:ignore t :wk "compile")
-   "cecb" '(aero/native-compile-file-at-buffer :wk "file at buffer")
-   "ceB" '(:ignore t :wk "byte compile")
-   "ceBb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
-   "ceBr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
-   "ceBf" '(byte-compile-file :wk "other file")
-   "ceBF" '(async-byte-compile-file :wk "other file async")
-   "ceBd" '(byte-recompile-directory :wk "directory")
-
-   "e" '(:ignore t :wk "errors")
-   "en" 'next-error
-   "ep" 'previous-error
-
-   "F" '(:ignore t :wk "frame")
-   "Fd" 'delete-frame
-   "Fo" 'other-frame
-   "FF" 'find-file-other-frame
-   "Fn" 'make-frame
-   "Fm" 'toggle-frame-maximized
-   "Ff" 'toggle-frame-fullscreen
+   "fot" '(:ignore t :wk "thornlog")
+   "fotd" '(aero/thornlog-todo :wk "thornlog todo")
+   "fotl" '(aero/thornlog-today :wk "thornlog log")
+   "fott" '(aero/thornlog-dir :wk "thornlog all")
+   "fw" '(save-buffer :wk "write buffer")
+   "fx" '(aero/xdg-open :wk "xdg-open")
 
    "g" '(:ignore t :wk "git")
    "gf" '(:ignore t :wk "files")
 
-   "l" '(:ignore t :wk "lsp")
-
-   "L" '(:ignore t :wk "local")
+   "h" '(:ignore t :wk "help/manual")
+   "hI" 'info-apropos
+   "hM" 'woman
+   "hd" '(:ignore t :wk "describe")
+   "hi" 'info
+   "hm" 'man
+   "hw" '(:ignore t :wk "which-key")
+   "hwm" '(which-key-show-major-mode :wk "major mode map")
 
    "j" '(:ignore t :wk "jump")
-   "s" '(:ignore t :wk "sexp")
+   "l" '(:ignore t :wk "lsp")
+
    "m" '(:ignore t :wk "mode")
-   "d" '(:ignore t :wk "debug")
+   "m" '(tmm-menubar :wk "Context menu")
+
+   "o" '(:ignore t :wk "org")
+   "oa" 'org-agenda
+   "oe" '(:ignore t :wk "org edit")
+   "oet" '(:ignore t :wk "org table")
+   "oets" 'org-table-sort-lines
+   "ot" 'aero/task
 
    "p" '(:ignore t :wk "project")
    "pr" '(xref-find-definitions :wk "find ref")
+   "q" '(:ignore t :wk "quoted insert")
+   "ql" 'insert-lambda
+   "qq" 'quoted-insert
 
-   "P" '(:ignore t :wk "packages/perspective")
-   "PP" '(:ignore t :wk "packages")
-   "PPp" 'straight-pull-package-and-deps
-   "PPF" 'straight-fetch-all
-   "PPP" 'straight-pull-all
-   "PPg" 'straight-get-recipe
-   "PPC" 'straight-check-all
-   "PPr" 'straight-rebuild-package
-   "PPR" 'straight-rebuild-all
-   "PPx" 'straight-prune-build
+   "s" '(:ignore t :wk "sexp")
+
+   "t" '(:ignore t :wk "tabs/text")
+   "tD" 'downcase-dwim
+   "tU" 'upcase-dwim
+   "tf" 'fill-paragraph
+   "tn" '(:ignore t :wk "number")
+   "tnd" 'decrement-number-at-point
+   "tni" 'increment-number-at-point
+   "ts" 'sort-lines
 
    "u" 'undo-tree-visualize
 
-   "S" '(:ignore t :wk "shell/sql")
-   "Se" 'eshell
-   "SE" '(:ignore t :wk "eshell")
-   "St" '(:ignore t :wk "term")
-
-   "T" '(:ignore t :wk "tab")
-   "TT" 'tab-bar-mode
-   "Tj" 'tab-next
-   "Tk" 'tab-previous
-   "Tc" '(tab-new :wk "create tab")
-   "TL" 'tab-list
-   "TL" 'tab-last
-   "T TAB" 'tab-recent
-   "T," 'tab-rename
-   "Ts" '(tab-duplicate :wk "tab duplicate split")
-   "Td" 'tab-close
-   "Tu" 'tab-undo
-   "Tg" '(tab-select :wk "tab go")
-   "Tb" 'switch-to-buffer-other-tab
-   "Tf" 'find-file-other-tab
-
    "w" '(:ignore t :wk "window/web")
-   "ww" 'eww
-   "wp" 'browse-url-at-point
-   "ws" '(eww-search-words :which-key "web search")
    "w=" 'balance-windows
    "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
-   "wd" 'delete-window
    "wF" 'make-frame
-   "w{" 'shrink-window
-   "w}" 'enlarge-window
-   "wm" 'maximize-window
-   "wi" 'minimize-window
-   "wo" 'browse-url-xdg-open
-   "wb" '(:ignore t :wk "browse")
-   "wbm" 'eww-list-bookmarks
-   "wbb" 'eww-list-buffers
-   "wbh" 'eww-list-histories
-
    "wL" '(:ignore t :wk "layout")
    "wL2" 'aero/layout-two-columns
    "wL3" 'aero/layout-three-columns
+   "wb" '(:ignore t :wk "browse")
+   "wbb" 'eww-list-buffers
+   "wbh" 'eww-list-histories
+   "wbm" 'eww-list-bookmarks
+   "wd" 'delete-window
+   "wi" 'minimize-window
+   "wm" 'maximize-window
+   "wo" 'browse-url-xdg-open
+   "wp" 'browse-url-at-point
+   "ws" '(eww-search-words :which-key "web search")
+   "ww" 'eww
+   "w{" 'shrink-window
+   "w}" 'enlarge-window
 
-   "t" '(:ignore t :wk "tabs/text")
-   "tf" 'fill-paragraph
-   "tU" 'upcase-dwim
-   "tD" 'downcase-dwim
-   "ts" 'sort-lines
-   "tn" '(:ignore t :wk "number")
-   "tni" 'increment-number-at-point
-   "tnd" 'decrement-number-at-point))
+   "z" 'repeat))
 
 (use-package which-key :straight t
   :defines which-key-mode
