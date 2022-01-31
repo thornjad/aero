@@ -562,7 +562,10 @@ Local bindings (`counsel-mode-map'):
   (ivy-rich-mode +1)
   (ivy-rich-project-root-cache-mode +1))
 
-(use-package all-the-icons :straight t)
+(use-package all-the-icons :straight t
+  :after (general)
+  :config (aero-leader-def "qi" 'all-the-icons-insert))
+
 (use-package all-the-icons-ivy-rich :straight t
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
