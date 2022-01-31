@@ -146,9 +146,6 @@ too little space.")
   ;; Always load newest byte code
   (setq load-prefer-newer t)
 
-  ;; disable vc (which is very slow to load). We'll use magit anyway
-  (setq vc-handled-backends nil)
-
   ;; explicitly set utf-8 to avoid prompt from emacs
   (prefer-coding-system 'utf-8)
   ;; silence ad-handle-definition without advised functions being redefined
