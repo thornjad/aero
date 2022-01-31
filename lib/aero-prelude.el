@@ -526,8 +526,6 @@ Local bindings (`counsel-mode-map'):
         ivy-fixed-height-minibuffer t
         ;; ne pas quitter le minibuffer en cas de `delete-error`
         ivy-on-del-error-function #'ignore
-        ;; don't bother counting candidates
-        ivy-count-format ""
         ;; use fuzzy by default, but some searching is impossible without
         ;; stricter regex's
         ivy-re-builders-alist '((t . ivy--regex-plus)))
