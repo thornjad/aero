@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2020 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -18,107 +18,104 @@
 ;;
 ;;; Commentary:
 ;;
+;; It looks a lot like doom modeline, but that's really more like convergent evolution than copying.
+;; Though I will admit I more or less stole that sweet bar on the left side of the line.
+;;
 ;;; Code:
 
-(require 'cl-lib)
+(require 'all-the-icons)
 
 (defgroup aero/modeline nil
   "A minimal mode-line configuration inspired by doom-modeline."
   :group 'mode-line)
 
-(defface aero/modeline-status-grayed-out
-  '((t (:inherit (font-lock-doc-face) :slant italic)))
+(defvar aero/modeline--bar-active nil)
+(defvar aero/modeline-bar--inactive nil)
+
+(defvar aero/modeline-height 30)
+(defvar aero/modeline-bar-width 5)
+
+(defface aero/modeline-status-grayed-out '((t (:inherit (font-lock-doc-face) :slant italic)))
   "Face used for neutral or inactive status indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-status-info
-  '((t (:inherit (font-lock-keyword-face) :slant italic)))
+(defface aero/modeline-status-info '((t (:inherit (font-lock-keyword-face) :slant italic)))
   "Face used for generic status indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-status-success
-  '((t (:inherit (success) :slant italic)))
+(defface aero/modeline-status-success '((t (:inherit (success) :slant italic)))
   "Face used for success status indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-status-warning
-  '((t (:inherit (warning) :slant italic)))
+(defface aero/modeline-status-warning '((t (:inherit (warning) :slant italic)))
   "Face for warning status indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-status-error
-  '((t (:inherit (error) :slant italic)))
+(defface aero/modeline-status-error '((t (:inherit (error) :slant italic)))
   "Face for error stauts indicators in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-unimportant
-  '((t (:inherit (font-lock-doc-face))))
+(defface aero/modeline-unimportant '((t (:inherit (font-lock-doc-face))))
   "Face used for less important mode-line elements."
   :group 'aero/modeline)
 
-(defface aero/modeline-modified
-  '((t (:inherit (error))))
+(defface aero/modeline-modified '((t (:inherit (error))))
   "Face used for the 'modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-not-modified
-  '((t (:inherit (success))))
+(defface aero/modeline-not-modified '((t (:inherit (success))))
   "Face used for the 'not modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-read-only
-  '((t (:inherit (warning))))
+(defface aero/modeline-read-only '((t (:inherit (warning))))
   "Face used for the 'buffer read-only' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-remote
-  '((t (:inherit (font-lock-keyword-face :weight bold))))
+(defface aero/modeline-remote '((t (:inherit (font-lock-keyword-face :weight bold))))
   "Face used for the 'not modified' indicator symbol in the mode-line."
   :group 'aero/modeline)
 
-(defface aero/modeline-evil-normal
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-normal '((t (:inherit (font-lock-keyword-face))))
   "Face used for Normal Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-insert
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-insert '((t (:inherit (font-lock-keyword-face))))
   "Face used for Insert Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-visual
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-visual '((t (:inherit (font-lock-keyword-face))))
   "Face used for Visual Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-operator
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-operator '((t (:inherit (font-lock-keyword-face))))
   "Face used for Visual Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-motion
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-motion '((t (:inherit (font-lock-keyword-face))))
   "Face used for Visual Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-replace
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-replace '((t (:inherit (font-lock-keyword-face))))
   "Face used for Replace Evil state message."
   :group 'aero/modeline)
-
-(defface aero/modeline-evil-emacs
-  '((t (:inherit (font-lock-keyword-face))))
+(defface aero/modeline-evil-emacs '((t (:inherit (font-lock-keyword-face))))
   "Face used for Emacs Evil state message."
   :group 'aero/modeline)
 
-(defface aero/modeline-major-mode-active
-  '((t (:inherit mode-line-buffer-id)))
+(defface aero/modeline-major-mode-active '((t (:inherit mode-line-buffer-id)))
   "Face used for major mode."
+  :group 'aero/modeline)
+
+(defface aero/modeline-git-branch '((t (:slant italic :bold t)))
+  "Used for Git branch name."
+  :group 'aero/modeline)
+
+(defface aero/modeline-bar '((t (:background nil)))
+  "Style of the bar on the modeline."
+  :group 'aero/modeline)
+(defface aero/modeline-bar-inactive '((t (:background nil)))
+  "Style of the bar on the inactive modeline."
   :group 'aero/modeline)
 
 ;; TODO could this be memoized?
 (defun aero-info-line-format (left right)
-  "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
+  "Return a string of `window-width' length containing LEFT and RIGHT, aligned
+respectively."
   (let ((reserve (length right)))
     (concat left " " (propertize
                       " " 'display
@@ -126,6 +123,25 @@
                           (- (+ right right-fringe right-margin)
                              ,(+ reserve (if (display-graphic-p) 1 2))))))
             right)))
+
+(defvar aero/modeline--active-window nil)
+(defun aero/modeline--get-active-window (&optional frame)
+  "Get the current window, but exclude child windows."
+  (if (and (fboundp 'frame-parent) (frame-parent frame))
+      (frame-selected-window (frame-parent frame))
+    (frame-selected-window frame)))
+(defun aero/modeline--set-selected-window (&rest _)
+  "Set `aero/modeline--active-window' to the correct window."
+  (let ((win (aero/modeline--get-active-window)))
+    (setq aero/modeline--active-window
+          (if (minibuffer-window-active-p win)
+              (minibuffer-selected-window)
+            win))))
+(add-hook 'pre-redisplay-functions #'aero/modeline--set-selected-window)
+(defun aero/modeline--active-p ()
+  "Return whether mode-line is active."
+  (and aero/modeline--active-window
+       (eq (aero/modeline--get-active-window) aero/modeline--active-window)))
 
 ;;; Segments
 
@@ -149,13 +165,33 @@
   "Displays a color-coded buffer modification indicator in the mode-line."
   (cond
    ((and buffer-read-only (buffer-file-name))  ;; read-only
-    (propertize "%" 'face `(:inherit aero/modeline-read-only :height 0.6)))
+    (propertize "" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((string-match-p "\\*.*\\*" (buffer-name))  ;; special buffer
-    (propertize "*" 'face `(:inherit aero/modeline-read-only :height 0.6)))
+    (propertize "" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((buffer-modified-p)  ;; modified
-    (propertize "●" 'face `(:inherit aero/modeline-modified :height 0.6)))
+    (propertize "" 'face `(:inherit aero/modeline-modified :height 0.6)))
    (t  ;; not modified
-    (propertize "○" 'face `(:inherit aero/modeline-not-modified :height 0.6)))))
+    (propertize "" 'face `(:inherit aero/modeline-not-modified :height 0.6)))))
+
+(defun aero/modeline-segment-git-state ()
+  "Displays the current branch and status from Git.
+
+Only Git is supported because I'm not an animal."
+  (when (and vc-mode buffer-file-name)
+    (let ((state (vc-state (file-local-name buffer-file-name)))
+          (str (if vc-display-status
+                   (substring vc-mode 5)
+                 "")))
+      (concat
+       " "
+       (propertize
+        (let ((max 13))
+          (if (> (length str) max)
+              (concat (substring str 0 (- max 3)) "…") ; substring 3 less than length limit
+            str))
+        'mouse-face 'mode-line-highlight
+        'face 'aero/modeline-git-branch)
+       " "))))
 
 (defun aero/modeline-segment-remote ()
   "Displays a symbol if buffer is remote"
@@ -186,6 +222,30 @@
   "Displays the current major mode in the mode-line."
   (format " %s " (format-mode-line mode-name)))
 
+(defun aero/modeline-create-bar-image (face width height)
+  "Create the bar image.
+Use FACE1 for the bar, FACE2 for the background.
+WIDTH and HEIGHT are the image size in pixels."
+  (when (and (display-graphic-p)
+             (image-type-available-p 'pbm))
+    (propertize
+     " " 'display
+     (let ((color (or (face-background face nil t) "None")))
+       (ignore-errors
+         (create-image
+          (concat (format "P1\n%i %i\n" width height)
+                  (make-string (* width height) ?1)
+                  "\n")
+          'pbm t :foreground color :ascent 'center))))))
+
+(defun aero/modeline-segment-bar ()
+  "The bar, also determines modeline height (in GUI)."
+  (let ((width aero/modeline-bar-width)
+        (height aero/modeline-height))
+    (if (aero/modeline--active-p)
+        (aero/modeline-create-bar-image 'aero/modeline-bar width height)
+      (aero/modeline-create-bar-image 'aero/modeline-bar-inactive width height))))
+
 ;;; Activation function
 
 ;; Store the default mode-line format
@@ -204,7 +264,8 @@
              (aero-info-line-format
               ;; Left
               (format-mode-line
-               '((:eval (aero/modeline-segment-evil-state))
+               '((:eval (aero/modeline-segment-bar))
+                 (:eval (aero/modeline-segment-evil-state))
                  " " (:eval (aero/modeline-segment-modified)) " "
                  (:eval (aero/modeline-segment-buffer-name))
                  (:eval (aero/modeline-segment-size-and-position))))
@@ -212,6 +273,7 @@
               ;; Right
               (format-mode-line
                '((:eval (aero/modeline-segment-process))
+                 (:eval (aero/modeline-segment-git-state))
                  (:eval (aero/modeline-segment-remote))
                  (:eval (aero/modeline-segment-major-mode))
                  ))))))))
