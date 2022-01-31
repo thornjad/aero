@@ -338,7 +338,7 @@
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
 
-;;; parens
+;; parens
 
 (use-package smartparens :straight t :after (general) :defer 5
   :functions (show-smartparens-global-mode
@@ -403,6 +403,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     (interactive)
     (funcall #'sp-kill-sexp arg t))
 
+  (defun aero/sp-wrap-double-quote () (interactive) (sp-wrap-with-pair "\""))
+  (defun aero/sp-wrap-single-quote () (interactive) (sp-wrap-with-pair "'"))
+  (defun aero/sp-wrap-backtick () (interactive) (sp-wrap-with-pair "`"))
+
   (general-define-key
    :states '(normal visual)
    :prefix "SPC"
@@ -414,6 +418,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sw(" 'sp-wrap-round
    "sw{" 'sp-wrap-curly
    "sw[" 'sp-wrap-square
+   "sw\"" '(aero/sp-wrap-double-quote :wk "wrap double quote")
+   "sw'" '(aero/sp-wrap-single-quote :wk "wrap single quote")
+   "sw`" '(aero/sp-wrap-backtick :wk "wrap backtick")
+   "swr" 'sp-rewrap-sexp
    "su" '(sp-unwrap-sexp :which-key "unwrap")
    "sk" '(sp-kill-sexp :which-key "kill")
    "sK" '(aero/copy-sexp-as-kill :wk "copy as kill"))
