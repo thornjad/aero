@@ -18,7 +18,8 @@
 
 (require 'aero-prelude)
 
-(use-package lsp-mode :after (general)
+(use-package lsp-mode :straight t
+  :after (general)
   :hook ((prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
@@ -28,11 +29,10 @@
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
     "lf" '(:ignore t :wk "find")
     "lfd" '(lsp-find-definition :wk "find definition")
-    "lfr" '(lsp-find-references :wk "find references")
     "ld" 'lsp-describe-thing-at-point
-    "ls" '(:ignore t :wk "server")
-    "lsr" '(lsp :wk "server restart")
-    "lsd" 'lsp-describe-session)
+    "lS" '(:ignore t :wk "server")
+    "lSr" '(lsp :wk "server restart")
+    "lSd" 'lsp-describe-session)
 
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0 ; default is 0.2
@@ -42,6 +42,18 @@
         lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-arrow "»"
         lsp-enable-on-type-formatting t)
+
+  (use-package lsp-treemacs :straight t
+    :after (general lsp-mode treemacs)
+    :config
+    (lsp-treemacs-sync-mode +1)
+
+    (aero-leader-def
+      "le" 'lsp-treemacs-errors-list
+      "ls" 'lsp-treemacs-symbols
+      "lf" '(:ignore t :wk "find")
+      "lfr" '(lsp-treemacs-references :wk "find references")
+      "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
 
   (use-package lsp-java
     :hook ((java-mode . lsp)))
