@@ -27,12 +27,26 @@
   :config
   (aero-leader-def
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
+    "l RET" 'lsp-execute-code-action
     "lf" '(:ignore t :wk "find")
     "lfd" '(lsp-find-definition :wk "find definition")
+    "lfa" '(xref-find-apropos :wk "find symbols matching pattern")
     "ld" 'lsp-describe-thing-at-point
+    "l TAB" '(:ignore t :wk "format")
+    "l TAB TAB" 'lsp-format-buffer
+    "l TAB r" 'lsp-format-region
+    "lr" '(:ignore t :wk "refactor")
+    "lrr" 'lsp-rename
+    "lro" 'lsp-organize-imports
     "lS" '(:ignore t :wk "server")
     "lSr" '(lsp :wk "server restart")
     "lSd" 'lsp-describe-session)
+
+  (defun load-lsp-format-buffer-hook ()
+    "Adds a buffer-local hook to format the buffer with LSP."
+    (when (fboundp #'lsp-format-buffer)
+      (add-hook 'after-save-hook #'lsp-format-buffer nil t)))
+  (add-hook 'lsp-mode-hook #'load-lsp-format-buffer-hook)
 
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0 ; default is 0.2
@@ -59,6 +73,7 @@
     :hook ((java-mode . lsp)))
 
   (use-package lsp-ui :straight t
+    :after (lsp)
     :hook ((lsp-mode . lsp-ui-mode)
            (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
     :config
@@ -74,11 +89,13 @@
      lsp-ui-sideline-show-symbol t
      lsp-ui-sideline-show-diagnostics t
      lsp-ui-sideline-show-code-actions t)
+
     (aero-leader-def
       "li" 'lsp-ui-imenu
       "lp" '(:ignore t :wk "peek")
       "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
-      "lpr" '(lsp-ui-peek-find-references :wk "peek references")))
+      "lpr" '(lsp-ui-peek-find-references :wk "peek references")
+      "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")))
 
   (use-package lsp-ivy :straight t
     :config
