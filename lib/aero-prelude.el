@@ -767,7 +767,7 @@ Local bindings (`counsel-mode-map'):
    :prefix "SPC"
    "ap" 'pomp))
 
-(use-package editorconfig :straight t :defer 5
+(use-package editorconfig :straight t :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
