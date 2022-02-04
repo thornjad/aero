@@ -23,7 +23,6 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-
 (defun aero/yarn-lint () (interactive) (compile "yarn lint"))
 (defun aero/yarn-test () (interactive) (compile "yarn test"))
 
