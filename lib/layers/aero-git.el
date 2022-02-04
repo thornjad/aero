@@ -99,10 +99,11 @@ This function will only work if branches are named with the schema
 board_ticket_branch_name."
     (interactive)
     (let* ((branch (magit-get-current-branch))
-           (parts (split-string branch "_"))
+           (parts (split-string branch "[_-]"))
            (board (upcase (car parts)))
            (ticket (cadr parts))
-           (my-boards '("WEB" "NUKE" "AV8R" "MOBILE" "BCK")))
+           (my-boards '("WEB" "NUKE" "AV8R" "MOBILE" "BCK"
+                        "WAL" "PROC" "SPPRT" "DDD")))
       (when (member board my-boards)
         (save-excursion
           (forward-line)
