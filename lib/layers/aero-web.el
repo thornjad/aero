@@ -26,14 +26,7 @@
 (defun aero/yarn-lint () (interactive) (compile "yarn lint"))
 (defun aero/yarn-test () (interactive) (compile "yarn test"))
 
-(use-package npm :straight t)
 (use-package jest :straight t)
-
-;; not actually working because of webpack dashboard, but may be useful in the future
-;; (defun aero/yarn-start ()
-;;   (interactive)
-;;   (let ((buf (get-buffer-create " *yarn start*")))
-;;     (async-shell-command "yarn start" buf)))
 
 (use-package web-mode :straight t
   :mode
