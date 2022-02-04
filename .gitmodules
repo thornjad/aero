@@ -1,9 +1,3 @@
-[submodule "lib/packages/testbackend"]
-	path = lib/packages/testbackend
-	url = git@github.flightaware.com:thornjad/testbackend.git
-[submodule "lib/packages/hackernews"]
-	path = lib/packages/hackernews
-	url = git@gitlab.com:thornjad/hackernews.git
 [submodule "lib/packages/aero-theme"]
 	path = lib/packages/aero-theme
 	url = git@gitlab.com:thornjad/aero-theme.git
