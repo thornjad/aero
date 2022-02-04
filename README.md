@@ -1,7 +1,5 @@
 # Aero Emacs
 
-![Preview of Aero](./etc/images/aero-preview.png)
-
 Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; I've tailored Aero to myself, what I want and what I use. Configuration for Lisps, Python and web languages have special focus. I hope this project serves as a strong starting point for the development of your own configuration.
 
 ## Note for non-Emacs users
