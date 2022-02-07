@@ -36,6 +36,9 @@
   (setq aero-theme-font "IBM Plex Mono")
   (load-theme 'aero-dark t))
 
+;; other themes
+(use-package tao-theme :straight t :defer t)
+
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
