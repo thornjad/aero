@@ -130,8 +130,12 @@
 (line-number-mode 1)
 (column-number-mode 1)
 (pixel-scroll-mode 1)
+(global-visual-line-mode +1) ; allow navigation by visual wrapped lines rather than real lines
+
+;; shiny new native fill-line indicator
+;; TODO this is not using the character I'm setting here?
+(setq display-fill-column-indicator-character ?│)
 (global-display-fill-column-indicator-mode 1)
-(global-visual-line-mode +1)
 
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -160,7 +164,14 @@
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method 'character
-              highlight-indent-guides-responsive 'top))
+              highlight-indent-guides-responsive 'top)
+  :config
+  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (set-face-background 'highlight-indent-guides-top-odd-face "darkgray")
+  (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
 (defun pulse-line (&rest _)
   "Briefly pulse a highlight of the line at point.
