@@ -34,7 +34,7 @@
     (setq aero-theme-font-height 140))
   :config
   (setq aero-theme-font "IBM Plex Mono")
-  (load-theme 'aero-dark t))
+  (load-theme 'aero t))
 
 ;; other themes
 (use-package tao-theme :straight t :defer t)
