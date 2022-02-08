@@ -20,10 +20,12 @@
 
 (use-package projectile
   :straight (:host github :repo "bbatsov/projectile")
+  :after (ivy)
 	:config
 	(setq projectile-indexing-method 'alien
 				projectile-enable-caching t
-				projectile-mode-line nil)
+				projectile-mode-line nil
+        projectile-completion-system 'ivy)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (projectile-mode 1))
 
