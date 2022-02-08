@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
@@ -43,8 +43,9 @@
           ("twitter.com" . browse-url-generic)
           ("youtube.com" . browse-url-generic)
           ("." . eww-browse-url)))
-  (setq browse-url-generic-program "firefox")
-	(setq eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
+  (setq browse-url-generic-program "firefox"
+	      eww-search-prefix "https://lite.duckduckgo.com/lite?q="
+        shr-indentation 2)
 
   (aero-leader-def
     "wbd" '(aero/ddg :wk "duckduckgo")
@@ -157,5 +158,15 @@
     :defines (link-hint-open-link)
     :init
     (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
+
+(use-package pocket-reader :straight t
+  :after (general)
+  :commands (pocket-reader)
+  :custom
+  (pocket-reader-open-url-default-function #'eww)
+  :init (aero-leader-def "aP" 'pocket-reader)
+  :config
+  ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
+  (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
 (provide 'aero-eww)
