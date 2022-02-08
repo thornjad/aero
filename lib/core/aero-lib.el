@@ -30,6 +30,7 @@
   :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
 (use-package async :straight (:host github :repo "jwiegley/emacs-async")
   :commands (async-save))
+(use-package popup :straight t)
 
 ;; sub-modules
 (require 'aero-pbcopier)
