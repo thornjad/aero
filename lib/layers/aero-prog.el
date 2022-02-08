@@ -303,6 +303,7 @@
    "pcH" 'flycheck-manual))
 
 (use-package flycheck-pos-tip :straight t
+  :after (flycheck)
   :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 (use-package flyspell
@@ -315,7 +316,8 @@
    flyspell-issue-message-flag nil
    ispell-personal-dictionary (expand-file-name
                                "ispell/personal_dictionary.aws"
-                               aero-etc-dir))
+                               aero-etc-dir)
+   flyspell-sort-corrections nil)
 
   (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+"))
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
