@@ -465,6 +465,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Use conf-mode for dotfiles.
 (add-to-list 'auto-mode-alist '("/\\.[^/]*\\'" . conf-mode))
 
+;; somehow makefile-mode broke??
+(add-to-list 'auto-mode-alist '("Makefile" . makefile-mode))
+
 (add-hook 'prog-mode-hook (lambda ()
                             (setq comment-auto-fill-only-comments t)
                             (auto-fill-mode 1)))
