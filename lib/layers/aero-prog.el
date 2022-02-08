@@ -96,6 +96,8 @@
 ;; Markup
 
 (use-package markdown-mode :straight t
+  :after (general)
+  :commands (markdown-mode gfm-mode)
   :mode (("\\`README\\.md\\'" . gfm-mode)
          ("github\\.com.*\\.txt\\'" . gfm-mode)
          ("\\.md\\'"          . markdown-mode)
@@ -107,7 +109,8 @@
         markdown-gfm-additional-languages '("sh"))
   (add-hook 'markdown-mode-hook #'flyspell-mode)
   :config
-  (add-hook 'markdown-mode-hook 'variable-pitch-mode)
+  ;; TEMP Not satisfactory because popup.el gets distorted
+  ;; (add-hook 'markdown-mode-hook 'variable-pitch-mode)
 
   (require 'aero-thornlog)
   (aero-mode-leader-def
