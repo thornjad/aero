@@ -342,6 +342,18 @@
     "psw" 'flyspell-word
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
+
+(use-package synosaurus :straight t
+  :after (general)
+  :commands (synosaurus-lookup
+             synosaurus-choose-and-replace
+             synosauruschoose-and-insert)
+  :custom
+  (synosaurus-choose-method 'default)
+  :config
+  (aero-leader-def
+    "tt" '(synosaurus-choose-and-replace :wk "synonyms")
+    "tT" 'synosaurus-lookup))
 
 ;; parens
 
