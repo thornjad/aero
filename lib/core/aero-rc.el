@@ -191,6 +191,7 @@
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
+(setq save-place-file (expand-file-name "saveplace" aero-etc-dir))
 (save-place-mode 1)
 
 (when (string= system-type "darwin")
