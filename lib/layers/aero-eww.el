@@ -166,4 +166,18 @@
   ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
+(use-package devdocs :straight t
+  :after (general)
+  :commands (devdocs-lookup)
+  :init
+  (aero-leader-def "hD" 'devdocs-lookup)
+  (add-hook 'python-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("python~3.10"))))
+  (add-hook 'typescript-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
+  (add-hook 'ng2-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript"))))
+  (add-hook 'web-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("angular" "rxjs" "javascript")))))
+
 (provide 'aero-eww)
