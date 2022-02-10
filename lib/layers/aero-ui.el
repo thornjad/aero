@@ -53,8 +53,11 @@
 
 ;; set up initial window the way i want it
 (split-window-horizontally)
-(aero/frame-recenter)
-(add-hook 'after-make-frame-functions #'aero/frame-recenter)
+
+;; not working:
+;; (aero/frame-recenter)
+;; (add-hook 'after-make-frame-functions #'aero/frame-recenter)
+
 ;; Startup with vterm running
 ;; (when (require 'vterm-toggle nil t)
 ;;   (vterm-toggle))
