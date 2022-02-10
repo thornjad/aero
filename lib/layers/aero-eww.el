@@ -154,13 +154,7 @@
     "D" 'eww-bookmark-kill
     "P" 'eww-bookmark-yank
     (kbd "RET") 'eww-bookmark-browse
-    "q" 'quit-window)
-
-  (use-package link-hint
-    :after (general)
-    :defines (link-hint-open-link)
-    :init
-    (evil-define-key 'normal eww-mode-map "f" 'link-hint-open-link)))
+    "q" 'quit-window))
 
 (use-package pocket-reader :straight t
   :after (general)
