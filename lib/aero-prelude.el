@@ -582,7 +582,6 @@ Local bindings (`counsel-mode-map'):
   (setq swiper-action-recenter t))
 
 (use-package avy :straight t
-  :commands (avy-goto-line avy-goto-char avy-goto-word-1)
   :init
   (general-define-key
    :states '(normal visual)
