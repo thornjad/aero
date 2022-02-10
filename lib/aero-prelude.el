@@ -607,6 +607,11 @@ Local bindings (`counsel-mode-map'):
   (setq undo-tree-enable-undo-in-region nil)
   (setq undo-tree-auto-save-history t)
 
+  ;; La persistance d'undo-tree est cassée, donc nous écrivons le fichier nous-mêmes. Nous utilisons
+  ;; before-save-hook pour que la zone d'écho affiche toujours le message d'écriture du fichier, ce
+  ;; qui est plus significatif dans 99% des cas.
+  (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
+
   (global-undo-tree-mode +1))
 
 (use-package winner
