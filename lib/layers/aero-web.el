@@ -64,15 +64,7 @@
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
-(use-package typescript-mode :straight t
-  :after (general)
-  :config
-
-  (aero-mode-leader-def
-    :keymaps 'typescript-mode
-    "l" '(aero/yarn-lint :wk "lint")
-    "t" '(aero/yarn-test :wk "test")))
-
+(use-package typescript-mode :straight t)
 (use-package ng2-mode :straight t)
 
 
