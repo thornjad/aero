@@ -55,14 +55,10 @@
   (require 'em-smart)
 
   ;; Ensure eshell doesn't override these
-  (define-key term-mode-map
-    (kbd "M-h") 'windmove-left)
-  (define-key term-mode-map
-    (kbd "M-l") 'windmove-right)
-  (define-key term-mode-map
-    (kbd "M-p") 'eshell-previous-input)
-  (define-key term-mode-map
-    (kbd "M-n") 'eshell-next-input)
+  (define-key term-mode-map (kbd "M-h") 'windmove-left)
+  (define-key term-mode-map (kbd "M-l") 'windmove-right)
+  (define-key term-mode-map (kbd "M-p") 'eshell-previous-input)
+  (define-key term-mode-map (kbd "M-n") 'eshell-next-input)
 
   (setq
    eshell-save-history-on-exit t
