@@ -206,4 +206,7 @@ alternative to the beacon package."
                  evil-window-bottom))
     (advice-add cmd :after #'pulse-line)))
 
+;; make links in comments clickable
+(global-goto-address-mode +1)
+
 (provide 'aero-ui)
