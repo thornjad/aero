@@ -266,6 +266,19 @@
   (defalias 'show-error-at-point-soon 'flycheck-show-error-at-point)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
+  ;; display errors in a lower buffer and auto-resize it
+  (add-to-list 'display-buffer-alist
+               (cons
+                (rx string-start (eval flycheck-error-list-buffer) string-end)
+                '(display-buffer-below-selected
+                  . ((window-height . shrink-window-if-larger-than-buffer)
+                     (reusable-frames . t)))))
+  (defadvice flycheck-error-list-refresh (around shrink-error-list activate)
+    ad-do-it
+    (-when-let (window (flycheck-get-error-list-window t))
+      (with-selected-window window
+        (fit-window-to-buffer window 30 10))))
+
   (defun aero/auto-adjust-flycheck-eagerness ()
     "Adjust how often we check for errors based on if there are any.
     In a clean, error-free buffer, we're an order of magnitude more
