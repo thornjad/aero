@@ -27,7 +27,7 @@
   :config
   (aero-leader-def
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
-    "l RET" 'lsp-execute-code-action
+    "la" 'lsp-execute-code-action
     "lf" '(:ignore t :wk "find")
     "lfd" '(lsp-find-definition :wk "find definition")
     "lfa" '(xref-find-apropos :wk "find symbols matching pattern")
