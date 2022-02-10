@@ -31,7 +31,6 @@
              eww-search-words
              browse-url-at-point)
   :init
-
   ;; Open everything in eww, except for these few sites which just don't work in eww
   (setq browse-url-browser-function
         '((".*google.*maps.*" . browse-url-generic)
@@ -113,8 +112,9 @@
     "H" 'eww-back-url
     "L" 'eww-forward-url
     "&" 'eww-browse-with-external-browser
-    "d" 'eww-download
+    "D" 'eww-download
     "o" 'eww
+    "O" 'aero/ddg
     "f" 'ace-link-eww
     "m" 'eww-add-bookmark
     "R" 'eww-readable
@@ -131,6 +131,9 @@
     "gh" 'eww-list-histories
     "gb" 'eww-list-buffers
     "gt" 'eww-list-buffers)
+
+  (define-key eww-mode-map (kbd "M-h") 'windmove-left)
+  (define-key eww-mode-map (kbd "M-l") 'windmove-right)
 
   ;; viewing history
   (evil-set-initial-state 'eww-history-mode 'normal)
