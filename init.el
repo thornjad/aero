@@ -105,8 +105,6 @@
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
   (aero/load-libs)
-  ;; Allow users to provide an optional "init-preload-local.el"
-  (require 'init-preload-local nil t)
   (aero/load-layers)
 
   ;; baise cette merde
@@ -116,7 +114,7 @@
   (require 'aero-rc)
 
   ;; Load local init if it exists
-  (require 'local-init nil t)
+  (load (expand-file-name "init.local" user-emacs-directory) nil nil)
 
   (global-font-lock-mode t)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el

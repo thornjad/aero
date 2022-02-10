@@ -89,15 +89,7 @@ Upon starting up Emacs for the first time, further third-party packages will aut
 
 ## Changing themes and adding your own customization
 
-To add your own customization, use <kbd>M-x customize</kbd>, <kbd>M-x customize-themes</kbd> etc. and/or create a file `~/.config/emacs/init-local.el` which looks like this:
-
-```el
-... your code here ...
-
-(provide 'init-local)
-```
-
-If you need initialisation code which executes earlier in the startup process, you can also create an `~/.config/emacs/init-preload-local.el` file.
+To add your own customization, use <kbd>M-x customize</kbd>, <kbd>M-x customize-themes</kbd> etc. and/or create a file `~/.config/emacs/init.local.el`.
 
 If you plan to customize things more extensively, you should probably just fork the repo and hack away at the config to make it your own! 
 
