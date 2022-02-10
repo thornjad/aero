@@ -55,6 +55,7 @@
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-arrow "»"
+        lsp-enable-file-watchers nil ; burns through max files
         lsp-enable-on-type-formatting t)
 
   (use-package lsp-treemacs :straight t
