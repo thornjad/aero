@@ -678,6 +678,19 @@ Local bindings (`counsel-mode-map'):
              helpful-callable)
   :after (evil general)
   :init
+
+  ;; REVIEW See Wilfred/elisp-refs#35. Remove once fixed upstream.
+  (unless (version< emacs-version "29")
+    (defvar read-symbol-positions-list nil))
+
+  ;; HACK `help-fns--autoloaded-p's signature changed on Emacs 29. This
+  ;;   suppresses the error until it is addressed upstream. Basically we just override the function
+  ;;   to ignore the second argument.
+  (unless (version< emacs-version "29")
+    (advice-add #'help-fns--autoloaded-p :around
+                (lambda (fn sym &rest args)
+                  (apply fn (list sym)))))
+
   (general-define-key
    :states 'normal
    :prefix "SPC"
