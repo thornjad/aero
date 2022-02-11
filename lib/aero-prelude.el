@@ -288,6 +288,7 @@
    "tD" 'downcase-dwim
    "tU" 'upcase-dwim
    "tf" 'fill-paragraph
+   "tF" 'aero/fill-to-80
    "tn" '(:ignore t :wk "number")
    "tnd" 'decrement-number-at-point
    "tni" 'increment-number-at-point
@@ -684,8 +685,8 @@ Local bindings (`counsel-mode-map'):
     (defvar read-symbol-positions-list nil))
 
   ;; HACK `help-fns--autoloaded-p's signature changed on Emacs 29. This
-  ;;   suppresses the error until it is addressed upstream. Basically we just override the function
-  ;;   to ignore the second argument.
+  ;; suppresses the error until it is addressed upstream. Basically we just
+  ;; override the function to ignore the second argument.
   (unless (version< emacs-version "29")
     (advice-add #'help-fns--autoloaded-p :around
                 (lambda (fn sym &rest args)

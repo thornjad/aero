@@ -362,6 +362,17 @@ on. This may cause a jump if the file has changed significantly."
             (kill-buffer buffer)))
         (buffer-list)))
 
+(defun aero/fill-to-80 ()
+  "`fill-paragraph' to 80 columns, regardless of the default."
+  (interactive)
+  (let ((fill-column 80))
+    (fill-paragraph)))
+
+(defun advice-unadvice (sym)
+  "Remove all advices from symbol SYM."
+  (interactive "aFunction symbol: ")
+  (advice-mapc (lambda (advice _props) (advice-remove sym advice)) sym))
+
 (defun aero/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)
