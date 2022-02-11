@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: builtins.fetchTarball ...
-# key: ftb
-# uuid: ftb
-# --
-builtins.fetchTarball ${1:url}

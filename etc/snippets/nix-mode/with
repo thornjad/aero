@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-# name: with ...;
-# --
-with ${1:pkgs};
