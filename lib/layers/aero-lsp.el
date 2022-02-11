@@ -29,7 +29,8 @@
     "lB" '(lsp-headerline-breadcrumb-mode :wk "breadcrumbs")
     "la" 'lsp-execute-code-action
     "lf" '(:ignore t :wk "find")
-    "lfd" '(lsp-find-definition :wk "find definition")
+    "lfd" 'lsp-find-definition
+    "lft" 'lsp-find-type-definition
     "lfa" '(xref-find-apropos :wk "find symbols matching pattern")
     "ld" 'lsp-describe-thing-at-point
     "l TAB" '(:ignore t :wk "format")
@@ -66,6 +67,7 @@
     (aero-leader-def
       "le" 'lsp-treemacs-errors-list
       "ls" 'lsp-treemacs-symbols
+      "lt" 'lsp-treemacs-type-hierarchy
       "lf" '(:ignore t :wk "find")
       "lfr" '(lsp-treemacs-references :wk "find references")
       "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
