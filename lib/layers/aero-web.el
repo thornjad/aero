@@ -25,6 +25,7 @@
 
 (defun aero/yarn-lint () (interactive) (compile "yarn lint"))
 (defun aero/yarn-test () (interactive) (compile "yarn test"))
+(defun aero/yarn-install () (interactive) (compile "yarn install"))
 
 (use-package jest :straight t)
 
