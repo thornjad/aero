@@ -522,6 +522,7 @@ Local bindings (`counsel-mode-map'):
   (setq ivy-initial-inputs-alist nil ; screw the regex
         ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
         ivy-virtual-abbreviate 'full
+        ivy-count-format "%d/%d "
         ivy-wrap t
         ivy-height 12
         ivy-fixed-height-minibuffer t
