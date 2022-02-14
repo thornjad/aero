@@ -217,11 +217,13 @@ emacs with sigusr2"
   (interactive)
   (switch-to-buffer (generate-new-buffer "*Scratch*")))
 
-(defun aero/bury-buffer-kill-window ()
-  "Bury the current buffer and kill its window."
+(defun aero/bury-buffer-kill-window (&optional window)
+  "Bury the current buffer and kill its window, or use WINDOW."
   (interactive)
-  (bury-buffer (current-buffer))
-  (delete-window))
+  (let* ((buf (window-buffer window))
+         (win (get-buffer-window buf)))
+    (bury-buffer buf)
+    (delete-window win)))
 
 ;; from spacemacs
 (defun aero/alternate-buffer (&optional window)
@@ -255,6 +257,20 @@ emacs with sigusr2"
   (delete-other-windows)
   (dotimes (_ 2) (split-window-right))
   (balance-windows))
+
+(defun aero/toggle-compilation-buffer ()
+  "Pop-up the compilation buffer."
+  (interactive)
+  (let ((win (get-buffer-window "*compilation*" 0)))
+    (if win
+        ;; found, so close it
+        (aero/bury-buffer-kill-window win)
+
+      ;; else we need to pop it up
+      (display-buffer "*compilation*"
+                      '((display-buffer-below-selected)
+                        (reusable-frames . nil) ;; only search this frame
+                        (window-height . 20))))))
 
 (defun aero/delete-windows-on-if-exist (buf)
   (when (get-buffer buf)

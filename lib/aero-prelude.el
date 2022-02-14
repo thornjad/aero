@@ -307,6 +307,7 @@
    "wbb" 'eww-list-buffers
    "wbh" 'eww-list-histories
    "wbm" 'eww-list-bookmarks
+   "wc" 'aero/toggle-compilation-buffer
    "wd" 'delete-window
    "wi" 'minimize-window
    "wm" 'maximize-window
