@@ -249,7 +249,7 @@
   (general-define-key
    :states '(normal visual motion)
    :keymaps 'compilation-mode-map
-    "q" 'aero/bury-buffer-kill-window))
+   "q" 'aero/bury-buffer-kill-window))
 
 ;; open some buffers in the same window
 (add-to-list 'display-buffer-alist
