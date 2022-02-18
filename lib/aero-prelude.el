@@ -649,7 +649,14 @@ Local bindings (`counsel-mode-map'):
   (global-set-key (kbd "M-h") #'windmove-left)
   (global-set-key (kbd "M-j") #'windmove-down)
   (global-set-key (kbd "M-k") #'windmove-up)
-  (global-set-key (kbd "M-l") #'windmove-right))
+  (global-set-key (kbd "M-l") #'windmove-right)
+
+  (when (require 'bind-key nil t)
+    (bind-keys*
+     ("M-h" . windmove-left)
+     ("M-j" . windmove-down)
+     ("M-k" . windmove-up)
+     ("M-l" . windmove-right))))
 
 (use-package winum :straight t :defer 5
   :after (general)

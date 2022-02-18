@@ -130,10 +130,45 @@
     "gc" 'url-cookie-list
     "gh" 'eww-list-histories
     "gb" 'eww-list-buffers
-    "gt" 'eww-list-buffers)
+    "gt" 'eww-list-buffers
+    ;; Doesn't work:
+    (kbd "M-h") 'windmove-left
+    (kbd "M-l") 'windmove-right
+    ;; these actually work, but suck:
+    (kbd "M-H") 'windmove-left
+    (kbd "M-L") 'windmove-right)
 
-  (define-key eww-mode-map (kbd "M-h") 'windmove-left)
-  (define-key eww-mode-map (kbd "M-l") 'windmove-right)
+  ;; Doesn't work:
+  (when (require 'bind-key nil t)
+    (bind-keys :map eww-mode-map
+     ("M-h" . windmove-left)
+     ("M-j" . windmove-down)
+     ("M-k" . windmove-up)
+     ("M-l" . windmove-right)))
+
+  ;; Doesn't work:
+  (when (require 'bind-key nil t)
+    (bind-keys :map outline-mode-map
+     ("M-h" . windmove-left)
+     ("M-j" . windmove-down)
+     ("M-k" . windmove-up)
+     ("M-l" . windmove-right)))
+
+  ;; trying to override this, but it doesnt work
+  (with-eval-after-load 'outline-mode
+    (define-key outline-mode-map (kbd "M-h") 'windmove-left)
+    (define-key outline-mode-map (kbd "M-l") 'windmove-right))
+
+  ;; Doesn't work:
+  (defun aero/eww-please ()
+    "Please, eww, let me bind these."
+    (define-key eww-mode-map (kbd "M-h") 'windmove-left)
+    (define-key eww-mode-map (kbd "M-l") 'windmove-right)
+    (evil-define-key 'normal eww-mode-map
+      (kbd "M-h") 'windmove-left
+      (kbd "M-l") 'windmove-right))
+  (aero/eww-please)
+  (add-hook 'eww-after-render-hook #'aero/eww-please)
 
   ;; viewing history
   (evil-set-initial-state 'eww-history-mode 'normal)
