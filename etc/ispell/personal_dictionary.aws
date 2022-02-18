@@ -1,4 +1,4 @@
-personal_ws-1.1 en 367 
+personal_ws-1.1 en 372 
 ACL
 APIs
 Aireon
@@ -84,6 +84,7 @@ NVME
 Nack
 Nvidia
 OCaml
+OOO
 OSM
 OSX
 OpenLayers
@@ -134,6 +135,7 @@ VFR
 Verix
 Voici
 WFH
+WIP
 WSL
 WTF
 Wayland
@@ -210,6 +212,8 @@ firehose
 flockmates
 flycheck
 fontconfig
+fontification
+fontify
 formdata
 formfeeds
 frontend
@@ -225,6 +229,7 @@ grey
 hacky
 hardcode
 hardcoded
+hella
 hoc
 homebrew
 homebrewed
