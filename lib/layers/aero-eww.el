@@ -46,6 +46,9 @@
 	      eww-search-prefix "https://lite.duckduckgo.com/lite?q="
         shr-indentation 2)
 
+  (when (system-is-mac)
+    (setq browse-url-generic-program "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"))
+
   (aero-leader-def
     "wbd" '(aero/ddg :wk "duckduckgo")
     "wbw" '(aero/wiki :wk "wikipedia")
