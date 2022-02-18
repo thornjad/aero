@@ -47,6 +47,11 @@
  jit-lock-defer-time 0
  ns-use-srgb-colorspace nil
 
+
+ ;; Emacs should just have code that automatically sets this threshold according to some function
+ ;; involving a constant, the current date, and Moore's Law.
+ large-file-warning-threshold 500000000
+
  ;; Defaults:
  ;; '("gnutls-cli --insecure -p %p %h"
  ;;   "gnutls-cli --insecure -p %p %h --protocols ssl3"
