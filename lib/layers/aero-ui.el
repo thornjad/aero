@@ -154,11 +154,10 @@
   :config (good-scroll-mode +1))
 
 (use-package formfeeder
-  :disabled t ;; TODO not working whatsoever, and breaking eww
   :straight (:host gitlab :repo "thornjad/formfeeder" :branch "main")
   :defines (formfeeder-line-width)
   :config
-  (setq formfeeder-line-width fill-column)
+  (setq formfeeder-line-width (- fill-column 1))
   (declare-function global-formfeeder-mode "formfeeder.el")
   (global-formfeeder-mode 1))
 
