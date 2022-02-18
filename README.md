@@ -94,6 +94,7 @@ To get started with Emacs, I highly recommend [Spacemacs](https://spacemacs.org)
 Like the Borg, Aero amalgamates macros, functions, bindings and packages modified from or inspired by a plethora of developers. Special thanks to these fantastic people, with links to the invaluable resource they provide:
 
 - [Sacha Chua](https://github.com/sachac/.emacs.d)
+- [Karl Fogel](https://svn.red-bean.com/repos/kfogel/trunk/.emacs)
 - [Wilfred Hughes](https://github.com/Wilfred/.emacs.d)
 - [Michael Markert](https://github.com/cofi/dotfiles)
 - [Lee Hinman](https://github.com/dakrone/.emacs.d)
