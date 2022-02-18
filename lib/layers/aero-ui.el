@@ -38,6 +38,7 @@
 
 ;; other themes
 (use-package tao-theme :straight t :defer t)
+(use-package spacemacs-theme :straight t :defer t)
 
 (setq default-frame-alist
       (append (list '(width  . 212) '(height . 60)
