@@ -83,4 +83,13 @@
   :commands (asm-blox)
   :init (aero-leader-def "aga" 'asm-blox))
 
+(use-package md4rd :straight t
+  :after (general evil)
+  :commands (md4rd)
+  :init (aero-leader-def "ar" 'md4rd)
+  :config
+  (evil-define-key 'normal md4rd-mode-map
+    "S" 'md4rd-jump-to-subs
+    "Q" 'kill-current-buffer))
+
 (provide 'aero-heap)
