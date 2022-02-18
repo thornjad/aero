@@ -50,19 +50,24 @@
   (add-hook 'lsp-mode-hook #'load-lsp-format-buffer-hook)
 
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0 ; default is 0.2
+        company-idle-delay 0.2 ; default is 0.2
+        lsp-idle-delay 0.2 ; default is 0.5
         lsp-lens-enable t
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-arrow "»"
+        lsp-enable-on-type-formatting nil
         lsp-enable-file-watchers nil ; burns through max files
-        lsp-enable-on-type-formatting t)
+        lsp-enable-on-type-formatting t
 
   (use-package lsp-treemacs :straight t
     :after (general lsp-mode treemacs)
     :config
     (lsp-treemacs-sync-mode +1)
+        ;; unused by aero modeline
+        lsp-modeline-code-actions-enable nil
+        lsp-modeline-diagnostics-enable nil))
 
     (aero-leader-def
       "le" 'lsp-treemacs-errors-list
