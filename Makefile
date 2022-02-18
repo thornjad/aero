@@ -10,10 +10,8 @@ build-macos: build-emacs-macos install-aero-macos
 build-emacs-macos:
 	brew install coreutils
 	brew tap d12frosted/emacs-plus
-	# NOTE: native-comp isn't working on M1 yet. At least probably, and I don't have the time to track 
-	# down the problem right now. So we're just using the lisp engine.
 	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@29 --with-modern-sexy-v1-icon
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-compilation --with-xwidgets
 
 install-aero-macos:
 	osacompile -o bin/Emacs\ \(Aero\).app bin/aero-emacs.osx.applescript
