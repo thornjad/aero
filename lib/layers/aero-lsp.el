@@ -61,55 +61,56 @@
         lsp-enable-file-watchers nil ; burns through max files
         lsp-enable-on-type-formatting t
 
-  (use-package lsp-treemacs :straight t
-    :after (general lsp-mode treemacs)
-    :config
-    (lsp-treemacs-sync-mode +1)
         ;; unused by aero modeline
         lsp-modeline-code-actions-enable nil
         lsp-modeline-diagnostics-enable nil))
 
-    (aero-leader-def
-      "le" 'lsp-treemacs-errors-list
-      "ls" 'lsp-treemacs-symbols
-      "lt" 'lsp-treemacs-type-hierarchy
-      "lf" '(:ignore t :wk "find")
-      "lfr" '(lsp-treemacs-references :wk "find references")
-      "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
+(use-package lsp-treemacs :straight t
+  :after (general lsp-mode treemacs)
+  :config
+  (lsp-treemacs-sync-mode +1)
 
-  (use-package lsp-java
-    :hook ((java-mode . lsp)))
+  (aero-leader-def
+    "le" 'lsp-treemacs-errors-list
+    "ls" 'lsp-treemacs-symbols
+    "lt" 'lsp-treemacs-type-hierarchy
+    "lf" '(:ignore t :wk "find")
+    "lfr" '(lsp-treemacs-references :wk "find references")
+    "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
 
-  (use-package lsp-ui :straight t
-    :after (lsp)
-    :hook ((lsp-mode . lsp-ui-mode)
-           (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
-    :config
-    (setq
-     lsp-ui-doc-enable t
-     lsp-ui-doc-position 'top
-     lsp-ui-doc-delay 1
-     lsp-ui-doc-use-childframe t
-     lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
-     lsp-ui-imenu-enable nil
-     lsp-ui-sideline-delay 1
-     lsp-ui-sideline-show-hover t
-     lsp-ui-sideline-show-symbol t
-     lsp-ui-sideline-show-diagnostics t
-     lsp-ui-sideline-show-code-actions t)
+(use-package lsp-java
+  :hook ((java-mode . lsp)))
 
-    (aero-leader-def
-      "li" 'lsp-ui-imenu
-      "lp" '(:ignore t :wk "peek")
-      "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
-      "lpr" '(lsp-ui-peek-find-references :wk "peek references")
-      "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")))
+(use-package lsp-ui :straight t
+  :hook ((lsp-mode . lsp-ui-mode)
+         (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
+  :config
+  (setq
+   lsp-ui-doc-enable t
+   lsp-ui-doc-position 'top
+   lsp-ui-doc-delay 1
+   lsp-ui-doc-use-childframe t
+   lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+   lsp-ui-imenu-enable nil
+   lsp-ui-sideline-delay 1
+   lsp-ui-sideline-show-hover t
+   lsp-ui-sideline-show-symbol t
+   lsp-ui-sideline-show-diagnostics t
+   lsp-ui-sideline-show-code-actions t)
 
-  (use-package lsp-ivy :straight t
-    :config
-    (aero-leader-def
-      "lf" '(:ignore t :wk "find")
-      "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
-      "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols"))))
+  (aero-leader-def
+    "li" 'lsp-ui-imenu
+    "lp" '(:ignore t :wk "peek")
+    "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
+    "lpr" '(lsp-ui-peek-find-references :wk "peek references")
+    "lps" '(lsp-ui-peek-find-workspace-symbol :wk "peek symbol")
+    "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")))
+
+(use-package lsp-ivy :straight t
+  :config
+  (aero-leader-def
+    "lf" '(:ignore t :wk "find")
+    "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
+    "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols")))
 
 (provide 'aero-lsp)
