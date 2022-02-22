@@ -52,6 +52,14 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 
+(if (fboundp 'fringe-mode) (fringe-mode '8))
+
+;; window margins
+(add-hook 'window-configuration-change-hook
+          (lambda ()
+            (set-window-margins
+             (car (get-buffer-window-list (current-buffer) nil t)) 1 1)))
+
 ;; set up initial window the way i want it
 (split-window-horizontally)
 
