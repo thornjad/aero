@@ -266,6 +266,12 @@
   (defalias 'show-error-at-point-soon 'flycheck-show-error-at-point)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
+  ;; boot flycheck to the right fringe
+  (setq flycheck-indication-mode 'right-fringe)
+  ;; A non-descript, left-pointing arrow
+  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
+    [16 48 112 240 112 48 16] nil nil 'center)
+
   ;; display errors in a lower buffer and auto-resize it
   (add-to-list 'display-buffer-alist
                (cons
