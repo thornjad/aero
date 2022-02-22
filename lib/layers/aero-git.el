@@ -111,20 +111,56 @@ board_ticket_branch_name."
 
 	(use-package magit-todos :straight t))
 
-(use-package git-gutter :straight t :defer 5
+(use-package git-gutter :straight t
+  :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
+  :custom
+  (git-gutter:visual-line t)
+  (git-gutter:disabled-modes '(so-long-mode
+                               image-mode asm-mode
+                               fundamental-mode image-mode pdf-view-mode))
+  (git-gutter:update-interval 0.02)
+  (git-gutter:handled-backends
+   (cons 'git (cl-remove-if-not #'executable-find (list 'hg 'svn 'bzr)
+                                :key #'symbol-name)))
+  ;; (git-gutter:modified-sign " ")
+  ;; (git-gutter:added-sign " ")
+  ;; (git-gutter:deleted-sign " ")
+
   :config
-  (setq git-gutter:modified-sign " "
-        git-gutter:added-sign " "
-        git-gutter:deleted-sign " "
-        git-gutter:visual-line t
-        git-gutter:hide-gutter t
-        git-gutter:disabled-modes '(so-long-mode image-mode asm-mode))
+  ;; Update git-gutter on focus (in case I was using git externally)
+  (add-hook 'focus-in-hook #'git-gutter:update-all-windows))
 
-  (when (display-graphic-p)
-    (use-package git-gutter-fringe :straight t
-      :config (setq git-gutter-fr:side 'right-fringe)))
+(when (display-graphic-p)
+  ;; Define as a no-op if not already defined, otherwise git-gutter-fringe errors
+  (unless (fboundp 'define-fringe-bitmap)
+    (defun define-fringe-bitmap (bitmap &rest _)
+      "This is a no-op placeholder function."
+      ;; Return the symbol, just like the normal function does.
+      bitmap))
 
-  (global-git-gutter-mode +1))
+  (use-package git-gutter-fringe :straight t :after (git-gutter)
+    :custom
+    (fringes-outside-margins t)
+
+    :config
+    ;; Define a thin bar. Themes should give these a suitable foreground and nil background
+    (define-fringe-bitmap 'git-gutter-fr:added
+      [224]
+      nil 2 '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:modified
+      [224]
+      nil 2 '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:deleted
+      [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
+      nil nil 'bottom)
+
+    ;; Don't use git-gutter in TRAMP, it murders connection bandwidth
+    (defun git-gutter-find-file-hook ()
+      (git-gutter-mode
+       (if (file-remote-p (buffer-file-name))
+           0
+         1)))
+    (add-hook 'find-file-hook #'git-gutter-find-file-hook)))
 
 (use-package ediff
   :commands (ediff ediff3)
