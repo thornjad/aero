@@ -111,9 +111,9 @@
   "Template for a new day in the thornlog")
 
 (defvar aero/thornlog-blocked-response-list
-  '("none" "none" "none" "none" "none"
+  '("none" "none" "none" "none" "none" "none" "none"
     "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
-    "∅" "nada")
+    "∅" "nada" "pas une chose")
   "List of template responses for blocked, to be chosen randomly.
 
 'none' is included multiple times so as to give it increased weight, it being the 'normal'
