@@ -67,8 +67,8 @@
 ;; (add-hook 'after-make-frame-functions #'aero/frame-recenter)
 
 ;; Startup with vterm running
-;; (when (require 'vterm-toggle nil t)
-;;   (vterm-toggle))
+(when (require 'vterm-toggle nil t)
+  (vterm-toggle))
 
 
 ;; get ligatures to actually work
