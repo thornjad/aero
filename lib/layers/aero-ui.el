@@ -49,10 +49,9 @@
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . (if (display-grapic-p) light dark)))))
+(if (fboundp 'fringe-mode) (fringe-mode '8))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
-
-(if (fboundp 'fringe-mode) (fringe-mode '8))
 
 ;; window margins
 (add-hook 'window-configuration-change-hook
