@@ -23,6 +23,9 @@
 (use-package python-mode :straight t
   :after (general flycheck)
   :mode "\\.py\\'"
+  :custom
+  (python-indent-guess-indent-offset t)
+  (python-indent-guess-indent-offset-verbose nil)
   :init
   (setq-default python-shell-interpreter "python3")
   (setq-default python-indent-offset 4)
