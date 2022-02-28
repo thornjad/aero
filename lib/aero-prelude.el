@@ -313,8 +313,8 @@
    "wm" 'maximize-window
    "wo" 'browse-url-xdg-open
    "wp" 'browse-url-at-point
-   "ws" '(eww-search-words :which-key "web search")
-   "ww" 'eww
+   "wS" '(eww-search-words :which-key "web search")
+   "wW" 'eww
    "w{" 'shrink-window
    "w}" 'enlarge-window
 

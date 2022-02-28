@@ -20,7 +20,6 @@
   (aero/ddg (format "!w %s" (or term ""))))
 (defun aero/wiki-news () (interactive)
        (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
-
 (defun aero/npr-news () (interactive)
        (eww-browse-url "https://text.npr.org/"))
 
@@ -44,6 +43,7 @@
           ("." . eww-browse-url)))
   (setq browse-url-generic-program "firefox"
 	      eww-search-prefix "https://lite.duckduckgo.com/lite?q="
+        shr-max-width 100
         shr-indentation 2)
 
   (when (system-is-mac)
@@ -136,18 +136,18 @@
   ;; Doesn't work:
   (when (require 'bind-key nil t)
     (bind-keys :map eww-mode-map
-     ("M-h" . windmove-left)
-     ("M-j" . windmove-down)
-     ("M-k" . windmove-up)
-     ("M-l" . windmove-right)))
+      ("M-h" . windmove-left)
+      ("M-j" . windmove-down)
+      ("M-k" . windmove-up)
+      ("M-l" . windmove-right)))
 
   ;; Doesn't work:
   (when (require 'bind-key nil t)
     (bind-keys :map outline-mode-map
-     ("M-h" . windmove-left)
-     ("M-j" . windmove-down)
-     ("M-k" . windmove-up)
-     ("M-l" . windmove-right)))
+      ("M-h" . windmove-left)
+      ("M-j" . windmove-down)
+      ("M-k" . windmove-up)
+      ("M-l" . windmove-right)))
 
   ;; trying to override this, but it doesnt work
   (with-eval-after-load 'outline-mode
@@ -186,6 +186,66 @@
     (kbd "RET") 'eww-bookmark-browse
     "q" 'quit-window))
 
+;; Hack to decrease jumpiness around images and scrolling(with-eval-after-load "shr"
+(with-eval-after-load "shr"
+  (defun shr-put-image (spec alt &optional flags)
+    "Insert image SPEC with a string ALT.  Return image.
+SPEC is either an image data blob, or a list where the first
+element is the data blob and the second element is the content-type.
+Hack to use `insert-sliced-image' to avoid jerky image scrolling."
+    (if (display-graphic-p)
+        (let* ((size (cdr (assq 'size flags)))
+               (data (if (consp spec)
+                         (car spec)
+                       spec))
+               (content-type (and (consp spec)
+                                  (cadr spec)))
+               (start (point))
+               (image (cond
+                       ((eq size 'original)
+                        (create-image data nil t :ascent 100
+                                      :format content-type))
+                       ((eq content-type 'image/svg+xml)
+                        (create-image data 'svg t :ascent 100))
+                       ((eq size 'full)
+                        (ignore-errors
+                          (shr-rescale-image data content-type
+                                             (plist-get flags :width)
+                                             (plist-get flags :height))))
+                       (t
+                        (ignore-errors
+                          (shr-rescale-image data content-type
+                                             (plist-get flags :width)
+                                             (plist-get flags :height)))))))
+          (when image
+            (let* ((image-pixel-cons (image-size image t))
+                   (image-pixel-width (car image-pixel-cons))
+                   (image-pixel-height (cdr image-pixel-cons))
+                   (image-scroll-rows (round (/ image-pixel-height (default-font-height)))))
+              ;; When inserting big-ish pictures, put them at the
+              ;; beginning of the line.
+              (when (and (> (current-column) 0)
+                         (> (car (image-size image t)) 400))
+                (insert "\n"))
+
+              (insert-sliced-image image (or alt "*") nil image-scroll-rows 1)
+              ;; (if (eq size 'original)
+              ;;     (insert-sliced-image image (or alt "*") nil image-scroll-rows 1)
+              ;;   (insert-image image (or alt "*")))
+
+              (put-text-property start (point) 'image-size size)
+              (when (and shr-image-animate
+                         (cond ((fboundp 'image-multi-frame-p)
+                                ;; Only animate multi-frame things that specify a
+                                ;; delay; eg animated gifs as opposed to
+                                ;; multi-page tiffs.  FIXME?
+                                (cdr (image-multi-frame-p image)))
+                               ((fboundp 'image-animated-p)
+                                (image-animated-p image))))
+                (image-animate image nil 60))))
+          image)
+      (insert (or alt "")))))
+
 (use-package pocket-reader :straight t
   :after (general)
   :commands (pocket-reader)
@@ -195,6 +255,40 @@
   :config
   ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
+
+(use-package hnreader :straight t
+  :after (general)
+  :commands (hnreader-news)
+  :init (aero-leader-def "wn" 'hnreader-news))
+
+(use-package counsel-web :straight t
+  :after (general)
+  :commands (counsel-web-suggest counsel-web-search)
+  :init
+  (aero-leader-def
+    "ww" 'counsel-web-suggest
+    "ws" 'counsel-web-search))
+
+(use-package howdoyou :straight t
+  :after (general counsel-web)
+  :commands (howdoyou-query)
+  :custom
+  (howdoyou-switch-to-answer-buffer t)
+  :init
+  (defun aero/howdoyou-with-suggestions ()
+    "Call `howdoyou-query' with suggestions from `counsel-web-suggest'."
+    (interactive)
+    (counsel-web-suggest nil
+                         "How Do You: "
+                         #'counsel-web-suggest--duckduckgo
+                         (lambda (x)
+                           (howdoyou-query x))))
+  (aero-leader-def "hs" 'aero/howdoyou-with-suggestions)
+
+  (aero-mode-leader-def 'howdoyou-mode-map
+    "n" 'howdoyou-next-link
+    "p" 'howdoyou-previous-link
+    "P" 'howdoyou-go-back-to-first-link))
 
 (use-package devdocs :straight t
   :after (general)
