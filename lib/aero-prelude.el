@@ -357,6 +357,15 @@
   ;; Ensure horizontal movement doesn't cross lines
   (setq-default evil-cross-lines nil)
 
+  (defun aero/scroll-quarter-page-down ()
+    (interactive)
+    (evil-scroll-down (/ (window-body-height) 4)))
+  (defun aero/scroll-quarter-page ()
+    (interactive)
+    (evil-scroll-up (/ (window-body-height) 4)))
+  (evil-define-key nil global-map (kbd "C-u") #'aero/scroll-quarter-page-up)
+  (evil-define-key nil global-map (kbd "C-d") #'aero/scroll-quarter-page-down)
+
   (defun aero/evil-shift-right ()
     (interactive)
     (evil-shift-right evil-visual-beginning evil-visual-end)
