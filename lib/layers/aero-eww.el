@@ -57,6 +57,14 @@
     "wbnn" '(aero/npr-news :wk "npr"))
 
 	:config
+  (use-package shrface :defer t :straight t
+    :config
+    (shrface-basic)
+    (shrface-trial)
+    (shrface-default-keybindings) ; setup default keybindings
+    (setq shrface-href-versatile t))
+  (add-hook 'eww-after-render-hook #'shrface-mode)
+
   (use-package shr-tag-pre-highlight :straight t
     :after shr
     :config
