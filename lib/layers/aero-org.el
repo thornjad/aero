@@ -41,5 +41,9 @@
 
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all))
+
+(use-package org-modern
+  :straight (:host github :repo "minad/org-modern")
+  :hook (org-mode . org-modern))
 
 (provide 'aero-org)
