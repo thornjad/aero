@@ -246,21 +246,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
           image)
       (insert (or alt "")))))
 
-(use-package pocket-reader :straight t
-  :after (general)
-  :commands (pocket-reader)
-  :custom
-  (pocket-reader-open-url-default-function #'eww)
-  :init (aero-leader-def "aP" 'pocket-reader)
-  :config
-  ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
-  (evil-set-initial-state 'pocket-reader-mode 'emacs))
-
-(use-package hnreader :straight t
-  :after (general)
-  :commands (hnreader-news)
-  :init (aero-leader-def "wn" 'hnreader-news))
-
 (use-package counsel-web :straight t
   :after (general)
   :commands (counsel-web-suggest counsel-web-search)
