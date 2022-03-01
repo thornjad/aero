@@ -185,34 +185,6 @@
   (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
-(defun pulse-line (&rest _)
-  "Briefly pulse a highlight of the line at point.
-This function, when bound to certain commands like scrolling, acts as a native
-alternative to the beacon package."
-  (pulse-momentary-highlight-one-line (point)))
-;; (dolist (cmd '(scroll-up-command
-;;                scroll-down-command
-;;                recenter-top-bottom
-;;                other-window))
-;;   (advice-add cmd :after #'pulse-line))
-
-;; (when (require 'evil nil 'no-error)
-;;   (dolist (cmd '(aero/copy-sexp-as-kill
-;;                  evil-goto-first-line
-;;                  evil-goto-line
-;;                  evil-scroll-up
-;;                  evil-scroll-down
-;;                  evil-scroll-line-to-center
-;;                  evil-scroll-line-to-top
-;;                  evil-scroll-line-to-bottom
-;;                  evil-yank
-;;                  evil-yank-line
-;;                  evil-yank-rectangle
-;;                  evil-yank-characters
-;;                  evil-window-top
-;;                  evil-window-middle
-;;                  evil-window-bottom))
-;;     (advice-add cmd :after #'pulse-line)))
 
 ;; make links in comments clickable
 (global-goto-address-mode +1)

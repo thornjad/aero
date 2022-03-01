@@ -702,4 +702,10 @@ With a prefix ARG always prompt for command to use."
                     open)))
     (call-process program nil 0 nil current-file-name)))
 
+(defun pulse-line (&rest _)
+  "Briefly pulse a highlight of the line at point.
+This function, when bound to certain commands like scrolling, acts as a native
+alternative to the beacon package."
+  (pulse-momentary-highlight-one-line (point)))
+
 (provide 'aero-lib)
