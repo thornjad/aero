@@ -95,10 +95,10 @@
   ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
-(use-package hnreader :straight t
+(use-package hackernews :straight t
   :after (general)
-  :commands (hnreader-news)
-  :init (aero-leader-def "wn" 'hnreader-news))
+  :commands (hackernews)
+  :init (aero-leader-def "wn" 'hackernews))
 
 
 
