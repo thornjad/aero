@@ -18,7 +18,7 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
-For everything else, Aero extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. , providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
+For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. , providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
 
 ### LSP
 
