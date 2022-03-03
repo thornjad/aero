@@ -108,7 +108,7 @@
 (use-package hackernews :straight t
   :after (general)
   :commands (hackernews)
-  :init (aero-leader-def "wn" 'hackernews))
+  :init (aero-leader-def "an" 'hackernews))
 
 
 
