@@ -6,34 +6,9 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 > "Emacs outshines all other editing software in the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish." — Neal Stephenson
 
-## Features
-
-### Languages / technologies
-
-Emacs supports many languages out of the box, and Aero adds more. Full support exists for the following (sorted roughly in order of how much I use them). Languages marked with `lsp` include full language server support (à la VS Code).
-
-- Python `lsp`
-- JavaScript / TypeScript / React / Angular `lsp`
-- HTML / CSS / SCSS `lsp`
-- ELisp / Common Lisp
-- Shells (Bash, Zsh, etc)
-- SQL `lsp`
-- Docker `lsp`
-- Markdown 
-- Yaml / JSON `lsp`
-- Java / Clojure / Groovy `lsp`
-- Rust `lsp`
-- C / C++ / Lua `lsp`
-- OCaml `lsp`
-- Nix `lsp`
-- TCL
-- Applescript
-
-### Evil (Vim keybindings)
-
 > "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 
-Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. Instead, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
+## Features
 
 ### Spacemacs-like leader keys
 
@@ -43,9 +18,11 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
+For everything else, Aero extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. , providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
+
 ### LSP
 
-Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python, OCaml and Javascript in particular, so they've received the most love.
+Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python and Javascript in particular, so they've received the most love.
 
 ### Custom theme with simplified mode line
 
@@ -59,7 +36,7 @@ Aero evolves as a cutting-edge tool and focuses on working with the latest versi
 
 ### Required for LSP
 
-Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. Only install what you need:
+Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. **Only install what you need***:
 
 - Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
 - Python 3
@@ -75,13 +52,7 @@ Emacs continues to lack native language server support, but Aero implements this
 git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
 ```
 
-Upon starting up Emacs for the first time, further third-party packages will automatically download and install. Subsequent startups should take around one second. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
-
-## Changing themes and adding your own customization
-
-To add your own customization, use <kbd>M-x customize</kbd>, <kbd>M-x customize-themes</kbd> etc. and/or create a file `~/.config/emacs/init.local.el`.
-
-If you plan to customize things more extensively, you should probably just fork the repo and hack away at the config to make it your own! 
+Upon starting up Emacs for the first time, further third-party packages will automatically download and install. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
 ## Note
 
