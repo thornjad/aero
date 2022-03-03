@@ -18,11 +18,11 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
-For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long. , providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available.
+For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long.
 
 ### LSP
 
-Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to protocol servers as have proved useful to me thus far. I regularly make use of these capabilities in Python and Javascript in particular, so they've received the most love.
+Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to any protocol servers Emacs can find. I regularly make use of these capabilities in Python and Javascript in particular, so they've received the most attention.
 
 ### Custom theme with simplified mode line
 
@@ -36,7 +36,7 @@ Aero evolves as a cutting-edge tool and focuses on working with the latest versi
 
 ### Required for LSP
 
-Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. **Only install what you need***:
+Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. **Only install what you need**:
 
 - Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
 - Python 3
@@ -67,9 +67,6 @@ Like the Borg, Aero amalgamates macros, functions, bindings and packages modifie
 - [Sacha Chua](https://github.com/sachac/.emacs.d)
 - [Karl Fogel](https://svn.red-bean.com/repos/kfogel/trunk/.emacs)
 - [Wilfred Hughes](https://github.com/Wilfred/.emacs.d)
-- [Michael Markert](https://github.com/cofi/dotfiles)
-- [Lee Hinman](https://github.com/dakrone/.emacs.d)
-- [James Sulak](https://github.com/jsulak/.emacs.d)
 - [John Wiegley](https://github.com/jwiegley/dot-emacs)
 - [Steve Purcell](https://github.com/purcell/emacs.d)
 - [Samuel Barreto](https://github.com/sam217pa/emacs-config)
