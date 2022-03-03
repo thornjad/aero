@@ -303,18 +303,22 @@
    "wL" '(:ignore t :wk "layout")
    "wL2" 'aero/layout-two-columns
    "wL3" 'aero/layout-three-columns
+   "wS" '(eww-search-words :which-key "web search")
+   "wW" 'eww
    "wb" '(:ignore t :wk "browse")
    "wbb" 'eww-list-buffers
    "wbh" 'eww-list-histories
    "wbm" 'eww-list-bookmarks
    "wc" 'aero/toggle-compilation-buffer
    "wd" 'delete-window
+   "wh" 'windmove-left
    "wi" 'minimize-window
+   "wj" 'windmove-down
+   "wk" 'windmove-up
+   "wl" 'windmove-right
    "wm" 'maximize-window
    "wo" 'browse-url-xdg-open
    "wp" 'browse-url-at-point
-   "wS" '(eww-search-words :which-key "web search")
-   "wW" 'eww
    "w{" 'shrink-window
    "w}" 'enlarge-window
 
@@ -642,17 +646,9 @@ Local bindings (`counsel-mode-map'):
           "*Ibuffer*"
           "*esh command on file*"))
   (winner-mode 1)
-  (declare-function general-define-key "general.el")
-  (general-define-key
-   :states '(normal)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
+  (aero-leader-def
    "wu" 'winner-undo
-   "wU" 'winner-redo
-   "wh" 'windmove-left
-   "wj" 'windmove-down
-   "wk" 'windmove-up
-   "wl" 'windmove-right)
+   "wU" 'winner-redo)
 
   ;; windmove
   (global-set-key (kbd "M-h") #'windmove-left)
