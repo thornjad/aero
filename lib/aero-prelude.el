@@ -285,8 +285,8 @@
    "s" '(:ignore t :wk "sexp")
 
    "t" '(:ignore t :wk "tabs/text")
-   "tD" 'downcase-dwim
-   "tU" 'upcase-dwim
+   "td" 'downcase-dwim
+   "tu" 'upcase-dwim
    "tf" 'fill-paragraph
    "tF" 'aero/fill-to-80
    "tn" '(:ignore t :wk "number")
