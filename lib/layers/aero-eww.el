@@ -221,8 +221,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :commands (counsel-web-suggest counsel-web-search)
   :init
   (aero-leader-def
-    "ww" 'counsel-web-suggest
-    "ws" 'counsel-web-search))
+    "ws" 'counsel-web-suggest
+    "ww" 'counsel-web-search))
 
 (use-package howdoyou :straight t
   :after (general counsel-web)
