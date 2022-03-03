@@ -24,6 +24,7 @@
 (setq-default
  ;; general
  ring-bell-function 'ignore ; supprime cette putain de cloche.
+ use-dialog-box nil
  sentence-end-double-space nil ; the world will not go to shit today
  default-fill-column 100 ; i am mortal, not arthur whitney
  fill-column 100
