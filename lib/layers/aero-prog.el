@@ -476,6 +476,20 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package rainbow-delimiters :straight t
   :hook ((prog-mode . rainbow-delimiters-mode)))
+
+(use-package virtual-comment :straight t
+  :hook (find-file-hook . virtual-comment-mode)
+  :after (general)
+  :init
+  (aero-leader-def
+    "v" '(:ignore t :wk "virtual comment")
+    "vv" 'virtual-comment-make
+    "vn" 'virtual-comment-next
+    "vp" 'virtual-comment-previous
+    "vk" 'virtual-comment-delete
+    "vP" 'virtual-comment-paste
+    "vs" 'virtual-comment-show))
+
 
 
 (add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
