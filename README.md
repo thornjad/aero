@@ -6,11 +6,11 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 > "Emacs outshines all other editing software in the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish." — Neal Stephenson
 
-> "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
-
 ## Features
 
 ### Spacemacs-like leader keys
+
+> "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 
 When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around a single leader key, `SPC`. For example, `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
 
