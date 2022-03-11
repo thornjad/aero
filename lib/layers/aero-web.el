@@ -66,7 +66,9 @@
 	:mode "\\.json\\'")
 
 (use-package typescript-mode :straight t)
-(use-package ng2-mode :straight t)
+
+;; Seems inferior to web-mode and ts-mode?
+;; (use-package ng2-mode :straight t)
 
 
 ;; the rest
