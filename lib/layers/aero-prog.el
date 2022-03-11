@@ -539,5 +539,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   :after (general)
   :hook (prog-mode . smartscan-mode))
 
+(use-package pdf-tools :straight t)
+
 
 (provide 'aero-prog)
