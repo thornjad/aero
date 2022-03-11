@@ -50,6 +50,7 @@ install-lsp-servers:
 	# https://github.com/denoland/deno/issues/2506 for more discussion.
 	# curl -fsSL https://deno.land/install.sh | sh
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server tslint
+	npm install -g emmet-ls
 	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi
 	pip3 install "ptvsd>=4.2"
 	rustup component add rls rust-analysis rust-src
