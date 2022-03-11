@@ -52,6 +52,7 @@
 (if (fboundp 'fringe-mode) (fringe-mode '8))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
+(pixel-scroll-precision-mode +1)
 
 ;; window margins
 (add-hook 'window-configuration-change-hook
