@@ -165,6 +165,7 @@
   (aero-mode-leader-def
     :keymaps 'elpy-mode-map
     "p" 'run-python
+    "'" 'elpy-shell-switch-to-shell
     "s" '(:ignore t :wk "shell send")
     "ss" '(elpy-shell-send-region-or-buffer :wk "send region or buffer")
     "sS" '(elpy-shell-send-region-or-buffer-and-go :wk "send region or buffer and go")
