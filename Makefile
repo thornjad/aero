@@ -11,7 +11,7 @@ build-emacs-macos:
 	brew install coreutils
 	brew tap d12frosted/emacs-plus
 	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-compilation --with-xwidgets
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 
 install-aero-macos:
 	osacompile -o bin/Emacs\ \(Aero\).app bin/aero-emacs.osx.applescript
