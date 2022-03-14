@@ -373,6 +373,7 @@
   (aero-leader-def
     "tt" '(synosaurus-choose-and-replace :wk "synonyms")
     "tT" 'synosaurus-lookup))
+
 
 ;; parens
 
@@ -491,6 +492,19 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     "vs" 'virtual-comment-show))
 
 
+;;; formatting
+
+(use-package apheleia :straight t
+  :config
+  ;; For some reason, prettier won't read the config file from package.json. I'm just hard-coding
+  ;; the config here because I'm done with the day. This will eventually come back to bite me, but
+  ;; that's future-me's problem.
+  (setf (alist-get 'prettier apheleia-formatters)
+        '(npx "prettier" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
+  (apheleia-global-mode +1))
+
+
+;;; auto modes and stuff
 
 (add-to-list 'auto-mode-alist '("\\(README\\|readme\\)\\'" . text-mode))
 ;; Use text mode for file that doesn't have an extension.

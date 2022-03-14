@@ -47,7 +47,7 @@
     "Adds a buffer-local hook to format the buffer with LSP."
     (when (fboundp #'lsp-format-buffer)
       (add-hook 'after-save-hook #'lsp-format-buffer nil t)))
-  (add-hook 'lsp-mode-hook #'load-lsp-format-buffer-hook)
+  ;; (add-hook 'lsp-mode-hook #'load-lsp-format-buffer-hook)
 
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.2 ; default is 0.2
