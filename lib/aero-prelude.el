@@ -571,6 +571,9 @@ Local bindings (`counsel-mode-map'):
   (setq ivy-posframe-size-function 'aero/ivy-posframe-get-size)
 
   (ivy-posframe-mode +1))
+(use-package amx :straight t
+  :after ivy
+  :config (amx-mode 1))
 
 (use-package ivy-rich :straight t
   :after (counsel ivy)
