@@ -109,9 +109,32 @@ board_ticket_branch_name."
       (when (member board my-boards)
         (save-excursion
           (forward-line)
-          (insert (format "\n%s-%s" board ticket))))))
+          (insert (format "\n%s-%s" board ticket)))))))
 
-	(use-package magit-todos :straight t))
+(use-package magit-todos :straight t
+  :commands (magit-todos-mode)
+  :hook (magit-mode . magit-todos-mode)
+  :config
+  (setq magit-todos-recursive t
+        magit-todos-depth 10
+        magit-todos-exclude-globs '("*Pods*" ".git/" "*elpa*" "*var/lsp/*"))
+  (custom-set-variables
+   '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
+
+(use-package blamer :straight t
+  :commands (blamer-mode)
+  :custom
+  (blamer-view 'overlay)
+  (blamer-type 'both)
+  (blamer-max-commit-message-length 180)
+  (blamer-author-formatter " ✎ [%s] ")
+  (blamer-commit-formatter "● %s")
+  (blamer-idle-time 1.0)
+  (blamer-min-offset 10)
+  :custom-face
+  (blamer-face ((t :foreground "#E46876"
+                   :height 140
+                   :italic t))))
 
 (use-package git-gutter :straight t
   :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
