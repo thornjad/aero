@@ -62,6 +62,8 @@
     "gmdbu" 'smerge-diff-base-upper
     "gmdbl" 'smerge-diff-base-lower)
 
+  :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+
   :config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
   (setq magit-completing-read-function 'ivy-completing-read
