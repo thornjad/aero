@@ -114,7 +114,7 @@
   (require 'aero-rc)
 
   ;; Load local init if it exists
-  (load (expand-file-name "init.local" user-emacs-directory) nil nil)
+  (load (expand-file-name "init.local" user-emacs-directory) t t)
 
   (global-font-lock-mode t)
   (eval-when-compile (defvar aero/gc-cons)) ; defined in init.el
