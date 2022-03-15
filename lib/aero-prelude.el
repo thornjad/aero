@@ -406,6 +406,10 @@
 
   (evil-mode 1))
 
+;; Multiple cursors evil mode
+(use-package evil-multiedit :straight t
+  :config (evil-multiedit-default-keybinds))
+
 ;; Doesn't do anything for GUI, so don't bother
 (unless (display-graphic-p)
   (use-package evil-terminal-cursor-changer
