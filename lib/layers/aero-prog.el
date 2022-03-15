@@ -46,6 +46,10 @@
                        'company-capf
                        'company-abort)))
 
+(use-package company-statistics :straight t
+  :after (company)
+  :hook (company-mode . company-statistics-mode))
+
 (use-package company-prescient :straight t
   :after (company)
 	:hook (company-mode . company-prescient-mode)
