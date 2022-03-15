@@ -303,8 +303,8 @@
    "wL" '(:ignore t :wk "layout")
    "wL2" 'aero/layout-two-columns
    "wL3" 'aero/layout-three-columns
-   "wS" '(eww-search-words :which-key "web search")
-   "wW" 'eww
+   "ws" '(eww-search-words :which-key "web search")
+   "ww" 'eww
    "wb" '(:ignore t :wk "browse")
    "wbb" 'eww-list-buffers
    "wbh" 'eww-list-histories
