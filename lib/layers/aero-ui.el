@@ -87,7 +87,7 @@
 
 ;;; SVGs
 
-(unless (display-graphic-p)
+(when (display-graphic-p)
   (use-package svg-tag-mode
     :hook ((prog-mode . svg-tag-mode)
            (org-mode . svg-tag-mode))
