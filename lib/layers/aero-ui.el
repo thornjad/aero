@@ -74,8 +74,9 @@
 
 ;; get ligatures to actually work
 
-(use-package fira-code-mode :straight t
-  :hook (prog-mode . fira-code-mode))
+(when (display-grapic-p)
+  (use-package fira-code-mode :straight t
+    :hook (prog-mode . fira-code-mode)))
 
 ;; Better fringe symbols.
 (when (and (require 'disp-table nil 'noerror) standard-display-table)
