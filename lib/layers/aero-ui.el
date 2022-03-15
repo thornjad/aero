@@ -85,6 +85,24 @@
                           (string-to-vector " …")))
 
 
+;;; SVGs
+
+(unless (display-graphic-p)
+  (use-package svg-tag-mode
+    :hook ((prog-mode . svg-tag-mode)
+           (org-mode . svg-tag-mode))
+    :config
+    (setq svg-tag-tags
+          '(("DONE\\b" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+            ("FIXME\\b" . ((lambda (tag) (svg-tag-make "FIXME" :face 'org-todo :inverse t :margin 0))))
+
+            ("\\/\\/\\W?swiftlint:disable" . ((lambda (tag) (svg-tag-make "swiftlint:disable" :face 'org-level-3 :inverse t :margin 0 :crop-right t))))
+            ("eslint:disable\\(.*\\)" . ((lambda (tag) (svg-tag-make tag :face 'org-level-3 :crop-left t))))
+
+            ("\\/\\/\\W?TODO\\b\\|TODO:?\\b" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0 :crop-right t))))
+            ("TODO\\b\\(.*\\)" . ((lambda (tag) (svg-tag-make tag :face 'org-todo :crop-left t))))))))
+
+
 ;;; additional tweaks and packages
 
 (blink-cursor-mode 0)
