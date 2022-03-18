@@ -38,13 +38,13 @@
    "pp" '(counsel-projectile-switch-project :wk "switch project")
    "p:" '(projectile-run-shell-command-in-root :wk "shell command in root")
    "p&" '(projectile-run-async-shell-command-in-root :wk "async shell command in root")
-   "p'" '(projectile-run-shell :wk "run shell in root")
+   "p'" '(projectile-run-eshell :wk "run eshell in root")
+   "p\"" '(projectile-run-vterm :wk "run vterm shell in root")
    "p%" '(projectile-replace-regexp :wk "regex replace")
    "pC" '(projectile-compile-project :wk "compile")
    "pt" '(projectile-find-tag :wk "find tag")
    "pG" 'projectile-regenerate-tags
-   "pI" 'projectile-invalidate-cache
-   "pC" 'projectile-cache-current-file))
+   "pI" 'projectile-invalidate-cache))
 
 (use-package find-file-in-project
   :after (ivy general)

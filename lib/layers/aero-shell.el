@@ -188,21 +188,22 @@
     (setq vterm-kill-buffer-on-exit t
           vterm-max-scrollback 5000)))
 
-(use-package vterm-toggle :straight t
+(use-package multi-vterm :straight t
   :after (vterm general)
-  :init
-  ;; Use bottom buffer (per project readme)
-  (setq vterm-toggle-fullscreen-p nil)
-  (add-to-list 'display-buffer-alist
-               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (display-buffer-reuse-window display-buffer-in-direction)
-                 (direction . bottom)
-                 (dedicated . t)
-                 (reusable-frames . visible)
-                 (window-height . 0.4)))
+  :config
+	(add-hook 'vterm-mode-hook
+			      (lambda ()
+			        (setq-local evil-insert-state-cursor 'bar)
+			        (evil-insert-state)))
+
   (aero-leader-def
-    "`" 'vterm-toggle))
+    "`" 'multi-vterm-dedicated-toggle
+    "p`" 'multi-vterm-project)
+
+  (aero-mode-leader-def 'vterm-mode-map
+    "c" 'multi-vterm
+    "n" 'mutli-vterm-next
+    "p" 'multi-vterm-prev))
 
 
 ;;; shell scripting
