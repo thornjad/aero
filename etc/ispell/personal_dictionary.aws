@@ -1,4 +1,4 @@
-personal_ws-1.1 en 377 
+personal_ws-1.1 en 380 
 ACL
 APIs
 Aireon
@@ -37,6 +37,7 @@ FTB
 FlashBack
 FlighAware
 FlightAware
+Floatplane
 Flyspell
 Framagit
 Frontend
@@ -71,6 +72,7 @@ MBTiles
 MELPA
 MVFR
 MacBook
+Magit
 MapBox's
 MapServer
 MapTiler
@@ -98,6 +100,7 @@ POSTed
 POSTs
 PRs
 PSU
+Patreon
 PiAware
 PoC
 Postgres
