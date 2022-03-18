@@ -41,7 +41,7 @@
 (use-package spacemacs-theme :straight t :defer t)
 
 (setq default-frame-alist
-      (append (list '(width  . 212) '(height . 60)
+      (append (list '(width  . 112) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 6)
@@ -59,17 +59,6 @@
           (lambda ()
             (set-window-margins
              (car (get-buffer-window-list (current-buffer) nil t)) 1 1)))
-
-;; set up initial window the way i want it
-(split-window-horizontally)
-
-;; not working:
-;; (aero/frame-recenter)
-;; (add-hook 'after-make-frame-functions #'aero/frame-recenter)
-
-;; Startup with vterm running
-(when (require 'vterm-toggle nil t)
-  (vterm-toggle))
 
 
 ;; get ligatures to actually work
