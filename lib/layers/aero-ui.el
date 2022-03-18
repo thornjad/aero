@@ -77,14 +77,14 @@
            (org-mode . svg-tag-mode))
     :config
     (setq svg-tag-tags
-          '(("DONE\\b" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-            ("FIXME\\b" . ((lambda (tag) (svg-tag-make "FIXME" :face 'org-todo :inverse t :margin 0))))
-
-            ("\\/\\/\\W?swiftlint:disable" . ((lambda (tag) (svg-tag-make "swiftlint:disable" :face 'org-level-3 :inverse t :margin 0 :crop-right t))))
-            ("eslint:disable\\(.*\\)" . ((lambda (tag) (svg-tag-make tag :face 'org-level-3 :crop-left t))))
-
-            ("\\/\\/\\W?TODO\\b\\|TODO:?\\b" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0 :crop-right t))))
-            ("TODO\\b\\(.*\\)" . ((lambda (tag) (svg-tag-make tag :face 'org-todo :crop-left t))))))))
+          '(("DONE:?" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+            ("NOTE:?" . ((lambda (tag) (svg-tag-make "NOTE" :face 'org-done :margin 0 :inverse t))))
+            ("FIXME:?"
+             . ((lambda (tag) (svg-tag-make "FIXME" :face 'org-todo :inverse t :margin 0))))
+            ("TODO:?" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t))))
+            ("TEMP:?" . ((lambda (tag) (svg-tag-make "TEMP" :face 'org-todo))))
+            ("eslint:disable:?"
+             . ((lambda (tag) (svg-tag-make "eslint:disable" :face 'org-level-3))))))))
 
 
 ;;; additional tweaks and packages
