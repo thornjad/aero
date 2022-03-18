@@ -61,12 +61,6 @@
              (car (get-buffer-window-list (current-buffer) nil t)) 1 1)))
 
 
-;; get ligatures to actually work
-
-(when (display-grapic-p)
-  (use-package fira-code-mode :straight t
-    :hook (prog-mode . fira-code-mode)))
-
 ;; Better fringe symbols.
 (when (and (require 'disp-table nil 'noerror) standard-display-table)
   (set-display-table-slot standard-display-table 'truncation ?…)
