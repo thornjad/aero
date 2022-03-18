@@ -80,6 +80,15 @@
     (other-window 1))
   (add-hook 'magit-status-mode-hook (lambda () (toggle-truncate-lines -1)))
 
+  ;; Don't want no color from the pre-commit hook
+  (defun aero/magit--color-buffer (proc &rest args)
+    (interactive)
+    (with-current-buffer (process-buffer proc)
+      (read-only-mode -1)
+      (ansi-color-apply-on-region (point-min) (point-max))
+      (read-only-mode 1)))
+  (advice-add 'magit-process-filter :after #'aero/magit--color-buffer)
+
   (defun aero/fetch-pr ()
     "Fetch a GH(E) pull request into a new branch prefixed with `pr'."
     (interactive)
