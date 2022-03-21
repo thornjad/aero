@@ -554,6 +554,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package applescript-mode :straight t)
 
+;; Smartscan gives us the M-n and M-p symbol following ability
 (use-package smartscan :straight t
   :after (general)
   :hook (prog-mode . smartscan-mode))
