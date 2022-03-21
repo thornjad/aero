@@ -272,6 +272,21 @@ emacs with sigusr2"
                         (reusable-frames . nil) ;; only search this frame
                         (window-height . 20))))))
 
+(defun aero/incr-compilation-buffer ()
+  "Renames existing compilation buffer so you can create more."
+  (interactive)
+  (let ((cbuf (get-buffer "*compilation*"))
+        (more-cbufs t)
+        (n 1)
+        (new-cbuf-name ""))
+    (when cbuf
+      (while more-cbufs
+        (setq new-cbuf-name (format "*compilation%d*" n))
+        (setq n (1+ n))
+        (setq more-cbufs (get-buffer new-cbuf-name)))
+      (with-current-buffer cbuf
+        (rename-buffer new-cbuf-name)))))
+
 (defun aero/delete-windows-on-if-exist (buf)
   (when (get-buffer buf)
     (delete-windows-on buf)))
