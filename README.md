@@ -4,7 +4,7 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 > "An infinite number of monkeys typing into GNU Emacs would never make a good program." — Linus Torvalds
 
-> "Emacs outshines all other editing software in the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish." — Neal Stephenson
+> "Configuring Emacs is more of a lifestyle choice than a task that one completes." — Stephen Ramsey
 
 ## Features
 
