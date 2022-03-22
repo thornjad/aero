@@ -23,6 +23,10 @@
 (defun aero/npr-news () (interactive)
        (eww-browse-url "https://text.npr.org/"))
 
+(defun aero/xwidgets-search-ddg (&optional term)
+  (interactive "sSearch DuckDuckGo: ")
+  (xwidget-webkit-browse-url (format "https://duckduckgo.com/?q=%s" (or term "")) t))
+
 (use-package eww :straight nil
   :after (general evil ace-link)
   :commands (eww
@@ -89,24 +93,25 @@
 						 (rename-buffer (concat "eww - " title) t)
 					 (rename-buffer "eww" t))))))
 
-  (defun aero/eww-open-in-new-buffer (url)
-    "Fetch URL in a new EWW buffer."
-    (interactive
-     (let* ((uris (eww-suggested-uris))
-            (prompt (concat "Enter URL or keywords"
-                            (if uris (format " (default %s)" (car uris)) "")
-                            ": ")))
-       (list (read-string prompt nil nil uris))))
-    (setq url (eww--dwim-expand-url url))
-    (with-current-buffer
-        (if (eq major-mode 'eww-mode) (clone-buffer)
-          (generate-new-buffer "*eww*"))
-      (unless (equal url (eww-current-url))
-        (eww-mode)
-        (eww (if (consp url) (car url) url)))))
+  (defun aero/ace-link-eww-new-buffer ()
+    "Call `ace-link-eww' but open in a new buffer.
+
+This simply calls `ace-link-eww' with a fake double prefix, which is equivalent to the list containing 16."
+    (interactive)
+    (ace-link-eww '(16)))
+
+  (defun aero/pocket-add-current-url ()
+    "Add the URL currently visited to Pocket."
+    (interactive)
+    (when (require 'pocket-reader nil t)
+      (let ((url (eww-current-url)))
+        (if (pocket-lib-add-urls url)
+            (message "Added: %s" url)
+          (message "Failed to add to Pocket")))))
 
   ;; normal browsing
   (evil-define-key 'normal eww-mode-map
+    "SPC SPC" 'counsel-M-x
     "?" 'describe-mode
     "^" 'eww-up-url
     "u" 'eww-up-url
@@ -117,15 +122,19 @@
     "&" 'eww-browse-with-external-browser
     "D" 'eww-download
     "o" 'eww
-    "O" 'aero/ddg
+    "O" 'eww-open-in-new-buffer
+    "p" 'pocket-reader-eww-add-link
+    "P" 'aero/pocket-add-current-url
+    "s" 'aero/ddg
     "f" 'ace-link-eww
+    "F" 'aero/ace-link-eww-new-buffer
     "m" 'eww-add-bookmark
     "R" 'eww-readable
     "r" 'eww-reload
     "gr" 'eww-reload
     "J" 'eww-buffer-show-next
     "K" 'eww-buffer-show-previous
-    "T" 'aero/eww-open-in-new-buffer
+    "T" 'eww-open-in-new-buffer
     "q" 'kill-this-buffer
     "Q" 'quit-window
     "go" 'eww
