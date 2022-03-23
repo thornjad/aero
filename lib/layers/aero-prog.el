@@ -394,14 +394,6 @@
   (setq sp-show-pair-from-inside t)
   (smartparens-global-mode +1)
   :config
-
-  (defun aero/smartparens-pair-newline-and-indent ()
-    "Insert newline after smart paren, then indent for insert."
-    (save-excursion
-      (newline)
-      (indent-according-to-mode))
-    (indent-according-to-mode))
-
   ;; from spacemacs
   (defun aero/smart-closing-parenthesis ()
     "Insert a closing pair delimiter or move point past existing delimiter.
@@ -474,10 +466,16 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" )
-  (sp-pair "{" nil :post-handlers
-           '(:add (aero/smartparens-pair-newline-and-indent "RET")))
-  (sp-pair "[" nil :post-handlers
-           '(:add (aero/smartparens-pair-newline-and-indent "RET")))
+  (sp-local-pair 'markdown-mode "```" "```" :post-handlers '(:add ("||\n[i]" "RET")))
+
+  ;; For these pairs, when hitting RET inside them, we add an extra newline to the middle and indent
+  ;; accordingly.
+  (sp-pair "{" "}" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "[" "]" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "(" ")" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "/**" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
+  (sp-pair "/*" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
+
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
 (use-package rainbow-delimiters :straight t
