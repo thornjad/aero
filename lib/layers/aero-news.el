@@ -40,8 +40,6 @@
      ("http://www.lunaryorn.com/feed.atom" emacs)
      ("http://www.masteringemacs.org/feed/" emacs)
 
-     ("https://www.reddit.com/r/emacs/.rss" emacs reddit)
-
      ("https://cscheerleader.com/feed")
      ("https://julesjacobs.github.io/feed.xml")
      ("http://standardsandfreedom.net/index.php/feed/")
