@@ -120,6 +120,9 @@ board_ticket_branch_name."
           (forward-line)
           (insert (format "\n%s-%s" board ticket)))))))
 
+(use-package forge :straight t
+  :after magit)
+
 (use-package magit-todos :straight t
   :commands (magit-todos-mode)
   :hook (magit-mode . magit-todos-mode)
