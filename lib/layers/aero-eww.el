@@ -135,6 +135,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
     "J" 'eww-buffer-show-next
     "K" 'eww-buffer-show-previous
     "T" 'eww-open-in-new-buffer
+    "W" 'eww-copy-page-url
     "q" 'kill-this-buffer
     "Q" 'quit-window
     "go" 'eww
