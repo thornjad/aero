@@ -51,7 +51,6 @@
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-arrow "»"
-        lsp-enable-on-type-formatting nil
         lsp-enable-file-watchers nil ; burns through max files
         lsp-enable-on-type-formatting t
 
