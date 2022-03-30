@@ -90,7 +90,7 @@
    lsp-ui-sideline-show-hover t
    lsp-ui-sideline-show-symbol t
    lsp-ui-sideline-show-diagnostics t
-   lsp-ui-sideline-show-code-actions t)
+   lsp-ui-sideline-show-code-actions nil)
 
   (aero-leader-def
     "li" 'lsp-ui-imenu
