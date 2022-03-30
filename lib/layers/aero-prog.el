@@ -559,22 +559,24 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package yasnippet :straight t
   :after (general company)
-  :custom
-  (yas-snippet-dirs (list (expand-file-name "snippets/" aero-etc-dir)))
   :config
   ;; drop the default keys
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
-
-  ;; Better, not so overloaded key
-  (define-key yas-minor-mode-map (kbd "C-<tab>") yas-maybe-expand)
-  (define-key yas-minor-mode-map (kbd "C-TAB") yas-maybe-expand)
+  (define-key yas-minor-mode-map (kbd "C-<tab>") 'yas-insert-snippet)
 
   (aero-leader-def
     "hdy" 'yas-describe-tables
     "ty" 'yas-insert-snippet)
 
   (yas-global-mode +1))
+
+(use-package yasnippet-snippets :straight t
+  :after (yasnippet)
+  :config
+  (let ((dir (expand-file-name "snippets/" aero-etc-dir)))
+    (unless (member dir yas-snippet-dirs)
+      (add-to-list 'yas-snippet-dirs dir nil))))
 
 (use-package pdf-tools :straight t)
 
