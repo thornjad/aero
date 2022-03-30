@@ -84,6 +84,7 @@
    lsp-ui-doc-delay 1
    lsp-ui-doc-use-childframe t
    lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+   lsp-ui-doc-show-with-cursor t
    lsp-ui-imenu-enable nil
    lsp-ui-sideline-delay 1
    lsp-ui-sideline-show-hover t
