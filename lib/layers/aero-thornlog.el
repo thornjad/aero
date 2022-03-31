@@ -94,6 +94,19 @@
       (let ((end (point)))
         (buffer-substring start end)))))
 
+(defun last-days-goals ()
+  "Get goals from last-day."
+  (save-excursion
+    (last-day)
+    (re-search-forward "## Goals" nil t)
+    (forward-line 1)
+    (let ((start (point)))
+      (re-search-forward "## Notes" nil t)
+      (beginning-of-line)
+      (backward-char 1)
+      (let ((end (point)))
+        (buffer-substring start end)))))
+
 (defvar aero/thornlog-template
   "# TEMPLATE
 
@@ -135,6 +148,10 @@ response.")
         (setq text (replace-regexp-in-string
                     "\\(`Y`\\|`F`\\)"
                     (concat "`Y` " (last-days-today))
+                    text t))
+        (setq text (replace-regexp-in-string
+                    "## Goals\n"
+                    (concat "## Goals\n" (last-days-goals))
                     text t)))
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
