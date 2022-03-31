@@ -163,6 +163,9 @@
 (setenv "LANG" "en_US.UTF-8")
 (setenv "LC_ALL" "en_US.UTF-8")
 
+;; underscores delineate words
+(modify-syntax-entry ?_ "w")
+
 ;; remplace yes no par y n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
