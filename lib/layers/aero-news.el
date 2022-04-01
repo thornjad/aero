@@ -95,8 +95,9 @@
 
 (use-package elfeed-summary
   :after (general)
+  :commands (elfeed-summary)
   :straight (:host github :repo "SqrtMinusOne/elfeed-summary")
-  :config (aero-leader-def "af" 'elfeed-summary))
+  :init (aero-leader-def "af" 'elfeed-summary))
 
 
 
