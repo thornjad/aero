@@ -2,6 +2,7 @@
 *.elc
 *.pyc
 *.stackdump
+*.sqlite
 *~
 .DS_Store
 .cache
