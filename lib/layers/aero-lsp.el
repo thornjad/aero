@@ -83,7 +83,7 @@
    lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
    lsp-ui-doc-show-with-cursor t
    lsp-ui-imenu-enable nil
-   lsp-ui-sideline-delay 1
+   lsp-ui-sideline-delay 0.2 ; default is 0.2
    lsp-ui-sideline-show-hover t
    lsp-ui-sideline-show-symbol t
    lsp-ui-sideline-show-diagnostics t
