@@ -2,9 +2,11 @@
 
 Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; I've tailored Aero to myself, what I want and what I use. Configuration for Lisps, Python and web languages have special focus. I hope this project serves as a strong starting point for the development of your own configuration.
 
+<br>
 > "Configuring Emacs is more of a lifestyle choice than a task that one completes."<br><br>  — Stephen Ramsey
-
+<br>
 > "An infinite number of monkeys typing into GNU Emacs would never make a good program."<br><br>  — Linus Torvalds
+<br>
 
 ## Features
 
