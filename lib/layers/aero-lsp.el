@@ -85,7 +85,7 @@
    lsp-ui-imenu-enable nil
    lsp-ui-sideline-delay 0.2 ; default is 0.2
    lsp-ui-sideline-show-hover t
-   lsp-ui-sideline-show-symbol t
+   lsp-ui-sideline-show-symbol nil
    lsp-ui-sideline-show-diagnostics t
    lsp-ui-sideline-show-code-actions nil)
 
