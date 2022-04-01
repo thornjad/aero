@@ -89,6 +89,9 @@
    "C-u" 'scroll-down
    "C-d" 'scroll-up))
 
+(use-package elfeed-summary
+  :straight (:host github :repo "SqrtMinusOne/elfeed-summary"))
+
 
 
 (use-package pocket-reader :straight t
