@@ -74,7 +74,7 @@
  hscroll-margin 5
  hscroll-step 1
  ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
- ;; for tall lines.
+ ;; for tall lines. Thanks to Sacha Chua for the time saved!
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
  comint-scroll-to-bottom-on-input t ; insert at bottom
