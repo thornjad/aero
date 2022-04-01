@@ -23,7 +23,6 @@
   :commands elfeed
   :after (general)
   :init
-  (aero-leader-def "af" 'elfeed)
   (setq-default elfeed-use-curl t)
   (setq-default
    elfeed-feeds
@@ -90,7 +89,9 @@
    "C-d" 'scroll-up))
 
 (use-package elfeed-summary
-  :straight (:host github :repo "SqrtMinusOne/elfeed-summary"))
+  :after (general)
+  :straight (:host github :repo "SqrtMinusOne/elfeed-summary")
+  :config (aero-leader-def "af" 'elfeed-summary))
 
 
 
