@@ -193,6 +193,27 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
+;; Disable stupid super keybindings. These are defined in ns-win.el
+(global-unset-key (kbd "s-:"))
+(global-unset-key (kbd "s-C"))
+(global-unset-key (kbd "s-D"))
+(global-unset-key (kbd "s-E"))
+(global-unset-key (kbd "s-F"))
+(global-unset-key (kbd "s-d"))
+(global-unset-key (kbd "s-e"))
+(global-unset-key (kbd "s-f"))
+(global-unset-key (kbd "s-g"))
+(global-unset-key (kbd "s-j"))
+(global-unset-key (kbd "s-k"))
+(global-unset-key (kbd "s-l"))
+(global-unset-key (kbd "s-m"))
+(global-unset-key (kbd "s-n"))
+(global-unset-key (kbd "s-o"))
+(global-unset-key (kbd "s-q"))
+(global-unset-key (kbd "s-t"))
+(global-unset-key (kbd "s-u"))
+(global-unset-key (kbd "s-w"))
+
 ;; Trigger auto-fill after punctutation characters, not just whitespace.
 (mapc
  (lambda (c)
