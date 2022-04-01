@@ -71,9 +71,6 @@
     "lfr" '(lsp-treemacs-references :wk "find references")
     "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
 
-(use-package lsp-java
-  :hook ((java-mode . lsp)))
-
 (use-package lsp-ui :straight t
   :hook ((lsp-mode . lsp-ui-mode)
          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
