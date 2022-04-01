@@ -66,7 +66,12 @@
 
      ("https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish" tech)
      ("https://modernstoicism.com/feed/" philosophy)
-     ("https://secularbuddhism.com/feed" philosophy)))
+     ("https://secularbuddhism.com/feed" philosophy)
+     ("https://secularbuddhism.org/category/articles/feed" philosophy)
+     ("https://www.everydaybuddhist.org/blog/atom.xml" philosophy)
+     ("https://www.sgi-usa.org/sgi-usa-blog/feed" philosophy)
+     ("https://tricycle.org/trikedaily/feed" philosophy)
+     ))
 
   :config
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
