@@ -1,8 +1,8 @@
 *.db
 *.elc
 *.pyc
-*.stackdump
 *.sqlite
+*.stackdump
 *~
 .DS_Store
 .cache
@@ -41,10 +41,11 @@ elnode/
 elpa/
 elpy/
 eshell/*
+etc/cache/
 etc/lsp-session
 etc/recentf
+etc/saveplace
 etc/todo.org
-etc/cache/
 flycheck_*
 nov-places
 places
