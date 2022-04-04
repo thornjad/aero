@@ -15,13 +15,8 @@
 (defun aero/ddg (&optional term)
   (interactive "sSearch DuckDuckGo: ")
   (eww-browse-url (format "https://lite.duckduckgo.com/lite?q=%s" (or term ""))))
-(defun aero/wiki (&optional term)
-  (interactive "sSearch Wikipedia: ")
-  (aero/ddg (format "!w %s" (or term ""))))
 (defun aero/wiki-news () (interactive)
        (eww-browse-url "https://en.wikipedia.org/wiki/Portal:Current_events"))
-(defun aero/npr-news () (interactive)
-       (eww-browse-url "https://text.npr.org/"))
 
 (defun aero/xwidgets-search-ddg (&optional term)
   (interactive "sSearch DuckDuckGo: ")
@@ -29,10 +24,7 @@
 
 (use-package eww :straight nil
   :after (general evil ace-link)
-  :commands (eww
-             eww-browse-url
-             eww-search-words
-             browse-url-at-point)
+  :commands (eww eww-browse-url eww-search-words browse-url-at-point)
   :init
   ;; Open everything in eww, except for these few sites which just don't work in eww
   (setq browse-url-browser-function
@@ -47,18 +39,16 @@
           ("." . eww-browse-url)))
   (setq browse-url-generic-program "firefox"
 	      eww-search-prefix "https://lite.duckduckgo.com/lite?q="
-        shr-max-width 100
+        shr-max-width 90
         shr-indentation 2)
 
+  ;; Hold mac's hand in finding binaries
   (when (system-is-mac)
     (setq browse-url-generic-program "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox"))
 
   (aero-leader-def
     "wbd" '(aero/ddg :wk "duckduckgo")
-    "wbw" '(aero/wiki :wk "wikipedia")
-    "wbn" '(:ignore t :wk "news sites")
-    "wbnw" '(aero/wiki-news :wk "wikipedia")
-    "wbnn" '(aero/npr-news :wk "npr"))
+    "wbn" '(aero/wiki-news :wk "wikipedia news"))
 
 	:config
   (use-package shrface :defer t :straight t
@@ -166,7 +156,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
     (kbd "RET") 'eww-bookmark-browse
     "q" 'quit-window))
 
-;; Hack to decrease jumpiness around images and scrolling(with-eval-after-load "shr"
+;; Hack to decrease jumpiness around images and scrolling
 (with-eval-after-load "shr"
   (defun shr-put-image (spec alt &optional flags)
     "Insert image SPEC with a string ALT.  Return image.
@@ -226,39 +216,22 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
           image)
       (insert (or alt "")))))
 
-(use-package howdoyou :straight t
-  :after (general counsel-web)
-  :commands (howdoyou-query)
-  :custom
-  (howdoyou-switch-to-answer-buffer t)
-  :init
-  (defun aero/howdoyou-with-suggestions ()
-    "Call `howdoyou-query' with suggestions from `counsel-web-suggest'."
-    (interactive)
-    (counsel-web-suggest nil
-                         "How Do You: "
-                         #'counsel-web-suggest--duckduckgo
-                         (lambda (x)
-                           (howdoyou-query x))))
-  (aero-leader-def "hs" 'aero/howdoyou-with-suggestions)
-
-  (aero-mode-leader-def 'howdoyou-mode-map
-    "n" 'howdoyou-next-link
-    "p" 'howdoyou-previous-link
-    "P" 'howdoyou-go-back-to-first-link))
-
 (use-package devdocs :straight t
   :after (general)
   :commands (devdocs-lookup)
   :init
   (aero-leader-def "hD" 'devdocs-lookup)
   (add-hook 'python-mode-hook
-            (lambda () (setq-local devdocs-current-docs '("python~3.10"))))
+            (lambda ()
+              (setq-local devdocs-current-docs '("python~3.10"))))
   (add-hook 'typescript-mode-hook
-            (lambda () (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
+            (lambda ()
+              (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
   (add-hook 'ng2-ts-mode-hook
-            (lambda () (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript"))))
+            (lambda ()
+              (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript"))))
   (add-hook 'web-mode-hook
-            (lambda () (setq-local devdocs-current-docs '("angular" "rxjs" "javascript")))))
+            (lambda ()
+              (setq-local devdocs-current-docs '("angular" "rxjs" "javascript")))))
 
 (provide 'aero-eww)

@@ -215,10 +215,7 @@
 (global-unset-key (kbd "s-w"))
 
 ;; Trigger auto-fill after punctutation characters, not just whitespace.
-(mapc
- (lambda (c)
-   (set-char-table-range auto-fill-chars c t))
- "!-=+]};:'\",.?")
+(mapc (lambda (c) (set-char-table-range auto-fill-chars c t)) "!-=+]};:'\",.?")
 
 ;; type to get rid of active selection
 (delete-selection-mode t)
@@ -226,8 +223,7 @@
 (setq save-place-file (expand-file-name "saveplace" aero-etc-dir))
 (save-place-mode 1)
 
-(when (string= system-type "darwin")
-	(setq-default dired-use-ls-dired nil))
+(when (system-is-mac) (setq-default dired-use-ls-dired nil))
 
 ;; ensure buffer names are unique
 (require 'uniquify)
@@ -236,45 +232,6 @@
 (defun display-startup-echo-area-message ()
   "Override ridiculous built-in crap."
   (message "Aero est prêt"))
-
-(defun aero/compilation-finish (buf status)
-  "Notify with status."
-  (let ((notify-program
-         (if (system-is-linux)
-             '("notify-send" nil nil nil
-               "-t" "0" "-i" "emacs"
-               "Compilation finished in Emacs"
-               status)
-           '("osascript" nil nil nil
-             "-e" "'display notification \"Compilation finished in Emacs\" with title \"Aero Emacs\" sound name \"default\"'"))))
-    (apply 'call-process notify-program)))
-(setq compilation-finish-functions
-      (append compilation-finish-functions
-              '(aero/compilation-finish)))
-
-;; Small compilation window
-(defun aero/compilation-hook ()
-  (when (not (get-buffer-window "*compilation*"))
-    (save-selected-window
-      ;; select bottom window
-      (let ((bottom-window (selected-window))
-            window-below)
-        (while (setq window-below (window-in-direction 'below bottom-window))
-          (setq bottom-window window-below))
-        (select-window bottom-window))
-      (save-excursion
-        (let* ((w (split-window-vertically))
-               (h (window-height w)))
-          (select-window w)
-          (switch-to-buffer "*compilation*")
-          (shrink-window (- h (or compilation-window-height 20))))))))
-(add-hook 'compilation-mode-hook 'aero/compilation-hook)
-
-(eval-after-load 'general
-  (general-define-key
-   :states '(normal visual motion)
-   :keymaps 'compilation-mode-map
-   "q" 'aero/bury-buffer-kill-window))
 
 ;; open some buffers in the same window
 (add-to-list 'display-buffer-alist

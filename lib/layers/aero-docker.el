@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2020-2021 Jade Michael Thornton
+;; Copyright (c) 2020-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -17,6 +17,8 @@
 ;; loss of use, data or profits, whether in an action of contract, negligence or
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
+
+(require 'aero-prelude)
 
 (use-package docker :straight t
   :commands (docker)

@@ -21,8 +21,6 @@
 (use-package common-lisp-mode :straight nil
   :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'")
 
-;; NOTE: This is far easier to grab from MELPA than to submodule, mostly because
-;; it needs to be compile specially.
 (use-package slime :straight t
   :commands slime
   :init

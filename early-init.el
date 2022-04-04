@@ -1,6 +1,6 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2019, 2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -16,18 +16,17 @@
 ;;
 ;;; Commentary:
 ;;
-;; Emacs 27+ introduced early-init.el, which is run before init.el, before
+;; Emacs 27 introduced early-init.el, which is run before init.el, before
 ;; package and UI initialization happens.
-;;
-;; Package initialize occurs automatically, before `user-init-file' is
-;; loaded, but after `early-init-file'. We want Aero to handle this, so stop
-;; Emacs
 ;;
 ;;; Code:
 
+;; Package initialize occurs automatically, before `user-init-file' is loaded, but after
+;; `early-init-file'. We want Aero to handle this, so stop Emacs from doing it on its own.
 (setq package-enable-at-startup nil)
 
-;; Always utf-8
+;; Always use utf-8 for everything, I'll change it on the fly if I need something else for some
+;; reason.
 (set-charset-priority 'unicode)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -36,12 +35,7 @@
 (prefer-coding-system 'utf-8)
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
-(setq message-log-max 16384)
-
-;; remove useless crap
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;; Disable useless UI features by default.
 (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars))

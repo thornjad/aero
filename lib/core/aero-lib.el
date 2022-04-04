@@ -26,17 +26,12 @@
 ;;; Code:
 
 ;; Requirements
-(use-package memo
-  :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
-(use-package async :straight (:host github :repo "jwiegley/emacs-async")
-  :commands (async-save))
+(use-package memo :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
+(use-package async :straight (:host github :repo "jwiegley/emacs-async") :commands (async-save))
 (use-package popup :straight t)
-
-;; sub-modules
-(require 'aero-pbcopier)
+(require 'aero-pbcopier) ; Can be found in this dir
 
 ;; basic helpers
-
 (defun rand-nth (coll)
   "Return a random element of the list COLL."
   (nth (random (length coll)) coll))
@@ -83,8 +78,7 @@ with some parts omitted and some custom behavior added."
 
 (defmacro aero/local! (&rest body)
   "Execute BODY in local directory instead of TRAMP."
-  `(let ((default-directory user-emacs-directory))
-     ,@body))
+  `(let ((default-directory user-emacs-directory)) ,@body))
 
 (defmacro aero/voidvar! (&rest body)
   "Appease the compiler by pretending to use variables in BODY.
@@ -106,41 +100,11 @@ See `sort-regexp-fields'."
 
 ;;; system and logging
 
-(defun system-is-mac ()
-  (string= system-type 'darwin))
-(defun system-is-linux ()
-  (string= system-type 'gnu/linux))
-(defun system-is-mswindows ()
-  (string= system-type 'windows-nt))
-(defun window-system-is-mac ()
-  (memq (window-system) '(mac ns)))
-
-(defun in-nix-shell-p ()
-  (string-equal (getenv "IN_NIX_SHELL") "1"))
-
-(defun aero/log-error (msg &rest args)
-  "Display MSG as an error message in `*Messages*' buffer"
-  (let ((msg (apply 'format msg args)))
-    (message "(aero) Error: %s" msg)))
-(defalias 'aero/error #'aero/log-error)
-
-(defun aero/log-warning (msg &rest args)
-  "Display MSG as a warning message in buffer `*Messages*'"
-  (let ((msg (apply 'format msg args)))
-    (message "(aero) Warning: %s" msg)))
-(defalias 'aero/warning #'aero/log-warning)
-
-(defun aero/log-info (msg &rest args)
-  "Display MSG as an info message in buffer `*Messages'"
-  (let ((msg (apply 'format msg args)))
-    (message "(aero) Info: %s" msg)))
-(defalias 'aero/info #'aero/log-info)
-
-(defun aero/echo (msg &rest args)
-  "Display MSG in echo-area without logging it in `*Messages' buffer."
-  (interactive)
-  (let ((message-log-max nil))
-    (apply 'message msg args)))
+(defun system-is-mac () (string= system-type 'darwin))
+(defun system-is-linux () (string= system-type 'gnu/linux))
+(defun system-is-mswindows () (string= system-type 'windows-nt))
+(defun window-system-is-mac () (memq (window-system) '(mac ns)))
+(defun in-nix-shell-p () (string-equal (getenv "IN_NIX_SHELL") "1"))
 
 
 ;; program-wide
@@ -148,56 +112,15 @@ See `sort-regexp-fields'."
 ;; https://sachachua.com/blog/2006/09/emacs-changing-the-font-size-on-the-fly/
 (defun aero/increase-font-size ()
   (interactive)
-  (set-face-attribute
-   'default
-   nil
-   :height
-   (ceiling (* 1.10
-               (face-attribute 'default :height)))))
+  (set-face-attribute 'default nil :height (ceiling (* 1.10 (face-attribute 'default :height)))))
 (defun aero/decrease-font-size ()
   (interactive)
-  (set-face-attribute
-   'default
-   nil
-   :height
-   (floor (* 0.9
-             (face-attribute 'default :height)))))
+  (set-face-attribute 'default nil :height (floor (* 0.9 (face-attribute 'default :height)))))
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
-(defun aero/apologize-to-emacs ()
-  "Apologize for smacking emacs (stop debug on quit). Use this after smacking
-emacs with sigusr2"
-  (interactive)
-  (toggle-debug-on-quit))
-
-(defun aero/eshell-taskwarrior ()
-  "Open a specialized eshell buffer for taskwarrior."
-  (interactive)
-  (when (require 'eshell nil 'no-error)
-    (declare-function eshell-return-to-prompt "eshell.el")
-    (declare-function eshell-send-input "eshell.el")
-    (declare)
-    (let ((default-directory (expand-file-name "~")))
-      (switch-to-buffer (get-buffer-create "*aero taskwarrior*"))
-      (eshell-mode)
-      (eshell-return-to-prompt)
-      (insert "task")
-      (eshell-send-input))))
-(defalias 'aero/task #'aero/eshell-taskwarrior)
-
-(defun aero/stop-auto-revert-buffers ()
-  (cancel-function-timers 'auto-revert-buffers))
-
 
 ;; buffers, windows, frames, tabs
-
-(defun aero/toggle-prettify-this-buffer ()
-  "Disable `prettify-symbols-mode' in this buffer."
-  (interactive)
-  (if prettify-symbols-mode
-      (prettify-symbols-mode -1)
-    (prettify-symbols-mode 1)))
 
 (defun aero/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
@@ -287,10 +210,6 @@ emacs with sigusr2"
       (with-current-buffer cbuf
         (rename-buffer new-cbuf-name)))))
 
-(defun aero/delete-windows-on-if-exist (buf)
-  (when (get-buffer buf)
-    (delete-windows-on buf)))
-
 (defun aero/eshell-new ()
   "Open a new Eshell window.
 
@@ -374,17 +293,7 @@ on. This may cause a jump if the file has changed significantly."
         (set-visited-file-name new-name)
         (set-buffer-modified-p nil)))))
 
-(defun aero/buffer-too-big-p ()
-  "Is buffer longer than 5000"
-  (> (buffer-size) (* 5000 fill-column)))
-
-(defun aero/file-too-big-p (file)
-  "Is file larger than 5000 lines"
-  (> (nth 7 (file-attributes file))
-     (* 5000 64)))
-
-;; adapted from
-;; http://emacs.stackexchange.com/questions/202/close-all-dired-buffers
+;; adapted from http://emacs.stackexchange.com/questions/202/close-all-dired-buffers
 (defun aero/kill-diff-buffers ()
   (interactive)
   (mapc (lambda (buffer)
@@ -431,30 +340,6 @@ on. This may cause a jump if the file has changed significantly."
   (start-process "OsaScript" "*OsaScript*" "osascript" file))
 (defalias 'aero/run-applescript-file #'aero/run-osascript-file)
 
-(defun aero/osx-notify2 (title message)
-  "Create a notification with TITLE and MESSAGE."
-  (aero/run-osascript
-   (concat "display notification \""
-           (aero/applescript-escape message)
-           "\" with title  \""
-           (aero/applescript-escape title)
-           "\"")))
-
-(defun aero/osx-notify3 (title subtitle message)
-  "Create a notification with TITLE, SUBTITLE and MESSAGE."
-  (aero/run-osascript
-   (concat "display notification \""
-           (aero/applescript-escape message)
-           "\" with title  \""
-           (aero/applescript-escape title)
-           "\" subtitle \""
-           (aero/applescript-escape subtitle)
-           "\"")))
-
-(defun aero/osx-beep ()
-  "Play beep sound."
-  (aero/run-applescript "beep"))
-
 (defun aero/reveal-in-finder-as (file)
   "Reveal the supplied file FILE in Finder.
 
@@ -466,19 +351,6 @@ To call interactively, use [aero/open-in-finder]."
                  " reveal thePath \n"
                  "end tell\n")))
     (aero/run-osascript script)))
-
-(when (require 'async nil t)
-  (defun aero/async-write-buffer ()
-    "Asynchronously write the current buffer to disk.
-
-Really just an async wrapper around `save-buffer'"
-    (interactive)
-    (let* ((buf buffer-file-name)
-           (fun (lambda ()
-                  (message (or buf "wtf"))
-                  (funcall #'basic-save-buffer))))
-      (declare-function async-start "async.el")
-      (async-start fun))))
 
 (defun aero/open-in-finder ()
   "Reveal the file associated with the current buffer in the OSX Finder.
@@ -607,23 +479,9 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   (interactive)
   (insert "¯\\_(ツ)_/¯"))
 
-(defun untabify-buffer ()
-  (interactive)
-  (untabify (point-min) (point-max)))
-
-(defun tabify-buffer ()
-  (interactive)
-  (tabify (point-min) (point-max)))
-
-(defun indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun insert-lambda ()
-  (interactive)
-  (save-excursion
-    (right-char)
-    (insert "λ")))
+(defun untabify-buffer () (interactive) (untabify (point-min) (point-max)))
+(defun tabify-buffer () (interactive) (tabify (point-min) (point-max)))
+(defun indent-buffer () (interactive) (indent-region (point-min) (point-max)))
 
 (defmacro aero/insert-text-at-point (text)
   `(progn
@@ -636,16 +494,10 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   (save-excursion
     (skip-chars-backward "0-9")
     (or (looking-at "[0-9]+")
-        (aero/log-error "No number at point"))
+        (message "No number at point"))
     (replace-match (number-to-string (+ offset (string-to-number (match-string 0)))))))
-
-(defun increment-number-at-point ()
-  (interactive)
-  (alter-number-at-point 1))
-
-(defun decrement-number-at-point ()
-  (interactive)
-  (alter-number-at-point -1))
+(defun increment-number-at-point () (interactive) (alter-number-at-point 1))
+(defun decrement-number-at-point () (interactive) (alter-number-at-point -1))
 
 (defun human-date (human-string &optional epoch)
   "Convert HUMAN-STRING to a date string or if EPOCH, seconds.
@@ -671,6 +523,7 @@ Requires the utility date to be installed."
 
 (defun aero/frame-recenter (&optional frame)
   "Center FRAME on the screen.
+
 FRAME can specify a frame name, a terminal name, or a frame.
 If FRAME is omitted or nil, use currently selected frame."
   (interactive)

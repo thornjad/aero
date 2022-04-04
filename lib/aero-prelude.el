@@ -98,6 +98,8 @@
    "fW" 'evil-write-all
    "w/" '(evil-window-vsplit :wk "split vertical")
    "w-" '(evil-window-split :wk "split horizontal")
+   "w2" 'aero/layout-two-columns
+   "w3" 'aero/layout-three-columns
    "cm" 'evil-make)
 
   (global-set-key [remap keyboard-quit] #'aero/keyboard-quit-context)
@@ -133,7 +135,6 @@
    "C" '(:ignore t :wk "clue")
 
    "E" '(:ignore t :wk "emacs")
-   "Ea" 'aero/apologize-to-emacs
    "Ed" '(:ignore t :wk "debug")
    "Ede" 'toggle-debug-on-error
    "Edq" 'toggle-debug-on-quit
@@ -191,7 +192,6 @@
 
    "b" '(:ignore t :wk "buffers")
    "bL" 'list-buffers
-   "bP" 'aero/toggle-prettify-this-buffer
    "bS" 'switch-to-new-scratch-buffer
    "bd" 'kill-this-buffer
    "bi" 'indent-buffer
@@ -240,7 +240,6 @@
    "fD" '(aero/delete-this-file :wk "delete this file")
    "fE" '(aero/sudo-edit :wk "sudo edit")
    "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
-   "fW" '(aero/async-write-buffer :wk "async write buffer (experimental)")
    "fo" '(:ignore t :wk "open special files")
    "foP" 'aero/open-emacs-problems
    "fof" 'aero/open-local-init
@@ -435,60 +434,6 @@
 
 (use-package counsel :straight t
   :after general
-
-  :init/el-patch ; remove bindings which we use `helpful' for
-  (defvar counsel-mode-map
-    (let ((map (make-sparse-keymap)))
-      (dolist (binding
-               '((execute-extended-command . counsel-M-x)
-                 (describe-bindings . counsel-descbinds)
-                 (el-patch-remove
-                   (describe-function . counsel-describe-function)
-                   (describe-variable . counsel-describe-variable))
-                 (apropos-command . counsel-apropos)
-                 (describe-face . counsel-describe-face)
-                 (list-faces-display . counsel-faces)
-                 (find-file . counsel-find-file)
-                 (find-library . counsel-find-library)
-                 (imenu . counsel-imenu)
-                 (load-library . counsel-load-library)
-                 (load-theme . counsel-load-theme)
-                 (yank-pop . counsel-yank-pop)
-                 (info-lookup-symbol . counsel-info-lookup-symbol)
-                 (pop-to-mark-command . counsel-mark-ring)
-                 (bookmark-jump . counsel-bookmark)))
-        (define-key map (vector 'remap (car binding)) (cdr binding)))
-      map)
-    (el-patch-concat
-      "Map for `counsel-mode'.
-Remaps built-in functions to counsel replacements."
-      (el-patch-add
-        "\n\nBindings that are remapped by `helpful' have been removed.")))
-
-  (defcustom counsel-mode-override-describe-bindings nil
-    "Whether to override `describe-bindings' when `counsel-mode' is active."
-    :type 'boolean
-    :group 'counsel)
-
-  (define-minor-mode counsel-mode
-    "Toggle Counsel mode on or off.
-Turn Counsel mode on if ARG is positive, off otherwise. Counsel mode remaps
-built-in emacs functions that have counsel replacements.
-Local bindings (`counsel-mode-map'):
-\\{counsel-mode-map}"
-    :global t
-    :keymap counsel-mode-map
-    :group 'counsel
-    (if counsel-mode
-        (progn
-          (when (and (fboundp 'advice-add)
-                     counsel-mode-override-describe-bindings)
-            (advice-add #'describe-bindings :override #'counsel-descbinds))
-          (define-key minibuffer-local-map (kbd "C-r")
-            'counsel-minibuffer-history))
-      (when (fboundp 'advice-remove)
-        (advice-remove #'describe-bindings #'counsel-descbinds))))
-
   :config
   (setq counsel-find-file-ignore-regexp
         (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
@@ -532,10 +477,8 @@ Local bindings (`counsel-mode-map'):
 
 (use-package ivy :straight t
   :after general
-  :functions ivy-mode
   :config
   (use-package flx :straight t)
-
   (ivy-mode 1)
   (setq ivy-initial-inputs-alist nil ; screw the regex
         ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
@@ -544,17 +487,10 @@ Local bindings (`counsel-mode-map'):
         ivy-wrap t
         ivy-height 12
         ivy-fixed-height-minibuffer t
-        ;; ne pas quitter le minibuffer en cas de `delete-error`
         ivy-on-del-error-function #'ignore
-        ;; use fuzzy by default, but some searching is impossible without
-        ;; stricter regex's
         ivy-re-builders-alist '((t . ivy--regex-plus)))
   (aero-leader-def
     "bb" 'ivy-switch-buffer))
-
-(use-package amx :straight t
-  :after ivy
-  :config (amx-mode 1))
 
 (use-package ivy-rich :straight t
   :after (counsel ivy)
@@ -652,7 +588,7 @@ Local bindings (`counsel-mode-map'):
      ("M-l" . windmove-right))))
 
 (use-package winum :straight t :defer 5
-  :after (general)
+  :after (general which-key)
   :init
   (winum-mode)
   :config
@@ -719,8 +655,8 @@ Local bindings (`counsel-mode-map'):
 ;; Mac needs some extra hand-holding to connect the kill-ring to the system
 ;; clipboard.
 (when (system-is-mac)
-  (declare-function aero/pbcopier-select-text "aero-lib.el")
-  (declare-function aero/pbcopier-selection-value "aero-lib.el")
+  (declare-function aero/pbcopier-select-text "aero-pbcopier.el")
+  (declare-function aero/pbcopier-selection-value "aero-pbcopier.el")
 	(setq interprogram-cut-function #'aero/pbcopier-select-text)
 	(setq interprogram-paste-function #'aero/pbcopier-selection-value)
 
@@ -731,24 +667,22 @@ Local bindings (`counsel-mode-map'):
         (setq dired-listing-switches "-lFaGh1v --group-directories-first"))
     (setq dired-listing-switches "-ahlF")))
 
+;; Linux just needs the functionality enabled
 (when (system-is-linux)
   (setq select-enable-clipboard t
         interprogram-paste-function #'gui-selection-value
         x-gtk-use-system-tooltips t
         dired-listing-switches "-lFaGh1v --group-directories-first"))
 
-;; TTY also needs some clipboard help. Only works in certain term emulators,
-;; Alacritty is my preferred.
+;; TTY also needs some clipboard help. Only works in certain term emulators.
 (unless (display-graphic-p)
-  (use-package xclip :straight t
-    :config (xclip-mode +1)))
+  (use-package xclip :straight t :config (xclip-mode +1)))
 
 
 ;; File navigation
 
-(use-package tramp
+(use-package tramp :defer t
   :straight (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
-  :defer t
   :functions tramp-cleanup-all-connection
   :config
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
@@ -782,10 +716,7 @@ Local bindings (`counsel-mode-map'):
   :init
   (evil-set-initial-state 'pomp-mode 'emacs)
   (global-set-key (kbd "<f12>") 'pomp)
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "ap" 'pomp))
+  (aero-leader-def "ap" 'pomp))
 
 (use-package editorconfig :straight t :defer 1
   :functions (editorconfig-mode)
@@ -793,6 +724,40 @@ Local bindings (`counsel-mode-map'):
 
 ;; Ensure emacsclient frames open with focus
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
+
+(use-package esup :straight t :commands (esup))
+
+;; Mark passive voice, duplicate words and weasel words
+(use-package writegood-mode
+  :straight (:host github :repo "bnbeckwith/writegood-mode")
+  :hook ((text-mode) . writegood-mode))
+
+;; Mark E′ violations
+(use-package eprime-mode
+  :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
+  :after (general)
+  :commands (eprime-check-buffer
+             eprime-mode)
+  :init
+  (aero-leader-def
+    "tp" 'eprime-check-buffer
+    "tP" 'eprime-mode))
+
+(use-package counsel-spotify :straight t
+  :after (counsel general)
+  :commands (counsel-spotify-toggle-play-pause
+             counsel-spotify-next
+             counsel-spotify-previous)
+  :init
+  (aero-leader-def
+    "as" '(:ignore t :which-key "spotify")
+    "asp" 'spotify-toggle-play-pause
+    "asn" 'spotify-next
+    "asP" 'spotify-previous))
+
+(use-package unmodified-buffer :defer 1
+  :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
+  :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
 
 (provide 'aero-prelude)
