@@ -41,7 +41,7 @@
 (use-package spacemacs-theme :straight t :defer t)
 
 (setq default-frame-alist
-      (append (list '(width  . 112) '(height . 60)
+      (append (list '(width  . 212) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 6)
@@ -53,6 +53,9 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 6)
 (pixel-scroll-precision-mode +1)
+
+;; Initial window split in half
+(split-window-horizontally)
 
 ;; window margins
 (add-hook 'window-configuration-change-hook
