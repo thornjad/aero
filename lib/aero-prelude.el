@@ -759,5 +759,32 @@
   :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
+(use-package virtual-comment :straight t
+  :hook (find-file-hook . virtual-comment-mode)
+  :after (general)
+  :init
+  (aero-leader-def
+    "v" '(:ignore t :wk "virtual comment")
+    "vv" 'virtual-comment-make
+    "vn" 'virtual-comment-next
+    "vp" 'virtual-comment-previous
+    "vk" 'virtual-comment-delete
+    "vP" 'virtual-comment-paste
+    "vs" 'virtual-comment-show))
+
+(use-package clue :defer t
+  :straight (:host github :repo "AmaiKinono/clue")
+  :after (general)
+  :hook (find-file-hook . clue-auto-enable-clue-mode)
+  :commands (clue-copy
+             clue-paste)
+  :custom
+  (clue-project-root-function #'projectile-project-root)
+  (clue-auto-enable-modes '(markdown-mode))
+  :init
+  (aero-leader-def
+    "Cc" 'clue-copy
+    "Cp" 'clue-paste))
+
 
 (provide 'aero-prelude)

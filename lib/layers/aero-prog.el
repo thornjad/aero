@@ -129,20 +129,6 @@
 (use-package yaml-mode :straight t
   :mode "\\.ya?ml\\'")
 
-(use-package clue :defer t
-  :straight (:host github :repo "AmaiKinono/clue")
-  :after (general)
-  :hook (find-file-hook . clue-auto-enable-clue-mode)
-  :commands (clue-copy
-             clue-paste)
-  :custom
-  (clue-project-root-function #'projectile-project-root)
-  (clue-auto-enable-modes '(markdown-mode))
-  :init
-  (aero-leader-def
-    "Cc" 'clue-copy
-    "Cp" 'clue-paste))
-
 (use-package org :straight nil
 	:commands org-mode
 
@@ -480,19 +466,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package rainbow-delimiters :straight t
   :hook ((prog-mode . rainbow-delimiters-mode)))
-
-(use-package virtual-comment :straight t
-  :hook (find-file-hook . virtual-comment-mode)
-  :after (general)
-  :init
-  (aero-leader-def
-    "v" '(:ignore t :wk "virtual comment")
-    "vv" 'virtual-comment-make
-    "vn" 'virtual-comment-next
-    "vp" 'virtual-comment-previous
-    "vk" 'virtual-comment-delete
-    "vP" 'virtual-comment-paste
-    "vs" 'virtual-comment-show))
 
 
 ;;; formatting
