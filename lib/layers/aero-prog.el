@@ -454,6 +454,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-local-pair 'org-mode "/" "/" :trigger-wrap "/" )
   (sp-local-pair 'markdown-mode "```" "```" :post-handlers '(:add ("||\n[i]" "RET")))
 
+  (sp-pair "<" ">")
+
   ;; For these pairs, when hitting RET inside them, we add an extra newline to the middle and indent
   ;; accordingly.
   (sp-pair "{" "}" :post-handlers '(:add ("||\n[i]" "RET")))
