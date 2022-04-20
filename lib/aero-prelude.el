@@ -751,9 +751,9 @@
   :init
   (aero-leader-def
     "as" '(:ignore t :which-key "spotify")
-    "asp" 'spotify-toggle-play-pause
-    "asn" 'spotify-next
-    "asP" 'spotify-previous))
+    "asp" 'counsel-spotify-toggle-play-pause
+    "asn" 'counsel-spotify-next
+    "asP" 'counsel-spotify-previous))
 
 (use-package unmodified-buffer :defer 1
   :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
