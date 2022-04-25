@@ -169,8 +169,7 @@
 ;; NOTE: vterm requires libvterm-dev, which may not be installed. See
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
 ;; configuration.
-;; Requires that Emacs is compiled with modules
-(when (bound-and-true-p module-file-suffix)
+(when (bound-and-true-p module-file-suffix)  ; Requires Emacs modules
   (use-package vterm :straight t
     :after (general)
     :init
