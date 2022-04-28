@@ -130,7 +130,7 @@
   "List of template responses for blocked, to be chosen randomly.
 
 'none' is included multiple times so as to give it increased weight, it being the 'normal'
-response.")
+response. I'm too lazy to create a weights map or something, this is easier.")
 
 (defun new-day-insert ()
   "Insert the contents of the template into the document, for a new day's work."
