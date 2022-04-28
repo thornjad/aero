@@ -184,16 +184,19 @@ See `sort-regexp-fields'."
 (defun aero/toggle-compilation-buffer ()
   "Pop-up the compilation buffer."
   (interactive)
-  (let ((win (get-buffer-window "*compilation*" 0)))
+  (aero/toggle-popup-buffer "*compilation*"))
+
+(defun aero/toggle-popup-buffer (buf)
+  "Pop-up BUF in a buffer below."
+  (let ((win (get-buffer-window buf 0)))
     (if win
         ;; found, so close it
         (aero/bury-buffer-kill-window win)
 
       ;; else we need to pop it up
-      (display-buffer "*compilation*"
-                      '((display-buffer-below-selected)
-                        (reusable-frames . nil) ;; only search this frame
-                        (window-height . 20))))))
+      (display-buffer buf '((display-buffer-below-selected)
+                            (reusable-frames . nil) ;; only search this frame
+                            (window-height . 20))))))
 
 (defun aero/incr-compilation-buffer ()
   "Renames existing compilation buffer so you can create more."
