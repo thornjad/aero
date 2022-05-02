@@ -25,6 +25,7 @@
  ;; general
  ring-bell-function 'ignore ; supprime cette putain de cloche.
  use-dialog-box nil
+ use-short-answers t ; y-or-n instead of yes-or-no
  sentence-end-double-space nil ; the world will not go to shit today
  default-fill-column 100 ; i am mortal, not arthur whitney
  fill-column 100
@@ -165,9 +166,6 @@
 
 ;; underscores delineate words
 (modify-syntax-entry ?_ "w")
-
-;; remplace yes no par y n
-(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; make case statements indent properly
 (with-eval-after-load 'prog-mode
