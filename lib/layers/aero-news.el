@@ -21,11 +21,10 @@
 
 (use-package elfeed :straight t
   :commands elfeed
-  :after (general)
-  :init
-  (setq-default elfeed-use-curl t)
-  (setq-default
-   elfeed-feeds
+  :after (general evil)
+  :custom
+  (elfeed-use-curl t)
+  (elfeed-feeds
    '(("https://sachachua.com/blog/category/emacs/feed/" emacs)
      ("https://nullprogram.com/feed/" emacs)
      ("http://www.wilfred.me.uk/rss.xml" emacs)
@@ -82,19 +81,22 @@
 
   (general-define-key
    :keymaps 'elfeed-search-mode-map
-    "R" 'elfeed-update)
+   "R" 'elfeed-update
+   "j" 'next-line
+   "k" 'previous-line)
 
   (general-define-key
    :keymaps 'elfeed-show-mode-map
    "j" 'next-line
    "k" 'previous-line
    "o" 'elfeed-search-browse-url
+   "SPC" nil ; don't scroll
    "TAB" 'elfeed-show-next-link
-   "C-u" 'scroll-down
-   "C-d" 'scroll-up))
+   "C-u" 'evil-scroll-up
+   "C-d" 'evil-scroll-down))
 
 (use-package elfeed-summary
-  :after (general)
+  :after (general elfeed)
   :commands (elfeed-summary)
   :straight (:host github :repo "SqrtMinusOne/elfeed-summary")
   :init (aero-leader-def "af" 'elfeed-summary))
