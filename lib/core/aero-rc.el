@@ -38,6 +38,7 @@
  gnutls-min-prime-bits 4096 ; 256 est absurde
  confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alt file
  switch-to-buffer-preserve-window-point t
+ next-error-message-highlight t
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
