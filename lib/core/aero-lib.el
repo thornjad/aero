@@ -271,6 +271,7 @@ on. This may cause a jump if the file has changed significantly."
       ;; closer than this would require text parsing, which is more complex than
       ;; we need for a simple file replacement.
       (setf (point) initial-line))))
+(define-obsolete-function-alias #'aero/reopen-file-at-buffer #'revert-buffer-quick "2022-05-02")
 
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
