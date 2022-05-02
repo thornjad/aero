@@ -273,6 +273,15 @@ on. This may cause a jump if the file has changed significantly."
       (setf (point) initial-line))))
 (define-obsolete-function-alias #'aero/reopen-file-at-buffer #'revert-buffer-quick "2022-05-02")
 
+(defun aero/insert-date ()
+  "Insert current date."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
+(defun aero/insert-timestamp ()
+  "Insert current timestamp."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
