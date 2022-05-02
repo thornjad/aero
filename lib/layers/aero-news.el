@@ -101,6 +101,11 @@
   :straight (:host github :repo "SqrtMinusOne/elfeed-summary")
   :init (aero-leader-def "af" 'elfeed-summary))
 
+(use-package elfeed-protocol :straight t
+  :after (elfeed)
+  :custom (elfeed-protocol-enabled-protocols '(fever newsblur owncloud ttrss))
+  :config (elfeed-protocol-enable))
+
 
 
 (use-package pocket-reader :straight t
