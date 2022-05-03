@@ -325,6 +325,7 @@
    "z" 'repeat))
 
 (use-package which-key :straight t
+  :hook (on-first-input . which-key-mode)
   :defines which-key-mode
   :config
   (which-key-mode)

@@ -39,6 +39,9 @@
 (defun aero/bootstrap ()
   "Bootstrap `straight', `use-package' and major components, and set up for use"
 
+  ;; Get our on hooks early
+  (require 'on (expand-file-name "lib/core/on.el" user-emacs-directory))
+
   (with-eval-after-load 'gnutls
     (eval-when-compile (require 'gnutls))
     (setq gnutls-verify-error t) ; Do not allow insecure TLS connections.
