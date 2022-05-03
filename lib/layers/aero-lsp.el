@@ -50,6 +50,7 @@
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
+        lsp-headerline-breadcrumb-icons-enable nil
         lsp-headerline-arrow "»"
         lsp-enable-file-watchers nil ; burns through max files
         lsp-enable-on-type-formatting t
@@ -78,16 +79,14 @@
   (setq
    lsp-ui-doc-enable t
    lsp-ui-doc-position 'top
+   lsp-ui-doc-include-signature t
    lsp-ui-doc-delay 1
    lsp-ui-doc-use-childframe t
    lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
    lsp-ui-doc-show-with-cursor t
    lsp-ui-imenu-enable nil
-   lsp-ui-sideline-delay 0.2 ; default is 0.2
-   lsp-ui-sideline-show-hover t
-   lsp-ui-sideline-show-symbol nil
-   lsp-ui-sideline-show-diagnostics t
-   lsp-ui-sideline-show-code-actions nil)
+   lsp-ui-sideline-enable nil
+   )
 
   (aero-leader-def
     "li" 'lsp-ui-imenu
@@ -95,7 +94,11 @@
     "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
     "lpr" '(lsp-ui-peek-find-references :wk "peek references")
     "lps" '(lsp-ui-peek-find-workspace-symbol :wk "peek symbol")
-    "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")))
+    "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")
+    "lff" '(lsp-ui-doc-focus-frame :wk "focus frame"))
+
+  (evil-define-key 'normal 'lsp-ui-doc-frame-mode
+    [?q] #'lsp-ui-doc-unfocus-frame))
 
 (use-package lsp-ivy :straight t
   :config
