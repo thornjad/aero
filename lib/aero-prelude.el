@@ -200,6 +200,7 @@
    "bn" 'next-buffer
    "bp" 'previous-buffer
    "br" '(revert-buffer-quick :wk "buffer revert")
+   "bR" '(aero/reopen-file-at-buffer :wk "buffer replace")
    "bs" 'switch-to-scratch-buffer
    "bt" '(:ignore t :wk "tabify")
    "btt" 'tabify-buffer
