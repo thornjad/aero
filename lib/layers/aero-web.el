@@ -23,11 +23,21 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(defun aero/yarn-lint () (interactive) (compile "yarn lint"))
-(defun aero/yarn-test () (interactive) (compile "yarn test"))
-(defun aero/yarn-install () (interactive) (compile "yarn install"))
+(use-package jest :straight t
+  :commands (jest jest-file jest-file-dwim jest-function))
+(use-package jest-interactive-mode
+  :after (general)
+  :straight (:host github :repo "i-have-no-name/jest-interactive-mode")
+  :commands (jest-interactive-mode)
+  ;; :config
+  ;; (aero-mode-leader-def 'jest-interactive-mode
+  ;;   "le" 'jest-interactive-display-list-errors)
+  )
 
-(use-package jest :straight t)
+(use-package yarn :straight (:host github :repo "jmfirth/yarn.el")
+  :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
+                        yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
+(use-package npm :straight t :commands (npm))
 
 (use-package web-mode :straight t
   :mode
