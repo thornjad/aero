@@ -469,8 +469,7 @@
 (use-package recentf
   :defines (recentf-mode)
   :config
-  (defvar aero-etc-dir)
-  (setq recentf-save-file (expand-file-name "recentf" aero-etc-dir)
+  (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
         recentf-max-saved-items 500)
   (recentf-mode 1)
 
