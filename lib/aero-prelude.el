@@ -466,6 +466,11 @@
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
+;; Enhances counsel-M-x by showing recently used commands and keyboard shortcuts
+(use-package amx :straight t
+  :after (counsel)
+  :config (amx-mode 1))
+
 (use-package recentf
   :defines (recentf-mode)
   :config
