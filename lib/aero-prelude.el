@@ -453,7 +453,7 @@
   :after (counsel)
   :config (amx-mode 1))
 
-(use-package recentf
+(use-package recentf :defer 1
   :defines (recentf-mode)
   :config
   (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
