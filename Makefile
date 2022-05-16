@@ -42,7 +42,7 @@ install-dependencies: install-lsp-servers
 
 install-lsp-servers:
 	npm i -g bash-language-server @types/node
-	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server tslint
+	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint
 	npm i -g emmet-ls
 	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi
 	pip3 install "ptvsd>=4.2"

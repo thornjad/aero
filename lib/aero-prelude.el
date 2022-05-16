@@ -36,24 +36,6 @@
       (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize)))
 
-(use-package no-littering :defer 5
-  :after recentf
-  :straight (:host github :repo "emacscollective/no-littering")
-  :defines (no-littering-var-directory
-            no-littering-etc-directory)
-  :config
-  (add-to-list 'recentf-exclude no-littering-var-directory)
-  (add-to-list 'recentf-exclude no-littering-etc-directory))
-
-
-;;; get ready to patch at any time
-
-(use-package el-patch :straight t
-  :init (setq el-patch-enable-use-package-integration t))
-;; Only needed at compile time
-(eval-when-compile
-  (require 'el-patch))
-
 
 ;;; used in several places
 
@@ -418,18 +400,22 @@
     :functions (evil-terminal-cursor-changer-activate)
     :config (evil-terminal-cursor-changer-activate)))
 
-
 (use-package evil-matchit :straight t :defer 5
+  ;; allows % to jump matching tags
   :after evil
   :defines global-evil-matchit-mode
   :config (global-evil-matchit-mode 1))
 
-(use-package evil-visualstar :straight t :defer 5
-  :after evil
-  :defines global-evil-visualstar-mode
+
+;; tree-sitter
 
-  :config
-  (global-evil-visualstar-mode t))
+;; (use-package tree-sitter :straight t
+;;   :config (global-tree-sitter-mode))
+;; (use-package tree-sitter-langs :straight t)
+;; (use-package evil-textobj-tree-sitter
+;;   :straight (:host github
+;;              :repo "meain/evil-textobj-tree-sitter"
+;;              :files (:defaults "queries")))
 
 
 ;; abo-abo!
@@ -466,8 +452,8 @@
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
-;; Enhances counsel-M-x by showing recently used commands and keyboard shortcuts
 (use-package amx :straight t
+  ;; Enhances counsel-M-x by showing recently used commands and keyboard shortcuts
   :after (counsel)
   :config (amx-mode 1))
 
@@ -541,6 +527,11 @@
   :after (avy)
   :functions (ace-link-setup-default)
   :init (ace-link-setup-default))
+
+(use-package smartscan :straight t
+  ;; Gives us the M-n and M-p symbol following ability
+  :after (general)
+  :hook (prog-mode . smartscan-mode))
 
 
 ;;; system
@@ -733,13 +724,13 @@
 
 (use-package esup :straight t :commands (esup))
 
-;; Mark passive voice, duplicate words and weasel words
 (use-package writegood-mode
+  ;; Mark passive voice, duplicate words and weasel words
   :straight (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
-;; Mark E′ violations
 (use-package eprime-mode
+  ;; Mark E′ violations
   :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
   :commands (eprime-check-buffer
@@ -749,7 +740,8 @@
     "tp" 'eprime-check-buffer
     "tP" 'eprime-mode))
 
-(use-package counsel-spotify :straight t
+;; REVIEW not sure if we still want this, disabling to see if i miss it
+(use-package counsel-spotify :straight t :disabled t
   :after (counsel general)
   :commands (counsel-spotify-toggle-play-pause
              counsel-spotify-next

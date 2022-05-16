@@ -19,6 +19,7 @@
 (require 'aero-prelude)
 
 (use-package company :straight t
+  ;; Standard completions library
   :after (evil)
 	:hook ((prog-mode . company-mode)
          (company-mode-hook . evil-normalize-keymaps))
@@ -27,7 +28,7 @@
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
-        company-tooltip-limit 10
+        company-tooltip-limit 15
         company-tooltip-margin 2
         company-require-match nil
         company-show-numbers t
@@ -46,42 +47,24 @@
                        'company-capf
                        'company-abort)))
 
-(use-package company-statistics :straight t
-  :after (company)
-  :hook (company-mode . company-statistics-mode))
-
 (use-package company-prescient :straight t
+  ;; Move commonly-used completions to the top
   :after (company)
 	:hook (company-mode . company-prescient-mode)
-	:defines (prescient-save-file)
-	:commands (prescient-persist-mode)
-	:config
-  ;; duplicate setq with company-prescient
-	(setq prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir)))
+	:custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
+	:config (prescient-persist-mode +1))
 
 (use-package company-box :straight t
+  ;; Better popup interface for company
   :hook (company-mode . company-box-mode))
 
-(use-package company-dict :straight t
-  :after (company flyspell)
-  :config
-  (setq company-dict-dir (expand-file-name "ispell" aero-etc-dir)))
-
-(use-package counsel-gtags
-  :after (general)
-  :commands (counsel-gtags-dwim)
-  :init
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "]" 'counsel-gtags-dwim))
-
 (use-package company-tabnine :straight t
+  ;; Manages and provides Tabnine interface
   :after (company)
   :init (add-to-list 'company-backends #'company-tabnine))
 
 
-;; C lang
+;; C language
 
 (use-package cc-mode :straight t
   :after flycheck
@@ -107,16 +90,15 @@
          ("github\\.com.*\\.txt\\'" . gfm-mode)
          ("\\.md\\'"          . markdown-mode)
          ("\\.markdown\\'"    . markdown-mode))
+
   :init
   (setq markdown-enable-wiki-links t
         markdown-italic-underscore t
         markdown-make-gfm-checkboxes-buttons t
         markdown-gfm-additional-languages '("sh"))
   (add-hook 'markdown-mode-hook #'flyspell-mode)
-  :config
-  ;; TEMP Not satisfactory because popup.el gets distorted
-  ;; (add-hook 'markdown-mode-hook 'variable-pitch-mode)
 
+  :config
   (require 'aero-thornlog)
   (aero-mode-leader-def
     :keymaps 'markdown-mode-map
@@ -126,12 +108,10 @@
 (use-package markdown-toc :straight t
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
 
-(use-package yaml-mode :straight t
-  :mode "\\.ya?ml\\'")
+(use-package yaml-mode :straight t :mode "\\.ya?ml\\'")
 
 (use-package org :straight nil
 	:commands org-mode
-
 	:config
 	(setq org-src-preserve-indentation t
 				org-footnote-auto-adjust t
@@ -150,16 +130,10 @@
   (add-hook 'org-mode-hook #'org-hide-block-all))
 
 
-;; ML
-
-(use-package tuareg :straight t
-  :mode ("\\.mli?\\'" . tuareg-mode))
-
-
 ;; Java/Clojure/Groovy
 
-(use-package clojure-mode :straight t
-  :mode "\\.clj\\'")
+(use-package clojure-mode :straight t :mode "\\.clj\\'")
+(use-package groovy-mode :straight t)
 (use-package cider :straight t
   :hook (clojure-mode . cider-mode)
   :after (clojure-mode general)
@@ -225,8 +199,6 @@
       "re" 'lsp-clojure-extract-function
       "rs" 'lsp-clojure-inline-symbol)))
 
-(use-package groovy-mode :straight t)
-
 
 ;; flycheck
 
@@ -235,13 +207,7 @@
 (use-package flycheck :after (general)
   :commands flycheck-mode
   :functions (flycheck-buffer-automatically)
-  :hook ((web-mode
-          tcl-mode
-          json-mode
-          js2-mode
-          emacs-lisp-mode
-          c-mode
-          cpp-mode)
+  :hook ((web-mode tcl-mode json-mode js2-mode emacs-lisp-mode c-mode cpp-mode)
          . flycheck-mode)
   :init
   (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
@@ -313,6 +279,7 @@
    "pcH" 'flycheck-manual))
 
 (use-package flycheck-pos-tip :straight t
+  ;; Display flycheck error in tooltip at point
   :after (flycheck)
   :hook (flycheck-mode . flycheck-pos-tip-mode))
 
@@ -334,14 +301,6 @@
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
 
-	(use-package flyspell-correct-popup :straight t
-		:commands flyspell-correct-wrapper
-    :functions (flyspell-correct-popup)
-		:init
-    (defvar flyspell-correct-interface)
-		(setq flyspell-correct-interface #'flyspell-correct-popup))
-
-  (declare-function aero-leader-def "aero-prelude.el")
   (aero-leader-def
     "ps" '(:ignore t :wk "spelling")
     "psP" 'flyspell-prog-mode
@@ -353,17 +312,20 @@
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
 
+(use-package flyspell-correct-ivy :straight t
+  ;; Flyspell interface. Use M-o to access minibuffer actions
+  :after flyspell
+	:commands flyspell-correct-ivy
+	:custom (flyspell-correct-interface #'flyspell-correct-ivy))
+
 (use-package synosaurus :straight t
+  ;; Thesaurus
   :after (general)
-  :commands (synosaurus-lookup
-             synosaurus-choose-and-replace
-             synosauruschoose-and-insert)
-  :custom
-  (synosaurus-choose-method 'default)
-  :config
-  (aero-leader-def
-    "tt" '(synosaurus-choose-and-replace :wk "synonyms")
-    "tT" 'synosaurus-lookup))
+  :commands (synosaurus-lookup synosaurus-choose-and-replace)
+  :custom (synosaurus-choose-method 'default)
+  :config (aero-leader-def
+            "tt" '(synosaurus-choose-and-replace :wk "synonyms")
+            "tT" 'synosaurus-lookup))
 
 
 ;; parens
@@ -521,39 +483,11 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package nix-mode :straight t :mode "\\.nix\\'")
 (use-package lua-mode :straight t :mode "\\.lua\\'")
+(use-package applescript-mode :straight t :mode "\\.applescript\\'")
+(use-package nhexl-mode :straight t :defer t) ; improved version of `hexl-mode'
+(use-package pdf-tools :straight t :defer t)
 
-;; Improved version of `hexl-mode' for editing hex/binary
-(use-package nhexl-mode :straight t :defer t)
-
-(use-package applescript-mode :straight t)
-
-;; Smartscan gives us the M-n and M-p symbol following ability
-(use-package smartscan :straight t
-  :after (general)
-  :hook (prog-mode . smartscan-mode))
-
-(use-package yasnippet :straight t
-  :after (general company)
-  :config
-  ;; drop the default keys
-  (define-key yas-minor-mode-map (kbd "<tab>") nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (define-key yas-minor-mode-map (kbd "C-<tab>") 'yas-insert-snippet)
-
-  (aero-leader-def
-    "hdy" 'yas-describe-tables
-    "ty" 'yas-insert-snippet)
-
-  (yas-global-mode +1))
-
-(use-package yasnippet-snippets :straight t
-  :after (yasnippet)
-  :config
-  (let ((dir (expand-file-name "snippets/" aero-etc-dir)))
-    (unless (member dir yas-snippet-dirs)
-      (add-to-list 'yas-snippet-dirs dir nil))))
-
-(use-package pdf-tools :straight t)
-
+;; Ocaml
+(use-package tuareg :straight t :mode ("\\.mli?\\'" . tuareg-mode))
 
 (provide 'aero-prog)
