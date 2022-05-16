@@ -102,7 +102,7 @@
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
 																 "." (number-to-string emacs-build-number)
                                  "\n"
-                                 ";; Enfin, un putain de bon éditeur"
+                                 ";; Go placidly amid the noise and haste"
                                  "\n;;\n"
                                  ";; Booted in " (emacs-init-time "%.3f seconds")
                                  (format " with %d garbage collections" gcs-done)
