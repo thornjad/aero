@@ -1,4 +1,4 @@
-personal_ws-1.1 en 395 
+personal_ws-1.1 en 397 
 ACL
 APIs
 Aireon
@@ -133,6 +133,7 @@ Starbound
 TLS
 TSV
 TUI
+Tabnine
 Tabstops
 Theming
 TileJSON
@@ -374,6 +375,7 @@ touchpad
 transpiled
 triaging
 truthy
+tsc
 tty
 typeof
 umount
