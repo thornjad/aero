@@ -31,7 +31,10 @@
 
 (use-package counsel-projectile 
 	:after (projectile general)
-	:config
+  :commands (counsel-projectile-rg
+             counsel-projectile-find-file-dwim
+             counsel-projectile-switch-project)
+	:init
 	(aero-leader-def
    "p/" '(counsel-projectile-rg :wk "find with rg")
    "pf" '(counsel-projectile-find-file-dwim :wk "find file dwim")

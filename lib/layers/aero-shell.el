@@ -55,10 +55,10 @@
   (require 'em-smart)
 
   ;; Ensure eshell doesn't override these
-  (define-key term-mode-map (kbd "M-h") 'windmove-left)
-  (define-key term-mode-map (kbd "M-l") 'windmove-right)
-  (define-key term-mode-map (kbd "M-p") 'eshell-previous-input)
-  (define-key term-mode-map (kbd "M-n") 'eshell-next-input)
+  (define-key eshell-mode-map (kbd "M-h") 'windmove-left)
+  (define-key eshell-mode-map (kbd "M-l") 'windmove-right)
+  (define-key eshell-mode-map (kbd "M-p") 'eshell-previous-input)
+  (define-key eshell-mode-map (kbd "M-n") 'eshell-next-input)
 
   (setq
    eshell-save-history-on-exit t
@@ -170,7 +170,7 @@
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
 ;; configuration.
 (when (bound-and-true-p module-file-suffix)  ; Requires Emacs modules
-  (use-package vterm :straight t
+  (use-package vterm :straight t :defer t
     :after (general)
     :init
     ;; HACK vterm clumsily forces vterm-module.so to compile when the package is loaded. This is
@@ -187,7 +187,7 @@
     (setq vterm-kill-buffer-on-exit t
           vterm-max-scrollback 5000)))
 
-(use-package multi-vterm :straight t
+(use-package multi-vterm :straight t :defer t
   :after (vterm general)
   :config
 	(add-hook 'vterm-mode-hook

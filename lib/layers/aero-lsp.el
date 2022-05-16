@@ -99,7 +99,7 @@
   (evil-define-key 'normal 'lsp-ui-doc-frame-mode
     [?q] #'lsp-ui-doc-unfocus-frame))
 
-(use-package lsp-ivy :straight t
+(use-package lsp-ivy :straight t :defer t
   :config
   (aero-leader-def
     "lf" '(:ignore t :wk "find")
