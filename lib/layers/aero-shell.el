@@ -170,8 +170,13 @@
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
 ;; configuration.
 (when (bound-and-true-p module-file-suffix)  ; Requires Emacs modules
-  (use-package vterm :straight t :defer t
+  (use-package vterm :straight t
+    :commands (vterm)
     :after (general)
+    :custom
+    (vterm-max-scrollback 5000)
+    (vterm-kill-buffer-on-exit t)
+
     :init
     ;; HACK vterm clumsily forces vterm-module.so to compile when the package is loaded. This is
     ;; necessary to prevent compilation when use-package is evaluated during byte- or
@@ -181,11 +186,7 @@
       (provide 'vterm-module))
     (aero-leader-def
       "Stv" 'vterm
-      "S'" 'vterm)
-
-    :config
-    (setq vterm-kill-buffer-on-exit t
-          vterm-max-scrollback 5000)))
+      "S'" 'vterm)))
 
 (use-package multi-vterm :straight t :defer t
   :after (vterm general)
