@@ -25,8 +25,8 @@
 ;; Catch-all version check, should be updated when we use a new feature that's not
 ;; backward-compatible.
 (when (or (member "--no-version-check" command-line-args)
-         (version< emacs-version "28"))
- (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
+          (version< emacs-version "28"))
+  (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
 
 
 ;;; Core functionality
@@ -77,9 +77,10 @@
   ;; Bootstrap use-package
   (require 'straight)
   (declare-function straight-use-package "straight.el")
+  (unless (package-installed-p 'use-package)
+    (straight-use-package 'use-package)
+    (require 'use-package))
   (defvar straight-use-package-by-default)
-  (straight-use-package 'use-package)
-  (require 'use-package)
   (setq straight-use-package-by-default t)
 
   ;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
