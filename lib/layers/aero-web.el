@@ -41,7 +41,7 @@
 
 (use-package web-mode :straight t
   :mode
-  "\\.\\(tpl\\|php\\|xml\\|html\\|htm\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\)\\'"
+  "\\.\\(jsp\\|handlebars\\|mustache\\|tpl\\|php\\|xml\\|html\\|htm\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\)\\'"
   :config
   (setq web-mode-engines-alist
         '(("ctemplate" . "\\.tpl\\'"))))
