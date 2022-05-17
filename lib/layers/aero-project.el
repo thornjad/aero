@@ -25,6 +25,7 @@
 	(setq projectile-indexing-method 'alien
 				projectile-enable-caching t
 				projectile-mode-line nil
+        projectile-project-search-path (directory-files "~/src" t "[^.]")
         projectile-completion-system 'ivy)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (projectile-mode 1))
