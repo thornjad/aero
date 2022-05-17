@@ -486,6 +486,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (use-package applescript-mode :straight t :mode "\\.applescript\\'")
 (use-package nhexl-mode :straight t :defer t) ; improved version of `hexl-mode'
 (use-package pdf-tools :straight t :defer t)
+(use-package terraform-mode :straight t :mode "\\.tf\\'")
 
 ;; Ocaml
 (use-package tuareg :straight t :mode ("\\.mli?\\'" . tuareg-mode))
