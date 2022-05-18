@@ -188,7 +188,7 @@
       "S'" 'vterm)))
 
 (use-package multi-vterm :straight t :defer t
-  :after (vterm general)
+  :after general
   :init
   (aero-leader-def
     "`" 'multi-vterm-dedicated-toggle
