@@ -170,8 +170,7 @@
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
 ;; configuration.
 (when (bound-and-true-p module-file-suffix)  ; Requires Emacs modules
-  (use-package vterm :straight t
-    :commands (vterm)
+  (use-package vterm :straight t :defer t
     :after (general)
     :custom
     (vterm-max-scrollback 5000)
@@ -190,15 +189,16 @@
 
 (use-package multi-vterm :straight t :defer t
   :after (vterm general)
+  :init
+  (aero-leader-def
+    "`" 'multi-vterm-dedicated-toggle
+    "p`" 'multi-vterm-project)
+
   :config
 	(add-hook 'vterm-mode-hook
 			      (lambda ()
 			        (setq-local evil-insert-state-cursor 'bar)
 			        (evil-insert-state)))
-
-  (aero-leader-def
-    "`" 'multi-vterm-dedicated-toggle
-    "p`" 'multi-vterm-project)
 
   (aero-mode-leader-def 'vterm-mode-map
     "c" 'multi-vterm
