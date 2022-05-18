@@ -1,14 +1,10 @@
 # Aero Emacs
 
-Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine. I built Aero in the style of a distribution like Prelude or Spacemacs, but without intention for widespread use; I've tailored Aero to myself, what I want and what I use. Configuration for Lisps, Python and web languages have special focus. I hope this project serves as a strong starting point for the development of your own configuration.
+Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine.
 
 <br>
 
 > "Configuring Emacs is more of a lifestyle choice than a task that one completes."<br><br>  — Stephen Ramsey
-
-<br>
-
-> "An infinite number of monkeys typing into GNU Emacs would never make a good program."<br><br>  — Linus Torvalds
 
 <br>
 
@@ -27,6 +23,8 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long.
 
 ### LSP
+
+> "An infinite number of monkeys typing into GNU Emacs would never make a good program."<br><br>  — Linus Torvalds
 
 Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to any protocol servers Emacs can find. I regularly make use of these capabilities in Python and Javascript in particular, so they've received the most attention.
 
