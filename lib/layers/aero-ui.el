@@ -33,7 +33,7 @@
   (when (system-is-mac)
     (setq aero-theme-font-height 140))
   :config
-  (setq aero-theme-font "IBM Plex Mono")
+  (setq aero-theme-font "JetBrains Mono")
   (load-theme 'aero t))
 
 ;; other themes
