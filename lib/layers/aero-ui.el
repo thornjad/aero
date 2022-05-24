@@ -129,10 +129,11 @@
   (defun aero/echo-bar-function ()
     (concat
      (format-time-string "[ %R | %A, %d %b")
-     (when-let ((bat (funcall battery-status-function)))
+     (when-let ((bat (ignore-errors (funcall battery-status-function))))
        (concat " | " (cdr (cadr bat)) "%"))
      " ]"))
-  (setq echo-bar-function #'aero/echo-bar-function))
+  (setq echo-bar-function #'aero/echo-bar-function)
+  (echo-bar-mode +1))
 
 ;; make links in comments clickable
 (global-goto-address-mode +1)
