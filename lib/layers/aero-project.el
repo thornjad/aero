@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -18,60 +18,53 @@
 
 (require 'aero-prelude)
 
-(use-package projectile
-  :straight (:host github :repo "bbatsov/projectile")
-  :after (ivy)
-	:config
-	(setq projectile-indexing-method 'alien
-				projectile-enable-caching t
-				projectile-mode-line nil
-        projectile-project-search-path (directory-files "~/src" t "[^.]")
-        projectile-completion-system 'ivy)
-  (add-to-list 'projectile-globally-ignored-directories "node_modules")
-  (projectile-mode 1))
-
-(use-package counsel-projectile 
-	:after (projectile general)
-  :commands (counsel-projectile-rg
-             counsel-projectile-find-file-dwim
-             counsel-projectile-switch-project)
-	:init
-	(aero-leader-def
-   "p/" '(counsel-projectile-rg :wk "find with rg")
-   "pf" '(counsel-projectile-find-file-dwim :wk "find file dwim")
-   "pp" '(counsel-projectile-switch-project :wk "switch project")
-   "p:" '(projectile-run-shell-command-in-root :wk "shell command in root")
-   "p&" '(projectile-run-async-shell-command-in-root :wk "async shell command in root")
-   "p'" '(projectile-run-eshell :wk "run eshell in root")
-   "p\"" '(projectile-run-vterm :wk "run vterm shell in root")
-   "p%" '(projectile-replace-regexp :wk "regex replace")
-   "pC" '(projectile-compile-project :wk "compile")
-   "pt" '(projectile-find-tag :wk "find tag")
-   "pG" 'projectile-regenerate-tags
-   "pI" 'projectile-invalidate-cache))
-
-(use-package find-file-in-project
-  :after (ivy general)
-  :straight (:host github :repo "redguardtoo/find-file-in-project")
+;; Built-in
+(use-package project
+  :after (general)
   :config
+  (defun aero/project-root-override (dir)
+    "Find DIR's project root by searching for a '.project.el' file.
+
+If this file exists, it marks the project root. For convenient compatibility with Projectile, '.projectile' is also considered a project root marker.
+
+https://blog.jmthornton.net/p/emacs-project-override"
+    (let ((root (or (locate-dominating-file dir ".project.el")
+                    (locate-dominating-file dir ".projectile")))
+          (backend (ignore-errors (vc-responsible-backend dir))))
+      (when root (if (version<= emacs-version "28")
+                     (cons 'vc root)
+                   (list 'vc backend root)))))
+
+  ;; Note that we cannot use :hook here because `project-find-functions' doesn't end in "-hook", and
+  ;; we can't use this in :init because it won't be defined yet.
+  (add-hook 'project-find-functions #'aero/project-root-override)
+
+  ;; TODO may not be filtering out unwanted dirs like node_modules?
   (aero-leader-def
-    "pF" 'find-file-in-project))
+    "pf" 'project-find-file
+    "pp" 'project-switch-project
+    "p:" 'project-shell-command
+    "p&" 'project-async-shell-command
+    "p'" 'project-eshell
+    "p%" 'project-query-replace-regexp
+    "pC" 'project-compile))
 
 (use-package treemacs :straight t
-  :hook ((lsp . treemacs))
+  :commands (treemacs)
   :after (lsp general)
+  :custom
+  (treemacs-tag-follow-delay 0.5)
+  (treemacs-recenter-after-tag-follow t)
+  (treemacs-recenter-after-file-follow t)
+
+  :init
+  (aero-leader-def "ft" 'treemacs)
+
   :config
   (use-package treemacs-evil :straight t)
   (use-package treemacs-projectile :straight t)
   (use-package treemacs-magit :straight t)
   (use-package treemacs-all-the-icons :straight t)
-
-  (aero-leader-def
-    "ft" 'treemacs)
-
-  (setq treemacs-tag-follow-delay 0.5
-        treemacs-recenter-after-tag-follow t
-        treemacs-recenter-after-file-follow t)
 
   ;; Follow me around
   (treemacs-project-follow-mode +1)
