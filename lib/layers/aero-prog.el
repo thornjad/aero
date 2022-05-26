@@ -409,7 +409,11 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sK" '(aero/copy-sexp-as-kill :wk "copy as kill"))
 
   (sp-local-pair 'web-mode "<?" "?>")
+  (sp-local-pair 'web-mode "<? " " ?>")
   (sp-local-pair 'web-mode "{" "}")
+  (sp-local-pair 'web-mode "{ " " }")
+  (sp-local-pair 'web-mode "{%" "%}")
+  (sp-local-pair 'web-mode "{% " " %}")
   (sp-local-pair 'web-mode "`" "`")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
@@ -417,12 +421,19 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-local-pair 'markdown-mode "```" "```" :post-handlers '(:add ("||\n[i]" "RET")))
 
   (sp-pair "<" ">")
+  (sp-pair "< " " >")
+  (sp-pair "{ " " }")
+  (sp-pair "( " " )")
+  (sp-pair "[ " " ]")
 
   ;; For these pairs, when hitting RET inside them, we add an extra newline to the middle and indent
   ;; accordingly.
   (sp-pair "{" "}" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "[" "]" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "(" ")" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "{ " " }" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "[ " " ]" :post-handlers '(:add ("||\n[i]" "RET")))
+  (sp-pair "( " " )" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "/**" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
   (sp-pair "/*" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
 
@@ -451,6 +462,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (add-to-list 'auto-mode-alist '("/[^./]*\\'" . text-mode))
 ;; Use conf-mode for dotfiles.
 (add-to-list 'auto-mode-alist '("/\\.[^/]*\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("/\\.dir-locals\\.el\\'" . emacs-lisp-mode))
 
 ;; somehow makefile-mode broke??
 (add-to-list 'auto-mode-alist '("Makefile" . makefile-mode))
