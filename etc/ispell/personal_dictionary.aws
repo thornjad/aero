@@ -1,4 +1,4 @@
-personal_ws-1.1 en 399 
+personal_ws-1.1 en 406 
 ACL
 APIs
 Aireon
@@ -29,6 +29,8 @@ Comeet
 Comeet's
 Customizable
 Donal
+DuckDuckGo
+ELPA
 ESC
 Ewelina
 FATV
@@ -260,6 +262,7 @@ https
 ident
 idents
 incrementation
+indent
 ingester
 ingestible
 init
@@ -268,6 +271,7 @@ itcl
 jmthornton
 json
 jupyter
+keyring
 libertarianism
 loblolly
 localhost
@@ -314,6 +318,7 @@ preprocessor
 println
 proc
 procs
+profiler
 proration
 proxied
 prêt
@@ -330,6 +335,7 @@ requeued
 requries
 rgb
 rgba
+ripgrep
 roadmap
 roguelite
 rollout
@@ -383,6 +389,7 @@ typeof
 umount
 umounted
 unicode
+unindent
 usr
 util
 utils
