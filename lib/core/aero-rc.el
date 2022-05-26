@@ -24,7 +24,7 @@
 (setq-default
  ;; general
  ring-bell-function 'ignore ; supprime cette putain de cloche.
- use-dialog-box nil
+ use-dialog-box nil ; use minibuffer to ask questions instead
  use-short-answers t ; y-or-n instead of yes-or-no
  sentence-end-double-space nil ; the world will not go to shit today
  default-fill-column 100 ; i am mortal, not arthur whitney
@@ -32,12 +32,12 @@
  help-window-select t ; focus help window when opened
  kill-ring-max 5000 ; truncate kill ring after 5000 entries
  mark-ring-max 5000 ; truncate mark ring after 5000 entries
- kill-do-not-save-duplicates t
+ kill-do-not-save-duplicates t ; don't add duplicate strings to kill-ring
  apropos-do-all t ; apropos is apropos
  global-display-line-numbers-mode nil ; fuck line numbers
  gnutls-min-prime-bits 4096 ; 256 est absurde
  confirm-kill-emacs 'yes-or-no-p ; too easy to kill when looking for alt file
- switch-to-buffer-preserve-window-point t
+ switch-to-buffer-preserve-window-point t ; try to preserve point position in closed buffers
  next-error-message-highlight t
  line-move-visual t ; move lines by display, not reality
  make-pointer-invisible t ; le curseur est une chienne
@@ -46,9 +46,9 @@
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
  idle-update-delay 2 ; default is 0.5
  bidi-display-reordering nil ; no need for bidirectional display
- create-lockfiles nil
- jit-lock-defer-time 0
- ns-use-srgb-colorspace nil
+ create-lockfiles nil ; tries to solve a non-existent problem and causes trouble doing it
+ jit-lock-defer-time 0 ; wait to fontify until input ends, but no longer
+ ns-use-srgb-colorspace nil ;; REVIEW what is this?
 
 
  ;; Emacs should just have code that automatically sets this threshold according to some function
@@ -67,31 +67,30 @@
  ;; cursor more than N lines past window edges (where N is the settings of
  ;; `scroll-conservatively'). This is especially slow in larger files
  ;; during large-scale scrolling commands. If kept over 100, the window is
- ;; never automatically recentered.
+ ;; never automatically re-centered.
  scroll-conservatively 101
- scroll-margin 3
- scroll-preserve-screen-position t
- mouse-wheel-scroll-amount '(3 ((shift) . 1))
- pixel-resolution-fine-flag 1
- hscroll-margin 5
- hscroll-step 1
+ scroll-margin 3 ; keep 3 lines at top and bottom of buffer when scrolling
+ scroll-preserve-screen-position t ; see variable documentation; this is the modern expectation
+ mouse-wheel-scroll-amount '(3 ((shift) . 1)) ; make scroll wheel scroll more at a time
+ pixel-resolution-fine-flag 1 ; use pixel scrolling
+ hscroll-margin 5 ; like scroll-margin but horizontal
+ hscroll-step 1 ; on horizontal scroll, scroll by one column at a time
  ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
  ;; for tall lines. Thanks to Sacha Chua for the time saved!
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil ; don't accelerate TODO may not want this?
  comint-scroll-to-bottom-on-input t ; insert at bottom
- comint-scroll-to-bottom-on-output nil ; don't scroll on output
- comint-input-ignoredups t
+ comint-scroll-to-bottom-on-output nil ; don't scroll on output by default
+ comint-input-ignoredups t ; ignore duplicate inputs in history
  comint-prompt-read-only nil ; breaks shell-command sometimes
  compilation-scroll-output t ; scroll with compilation output
 
- eww-search-prefix "https://lite.duckduckgo.com/lite?q="
+ eww-search-prefix "https://lite.duckduckgo.com/lite?q=" ; eww search DuckDuckGo
 
- ;; The newline pushes everything else to a non-rendered second line
- frame-title-format "Emacs"
+ frame-title-format "Emacs" ; simple frame title; I find the default distracting
  ns-use-proxy-icon nil ; remove icon from frame title in ns
 
- ;; startup with scratch
+ ;; startup with scratch buffer instead of the splash screen
  inhibit-startup-screen t
  inhibit-splash-screen t
  inhibit-startup-echo-area-message t
@@ -114,22 +113,19 @@
                                                 0))))
                                  "\n\n")
 
- ;; version control and saving
- use-package-verbose nil
+ use-package-verbose nil ; ignore verbose output from use-package
  delete-old-versions -1 ; supprime les vieilles versions des fichiers
                                         ; sauvegardés
  backup-directory-alist `(("." . "~/.config/emacs/backups"))
- version-control t
- vc-follow-symlinks t
- git-commit-fill-column 72
+ git-commit-fill-column 72 ; best length in my opinion
  auto-save-file-name-transforms '((".*" "~/.config/emacs/auto-save-list/" t))
- save-interprogram-paste-before-kill t
+ save-interprogram-paste-before-kill t ; see variable documentation
  diff-switches "-u" ; unified diff by default
 
  ;; files
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
- require-final-newline t
- load-prefer-newer t
+ require-final-newline t ; add newline to end of files if there isn't one
+ load-prefer-newer t ; load the newer of equivalent el, elc, eln
  completion-ignore-case t ; ignorer la capitalisation
  read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
@@ -147,7 +143,7 @@
  js-syntactic-mode-name nil ; just use normal mode name
  js2-basic-offset 2
  typescript-indent-level 2
- python-indent-offset 4 ; 2 would be a hassle
+ python-indent-offset 4 ; 2 would be too much of a hassle
  rust-indent-offset 4
  sgml-basic-offset 2
  sh-basic-offset 2
@@ -178,6 +174,7 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
+;; Don't kill scratch buffer, just bury it if something tries to
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   "Don't kill my scratch!"
   (let ((buffer-to-kill (ad-get-arg 0)))
@@ -192,7 +189,8 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
-;; Disable stupid super keybindings. These are defined in ns-win.el
+;; Disable stupid super keybindings. These are defined in ns-win.el. In my view, super is the domain
+;; of the OS and nothing should be bound with it.
 (global-unset-key (kbd "s-:"))
 (global-unset-key (kbd "s-C"))
 (global-unset-key (kbd "s-D"))
@@ -219,12 +217,13 @@
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
+;; Try to save point position between sessions
 (setq save-place-file (expand-file-name "saveplace" aero-etc-dir))
 (save-place-mode 1)
 
-(when (system-is-mac) (setq-default dired-use-ls-dired nil))
-
-;; ensure buffer names are unique
+;; ensure buffer names are unique when their filenames are the same. The forward option will expand
+;; each duplicate buffer name to include their parent directories as far up as needed to make them
+;; unique.
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
@@ -232,7 +231,7 @@
   "Override ridiculous built-in crap."
   (message "Aero est prêt"))
 
-;; open some buffers in the same window
+;; open these buffers in the same window
 (add-to-list 'display-buffer-alist
              '("*Help*" display-buffer-same-window)
              '("*helpful*" display-buffer-same-window))

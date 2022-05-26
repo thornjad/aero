@@ -18,6 +18,14 @@
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
 ;;
+;;; Commentary:
+;;
+;; After init.el, this file is the core driver of Aero. It sets up ubiquitous packages and the
+;; primary keybindings.
+;;
+;; The file name of "prelude" has nothing to do with the excellent Emacs configuration distribution
+;; of the same name. Instead, the name alludes to the fact that the configuration here comes before
+;; the rest, and in many cases is required by other packages.
 
 (require 'cl-lib)
 (require 'straight)
@@ -27,33 +35,40 @@
 ;;; Code:
 
 
-;;; Set up core packages
+;; Set up core packages. The ELPA keyring sometimes gets screwed up, but this package lets us fix
+;; it easily.
 (use-package gnu-elpa-keyring-update :straight t)
+
+;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
+;; This lets us use TRAMP more easily and connects us with some tools.
 (use-package exec-path-from-shell :straight t :defer 1
   :config
   (when (or (window-system) (daemonp))
-    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH" "PATH"))
       (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize)))
 
-
-;;; used in several places
-
+;; Faster than grep, but requires ripgrep to be installed locally
 (use-package ripgrep :straight t :defer 3)
 
 
 ;;; the general is here
 
+;; General lets us more easily set keybindings throughout Aero
 (use-package general :straight t
   :functions (general-define-key)
   :init
   (setq-default general-override-states
                 '(insert hybrid normal visual motion operator replace))
   :config
+
+  ;; Most bindings will fall under this leader key, so we make a handy macro.
 	(general-create-definer aero-leader-def
 		:states '(normal visual emacs motion)
 		:prefix "SPC"
 		:non-normal-prefix "C-SPC")
+
+  ;; Mode-leader lets us put keybindings only in specific modes (usually major modes).
 	(general-create-definer aero-mode-leader-def
 		:states '(normal visual emacs motion)
 		:prefix "SPC ,")
@@ -324,9 +339,11 @@
         evil-want-C-u-scroll t)
 
   :config
-  (use-package evil-collection
-    :config (evil-collection-init))
 
+  ;; Provides defaults for many modes which evil proper overlooks
+  (use-package evil-collection :config (evil-collection-init))
+
+  ;; We use SPC as the leader key so it shouldn't do anything when in motion
   (define-key evil-motion-state-map " " nil)
 
   ;; default states
@@ -339,9 +356,11 @@
   (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
   (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
   (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-  ;; Ensure horizontal movement doesn't cross lines
+
+  ;; Ensure horizontal movement doesn't cross to the next/previous line
   (setq-default evil-cross-lines nil)
 
+  ;; By default, these two operate on half pages, but I prefer the smaller jump
   (defun aero/scroll-quarter-page-down ()
     (interactive)
     (evil-scroll-down (/ (window-body-height) 4)))
@@ -351,6 +370,7 @@
   (evil-define-key nil global-map (kbd "C-u") #'aero/scroll-quarter-page-up)
   (evil-define-key nil global-map (kbd "C-d") #'aero/scroll-quarter-page-down)
 
+  ;; Very useful, in visual mode, use < and > to indent/unindent the line(s)
   (defun aero/evil-shift-right ()
     (interactive)
     (evil-shift-right evil-visual-beginning evil-visual-end)
@@ -363,31 +383,34 @@
     (evil-visual-restore))
   (evil-define-key 'visual global-map (kbd ">") 'aero/evil-shift-right)
   (evil-define-key 'visual global-map (kbd "<") 'aero/evil-shift-left)
-  ;; :q should kill the current buffer rather than quitting emacs entirely
+
+  ;; :q should kill the current buffer rather than quitting Emacs entirely
   (evil-ex-define-cmd "q" 'kill-this-buffer)
-  ;; Need to type out :quit to close emacs
-  (evil-ex-define-cmd "quit" 'evil-quit)
+
+  ;; Unless I'm mistaken, there's no Evil backward equivalent to "e", so we'll invent it.
   (evil-define-key '(normal visual motion) global-map
     (kbd "C-e") #'evil-backward-word-end)
   (evil-define-key '(normal visual motion) global-map
     (kbd "C-M-e") #'evil-backward-WORD-end)
+
+  ;; Useful for pasting into the minibuffer where Evil modes usually don't properly function
   (evil-define-key '(insert) global-map
     (kbd "C-y") #'evil-paste-after)
   (evil-define-key '(insert) global-map
     (kbd "C-S-y") #'evil-paste-before)
 
-  (evil-define-key 'normal 'global
-    ;; Run macro in register q
-    "Q" "@q")
+  ;; Run macro in register q
+  (evil-define-key 'normal 'global "Q" "@q")
   (evil-define-key 'visual 'global
     ;; run macro in register q on region
     "Q" (kbd ":norm @q RET")
     ;; repeat on region
     "." (kbd ":norm . RET"))
 
+  ;; activate
   (evil-mode 1))
 
-;; Doesn't do anything for GUI, so don't bother
+;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
 (unless (display-graphic-p)
   (use-package evil-terminal-cursor-changer
     :after evil
@@ -452,33 +475,39 @@
   :config (amx-mode 1))
 
 (use-package recentf :defer 1
+  ;; Doesn't seem like indent activates properly for me without this intervention. Here we move it
+  ;; to a known cache file and set up an auto-save every 5 minutes.
   :defines (recentf-mode)
   :config
   (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
         recentf-max-saved-items 500)
   (recentf-mode 1)
-
-  ;; run recentf save every 5 minutes
   (run-at-time 60 (* 5 60) 'recentf-save-list))
 
 (use-package ivy :straight t
+  ;; Despite a general trend in the (loud part of the) community to move away from ivy, I'm still a
+  ;; big fan. It's fast, its fully-featured and it has many useful integrations.
   :after general
   :config
-  (use-package flx :straight t)
+  (use-package flx :straight t) ; better fuzzy matching
+
   (ivy-mode 1)
-  (setq ivy-initial-inputs-alist nil ; screw the regex
+  (setq ivy-initial-inputs-alist nil ; don't pre-populate our search
         ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
         ivy-virtual-abbreviate 'full
+        ;; Counting results isn't really that useful and slows down searching large projects
+        ;; significantly, so just forget it.
         ivy-count-format ""
-        ivy-wrap t
+        ivy-wrap t ; wrap top to bottom
         ivy-height 12
-        ivy-fixed-height-minibuffer t
-        ivy-on-del-error-function #'ignore
-        ivy-re-builders-alist '((t . ivy--regex-plus)))
+        ivy-fixed-height-minibuffer t ; better visual consistency
+        ivy-on-del-error-function #'ignore ; don't punish me when I accidentally delete search
+        ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ; use flx fuzzy
   (aero-leader-def
     "bb" 'ivy-switch-buffer))
 
 (use-package ivy-rich :straight t
+  ;; Adds information about various results in the ivy buffer
   :after (counsel ivy)
   :defines (ivy-rich-path-style)
   :functions (ivy-rich-mode)
@@ -498,6 +527,7 @@
   :init (all-the-icons-ivy-rich-mode +1))
 
 (use-package swiper :straight t
+  ;; Search utility
   :after (general counsel)
   :commands (swiper counsel-grep-or-swiper swiper-thing-at-point)
   :init
@@ -508,6 +538,7 @@
   (setq swiper-action-recenter t))
 
 (use-package avy :straight t
+  ;; visual navigation utility
   :init
   (general-define-key
    :states '(normal visual)
@@ -518,6 +549,7 @@
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
 (use-package ace-link :straight (:host github :repo "abo-abo/ace-link")
+  ;; jump to search results in eww
   :after (avy)
   :functions (ace-link-setup-default)
   :init (ace-link-setup-default))
@@ -531,6 +563,7 @@
 ;;; system
 
 (use-package vundo :straight (:host github :repo "casouri/vundo")
+  ;; visual undo
   :after (general evil)
   :config
   (aero-leader-def "u" 'vundo))
@@ -539,6 +572,7 @@
   :after (general)
   :defines winner-boring-buffers
   :config
+  ;; list of buffers that winner-undo won't restore
   (setq winner-boring-buffers
         '("*Completions*"
           "*Compile-Log*"
@@ -555,12 +589,11 @@
    "wu" 'winner-undo
    "wU" 'winner-redo)
 
-  ;; windmove
+  ;; These don't really always work, and I'm not sure why
   (global-set-key (kbd "M-h") #'windmove-left)
   (global-set-key (kbd "M-j") #'windmove-down)
   (global-set-key (kbd "M-k") #'windmove-up)
   (global-set-key (kbd "M-l") #'windmove-right)
-
   (when (require 'bind-key nil t)
     (bind-keys*
      ("M-h" . windmove-left)
@@ -569,6 +602,7 @@
      ("M-l" . windmove-right))))
 
 (use-package winum :straight t :defer 5
+  ;; Jump to windows by number. 1 is the upper-left-most
   :after (general which-key)
   :init
   (winum-mode)
@@ -585,12 +619,13 @@
     "9" '(winum-select-window-9 :wk "window-9")
     "wg" '(winum-select-window-by-number :wk "select window by number"))
 
-  ;; collapse all those window commands to one summary
+  ;; collapse all those window commands to one summary in which-key
   (push '(("\\(.*\\) 0" . "winum-select-window-0") . ("\\1 0..9" . "window 0..9"))
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
 (use-package helpful :straight t
+  ;; Improved version of help buffers
   :commands (helpful-function
              helpful-variable
              helpful-macro
@@ -677,6 +712,7 @@
     (unless (file-remote-p default-directory) ad-do-it)))
 
 (use-package ranger :straight t
+  ;; We only use this for the deer function, which is a better version of dired.
   :commands (deer)
   :after general
   :init
@@ -691,6 +727,7 @@
 ;;; General crap
 
 (use-package pomp
+  ;; homebrewed pomodoro timer
   :straight (:host gitlab :repo "thornjad/pomp")
   :after (general evil)
   :commands (pomp)
@@ -706,6 +743,7 @@
 ;; Ensure emacsclient frames open with focus
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
 
+;; startup profiler
 (use-package esup :straight t :commands (esup))
 
 (use-package writegood-mode
@@ -738,10 +776,16 @@
     "asP" 'counsel-spotify-previous))
 
 (use-package unmodified-buffer :defer 1
+  ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
+  ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
+  ;; think its still modified.
   :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
 (use-package virtual-comment :straight t
+  ;; Not working well in Emacs 29, and doesn't persist through buffer destruction.
+  ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
+  ;; to disk.
   :hook (find-file-hook . virtual-comment-mode)
   :after (general)
   :init
@@ -755,6 +799,8 @@
     "vs" 'virtual-comment-show))
 
 (use-package clue :defer t
+  ;; Method for linking notes to specific locations in files. Rather cumbersome to use. REVIEW may
+  ;; want to remove this.
   :straight (:host github :repo "AmaiKinono/clue")
   :after (general)
   :hook (find-file-hook . clue-auto-enable-clue-mode)
