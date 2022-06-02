@@ -142,11 +142,7 @@ board_ticket_branch_name."
   (blamer-author-formatter " ✎ [%s] ")
   (blamer-commit-formatter "● %s")
   (blamer-idle-time 1.0)
-  (blamer-min-offset 10)
-  :custom-face
-  (blamer-face ((t :foreground "#E46876"
-                   :height 140
-                   :italic t))))
+  (blamer-min-offset 15))
 
 (use-package git-gutter :straight t
   :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
