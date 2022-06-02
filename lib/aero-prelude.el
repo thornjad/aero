@@ -489,7 +489,8 @@
   ;; big fan. It's fast, its fully-featured and it has many useful integrations.
   :after general
   :config
-  (use-package flx :straight t) ; better fuzzy matching
+  ;; Note: flx is a popular fuzzy matching package, but it refuses to prioritize exact matches,
+  ;; which gets too annoying to use.
 
   (ivy-mode 1)
   (setq ivy-initial-inputs-alist nil ; don't pre-populate our search
@@ -502,9 +503,10 @@
         ivy-height 12
         ivy-fixed-height-minibuffer t ; better visual consistency
         ivy-on-del-error-function #'ignore ; don't punish me when I accidentally delete search
-        ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ; use flx fuzzy
+        ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (aero-leader-def
-    "bb" 'ivy-switch-buffer))
+    "bb" 'ivy-switch-buffer
+    "R" 'ivy-resume))
 
 (use-package ivy-rich :straight t
   ;; Adds information about various results in the ivy buffer
