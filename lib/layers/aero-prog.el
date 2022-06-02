@@ -278,11 +278,6 @@
    "pcl" 'flycheck-list-errors
    "pcH" 'flycheck-manual))
 
-(use-package flycheck-pos-tip :straight t
-  ;; Display flycheck error in tooltip at point
-  :after (flycheck)
-  :hook (flycheck-mode . flycheck-pos-tip-mode))
-
 (use-package flyspell
 	:after (general)
   :hook ((prog-mode . flyspell-prog-mode)
