@@ -86,7 +86,8 @@
    lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
    lsp-ui-doc-show-with-cursor t
    lsp-ui-imenu-enable nil
-   lsp-ui-sideline-enable nil)
+   lsp-ui-sideline-enable nil
+   lsp-ui-sideline-show-diagnostics nil)
 
   (aero-leader-def
     "li" 'lsp-ui-imenu
