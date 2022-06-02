@@ -54,6 +54,7 @@
         lsp-headerline-arrow "»"
         lsp-enable-file-watchers nil ; burns through max files
         lsp-enable-on-type-formatting t
+        lsp-eldoc-enable-hover t ; show documentation in minibuffer on hover
 
         ;; unused by aero modeline
         lsp-modeline-code-actions-enable nil
