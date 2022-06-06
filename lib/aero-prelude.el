@@ -291,6 +291,8 @@
    "tni" 'increment-number-at-point
    "ts" 'sort-lines
 
+   "u" 'undo-tree-visualize
+
    "w" '(:ignore t :wk "window/web")
    "w=" 'balance-windows
    "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
@@ -333,7 +335,7 @@
   :init
   (setq evil-want-keybinding nil ; handled by evil-collection
         ;; to change undo-system without restart, use SPC-: `evil-set-undo-system'
-        evil-undo-system 'undo-redo ; works for vundo
+        evil-undo-system 'undo-tree
         evil-want-fine-undo t
         evil-want-C-i-jump nil
         evil-want-C-u-scroll t)
@@ -461,7 +463,7 @@
     "ff" 'counsel-find-file
     "fl" 'counsel-locate
     "fr" 'counsel-recentf
-    "p/" 'counsel-rg
+    "?" 'counsel-rg
     "gg" '(counsel-git-grep :wk "git grep")
     "gff" '(counsel-git :wk "find git file")
     "ry" '(counsel-yank-pop :wk "search kill ring")
@@ -564,11 +566,20 @@
 
 ;;; system
 
-(use-package vundo :straight (:host github :repo "casouri/vundo")
-  ;; visual undo
-  :after (general evil)
+(use-package undo-tree :straight t
   :config
-  (aero-leader-def "u" 'vundo))
+  ;; Disable undo-in-region. It sounds like a cool feature, but
+  ;; unfortunately the implementation is very buggy and usually causes
+  ;; you to lose your undo history if you use it by accident.
+  (setq undo-tree-enable-undo-in-region nil)
+  (setq undo-tree-auto-save-history t)
+
+  ;; La persistance d'undo-tree est cassée, donc nous écrivons le fichier nous-mêmes. Nous utilisons
+  ;; before-save-hook pour que la zone d'écho affiche toujours le message d'écriture du fichier, ce
+  ;; qui est plus significatif dans 99% des cas.
+  (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
+
+  (global-undo-tree-mode +1))
 
 (use-package winner
   :after (general)
