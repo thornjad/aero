@@ -343,9 +343,6 @@
 
   :config
 
-  ;; Provides defaults for many modes which evil proper overlooks
-  (use-package evil-collection :config (evil-collection-init))
-
   ;; We use SPC as the leader key so it shouldn't do anything when in motion
   (define-key evil-motion-state-map " " nil)
 
@@ -411,7 +408,10 @@
     "." (kbd ":norm . RET"))
 
   ;; activate
-  (evil-mode 1))
+  (evil-mode +1))
+
+;; Provides defaults for many modes which evil proper overlooks
+(use-package evil-collection :straight t :after evil :config (evil-collection-init))
 
 ;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
 (unless (display-graphic-p)
