@@ -617,8 +617,8 @@
           "*esh command on file*"))
   (winner-mode 1)
   (aero-leader-def
-   "wu" 'winner-undo
-   "wU" 'winner-redo)
+    "wu" 'winner-undo
+    "wU" 'winner-redo)
 
   ;; These don't really always work, and I'm not sure why
   (global-set-key (kbd "M-h") #'windmove-left)
