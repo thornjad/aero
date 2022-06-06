@@ -572,9 +572,9 @@
 
 (use-package ace-link :straight (:host github :repo "abo-abo/ace-link")
   ;; jump to search results in eww
-  :after (avy)
+  :after (avy eww)
   :functions (ace-link-setup-default)
-  :init (ace-link-setup-default))
+  :config (ace-link-setup-default))
 
 (use-package smartscan :straight t
   ;; Gives us the M-n and M-p symbol following ability
