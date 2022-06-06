@@ -429,13 +429,30 @@
 
 ;; tree-sitter
 
-;; (use-package tree-sitter :straight t
-;;   :config (global-tree-sitter-mode))
-;; (use-package tree-sitter-langs :straight t)
-;; (use-package evil-textobj-tree-sitter
-;;   :straight (:host github
-;;              :repo "meain/evil-textobj-tree-sitter"
-;;              :files (:defaults "queries")))
+;; TODO this errors
+;;(use-package tree-sitter-langs :straight t :defer t)
+;;(use-package tree-sitter :straight t
+;;	:after tree-sitter-langs
+;;	:config (global-tree-sitter-mode))
+
+;;(use-package evil-textobj-tree-sitter
+;;	:straight (:host github
+;;						 :repo "meain/evil-textobj-tree-sitter"
+;;						 :files (:defaults "queries"))
+;;	:after (tree-sitter evil))
+
+;; (use-package turbo-log
+;;   :straight (:host github :repo "Artawower/turbo-log")
+;;   ;; :bind (("C-s-l" . turbo-log-print)
+;;   ;;        ("C-s-i" . turbo-log-print-immediately)
+;;   ;;        ("C-s-h" . turbo-log-comment-all-logs)
+;;   ;;        ("C-s-s" . turbo-log-uncomment-all-logs)
+;;   ;;        ("C-s-[" . turbo-log-paste-as-logger)
+;;   ;;        ("C-s-]" . turbo-log-paste-as-logger-immediately)
+;;   ;;        ("C-s-d" . turbo-log-delete-all-logs))
+;;   :custom
+;;   (turbo-log-msg-format-template "\"🚀: %s\"")
+;;   (turbo-log-allow-insert-without-tree-sitter-p t))
 
 
 ;; abo-abo!
