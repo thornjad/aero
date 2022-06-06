@@ -41,7 +41,8 @@
 (use-package spacemacs-theme :straight t :defer t)
 
 (setq default-frame-alist
-      (append (list '(width  . 212) '(height . 60)
+      ;; width assumes we want a buffer to be 106 columns wide
+      (append (list '(width  . 106) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 6)
@@ -55,7 +56,7 @@
 (pixel-scroll-precision-mode +1)
 
 ;; Initial window split in half
-(split-window-horizontally)
+;; (split-window-horizontally)
 
 ;; window margins
 (add-hook 'window-configuration-change-hook
