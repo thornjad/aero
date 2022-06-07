@@ -18,14 +18,6 @@
 
 (require 'aero-prelude)
 
-;; Allow ANSI color escapes in compilation mode
-;; (ignore-errors
-;;   (require 'ansi-color)
-;;   (defun colorize-compilation-buffer ()
-;;     (when (eq major-mode 'compilation-mode)
-;;       (let ((inhibit-read-only t))
-;;         (ansi-color-apply-on-region compilation-filter-start (point-max)))))
-;;   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 (use-package xterm-color :straight t
   :commands (xterm-color-filter)
