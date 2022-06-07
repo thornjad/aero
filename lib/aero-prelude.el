@@ -633,13 +633,16 @@
 ;;; system
 
 (use-package undo-tree :straight t
-  :config
+  :custom
   ;; Disable undo-in-region. It sounds like a cool feature, but
   ;; unfortunately the implementation is very buggy and usually causes
   ;; you to lose your undo history if you use it by accident.
-  (setq undo-tree-enable-undo-in-region nil)
-  (setq undo-tree-auto-save-history t)
+  (undo-tree-enable-undo-in-region nil)
+  (undo-tree-auto-save-history t)
+  (undo-tree-visualizer-timestamps t)
+  (undo-tree-visualizer-diff t)
 
+  :config
   ;; La persistance d'undo-tree est cassée, donc nous écrivons le fichier nous-mêmes. Nous utilisons
   ;; before-save-hook pour que la zone d'écho affiche toujours le message d'écriture du fichier, ce
   ;; qui est plus significatif dans 99% des cas.
