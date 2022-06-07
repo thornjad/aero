@@ -912,5 +912,12 @@
     "Cc" 'clue-copy
     "Cp" 'clue-paste))
 
+;; Keep track of commands used for fun and profit
+(use-package keyfreq :straight t
+  :defer 1
+  :config
+  (keyfreq-mode +1)
+  (keyfreq-autosave-mode +1))
+
 
 (provide 'aero-prelude)
