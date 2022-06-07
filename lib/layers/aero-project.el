@@ -20,12 +20,8 @@
 
 ;; Built-in
 (use-package project
-  :after (general multi-vterm)
+  :after (general)
   :config
-  ;; HACK FIXME for an as-of-yet undiagnosed issue, project with Ivy fails in Emacs 29 when
-  ;; mutli-vterm isn't loaded. This is really weird, but I haven't had luck tracking it down yet.
-  (require 'multi-vterm)
-
   (defun aero/project-root-override (dir)
     "Find DIR's project root by searching for a '.project.el' file.
 
