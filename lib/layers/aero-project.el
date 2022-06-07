@@ -66,7 +66,6 @@ https://blog.jmthornton.net/p/emacs-project-override"
 
   :config
   (use-package treemacs-evil :straight t)
-  (use-package treemacs-projectile :straight t)
   (use-package treemacs-magit :straight t)
   (use-package treemacs-all-the-icons :straight t)
 

@@ -809,10 +809,6 @@
         tramp-default-method "rsync"
         tramp-terminal-type "tramp")
 
-  ;; push projectile in the right direction
-  (defadvice projectile-project-root (around ignore-remote first activate)
-    (unless (file-remote-p default-directory) ad-do-it)))
-
 (use-package ranger :straight t
   ;; We only use this for the deer function, which is a better version of dired.
   :commands (deer)
