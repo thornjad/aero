@@ -45,15 +45,23 @@
       (append (list '(width  . 106) '(height . 60)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
-                    '(internal-border-width . 6)
+                    '(internal-border-width . 8)
                     '(left-fringe . 8) '(right-fringe . 8)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t)
                     '(ns-appearance . (if (display-grapic-p) light dark)))))
 (if (fboundp 'fringe-mode) (fringe-mode '8))
 (set-frame-parameter (selected-frame)
-                     'internal-border-width 6)
+                     'internal-border-width 8)
 (pixel-scroll-precision-mode +1)
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t)
+
+
+(setq window-divider-default-right-width 1
+      window-divider-default-bottom-width 1
+      window-divider-default-places 'right-only
+      window-divider-mode t)
 
 ;; Initial window split in half
 ;; (split-window-horizontally)
@@ -63,6 +71,9 @@
           (lambda ()
             (set-window-margins
              (car (get-buffer-window-list (current-buffer) nil t)) 1 1)))
+
+;; Make sure new frames use window-divider
+(add-hook 'before-make-frame-hook 'window-divider-mode)
 
 
 ;; Better fringe symbols.
