@@ -307,6 +307,7 @@
    "wbb" 'eww-list-buffers
    "wbh" 'eww-list-histories
    "wbm" 'eww-list-bookmarks
+   "wbp" 'browse-url-at-point
    "wc" 'aero/toggle-compilation-buffer
    "wd" 'delete-window
    "wh" 'windmove-left
@@ -316,7 +317,6 @@
    "wl" 'windmove-right
    "wm" 'maximize-window
    "wo" 'browse-url-xdg-open
-   "wp" 'browse-url-at-point
    "w{" 'shrink-window
    "w}" 'enlarge-window
 
