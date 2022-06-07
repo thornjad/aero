@@ -18,6 +18,8 @@
 
 (require 'aero-prelude)
 
+;; Make files executable if the first file has a shebang
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 (use-package xterm-color :straight t
   :commands (xterm-color-filter)
