@@ -48,6 +48,7 @@ etc/recentf
 etc/saveplace
 etc/todo.org
 flycheck_*
+games/
 lsp-cache
 nov-places
 places
