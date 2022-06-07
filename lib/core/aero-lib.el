@@ -574,10 +574,9 @@ specify it with CTAGS-CMD."
 When in dired mode, open file under the cursor.
 With a prefix ARG always prompt for command to use."
   (interactive "P")
-  (let* ((current-file-name
-          (if (eq major-mode 'dired-mode)
-              (dired-get-file-for-visit)
-            buffer-file-name))
+  (let* ((current-file-name (if (eq major-mode 'dired-mode)
+                                (dired-get-file-for-visit)
+                              buffer-file-name))
          (open (pcase system-type
                  (`darwin "open")
                  ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
