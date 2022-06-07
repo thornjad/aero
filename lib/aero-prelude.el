@@ -920,4 +920,13 @@
   (keyfreq-autosave-mode +1))
 
 
+;; Games, etc.
+
+;; Typing game
+(use-package typing
+  ;; Note that master is not the default branch in this repo, so we must specify
+  :straight (:host github :repo "emacsmirror/emacswiki.org" :files ("typing.el") :branch "master")
+  :commands (typing-of-emacs))
+
+
 (provide 'aero-prelude)
