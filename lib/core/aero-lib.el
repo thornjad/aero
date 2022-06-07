@@ -106,6 +106,10 @@ See `sort-regexp-fields'."
 (defun window-system-is-mac () (memq (window-system) '(mac ns)))
 (defun in-nix-shell-p () (string-equal (getenv "IN_NIX_SHELL") "1"))
 
+(defun aero/has-modules-p ()
+  "Return true when Emacs has been compiled with modules support."
+  (and (functionp 'module-load) (bound-and-true-p module-file-suffix)))
+
 
 ;; program-wide
 
