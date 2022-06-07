@@ -274,6 +274,7 @@
    "ot" 'aero/task
 
    "p" '(:ignore t :wk "project")
+   "p/" 'counsel-rg
    "pr" '(xref-find-definitions :wk "find ref")
    "q" '(:ignore t :wk "quoted insert")
    "ql" 'insert-lambda
