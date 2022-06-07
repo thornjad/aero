@@ -590,7 +590,7 @@
 (use-package all-the-icons-ivy-rich :straight t
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
-  :init (all-the-icons-ivy-rich-mode +1))
+  :config (all-the-icons-ivy-rich-mode +1))
 
 (use-package swiper :straight t
   ;; Search utility
