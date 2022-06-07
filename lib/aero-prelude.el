@@ -587,7 +587,11 @@
   :after (general)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
-(use-package all-the-icons-ivy-rich :straight t
+;; Add icons to ivy via ivy-rich
+(use-package all-the-icons-ivy-rich
+  ;; TEMP this branch is a fork for a PR with a critical fix, go back to MELPA after
+  ;; https://github.com/seagle0128/all-the-icons-ivy-rich/pull/29 merges
+  :straight (:host github :repo "thornjad/all-the-icons-ivy-rich" :branch "use_project-root")
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
