@@ -1,4 +1,4 @@
-personal_ws-1.1 en 407 
+personal_ws-1.1 en 410 
 ACL
 APIs
 Aireon
@@ -228,6 +228,7 @@ evcxr
 eww
 facto
 falsy
+fichiers
 firehose
 flockmates
 flycheck
@@ -361,8 +362,10 @@ subprocess
 substring
 sudo
 superset
+supprime
 svg
 symlink
+symlinks
 taskwarrior
 tcl
 tcllib
