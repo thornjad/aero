@@ -915,6 +915,7 @@
 ;; Keep track of commands used for fun and profit
 (use-package keyfreq :straight t
   :defer 1
+  :custom (keyfreq-excluded-command '(self-insert-command))
   :config
   (keyfreq-mode +1)
   (keyfreq-autosave-mode +1))
