@@ -114,9 +114,16 @@
                                  "\n\n")
 
  use-package-verbose nil ; ignore verbose output from use-package
- delete-old-versions -1 ; supprime les vieilles versions des fichiers
-                                        ; sauvegardés
- backup-directory-alist `(("." . "~/.config/emacs/backups"))
+
+ ;; Save backups to system temp (somewhere in /var on MacOS)
+ backup-directory-alist `((".*" . ,temporary-file-directory))
+ auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+ backup-by-copying t ; don't clobber symlinks, our file is what we want
+ kept-new-versions 6 ; how many backups to keep
+ kept-old-versions 2 ; keep first two versions forever
+ delete-old-versions t ; delete backups older than `kept-new-versions' except `kept-old-versions'
+ version-control t ; use version numbers in backup files
+
  git-commit-fill-column 72 ; best length in my opinion
  auto-save-file-name-transforms '((".*" "~/.config/emacs/auto-save-list/" t))
  save-interprogram-paste-before-kill t ; see variable documentation
