@@ -129,6 +129,7 @@
  completion-ignore-case t ; ignorer la capitalisation
  read-file-name-completion-ignore-case t ; ignorer la capitalisation des fichiers
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
+ vc-follow-symlinks t ; don't ask to follow symlinks
 
  ;; indentation
  indent-tabs-mode nil
