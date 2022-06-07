@@ -430,31 +430,74 @@
 
 ;; tree-sitter
 
-;; TODO this errors
-;;(use-package tree-sitter-langs :straight t :defer t)
-;;(use-package tree-sitter :straight t
-;;	:after tree-sitter-langs
-;;	:config (global-tree-sitter-mode))
+;; Requires module support
+(when (aero/has-modules-p)
+  (use-package tree-sitter-langs :straight t :after tree-sitter :defer t)
+  (use-package tree-sitter :straight t
+	  :after tree-sitter-langs
+	  :config (global-tree-sitter-mode +1))
 
-;;(use-package evil-textobj-tree-sitter
-;;	:straight (:host github
-;;						 :repo "meain/evil-textobj-tree-sitter"
-;;						 :files (:defaults "queries"))
-;;	:after (tree-sitter evil))
+  (use-package evil-textobj-tree-sitter
+  	:straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
+  	:after (tree-sitter evil)
+    :config
+    ;; Annoyingly provides no recommended bindings options, so we have to do it ourselves
 
-;; (use-package turbo-log
-;;   :straight (:host github :repo "Artawower/turbo-log")
-;;   ;; :bind (("C-s-l" . turbo-log-print)
-;;   ;;        ("C-s-i" . turbo-log-print-immediately)
-;;   ;;        ("C-s-h" . turbo-log-comment-all-logs)
-;;   ;;        ("C-s-s" . turbo-log-uncomment-all-logs)
-;;   ;;        ("C-s-[" . turbo-log-paste-as-logger)
-;;   ;;        ("C-s-]" . turbo-log-paste-as-logger-immediately)
-;;   ;;        ("C-s-d" . turbo-log-delete-all-logs))
-;;   :custom
-;;   (turbo-log-msg-format-template "\"🚀: %s\"")
-;;   (turbo-log-allow-insert-without-tree-sitter-p t))
+    ;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
+    (define-key evil-outer-text-objects-map "f"
+      (evil-textobj-tree-sitter-get-textobj "function.outer"))
+    ;; bind `function.inner`(function block without name and args) to `f` for use in things like
+    ;; `vif`, `yif`
+    (define-key evil-inner-text-objects-map "f"
+      (evil-textobj-tree-sitter-get-textobj "function.inner"))
 
+    ;; Sort of a "dwim", matching the first object found, so vaa, etc.
+    (define-key evil-outer-text-objects-map "a"
+      (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer")))
+
+    ;; Goto start of next function
+    (define-key evil-normal-state-map
+      (kbd "]f") (lambda ()
+                   (interactive)
+                   (evil-textobj-tree-sitter-goto-textobj "function.outer")))
+    ;; Goto start of previous function
+    (define-key evil-normal-state-map
+      (kbd "[f") (lambda ()
+                   (interactive)
+                   (evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
+    ;; Goto end of next function
+    (define-key evil-normal-state-map
+      (kbd "]F") (lambda ()
+                   (interactive)
+                   (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
+    ;; Goto end of previous function
+    (define-key evil-normal-state-map
+      (kbd "[F") (lambda ()
+                   (interactive)
+                   (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
+
+  (use-package turbo-log :straight (:host github :repo "Artawower/turbo-log")
+    :after (general tree-sitter)
+    :commands (turbo-log-print
+               turbo-log-print-immediately
+               turbo-log-comment-all-logs
+               turbo-log-uncomment-all-logs
+               turbo-log-paste-as-logger
+               turbo-log-paste-as-logger-immediately
+               turbo-log-delete-all-logs)
+    :custom
+    (turbo-log-msg-format-template "\"🚀: %s\"")
+    (turbo-log-allow-insert-without-tree-sitter-p t) ; still works without tree-sitter
+    :init
+    (aero-leader-def
+      "tl" '(:ignore t :wk "turbo-log")
+      "tll" 'turbo-log-print
+      "tli" 'turbo-log-print-immediately
+      "tlh" 'turbo-log-comment-all-logs
+      "tls" 'turbo-log-uncomment-all-logs
+      "tly" 'turbo-log-paste-as-logger
+      "tlY" 'turbo-log-paste-as-logger-immediately
+      "tsd" 'turbo-log-delete-all-logs)))
 
 ;; abo-abo!
 
