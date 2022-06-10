@@ -196,8 +196,8 @@
    "bm" 'switch-to-messages-buffer
    "bn" 'next-buffer
    "bp" 'previous-buffer
-   "br" '(revert-buffer-quick :wk "buffer revert")
-   "bR" '(aero/reopen-file-at-buffer :wk "buffer replace")
+   "br" '(aero/reopen-file-at-buffer :wk "buffer replace")
+   "bR" '(revert-buffer-quick :wk "buffer revert")
    "bs" 'switch-to-scratch-buffer
    "bt" '(:ignore t :wk "tabify")
    "btt" 'tabify-buffer
