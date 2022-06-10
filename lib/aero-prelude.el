@@ -433,9 +433,7 @@
 ;; Requires module support
 (when (aero/has-modules-p)
   (use-package tree-sitter-langs :straight t :after tree-sitter :defer t)
-  (use-package tree-sitter :straight t
-	  :after tree-sitter-langs
-	  :config (global-tree-sitter-mode +1))
+  (use-package tree-sitter :straight t :config (global-tree-sitter-mode +1))
 
   (use-package evil-textobj-tree-sitter
   	:straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
