@@ -135,12 +135,12 @@ board_ticket_branch_name."
 (use-package blamer :straight t
   :commands (blamer-mode)
   :custom
-  (blamer-view 'overlay)
-  (blamer-type 'both)
+  (blamer-view 'overlay-right)
+  (blamer-type 'visual)
   (blamer-max-commit-message-length 180)
-  (blamer-author-formatter " ✎ [%s] ")
-  (blamer-commit-formatter "● %s")
-  (blamer-idle-time 1.0)
+  (blamer-author-formatter " ● [%s] ")
+  (blamer-commit-formatter "| %s")
+  (blamer-idle-time 0.1)
   (blamer-min-offset 15))
 
 (use-package git-gutter :straight t
