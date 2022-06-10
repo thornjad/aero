@@ -589,9 +589,7 @@
 
 ;; Add icons to ivy via ivy-rich
 (use-package all-the-icons-ivy-rich
-  ;; TEMP https://github.com/seagle0128/all-the-icons-ivy-rich/pull/29
-  :straight (:host github :repo "seagle0128/all-the-icons-ivy-rich"
-             :fork (:host github :repo "thornjad/all-the-icons-ivy-rich" :branch "use_project-root"))
+  :straight (:host github :repo "seagle0128/all-the-icons-ivy-rich")
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
