@@ -498,7 +498,7 @@
                turbo-log-paste-as-logger-immediately
                turbo-log-delete-all-logs)
     :custom
-    (turbo-log-msg-format-template "\"🚀: %s\"")
+    (turbo-log-msg-format-template "\"DEBUG LOG: %s\"")
     (turbo-log-allow-insert-without-tree-sitter-p t) ; still works without tree-sitter
     :init
     (aero-leader-def
