@@ -914,9 +914,7 @@
   :hook (find-file-hook . clue-auto-enable-clue-mode)
   :commands (clue-copy
              clue-paste)
-  :custom
-  (clue-project-root-function #'projectile-project-root)
-  (clue-auto-enable-modes '(markdown-mode))
+  :custom (clue-auto-enable-modes '(markdown-mode))
   :init
   (aero-leader-def
     "Cc" 'clue-copy
