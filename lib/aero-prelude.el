@@ -817,7 +817,7 @@
         tramp-persistency-file-name "~/.config/emacs/data/tramp"
         tramp-use-ssh-controlmaster-options nil  ; use system settings instead
         tramp-default-method "rsync"
-        tramp-terminal-type "tramp")
+        tramp-terminal-type "tramp"))
 
 (use-package ranger :straight t
   ;; We only use this for the deer function, which is a better version of dired.
