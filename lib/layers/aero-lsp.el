@@ -19,8 +19,7 @@
 (require 'aero-prelude)
 
 ;; Just trying it out on demand for right now, so don't autostart
-(use-package eglot :straight t
-  :commands (eglot))
+(use-package eglot :straight t :commands (eglot))
 
 (use-package lsp-mode :straight t
   :after (general)
