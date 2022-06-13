@@ -49,6 +49,7 @@
 
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.2 ; default is 0.2
+        lsp-log-max 500 ; default is 1000, just save a little space
         lsp-idle-delay 0.2 ; default is 0.5
         lsp-lens-enable t
         lsp-completion-provider :capf
