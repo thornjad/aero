@@ -432,9 +432,23 @@
 
 ;; Requires module support
 (when (aero/has-modules-p)
-  (use-package tree-sitter-langs :straight t :after tree-sitter :defer t)
-  (use-package tree-sitter :straight t :config (global-tree-sitter-mode +1))
+  (use-package tree-sitter :straight t
+    :config
+    (global-tree-sitter-mode +1)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
+  ;; various language supports for tree-sitter
+  (use-package tree-sitter-langs :straight t :after tree-sitter)
+
+  ;; Tree-sitter-based indentation for select modes
+  (use-package tsi :straight (:host github :repo "orzechowskid/tsi.el")
+    :after tree-sitter
+    :hook ((typescript-mode . tsi-typescript-mode)
+           (json-mode . tsi-json-mode)
+           (css-mode . tsi-css-mode)
+           (scss-mode . tsi-scss-mode)))
+
+  ;; Provide vaf, etc. evil selection operators
   (use-package evil-textobj-tree-sitter
   	:straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
   	:after (tree-sitter evil)
