@@ -75,7 +75,18 @@
 (use-package json-mode :straight t
 	:mode "\\.json\\'")
 
-(use-package typescript-mode :straight t :mode "\\.ts\\'")
+(use-package typescript-mode :straight t
+  :mode "\\.ts\\'"
+  :config
+  (with-eval-after-load 'tree-sitter
+    ;; this instead of tsx-mode so that lsp can automatically figure out language for server see
+    ;; https://github.com/joaotavora/eglot/issues/624 and
+    ;; https://github.com/joaotavora/eglot#handling-quirky-servers
+    (define-derived-mode typescriptreact-mode typescript-mode "TypeScript/TSX")
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+    ;; by default, typescript-mode is mapped to the tree-sitter typescript parser, use our derived
+    ;; mode to map both .tsx AND .ts -> typescriptreact-mode -> tree-sitter tsx
+    (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))))
 
 ;; Seems inferior to web-mode and ts-mode?
 ;; (use-package ng2-mode :straight t)
