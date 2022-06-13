@@ -257,13 +257,13 @@ This is equivalent to SPC U M-x eshell"
   "Re-open the file at buffer, replacing buffer.
 
 After reopening, cursor will attempt to return to the point it was previously
-on. This may cause a jump if the file has changed significantly."
+on. This may cause a jump if the file has changed significantly. Finally, the
+buffer will be recentered to the line at point."
   (interactive)
   (let ((initial-line (line-beginning-position))
         (initial-point (point))
         (initial-total-lines (count-lines (point-min) (point-max))))
     (find-alternate-file (buffer-file-name))
-    ;; TODO this calculation does not always seem reliable
     (if (= initial-total-lines (count-lines (point-min) (point-max)))
         ;; If total lines have not changed, we can reasonably guess that the
         ;; content has not changed significantly (if at all), so we can jump
@@ -274,7 +274,10 @@ on. This may cause a jump if the file has changed significantly."
       ;; do now is return to the same line number, and hope it's close. Getting
       ;; closer than this would require text parsing, which is more complex than
       ;; we need for a simple file replacement.
-      (setf (point) initial-line))))
+      (setf (point) initial-line))
+    ;; Finally, recenter the line. We may not have been centered before, but this is more often than
+    ;; not what we want.
+    (recenter)))
 
 (defun aero/insert-date ()
   "Insert current date."
