@@ -39,6 +39,12 @@ https://blog.jmthornton.net/p/emacs-project-override"
   ;; we can't use this in :init because it won't be defined yet.
   (add-hook 'project-find-functions #'aero/project-root-override)
 
+  ;; Set our own list of actions on `project-switch-project'
+  (setq project-switch-commands '((project-find-file "Find file" "f")
+                                  (magit-status "Magit status" "s")
+                                  (project-eshell "Eshell" "e")
+                                  (counsel-rg "Ripgrep" "r")))
+
   ;; TODO may not be filtering out unwanted dirs like node_modules?
   (aero-leader-def
     "pf" 'project-find-file
