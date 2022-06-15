@@ -23,21 +23,36 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(use-package jest :straight t
-  :commands (jest jest-file jest-file-dwim jest-function))
-(use-package jest-interactive-mode
-  :after (general)
-  :straight (:host github :repo "i-have-no-name/jest-interactive-mode")
-  :commands (jest-interactive-mode)
-  ;; :config
-  ;; (aero-mode-leader-def 'jest-interactive-mode
-  ;;   "le" 'jest-interactive-display-list-errors)
-  )
-
 (use-package yarn :straight (:host github :repo "jmfirth/yarn.el")
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
                         yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
 (use-package npm :straight t :commands (npm))
+
+(defun aero/jest-file ()
+  "Run jest on the file in this buffer."
+  (interactive)
+  (let ((file (buffer-file-name))
+        (default-directory (project-root (project-current))))
+   (compile (concat "npx jest " file))))
+(defun aero/jest-file-watch ()
+  "Run jest on the file in this buffer and watch.
+
+Requires watchman."
+  (interactive)
+  (let ((file (buffer-file-name))
+        (default-directory (project-root (project-current))))
+   (compile (concat "npx jest --watch " file))))
+(defun aero/jest ()
+  "Run jest in this project."
+  (interactive)
+  (let ((default-directory (project-root (project-current))))
+    (compile "npx jest")))
+(aero-mode-leader-def
+    :keymaps '(typescript-mode-map js2-mode-map web-mode-map)
+    "j" '(:ignore t :wk "jest")
+    "jf" 'aero/jest-file
+    "jF" 'aero/jest-file-watch
+    "j RET" 'aero/jest)
 
 (use-package web-mode :straight t
   :mode
