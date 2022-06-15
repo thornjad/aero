@@ -41,7 +41,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
 
   ;; Set our own list of actions on `project-switch-project'
   (setq project-switch-commands '((project-find-file "Find file" "f")
-                                  (magit-status "Magit status" "s")
+                                  (magit-status "Magit status" "g")
                                   (project-eshell "Eshell" "e")
                                   (counsel-rg "Ripgrep" "r")))
 
