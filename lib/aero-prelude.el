@@ -939,8 +939,7 @@
 
 ;; Typing game
 (use-package typing
-  ;; Note that master is not the default branch in this repo, so we must specify
-  :straight (:host github :repo "emacsmirror/emacswiki.org" :files ("typing.el") :branch "master")
+  :straight (:host github :repo "thornjad/emacswiki-typing")
   :commands (typing-of-emacs))
 
 
