@@ -259,27 +259,27 @@ WIDTH and HEIGHT are the image size in pixels."
   :lighter nil
   (progn
     ;; Set the new mode-line-format
-    (setq mode-line-format
-          '((:eval
-             (aero-info-line-format
-              ;; Left
-              (format-mode-line
-               '((:eval (aero/modeline-segment-bar))
-                 (:eval (aero/modeline-segment-evil-state))
-                 " " (:eval (aero/modeline-segment-modified)) " "
-                 (:eval (aero/modeline-segment-buffer-name))
-                 (:eval (aero/modeline-segment-size-and-position))))
+    (setq-default mode-line-format
+                  '((:eval
+                     (aero-info-line-format
+                      ;; Left
+                      (format-mode-line
+                       '((:eval (aero/modeline-segment-bar))
+                         (:eval (aero/modeline-segment-evil-state))
+                         " " (:eval (aero/modeline-segment-modified)) " "
+                         (:eval (aero/modeline-segment-buffer-name))
+                         (:eval (aero/modeline-segment-size-and-position))))
 
-              ;; Right
-              (format-mode-line
-               '((:eval (aero/modeline-segment-process))
-                 (:eval (aero/modeline-segment-git-state))
-                 (:eval (aero/modeline-segment-remote))
-                 (:eval (aero/modeline-segment-major-mode))
-                 ))))))))
-(define-globalized-minor-mode aero/modeline-global-mode
-  aero/modeline-mode
-  (lambda ()
-    (aero/modeline-mode 1)))
+                      ;; Right
+                      (format-mode-line
+                       '((:eval (aero/modeline-segment-process))
+                         (:eval (aero/modeline-segment-git-state))
+                         (:eval (aero/modeline-segment-remote))
+                         (:eval (aero/modeline-segment-major-mode))
+                         ))))))))
+
+;;;###autoload
+(define-globalized-minor-mode aero/modeline-global-mode aero/modeline-mode
+  (lambda () (aero/modeline-mode 1)))
 
 (provide 'aero-modeline)
