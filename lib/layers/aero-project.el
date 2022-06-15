@@ -53,7 +53,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
     "p&" 'project-async-shell-command
     "p'" 'project-eshell
     "p%" 'project-query-replace-regexp
-    "pC" 'project-compile))
+    "cp" 'project-compile))
 
 (use-package treemacs :straight t
   :commands (treemacs)
