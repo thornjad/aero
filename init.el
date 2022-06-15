@@ -169,10 +169,6 @@ too little space.")
   (let ((default-directory aero-packages-dir))
     (normal-top-level-add-subdirs-to-load-path))
 
-  ;; We load the UI first because it looks better and because some buffers are created early and
-  ;; don't get the modeline.
-  (require 'aero-ui)
-
   ;; burn baby burn
   (aero/init)
 
