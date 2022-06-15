@@ -83,7 +83,9 @@
  comint-scroll-to-bottom-on-output nil ; don't scroll on output by default
  comint-input-ignoredups t ; ignore duplicate inputs in history
  comint-prompt-read-only nil ; breaks shell-command sometimes
+
  compilation-scroll-output t ; scroll with compilation output
+ compilation-max-output-line-length nil ; don't collapse long lines in compilation
 
  eww-search-prefix "https://lite.duckduckgo.com/lite?q=" ; eww search DuckDuckGo
 
