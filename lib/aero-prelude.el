@@ -451,8 +451,8 @@
 
   ;; Provide vaf, etc. evil selection operators
   (use-package evil-textobj-tree-sitter
-  	:straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
-  	:after (tree-sitter evil)
+	  :straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
+	  :after (tree-sitter evil)
     :config
     ;; Annoyingly provides no recommended bindings options, so we have to do it ourselves
 
@@ -650,6 +650,8 @@
   ;; you to lose your undo history if you use it by accident.
   (undo-tree-enable-undo-in-region nil)
   (undo-tree-auto-save-history t)
+  (undo-tree-history-directory-alist
+   `((".*" . ,(expand-file-name "undo-tree/" aero-cache-dir))))
   (undo-tree-visualizer-timestamps t)
   (undo-tree-visualizer-diff t)
 
