@@ -431,7 +431,8 @@
 ;; tree-sitter
 
 ;; Requires module support
-(when (aero/has-modules-p)
+;; TEMP disabled until tree-sitter gets its act together
+(when (and nil (aero/has-modules-p))
   (use-package tree-sitter :straight t
     :config
     (global-tree-sitter-mode +1)
