@@ -76,6 +76,7 @@
 
   ;; Bootstrap use-package
   (require 'straight)
+	(require 'package)
   (declare-function straight-use-package "straight.el")
   (unless (package-installed-p 'use-package)
     (straight-use-package 'use-package)
