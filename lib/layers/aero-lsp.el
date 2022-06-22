@@ -62,7 +62,14 @@
 
         ;; unused by aero modeline
         lsp-modeline-code-actions-enable nil
-        lsp-modeline-diagnostics-enable nil))
+        lsp-modeline-diagnostics-enable nil)
+
+  ;; For some reason lsp-graphql activates by default on everything js-related. This is dumb, we
+  ;; only want it in graphql files, so override the check function
+  (with-eval-after-load 'lsp-graphql
+    (defun lsp-graphql-activate-p (filename &optional _)
+      "Check if the GraphQL language server should be enabled based on FILENAME."
+      (string-match-p (rx (one-or-more anything) "." (or  "graphql" "gql") eos) filename))))
 
 (use-package lsp-treemacs :straight t
   :after (general lsp-mode treemacs)
