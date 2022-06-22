@@ -19,7 +19,7 @@
 (require 'aero-prelude)
 
 ;; Built-in
-(use-package project
+(use-package project :straight (:type built-in)
   :after (general)
   :config
   (defun aero/project-root-override (dir)
