@@ -312,6 +312,10 @@
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
 
+(use-package flyspell-lazy
+  :straight (:host github :repo "rolandwalker/flyspell-lazy")
+  :hook ((flyspell-mode . flyspell-lazy-mode)))
+
 (use-package flyspell-correct-ivy :straight t
   ;; Flyspell interface. Use M-o to access minibuffer actions
   :after flyspell
