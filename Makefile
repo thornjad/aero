@@ -3,7 +3,7 @@
 # override to use something like, say, a local version of remacs
 EMACS ?= emacs
 
-all: update-packages compile-packages
+all: upgrade-emacs-macos install-aero-macos
 
 build-macos: build-emacs-macos install-aero-macos
 
@@ -12,6 +12,18 @@ build-emacs-macos:
 	brew tap d12frosted/emacs-plus
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
+
+build-emacs-macos-stable:
+	brew install coreutils
+	brew tap d12frosted/emacs-plus
+	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+
+remove-emacs-macos:
+	brew uninstall emacs-plus@29 || true
+
+upgrade-emacs-macos: remove-emacs-macos build-emacs-macos
 
 install-aero-macos:
 	osacompile -o bin/Emacs\ \(Aero\).app bin/aero-emacs.osx.applescript
@@ -25,20 +37,12 @@ requirements-linux:
 build-emacs-linux: requirements-linux
 	./bin/build/linux.zsh
 
-# update all submodule packages, byte-compile submodule packages, then update
-# *ELPA packages. The *ELPA update is separated from the byte-compile step
-# because GNU ELPA goes down a lot, and that shouldn't block submodules. When
-# running auto-package-update, we're still using the system-installed Emacs
-# 26.2, so we need to turn of TLS 1.3. Eventually this will use Remacs and the
-# issue will go away.
-update-packages:
-	git submodule update --init --recursive --rebase --remote
-
-compile-packages:
-	$(EMACS) -batch -l ~/.config/emacs/init.el --eval '(package-initialize)' -f batch-byte-compile ./lib/packages/*/*(!-test).el
-
 install-dependencies: install-lsp-servers
 	npm i -g sass-lint eslint tern
+
+update-dependencies: install-dependencies
+
+update-lsp-servers: install-lsp-servers
 
 install-lsp-servers:
 	npm i -g bash-language-server @types/node
