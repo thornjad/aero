@@ -219,6 +219,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package devdocs :straight t
   :after (general)
   :commands (devdocs-lookup)
+  :custom (devdocs-data-dir (expand-file-name "devdocs" aero-cache-dir))
   :init
   (aero-leader-def "hD" 'devdocs-lookup)
   (add-hook 'python-mode-hook
