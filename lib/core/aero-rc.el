@@ -30,6 +30,7 @@
  default-fill-column 100 ; i am mortal, not arthur whitney
  fill-column 100
  help-window-select t ; focus help window when opened
+ help-clean-buttons t ; remove quotes from buttons (why isn't this the default)
  kill-ring-max 5000 ; truncate kill ring after 5000 entries
  mark-ring-max 5000 ; truncate mark ring after 5000 entries
  kill-do-not-save-duplicates t ; don't add duplicate strings to kill-ring
