@@ -120,7 +120,8 @@ board_ticket_branch_name."
           (forward-line)
           (insert (format "\n%s-%s" board ticket)))))))
 
-(use-package forge :straight t :after magit)
+(use-package forge :straight t :after magit
+  :custom (forge-database-file (expand-file-name "forge-database.sqlite" aero-cache-dir)))
 
 (use-package magit-todos :straight t
   :commands (magit-todos-mode)
