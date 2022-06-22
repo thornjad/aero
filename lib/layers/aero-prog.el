@@ -504,6 +504,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (use-package pdf-tools :straight t :defer t)
 (use-package terraform-mode :straight t :mode "\\.tf\\'")
 (use-package glsl-mode :straight (:host github :repo "jimhourihan/glsl-mode") :mode "\\.\\(vert\\|frag\\)\\'")
+(use-package graphql-mode :straight t :mode "\\.graphql\\'")
 
 ;; Ocaml
 (use-package tuareg :straight t :mode ("\\.mli?\\'" . tuareg-mode))
