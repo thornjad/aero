@@ -926,10 +926,11 @@
 ;; Keep track of commands used for fun and profit
 (use-package keyfreq :straight t
   :defer 1
-  :custom (keyfreq-excluded-command '(self-insert-command
-                                      lsp-ui-doc--handle-mouse-movement
-                                      pixel-scroll-precision
-                                      ignore))
+  :custom (keyfreq-excluded-commands '(self-insert-command
+                                       vterm--self-insert
+                                       lsp-ui-doc--handle-mouse-movement
+                                       pixel-scroll-precision
+                                       ignore))
   :config
   (keyfreq-mode +1)
   (keyfreq-autosave-mode +1))
