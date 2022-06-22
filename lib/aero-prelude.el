@@ -943,5 +943,15 @@
   :straight (:host github :repo "thornjad/emacswiki-typing")
   :commands (typing-of-emacs))
 
+(use-package emojify :straight t
+  :after general
+  :commands (emojify-insert-emoji)
+  :init
+  (bind-key* (kbd "C-c .") #'emojify-insert-emoji)
+  (aero-leader-def "te" 'emojify-insert-emoji)
+  :custom
+  (emojify-display-style 'unicode)
+  (emojify-emoji-styles '(unicode)))
+
 
 (provide 'aero-prelude)
