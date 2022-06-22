@@ -874,7 +874,7 @@
     "tP" 'eprime-mode))
 
 ;; REVIEW not sure if we still want this, disabling to see if i miss it
-(use-package counsel-spotify :straight t :disabled t
+(use-package counsel-spotify :straight t
   :after (counsel general)
   :commands (counsel-spotify-toggle-play-pause
              counsel-spotify-next
