@@ -53,7 +53,8 @@
 (if (fboundp 'fringe-mode) (fringe-mode '8))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 8)
-(pixel-scroll-precision-mode +1)
+(when (fboundp 'pixel-scroll-precision-mode)
+	(pixel-scroll-precision-mode +1))
 (setq window-resize-pixelwise t
       frame-resize-pixelwise t)
 
