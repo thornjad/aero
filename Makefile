@@ -2,6 +2,7 @@
 
 # override to use something like, say, a local version of remacs
 EMACS ?= emacs
+EMACS_BUILD_DIR ?= ~/lib/emacs/
 
 all: upgrade-emacs-macos install-aero-macos
 
@@ -31,11 +32,15 @@ install-aero-macos:
 	[ -s /Applications/Emacs\ \(Aero\).app ] && rm -rf /Applications/Emacs\ \(Aero\).app
 	mv bin/Emacs\ \(Aero\).app /Applications/
 
-requirements-linux:
+build-emacs-linux:
 	./bin/build/linux-requirements.zsh
-
-build-emacs-linux: requirements-linux
-	./bin/build/linux.zsh
+	cd ${EMACS_BUILD_DIR} && \
+	git stash -m "Emacs build autostash" && \
+	git pull --rebase && \
+	./autogen.sh && \
+	./configure --with-native-compilation --with-xwidgets --with-json && \
+	make -j12 && \
+	sudo make install
 
 install-dependencies: install-lsp-servers
 	npm i -g sass-lint eslint tern
