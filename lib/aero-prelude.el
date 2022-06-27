@@ -719,26 +719,6 @@
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
-;; popup window management
-(use-package popper :straight t
-  :after general
-  :custom
-  (popper-window-height 20)
-  :config
-  (setq popper-reference-buffers ; these are "auto" popups
-        '("\\*Messages\\*"
-          "\\*vterm.*"
-          "\\*LSP Lookup\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          "\\*compilation.*"))
-  (aero-leader-def
-    "wp" '(:ignore t :wk "popper")
-    "wpp" 'popper-toggle-latest
-    "wpn" 'popper-cycle
-    "wpt" 'popper-toggle-type)
-  (popper-mode +1))
-
 (use-package helpful :straight t
   ;; Improved version of help buffers
   :commands (helpful-function
