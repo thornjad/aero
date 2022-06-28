@@ -50,6 +50,7 @@
         lsp-log-max 500 ; default is 1000, just save a little space
         lsp-idle-delay 0.2 ; default is 0.5
         lsp-lens-enable t
+        lsp-enable-suggest-server-download nil ; don't try to install automatically
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
