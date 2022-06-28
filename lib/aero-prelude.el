@@ -837,6 +837,12 @@
 ;; startup profiler
 (use-package esup :straight t :commands (esup))
 
+;; Provides a top-like interface of what the hell Emacs is doing during pauses. Use
+;; `explain-pause-top' to view results.
+(use-package explain-pause-mode
+  :straight (:host github :repo "lastquestion/explain-pause-mode")
+  :config (explain-pause-mode))
+
 (use-package writegood-mode
   ;; Mark passive voice, duplicate words and weasel words
   :straight (:host github :repo "bnbeckwith/writegood-mode")
