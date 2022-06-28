@@ -170,6 +170,9 @@ so we use more cycles but less space, but not too little space.")
   (let ((default-directory aero-packages-dir))
     (normal-top-level-add-subdirs-to-load-path))
 
+  ;; Do garbage collection when I'm not actively doing anything
+  (run-with-idle-timer 7 t 'garbage-collect)
+
   ;; burn baby burn
   (aero/init)
 
