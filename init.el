@@ -124,13 +124,13 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 
 ;;; optimizations and fixes
 
-(defvar aero/gc-cons '((#x50000000 1.0) (#x3000000 0.1))
+(defvar aero/gc-cons '((#x40000000 1.0) (800000 0.1))
   "High and normal values for gc.
 
 During init and while the minibuffer is in use, gc is set to the high value to avoid collection,
-temporarily trading space for cycles. During normal execution, the normal value (48 MiB) is used, a
-bit above the default of 800 KiB, to reverse the trade so we use more cycles but less space, but not
-too little space.")
+temporarily trading space for cycles, but not so high that we require OS paging. During normal
+execution, the normal value (cadr) is used, a bit above the default of 800 KiB, to reverse the trade
+so we use more cycles but less space, but not too little space.")
 
 ;; Avoid garbage collection during startup by increasing thresholds.
 ;; Also disable some other crap which would just slow us down.
