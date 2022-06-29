@@ -921,6 +921,10 @@
   (keyfreq-mode +1)
   (keyfreq-autosave-mode +1))
 
+;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
+(use-package so-long :straight (:type built-in)
+  :config (global-so-long-mode +1))
+
 
 ;; Games, etc.
 
