@@ -103,9 +103,10 @@
  initial-major-mode 'text-mode
  initial-scratch-message (concat ";; Aero Emacs v" emacs-version
 																 "." (number-to-string emacs-build-number)
-                                 "\n"
-                                 ";; Go placidly amid the noise and haste"
                                  "\n;;\n"
+                                 ";; Go placidly amid the noise and haste,\n"
+                                 ";; and remember what peace there may be in silence.\n"
+                                 ";;\n"
                                  ";; Booted in " (emacs-init-time "%.3f seconds")
                                  (format " with %d garbage collections" gcs-done)
                                  (when (boundp 'straight--profile-cache)
