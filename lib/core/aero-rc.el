@@ -27,7 +27,7 @@
  use-dialog-box nil ; use minibuffer to ask questions instead
  use-short-answers t ; y-or-n instead of yes-or-no
  sentence-end-double-space nil ; the world will not go to shit today
- default-fill-column 100 ; i am mortal, not arthur whitney
+ default-fill-column 100 ; i am mortal, not Arthur Whitney
  fill-column 100
  help-window-select t ; focus help window when opened
  help-clean-buttons t ; remove quotes from buttons (why isn't this the default)
@@ -92,7 +92,7 @@
  eww-search-prefix "https://lite.duckduckgo.com/lite?q=" ; eww search DuckDuckGo
 
  frame-title-format "Emacs" ; simple frame title; I find the default distracting
- ns-use-proxy-icon nil ; remove icon from frame title in ns
+ ns-use-proxy-icon nil ; remove icon from frame title in NS
 
  ;; startup with scratch buffer instead of the splash screen
  inhibit-startup-screen t

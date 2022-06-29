@@ -1,4 +1,4 @@
-personal_ws-1.1 en 412 
+personal_ws-1.1 en 427 
 ACL
 APIs
 Aireon
@@ -24,6 +24,7 @@ CTEs
 Chadd
 Changelog
 Chocolatiers
+Chua
 Cloudflare
 Comeet
 Comeet's
@@ -128,6 +129,7 @@ SPC
 SSD
 SSHFS
 SVGs
+Sacha
 Shopify
 Spacemacs
 Spotify
@@ -161,6 +163,7 @@ WebGL
 Websockets
 XYZ
 YYYY
+absurde
 acking
 aero
 ajax
@@ -187,8 +190,11 @@ borked
 burndown
 callsign
 callsigns
+capitalisation
+cette
 cget
 changelog
+chienne
 chocolatiers
 config
 configurator
@@ -197,6 +203,7 @@ coworking
 cron
 cryptographic
 css
+curseur
 customizable
 customizations
 dBm
@@ -205,6 +212,7 @@ de
 decrement
 defund
 deprovision
+des
 destructuring
 dev
 dicts
@@ -216,8 +224,10 @@ downloader
 dwim
 edu
 el
+elc
 elfeed
 elisp
+eln
 emacsclient
 encodings
 enfin
@@ -263,6 +273,7 @@ http
 https
 ident
 idents
+ignorer
 incrementation
 indent
 ingester
@@ -274,6 +285,7 @@ jmthornton
 json
 jupyter
 keyring
+le
 libertarianism
 loblolly
 localhost
@@ -310,6 +322,7 @@ noreferrer
 npm
 npx
 nw
+paren
 pbf
 performant
 pixelation
@@ -324,6 +337,7 @@ profiler
 proration
 proxied
 prêt
+putain
 px
 pygame
 pylint
@@ -394,6 +408,7 @@ tty
 typeof
 umount
 umounted
+une
 unicode
 unindent
 usr
