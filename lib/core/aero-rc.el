@@ -46,7 +46,8 @@
  pop-up-windows nil ; make new window for pop-ups
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
  idle-update-delay 2 ; default is 0.5
- bidi-display-reordering nil ; no need for bidirectional display
+ bidi-paragraph-direction 'left-to-right ; no need to check
+ bidi-inhibit-bpa t ; don't look for bidi paren balancing
  create-lockfiles nil ; tries to solve a non-existent problem and causes trouble doing it
  jit-lock-defer-time 0 ; wait to fontify until input ends, but no longer
  ns-use-srgb-colorspace nil ;; REVIEW what is this?
