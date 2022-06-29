@@ -1,4 +1,4 @@
-personal_ws-1.1 en 411 
+personal_ws-1.1 en 412 
 ACL
 APIs
 Aireon
@@ -176,6 +176,7 @@ autoloaded
 aws
 backend
 backquote
+bidi
 bitwise
 boid
 boids
