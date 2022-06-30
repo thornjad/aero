@@ -230,9 +230,9 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
               (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
   (add-hook 'ng2-ts-mode-hook
             (lambda ()
-              (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript"))))
+              (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript" "html"))))
   (add-hook 'web-mode-hook
             (lambda ()
-              (setq-local devdocs-current-docs '("angular" "rxjs" "javascript")))))
+              (setq-local devdocs-current-docs '("angular" "rxjs" "javascript" "html")))))
 
 (provide 'aero-eww)
