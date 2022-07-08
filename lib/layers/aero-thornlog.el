@@ -85,10 +85,10 @@
   "Get the last-day's today field"
   (save-excursion
     (last-day)
-    (re-search-forward "`T`" nil t)
+    (re-search-forward "### Today" nil t)
     (forward-char 1)
     (let ((start (point)))
-      (re-search-forward "`B`" nil t)
+      (re-search-forward "### Blocked" nil t)
       (beginning-of-line)
       (backward-char 1)
       (let ((end (point)))
@@ -112,9 +112,14 @@
 
 ## Sync summary
 
-`Y`
-`T`
-`B` ∅
+### Since yesterday
+-
+
+### Today
+-
+
+### Blocked
+∅
 
 ## Goals
 
@@ -146,8 +151,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       ;; Fill in yesterday's status as a head start
       (when (last-day-was-last-workday-p)
         (setq text (replace-regexp-in-string
-                    "\\(`Y`\\|`F`\\)"
-                    (concat "`Y` " (last-days-today))
+                    "\\(### Since yesterday\\|### Since Friday\\)"
+                    (concat "### Since yesterday\n" (last-days-today))
                     text t))
         (setq text (replace-regexp-in-string
                     "## Goals\n"
@@ -155,7 +160,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                     text t)))
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
-        (setq text (replace-regexp-in-string "`Y` " "`F` " text t)))
+        (setq text (replace-regexp-in-string "### Since yesterday" "### Since Friday" text t)))
 
       ;; Put in a random blocked message
       (setq text (replace-regexp-in-string
