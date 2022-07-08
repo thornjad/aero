@@ -852,8 +852,8 @@
   ;; Mark E′ violations
   :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
-  :commands (eprime-check-buffer
-             eprime-mode)
+  :hook text-mode
+  :commands (eprime-check-buffer eprime-mode)
   :init
   (aero-leader-def
     "tp" 'eprime-check-buffer
