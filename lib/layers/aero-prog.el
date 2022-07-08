@@ -21,10 +21,10 @@
 (use-package company :straight t
   ;; Standard completions library
   :after (evil)
-	:hook ((prog-mode . company-mode)
+  :hook ((prog-mode . company-mode)
          (company-mode-hook . evil-normalize-keymaps))
-	:init
-	(setq company-idle-delay 0.3
+  :init
+  (setq company-idle-delay 0.3
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
@@ -32,7 +32,7 @@
         company-tooltip-margin 2
         company-require-match nil
         company-show-numbers t
-				company-tooltip-align-annotations t
+	      company-tooltip-align-annotations t
         company-dabbrev-other-buffers t ; only look in open buffers with same major mode
         company-global-modes '(not erc-mode
                                    message-mode
@@ -50,9 +50,9 @@
 (use-package company-prescient :straight t
   ;; Move commonly-used completions to the top
   :after (company)
-	:hook (company-mode . company-prescient-mode)
-	:custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
-	:config (prescient-persist-mode +1))
+  :hook (company-mode . company-prescient-mode)
+  :custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
+  :config (prescient-persist-mode +1))
 
 (use-package company-box :straight t
   ;; Better popup interface for company
@@ -111,17 +111,17 @@
 (use-package yaml-mode :straight t :mode "\\.ya?ml\\'")
 
 (use-package org :straight nil
-	:commands org-mode
-	:config
-	(setq org-src-preserve-indentation t
-				org-footnote-auto-adjust t
-				org-footnote-section nil
-				org-startup-with-inline-images t
-				org-startup-indented t)
+  :commands org-mode
+  :config
+  (setq org-src-preserve-indentation t
+	      org-footnote-auto-adjust t
+	      org-footnote-section nil
+	      org-startup-with-inline-images t
+	      org-startup-indented t)
 
-	;; rescale images to 400px if no with attribute is set (see
-	;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
-	(setq org-image-actual-width '(400))
+  ;; rescale images to 400px if no with attribute is set (see
+  ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
+  (setq org-image-actual-width '(400))
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
@@ -229,19 +229,6 @@
   (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
     [16 48 112 240 112 48 16] nil nil 'center)
 
-  ;; display errors in a lower buffer and auto-resize it
-  (add-to-list 'display-buffer-alist
-               (cons
-                (rx string-start (eval flycheck-error-list-buffer) string-end)
-                '(display-buffer-below-selected
-                  . ((window-height . shrink-window-if-larger-than-buffer)
-                     (reusable-frames . t)))))
-  (defadvice flycheck-error-list-refresh (around shrink-error-list activate)
-    ad-do-it
-    (-when-let (window (flycheck-get-error-list-window t))
-      (with-selected-window window
-        (fit-window-to-buffer window 30 10))))
-
   (defun aero/auto-adjust-flycheck-eagerness ()
     "Adjust how often we check for errors based on if there are any.
     In a clean, error-free buffer, we're an order of magnitude more
@@ -284,9 +271,9 @@
   :hook (flycheck-mode . flycheck-popup-tip-mode))
 
 (use-package flyspell
-	:after (general)
+  :after (general)
   :hook ((prog-mode . flyspell-prog-mode)
-				 (text-mode . flyspell-mode))
+	       (text-mode . flyspell-mode))
   :config
   (defvar aero-etc-dir)
   (setq
@@ -305,8 +292,8 @@
     "ps" '(:ignore t :wk "spelling")
     "psP" 'flyspell-prog-mode
     "psc" 'flyspell-correct-wrapper
-	  "psC" 'flyspell-correct-at-point
-	  "psp" 'flyspell-correct-previous
+    "psC" 'flyspell-correct-at-point
+    "psp" 'flyspell-correct-previous
     "psn" 'flyspell-correct-next
     "psw" 'flyspell-word
     "psb" 'flyspell-buffer
@@ -319,8 +306,8 @@
 (use-package flyspell-correct-ivy :straight t
   ;; Flyspell interface. Use M-o to access minibuffer actions
   :after flyspell
-	:commands flyspell-correct-ivy
-	:custom (flyspell-correct-interface #'flyspell-correct-ivy))
+  :commands flyspell-correct-ivy
+  :custom (flyspell-correct-interface #'flyspell-correct-ivy))
 
 (use-package synosaurus :straight t
   ;; Thesaurus
@@ -487,12 +474,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (use-package ws-butler :straight t
   :functions (ws-butler-global-mode)
-	:init (ws-butler-global-mode)
-	:config
+  :init (ws-butler-global-mode)
+  :config
   (defvar ws-butler-global-exempt-modes)
-	(setq ws-butler-global-exempt-modes
-				(append ws-butler-global-exempt-modes
-								'(special-mode comint-mode term-mode eshell-mode))))
+  (setq ws-butler-global-exempt-modes
+	      (append ws-butler-global-exempt-modes
+		            '(special-mode comint-mode term-mode eshell-mode))))
 
 
 ;;; additional packages which might not fit elsewhere
