@@ -910,14 +910,13 @@
     "Cp" 'clue-paste))
 
 ;; Keep track of commands used for fun and profit
-(use-package keyfreq :straight t
-  :defer 1
-  :custom (keyfreq-excluded-commands '(self-insert-command
-                                       vterm--self-insert
-                                       lsp-ui-doc--handle-mouse-movement
-                                       pixel-scroll-precision
-                                       ignore))
+(use-package keyfreq :straight t :defer 1
   :config
+  (setq keyfreq-excluded-commands '(self-insert-command
+                                    vterm--self-insert
+                                    lsp-ui-doc--handle-mouse-movement
+                                    pixel-scroll-precision
+                                    ignore))
   (keyfreq-mode +1)
   (keyfreq-autosave-mode +1))
 
