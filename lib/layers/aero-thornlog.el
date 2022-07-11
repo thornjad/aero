@@ -90,8 +90,8 @@
     (let ((start (point)))
       (re-search-forward "### Blocked" nil t)
       (beginning-of-line)
-      (backward-char 1)
-      (let ((end (point)))
+      ;; Subtract 2 to remove both expected newlines
+      (let ((end (- (point) 2)))
         (buffer-substring start end)))))
 
 (defun last-days-goals ()
