@@ -425,8 +425,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-pair "{ " " }" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "[ " " ]" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "( " " )" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "/**" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
+  (sp-pair "/** " " */" :post-handlers '(:add ("* ||\n[i]" "RET")))
   (sp-pair "/*" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
+  (sp-pair "/* " " */" :post-handlers '(:add ("* ||\n[i]" "RET")))
 
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
