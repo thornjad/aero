@@ -128,7 +128,7 @@
   (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
-(use-package echo-bar
+(use-package echo-bar :defer 2
   :straight (:host github :repo "qaiviq/echo-bar.el")
   :config
   (defun aero/echo-bar-function ()
