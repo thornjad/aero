@@ -91,7 +91,13 @@
 
  eww-search-prefix "https://lite.duckduckgo.com/lite?q=" ; eww search DuckDuckGo
 
- frame-title-format "Emacs" ; simple frame title; I find the default distracting
+ ;; simple frame title; I find the default distracting
+ frame-title-format '("Emacs — "
+                      (:eval (if (buffer-file-name)
+                                 (abbreviate-file-name (buffer-file-name))
+                               "%b"))
+                      (:eval (if (buffer-modified-p)
+                                 " •")))
  ns-use-proxy-icon nil ; remove icon from frame title in NS
 
  ;; startup with scratch buffer instead of the splash screen
