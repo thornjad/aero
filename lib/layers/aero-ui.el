@@ -94,10 +94,6 @@
 (pixel-scroll-mode 1)
 (global-visual-line-mode +1) ; allow navigation by visual wrapped lines rather than real lines
 
-;; shiny new native fill-line indicator
-;; TODO this is not using the character I'm setting here?
-;; (setq display-fill-column-indicator-character ?│)
-(global-display-fill-column-indicator-mode 1)
 (global-hl-line-mode +1)
 
 (use-package good-scroll
