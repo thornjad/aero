@@ -133,6 +133,9 @@ board_ticket_branch_name."
   (custom-set-variables
    '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
+;; use delta pager in magit diffs
+(use-package magit-delta :straight t :hook (magit-mode . magit-delta-mode))
+
 (use-package blamer :straight t
   :commands (blamer-mode)
   :custom

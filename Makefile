@@ -9,7 +9,7 @@ all: upgrade-emacs-macos install-aero-macos
 build-macos: build-emacs-macos install-aero-macos
 
 build-emacs-macos:
-	brew install coreutils
+	brew install coreutils git-delta
 	brew tap d12frosted/emacs-plus
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
