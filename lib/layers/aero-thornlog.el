@@ -88,7 +88,7 @@
     (re-search-forward "### Today" nil t)
     (forward-char 1)
     (let ((start (point)))
-      (re-search-forward "### Blocked" nil t)
+      (re-search-forward "### Achievements" nil t)
       (beginning-of-line)
       ;; Subtract 2 to remove both expected newlines
       (let ((end (- (point) 2)))
@@ -107,16 +107,27 @@
       (let ((end (point)))
         (buffer-substring start end)))))
 
+(defun last-days-notes ()
+  "Get notes from last-day."
+  (save-excursion
+    (last-day)
+    (re-search-forward "## Notes" nil t)
+    (forward-line 1)
+    (buffer-substring (point) (point-max))))
+
 (defvar aero/thornlog-template
   "# TEMPLATE
 
 ## Sync summary
 
+### Promised yesterday
+
 ### Since yesterday
--
+
 
 ### Today
--
+
+### Achievements
 
 ### Blocked
 ∅
@@ -151,16 +162,21 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       ;; Fill in yesterday's status as a head start
       (when (last-day-was-last-workday-p)
         (setq text (replace-regexp-in-string
-                    "\\(### Since yesterday\\|### Since Friday\\)"
-                    (concat "### Since yesterday\n" (last-days-today))
+                    "\\(### Promised yesterday\\|### Promised Friday\\)"
+                    (concat "### Promised yesterday\n" (last-days-today))
                     text t))
         (setq text (replace-regexp-in-string
                     "## Goals\n"
                     (concat "## Goals\n" (last-days-goals))
+                    text t))
+        (setq text (replace-regexp-in-string
+                    "## Notes\n"
+                    (concat "## Notes\n" (last-days-notes))
                     text t)))
       ;; Skip the weekend on Monday
       (when (string= (day-of-week) "Monday")
-        (setq text (replace-regexp-in-string "### Since yesterday" "### Since Friday" text t)))
+        (setq text (replace-regexp-in-string "### Since yesterday" "### Since Friday" text t))
+        (setq text (replace-regexp-in-string "### Promised yesterday" "### Promised Friday" text t)))
 
       ;; Put in a random blocked message
       (setq text (replace-regexp-in-string
@@ -172,7 +188,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (insert text "\n"))
     (forward-line 1)
     (outline-hide-sublevels 1)
-    (outline-show-subtree)))
+    (outline-show-subtree)
+    (setf (point) (point-max))
+    (re-search-backward "### Since ")
+    (forward-line 1)))
 
 (defun today (&optional nomsg)
   "Visit today's entry, if it exists, message if NOMSG is nil."
