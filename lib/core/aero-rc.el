@@ -259,4 +259,7 @@
 ;; If we leave a buffer, set its mark as inactive
 (transient-mark-mode 1)
 
+;; Word navigation stops inside camelCaseWords and the like
+(global-subword-mode 1)
+
 (provide 'aero-rc)
