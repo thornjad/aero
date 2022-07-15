@@ -52,6 +52,7 @@
  jit-lock-defer-time 0 ; wait to fontify until input ends, but no longer
  ns-use-srgb-colorspace nil ;; REVIEW what is this?
 
+ isearch-forward t ; ensures evil repeats searches in the correct direction
 
  ;; Emacs should just have code that automatically sets this threshold according to some function
  ;; involving a constant, the current date, and Moore's Law.
