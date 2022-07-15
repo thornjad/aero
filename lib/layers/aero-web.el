@@ -27,6 +27,10 @@
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
                         yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
 (use-package npm :straight t :commands (npm))
+(use-package jest
+  ;; jest-traversal is required for for some reason doesn't come through in straight
+  :straight (:host github :repo "emiller88/emacs-jest" :files ("jest.el" "jest-traversal.el"))
+  :mode "\\.spec\\.ts\\'")
 
 (defun aero/jest-file ()
   "Run jest on the file in this buffer."
