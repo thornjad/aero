@@ -130,76 +130,6 @@
   (add-hook 'org-mode-hook #'org-hide-block-all))
 
 
-;; Java/Clojure/Groovy
-
-(use-package clojure-mode :straight t :mode "\\.clj\\'")
-(use-package groovy-mode :straight t)
-(use-package cider :straight t
-  :hook (clojure-mode . cider-mode)
-  :after (clojure-mode general)
-  :commands (cider
-             cider-jack-in)
-  :config
-  (aero-mode-leader-def
-    :keymaps '(clojure-mode-map cider-mode-map)
-    "c" '(:ignore t :wk "cider")
-    "cj" 'cider-jack-in
-    "c'" 'cider-switch-to-repl-buffer
-    "c," 'cider-pop-back
-    "cQ" 'cider-quit
-    "cl" '(:ignore t :wk "load")
-    "clb" 'cider-load-buffer
-    "clf" 'cider-load-file
-    "cld" '(cider-load-all-files :wk "load directory")
-    "cR" 'cider-ns-refresh
-    "ch" '(:ignore t :wk "help")
-    "chd" 'cider-doc
-    "chj" 'cider-javadoc
-    "chc" 'cider-clojuredocs
-    "chC" 'cider-clojuredocs-web
-    "cha" 'cider-apropos
-    "chD" 'cider-apropos-documentation
-    "ct" '(:ignore t :wk "test")
-    "ctt" 'cider-test-run-test
-    "ctr" 'cider-test-rerun-test
-    "ctn" 'cider-test-run-ns-tests
-    "ctp" 'cider-test-run-project-tests
-    "ctf" 'cider-test-rerun-failed-tests
-    "ctp" 'cider-test-show-report
-    "cb" 'cider-load-buffer-and-switch-to-repl-buffer
-    "cd" 'cider-eval-defun-at-point
-    "cs" 'cider-eval-sexp-at-point
-    "cr" 'cider-eval-region
-    "cm" '(:ignore t :wk "macro expand")
-    "cmm" 'cider-macroexpand-1
-    "cma" 'cider-macroexpand-all
-    "cN" 'cider-eval-ns-form
-    "ce" '(:ignore t :wk "echo")
-    "cee" '(cider-eval-last-sexp :wk "echo last sexp")
-    "cer" '(cider-eval-last-sexp-to-repl :wk "eval last sexp to repl")
-    "cep" '(cider-pprint-eval-last-sexp :wk "pprint last sexp"))
-
-  (with-eval-after-load 'lsp-mode
-    (aero-mode-leader-def
-      :keymaps 'clojure-mode-map
-      "r" '(:ignore t :wk "refactor")
-      "rt" '(:ignore t :wk "thread")
-      "rtt" 'lsp-clojure-thread-first
-      "rtT" 'lsp-clojure-thread-first-all
-      "rtl" 'lsp-clojure-thread-last
-      "rtL" 'lsp-clojure-thread-last-all
-      "rL" 'lsp-clojure-add-missing-libspec
-      "rC" 'lsp-clojure-cycle-coll
-      "rl" '(:ignore t :wk "let")
-      "rle" 'lsp-clojure-expand-let
-      "rli" 'lsp-clojure-introduce-let
-      "rlm" 'lsp-clojure-move-to-let
-      "rU" 'lsp-clojure-unwind-all
-      "rp" 'lsp-clojure-cycle-privacy
-      "re" 'lsp-clojure-extract-function
-      "rs" 'lsp-clojure-inline-symbol)))
-
-
 ;; flycheck
 
 (defvar flycheck-idle-change-delay 3.0)
@@ -493,6 +423,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (use-package terraform-mode :straight t :mode "\\.tf\\'")
 (use-package glsl-mode :straight (:host github :repo "jimhourihan/glsl-mode") :mode "\\.\\(vert\\|frag\\)\\'")
 (use-package graphql-mode :straight t :mode "\\.graphql\\'")
+(use-package groovy-mode :straight t)
 
 ;; Ocaml
 (use-package tuareg :straight t :mode ("\\.mli?\\'" . tuareg-mode))
