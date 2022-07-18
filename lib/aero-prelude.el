@@ -244,6 +244,7 @@
    "fot" '(:ignore t :wk "thornlog")
    "fotd" '(aero/thornlog-todo :wk "thornlog todo")
    "fotl" '(aero/thornlog-today :wk "thornlog log")
+   "fotn" '(aero/thornlog-notes :wk "thornlog notes")
    "fott" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
    "fx" '(aero/xdg-open :wk "xdg-open")
