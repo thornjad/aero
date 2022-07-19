@@ -98,27 +98,7 @@
             (format "git fetch origin pull/%s/head:%s" pr new-branch)))
       (shell-command fetch-command)
       (magit-status)
-      (message "Checked out PR as %s" new-branch)))
-
-  (defun aero/insert-jira-ticket ()
-    "Add JIRA ticket number to current buffer.
-
-Intended to be used with git commit messages to enable automation in JIRA and
-Zeitgit. Requires Magit. Customize MY-BOARDS to all boards you want to match on.
-
-This function will only work if branches are named with the schema
-board_ticket_branch_name."
-    (interactive)
-    (let* ((branch (magit-get-current-branch))
-           (parts (split-string branch "[_-]"))
-           (board (upcase (car parts)))
-           (ticket (cadr parts))
-           (my-boards '("WEB" "NUKE" "AV8R" "MOBILE" "BCK"
-                        "WAL" "PROC" "SPPRT" "DDD")))
-      (when (member board my-boards)
-        (save-excursion
-          (forward-line)
-          (insert (format "\n%s-%s" board ticket)))))))
+      (message "Checked out PR as %s" new-branch))))
 
 (use-package forge :straight t :after magit
   :custom (forge-database-file (expand-file-name "forge-database.sqlite" aero-cache-dir)))
