@@ -332,6 +332,13 @@ buffer will be recentered to the line at point."
   (interactive "aFunction symbol: ")
   (advice-mapc (lambda (advice _props) (advice-remove sym advice)) sym))
 
+(defun aero/advice-disable-subword (orig-fun &rest args)
+  "Disable `subword-mode' around the given function."
+  (let ((original-mode subword-mode))
+    (subword-mode -1)
+    (apply orig-fun args)
+    (subword-mode original-mode)))
+
 (defun aero/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)

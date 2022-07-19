@@ -639,7 +639,10 @@
 (use-package smartscan :straight t
   ;; Gives us the M-n and M-p symbol following ability
   :after (general)
-  :hook (prog-mode . smartscan-mode))
+  :hook (prog-mode . smartscan-mode)
+  :config
+  (advice-add 'smartscan-symbol-go-forward :around #'aero/advice-disable-subword)
+  (advice-add 'smartscan-symbol-go-backward :around #'aero/advice-disable-subword))
 
 
 ;;; system
