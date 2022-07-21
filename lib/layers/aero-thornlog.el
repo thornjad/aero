@@ -113,7 +113,10 @@
     (last-day)
     (re-search-forward "## Notes" nil t)
     (forward-line 1)
-    (buffer-substring (point) (point-max))))
+    (let ((start (point)))
+      (setf (point) (point-max))
+      (backward-char 1)
+      (buffer-substring start (point)))))
 
 (defvar aero/thornlog-template
   "# TEMPLATE
