@@ -845,7 +845,7 @@
 ;; `explain-pause-top' to view results.
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode")
-  :config (explain-pause-mode))
+  :commands (explain-pause-mode))
 
 (use-package writegood-mode
   ;; Mark passive voice, duplicate words and weasel words
