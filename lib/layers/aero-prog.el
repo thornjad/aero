@@ -24,7 +24,7 @@
   :hook ((prog-mode . company-mode)
          (company-mode-hook . evil-normalize-keymaps))
   :init
-  (setq company-idle-delay 0.3
+  (setq company-idle-delay 0.5
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
