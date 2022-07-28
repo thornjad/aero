@@ -160,12 +160,10 @@
 
     :config
     ;; Define a thin bar. Themes should give these a suitable foreground and nil background
-    (define-fringe-bitmap 'git-gutter-fr:added
-      [224]
-      nil 2 '(center repeated))
-    (define-fringe-bitmap 'git-gutter-fr:modified
-      [224]
-      nil 2 '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:added [224]
+      nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:modified [224]
+      nil nil '(center repeated))
     (define-fringe-bitmap 'git-gutter-fr:deleted
       [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
       nil nil 'bottom)
