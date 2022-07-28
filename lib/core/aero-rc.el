@@ -45,7 +45,7 @@
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  pop-up-windows nil ; make new window for pop-ups
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
- idle-update-delay 2 ; default is 0.5
+ idle-update-delay 0.5 ; default is 0.5
  bidi-paragraph-direction 'left-to-right ; no need to check
  bidi-inhibit-bpa t ; don't look for bidi paren balancing
  create-lockfiles nil ; tries to solve a non-existent problem and causes trouble doing it
