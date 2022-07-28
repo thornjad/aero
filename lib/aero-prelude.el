@@ -228,8 +228,8 @@
    "d" '(:ignore t :wk "debug")
 
    "e" '(:ignore t :wk "errors")
-   "en" 'next-error
-   "ep" 'previous-error
+   "en" 'flymake-goto-next-error
+   "ep" 'flymake-goto-prev-error
 
    "f" '(:ignore t :wk "files")
    "fC" '(:ignore t :wk "convert")
