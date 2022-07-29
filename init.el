@@ -124,7 +124,7 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 
 ;;; optimizations and fixes
 
-(defvar aero/gc-cons '((#x40000000 1.0) (800000 0.1))
+(defvar aero/gc-cons '((#x40000000 1.0) (1000000 0.1))
   "High and normal values for gc.
 
 During init and while the minibuffer is in use, gc is set to the high value to avoid collection,
