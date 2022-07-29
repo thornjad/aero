@@ -380,11 +380,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (use-package ws-butler :straight t
   :functions (ws-butler-global-mode)
   :init (ws-butler-global-mode)
-  :config
-  (defvar ws-butler-global-exempt-modes)
-  (setq ws-butler-global-exempt-modes
-	      (append ws-butler-global-exempt-modes
-		            '(special-mode comint-mode term-mode eshell-mode))))
+  :custom
+  ;; default is just markdown-mode, which is a mode where I really want this in particular. Instead,
+  ;; only exempt modes where whitespace could be important.
+  (ws-butler-global-exempt-modes '(special-mode comint-mode term-mode eshell-mode)))
 
 
 ;;; additional packages which might not fit elsewhere
