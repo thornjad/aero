@@ -64,6 +64,29 @@
   :init (add-to-list 'company-backends #'company-tabnine))
 
 
+;; LSP
+
+(use-package eglot :straight t
+  :hook (prog-mode . eglot-ensure)
+  :after (general)
+  :config
+  (aero-leader-def
+    "la" 'eglot-code-actions
+    "lf" '(:ignore t :wk "find")
+    "lfr" 'xref-find-references
+    "lfd" 'eglot-find-declaration
+    "lfi" 'eglot-find-implementation
+    "lft" 'eglot-find-typeDefinition
+    "lr" '(:ignore t :wk "refactor")
+    "lrr" 'eglot-rename
+    "lrf" 'eglot-format
+    "lro" 'eglot-code-action-organize-imports))
+
+;; puts eldoc in a child frame. not enabled with eldoc because I'm not certain of it yet
+(use-package eldoc-box :straight t
+  :commands (eldoc-box-hover-mode))
+
+
 ;; C language
 
 (use-package cc-mode :straight t

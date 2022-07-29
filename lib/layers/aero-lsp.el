@@ -18,10 +18,10 @@
 
 (require 'aero-prelude)
 
-;; Just trying it out on demand for right now, so don't autostart
-(use-package eglot :straight t :commands (eglot))
+;; NOTE: eglot config is in aero-prog.el
 
-(use-package lsp-mode :straight t
+;; TEMP disabled while I try out eglot instead
+(use-package lsp-mode :straight t :disabled t
   :after (general)
   :hook ((prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration)
