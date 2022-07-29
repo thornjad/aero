@@ -663,6 +663,13 @@
   ;; qui est plus significatif dans 99% des cas.
   (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
 
+  (defun aero/undo-tree-save-history-no-message (undo-tree-save-history &rest args)
+    "Advice for `undo-tree-save-history' to not message about saving."
+    (let ((message-log-max nil)
+          (inhibit-message t))
+      (apply undo-tree-save-history args)))
+  (advice-add 'undo-tree-save-history :around #'aero/undo-tree-save-history-no-message)
+
   (global-undo-tree-mode +1))
 
 (use-package winner
