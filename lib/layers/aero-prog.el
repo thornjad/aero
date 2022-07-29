@@ -130,75 +130,26 @@
   (add-hook 'org-mode-hook #'org-hide-block-all))
 
 
-;; flycheck
+;; flymake/flycheck
 
-(defvar flycheck-idle-change-delay 3.0)
-(make-variable-buffer-local 'flycheck-idle-change-delay)
-(use-package flycheck :after (general)
-  :commands flycheck-mode
-  :functions (flycheck-buffer-automatically)
-  :hook ((web-mode tcl-mode json-mode js2-mode emacs-lisp-mode c-mode cpp-mode)
-         . flycheck-mode)
-  :init
-  (dolist (where '((emacs-lisp-mode-hook . emacs-lisp-mode-map)
-                   (haskell-mode-hook    . haskell-mode-map)
-                   (js2-mode-hook        . js2-mode-map)
-                   (c-mode-common-hook   . c-mode-base-map)))
-    (add-hook (car where)
-              `(lambda ()
-                 (bind-key "M-n" #'flycheck-next-error ,(cdr where))
-                 (bind-key "M-p" #'flycheck-previous-error ,(cdr where)))))
+(use-package flymake :straight (:type built-in)
+  :after (general)
   :config
-  (setq flycheck-highlighting-mode 'symbols)
-  (defalias 'show-error-at-point-soon 'flycheck-show-error-at-point)
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  ;; left-fringe is the default, but we're being explicit because git-gutter also uses left-fringe.
+  ;; Usually this works itself out.
+  (setq flymake-fringe-indicator-position 'left-fringe
+        flymake-wrap-around t)
 
-  ;; boot flycheck to the right fringe
-  (setq flycheck-indication-mode 'right-fringe)
-  ;; A non-descript, left-pointing arrow
-  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
-    [16 48 112 240 112 48 16] nil nil 'center)
+  (aero-leader-def
+   "en" 'flymake-goto-next-error
+   "ep" 'flymake-goto-prev-error
+   "eb" 'flymake-show-buffer-diagnostics))
 
-  (defun aero/auto-adjust-flycheck-eagerness ()
-    "Adjust how often we check for errors based on if there are any.
-    In a clean, error-free buffer, we're an order of magnitude more
-    lax about running the checks."
-    (setq flycheck-idle-change-delay
-          (if flycheck-current-errors 0.3 3.0)))
-  ;; auto-adjust at the buffer level
-  (add-hook 'flycheck-after-syntax-check-hook
-            'aero/auto-adjust-flycheck-eagerness)
-
-  (eval-when-compile
-    (declare-function flycheck-clear-idle-change-timer "flycheck"))
-  (defun flycheck-handle-idle-change ()
-    "Handle an expired idle time since the last change. This is an
-  overwritten versioon of the original flycheck-handle-idle-change,
-  which removes the forced deferred. Timers should only trigger
-  inbetween commands in a single threaded system and the forced
-  deferred makes errors never show up before you execute another
-  command. Credit to jwiegley for this one"
-    (flycheck-clear-idle-change-timer)
-    (flycheck-buffer-automatically 'idle-change))
-
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "pc" '(:ignore t :which-key "flycheck")
-   "pcn" 'flycheck-next-error
-   "pcp" 'flycheck-previous-error
-   "pcc" 'flycheck-clear
-   "pcb" 'flycheck-buffer
-   "pcy" '(flycheck-copy-errors-as-kill :which-key "yank as kill")
-   "pch" 'flycheck-display-error-at-point
-   "pce" 'flycheck-explain-error-at-point
-   "pcl" 'flycheck-list-errors
-   "pcH" 'flycheck-manual))
-
-;; Display flycheck error in tooltip at point
-(use-package flycheck-popup-tip :straight t
-  :after (flycheck)
-  :hook (flycheck-mode . flycheck-popup-tip-mode))
+;; makes flymake appear in popup
+(use-package flymake-diagnostic-at-point
+  :straight (:host github :repo "meqif/flymake-diagnostic-at-point")
+  :after flymake
+  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
 (use-package flyspell
   :after (general)

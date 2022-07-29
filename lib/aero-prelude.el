@@ -228,8 +228,6 @@
    "d" '(:ignore t :wk "debug")
 
    "e" '(:ignore t :wk "errors")
-   "en" 'flymake-goto-next-error
-   "ep" 'flymake-goto-prev-error
 
    "f" '(:ignore t :wk "files")
    "fC" '(:ignore t :wk "convert")
@@ -819,7 +817,7 @@
    "fd" 'deer))
 
 
-;;; General crap
+;; General crap
 
 (use-package pomp
   ;; homebrewed pomodoro timer
