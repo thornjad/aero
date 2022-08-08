@@ -80,6 +80,18 @@
     (other-window 1))
   (add-hook 'magit-status-mode-hook (lambda () (toggle-truncate-lines -1)))
 
+  (defun aero/magit-diff-default-branch (&optional args)
+    "Show diff of default branch to working tree."
+    (interactive (list (magit-diff-arguments)))
+    (magit-diff-working-tree
+     (replace-regexp-in-string "refs/remotes/origin/" ""
+                               (magit-git-string "symbolic-ref" "refs/remotes/origin/HEAD"))
+     args))
+
+  (magit-define-popup-action
+   'magit-diff-popup
+   ?m "Diff main branch" #'aero/magit-diff-default-branch)
+
   ;; Don't want no color from the pre-commit hook
   (defun aero/magit--color-buffer (proc &rest args)
     (interactive)
@@ -116,6 +128,7 @@
 ;; use delta pager in magit diffs
 (use-package magit-delta :straight t :hook (magit-mode . magit-delta-mode))
 
+;; extremely difficult to style for some reason
 (use-package blamer :straight t
   :commands (blamer-mode)
   :custom
