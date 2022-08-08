@@ -15,10 +15,24 @@ build-emacs-macos:
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
+# for when libgccjit breaks every few months
+build-emacs-macos-without-native-comp:
+	brew install coreutils git-delta
+	brew tap d12frosted/emacs-plus
+	# NOTE: dbus isn't working on M1 yet.
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
+
 build-emacs-macos-stable:
 	brew install coreutils
 	brew tap d12frosted/emacs-plus
 	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
+
+build-emacs-macos-stable-without-native-comp:
+	brew install coreutils
+	brew tap d12frosted/emacs-plus
+	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
 
 remove-emacs-macos:
