@@ -1,4 +1,4 @@
-personal_ws-1.1 en 441 
+personal_ws-1.1 en 446 
 ACL
 APIs
 Aireon
@@ -73,6 +73,7 @@ Jarod's
 Javascript
 Jira
 KDE
+Kat
 KiB
 Kosovo
 LIFR
@@ -183,6 +184,7 @@ autoloaded
 aws
 backend
 backquote
+basemap
 bidi
 bitwise
 boid
@@ -270,6 +272,7 @@ hacky
 handoff
 hardcode
 hardcoded
+headerline
 hella
 hoc
 homebrew
@@ -280,7 +283,6 @@ http
 https
 ident
 idents
-iff
 ignorer
 incrementation
 indent
@@ -314,6 +316,7 @@ minibuffer
 minified
 minifies
 minify
+minimap
 misconfiguration
 modeline
 multiplanetary
@@ -355,6 +358,7 @@ pylint
 readme
 rearchitecting
 recentered
+referer
 repl
 repo
 reproducibility
@@ -368,6 +372,7 @@ roadmap
 roguelite
 rollout
 rsync
+runbook
 runnable
 rvt
 scada
