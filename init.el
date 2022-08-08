@@ -95,20 +95,27 @@
   "Load all Aero layers.
 
 A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package names MUST match their filename exactly."
-  (require 'aero-prelude)
-  (if (boundp 'aero-layers-dir)
-      (dolist (layer (directory-files aero-layers-dir nil "^[^#]*\\.el$"))
-        (require (intern (string-trim-right layer ".el"))))
-    (error "Cannot load layers because `aero-layers-dir' is not bound! This should never happen, what have you done??")))
+  (require 'aero-prelude) ; Foundational packages
+  (require 'aero-ui) ; Core theming, loaded now so we have less of a flash of basic Emacs
+
+  ;; The rest of the layers need only exist in the `aero-layers-dir'. NOTE: layer must `provide' a
+  ;; package matching its file name.
+  (dolist (layer (directory-files aero-layers-dir nil "^[^#]*\\.el$"))
+    (require (intern (string-trim-right layer ".el"))))
+
+  ;; Core settings, loaded last to override layer settings
+  (require 'aero-rc))
 
 (defun aero/init ()
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
+
+  ;; Packages used by most stuff
   (require 'subr-x)
   (require 'aero-lib)
+
   (aero/load-layers)
   (setq-default custom-file "/dev/null") ; Don't use customization system
-  (require 'aero-rc) ; Core settings
 
   ;; Load local init if it exists
   (load (expand-file-name "init.local" user-emacs-directory) t t)
