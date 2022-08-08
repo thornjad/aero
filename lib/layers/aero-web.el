@@ -33,7 +33,7 @@
   (interactive)
   (let ((file (buffer-file-name))
         (default-directory (project-root (project-current))))
-   (compile (concat "npx jest " file))))
+    (compile (concat "npx jest " file))))
 (defun aero/jest-file-watch ()
   "Run jest on the file in this buffer and watch.
 
@@ -41,7 +41,7 @@ Requires watchman."
   (interactive)
   (let ((file (buffer-file-name))
         (default-directory (project-root (project-current))))
-   (compile (concat "npx jest --watch " file))))
+    (compile (concat "npx jest --watch " file))))
 (defun aero/jest ()
   "Run jest in this project."
   (interactive)
@@ -65,8 +65,10 @@ Requires watchman."
     "jl" 'jest-last-failed))
 
 (use-package web-mode :straight t
-  :mode
-  "\\.\\(jsp\\|handlebars\\|mustache\\|tpl\\|php\\|xml\\|html\\|htm\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|jsx\\|tsx\\)\\'"
+  :mode (("\\.component\\.html\\'" . web-angular-mode) ("\\.\\(jsp\\|handlebars\\|mustache\\|tpl\\|php\\|xml\\|[^.]html\\|htm\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|jsx\\|tsx\\)\\'" . web-mode))
+  :preface
+  (define-derived-mode web-angular-mode web-mode "Web/Angular"
+    "Major mode for Angular .component.html files.")
   :config
   (setq web-mode-engines-alist
         '(("ctemplate" . "\\.tpl\\'"))))
