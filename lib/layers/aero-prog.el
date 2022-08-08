@@ -67,9 +67,39 @@
 ;; LSP
 
 (use-package eglot :straight t
-  :hook (prog-mode . eglot-ensure)
+  :hook ((css-mode
+          scss-mode
+          js-mode
+          js2-mode
+          typescript-mode
+          web-mode
+          web-angular-mode
+          html-mode
+          python-mode)
+         . eglot-ensure)
   :after (general)
   :config
+  ;; For some reason eglot refuses to add angular support, so we have to add it. Because, for
+  ;; whatever reason, the server needs to be told where to find the global node_modules, we have to
+  ;; find it ourselves, hence the complexity here.
+  (add-to-list 'eglot-server-programs
+               `(web-angular-mode
+                 . ,(let ((node-modules-path
+                           (expand-file-name
+                            "lib/node_modules"
+                            (string-trim (shell-command-to-string
+                                          "npm config get --global prefix")))))
+                      (list
+                       "node"
+                       (expand-file-name "@angular/language-server" node-modules-path)
+                       "--ngProbeLocations" node-modules-path
+                       "--tsProbeLocations" node-modules-path
+                       "--stdio"))))
+
+  ;; Seems weird that this isn't a default
+  (add-to-list 'eglot-server-programs
+               `(web-mode . ,(eglot-alternatives '(("vscode-html-language-server" "--stdio") ("html-languageserver" "--stdio")))))
+
   (aero-leader-def
     "la" 'eglot-code-actions
     "lf" '(:ignore t :wk "find")
@@ -80,9 +110,13 @@
     "lr" '(:ignore t :wk "refactor")
     "lrr" 'eglot-rename
     "lrf" 'eglot-format
-    "lro" 'eglot-code-action-organize-imports))
+    "lro" 'eglot-code-action-organize-imports)
 
-;; puts eldoc in a child frame. not enabled with eldoc because I'm not certain of it yet
+  ;; Experimental homebrew LSP headerline, without any frills
+  ;; (require 'aero-eglot-headerline)
+  )
+
+;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
 (use-package eldoc-box :straight t
   :commands (eldoc-box-hover-mode))
 
@@ -164,9 +198,9 @@
         flymake-wrap-around t)
 
   (aero-leader-def
-   "en" 'flymake-goto-next-error
-   "ep" 'flymake-goto-prev-error
-   "eb" 'flymake-show-buffer-diagnostics))
+    "en" 'flymake-goto-next-error
+    "ep" 'flymake-goto-prev-error
+    "eb" 'flymake-show-buffer-diagnostics))
 
 ;; makes flymake appear in popup
 (use-package flymake-diagnostic-at-point
