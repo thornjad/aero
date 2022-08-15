@@ -65,10 +65,12 @@ Requires watchman."
     "jl" 'jest-last-failed))
 
 (use-package web-mode :straight t
-  :mode (("\\.component\\.html\\'" . web-angular-mode) ("\\.\\(jsp\\|handlebars\\|mustache\\|tpl\\|php\\|xml\\|[^.]html\\|htm\\|djhtml\\|erb\\|eco\\|ejs\\|svg\\|jsx\\|tsx\\)\\'" . web-mode))
+  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\|tsx\\)\\'"
   :preface
+  ;; NOTE: Not automatic, load via dir-locals whenever web-mode loads:
+  ;;     ((web-mode (eval web-angular-mode)))
   (define-derived-mode web-angular-mode web-mode "Web/Angular"
-    "Major mode for Angular .component.html files.")
+    "Helper mode for Angular .component.html files.")
   :config
   (setq web-mode-engines-alist
         '(("ctemplate" . "\\.tpl\\'"))))
