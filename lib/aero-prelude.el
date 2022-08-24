@@ -561,7 +561,14 @@
   (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
         recentf-max-saved-items 500)
   (recentf-mode 1)
-  (run-at-time 60 (* 5 60) 'recentf-save-list))
+  (defun aero/recentf-save-list-quiet ()
+    "Wrapper for `recentf-save-list' with no message."
+    (let ((inhibit-message t))
+      (recentf-save-list)))
+  ;; Would be a great place for `aero/advice-no-message' but there's no need to hide messaging if
+  ;; recentf saves for some other reason. Here, we run it regularly so we don't care about the
+  ;; constant messaging.
+  (run-at-time 60 (* 5 60) #'aero/recentf-save-list-quiet))
 
 (package! ivy :auto
   ;; Despite a general trend in the (loud part of the) community to move away from ivy, I'm still a
