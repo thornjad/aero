@@ -18,10 +18,10 @@
 
 (require 'aero-prelude)
 
-(use-package common-lisp-mode :straight nil
+(package! common-lisp-mode :builtin
   :mode "\\(Lakefile|\\.\\(cl|lisp\\)\\)\\'")
 
-(use-package slime :straight t
+(package! slime :auto
   :commands slime
   :init
   (setq-default
@@ -130,8 +130,8 @@ does not specify a special indentation."
 
 ;; Clojure
 
-(use-package clojure-mode :straight t :mode "\\.\\(cljs?\\|cljs.*\\|edn\\|boot\\)\\'")
-(use-package cider :straight t
+(package! clojure-mode :auto :mode "\\.\\(cljs?\\|cljs.*\\|edn\\|boot\\)\\'")
+(package! cider :auto
   :hook ((clojure-mode . cider-mode)
          (cider-mode . eldoc-mode))
   :after (clojure-mode general)
@@ -204,11 +204,10 @@ does not specify a special indentation."
 
 ;; Elisp-specific
 
-(use-package package-lint :straight t
+(package! package-lint :auto
   :commands (package-lint-current-buffer))
 
-(use-package el2md
-  :straight (:host gitlab :repo "thornjad/el2md")
+(package! el2md (:host gitlab :repo "thornjad/el2md")
   :after (general)
   :commands (el2md-write-readme
              el2md-view-buffer

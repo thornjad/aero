@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -22,7 +22,7 @@
 
 (require 'aero-prelude)
 
-(use-package org :straight nil
+(package! org :builtin
 	:commands org-mode
 
 	:config
@@ -42,8 +42,7 @@
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all))
 
-(use-package org-modern
-  :straight (:host github :repo "minad/org-modern")
+(package! org-modern (:host github :repo "minad/org-modern")
   :hook (org-mode . org-modern))
 
 (provide 'aero-org)

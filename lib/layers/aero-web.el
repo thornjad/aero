@@ -23,10 +23,10 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(use-package yarn :straight (:host github :repo "jmfirth/yarn.el")
+(package! yarn (:host github :repo "jmfirth/yarn.el")
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
                         yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
-(use-package npm :straight t :commands (npm))
+(package! npm :auto :commands (npm))
 
 (defun aero/jest-file ()
   "Run jest on the file in this buffer."
@@ -48,9 +48,8 @@ Requires watchman."
   (let ((default-directory (project-root (project-current))))
     (compile "npx jest")))
 
-(use-package jest
+(package! jest (:host github :repo "emiller88/emacs-jest" :files ("jest.el" "jest-traversal.el"))
   ;; jest-traversal is required for for some reason doesn't come through in straight
-  :straight (:host github :repo "emiller88/emacs-jest" :files ("jest.el" "jest-traversal.el"))
   :after general
   :commands (jest jest-file jest-file-dwim jest-function jest-last-failed jest-repeat)
   :init
@@ -64,7 +63,7 @@ Requires watchman."
     "jr" 'jest-repeat
     "jl" 'jest-last-failed))
 
-(use-package web-mode :straight t
+(package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\|tsx\\)\\'"
   :preface
   ;; NOTE: Not automatic, load via dir-locals whenever web-mode loads:
@@ -75,7 +74,7 @@ Requires watchman."
   (setq web-mode-engines-alist
         '(("ctemplate" . "\\.tpl\\'"))))
 
-(use-package emmet-mode :straight t
+(package! emmet-mode :auto
   :load-path "lib/packages/emmet-mode/"
   :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
 	:init
@@ -86,7 +85,7 @@ Requires watchman."
    'js-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
 
-(use-package scss-mode :straight t
+(package! scss-mode :auto
   :mode "\\.s?css\\'")
 
 
@@ -101,18 +100,15 @@ Requires watchman."
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
-(use-package json-mode :straight t
+(package! json-mode :auto
 	:mode "\\.json\\'")
 
-(use-package typescript-mode :straight t :mode "\\.tsx?\\'")
-
-;; Seems inferior to web-mode and ts-mode?
-;; (use-package ng2-mode :straight t)
+(package! typescript-mode :auto :mode "\\.tsx?\\'")
 
 
 ;; the rest
 
-(use-package restclient
+(package! restclient :auto
 	:after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
@@ -128,7 +124,7 @@ Requires watchman."
     "." 'restclient-mark-current
     "y" 'restclient-copy-curl-command))
 
-(use-package company-restclient :straight t
+(package! company-restclient :auto
   :hook (restclient-mode-hook . company-restclient)
   :after (restclient company)
   :config

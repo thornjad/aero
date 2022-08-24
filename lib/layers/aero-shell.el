@@ -21,7 +21,7 @@
 ;; Make files executable if the first file has a shebang
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-(use-package xterm-color :straight t
+(package! xterm-color :auto
   :commands (xterm-color-filter)
   :init
   (setq compilation-environment '("TERM=xterm-256color"))
@@ -32,7 +32,7 @@
 
 ;;; eshell
 
-(use-package eshell
+(package! eshell :builtin
   :after (general evil)
   :commands eshell
   :defines (evil-move-cursor-back
@@ -164,7 +164,7 @@
 ;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
 ;; configuration.
 (when (aero/has-modules-p)
-  (use-package vterm :straight t :defer t
+  (package! vterm :auto :defer t
     :after (general)
     :custom
     (vterm-max-scrollback 5000)
@@ -181,7 +181,7 @@
       "Stv" 'vterm
       "S'" 'vterm)))
 
-(use-package multi-vterm :straight t :defer t
+(package! multi-vterm :auto :defer t
   :after general
   :init
   (aero-leader-def
@@ -202,7 +202,7 @@
 
 ;;; shell scripting
 
-(use-package sh-script :defer t
+(package! sh-script :builtin :defer t
   :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
   :config
   (defun indent-paragraph ()

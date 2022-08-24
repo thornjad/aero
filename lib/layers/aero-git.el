@@ -12,7 +12,7 @@
 
 (require 'aero-prelude)
 
-(use-package magit
+(package! magit :auto
   :after (general ivy)
 	:commands (magit-blame
              ivy-magit-todos
@@ -112,10 +112,11 @@
       (magit-status)
       (message "Checked out PR as %s" new-branch))))
 
-(use-package forge :straight t :after magit
+(package! forge :auto
+  :after magit
   :custom (forge-database-file (expand-file-name "forge-database.sqlite" aero-cache-dir)))
 
-(use-package magit-todos :straight t
+(package! magit-todos :auto
   :commands (magit-todos-mode)
   :hook (magit-mode . magit-todos-mode)
   :config
@@ -126,10 +127,10 @@
    '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
 ;; use delta pager in magit diffs
-(use-package magit-delta :straight t :hook (magit-mode . magit-delta-mode))
+(package! magit-delta :auto :hook (magit-mode . magit-delta-mode))
 
 ;; extremely difficult to style for some reason
-(use-package blamer :straight t
+(package! blamer :auto
   :commands (blamer-mode)
   :custom
   (blamer-view 'overlay-right)
@@ -140,7 +141,7 @@
   (blamer-idle-time 0.1)
   (blamer-min-offset 15))
 
-(use-package git-gutter :straight t
+(package! git-gutter :auto
   :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
   :custom
   (git-gutter:visual-line t)
@@ -167,7 +168,7 @@
       ;; Return the symbol, just like the normal function does.
       bitmap))
 
-  (use-package git-gutter-fringe :straight t :after (git-gutter)
+  (package! git-gutter-fringe :auto :after (git-gutter)
     :custom
     (fringes-outside-margins t)
 
@@ -189,13 +190,13 @@
          1)))
     (add-hook 'find-file-hook #'git-gutter-find-file-hook)))
 
-(use-package ediff
+(package! ediff :builtin
   :commands (ediff ediff3)
   :custom
   (ediff-split-window-function #'split-window-horizontally )
   (ediff-window-setup-function #'ediff-setup-windows-plain))
 
-(use-package git-link :straight t
+(package! git-link :auto
   :after (general)
   :commands (git-link git-link-commit git-link-homepage)
   :init (aero-leader-def "gL" 'git-link))

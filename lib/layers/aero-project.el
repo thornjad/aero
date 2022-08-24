@@ -19,7 +19,7 @@
 (require 'aero-prelude)
 
 ;; Built-in
-(use-package project :straight (:type built-in)
+(package! project :builtin
   :after (general)
   :config
   (defun aero/project-root-override (dir)
@@ -54,26 +54,5 @@ https://blog.jmthornton.net/p/emacs-project-override"
     "p'" 'project-eshell
     "p%" 'project-query-replace-regexp
     "cp" 'project-compile))
-
-(use-package treemacs :straight t
-  :commands (treemacs)
-  :after (lsp general)
-  :custom
-  (treemacs-tag-follow-delay 0.5)
-  (treemacs-recenter-after-tag-follow t)
-  (treemacs-recenter-after-file-follow t)
-
-  :init
-  (aero-leader-def "ft" 'treemacs)
-
-  :config
-  (use-package treemacs-evil :straight t)
-  (use-package treemacs-magit :straight t)
-  (use-package treemacs-all-the-icons :straight t)
-
-  ;; Follow me around
-  (treemacs-project-follow-mode +1)
-  (treemacs-git-mode 'deferred)
-  (treemacs-filewatch-mode +1))
 
 (provide 'aero-project)

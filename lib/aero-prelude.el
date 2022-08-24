@@ -28,8 +28,6 @@
 ;; the rest, and in many cases is required by other packages.
 
 (require 'cl-lib)
-(require 'straight)
-(require 'use-package)
 (require 'aero-lib)
 
 ;;; Code:
@@ -37,11 +35,16 @@
 
 ;; Set up core packages. The ELPA keyring sometimes gets screwed up, but this package lets us fix
 ;; it easily.
-(use-package gnu-elpa-keyring-update :straight t)
+(package! gnu-elpa-keyring-update :auto)
+
+;; Requirements for lib
+(package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
+(package! async (:host github :repo "jwiegley/emacs-async") :commands (async-save))
+(package! popup :auto)
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
-(use-package exec-path-from-shell :straight t :defer 1
+(package! exec-path-from-shell :auto :defer 1
   :config
   (when (or (window-system) (daemonp))
     (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH" "PATH"))
@@ -49,13 +52,13 @@
     (exec-path-from-shell-initialize)))
 
 ;; Faster than grep, but requires ripgrep to be installed locally
-(use-package ripgrep :straight t :defer 3)
+(package! ripgrep :auto :defer 3)
 
 
 ;;; the general is here
 
 ;; General lets us more easily set keybindings throughout Aero
-(use-package general :straight t
+(package! general :auto
   :functions (general-define-key)
   :init
   (setq-default general-override-states
@@ -315,13 +318,13 @@
    "wk" 'windmove-up
    "wl" 'windmove-right
    "wm" 'maximize-window
-   "wo" 'browse-url-xdg-open
+   "wo" 'aero/browse-url-open
    "w{" 'shrink-window
    "w}" 'enlarge-window
 
    "z" 'repeat))
 
-(use-package which-key :straight t
+(package! which-key :auto
   :hook (on-first-input . which-key-mode)
   :defines which-key-mode
   :config
@@ -331,7 +334,7 @@
 
 ;; we descend to hell
 
-(use-package evil :straight t
+(package! evil :auto
   :init
   ;; Need to be in init because of something in the way the "want" variables are used
   (setq evil-want-keybinding nil ; handled by evil-collection
@@ -411,16 +414,16 @@
   (evil-mode +1))
 
 ;; Provides defaults for many modes which evil proper overlooks
-(use-package evil-collection :straight t :after evil :config (evil-collection-init))
+(package! evil-collection :auto :after evil :config (evil-collection-init))
 
 ;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
 (unless (display-graphic-p)
-  (use-package evil-terminal-cursor-changer
+  (package! evil-terminal-cursor-changer :auto
     :after evil
     :functions (evil-terminal-cursor-changer-activate)
     :config (evil-terminal-cursor-changer-activate)))
 
-(use-package evil-matchit :straight t :defer 5
+(package! evil-matchit :auto :defer 5
   ;; allows % to jump matching tags
   :after evil
   :defines global-evil-matchit-mode
@@ -432,16 +435,16 @@
 ;; Requires module support
 ;; TEMP disabled until tree-sitter gets its act together
 (when (and nil (aero/has-modules-p))
-  (use-package tree-sitter :straight t
+  (package! tree-sitter :auto
     :config
     (global-tree-sitter-mode +1)
     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
   ;; various language supports for tree-sitter
-  (use-package tree-sitter-langs :straight t :after tree-sitter)
+  (package! tree-sitter-langs :auto :after tree-sitter)
 
   ;; Tree-sitter-based indentation for select modes
-  (use-package tsi :straight (:host github :repo "orzechowskid/tsi.el")
+  (package! tsi (:host github :repo "orzechowskid/tsi.el")
     :after tree-sitter
     :hook ((typescript-mode . tsi-typescript-mode)
            (json-mode . tsi-json-mode)
@@ -449,8 +452,8 @@
            (scss-mode . tsi-scss-mode)))
 
   ;; Provide vaf, etc. evil selection operators
-  (use-package evil-textobj-tree-sitter
-	  :straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
+  (package! evil-textobj-tree-sitter
+	  (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
 	  :after (tree-sitter evil)
     :config
     ;; Annoyingly provides no recommended bindings options, so we have to do it ourselves
@@ -488,7 +491,7 @@
                    (interactive)
                    (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
 
-  (use-package turbo-log :straight (:host github :repo "Artawower/turbo-log")
+  (package! turbo-log (:host github :repo "Artawower/turbo-log")
     :after (general tree-sitter)
     :commands (turbo-log-print
                turbo-log-print-immediately
@@ -513,7 +516,7 @@
 
 ;; abo-abo!
 
-(use-package counsel :straight t
+(package! counsel :auto
   :after general
   :config
   (setq counsel-find-file-ignore-regexp
@@ -541,16 +544,16 @@
     "gg" '(counsel-git-grep :wk "git grep")
     "gff" '(counsel-git :wk "find git file")
     "ry" '(counsel-yank-pop :wk "search kill ring")
-    "hda" '(counsel-apropos :wk "apropos")
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
-(use-package amx :straight t
+(package! amx :auto
   ;; Enhances counsel-M-x by showing recently used commands and keyboard shortcuts
   :after (counsel)
   :config (amx-mode 1))
 
-(use-package recentf :defer 1
+(package! recentf :builtin
+  :defer 1
   ;; Doesn't seem like indent activates properly for me without this intervention. Here we move it
   ;; to a known cache file and set up an auto-save every 5 minutes.
   :defines (recentf-mode)
@@ -560,7 +563,7 @@
   (recentf-mode 1)
   (run-at-time 60 (* 5 60) 'recentf-save-list))
 
-(use-package ivy :straight t
+(package! ivy :auto
   ;; Despite a general trend in the (loud part of the) community to move away from ivy, I'm still a
   ;; big fan. It's fast, its fully-featured and it has many useful integrations.
   :after general
@@ -584,7 +587,7 @@
     "bb" 'ivy-switch-buffer
     "R" 'ivy-resume))
 
-(use-package ivy-rich :straight t
+(package! ivy-rich :auto
   ;; Adds information about various results in the ivy buffer
   :after (counsel ivy)
   :defines (ivy-rich-path-style)
@@ -595,18 +598,17 @@
   (ivy-rich-mode +1)
   (ivy-rich-project-root-cache-mode +1))
 
-(use-package all-the-icons :straight t
+(package! all-the-icons :auto
   :after (general)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
 ;; Add icons to ivy via ivy-rich
-(use-package all-the-icons-ivy-rich
-  :straight (:host github :repo "seagle0128/all-the-icons-ivy-rich")
+(package! all-the-icons-ivy-rich (:host github :repo "seagle0128/all-the-icons-ivy-rich")
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
 
-(use-package swiper :straight t
+(package! swiper :auto
   ;; Search utility
   :after (general counsel)
   :commands (swiper counsel-grep-or-swiper swiper-thing-at-point)
@@ -617,7 +619,7 @@
   :config
   (setq swiper-action-recenter t))
 
-(use-package avy :straight t
+(package! avy :auto
   ;; visual navigation utility
   :init
   (general-define-key
@@ -628,13 +630,13 @@
    "jj" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
-(use-package ace-link :straight (:host github :repo "abo-abo/ace-link")
+(package! ace-link (:host github :repo "abo-abo/ace-link")
   ;; jump to search results in eww
   :after (avy eww)
   :functions (ace-link-setup-default)
   :config (ace-link-setup-default))
 
-(use-package smartscan :straight t
+(package! smartscan :auto
   ;; Gives us the M-n and M-p symbol following ability
   :hook (prog-mode . smartscan-mode)
   :config
@@ -644,7 +646,7 @@
 
 ;;; system
 
-(use-package undo-tree :straight t
+(package! undo-tree :auto
   :custom
   ;; Disable undo-in-region. It sounds like a cool feature, but
   ;; unfortunately the implementation is very buggy and usually causes
@@ -671,7 +673,7 @@
 
   (global-undo-tree-mode +1))
 
-(use-package winner
+(package! winner :builtin
   :after (general)
   :defines winner-boring-buffers
   :config
@@ -704,7 +706,8 @@
      ("M-k" . windmove-up)
      ("M-l" . windmove-right))))
 
-(use-package winum :straight t :defer 5
+(package! winum :auto
+  :defer 5
   ;; Jump to windows by number. 1 is the upper-left-most
   :after (general which-key)
   :init
@@ -727,7 +730,7 @@
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
-(use-package helpful :straight t
+(package! helpful :auto
   ;; Improved version of help buffers
   :commands (helpful-function
              helpful-variable
@@ -795,13 +798,13 @@
 
 ;; TTY also needs some clipboard help. Only works in certain term emulators.
 (unless (display-graphic-p)
-  (use-package xclip :straight t :config (xclip-mode +1)))
+  (package! xclip :auto :config (xclip-mode +1)))
 
 
 ;; File navigation
 
-(use-package tramp :defer t
-  :straight (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
+(package! tramp (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
+  :defer t
   :functions tramp-cleanup-all-connection
   :config
   (setq tramp-auto-save-directory "~/.cache/emacs/backups"
@@ -810,7 +813,7 @@
         tramp-default-method "rsync"
         tramp-terminal-type "tramp"))
 
-(use-package ranger :straight t
+(package! ranger :auto
   ;; We only use this for the deer function, which is a better version of dired.
   :commands (deer)
   :after general
@@ -825,9 +828,7 @@
 
 ;; General crap
 
-(use-package pomp
-  ;; homebrewed pomodoro timer
-  :straight (:host gitlab :repo "thornjad/pomp")
+(package! pomp (:host gitlab :repo "thornjad/pomp")
   :after (general evil)
   :commands (pomp)
   :init
@@ -835,7 +836,8 @@
   (global-set-key (kbd "<f12>") 'pomp)
   (aero-leader-def "ap" 'pomp))
 
-(use-package editorconfig :straight t :defer 1
+(package! editorconfig :auto
+  :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
@@ -843,22 +845,14 @@
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
 
 ;; startup profiler
-(use-package esup :straight t :commands (esup))
+(package! esup :auto :commands (esup))
 
-;; Provides a top-like interface of what the hell Emacs is doing during pauses. Use
-;; `explain-pause-top' to view results.
-(use-package explain-pause-mode
-  :straight (:host github :repo "lastquestion/explain-pause-mode")
-  :commands (explain-pause-mode))
-
-(use-package writegood-mode
-  ;; Mark passive voice, duplicate words and weasel words
-  :straight (:host github :repo "bnbeckwith/writegood-mode")
+;; Mark passive voice, duplicate words and weasel words
+(package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
-(use-package eprime-mode
-  ;; Mark E′ violations
-  :straight (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
+;; Mark E′ violations
+(package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
   :hook text-mode
   :commands (eprime-check-buffer eprime-mode)
@@ -867,27 +861,14 @@
     "tp" 'eprime-check-buffer
     "tP" 'eprime-mode))
 
-;; REVIEW not sure if we still want this, disabling to see if i miss it
-(use-package counsel-spotify :straight t
-  :after (counsel general)
-  :commands (counsel-spotify-toggle-play-pause
-             counsel-spotify-next
-             counsel-spotify-previous)
-  :init
-  (aero-leader-def
-    "as" '(:ignore t :which-key "spotify")
-    "asp" 'counsel-spotify-toggle-play-pause
-    "asn" 'counsel-spotify-next
-    "asP" 'counsel-spotify-previous))
-
-(use-package unmodified-buffer :defer 1
-  ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
-  ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
-  ;; think its still modified.
-  :straight (:host github :repo "arthurcgusmao/unmodified-buffer")
+;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
+;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
+;; think its still modified.
+(package! unmodified-buffer (:host github :repo "arthurcgusmao/unmodified-buffer")
+  :defer 1
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
-(use-package virtual-comment :straight t
+(package! virtual-comment :auto
   ;; Not working well in Emacs 29, and doesn't persist through buffer destruction.
   ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
   ;; to disk.
@@ -903,10 +884,10 @@
     "vP" 'virtual-comment-paste
     "vs" 'virtual-comment-show))
 
-(use-package clue :defer t
-  ;; Method for linking notes to specific locations in files. Rather cumbersome to use. REVIEW may
-  ;; want to remove this.
-  :straight (:host github :repo "AmaiKinono/clue")
+;; Method for linking notes to specific locations in files. Rather cumbersome to use. REVIEW may
+;; want to remove this.
+(package! clue (:host github :repo "AmaiKinono/clue")
+  :defer t
   :after (general)
   :hook (find-file-hook . clue-auto-enable-clue-mode)
   :commands (clue-copy
@@ -918,7 +899,8 @@
     "Cp" 'clue-paste))
 
 ;; Keep track of commands used for fun and profit
-(use-package keyfreq :straight t :defer 1
+(package! keyfreq :auto
+  :defer 1
   :config
   (setq keyfreq-excluded-commands '(self-insert-command
                                     vterm--self-insert
@@ -929,18 +911,17 @@
   (keyfreq-autosave-mode +1))
 
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
-(use-package so-long :straight (:type built-in)
+(package! so-long :builtin
   :config (global-so-long-mode +1))
 
 
 ;; Games, etc.
 
 ;; Typing game
-(use-package typing
-  :straight (:host github :repo "thornjad/emacswiki-typing")
+(package! typing (:host github :repo "thornjad/emacswiki-typing")
   :commands (typing-of-emacs))
 
-(use-package emojify :straight t
+(package! emojify :auto
   :after general
   :commands (emojify-insert-emoji)
   :init

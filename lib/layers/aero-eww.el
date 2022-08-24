@@ -22,7 +22,7 @@
   (interactive "sSearch DuckDuckGo: ")
   (xwidget-webkit-browse-url (format "https://duckduckgo.com/?q=%s" (or term "")) t))
 
-(use-package eww :straight nil
+(package! eww :builtin
   :after (general evil ace-link)
   :commands (eww eww-browse-url eww-search-words browse-url-at-point)
   :init
@@ -52,7 +52,8 @@
     "wbn" '(aero/wiki-news :wk "wikipedia news"))
 
 	:config
-  (use-package shrface :defer t :straight t
+  (package! shrface :auto
+    :defer t
     :config
     (shrface-basic)
     (shrface-trial)
@@ -60,7 +61,7 @@
     (setq shrface-href-versatile t))
   (add-hook 'eww-after-render-hook #'shrface-mode)
 
-  (use-package shr-tag-pre-highlight :straight t
+  (package! shr-tag-pre-highlight :auto
     :after shr
     :config
     (add-to-list 'shr-external-rendering-functions
@@ -217,7 +218,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
           image)
       (insert (or alt "")))))
 
-(use-package devdocs :straight t
+(package! devdocs :auto
   :after (general)
   :commands (devdocs-lookup)
   :custom (devdocs-data-dir (expand-file-name "devdocs" aero-cache-dir))

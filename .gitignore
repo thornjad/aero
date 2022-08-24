@@ -40,6 +40,7 @@ eclipse*
 eln-cache/
 elnode/
 elpa/
+elpaca/
 elpy/
 eshell/*
 etc/cache/

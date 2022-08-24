@@ -18,7 +18,7 @@
 
 (setenv "PATH" (concat "~/.cargo/bin:" (getenv "PATH")))
 
-(use-package rust-mode :straight t
+(package! rust-mode :auto
   :mode "\\.rs\\'"
   :config
   (require 'company)
@@ -29,7 +29,7 @@
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode t))))
 
-(use-package racer :straight t
+(package! racer :auto
   :defines (racer-cmd
             racer-rust-src-path)
   :hook (rust-mode . racer-mode)
@@ -43,7 +43,7 @@
   (add-hook 'racer-mode-hook #'company-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode))
 
-(use-package company-racer :straight t
+(package! company-racer :auto
   :hook (rust-mode . racer-mode)
   :after company
   :config
@@ -51,14 +51,14 @@
   (defvar company-backends)
   (push 'company-racer company-backends))
 
-(use-package flycheck-rust :straight t
+(package! flycheck-rust :auto
   :hook (rust-mode . flycheck-rust-setup))
 
-(use-package cargo :straight t
+(package! cargo :auto
   :commands cargo-minor-mode
   :hook (rust-mode . cargo-minor-mode))
 
-(use-package toml-mode :straight t
+(package! toml-mode :auto
   :mode "\\(\\.toml\\|Cargo\\.lock\\)\\'")
 
 (provide 'aero-rust)

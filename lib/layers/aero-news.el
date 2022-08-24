@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -19,7 +19,7 @@
 
 (require 'aero-prelude)
 
-(use-package elfeed :straight t
+(package! elfeed :auto
   :commands elfeed
   :after (general evil)
   :custom
@@ -95,20 +95,19 @@
    "C-u" 'evil-scroll-up
    "C-d" 'evil-scroll-down))
 
-(use-package elfeed-summary
+(package! elfeed-summary (:host github :repo "SqrtMinusOne/elfeed-summary")
   :after (general elfeed)
   :commands (elfeed-summary)
-  :straight (:host github :repo "SqrtMinusOne/elfeed-summary")
   :init (aero-leader-def "af" 'elfeed-summary))
 
-(use-package elfeed-protocol :straight t
+(package! elfeed-protocol :auto
   :after (elfeed)
   :custom (elfeed-protocol-enabled-protocols '(fever newsblur owncloud ttrss))
   :config (elfeed-protocol-enable))
 
 
 
-(use-package pocket-reader :straight t
+(package! pocket-reader :auto
   :after (general)
   :commands (pocket-reader)
   :custom
@@ -118,7 +117,7 @@
   ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
-(use-package hackernews :straight t
+(package! hackernews :auto
   :after (general)
   :commands (hackernews)
   :init (aero-leader-def "an" 'hackernews))

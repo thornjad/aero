@@ -23,8 +23,6 @@
 ;;
 ;;; Code:
 
-(require 'all-the-icons)
-
 (defgroup aero/modeline nil
   "A minimal mode-line configuration inspired by doom-modeline."
   :group 'mode-line)

@@ -21,13 +21,12 @@
 ;;; Code:
 
 (require 'aero-prelude)
-(require 'use-package)
 
 
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-(use-package aero-theme :straight nil
+(package! aero-theme :local
   :load-path "lib/packages/aero-theme/"
   :init
   (when (system-is-mac)
@@ -37,8 +36,8 @@
   (load-theme 'aero t))
 
 ;; other themes
-(use-package tao-theme :straight t :defer t)
-(use-package spacemacs-theme :straight t :defer t)
+(package! tao-theme :auto :defer t)
+(package! spacemacs-theme :auto :defer t)
 
 (setq default-frame-alist
       ;; width assumes we want a buffer to be 106 columns wide
@@ -96,27 +95,24 @@
 
 (global-hl-line-mode +1)
 
-(use-package good-scroll
-  :straight (:host github :repo "io12/good-scroll.el")
+(package! good-scroll (:host github :repo "io12/good-scroll.el")
   :functions (good-scroll-mode)
   :init
   ;; Avoid bug with evil-mode, https://github.com/io12/good-scroll.el/issues/16
   (setq good-scroll-avoid-vscroll-reset nil)
   :config (good-scroll-mode +1))
 
-(use-package formfeeder
-  :straight (:host gitlab :repo "thornjad/formfeeder" :branch "main")
+(package! formfeeder (:host gitlab :repo "thornjad/formfeeder" :branch "main")
   :defines (formfeeder-line-width)
   :config
   (setq formfeeder-line-width (- fill-column 1))
   (declare-function global-formfeeder-mode "formfeeder.el")
   (global-formfeeder-mode 1))
 
-(use-package todo-light
-  :straight (:host gitlab :repo "thornjad/todo-light" :branch "main")
+(package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
-(use-package highlight-indent-guides
+(package! highlight-indent-guides :auto
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method 'character
               highlight-indent-guides-responsive 'top)
@@ -128,8 +124,8 @@
   (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
-(use-package echo-bar :defer 2
-  :straight (:host github :repo "qaiviq/echo-bar.el")
+(package! echo-bar (:host github :repo "qaiviq/echo-bar.el")
+  :defer 2
   :config
   (defun aero/echo-bar-function ()
     (concat

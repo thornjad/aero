@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2021 Jade Michael Thornton
+;; Copyright (c) 2019-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -20,8 +20,7 @@
 
 ;; NOTE: eglot config is in aero-prog.el
 
-;; TEMP disabled while I try out eglot instead
-(use-package lsp-mode :straight t :disabled t
+(package! lsp-mode :auto :disabled t
   :after (general)
   :hook ((prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration)
@@ -84,7 +83,7 @@
     "lfr" '(lsp-treemacs-references :wk "find references")
     "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
 
-(use-package lsp-ui :straight t
+(package! lsp-ui :auto
   :hook ((lsp-mode . lsp-ui-mode)
          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
   :config
@@ -112,7 +111,7 @@
   (evil-define-key 'normal 'lsp-ui-doc-frame-mode
     [?q] #'lsp-ui-doc-unfocus-frame))
 
-(use-package lsp-ivy :straight t :defer t
+(package! lsp-ivy :auto :defer t
   :config
   (aero-leader-def
     "lf" '(:ignore t :wk "find")

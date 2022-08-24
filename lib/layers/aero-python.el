@@ -20,7 +20,7 @@
 
 (require 'aero-prelude)
 
-(use-package python-mode :straight t
+(package! python-mode :auto
   :after (general flycheck)
   :mode "\\.py\\'"
   :custom
@@ -134,8 +134,7 @@
              (buffer-file-name))))))
     (if command-line (pdb command-line) (error "command required"))))
 
-(use-package elpy
-  :straight (:host github :repo "jorgenschaefer/elpy")
+(package! elpy (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
   (setq elpy-rpc-virtualenv-path 'default

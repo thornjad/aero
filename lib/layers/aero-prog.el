@@ -18,7 +18,7 @@
 
 (require 'aero-prelude)
 
-(use-package company :straight t
+(package! company :auto
   ;; Standard completions library
   :after (evil)
   :hook ((prog-mode . company-mode)
@@ -47,18 +47,18 @@
                        'company-capf
                        'company-abort)))
 
-(use-package company-prescient :straight t
+(package! company-prescient :auto
   ;; Move commonly-used completions to the top
   :after (company)
   :hook (company-mode . company-prescient-mode)
   :custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
   :config (prescient-persist-mode +1))
 
-(use-package company-box :straight t
+(package! company-box :auto
   ;; Better popup interface for company
   :hook (company-mode . company-box-mode))
 
-(use-package company-tabnine :straight t
+(package! company-tabnine :auto
   ;; Manages and provides Tabnine interface
   :after (company)
   :init (add-to-list 'company-backends #'company-tabnine))
@@ -66,9 +66,8 @@
 
 ;; LSP
 
-(use-package eglot :straight t
+(package! eglot :auto
   :hook ((python-mode
-          web-angular-mode
           scss-mode
           css-mode
           clojure-mode
@@ -131,18 +130,20 @@
     "lrf" 'eglot-format
     "lro" 'eglot-code-action-organize-imports)
 
+  ;; TODO try `condition-case' or `condition-case-unless-debug' to catch what `eglot-ensure' errors
+  ;; on??
+
   ;; Experimental homebrew LSP headerline, without any frills
   ;; (require 'aero-eglot-headerline)
   )
 
 ;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
-(use-package eldoc-box :straight t
-  :commands (eldoc-box-hover-mode))
+(package! eldoc-box :auto :commands (eldoc-box-hover-mode))
 
 
 ;; C language
 
-(use-package cc-mode :straight t
+(package! cc-mode :auto
   :after flycheck
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode)
@@ -159,7 +160,7 @@
 
 ;; Markup
 
-(use-package markdown-mode :straight t
+(package! markdown-mode :auto
   :after (general)
   :commands (markdown-mode gfm-mode)
   :mode (("\\`README\\.md\\'" . gfm-mode)
@@ -181,12 +182,12 @@
     "t" 'today
     "d" 'new-day))
 
-(use-package markdown-toc :straight t
+(package! markdown-toc :auto
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
 
-(use-package yaml-mode :straight t :mode "\\.ya?ml\\'")
+(package! yaml-mode :auto :mode "\\.ya?ml\\'")
 
-(use-package org :straight nil
+(package! org :builtin
   :commands org-mode
   :config
   (setq org-src-preserve-indentation t
@@ -195,7 +196,7 @@
 	      org-startup-with-inline-images t
 	      org-startup-indented t)
 
-  ;; rescale images to 400px if no with attribute is set (see
+  ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
   (setq org-image-actual-width '(400))
 
@@ -208,7 +209,7 @@
 
 ;; flymake/flycheck
 
-(use-package flymake :straight (:type built-in)
+(package! flymake :builtin
   :after (general)
   :config
   ;; left-fringe is the default, but we're being explicit because git-gutter also uses left-fringe.
@@ -222,12 +223,11 @@
     "eb" 'flymake-show-buffer-diagnostics))
 
 ;; makes flymake appear in popup
-(use-package flymake-diagnostic-at-point
-  :straight (:host github :repo "meqif/flymake-diagnostic-at-point")
+(package! flymake-diagnostic-at-point (:host github :repo "meqif/flymake-diagnostic-at-point")
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
-(use-package flyspell
+(package! flyspell :builtin
   :after (general)
   :hook ((prog-mode . flyspell-prog-mode)
 	       (text-mode . flyspell-mode))
@@ -256,29 +256,29 @@
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
 
-(use-package flyspell-lazy
-  :straight (:host github :repo "rolandwalker/flyspell-lazy")
+(package! flyspell-lazy (:host github :repo "rolandwalker/flyspell-lazy")
   :hook ((flyspell-mode . flyspell-lazy-mode)))
 
-(use-package flyspell-correct-ivy :straight t
+(package! flyspell-correct-ivy :auto
   ;; Flyspell interface. Use M-o to access minibuffer actions
   :after flyspell
   :commands flyspell-correct-ivy
   :custom (flyspell-correct-interface #'flyspell-correct-ivy))
 
-(use-package synosaurus :straight t
+(package! synosaurus :auto
   ;; Thesaurus
   :after (general)
   :commands (synosaurus-lookup synosaurus-choose-and-replace)
   :custom (synosaurus-choose-method 'default)
   :config (aero-leader-def
             "tt" '(synosaurus-choose-and-replace :wk "synonyms")
-            "tT" 'synosaurus-lookup))
+            "tT" '(synosaurus-lookup :wk "synonym lookup")))
 
 
 ;; parens
 
-(use-package smartparens :straight t :after (general) :defer 5
+(package! smartparens :auto
+  :after (general) :defer 5
   :functions (show-smartparens-global-mode
               sp-kill-sexp sp-local-pair
               sp-local-pairs sp-pair
@@ -388,13 +388,13 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
-(use-package rainbow-delimiters :straight t
+(package! rainbow-delimiters :auto
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
 
 ;;; formatting
 
-(use-package apheleia :straight t
+(package! apheleia :auto
   :config
   ;; For some reason, prettier won't read the config file from package.json. I'm just hard-coding
   ;; the config here because I'm done with the day. This will eventually come back to bite me, but
@@ -430,7 +430,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 ;;; whitespace and indentation and stuff
 
-(use-package ws-butler :straight t
+(package! ws-butler :auto
   :functions (ws-butler-global-mode)
   :init (ws-butler-global-mode)
   :custom
@@ -438,20 +438,96 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   ;; only exempt modes where whitespace could be important.
   (ws-butler-global-exempt-modes '(special-mode comint-mode term-mode eshell-mode)))
 
+;; Ocaml
+(package! tuareg :auto :mode ("\\.mli?\\'" . tuareg-mode))
+
+;; SQL
+(package! sql :builtin
+  :defer t
+	:after (general)
+  :commands (sql-connect)
+  :init
+  (aero-leader-def
+    "Sc" 'sql-connect)
+
+  :config
+  (setq sql-sqlite-program "sqlite3")
+
+  (aero-mode-leader-def
+    :keymaps 'sql-mode-map
+    "b" 'sql-send-buffer
+    "B" 'aero/sql-send-buffer-and-focus
+    "r" 'sql-send-region
+    "R" 'aero/sql-send-region-and-focus
+    "p" 'sql-send-paragraph
+    "P" 'aero/sql-send-paragraph-and-focus
+    "s" 'sql-send-string
+    "S" 'aero/sql-send-string-and-focus)
+
+	;; for sql comint
+	(add-to-list 'same-window-buffer-names "*SQL: *")
+  (add-hook 'sql-interactive-mode-hook #'evil-insert-state)
+
+  (defun aero/sql-send-string-and-focus ()
+    "Send a string to SQLi and switch to SQLi in `insert state'."
+    (interactive)
+    (let ((sql-pop-to-buffer-after-send-region t))
+      (call-interactively 'sql-send-string)
+      (evil-insert-state)))
+
+  (defun aero/sql-send-buffer-and-focus ()
+    "Send the buffer to SQLi and switch to SQLi in `insert state'."
+    (interactive)
+    (let ((sql-pop-to-buffer-after-send-region t))
+      (sql-send-buffer)
+      (evil-insert-state)))
+
+  (defun aero/sql-send-paragraph-and-focus ()
+    "Send the paragraph to SQLi and switch to SQLi in `insert state'."
+    (interactive)
+    (let ((sql-pop-to-buffer-after-send-region t))
+      (sql-send-paragraph)
+      (evil-insert-state)))
+
+  (defun aero/sql-send-region-and-focus (start end)
+    "Send region to SQLi and switch to SQLi in `insert state'."
+    (interactive "r")
+    (let ((sql-pop-to-buffer-after-send-region t))
+      (sql-send-region start end)
+      (evil-insert-state)))
+
+  (defun my-sql-save-history-hook ()
+    (let ((lval 'sql-input-ring-file-name)
+          (rval 'sql-product))
+      (if (symbol-value rval)
+          (let ((filename
+                 (concat "~/.emacs.d/sql/"
+                         (symbol-name (symbol-value rval))
+                         "-history.sql")))
+            (set (make-local-variable lval) filename))
+        (error
+         (format "SQL history will not be saved because %s is nil"
+                 (symbol-name rval))))))
+  (add-hook 'sql-interactive-mode-hook 'my-sql-save-history-hook))
+
+;; Docker
+
+(package! docker-compose-mode :auto :mode "docker-compose.*\.yml\\'")
+(package! docker-tramp :auto :after (tramp) :defer 5)
+(package! dockerfile-mode :auto :mode "Dockerfile[a-zA-Z.-]*\\'")
+
 
 ;;; additional packages which might not fit elsewhere
 
-(use-package nix-mode :straight t :mode "\\.nix\\'")
-(use-package lua-mode :straight t :mode "\\.lua\\'")
-(use-package applescript-mode :straight t :mode "\\.applescript\\'")
-(use-package nhexl-mode :straight t :defer t) ; improved version of `hexl-mode'
-(use-package pdf-tools :straight t :defer t)
-(use-package terraform-mode :straight t :mode "\\.tf\\'")
-(use-package glsl-mode :straight (:host github :repo "jimhourihan/glsl-mode") :mode "\\.\\(vert\\|frag\\)\\'")
-(use-package graphql-mode :straight t :mode "\\.graphql\\'")
-(use-package groovy-mode :straight t)
-
-;; Ocaml
-(use-package tuareg :straight t :mode ("\\.mli?\\'" . tuareg-mode))
+(package! nix-mode :auto :mode "\\.nix\\'")
+(package! lua-mode :auto :mode "\\.lua\\'")
+(package! applescript-mode :auto :mode "\\.applescript\\'")
+(package! nhexl-mode :auto :defer t) ; improved version of `hexl-mode'
+(package! pdf-tools :auto :defer t)
+(package! terraform-mode :auto :mode "\\.tf\\'")
+(package! glsl-mode (:host github :repo "jimhourihan/glsl-mode") :mode "\\.\\(vert\\|frag\\)\\'")
+(package! graphql-mode :auto :mode "\\.graphql\\'")
+(package! groovy-mode :auto)
+(package! csv-mode :auto :mode "\\.csv\\'")
 
 (provide 'aero-prog)

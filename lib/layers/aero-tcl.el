@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2021 Jade Michael Thornton
+;; Copyright (c) 2018-2022 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -17,9 +17,8 @@
 ;; performance of this software.
 
 (require 'aero-prelude)
-(require 'use-package)
 
-(use-package tcl :straight nil
+(package! tcl :builtin
   :mode ("\\(\\.tcl\\|\\.test\\)\\'" . tcl-mode)
   :init
 	;; make inferior-tcl use tclsh (default is wish in GNU Emacs, no effect in Aero Emacs)
@@ -27,22 +26,7 @@
   :config
   (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
 
-(use-package testbackend
-  :disabled t ;; TODO need to get this working properly
-  :load-path "lib/packages/testbackend"
-  :init
-  (aero-mode-leader-def
-    :keymaps 'tcl-mode-map
-    "t" '(:ignore t :which-key "testbackend")
-    "tt" '(testbackend/run-tests-dwim-focus :wk "Run tests and focus")
-    "tT" '(testbackend/run-tests-dwim :wk "Run tests")
-    "tr" '(testbackend/run-tests-focus :wk "Prompt for run and focus")
-    "tR" '(testbackend/run-tests :wk "Prompt for run")
-    "tR" '(testbackend/re-run-tests :wk "Re-run tests")
-    "tW" '(testbackend/run-tests-on-write :wk "Activate run tests on write")
-    "tS" '(testbackend/stop-run-tests-on-write :wk "Stop run tests on write")))
-
-(use-package rivet-mode :straight t)
+(package! rivet-mode :auto)
 
 (defun mc-string-at-point (&optional key)
   "Surround the current string at point with a call to `mc'.
