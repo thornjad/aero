@@ -8,35 +8,36 @@ all: upgrade-emacs-macos install-aero-macos
 
 build-macos: build-emacs-macos install-aero-macos
 
-build-emacs-macos:
+# required for Aero, emacs-plus handles the actual Emacs dependencies
+macos-reqs:
+	brew update
 	brew install coreutils git-delta
 	brew tap d12frosted/emacs-plus
+
+build-emacs-macos: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
-build-emacs-macos-without-native-comp:
-	brew install coreutils git-delta
-	brew tap d12frosted/emacs-plus
+build-emacs-macos-without-native-comp: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
-build-emacs-macos-stable:
-	brew install coreutils
-	brew tap d12frosted/emacs-plus
+build-emacs-macos-stable: macos-reqs
 	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
 
-build-emacs-macos-stable-without-native-comp:
-	brew install coreutils
-	brew tap d12frosted/emacs-plus
+build-emacs-macos-stable-without-native-comp: macos-reqs
 	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
 
 remove-emacs-macos:
 	brew uninstall emacs-plus@29 || true
+
+remove-emacs-macos-stable:
+	brew uninstall emacs-plus@28 || true
 
 upgrade-emacs-macos: remove-emacs-macos build-emacs-macos
 
