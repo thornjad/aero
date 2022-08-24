@@ -171,8 +171,11 @@ so we use more cycles but less space, but not too little space.")
 ;; Avoid garbage collection during startup by increasing thresholds.
 ;; Also disable some other crap which would just slow us down.
 (let ((gc-cons-threshold (car (car aero/gc-cons)))
-      (gc-cons-percentage (cadr (car aero/gc-cons)))
-      (file-name-handler-alist nil))
+      (gc-cons-percentage (cadr (car aero/gc-cons))))
+	;; NOTE to future self, Doom has an optimization where `file-name-handler-alist' is set to nil
+	;; during startup because many IO functions consult it needlessly. However, this stops Emacs from
+	;; falling back to *.el.gz files if it can't find native- or byte-compiled versions of a package.
+	;; This breaks often enough that it's not worth it to copy this behavior.
 
   ;; BUT, trade memory for less cycles when using the minibuffer
   (add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold (car (car aero/gc-cons)))))
