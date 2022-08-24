@@ -48,18 +48,17 @@
   (setq company-minimum-prefix-length 1
         lsp-log-max 500 ; default is 1000, just save a little space
         lsp-idle-delay 0.5 ; default is 0.5
-        lsp-lens-enable t
         lsp-enable-suggest-server-download nil ; don't try to install automatically
         lsp-completion-provider :capf
         lsp-keep-workspace-alive nil
         lsp-headerline-breadcrumb-segments '(symbols)
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-headerline-arrow "»"
-        lsp-enable-file-watchers nil ; burns through max files
-        lsp-enable-on-type-formatting t
+        lsp-enable-file-watchers nil ; burns through max files on M1
+        lsp-enable-on-type-formatting nil ; depend on aphelia instead
         lsp-eldoc-enable-hover t ; show documentation in minibuffer on hover
 
-        ;; unused by aero modeline
+        ;; unused by aero modeline, so don't bother
         lsp-modeline-code-actions-enable nil
         lsp-modeline-diagnostics-enable nil)
 
@@ -69,19 +68,6 @@
     (defun lsp-graphql-activate-p (filename &optional _)
       "Check if the GraphQL language server should be enabled based on FILENAME."
       (string-match-p (rx (one-or-more anything) "." (or  "graphql" "gql") eos) filename))))
-
-(use-package lsp-treemacs :straight t
-  :after (general lsp-mode treemacs)
-  :config
-  (lsp-treemacs-sync-mode +1)
-
-  (aero-leader-def
-    "le" 'lsp-treemacs-errors-list
-    "ls" 'lsp-treemacs-symbols
-    "lt" 'lsp-treemacs-type-hierarchy
-    "lf" '(:ignore t :wk "find")
-    "lfr" '(lsp-treemacs-references :wk "find references")
-    "lfi" '(lsp-treemacs-implementations :wk "find implementations")))
 
 (package! lsp-ui :auto
   :hook ((lsp-mode . lsp-ui-mode)
@@ -93,7 +79,7 @@
    lsp-ui-doc-include-signature nil
    lsp-ui-doc-delay 1
    lsp-ui-doc-use-childframe t
-   lsp-ui-doc-use-webkit nil  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+   lsp-ui-doc-use-webkit nil
    lsp-ui-doc-show-with-cursor t
    lsp-ui-imenu-enable nil
    lsp-ui-sideline-enable nil
