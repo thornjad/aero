@@ -37,7 +37,7 @@
   :prefix 'aero/)
 
 (defun aero/bootstrap ()
-  "Bootstrap `straight', `use-package' and major components, and set up for use"
+  "Bootstrap major components and set up for use"
 
   ;; Get our on hooks early
   (require 'on (expand-file-name "lib/core/on.el" user-emacs-directory))
@@ -68,21 +68,50 @@
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
            'silent 'inhibit-cookies)
         (setf (point) (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 
-  ;; Bootstrap use-package
+  ;; Bootstrap elpaca (snippet from elpaca readme)
+  (declare-function elpaca-generate-autoloads "elpaca")
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (when-let ((elpaca-repo (expand-file-name "repos/elpaca/" elpaca-directory))
+             (elpaca-build (expand-file-name "builds/elpaca/" elpaca-directory))
+             (elpaca-target (if (file-exists-p elpaca-build) elpaca-build elpaca-repo))
+             (elpaca-url  "https://www.github.com/progfolio/elpaca.git")
+             ((add-to-list 'load-path elpaca-target))
+             ((not (file-exists-p elpaca-repo)))
+             (buffer (get-buffer-create "*elpaca-bootstrap*")))
+    (condition-case-unless-debug err
+        (progn
+          (unless (zerop (call-process "git" nil buffer t "clone" elpaca-url elpaca-repo))
+            (error "%s" (list (with-current-buffer buffer (buffer-string)))))
+          (byte-recompile-directory elpaca-repo 0 'force)
+          (require 'elpaca)
+          (elpaca-generate-autoloads "elpaca" elpaca-repo)
+          (kill-buffer buffer))
+      ((error)
+       (delete-directory elpaca-directory 'recursive)
+       (with-current-buffer buffer
+         (goto-char (point-max))
+         (insert (format "\n%S" err))
+         (display-buffer buffer)))))
+  (require 'elpaca-autoloads)
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca (elpaca :host github :repo "progfolio/elpaca"))
+
+	;; Install use-package (elpaca)
+  ;(elpaca use-package (require 'use-package))
+	;(elpaca-process-queues) ;; Install use-package now
+
+	;; Install use-package (straight)
   (require 'straight)
 	(require 'package)
   (declare-function straight-use-package "straight.el")
-  (unless (package-installed-p 'use-package)
-    (straight-use-package 'use-package)
-    (require 'use-package))
-  (defvar straight-use-package-by-default)
-  (setq straight-use-package-by-default t)
+	(straight-use-package 'use-package)
+	(require 'use-package)
 
   ;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
   (eval-when-compile

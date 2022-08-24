@@ -78,6 +78,12 @@ to do every few years."
                  (t recipe))
             ,@body))))
 
+(defun aero/elpaca-process-queues ()
+  "Interactive version of `elpaca-process-queues'."
+  (interactive)
+  (elpaca-process-queues))
+
+
 ;; utilities
 
 (defun aero/keyboard-quit-context ()
