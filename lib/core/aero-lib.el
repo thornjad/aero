@@ -502,6 +502,12 @@ This can be used to open Nautilus/Finder, the default browser, etc. See \"man
 xdg-open\" for more."
   (interactive (list (read-string "xdg-open: ")))
   (call-process "xdg-open" nil 0 nil arg))
+(defun aero/browse-url-open (url &optional _ignored)
+  "Pass the specified URL to `aero/xdg-open'.
+
+Ignored arg is due to the way `funcall-interactively' calls stuff."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (aero/xdg-open url))
 
 
 ;;; editing et cetera
