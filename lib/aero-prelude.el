@@ -758,6 +758,7 @@
    :prefix "SPC"
    "hdf" 'helpful-function
    "hdF" 'counsel-describe-face
+   "hda" 'helpful-symbol
    "hdb" 'describe-bindings
    "hdv" 'helpful-variable
    "hdm" 'helpful-macro
