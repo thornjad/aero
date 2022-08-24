@@ -500,8 +500,13 @@ This function does NOT remove remote buffers, only their connections."
   "Pass the specified ARG to \"xdg-open\".
 This can be used to open Nautilus/Finder, the default browser, etc. See \"man
 xdg-open\" for more."
-  (interactive (list (read-string "xdg-open: ")))
-  (call-process "xdg-open" nil 0 nil arg))
+  (interactive (list (read-string "Open: ")))
+  (let ((proc (cond
+                ((system-is-linux) "xdg-open")
+                ((system-is-mac) "open")
+                (t (user-error "No system process to use on this OS")))))
+    (call-process proc nil 0 nil arg)))
+
 (defun aero/browse-url-open (url &optional _ignored)
   "Pass the specified URL to `aero/xdg-open'.
 
