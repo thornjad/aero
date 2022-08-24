@@ -408,7 +408,7 @@ Requires watchman."
     (string-match "entity: \\(&.*?;\\)" entry)
     (insert (match-string 1 entry))))
 
-(eval-after-load 'general
+(with-eval-after-load 'general
   (aero-leader-def
     "th" 'aero/html-entity-insert
     "tH" 'aero/html-entity-select))
