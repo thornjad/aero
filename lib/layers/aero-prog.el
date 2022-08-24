@@ -82,42 +82,6 @@
          . eglot-ensure)
   :after (general)
   :config
-  ;; Eglot throws an error when it doesn't find a matching server, which is ridiculous. So here we
-  ;; override the error function so it's just a message. However, Eglot assumes this function will
-  ;; stop execution, so just the message alone will cause legitimate errors. Rather than hack more
-  ;; into Eglot functions, we wrap the problematic functions with a `catch' and then `throw' to it.
-;;   (defun aero/eglot-error-box (eglot-fn &rest args)
-;;     (catch 'eglot-error-box
-;;       (apply eglot-fn args)))
-;;   ;; List contains any Eglot function which contains a call to `eglot--error' and may run on a
-;;   ;; buffer in which Eglot is not already running. NOTE may need to add more here later.
-;;   (dolist (fn '(eglot--connect))
-;;     (advice-add fn :around #'aero/eglot-error-box))
-;;   (defun eglot--error (format &rest args)
-;;     "Error out with FORMAT with ARGS.
-
-;; Modified by Aero so it doesn't actually `error' and throw off execution. However, Eglot depends on
-;; this function stopping execution, so this implementation is fragile."
-;;     (message "[eglot] %s" (apply #'format format args))
-;;     (throw 'eglot-error-box nil))
-
-  ;; For some reason Eglot refuses to add angular support, so we have to add it. And because, for
-  ;; whatever reason, the server needs to be told where to find the global node_modules, we have to
-  ;; find it ourselves, hence the complexity here.
-  (add-to-list 'eglot-server-programs
-               `(web-angular-mode
-                 . ,(let ((node-modules-path
-                           (expand-file-name
-                            "lib/node_modules"
-                            (string-trim (shell-command-to-string
-                                          "npm config get --global prefix")))))
-                      (list
-                       "node"
-                       (expand-file-name "@angular/language-server" node-modules-path)
-                       "--ngProbeLocations" node-modules-path
-                       "--tsProbeLocations" node-modules-path
-                       "--stdio"))))
-
   (aero-leader-def
     "la" 'eglot-code-actions
     "lf" '(:ignore t :wk "find")
