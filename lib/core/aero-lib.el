@@ -36,7 +36,48 @@
   "Return a random element of the list COLL."
   (nth (random (length coll)) coll))
 
-
+(defmacro package! (package recipe &rest body)
+  "Get PACKAGE using RECIPE, then evaluate PACKAGE & BODY with `use-package'.
+
+Example:
+
+    (package! foo :auto :commands (foo-bar foo-spam))
+
+If the RECIPE is :auto, use the recipe provided by [M]ELPA.
+
+If the RECIPE is :builtin or :local, do not search [M]ELPA, only pass BODY to `use-package'.
+
+If the BODY contains the keyword :disabled, the package is completely ignored, with an expansion
+indicating the package has been disabled.
+
+Usage of this macro allows simplified refactoring when changing packaging systems, as Aero is wont
+to do every few years."
+  (declare (indent 1)) ; indent like use-package
+  (cond
+    ((memq :disabled body)
+     (format "%s :disabled by Aero package!" package))
+
+    ((or (equal recipe :builtin)
+         (equal recipe :local))
+     `(use-package ,package ,@body))
+
+    ;; Use straight
+		(t `(use-package ,package
+					  :straight ,(or (equal recipe :auto) recipe)
+					  ,@body))
+
+    ;; Disabled until elpaca matures a little more, it's still in active development, has too many
+    ;; bugs for daily use as of this comment.
+    (nil `(elpaca-use-package
+              ,(cond
+                 ((equal recipe :auto) package)
+                 ((keywordp (car recipe))
+                  ;; Elpaca prefers recipe to start with identifier, but it's redundant in usage, so
+                  ;; auto-insert it here if recipe doesn't have it.
+                  (cons package recipe))
+                 (t recipe))
+            ,@body))))
+
 ;; utilities
 
 (defun aero/keyboard-quit-context ()
