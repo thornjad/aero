@@ -396,6 +396,12 @@ buffer will be recentered to the line at point."
     (apply orig-fun args)
     (subword-mode original-mode)))
 
+(defun aero/advice-no-message (fn &rest args)
+  "Advise function FN with ARGS not to message at all."
+  (let ((message-log-max nil)
+        (inhibit-message t))
+    (apply fn args)))
+
 (defun aero/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)
