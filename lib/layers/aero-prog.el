@@ -127,10 +127,13 @@
 (package! markdown-mode :auto
   :after (general)
   :commands (markdown-mode gfm-mode)
-  :mode (("\\`README\\.md\\'" . gfm-mode)
-         ("github\\.com.*\\.txt\\'" . gfm-mode)
-         ("\\.md\\'"          . markdown-mode)
-         ("\\.markdown\\'"    . markdown-mode))
+  :mode (("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . gfm-mode)
+         ("github\\.com.*\\.txt\\'" . gfm-mode))
+
+  :custom
+  ;; Fix table to teach it that quotes mean string, regardless of what the dev says
+  (markdown-mode-syntax-table (make-syntax-table text-mode-syntax-table))
 
   :init
   (setq markdown-enable-wiki-links t
@@ -140,6 +143,9 @@
   (add-hook 'markdown-mode-hook #'flyspell-mode)
 
   :config
+  ;; Don't expand checkboxes
+  (sp-local-pair 'gfm-mode "- [ " "]")
+
   (require 'aero-thornlog)
   (aero-mode-leader-def
     :keymaps 'markdown-mode-map
