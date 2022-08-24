@@ -21,15 +21,9 @@
 ;; A home for utilities
 
 (require 'cl-lib)
-(require 'use-package)
+(require 'aero-pbcopier) ; Can be found in this dir
 
 ;;; Code:
-
-;; Requirements
-(use-package memo :straight (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
-(use-package async :straight (:host github :repo "jwiegley/emacs-async") :commands (async-save))
-(use-package popup :straight t)
-(require 'aero-pbcopier) ; Can be found in this dir
 
 ;; basic helpers
 (defun rand-nth (coll)
@@ -94,30 +88,31 @@ with some parts omitted and some custom behavior added."
   ;; Adapted from https://with-emacs.com/posts/tips/quit-current-context/
   (interactive)
   (cond
-   ((region-active-p)
-    ;; Avoid adding the region to the window selection.
-    (setq saved-region-selection nil)
-    (let (select-active-regions)
-      (deactivate-mark)))
+    ((region-active-p)
+     ;; Avoid adding the region to the window selection.
+     (setq saved-region-selection nil)
+     (let (select-active-regions)
+       (deactivate-mark)))
 
-   ((eq last-command 'mode-exited) nil)
+    ((eq last-command 'mode-exited) nil)
 
-   (current-prefix-arg nil)
+    (current-prefix-arg nil)
 
-   (defining-kbd-macro
+    (defining-kbd-macro
      (message
       (substitute-command-keys
        "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
-     (cancel-kbd-macro-events))
+        (cancel-kbd-macro-events))
 
-   ((active-minibuffer-window)
-    (when (get-buffer-window "*Completions*")
-      ;; hide completions first so point stays in active window when
-      ;; outside the minibuffer
-      (minibuffer-hide-completions))
-    (abort-recursive-edit))
+    ((active-minibuffer-window)
+     (when (get-buffer-window "*Completions*")
+       ;; hide completions first so point stays in active window when
+       ;; outside the minibuffer
+       (minibuffer-hide-completions))
+     (abort-recursive-edit))
 
-   (t (keyboard-quit))))
+    (t (keyboard-quit))))
+
 (defun aero/comment-dwim ()
   "Comment region if active, else comment line.
 
@@ -214,11 +209,11 @@ See `sort-regexp-fields'."
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
   (cl-destructuring-bind
-      (buf start pos)
+        (buf start pos)
       (or (cl-find (window-buffer window) (window-prev-buffers)
                    :key #'car :test-not #'eq)
-          (list (other-buffer) nil nil ))
-    (set-window-buffer-start-and-point window buf start pos)))
+          (list (other-buffer) nil nil)
+          (set-window-buffer-start-and-point window buf start pos))))
 
 (defun aero/alternate-window ()
   "Switch back and forth between current and last window in the current frame."
@@ -296,15 +291,15 @@ This is equivalent to SPC U M-x eshell"
                color)
        (apply #'concat
               (cl-loop with idx = 0
-                       with len = (length data)
-                       for dl in data
-                       do (cl-incf idx)
-                       collect
-                       (concat "\""
-                               (cl-loop for d in dl
-                                        if (= d 0) collect (string-to-char " ")
-                                        else collect (string-to-char "."))
-                               (if (eq idx len) "\"};" "\",\n")))))
+                    with len = (length data)
+                    for dl in data
+                    do (cl-incf idx)
+                    collect
+                    (concat "\""
+                            (cl-loop for d in dl
+                                  if (= d 0) collect (string-to-char " ")
+                                  else collect (string-to-char "."))
+                            (if (eq idx len) "\"};" "\",\n")))))
       'xpm t :ascent 'center))))
 
 
