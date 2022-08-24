@@ -1,4 +1,4 @@
-personal_ws-1.1 en 446 
+personal_ws-1.1 en 456 
 ACL
 APIs
 Aireon
@@ -6,6 +6,7 @@ Alacritty
 Analytics
 AuthNet
 Autodesk
+Autodesk's
 Avvir
 BCAT
 BIM
@@ -29,11 +30,14 @@ Cloudflare
 Comeet
 Comeet's
 Customizable
+DoD
 Donal
 DroneDeploy
 DuckDuckGo
 ELPA
 ESC
+Eglot
+Elpaca
 Ewelina
 FATV
 FBO
@@ -98,6 +102,9 @@ Mongo
 NSR
 NVM
 NVME
+NWC
+NWD
+NWF
 Nack
 Nvidia
 OCaml
@@ -159,6 +166,7 @@ UX
 VFR
 Verix
 Voici
+WAL
 WFH
 WIP
 WSL
@@ -200,6 +208,7 @@ capitalisation
 cette
 cget
 changelog
+checkboxes
 chienne
 chocolatiers
 codebases
@@ -359,6 +368,7 @@ readme
 rearchitecting
 recentered
 referer
+regionalization
 repl
 repo
 reproducibility
