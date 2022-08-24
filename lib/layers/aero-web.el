@@ -65,14 +65,8 @@ Requires watchman."
 
 (package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\|tsx\\)\\'"
-  :preface
-  ;; NOTE: Not automatic, load via dir-locals whenever web-mode loads:
-  ;;     ((web-mode (eval web-angular-mode)))
-  (define-derived-mode web-angular-mode web-mode "Web/Angular"
-    "Helper mode for Angular .component.html files.")
   :config
-  (setq web-mode-engines-alist
-        '(("ctemplate" . "\\.tpl\\'"))))
+  (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
 
 (package! emmet-mode :auto
   :load-path "lib/packages/emmet-mode/"
