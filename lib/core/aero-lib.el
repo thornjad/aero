@@ -118,6 +118,16 @@ with some parts omitted and some custom behavior added."
     (abort-recursive-edit))
 
    (t (keyboard-quit))))
+(defun aero/comment-dwim ()
+  "Comment region if active, else comment line.
+
+This avoids the excess region commenting of `comment-line' while also avoiding the weird single-line
+behavior of `comment-dwim'."
+  (interactive)
+  (save-excursion
+    (if (use-region-p)
+        (call-interactively #'comment-or-uncomment-region)
+      (call-interactively #'comment-line))))
 
 (defun aero/applescript-escape (str)
   "Escape STR to make it suitable for using is applescripts."

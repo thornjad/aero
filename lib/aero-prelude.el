@@ -125,7 +125,7 @@
    "'" 'eshell
    "\"" '(aero/eshell-new :wk "eshell-new")
    ":" 'eval-expression
-   ";" 'comment-or-uncomment-region
+   ";" 'aero/comment-dwim
    "!" 'shell-command
    "=" 'quick-calc
 
