@@ -1,4 +1,4 @@
-# Things that are currently broken or missing in Aero
+# Things currently broken or missing in Aero
 
 More or less a TODO list
 
