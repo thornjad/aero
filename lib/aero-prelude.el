@@ -948,6 +948,18 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
 
+;; Eldoc
+(defun aero/advice-elisp-get-fnsym-args-string (fn sym &rest args)
+  "If SYM is a function, append its docstring."
+  (concat
+   (apply fn sym args)
+   (let ((doc (and (fboundp sym) (documentation sym 'raw))))
+     (and doc
+          (stringp doc)
+          (not (string= "" doc))
+          (concat "\n\n" (propertize doc 'face 'italic))))))
+(advice-add 'elisp-get-fnsym-args-string :around #'aero/advice-elisp-get-fnsym-args-string)
+
 
 ;; Games, etc.
 
