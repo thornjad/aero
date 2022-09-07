@@ -39,14 +39,17 @@ Example:
 
 If the RECIPE is :auto, use the recipe provided by [M]ELPA.
 
-If the RECIPE is :builtin or :local, do not search [M]ELPA, only pass BODY to `use-package'.
+If the RECIPE is :builtin or :local, do not search [M]ELPA, only pass BODY to `use-package'. While
+there is no functional difference between these two keywords, :builtin should be used for packages
+within Emacs while :local should be used for user packages which exist locally. :local packages may
+require a :load-path for `use-package' to load properly.
 
 If the BODY contains the keyword :disabled, the package is completely ignored, with an expansion
 indicating the package has been disabled.
 
 Usage of this macro allows simplified refactoring when changing packaging systems, as Aero is wont
 to do every few years."
-  (declare (indent 1)) ; indent like use-package
+  (declare (indent defun)) ; indent like use-package
   (cond
     ((memq :disabled body)
      (format "%s :disabled by Aero package!" package))
