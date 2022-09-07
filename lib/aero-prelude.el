@@ -373,6 +373,38 @@
   (evil-define-key nil global-map (kbd "C-u") #'aero/scroll-quarter-page-up)
   (evil-define-key nil global-map (kbd "C-d") #'aero/scroll-quarter-page-down)
 
+  ;; Define vig and vag, etc. to look for all paren types
+  (defun aero/evil-paren-range (count beg end type inclusive)
+    "Get minimum range of paren text object.
+COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive."
+    (let* ((parens '("()" "[]" "{}" "<>"))
+           range
+           found-range)
+      (dolist (p parens)
+        (condition-case nil
+            (setq range (evil-select-paren (aref p 0) (aref p 1) beg end type count inclusive))
+          (error nil))
+        (when range
+          (cond
+            (found-range
+             (when (< (- (nth 1 range) (nth 0 range))
+                      (- (nth 1 found-range) (nth 0 found-range)))
+               (setf (nth 0 found-range) (nth 0 range))
+               (setf (nth 1 found-range) (nth 1 range))))
+            (t
+             (setq found-range range)))))
+      found-range))
+  (evil-define-text-object aero/evil-a-paren (count &optional beg end type)
+    "Select a paren."
+    :extend-selection t
+    (aero/evil-paren-range count beg end type t))
+  (evil-define-text-object aero/evil-inner-paren (count &optional beg end type)
+    "Select 'inner' paren."
+    :extend-selection nil
+    (aero/evil-paren-range count beg end type nil))
+  (define-key evil-inner-text-objects-map "g" #'aero/evil-inner-paren)
+  (define-key evil-outer-text-objects-map "g" #'aero/evil-a-paren)
+
   ;; Very useful, in visual mode, use < and > to indent/unindent the line(s)
   (defun aero/evil-shift-right ()
     (interactive)
