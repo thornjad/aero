@@ -1,4 +1,4 @@
-personal_ws-1.1 en 456 
+personal_ws-1.1 en 458 
 ACL
 APIs
 Aireon
@@ -29,6 +29,7 @@ Chua
 Cloudflare
 Comeet
 Comeet's
+Covid
 Customizable
 DoD
 Donal
@@ -235,6 +236,7 @@ dicts
 dir
 dired
 diskutil
+docstring
 doi
 downloader
 dropdown
