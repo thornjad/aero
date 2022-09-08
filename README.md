@@ -48,9 +48,9 @@ With Aero, you'll also find a custom improved mode line which works with any the
 
 Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs, but you can generally assume support for the last version too.
 
-### Required for LSP
+### Optional LSP dependencies
 
-Emacs continues to lack native language server support, but Aero implements this. To take full advantage of this feature, Aero requires some tools. **Only install what you need**:
+Emacs continues to lack native language server support. To take full advantage of this feature, Aero requires some optional tools:
 
 - Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
 - Python 3
