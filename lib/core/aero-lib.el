@@ -193,11 +193,11 @@ See `sort-regexp-fields'."
 
 (defun switch-to-scratch-buffer ()
   (interactive)
-  (switch-to-buffer "*Scratch*"))
+  (switch-to-buffer "*scratch*"))
 
 (defun switch-to-new-scratch-buffer ()
   (interactive)
-  (switch-to-buffer (generate-new-buffer "*Scratch*")))
+  (switch-to-buffer (generate-new-buffer "*scratch*")))
 
 (defun aero/bury-buffer-kill-window (&optional window)
   "Bury the current buffer and kill its window, or use WINDOW."
