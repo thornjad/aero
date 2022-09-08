@@ -1,4 +1,4 @@
-personal_ws-1.1 en 458 
+personal_ws-1.1 en 466 
 ACL
 APIs
 Aireon
@@ -53,6 +53,7 @@ Floatplane
 Flyspell
 Framagit
 Frontend
+GDAL
 GDPR
 GHE
 GPL
@@ -81,6 +82,7 @@ KDE
 Kat
 KiB
 Kosovo
+Kubernetes
 LIFR
 LLC
 LMB
@@ -143,6 +145,7 @@ SSD
 SSHFS
 SVGs
 Sacha
+Shapefiles
 Shopify
 Spacemacs
 Spotify
@@ -250,6 +253,8 @@ eln
 emacsclient
 encodings
 enfin
+enqueues
+enqueuing
 enum
 env
 eshell
@@ -272,6 +277,7 @@ frontend
 frontend's
 fullscreen
 fullscreening
+geojson
 geolocation
 gitlab
 globals
@@ -366,6 +372,8 @@ putain
 px
 pygame
 pylint
+rasterization
+rasterize
 readme
 rearchitecting
 recentered
