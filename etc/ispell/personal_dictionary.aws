@@ -1,4 +1,4 @@
-personal_ws-1.1 en 466 
+personal_ws-1.1 en 467 
 ACL
 APIs
 Aireon
@@ -337,6 +337,7 @@ minimap
 misconfiguration
 modeline
 multiplanetary
+multivariadic
 nack
 nacking
 namespace
@@ -463,5 +464,5 @@ webpack
 websocket
 websockets
 whitespace
+whoever's
 yml
-éditeur
