@@ -14,6 +14,12 @@ macos-reqs:
 	brew install coreutils git-delta
 	brew tap d12frosted/emacs-plus
 
+build-emacs-cask-stable: macos-reqs
+	brew install --cask emacs
+
+build-emacs-cask: macos-reqs
+	brew install --cask emacs-nightly
+
 build-emacs-macos: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
