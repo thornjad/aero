@@ -391,7 +391,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (add-to-list 'auto-mode-alist '("/\\.[^/]*\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("/\\.dir-locals\\.el\\'" . emacs-lisp-mode))
 
-;; somehow makefile-mode broke??
+;; somehow makefile-mode stopped activating?
 (add-to-list 'auto-mode-alist '("Makefile" . makefile-mode))
 
 (add-hook 'prog-mode-hook (lambda ()
