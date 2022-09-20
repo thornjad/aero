@@ -136,6 +136,7 @@
   :custom
   ;; Fix table to teach it that quotes mean string, regardless of what the dev says
   (markdown-mode-syntax-table (make-syntax-table text-mode-syntax-table))
+  (markdown-header-scaling t)
 
   :init
   (setq markdown-enable-wiki-links t
