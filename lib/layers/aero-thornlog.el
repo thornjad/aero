@@ -241,8 +241,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (find-file (expand-file-name "log.md" aero/thornlog-path)))
 
 (defun aero/thornlog-notes ()
-  "Personal persistent log."
+  "Personal notes file."
   (interactive)
   (find-file (expand-file-name "notes.md" aero/thornlog-path)))
+
+(defun aero/thornlog-todo ()
+  "Personal todo list."
+  (interactive)
+  (find-file (expand-file-name "todo.md" aero/thornlog-path)))
 
 (provide 'aero-thornlog)
