@@ -200,6 +200,11 @@
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
+(package! flymake-eslint :auto
+  :init
+  (add-hook 'typescript-mode-hook (lambda () (flymake-eslint-enable)))
+  (add-hook 'js-mode-hook (lambda () (flymake-eslint-enable))))
+
 (package! flyspell :builtin
   :after (general)
   :hook ((prog-mode . flyspell-prog-mode)
