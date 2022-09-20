@@ -889,7 +889,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
-  :hook text-mode
+  ;; :hook text-mode
   :commands (eprime-check-buffer eprime-mode)
   :init
   (aero-leader-def
