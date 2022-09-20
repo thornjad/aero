@@ -81,6 +81,8 @@
           rust-mode)
          . eglot-ensure)
   :after (general)
+  :custom
+  (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   :config
   (aero-leader-def
     "la" 'eglot-code-actions
