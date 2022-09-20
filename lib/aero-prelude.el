@@ -310,6 +310,7 @@
    "wbh" 'eww-list-histories
    "wbm" 'eww-list-bookmarks
    "wbp" 'browse-url-at-point
+   "wp" 'browse-url-at-point
    "wc" 'aero/toggle-compilation-buffer
    "wd" 'delete-window
    "wh" 'windmove-left
