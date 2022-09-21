@@ -871,10 +871,10 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (global-set-key (kbd "<f12>") 'pomp)
   (aero-leader-def "ap" 'pomp))
 
-;; (package! editorconfig :auto
-;;   :defer 1
-;;   :functions (editorconfig-mode)
-;;   :config (editorconfig-mode +1))
+(package! editorconfig :auto
+  :defer 1
+  :functions (editorconfig-mode)
+  :config (editorconfig-mode +1))
 
 ;; Ensure emacsclient frames open with focus
 (add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
