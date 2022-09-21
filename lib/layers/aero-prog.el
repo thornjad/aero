@@ -373,12 +373,15 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;;; formatting
 
 (package! apheleia :auto
+  :after general
   :config
   ;; For some reason, prettier won't read the config file from package.json. I'm just hard-coding
   ;; the config here because I'm done with the day. This will eventually come back to bite me, but
   ;; that's future-me's problem.
   (setf (alist-get 'prettier apheleia-formatters)
         '(npx "prettier" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
+  (aero-leader-def
+    "bI" 'apheleia-format-buffer)
   (apheleia-global-mode +1))
 
 
