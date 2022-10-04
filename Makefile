@@ -4,7 +4,7 @@
 EMACS ?= emacs
 EMACS_BUILD_DIR ?= ~/lib/emacs/
 
-all: upgrade-emacs-macos install-aero-macos
+all: upgrade-emacs-macos nongnu-elpa install-aero-macos
 
 build-macos: build-emacs-macos install-aero-macos
 
@@ -53,15 +53,22 @@ install-aero-macos:
 	[ -s /Applications/Emacs\ \(Aero\).app ] && rm -rf /Applications/Emacs\ \(Aero\).app
 	mv bin/Emacs\ \(Aero\).app /Applications/
 
-build-emacs-linux:
+build-emacs-linux: nongnu-elpa
 	./bin/build/linux-requirements.zsh
 	cd ${EMACS_BUILD_DIR} && \
 	git stash -m "Emacs build autostash" && \
 	git pull --rebase && \
 	./autogen.sh && \
-	./configure --with-native-compilation --with-xwidgets --with-json && \
+	./configure --with-native-compilation --with-json --with-threads --with-compress-install --with-modules --with-gnutls=ifavailable --without-mailutils CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" && \
 	make -j12 && \
 	sudo make install
+
+.PHONY: nongnu-elpa
+nongnu-elpa:
+	# nongnu-elpa is corrupted somehow, this fixes it by cloning without fsck whether or not it's already there
+	rm -rf ~/.config/emacs/straight/repos/nongnu-elpa/
+	mkdir -p ~/.config/emacs/straight/repos/
+	git clone https://git.savannah.gnu.org/git/emacs/nongnu.git ~/.config/emacs/straight/repos/nongnu-elpa --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false
 
 install-dependencies: install-lsp-servers
 	npm i -g sass-lint eslint tern
