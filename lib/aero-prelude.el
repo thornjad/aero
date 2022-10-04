@@ -933,18 +933,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "Cc" 'clue-copy
     "Cp" 'clue-paste))
 
-;; Keep track of commands used for fun and profit
-(package! keyfreq :auto
-  :defer 1
-  :config
-  (setq keyfreq-excluded-commands '(self-insert-command
-                                    vterm--self-insert
-                                    lsp-ui-doc--handle-mouse-movement
-                                    pixel-scroll-precision
-                                    ignore))
-  (keyfreq-mode +1)
-  (keyfreq-autosave-mode +1))
-
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
