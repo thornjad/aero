@@ -510,5 +510,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! graphql-mode :auto :mode "\\.graphql\\'")
 (package! groovy-mode :auto :mode "\\(\\.groovy\\'\\|Jenkinsfile\\)")
 (package! csv-mode :auto :mode "\\.csv\\'")
+(package! logstash-conf :auto :commands (logstash-conf-mode))
 
 (provide 'aero-prog)
