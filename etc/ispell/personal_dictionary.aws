@@ -1,4 +1,4 @@
-personal_ws-1.1 en 468 
+personal_ws-1.1 en 470 
 ACL
 APIs
 Aireon
@@ -83,6 +83,7 @@ Kat
 KiB
 Kosovo
 Kubernetes
+LD
 LIFR
 LLC
 LMB
@@ -374,6 +375,7 @@ putain
 px
 pygame
 pylint
+quaternion
 rasterization
 rasterize
 readme
