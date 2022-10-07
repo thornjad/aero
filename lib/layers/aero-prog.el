@@ -83,6 +83,7 @@
   :after (general)
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
+  (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
   :config
   (aero-leader-def
     "la" 'eglot-code-actions
