@@ -85,6 +85,15 @@
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
   :config
+  ;; Re-add flymake checkers because eglot clobbers them all on server start
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (when (derived-mode-p 'python-mode)
+                (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
+
+  ;; Experimental homebrew LSP headerline, without any frills
+  ;; (require 'aero-eglot-headerline)
+
   (aero-leader-def
     "la" 'eglot-code-actions
     "lf" '(:ignore t :wk "find")
@@ -95,14 +104,7 @@
     "lr" '(:ignore t :wk "refactor")
     "lrr" 'eglot-rename
     "lrf" 'eglot-format
-    "lro" 'eglot-code-action-organize-imports)
-
-  ;; TODO try `condition-case' or `condition-case-unless-debug' to catch what `eglot-ensure' errors
-  ;; on??
-
-  ;; Experimental homebrew LSP headerline, without any frills
-  ;; (require 'aero-eglot-headerline)
-  )
+    "lro" 'eglot-code-action-organize-imports))
 
 ;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
 (package! eldoc-box :auto :commands (eldoc-box-hover-mode))
@@ -203,8 +205,19 @@
 
 (package! flymake-eslint :auto
   :init
-  (add-hook 'typescript-mode-hook (lambda () (flymake-eslint-enable)))
-  (add-hook 'js-mode-hook (lambda () (flymake-eslint-enable))))
+  ;; Need to add after eglot so eglot doesn't clobber
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (when (or (derived-mode-p 'typescript-mode) (derived-mode-p 'js-mode))
+                (flymake-eslint-enable)))))
+
+(package! flymake-mypy (:host github :repo "com4/flymake-mypy")
+  :init
+  ;; Need to add after eglot so eglot doesn't clobber
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (when (derived-mode-p 'python-mode)
+                (flymake-mypy-enable)))))
 
 (package! flyspell :builtin
   :after (general)
@@ -381,6 +394,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   ;; that's future-me's problem.
   (setf (alist-get 'prettier apheleia-formatters)
         '(npx "prettier" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
+  (setf (alist-get 'prettier-typescript apheleia-formatters)
+        '(npx "prettier" "--stdin-filepath" filepath "--parser=typescript" "--single-quote" "--trailing-comma" "all" "--print-width" "110"))
+
   (aero-leader-def
     "bI" 'apheleia-format-buffer)
   (apheleia-global-mode +1))
