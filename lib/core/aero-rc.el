@@ -141,6 +141,8 @@
  save-interprogram-paste-before-kill t ; see variable documentation
  diff-switches "-u" ; unified diff by default
 
+ eldoc-echo-area-use-multiline-p t ; don't truncate documentation
+
  ;; files
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
  require-final-newline t ; add newline to end of files if there isn't one
