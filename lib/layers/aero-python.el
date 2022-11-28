@@ -33,6 +33,11 @@
   :config
   (defvar python-mode-initialized nil)
 
+  (defun aero/insert-pdb ()
+    "Inserts PDB set_trace."
+    (interactive)
+    (insert "import pdb; pdb.set_trace()"))
+
   (aero-mode-leader-def
     :keymaps 'python-mode-map
     "p" 'run-python
@@ -56,7 +61,8 @@
     "g" '(:ignore t :wk "go")
     "ge" 'elpy-shell-goto-last-error
     "gi" 'elpy-shell-goto-import-header
-    "d" '(:ignore t :wk "pdb"))
+    "d" '(:ignore t :wk "pdb")
+    "di" '(aero/insert-pdb :wk "insert pdb"))
   (general-define-key
    :keymaps 'python-mode-map
    "s-e" 'python-shell-send-defun
