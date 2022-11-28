@@ -43,5 +43,9 @@
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars))
 
+;; Disable mail accidentally opening
+(global-unset-key (kbd "C-x m"))
+(defun goto-address-find-address-at-point () "Disabled by Aero." nil)
+
 ;; One less file to load at startup, and we'll never use it
 (setq site-run-file nil)
