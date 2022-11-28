@@ -159,7 +159,6 @@
  cperl-indent-level 2
  css-indent-offset 2
  evil-shift-width 2
- js-basic-offset 2
  js-indent-level 2
  js-switch-indent-offset 2
  js-syntactic-mode-name nil ; just use normal mode name
