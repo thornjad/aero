@@ -364,6 +364,9 @@
   ;; Ensure horizontal movement doesn't cross to the next/previous line
   (setq-default evil-cross-lines nil)
 
+  ;; Undo in region
+  (define-key evil-visual-state-map (kbd "u") 'undo)
+
   ;; By default, these two operate on half pages, but I prefer the smaller jump
   (defun aero/scroll-quarter-page-down ()
     (interactive)
