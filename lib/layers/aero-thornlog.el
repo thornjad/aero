@@ -28,12 +28,14 @@
 (defun new-day ()
   "Create a new entry for today, if one isn't already present."
   (interactive)
-  (if (today t)
-      (message "Entry for today already present")
-    (progn
-      (new-day-insert)
-      (when (require 'evil nil t)
-        (evil-scroll-line-to-center (line-number-at-pos))))))
+  (cond
+   ((not (string= (buffer-file-name) (expand-file-name "log.md" aero/thornlog-path)))
+    (message "Not in Thornlog file"))
+   ((today t) (message "Entry for today already present"))
+   (t (progn
+        (new-day-insert)
+        (when (require 'evil nil t)
+          (evil-scroll-line-to-center (line-number-at-pos)))))))
 
 ;; List of things we expand inside the templated-section of this file.
 ;; The pairs are "regexp" + "replacement" which is invoked via "apply".
