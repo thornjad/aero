@@ -78,12 +78,15 @@ update-dependencies: install-dependencies
 update-lsp-servers: install-lsp-servers
 
 install-lsp-servers:
-	npm i -g bash-language-server @types/node
-	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server
-	npm i -g emmet-ls
-	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi
-	pip3 install "ptvsd>=4.2"
-	rustup component add rls rust-analysis rust-src
-	brew install clojure-lsp/brew/clojure-lsp-native
-	# opam install ocaml-lsp-server
-	# nix-env -i rnix-lsp
+	# Continues even on failures. This lets us only install what the system can install, but can
+	# swallow up errors
+	npm i -g bash-language-server @types/node || true
+	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
+	npm i -g emmet-ls || true
+	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi || true
+	pip3 install "ptvsd>=4.2" || true
+	rustup component add rls rust-analysis rust-src || true
+	brew install clojure-lsp/brew/clojure-lsp-native || true
+	gem install solargraph || true
+	opam install ocaml-lsp-server || true
+	nix-env -i rnix-lsp || true
