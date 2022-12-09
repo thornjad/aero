@@ -58,6 +58,11 @@
   ;; Better popup interface for company
   :hook (company-mode . company-box-mode))
 
+;; required by very old unicode-escape.el, used by tabnine
+(require 'cl-lib)
+(defalias 'defun* 'cl-defun)
+(defalias 'list* 'cl-list*)
+
 (package! company-tabnine :auto
   ;; Manages and provides Tabnine interface
   :after (company)
