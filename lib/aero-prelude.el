@@ -390,13 +390,13 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
           (error nil))
         (when range
           (cond
-            (found-range
-             (when (< (- (nth 1 range) (nth 0 range))
-                      (- (nth 1 found-range) (nth 0 found-range)))
-               (setf (nth 0 found-range) (nth 0 range))
-               (setf (nth 1 found-range) (nth 1 range))))
-            (t
-             (setq found-range range)))))
+           (found-range
+            (when (< (- (nth 1 range) (nth 0 range))
+                     (- (nth 1 found-range) (nth 0 found-range)))
+              (setf (nth 0 found-range) (nth 0 range))
+              (setf (nth 1 found-range) (nth 1 range))))
+           (t
+            (setq found-range range)))))
       found-range))
   (evil-define-text-object aero/evil-a-paren (count &optional beg end type)
     "Select a paren."
@@ -650,6 +650,12 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
+
+(defun aero/ivy-rich--switch-buffer-directory (orig-fun &rest args)
+  "Advice to help ivy-rich see that files are not directories."
+  (cl-letf (((symbol-function 'directory-file-name) #'file-name-directory))
+    (apply orig-fun args)))
+(advice-add 'ivy-rich--switch-buffer-directory :around #'aero/ivy-rich--switch-buffer-directory)
 
 (package! swiper :auto
   ;; Search utility
