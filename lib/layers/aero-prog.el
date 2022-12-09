@@ -447,7 +447,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; SQL
 (package! sql :builtin
   :defer t
-	:after (general)
+  :after (general)
   :commands (sql-connect)
   :init
   (aero-leader-def
@@ -467,8 +467,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     "s" 'sql-send-string
     "S" 'aero/sql-send-string-and-focus)
 
-	;; for sql comint
-	(add-to-list 'same-window-buffer-names "*SQL: *")
+  ;; for sql comint
+  (add-to-list 'same-window-buffer-names "*SQL: *")
   (add-hook 'sql-interactive-mode-hook #'evil-insert-state)
 
   (defun aero/sql-send-string-and-focus ()
