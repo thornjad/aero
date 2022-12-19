@@ -528,7 +528,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! nhexl-mode :auto :defer t) ; improved version of `hexl-mode'
 (package! pdf-tools :auto :defer t)
 (package! terraform-mode :auto :mode "\\.tf\\'")
-(package! glsl-mode (:host github :repo "jimhourihan/glsl-mode") :mode "\\.\\(vert\\|frag\\)\\'")
+(package! glsl-mode (:host github :repo "jimhourihan/glsl-mode")
+  :mode "\\.\\(vert\\|frag\\)\\'"
+  :config (add-hook 'glsl-mode-hook '(lambda () (setq tab-width 4 c-basic-offset 4))))
 (package! graphql-mode :auto :mode "\\.graphql\\'")
 (package! groovy-mode :auto :mode "\\(\\.groovy\\'\\|Jenkinsfile\\)")
 (package! csv-mode :auto :mode "\\.csv\\'")
