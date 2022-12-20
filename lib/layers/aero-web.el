@@ -23,6 +23,8 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
+(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode)))
+
 (package! yarn (:host github :repo "jmfirth/yarn.el")
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
                         yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
@@ -64,8 +66,10 @@ Requires watchman."
     "jl" 'jest-last-failed))
 
 (package! web-mode :auto
-  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\|tsx\\)\\'"
+  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\)\\'"
   :config
+  (unless (treesitterp)
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
   (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
 
 (package! emmet-mode :auto
@@ -95,9 +99,12 @@ Requires watchman."
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
 (package! json-mode :auto
+  :unless (treesitterp)
 	:mode "\\.json\\'")
+(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode)))
 
 (package! typescript-mode :auto :unless (treesitterp) :mode "\\.tsx?\\'")
+(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
 
 ;; the rest
