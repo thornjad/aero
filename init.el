@@ -76,6 +76,10 @@
 
 	(require 'use-package)
 
+  (and
+	 (and (functionp 'module-load) (bound-and-true-p module-file-suffix))
+   (require 'treesit nil t))
+
   ;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
   (eval-when-compile
     (defvar use-package-expand-minimally)
