@@ -97,7 +97,7 @@ Requires watchman."
 (package! json-mode :auto
 	:mode "\\.json\\'")
 
-(package! typescript-mode :auto :mode "\\.tsx?\\'")
+(package! typescript-mode :auto :unless (treesitterp) :mode "\\.tsx?\\'")
 
 
 ;; the rest

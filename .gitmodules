@@ -1,3 +1,6 @@
 [submodule "lib/packages/aero-theme"]
 	path = lib/packages/aero-theme
 	url = git@gitlab.com:thornjad/aero-theme.git
+[submodule "lib/tree-sitter-module"]
+	path = lib/tree-sitter-module
+	url = git@github.com:casouri/tree-sitter-module.git

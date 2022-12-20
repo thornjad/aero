@@ -165,6 +165,10 @@ See `sort-regexp-fields'."
   "Return true when Emacs has been compiled with modules support."
   (and (functionp 'module-load) (bound-and-true-p module-file-suffix)))
 
+(defun treesitterp ()
+  "Evaluate whether Emacs has treesitter support."
+  (and (functionp 'treesit-available-p) (treesit-available-p)))
+
 
 ;; program-wide
 

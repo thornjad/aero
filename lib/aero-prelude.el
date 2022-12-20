@@ -468,16 +468,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; tree-sitter
 
-;; Requires module support
-;; TEMP disabled until tree-sitter gets its act together
-(when (and nil (aero/has-modules-p))
-  (package! tree-sitter :auto
-    :config
-    (global-tree-sitter-mode +1)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
+(when (and (aero/has-modules-p) (require 'treesit nil t))
   ;; various language supports for tree-sitter
-  (package! tree-sitter-langs :auto :after tree-sitter)
+  (package! tree-sitter-langs :auto)
 
   ;; Tree-sitter-based indentation for select modes
   (package! tsi (:host github :repo "orzechowskid/tsi.el")

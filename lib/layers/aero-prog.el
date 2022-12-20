@@ -71,8 +71,9 @@
 
 ;; LSP
 
-(package! eglot :auto
+(package! eglot :builtin
   :hook ((python-mode
+          python-ts-mode
           scss-mode
           css-mode
           clojure-mode
@@ -81,6 +82,8 @@
           json-mode
           js2-mode
           typescript-mode
+          typescript-ts-mode
+          tsx-ts-mode
           nix-mode
           tuareg-mode
           rust-mode)
@@ -95,6 +98,8 @@
             (lambda ()
               (when (derived-mode-p 'python-mode)
                 (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
+
+  ;; Set servers for some of web-mode
 
   ;; Experimental homebrew LSP headerline, without any frills
   ;; (require 'aero-eglot-headerline)
