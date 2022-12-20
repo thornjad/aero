@@ -70,12 +70,9 @@ nongnu-elpa:
 	mkdir -p ~/.config/emacs/straight/repos/
 	git clone https://git.savannah.gnu.org/git/emacs/nongnu.git ~/.config/emacs/straight/repos/nongnu-elpa --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false
 
-install-dependencies: install-lsp-servers
-	npm i -g sass-lint eslint tern
-
-update-dependencies: install-dependencies
-
-update-lsp-servers: install-lsp-servers
+init: nongnu-elpa install-lsp-servers
+	git submodule init
+	cd lib/tree-sitter-module && ./batch.sh
 
 install-lsp-servers:
 	# Continues even on failures. This lets us only install what the system can install, but can
