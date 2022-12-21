@@ -474,11 +474,10 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Tree-sitter-based indentation for select modes
 (package! tsi (:host github :repo "orzechowskid/tsi.el")
   :when (treesitterp)
-  :after tree-sitter
-  :hook ((typescript-mode . tsi-typescript-mode)
-         (json-mode . tsi-json-mode)
-         (css-mode . tsi-css-mode)
-         (scss-mode . tsi-scss-mode)))
+  :hook ((typescript-ts-mode . tsi-typescript-mode)
+         (tsx-ts-mode . tsi-typescript-mode)
+         (json-ts-mode . tsi-json-mode)
+         (css-ts-mode . tsi-css-mode)))
 
 ;; Provide vaf, etc. evil selection operators
 (package! evil-textobj-tree-sitter
