@@ -79,7 +79,7 @@ install-lsp-servers:
 	# swallow up errors
 	npm i -g bash-language-server @types/node || true
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
-	npm i -g emmet-ls || true
+	npm i -g emmet-ls vscode-json-languageserver || true
 	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi || true
 	pip3 install "ptvsd>=4.2" || true
 	rustup component add rls rust-analysis rust-src || true

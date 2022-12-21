@@ -80,10 +80,12 @@
           java-mode
           sh-mode
           json-mode
+          json-ts-mode
           js2-mode
           typescript-mode
           typescript-ts-mode
           tsx-ts-mode
+          elm-mode
           nix-mode
           tuareg-mode
           rust-mode)
