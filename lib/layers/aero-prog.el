@@ -409,10 +409,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (setf (alist-get 'prettier-typescript apheleia-formatters)
         '(npx "prettier" "--stdin-filepath" filepath "--parser=typescript" "--single-quote" "--trailing-comma" "all" "--print-width" "110"))
 
-  ;; By default Apheleia tries to use stdin, but, well, why? Instead, have elm-format overwrite
-  ;; in-place and let Emacs pick up the file change
+  ;; By default Apheleia tries to use elm-format directly, but I'd prefer to use npx
   (setf (alist-get 'elm-format apheleia-formatters)
-        '(npx "elm-format" "--yes" filepath))
+        '(npx "elm-format" "--yes" "--stdin"))
 
   (aero-leader-def
     "bI" 'apheleia-format-buffer)
