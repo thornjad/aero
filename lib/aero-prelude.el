@@ -707,6 +707,16 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   ;; qui est plus significatif dans 99% des cas.
   (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
 
+  (defun aero/kill-undo-tree-save-file-for-buffer ()
+    "Deletes the `undo-tree' history file for this buffer.
+Useful for when undo-tree inevitably fucks up the file and it can't be read."
+    (interactive)
+    (if buffer-file-name
+        (let ((filename (undo-tree-make-history-save-file-name buffer-file-name)))
+          (when (y-or-n-p (concat "Kill undo-tree history file " filename "?"))
+            (delete-file filename)))
+      (message "Buffer is not a file")))
+
   (advice-add 'undo-tree-save-history :around #'aero/advice-no-message)
   (global-undo-tree-mode +1))
 
