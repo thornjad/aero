@@ -22,7 +22,7 @@ Here lives my own Emacs configuration, blending all the best shit I can find, ma
 
 ### Spacemacs-like leader keys
 
-> "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
+> "An infinite number of monkeys typing into GNU Emacs would never make a good program."<br><br>  — Linus Torvalds
 
 When I first started using Emacs, I took full advantage of Spacemacs, so the architecture of that project has shaped the way I think about editing. As such, the majority of Aero revolves around a single leader key, `SPC`. For example, `SPC SPC` is the same as `M-x`, `SPC f w` (for file write) saves the buffer to disk.
 
@@ -30,13 +30,9 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 
 ![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
 
+> "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
+
 For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long.
-
-### LSP
-
-> "An infinite number of monkeys typing into GNU Emacs would never make a good program."<br><br>  — Linus Torvalds
-
-Emacs should support LSP out of the box. Since it doesn't, Aero makes up the difference by connecting to any protocol servers Emacs can find. I regularly make use of these capabilities in Python and Javascript in particular, so they've received the most attention.
 
 ### Custom theme with simplified mode line
 
@@ -47,18 +43,6 @@ With Aero, you'll also find a custom improved mode line which works with any the
 ## Requirements
 
 Aero evolves as a cutting-edge tool and focuses on working with the latest version of Emacs, but you can generally assume support for the last version too.
-
-### Optional LSP dependencies
-
-Emacs continues to lack native language server support. To take full advantage of this feature, Aero requires some optional tools:
-
-- Node.js (multiple servers, including Bash/shell, Angular, Sass/CSS) 
-- Python 3
-- Rust and rustup
-  - fd (improves project surfing performance)
-  - ripgrep (improves searching performance)
-- Ocaml and opam
-- Nix 
 
 ## Installation
 
