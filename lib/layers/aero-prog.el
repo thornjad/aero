@@ -536,6 +536,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! groovy-mode :auto :mode "\\(\\.groovy\\'\\|Jenkinsfile\\)")
 (package! csv-mode :auto :mode "\\.csv\\'")
 (package! logstash-conf :auto :commands (logstash-conf-mode))
-(package! elm-mode :auto)
+
+;; Elm-mode is supposed to enable elm-indent-mode by default, but for some reason it stopped doing
+;; this on Dec 21, 2022. Probably caused this myself, but this fixes it.
+(package! elm-mode :auto :hook (elm-mode . elm-indent-mode))
 
 (provide 'aero-prog)
