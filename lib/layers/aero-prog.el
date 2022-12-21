@@ -426,16 +426,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; somehow makefile-mode stopped activating?
 (add-to-list 'auto-mode-alist '("Makefile" . makefile-mode))
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (setq comment-auto-fill-only-comments t)
-                            (auto-fill-mode 1)))
-
-(defun aero/strip-namespace-from-xref (arg)
-  "Remove namespace qualifiers from xref call."
-  ;; Split up by mode because qualifiers are different all over
-  (cond
-   ((equal major-mode "tcl-mode")
-    (last (split-string arg "::")))))
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (setq comment-auto-fill-only-comments t)
+            (auto-fill-mode 1)))
 
 
 ;;; whitespace and indentation and stuff
