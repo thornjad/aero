@@ -70,16 +70,17 @@ nongnu-elpa:
 	mkdir -p ~/.config/emacs/straight/repos/
 	git clone https://git.savannah.gnu.org/git/emacs/nongnu.git ~/.config/emacs/straight/repos/nongnu-elpa --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false
 
-init: nongnu-elpa install-lsp-servers
+init: nongnu-elpa install-deps
 	git submodule init
 	cd lib/tree-sitter-module && ./batch.sh
 
-install-lsp-servers:
+install-deps:
 	# Continues even on failures. This lets us only install what the system can install, but can
 	# swallow up errors
 	npm i -g bash-language-server @types/node || true
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
 	npm i -g emmet-ls vscode-json-languageserver || true
+	gem install bundler prettier_print syntax_tree syntax_tree-haml syntax_tree-rbs && npm i -g prettier @prettier/plugin-ruby || true
 	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi || true
 	pip3 install "ptvsd>=4.2" || true
 	rustup component add rls rust-analysis rust-src || true
