@@ -26,8 +26,7 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-(package! aero-theme :local
-  :load-path "lib/packages/aero-theme/"
+(package! aero-theme :local :load-path "lib/aero-theme/"
   :init
   (when (system-is-mac)
     (setq aero-theme-font-height 140))

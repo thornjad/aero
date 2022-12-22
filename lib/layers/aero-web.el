@@ -73,10 +73,8 @@ Requires watchman."
   (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
 
 (package! emmet-mode :auto
-  :load-path "lib/packages/emmet-mode/"
   :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
-	:init
-	(setq emmet-self-closing-tag-style " /")
+	:init (setq emmet-self-closing-tag-style " /")
 
   :config
   (add-hook

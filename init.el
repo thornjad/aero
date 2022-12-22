@@ -158,7 +158,6 @@ so we use more cycles but less space, but not too little space.")
   (setq user-emacs-directory (file-name-directory user-init-file))
   (defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
   (defconst aero-core-dir (expand-file-name "core/" aero-lib-dir))
-  (defconst aero-packages-dir (expand-file-name "packages/" aero-lib-dir))
   (defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
   (defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
   (defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
@@ -170,11 +169,7 @@ so we use more cycles but less space, but not too little space.")
   (defsubst add-to-load-path-if-exists (dir)
     (when (file-exists-p dir) (add-to-list 'load-path dir)))
   (mapc 'add-to-load-path-if-exists
-        `(,aero-core-dir ,aero-layers-dir ,aero-lib-dir ,aero-packages-dir))
-
-  ;; also add all packages to load path
-  (let ((default-directory aero-packages-dir))
-    (normal-top-level-add-subdirs-to-load-path))
+        `(,aero-core-dir ,aero-layers-dir ,aero-lib-dir))
 
   ;; Do garbage collection when I'm not actively doing anything
   (run-with-idle-timer 7 t 'garbage-collect)
