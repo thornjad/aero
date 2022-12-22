@@ -5,10 +5,10 @@
   |  ___  | ___ |/ ___) _ \   |  ___) |    \(____ |/ ___)/___)
   | |   | | ____| |  | |_| |  | |_____| | | / ___ ( (___|___ |
   |_|   |_|_____)_|   \___/   |_______)_|_|_\_____|\____|___/
-     .-      .    .-.  ---        .     --    .-    -.-. ...
+  .-  .  .-.  ---  .  --  .-  -.-.  ...
 ```
 
-# aero emacs
+# Aero Emacs
 
 Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine.
 
