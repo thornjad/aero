@@ -91,6 +91,7 @@
  compilation-max-output-line-length nil ; don't collapse long lines in compilation
 
  eww-search-prefix "https://lite.duckduckgo.com/lite?q=" ; eww search DuckDuckGo
+ dictionary-server "dict.org" ; skip trying to search localhost
 
  ;; simple frame title; I find the default distracting
  frame-title-format '("Emacs — "

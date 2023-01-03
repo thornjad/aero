@@ -68,8 +68,8 @@ Requires watchman."
 (package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\)\\'"
   :config
-  (unless (treesitterp)
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
+  ;; If we have tree-sitter, prefer tsx-ts-mode over web-mode (which will also load eglot)
+  (unless (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
   (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
 
 (package! emmet-mode :auto
@@ -81,8 +81,7 @@ Requires watchman."
    'js-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
 
-(package! scss-mode :auto
-  :mode "\\.s?css\\'")
+(package! scss-mode :auto :mode "\\.s?css\\'")
 
 
 ;; js and jsx
