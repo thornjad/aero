@@ -290,6 +290,12 @@ This is equivalent to SPC U M-x eshell"
       (switch-to-buffer "*htop*")
     (ansi-term "/bin/zsh" "htop")
     (comint-send-string "*htop*" "htop\n")))
+
+(defmacro aero/async-shell-command-with-path (command &optional buffer error-buffer)
+  "Run COMMAND asynchronously like `async-shell-command' but with PATH loaded."
+  `(let ((shell-command-switch "-ic"))
+     (async-shell-command ,command ,buffer ,error-buffer)))
+
 (defun make-xpm-bar (color height width)
   "Create an XPM bar bitmap of HEIGHT and WIDTH, with COLOR accent."
   (propertize
