@@ -805,7 +805,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
    :states 'normal
    :prefix "SPC"
    "hdf" 'helpful-function
-   "hdF" 'counsel-describe-face
+   "hdF" 'counsel-faces
    "hda" 'helpful-symbol
    "hdb" 'describe-bindings
    "hdv" 'helpful-variable
