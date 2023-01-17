@@ -244,8 +244,7 @@
                                aero-etc-dir)
    flyspell-sort-corrections nil)
 
-  (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+"))
-  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  ;; Skip code inside org src blocks
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
 
@@ -268,15 +267,6 @@
   :after flyspell
   :commands flyspell-correct-ivy
   :custom (flyspell-correct-interface #'flyspell-correct-ivy))
-
-(package! synosaurus :auto
-  ;; Thesaurus
-  :after (general)
-  :commands (synosaurus-lookup synosaurus-choose-and-replace)
-  :custom (synosaurus-choose-method 'default)
-  :config (aero-leader-def
-            "tt" '(synosaurus-choose-and-replace :wk "synonyms")
-            "tT" '(synosaurus-lookup :wk "synonym lookup")))
 
 
 ;; parens
