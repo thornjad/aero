@@ -348,6 +348,11 @@ buffer will be recentered to the line at point."
   (interactive)
   (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
 
+(defun aero/copy-file-relative-to-project ()
+  "Copy the path of current buffer relative to the project."
+  (interactive)
+  (kill-new (file-relative-name (buffer-file-name) (project-root (project-current)))))
+
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)

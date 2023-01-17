@@ -233,6 +233,7 @@
    "e" '(:ignore t :wk "errors")
 
    "f" '(:ignore t :wk "files")
+   "fc" 'aero/copy-file-relative-to-project
    "fC" '(:ignore t :wk "convert")
    "fCd" '(aero/unix2dos :wk "unix2dos")
    "fCu" '(aero/dos2unix :wk "dos2unix")
