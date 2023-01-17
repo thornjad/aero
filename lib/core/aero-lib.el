@@ -284,6 +284,12 @@ This is equivalent to SPC U M-x eshell"
   (interactive)
   (eshell t))
 
+(defun htop ()
+  (interactive)
+  (if (get-buffer "*htop*")
+      (switch-to-buffer "*htop*")
+    (ansi-term "/bin/zsh" "htop")
+    (comint-send-string "*htop*" "htop\n")))
 (defun make-xpm-bar (color height width)
   "Create an XPM bar bitmap of HEIGHT and WIDTH, with COLOR accent."
   (propertize
