@@ -26,13 +26,15 @@
 (require 'aero-modeline)
 (aero/modeline-global-mode +1)
 
-(package! aero-theme :local :load-path "lib/aero-theme/"
+(package! aero-theme :local :load-path "lib/aero-theme"
   :init
   (when (system-is-mac)
+    ;; Default is fine in Linux
     (setq aero-theme-font-height 140))
   :config
   (setq aero-theme-font "JetBrains Mono")
-  (load-theme 'aero t))
+  (load-theme 'aero t)
+  )
 
 ;; other themes
 (package! tao-theme :auto :defer t)
