@@ -1,4 +1,12 @@
-alias vgo cd /ssh:hopnu:/vhosts/jade/fa_web
 alias dt gdate "+%Y-%m-%dT%H:%M:%S.%3N%zZ"
 alias epoch date +%s
 alias cdp cd (project-root (project-current))
+alias g git $*
+alias la exa -laag --git
+alias nstart npm run start:live-reload
+alias ddfix ddcloud tunnel stop; ddcloud tunnel start
+alias sup cd ~/src/smart-track/dev && docker-compose up -d && cd -
+alias srup cd ~/src/smart-track/dev && docker-compose down && docker-compose up -d && cd -
+alias stsdev psql -h localhost -U postgres Constructive_development
+alias clear (recenter 0)
+alias magit (magit-status-setup-buffer default-directory)

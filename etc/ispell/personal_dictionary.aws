@@ -1,4 +1,4 @@
-personal_ws-1.1 en 484 
+personal_ws-1.1 en 487 
 ACL
 APIs
 Aireon
@@ -75,6 +75,7 @@ ISC
 JDT
 JS
 JSX
+JT
 Jarod
 Jarod's
 Javascript
@@ -424,6 +425,7 @@ skilfullness
 sortable
 spectre
 standup
+standupdate
 standups
 struct
 subdirectory
@@ -432,6 +434,7 @@ submodule
 subprocess
 substring
 subteam
+subteams
 sudo
 superset
 supprime
