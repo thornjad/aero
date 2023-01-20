@@ -330,6 +330,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (defun aero/sp-wrap-double-quote () (interactive) (sp-wrap-with-pair "\""))
   (defun aero/sp-wrap-single-quote () (interactive) (sp-wrap-with-pair "'"))
   (defun aero/sp-wrap-backtick () (interactive) (sp-wrap-with-pair "`"))
+  (defun aero/sp-wrap-angle () (interactive) (sp-wrap-with-pair "<"))
 
   (general-define-key
    :states '(normal visual)
@@ -342,6 +343,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sw(" 'sp-wrap-round
    "sw{" 'sp-wrap-curly
    "sw[" 'sp-wrap-square
+   "sw<" 'aero/sp-wrap-angle
    "sw\"" '(aero/sp-wrap-double-quote :wk "wrap double quote")
    "sw'" '(aero/sp-wrap-single-quote :wk "wrap single quote")
    "sw`" '(aero/sp-wrap-backtick :wk "wrap backtick")
