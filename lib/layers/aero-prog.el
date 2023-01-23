@@ -62,7 +62,6 @@
 (require 'cl-lib)
 (defalias 'defun* 'cl-defun)
 (defalias 'list* 'cl-list*)
-
 (package! company-tabnine :auto
   ;; Manages and provides Tabnine interface
   :after (company)
