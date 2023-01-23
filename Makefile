@@ -72,6 +72,7 @@ nongnu-elpa:
 
 init: nongnu-elpa install-deps
 	git submodule init
+	git submodule update
 	cd lib/tree-sitter-module && ./batch.sh
 
 install-deps:
