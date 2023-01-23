@@ -93,6 +93,7 @@
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
+  (eglot-events-buffer-size #x10000) ; default is 2MiB, which is unnecessary
   :config
   ;; Re-add flymake checkers because eglot clobbers them all on server start
   (add-hook 'eglot-managed-mode-hook
