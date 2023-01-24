@@ -126,9 +126,6 @@
   (custom-set-variables
    '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
-;; use delta pager in magit diffs
-(package! magit-delta :auto :hook (magit-mode . magit-delta-mode))
-
 ;; extremely difficult to style for some reason
 (package! blamer :auto
   :commands (blamer-mode)
