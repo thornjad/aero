@@ -47,10 +47,13 @@ Aero evolves as a cutting-edge tool and focuses on working with the latest versi
 ## Installation
 
 ```sh
-git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs
+git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs && cd ~/.config/emacs
+make init
 ```
 
-Upon starting up Emacs for the first time, further third-party packages will automatically download and install. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
+`make init` will set up tree-sitter (the actual language support is not in Emacs core yet), fix nongnu-elpa which is always breaking, and install dependencies as possible (skipping those for which the packaging system isn't present).
+
+Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el`. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
 ## Note
 
@@ -72,7 +75,7 @@ Like the Borg, Aero amalgamates macros, functions, bindings and packages modifie
 
 ## License
 
-Copyright © 2016-2022 Jade Michael Thornton
+Copyright © 2016-2023 Jade Michael Thornton
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee
 is hereby granted, provided that the above copyright notice and this permission notice appear in all
