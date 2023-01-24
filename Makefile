@@ -75,6 +75,12 @@ init: nongnu-elpa install-deps
 	git submodule update
 	cd lib/tree-sitter-module && ./batch.sh
 
+clear-straight:
+	rm -rf ./straight/
+
+# Clear out packages and re-init
+hard-init: clear-straight init
+
 install-deps:
 	# Continues even on failures. This lets us only install what the system can install, but can
 	# swallow up errors
