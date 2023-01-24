@@ -103,10 +103,10 @@
   "Used for Git branch name."
   :group 'aero/modeline)
 
-(defface aero/modeline-bar '((t (:background nil)))
+(defface aero/modeline-bar '((t (:background unspecified)))
   "Style of the bar on the modeline."
   :group 'aero/modeline)
-(defface aero/modeline-bar-inactive '((t (:background nil)))
+(defface aero/modeline-bar-inactive '((t (:background unspecified)))
   "Style of the bar on the inactive modeline."
   :group 'aero/modeline)
 
