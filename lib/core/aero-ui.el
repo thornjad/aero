@@ -33,8 +33,7 @@
     (setq aero-theme-font-height 140))
   :config
   (setq aero-theme-font "JetBrains Mono")
-  (load-theme 'aero t)
-  )
+  (load-theme 'aero t))
 
 ;; other themes
 (package! tao-theme :auto :defer t)
@@ -116,6 +115,8 @@
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method 'character
               highlight-indent-guides-responsive 'top)
+  :custom
+  (highlight-indent-guides-suppress-auto-error t)
   :config
   (set-face-background 'highlight-indent-guides-odd-face "darkgray")
   (set-face-background 'highlight-indent-guides-even-face "dimgray")
