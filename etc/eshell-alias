@@ -2,7 +2,7 @@ alias dt gdate "+%Y-%m-%dT%H:%M:%S.%3N%zZ"
 alias epoch date +%s
 alias cdp cd (project-root (project-current))
 alias g git $*
-alias la exa -laag --git
+alias la exa -laag --git $*
 alias nstart npm run start:live-reload
 alias ddfix ddcloud tunnel stop; ddcloud tunnel start
 alias sup cd ~/src/smart-track/dev && docker-compose up -d && cd -
