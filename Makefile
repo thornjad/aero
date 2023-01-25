@@ -88,8 +88,11 @@ install-deps:
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
 	npm i -g emmet-ls vscode-json-languageserver || true
 	gem install bundler prettier_print syntax_tree syntax_tree-haml syntax_tree-rbs && npm i -g prettier @prettier/plugin-ruby || true
-	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi || true
-	pip3 install "ptvsd>=4.2" || true
+
+	pip3 install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi "ptvsd>=4.2" \
+|| pip install python-lsp-server pyls-mypy black pyls-black pyls-isort flake8 jedi "ptvsd>=4.2" \
+|| true
+
 	rustup component add rls rust-analysis rust-src || true
 	brew install clojure-lsp/brew/clojure-lsp-native || true
 	gem install solargraph || true
