@@ -29,7 +29,7 @@
   "Create a new entry for today, if one isn't already present."
   (interactive)
   (cond
-   ((not (string= (buffer-file-name) (expand-file-name "log.md" aero/thornlog-path)))
+   ((not (string-match "thornlog/log\\.md" (buffer-file-name)))
     (message "Not in Thornlog file"))
    ((today t) (message "Entry for today already present"))
    (t (progn
