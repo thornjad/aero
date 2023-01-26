@@ -1,4 +1,4 @@
-personal_ws-1.1 en 496 
+personal_ws-1.1 en 498 
 ACL
 APIs
 Aireon
@@ -96,6 +96,7 @@ MBTiles
 MELPA
 MVFR
 MacBook
+MacPorts
 Magit
 MapBox's
 MapServer
@@ -190,6 +191,7 @@ Wayde
 Wayland
 WebGL
 Websockets
+XBoard
 XYZ
 YYYY
 absurde
