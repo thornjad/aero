@@ -5,8 +5,9 @@ alias g git $*
 alias la exa -laag --git $*
 alias nstart npm run start:live-reload
 alias ddfix ddcloud tunnel stop; ddcloud tunnel start
-alias sup cd ~/src/smart-track/dev && docker-compose up -d && cd -
-alias srup cd ~/src/smart-track/dev && docker-compose down && docker-compose up -d && cd -
+alias sup cd ~/src/smart-track/dev && docker-compose up -d; cd -
+alias sdown cd ~/src/smart-track/dev && docker-compose down; cd -
+alias srup cd ~/src/smart-track/dev && docker-compose down && docker-compose up -d; cd -
 alias stsdev psql -h localhost -U postgres Constructive_development
 alias clear (recenter 0)
 alias magit (magit-status-setup-buffer default-directory)

@@ -106,10 +106,15 @@
 		'(progn
        (require 'em-cmpl)
        (require 'em-prompt)
-       (require 'em-term)
+       (require 'em-term))))
 
-       (setq
-        ))))
+(package! eshell-prompt-extras :auto
+  :after (eshell)
+  :config
+  (with-eval-after-load "esh-opt"
+    (autoload 'epe-theme-multiline-with-status "eshell-prompt-extras")
+    (setq eshell-highlight-prompt nil
+          eshell-prompt-function 'epe-theme-multiline-with-status)))
 
 
 ;; vterm
