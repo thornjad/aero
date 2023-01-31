@@ -54,7 +54,7 @@ Requires watchman."
   ;; jest-traversal is required for for some reason doesn't come through in straight
   :after general
   :commands (jest jest-file jest-file-dwim jest-function jest-last-failed jest-repeat)
-  :init
+  :config
   (aero-mode-leader-def
     :keymaps '(js2-mode web-mode typescript-mode)
     "j" '(:ignore t :wk "jest")
