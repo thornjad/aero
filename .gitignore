@@ -51,6 +51,8 @@ etc/todo.org
 flycheck_*
 games/
 lsp-cache
+# no idea what this is:
+multisession/
 nov-places
 places
 projectile-bookmarks.eld
