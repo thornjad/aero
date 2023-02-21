@@ -50,21 +50,6 @@ Requires watchman."
   (let ((default-directory (project-root (project-current))))
     (compile "npx jest")))
 
-(package! jest (:host github :repo "emiller88/emacs-jest" :files ("jest.el" "jest-traversal.el"))
-  ;; jest-traversal is required for for some reason doesn't come through in straight
-  :after general
-  :commands (jest jest-file jest-file-dwim jest-function jest-last-failed jest-repeat)
-  :config
-  (aero-mode-leader-def
-    :keymaps '(js2-mode web-mode typescript-mode)
-    "j" '(:ignore t :wk "jest")
-    "jf" 'aero/jest-file
-    "jF" 'aero/jest-file-watch
-    "j RET" 'aero/jest
-    "jd" '(jest-function :wk "jest defun")
-    "jr" 'jest-repeat
-    "jl" 'jest-last-failed))
-
 (package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\)\\'"
   :config
