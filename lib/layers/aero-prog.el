@@ -513,7 +513,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Docker
 
 (package! docker-compose-mode :auto :mode "docker-compose.*\.yml\\'")
-(package! docker-tramp :auto :after (tramp) :defer 5)
 (package! dockerfile-mode :auto :mode "Dockerfile[a-zA-Z.-]*\\'")
 
 
