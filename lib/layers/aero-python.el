@@ -21,7 +21,7 @@
 (require 'aero-prelude)
 
 (package! python-mode :auto
-  :after (general flycheck)
+  :after (general)
   :mode "\\.py\\'"
   :custom
   (python-indent-guess-indent-offset t)
@@ -196,22 +196,6 @@
     "rv" '(elpy-refactor-extract-variable :wk "extract variable")
     "rf" '(elpy-refactor-extract-function :wk "extract function")
     "ri" '(elpy-refactor-inline :wk "inline variable")
-    "rF" '(elpy-format-code :wk "format buffer or region"))
-
-  ;; ;; Auto-format on save using black
-  (add-hook 'elpy-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook
-                        'elpy-black-fix-code nil t)))
-
-  ;; Use mypy for typechecking
-  (flycheck-define-checker
-      python-mypy ""
-      :command ("mypy" "--ignore-missing-imports" source-original)
-      :error-patterns
-      ((error line-start (file-name) ":" line ": error:" (message) line-end))
-      :modes python-mode)
-  (add-to-list 'flycheck-checkers 'python-mypy t)
-  (flycheck-add-next-checker 'python-pylint 'python-mypy t))
+    "rF" '(elpy-format-code :wk "format buffer or region")))
 
 (provide 'aero-python)

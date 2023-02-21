@@ -51,9 +51,6 @@
   (defvar company-backends)
   (push 'company-racer company-backends))
 
-(package! flycheck-rust :auto
-  :hook (rust-mode . flycheck-rust-setup))
-
 (package! cargo :auto
   :commands cargo-minor-mode
   :hook (rust-mode . cargo-minor-mode))

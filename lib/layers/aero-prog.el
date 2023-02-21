@@ -98,10 +98,8 @@
   ;; Re-add flymake checkers because eglot clobbers them all on server start
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
-              (when (derived-mode-p 'python-mode)
+              (when (derived-mode-p 'python-base-mode)
                 (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
-
-  ;; Set servers for some of web-mode
 
   ;; Experimental homebrew LSP headerline, without any frills
   ;; (require 'aero-eglot-headerline)
@@ -125,7 +123,7 @@
 ;; C language
 
 (package! cc-mode :auto
-  :after flycheck
+  :after flymake
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode)
          ("\\.cpp\\'" . cpp-mode)
@@ -134,9 +132,7 @@
   (defun aero/c-mode-common-hook ()
     "Hook to run in all C modes"
     (set (make-local-variable 'parens-require-spaces) nil))
-  :hook (c-mode-common . aero/c-mode-common-hook)
-  :config
-  (add-to-list 'flycheck-disabled-checkers 'c/c++-clang))
+  :hook (c-mode-common . aero/c-mode-common-hook))
 
 
 ;; Markup
@@ -195,7 +191,7 @@
   (add-hook 'org-mode-hook #'org-hide-block-all))
 
 
-;; flymake/flycheck
+;; flymake
 
 (package! flymake :builtin
   :after (general)
