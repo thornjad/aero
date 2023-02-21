@@ -201,6 +201,10 @@
   (setq flymake-fringe-indicator-position 'left-fringe
         flymake-wrap-around t)
 
+  ;; Use ruff with python
+  (add-hook 'python-base-mode-hook 'flymake-mode)
+  (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
+
   (aero-leader-def
     "en" 'flymake-goto-next-error
     "ep" 'flymake-goto-prev-error
