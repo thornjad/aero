@@ -2,7 +2,7 @@
 ;;
 ;; Aero core prelude layer
 ;;
-;; Copyright (c) 2018-2022 Jade Michael Thornton
+;; Copyright (c) 2018-2023 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -704,9 +704,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (undo-tree-visualizer-diff t)
 
   :config
-  ;; La persistance d'undo-tree est cassée, donc nous écrivons le fichier nous-mêmes. Nous utilisons
-  ;; before-save-hook pour que la zone d'écho affiche toujours le message d'écriture du fichier, ce
-  ;; qui est plus significatif dans 99% des cas.
   (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
 
   (defun aero/kill-undo-tree-save-file-for-buffer ()

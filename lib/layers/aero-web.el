@@ -2,7 +2,7 @@
 ;;
 ;; web, js, cs, etc.
 ;;
-;; Copyright (c) 2018-2022 Jade Michael Thornton
+;; Copyright (c) 2018-2023 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
