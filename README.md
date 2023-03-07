@@ -55,6 +55,13 @@ make init
 
 Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el`. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
+### Mirrors
+
+- https://github.com/thornjad/aero.git
+- https://gitlab.com/thornjad/aero.git
+- https://framagit.org/thornjad/aero.git
+- https://codeberg.org/thornjad/aero.git
+
 ## Note
 
 This configuration undergoes constant evolution. Bindings, settings and packages change with no warning and little to no documentation. This project does not exist as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
