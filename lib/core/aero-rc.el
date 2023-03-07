@@ -153,6 +153,10 @@
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
  vc-follow-symlinks t ; don't ask to follow symlinks
 
+ ;; xref
+ ;; Use separate xref history for each window, allowing independent code navigation
+ xref-history-storage #'xref-window-local-history
+
  ;; indentation
  indent-tabs-mode nil
  tab-width 2
