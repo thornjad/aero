@@ -279,6 +279,14 @@
    "p" '(:ignore t :wk "project")
    "p/" 'counsel-rg
    "pr" '(xref-find-definitions :wk "find ref")
+
+   "x" '(:ignore t :wk "xref")
+   "xf" 'xref-find-definitions
+   "xp" 'xref-go-back
+   "xn" 'xref-go-forward
+   "xa" 'xref-find-apropos
+   "xr" 'xref-find-references
+
    "q" '(:ignore t :wk "quoted insert")
    "ql" 'insert-lambda
    "qq" 'quoted-insert
