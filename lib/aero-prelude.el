@@ -280,12 +280,12 @@
    "p/" 'counsel-rg
    "pr" '(xref-find-definitions :wk "find ref")
 
-   "x" '(:ignore t :wk "xref")
-   "xf" 'xref-find-definitions
-   "xp" 'xref-go-back
-   "xn" 'xref-go-forward
-   "xa" 'xref-find-apropos
-   "xr" 'xref-find-references
+   "r" '(:ignore t :wk "xref")
+   "rf" 'xref-find-definitions
+   "rp" 'xref-go-back
+   "rn" 'xref-go-forward
+   "ra" 'xref-find-apropos
+   "rr" 'xref-find-references
 
    "q" '(:ignore t :wk "quoted insert")
    "ql" 'insert-lambda
@@ -583,7 +583,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "?" 'counsel-rg
     "gg" '(counsel-git-grep :wk "git grep")
     "gff" '(counsel-git :wk "find git file")
-    "ry" '(counsel-yank-pop :wk "search kill ring")
     "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
     "qU" 'counsel-unicode-char))
 
