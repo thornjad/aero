@@ -126,7 +126,7 @@
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
 (package! echo-bar (:host github :repo "qaiviq/echo-bar.el")
-  :defer 2
+  :defer 4
   :config
   (defun aero/echo-bar-function ()
     (concat
