@@ -22,7 +22,7 @@
   :after (general)
   :custom
   (project-vc-ignores '("node_modules/" "straight/" "target/")) ; globally ignored
-  (project-vc-extra-root-markers '(".project.el" ".projectile" "package.json"))
+  (project-vc-extra-root-markers '(".project.el" ".projectile"))
   :config
   ;; Set our own list of actions on `project-switch-project'
   (setq project-switch-commands '((project-find-file "Find file" "f")
