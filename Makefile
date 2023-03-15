@@ -22,36 +22,39 @@ build-emacs-cask: macos-reqs
 
 build-emacs-macos: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
-	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
+	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
 build-emacs-macos-without-native-comp: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
+	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
+
+build-emacs-macos-stable: macos-reqs
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
+
+build-emacs-macos-stable-without-native-comp: macos-reqs
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
-build-emacs-macos-stable: macos-reqs
-	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
-	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
-
-build-emacs-macos-stable-without-native-comp: macos-reqs
-	brew install emacs-plus@28 --with-modern-sexy-v1-icon --with-xwidgets
-	ln -sf /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
-
 remove-emacs-macos:
-	brew uninstall emacs-plus@29 || true
+	brew uninstall emacs-plus@30 || true
 
 remove-emacs-macos-stable:
-	brew uninstall emacs-plus@28 || true
+	brew uninstall emacs-plus@29 || true
 
 upgrade-emacs-macos: remove-emacs-macos build-emacs-macos
 
 install-aero-macos:
 	osacompile -o bin/Emacs\ \(Aero\).app bin/aero-emacs.osx.applescript
 	cp etc/logo/Emacs.icns bin/Emacs\ \(Aero\).app/Contents/Resources/applet.icns
-	[ -s /Applications/Emacs\ \(Aero\).app ] && rm -rf /Applications/Emacs\ \(Aero\).app
+	[ -s /Applications/Emacs\ \(Aero\).app ] && rm -rf /Applications/Emacs\ \(Aero\).app || true
 	mv bin/Emacs\ \(Aero\).app /Applications/
+
+clean-aero-macos:
+	rm -rf /Applications/Emacs\ \(Aero\).app
 
 build-emacs-linux: nongnu-elpa
 	./bin/build/linux-requirements.zsh
@@ -73,7 +76,6 @@ nongnu-elpa:
 init: nongnu-elpa install-deps
 	git submodule init
 	git submodule update
-	cd lib/tree-sitter-module && ./batch.sh
 
 clear-straight:
 	rm -rf ./straight/
