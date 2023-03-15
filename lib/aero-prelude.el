@@ -478,6 +478,13 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; tree-sitter stuff
 
+;; automatically install and use tree-sitter grammars
+(package! treesit-auto :auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (global-treesit-auto-mode +1))
+
 ;; various language supports for tree-sitter
 (package! tree-sitter-langs :auto :when (treesitterp))
 
