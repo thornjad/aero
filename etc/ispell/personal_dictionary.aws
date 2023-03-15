@@ -1,4 +1,4 @@
-personal_ws-1.1 en 512 
+personal_ws-1.1 en 524 
 ACL
 APIs
 Aireon
@@ -16,6 +16,7 @@ BIM
 BLE
 BRE
 BSc
+Betlejewska
 Bing
 Boids
 Brotli
@@ -106,6 +107,7 @@ MVFR
 MacBook
 MacPorts
 Magit
+Mahr
 MapBox's
 MapServer
 MapTiler
@@ -150,12 +152,14 @@ QGIS
 RESTful
 RET
 RMQ
+RXJS
 Reddit
 Redux
 ResNet
 Roboto
 SEO
 SHA
+SLO
 SPC
 SSD
 SSHFS
@@ -169,6 +173,7 @@ StS
 Standup
 Starbound
 StructionSite
+Szulc
 TLS
 TSV
 TUI
@@ -322,6 +327,9 @@ hoc
 homebrew
 homebrewed
 hostname
+hotfix
+hotfixed
+hotfixing
 href
 http
 https
@@ -342,6 +350,7 @@ jupyter
 keyframe
 keymap
 keyring
+kutil
 le
 learnings
 libertarianism
@@ -369,6 +378,7 @@ minimap
 misconfiguration
 mockup
 modeline
+mortem
 multiplanetary
 multivariadic
 nack
@@ -388,6 +398,7 @@ npx
 nw
 onboarded
 onboarding
+pano
 paren
 pbf
 performant
@@ -472,6 +483,7 @@ tcllib
 tclsh
 terminfo
 termios
+th
 theming
 thornjad
 tileset
