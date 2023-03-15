@@ -88,10 +88,6 @@
                                (magit-git-string "symbolic-ref" "refs/remotes/origin/HEAD"))
      args))
 
-  (magit-define-popup-action
-   'magit-diff-popup
-   ?m "Diff main branch" #'aero/magit-diff-default-branch)
-
   ;; Don't want no color from the pre-commit hook
   (defun aero/magit--color-buffer (proc &rest args)
     (interactive)
