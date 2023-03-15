@@ -129,7 +129,6 @@
    "!" 'shell-command
    "=" 'quick-calc
 
-   ;; NOTE deprecated, use the top-level "," prefix instead
    "," '(:ignore t :wk "mode") ; reserved for mode-specific
 
    "C" '(:ignore t :wk "clue")
@@ -150,16 +149,15 @@
 
    "L" '(:ignore t :wk "local")
 
-   "P" '(:ignore t :wk "packages/perspective")
-   "PP" '(:ignore t :wk "packages")
-   "PPC" 'straight-check-all
-   "PPF" 'straight-fetch-all
-   "PPP" 'straight-pull-all
-   "PPR" 'straight-rebuild-all
-   "PPg" 'straight-get-recipe
-   "PPp" 'straight-pull-package-and-deps
-   "PPr" 'straight-rebuild-package
-   "PPx" 'straight-prune-build
+   "P" '(:ignore t :wk "packages")
+   "PC" 'straight-check-all
+   "PF" 'straight-fetch-all
+   "PP" 'straight-pull-all
+   "PR" 'straight-rebuild-all
+   "Pg" 'straight-get-recipe
+   "Pp" 'straight-pull-package-and-deps
+   "Pr" 'straight-rebuild-package
+   "Px" 'straight-prune-build
 
    "S" '(:ignore t :wk "shell/sql")
    "SE" '(:ignore t :wk "eshell")
