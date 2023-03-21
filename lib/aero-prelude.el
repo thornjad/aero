@@ -288,6 +288,7 @@
    "q" '(:ignore t :wk "quoted insert")
    "ql" 'insert-lambda
    "qq" 'quoted-insert
+   "qp" 'aero/insert-pdb
 
    "s" '(:ignore t :wk "sexp")
 
