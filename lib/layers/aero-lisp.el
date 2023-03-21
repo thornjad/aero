@@ -207,6 +207,13 @@ does not specify a special indentation."
 (package! package-lint :auto
   :commands (package-lint-current-buffer))
 
+(package! elisp-autofmt :auto
+  :commands (elisp-autofmt-buffer
+             elisp-autofmt-region)
+  :custom
+  (elisp-autofmt-cache-directory
+   (expand-file-name "elisp-autofmt-cache" aero-cache-dir)))
+
 (package! el2md (:host gitlab :repo "thornjad/el2md")
   :after (general)
   :commands (el2md-write-readme
