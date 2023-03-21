@@ -23,7 +23,8 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode)))
+(when (treesitterp)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode)))
 
 (package! yarn (:host github :repo "jmfirth/yarn.el")
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
@@ -56,6 +57,11 @@ Requires watchman."
   ;; If we have tree-sitter, prefer tsx-ts-mode over web-mode (which will also load eglot)
   (unless (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
   (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
+
+(package! instant-rename-tag
+  (:host github :repo "manateelazycat/instant-rename-tag")
+  :after web-mode
+  :commands (instant-rename-tag))
 
 (package! emmet-mode :auto
   :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
