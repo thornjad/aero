@@ -124,6 +124,26 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
         gc-cons-percentage (cadr (cadr aero/gc-cons)))
   (setq read-process-output-max #x1000000))
 
+;; Help debugging hidden errors
+(defun aero/reraise-error (func &rest args)
+  "Call function FUNC with ARGS and re-raise any error which occurs.
+Useful for debugging post-command hooks and filter functions, which
+normally have their errors suppressed."
+  (condition-case err
+      (apply func args)
+    ((debug error) (signal (car err) (cdr err)))))
+
+(defun aero/toggle-debug-on-hidden-errors (func)
+  "Toggle hidden error debugging for function FUNC."
+  (interactive "a")
+  (cond
+   ((advice-member-p #'aero/reraise-error func)
+    (advice-remove func #'aero/reraise-error)
+    (message "Debug on hidden errors disabled for %s" func))
+   (t
+    (advice-add func :around #'aero/reraise-error)
+    (message "Debug on hidden errors enabled for %s" func))))
+
 
 ;;; optimizations and fixes
 
