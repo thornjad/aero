@@ -65,6 +65,7 @@
 (package! company-tabnine :auto
   ;; Manages and provides Tabnine interface
   :after (company)
+  :hook (kill-emacs . company-tabnine-kill-process)
   :init (add-to-list 'company-backends #'company-tabnine))
 
 
