@@ -907,6 +907,12 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; startup profiler
 (package! esup :auto :commands (esup))
 
+;; Requires separate `chatgpt-shell-openai-key' secret to be set, then allows comint conversation
+;; with ChatGPT
+(package! chatgpt-shell (:host github :repo "xenodium/chatgpt-shell")
+  :commands (chatgpt-shell)
+  :custom (chatgpt-shell-prompt ">>> "))
+
 ;; Mark passive voice, duplicate words and weasel words
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
