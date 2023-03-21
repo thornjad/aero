@@ -707,4 +707,9 @@ alternative to the beacon package."
      (format "SSH_AUTH_SOCK %s --> %s"
              ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
 
+(defun aero/insert-pdb ()
+  "Inserts PDB set_trace."
+  (interactive)
+  (insert "import pdb; pdb.set_trace()"))
+
 (provide 'aero-lib)

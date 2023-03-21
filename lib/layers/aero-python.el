@@ -33,11 +33,6 @@
   :config
   (defvar python-mode-initialized nil)
 
-  (defun aero/insert-pdb ()
-    "Inserts PDB set_trace."
-    (interactive)
-    (insert "import pdb; pdb.set_trace()"))
-
   (aero-mode-leader-def
     :keymaps 'python-mode-map
     "p" 'run-python
