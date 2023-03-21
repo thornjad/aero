@@ -950,20 +950,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
     "vP" 'virtual-comment-paste
     "vs" 'virtual-comment-show))
 
-;; Method for linking notes to specific locations in files. Rather cumbersome to use. REVIEW may
-;; want to remove this.
-(package! clue (:host github :repo "AmaiKinono/clue")
-  :defer t
-  :after (general)
-  :hook (find-file-hook . clue-auto-enable-clue-mode)
-  :commands (clue-copy
-             clue-paste)
-  :custom (clue-auto-enable-modes '(markdown-mode))
-  :init
-  (aero-leader-def
-    "Cc" 'clue-copy
-    "Cp" 'clue-paste))
-
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
