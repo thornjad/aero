@@ -52,6 +52,7 @@
  jit-lock-defer-time 0 ; wait to fontify until input ends, but no longer
  ns-use-srgb-colorspace nil ;; REVIEW what is this?
  show-paren-context-when-offscreen 'overlay
+ mail-user-agent nil ; disable email click opening mail message; error instead
 
  isearch-forward t ; ensures evil repeats searches in the correct direction
 
