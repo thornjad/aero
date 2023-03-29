@@ -108,10 +108,6 @@
       (magit-status)
       (message "Checked out PR as %s" new-branch))))
 
-(package! forge :auto
-  :after magit
-  :custom (forge-database-file (expand-file-name "forge-database.sqlite" aero-cache-dir)))
-
 (package! magit-todos :auto
   :commands (magit-todos-mode)
   :hook (magit-mode . magit-todos-mode)
