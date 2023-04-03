@@ -280,6 +280,7 @@
 
    "r" '(:ignore t :wk "xref")
    "rf" 'xref-find-definitions
+   "rF" 'xref-find-definitions-other-window
    "rp" 'xref-go-back
    "rn" 'xref-go-forward
    "ra" 'xref-find-apropos
