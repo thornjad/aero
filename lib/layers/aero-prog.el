@@ -406,6 +406,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (setf (alist-get 'elm-format apheleia-formatters)
         '(npx "elm-format" "--yes" "--stdin"))
 
+  (add-to-list 'apheleia-formatters '(cljfmt "lein" "cljfmt" "fix" input))
+  (add-to-list 'apheleia-mode-alist '(clojure-mode . cljfmt))
+
   (aero-leader-def
     "bI" 'apheleia-format-buffer)
   (apheleia-global-mode +1))
