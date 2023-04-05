@@ -90,7 +90,8 @@
     (kbd "C-h") 'delete-backward-char
     (kbd "C-w") 'aero/smarter-backward-kill-word
     (kbd "C-TAB") 'insert-tab
-    (kbd "M-TAB") 'aero/alternate-buffer)
+    (kbd "M-TAB") 'aero/alternate-buffer
+    (kbd "C-RET") 'aero/browse-url-open)
 
   (general-define-key
    :states 'normal
@@ -560,6 +561,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "tly" 'turbo-log-paste-as-logger
     "tlY" 'turbo-log-paste-as-logger-immediately
     "tsd" 'turbo-log-delete-all-logs))
+
 
 ;; abo-abo!
 
