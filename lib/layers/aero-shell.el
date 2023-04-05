@@ -46,8 +46,6 @@
   :functions (eshell-previous-input
               eshell-next-input)
   :config
-  (require 'em-smart)
-
   ;; Ensure eshell doesn't override these
   (define-key eshell-mode-map (kbd "M-h") 'windmove-left)
   (define-key eshell-mode-map (kbd "M-l") 'windmove-right)
@@ -59,7 +57,7 @@
    eshell-buffer-maximum-lines 12000
    eshell-glob-case-insensitive t
    eshell-aliases-file (expand-file-name "eshell-alias" aero-etc-dir)
-   eshell-history-size 500
+   eshell-history-size 350
    eshell-ls-initial-args "-lah"
    eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'"
    eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
@@ -67,12 +65,24 @@
                             "nmtui" "alsamixer" "htop" "el" "elinks"
                             "ssh" "nethack" "dtop" "dstat" "docker-compose")
    eshell-visual-subcommands '(("git" "log" "diff" "show"))
-   eshell-cmpl-cycle-completions nil
+   eshell-cmpl-cycle-completions nil ; tab cycles the completion list
    eshell-buffer-maximum-lines 12000 ; auto truncate after 12k lines
    eshell-history-size 500 ; history size
    eshell-buffer-shorthand t ; buffer shorthand -> echo foo > #'buffer
    eshell-plain-echo-behavior t ; treat 'echo' like shell echo
+   eshell-banner-message '(format "%s %s\n"
+                                  (propertize (format " %s " (string-trim (buffer-name)))
+                                              'face 'mode-line-highlight)
+                                  (propertize (current-time-string)
+                                              'face 'font-lock-keyword-face))
+   eshell-scroll-to-bottom-on-input 'all
+   eshell-kill-processes-on-exit t
+   eshell-hist-ignoredups t
+   eshell-error-if-no-glob t  ; mimics zsh behavior
    completion-ignore-case t)
+
+  ;; Enable autopairing in eshell
+  (add-hook 'eshell-mode-hook #'smartparens-mode)
 
   ;; Try to load in PATH
   (let ((default-directory (expand-file-name "~")))
@@ -83,11 +93,14 @@
   (setenv "PAGER" "bat")
   (setenv "TERM" "xterm-256color")
 
-  (add-hook
-   'eshell-mode-hook
-   (lambda ()
-     (setq-local evil-move-cursor-back nil
-                 scroll-margin 0)))
+  ;; Remove hscroll-margin in shells, otherwise you get jumpiness when the
+  ;; cursor comes close to the left/right edges of the window.
+  (add-hook 'eshell-mode-hook
+            (lambda () (setq-local hscroll-margin 0
+                                   evil-move-cursor-back nil)))
+
+  ;; Use tab to cycle completions
+  (add-hook 'eshell-mode-hook (lambda () (setq-local pcomplete-cycle-completions nil)))
 
   (defalias 'eshell/emacs 'find-file)
 
@@ -115,6 +128,35 @@
     (autoload 'epe-theme-multiline-with-status "eshell-prompt-extras")
     (setq eshell-highlight-prompt nil
           eshell-prompt-function 'epe-theme-multiline-with-status)))
+
+(package! eshell-syntax-highlighting :auto
+  :after eshell-mode
+  :hook (eshell-mode . eshell-syntax-highlighting-mode))
+
+(package! esh-help :auto
+  :after eshell
+  :config (setup-esh-help-eldoc))
+
+;; TODO not working, subsequent calls override previous shells. Doesn't work with project-eshell
+(package! shell-pop :auto :defer t
+  :custom
+  (shell-pop-full-span t)
+  (shell-pop-shell-type '("eshell" "*eshell*" (lambda nil (eshell))))
+  :config
+  (defun aero/pop-eshell ()
+    (interactive)
+    (let ((shell-pop-shell-type '("eshell" "*eshell*" (lambda nil (eshell)))))
+      (call-interactively #'shell-pop)))
+  (defun aero/pop-project-eshell ()
+    (interactive)
+    (require 'project)
+    (let* ((default-directory (project-root (project-current t)))
+           (project-name (file-name-nondirectory
+                          (directory-file-name (file-name-directory default-directory))))
+           (shell-pop-shell-type '((concat "eshell-" project-name)
+                                   (concat "*eshell-" project-name "*")
+                                   (lambda nil (eshell)))))
+      (call-interactively #'shell-pop))))
 
 
 ;; vterm
