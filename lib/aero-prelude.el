@@ -653,12 +653,38 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (ivy-rich-mode +1)
   (ivy-rich-project-root-cache-mode +1))
 
+(package! ivy-posframe :auto
+  ;; ivy-posframe moves all ivy functions to a floating posframe in the centerish of the screen,
+  ;; much like many other editors.
+  ;;
+  ;; I continually turn this on and off, and cannot decide if I like it. Thus it is not
+  ;; auto-activated, you must call M-x ivy-posframe-mode
+  :after (ivy)
+  :config
+  (setq ivy-posframe-display-functions-alist
+        '((swiper . ivy-display-function-fallback) ; don't cover search results
+          (counsel-rg . ivy-display-function-fallback)
+          (flyspell . ivy-display-function-fallback)
+          (flyspell-correct-next . ivy-display-function-fallback)
+          (flyspell-correct-previous . ivy-display-function-fallback)
+          (complete-symbol . ivy-posframe-display-at-point) ; could cover point
+          (t . ivy-posframe-display)))
+
+  ;; Fix atrocious width jumping
+  (defun aero/ivy-posframe-get-size ()
+    "Set the ivy-posframe size according to the current frame."
+    (let ((height (or ivy-posframe-height (or ivy-height 10)))
+          (width (min (or ivy-posframe-width 200) (round (* .75 (frame-width))))))
+      (list :height height :width width :min-height height :min-width width)))
+  (setq ivy-posframe-size-function 'aero/ivy-posframe-get-size))
+
 (package! all-the-icons :auto
+  ;; Add support for icon insertion, and use as a lib in other packages
   :after (general)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
-;; Add icons to ivy via ivy-rich
 (package! all-the-icons-ivy-rich (:host github :repo "seagle0128/all-the-icons-ivy-rich")
+  ;; Add icons to ivy via ivy-rich
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
