@@ -936,11 +936,18 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; startup profiler
 (package! esup :auto :commands (esup))
 
-;; Requires separate `chatgpt-shell-openai-key' secret to be set, then allows comint conversation
-;; with ChatGPT
-(package! chatgpt-shell (:host github :repo "xenodium/chatgpt-shell")
-  :commands (chatgpt-shell)
-  :custom (chatgpt-shell-prompt ">>> "))
+(package! gptel (:host github :repo "karthink/gptel")
+  :after (general)
+  :commands (gptel gptel-send)
+  :custom
+  (gptel-api-key openai-api-key)
+  :init
+  (aero-leader-def
+    "ai" 'gptel
+    "aI" 'gptel-send)
+  :config
+  (general-define-key :keymaps 'gptel-mode-map
+    (kbd "<C-return>") 'gptel-send))
 
 ;; Mark passive voice, duplicate words and weasel words
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
