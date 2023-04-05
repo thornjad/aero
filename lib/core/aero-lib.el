@@ -51,29 +51,30 @@ Usage of this macro allows simplified refactoring when changing packaging system
 to do every few years."
   (declare (indent defun)) ; indent like use-package
   (cond
-    ((memq :disabled body)
-     (format "%s :disabled by Aero package!" package))
+   ((memq :disabled body)
+    (format "%s :disabled by Aero package!" package))
 
-    ((or (equal recipe :builtin)
-         (equal recipe :local))
-     `(use-package ,package ,@body))
+   ((or (equal recipe :builtin) (equal recipe :local))
+    `(use-package ,package ,@body))
 
-    ;; Use straight
-		(t `(use-package ,package
-					  :straight ,(or (equal recipe :auto) recipe)
-					  ,@body))
+   ;; Use straight
+   (t
+    `(use-package ,package :straight ,(or (equal recipe :auto) recipe) ,@body))
 
-    ;; Disabled until elpaca matures a little more, it's still in active development, has too many
-    ;; bugs for daily use as of this comment.
-    (nil `(elpaca-use-package
-              ,(cond
-                 ((equal recipe :auto) package)
-                 ((keywordp (car recipe))
-                  ;; Elpaca prefers recipe to start with identifier, but it's redundant in usage, so
-                  ;; auto-insert it here if recipe doesn't have it.
-                  (cons package recipe))
-                 (t recipe))
-            ,@body))))
+   ;; Disabled until elpaca matures a little more, it's still in active development, has too many
+   ;; bugs for daily use as of this comment.
+   (nil
+    `(elpaca-use-package
+      ,(cond
+        ((equal recipe :auto)
+         package)
+        ((keywordp (car recipe))
+         ;; Elpaca prefers recipe to start with identifier, but it's redundant in usage, so
+         ;; auto-insert it here if recipe doesn't have it.
+         (cons package recipe))
+        (t
+         recipe))
+      ,@body))))
 
 (defun aero/elpaca-process-queues ()
   "Interactive version of `elpaca-process-queues'."
@@ -91,30 +92,33 @@ with some parts omitted and some custom behavior added."
   ;; Adapted from https://with-emacs.com/posts/tips/quit-current-context/
   (interactive)
   (cond
-    ((region-active-p)
-     ;; Avoid adding the region to the window selection.
-     (setq saved-region-selection nil)
-     (let (select-active-regions)
-       (deactivate-mark)))
+   ((region-active-p)
+    ;; Avoid adding the region to the window selection.
+    (setq saved-region-selection nil)
+    (let (select-active-regions)
+      (deactivate-mark)))
 
-    ((eq last-command 'mode-exited) nil)
+   ((eq last-command 'mode-exited)
+    nil)
 
-    (current-prefix-arg nil)
+   (current-prefix-arg
+    nil)
 
-    (defining-kbd-macro
-     (message
-      (substitute-command-keys
-       "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
-        (cancel-kbd-macro-events))
+   (defining-kbd-macro
+    (message
+     (substitute-command-keys
+      "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
+    (cancel-kbd-macro-events))
 
-    ((active-minibuffer-window)
-     (when (get-buffer-window "*Completions*")
-       ;; hide completions first so point stays in active window when
-       ;; outside the minibuffer
-       (minibuffer-hide-completions))
-     (abort-recursive-edit))
+   ((active-minibuffer-window)
+    (when (get-buffer-window "*Completions*")
+      ;; hide completions first so point stays in active window when
+      ;; outside the minibuffer
+      (minibuffer-hide-completions))
+    (abort-recursive-edit))
 
-    (t (keyboard-quit))))
+   (t
+    (keyboard-quit))))
 
 (defun aero/comment-dwim ()
   "Comment region if active, else comment line.
@@ -133,7 +137,8 @@ behavior of `comment-dwim'."
 
 (defmacro aero/local! (&rest body)
   "Execute BODY in local directory instead of TRAMP."
-  `(let ((default-directory user-emacs-directory)) ,@body))
+  `(let ((default-directory user-emacs-directory))
+     ,@body))
 
 (defmacro aero/voidvar! (&rest body)
   "Appease the compiler by pretending to use variables in BODY.
@@ -155,11 +160,16 @@ See `sort-regexp-fields'."
 
 ;;; system and logging
 
-(defun system-is-mac () (string= system-type 'darwin))
-(defun system-is-linux () (string= system-type 'gnu/linux))
-(defun system-is-mswindows () (string= system-type 'windows-nt))
-(defun window-system-is-mac () (memq (window-system) '(mac ns)))
-(defun in-nix-shell-p () (string-equal (getenv "IN_NIX_SHELL") "1"))
+(defun system-is-mac ()
+  (string= system-type 'darwin))
+(defun system-is-linux ()
+  (string= system-type 'gnu/linux))
+(defun system-is-mswindows ()
+  (string= system-type 'windows-nt))
+(defun window-system-is-mac ()
+  (memq (window-system) '(mac ns)))
+(defun in-nix-shell-p ()
+  (string-equal (getenv "IN_NIX_SHELL") "1"))
 
 (defun aero/has-modules-p ()
   "Return true when Emacs has been compiled with modules support."
@@ -215,21 +225,22 @@ See `sort-regexp-fields'."
 (defun aero/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
-  (cl-destructuring-bind (buf start pos)
-      (or (cl-find (window-buffer window) (window-prev-buffers)
-                   :key #'car :test-not #'eq)
-          (list (other-buffer) nil nil))
-    (if (not buf)
-        (message "Last buffer not found")
-      (set-window-buffer-start-and-point window buf start pos))))
+  (cl-destructuring-bind
+   (buf start pos)
+   (or (cl-find (window-buffer window) (window-prev-buffers) :key #'car :test-not #'eq)
+       (list (other-buffer) nil nil))
+   (if (not buf)
+       (message "Last buffer not found")
+     (set-window-buffer-start-and-point window buf start pos))))
 
 (defun aero/alternate-window ()
   "Switch back and forth between current and last window in the current frame."
   (interactive)
-  (let (;; switch to first window previously shown in this frame
+  (let ( ;; switch to first window previously shown in this frame
         (prev-window (get-mru-window nil t t)))
     ;; Check window was not found successfully
-    (unless prev-window (user-error "Last window not found."))
+    (unless prev-window
+      (user-error "Last window not found."))
     (select-window prev-window)))
 
 (defun aero/layout-two-columns ()
@@ -242,7 +253,8 @@ See `sort-regexp-fields'."
   "Switch to three column window layout."
   (interactive)
   (delete-other-windows)
-  (dotimes (_ 2) (split-window-right))
+  (dotimes (_ 2)
+    (split-window-right))
   (balance-windows))
 
 (defun aero/toggle-compilation-buffer ()
@@ -258,9 +270,10 @@ See `sort-regexp-fields'."
         (aero/bury-buffer-kill-window win)
 
       ;; else we need to pop it up
-      (display-buffer buf '((display-buffer-below-selected)
-                            (reusable-frames . nil) ;; only search this frame
-                            (window-height . 20))))))
+      (display-buffer buf
+                      '((display-buffer-below-selected)
+                        (reusable-frames . nil) ;; only search this frame
+                        (window-height . 20))))))
 
 (defun aero/incr-compilation-buffer ()
   "Renames existing compilation buffer so you can create more."
@@ -299,28 +312,37 @@ This is equivalent to SPC U M-x eshell"
 (defun make-xpm-bar (color height width)
   "Create an XPM bar bitmap of HEIGHT and WIDTH, with COLOR accent."
   (propertize
-   " " 'display
+   " "
+   'display
    (let ((data (make-list height (make-list width 1)))
          (color (or color "None")))
      (create-image
       (concat
        (format "/* XPM */\nstatic char * percent[] = {\n\"%i %i 2 1\",\n\". c %s\",\n\"  c %s\","
-               (length (car data))
-               (length data)
-               color
-               color)
+               (length (car data)) (length data) color color)
        (apply #'concat
-              (cl-loop with idx = 0
-                    with len = (length data)
-                    for dl in data
-                    do (cl-incf idx)
-                    collect
-                    (concat "\""
-                            (cl-loop for d in dl
-                                  if (= d 0) collect (string-to-char " ")
-                                  else collect (string-to-char "."))
-                            (if (eq idx len) "\"};" "\",\n")))))
-      'xpm t :ascent 'center))))
+              (cl-loop
+               with idx = 0 with len = (length data) for dl in data do (cl-incf idx) collect
+               (concat
+                "\""
+                (cl-loop
+                 for
+                 d
+                 in
+                 dl
+                 if
+                 (= d 0)
+                 collect
+                 (string-to-char " ")
+                 else
+                 collect
+                 (string-to-char "."))
+                (if (eq idx len)
+                    "\"};"
+                  "\",\n")))))
+      'xpm
+      t
+      :ascent 'center))))
 
 
 ;;; files
@@ -369,8 +391,7 @@ buffer will be recentered to the line at point."
   "Delete the current file, and kill the buffer."
   (interactive)
   (or (buffer-file-name) (error "No file is currently being edited"))
-  (when (yes-or-no-p (format "Really delete '%s'?"
-                             (file-name-nondirectory buffer-file-name)))
+  (when (yes-or-no-p (format "Really delete '%s'?" (file-name-nondirectory buffer-file-name)))
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
@@ -392,11 +413,12 @@ buffer will be recentered to the line at point."
 ;; adapted from http://emacs.stackexchange.com/questions/202/close-all-dired-buffers
 (defun aero/kill-diff-buffers ()
   (interactive)
-  (mapc (lambda (buffer)
-          (when (member (buffer-local-value 'major-mode buffer)
-                        '(diff-mode magit-diff-mode magit-process-mode))
-            (kill-buffer buffer)))
-        (buffer-list)))
+  (mapc
+   (lambda (buffer)
+     (when (member
+            (buffer-local-value 'major-mode buffer) '(diff-mode magit-diff-mode magit-process-mode))
+       (kill-buffer buffer)))
+   (buffer-list)))
 
 (defun aero/fill-to-80 ()
   "`fill-paragraph' to 80 columns, regardless of the default."
@@ -453,12 +475,15 @@ buffer will be recentered to the line at point."
   "Reveal the supplied file FILE in Finder.
 
 To call interactively, use [aero/open-in-finder]."
-  (let ((script (concat
-                 "set thePath to POSIX file \"" (shell-quote-argument file) "\"\n"
-                 "tell application \"Finder\"\n"
-                 " set frontmost to true\n"
-                 " reveal thePath \n"
-                 "end tell\n")))
+  (let ((script
+         (concat
+          "set thePath to POSIX file \""
+          (shell-quote-argument file)
+          "\"\n"
+          "tell application \"Finder\"\n"
+          " set frontmost to true\n"
+          " reveal thePath \n"
+          "end tell\n")))
     (aero/run-osascript script)))
 
 (defun aero/open-in-finder ()
@@ -467,28 +492,29 @@ In a dired buffer, it will open the current file."
   (interactive)
   (declare-function dired-file-name-at-point "dired.el")
   (aero/reveal-in-finder-as
-   (or (buffer-file-name)
-       (expand-file-name (or (dired-file-name-at-point) ".")))))
+   (or (buffer-file-name) (expand-file-name (or (dired-file-name-at-point) ".")))))
 
 (defun aero/sudo-edit (&optional arg)
   (interactive "P")
-  (let ((fname (if (or arg (not buffer-file-name))
-                   (read-file-name "File: ")
-                 buffer-file-name)))
+  (let ((fname
+         (if (or arg (not buffer-file-name))
+             (read-file-name "File: ")
+           buffer-file-name)))
     (find-file
-     (cond ((string-match-p "^/ssh:" fname)
-            (with-temp-buffer
-              (insert fname)
-              (search-backward ":")
-              (let ((last-match-end nil)
-                    (last-ssh-hostname nil))
-                (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
-                  (setq last-ssh-hostname (or (match-string 1 fname)
-                                              last-ssh-hostname))
-                  (setq last-match-end (match-end 0)))
-                (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
-              (buffer-string)))
-           (t (concat "/sudo:root@localhost:" fname))))))
+     (cond
+      ((string-match-p "^/ssh:" fname)
+       (with-temp-buffer
+         (insert fname)
+         (search-backward ":")
+         (let ((last-match-end nil)
+               (last-ssh-hostname nil))
+           (while (string-match "@\\\([^:|]+\\\)" fname last-match-end)
+             (setq last-ssh-hostname (or (match-string 1 fname) last-ssh-hostname))
+             (setq last-match-end (match-end 0)))
+           (insert (format "|sudo:%s" (or last-ssh-hostname "localhost"))))
+         (buffer-string)))
+      (t
+       (concat "/sudo:root@localhost:" fname))))))
 
 (declare-function tramp-cleanup-all-connections "tramp.el")
 (defun aero/tramp-buffer-p (buffer)
@@ -504,7 +530,8 @@ This function does NOT remove remote buffers, only their connections."
     (cancel-function-timers 'tramp-timeout-session)
     (declare-function tramp-list-tramp-buffers "tramp.el")
     (dolist (name (tramp-list-tramp-buffers))
-      (when (processp (get-buffer-process name)) (delete-process name)))))
+      (when (processp (get-buffer-process name))
+        (delete-process name)))))
 
 (defun aero/kill-tags ()
   "Kill the currently-loaded TAGS file."
@@ -527,10 +554,14 @@ This function does NOT remove remote buffers, only their connections."
 This can be used to open Nautilus/Finder, the default browser, etc. See \"man
 xdg-open\" for more."
   (interactive (list (read-string "Open: ")))
-  (let ((proc (cond
-                ((system-is-linux) "xdg-open")
-                ((system-is-mac) "open")
-                (t (user-error "No system process to use on this OS")))))
+  (let ((proc
+         (cond
+          ((system-is-linux)
+           "xdg-open")
+          ((system-is-mac)
+           "open")
+          (t
+           (user-error "No system process to use on this OS")))))
     (call-process proc nil 0 nil arg)))
 
 (defun aero/browse-url-open (url &optional _ignored)
@@ -554,9 +585,8 @@ Ignored arg is due to the way `funcall-interactively' calls stuff."
   (interactive)
   (if (bolp)
       (delete-char -1)
-    (if (string-match-p "^[[:space:]]+$"
-                        (buffer-substring-no-properties
-                         (line-beginning-position) (point)))
+    (if (string-match-p
+         "^[[:space:]]+$" (buffer-substring-no-properties (line-beginning-position) (point)))
         (delete-horizontal-space)
       (when (thing-at-point 'whitespace)
         (delete-horizontal-space))
@@ -581,49 +611,59 @@ If called with prefix argument, or with nothing under point, prompt for tag."
   "Native compile the file in the current buffer."
   (interactive)
   (let ((warning-minimum-level :warning))
-    (save-excursion
-      (native-compile-async buffer-file-name nil t))))
+    (save-excursion (native-compile-async buffer-file-name nil t))))
 
 (defun aero/byte-compile-file-at-buffer ()
   "Byte compile the file open in the current buffer."
   (interactive)
-  (save-excursion
-    (byte-compile-file buffer-file-name)))
+  (save-excursion (byte-compile-file buffer-file-name)))
 (defun aero/byte-recompile-file-at-buffer ()
   "Byte recompile the file open in the current buffer."
   (interactive)
-  (save-excursion
-    (byte-recompile-file buffer-file-name)))
+  (save-excursion (byte-recompile-file buffer-file-name)))
 
 (defun shrug ()
   (interactive)
   (insert "¯\\_(ツ)_/¯"))
 
-(defun untabify-buffer () (interactive) (untabify (point-min) (point-max)))
-(defun tabify-buffer () (interactive) (tabify (point-min) (point-max)))
-(defun indent-buffer () (interactive) (indent-region (point-min) (point-max)))
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
+(defun tabify-buffer ()
+  (interactive)
+  (tabify (point-min) (point-max)))
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
 
 (defmacro aero/insert-text-at-point (text)
   `(progn
      (save-excursion
-       (unless (eobp) (right-char))
+       (unless (eobp)
+         (right-char))
        (insert ,text))
      (forward-sexp 1)))
 
 (defun alter-number-at-point (offset)
   (save-excursion
     (skip-chars-backward "0-9")
-    (or (looking-at "[0-9]+")
-        (message "No number at point"))
+    (or (looking-at "[0-9]+") (message "No number at point"))
     (replace-match (number-to-string (+ offset (string-to-number (match-string 0)))))))
-(defun increment-number-at-point () (interactive) (alter-number-at-point 1))
-(defun decrement-number-at-point () (interactive) (alter-number-at-point -1))
+(defun increment-number-at-point ()
+  (interactive)
+  (alter-number-at-point 1))
+(defun decrement-number-at-point ()
+  (interactive)
+  (alter-number-at-point -1))
 
 (defun human-date (human-string &optional epoch)
   "Convert HUMAN-STRING to a date string or if EPOCH, seconds.
 Requires the utility date to be installed."
   (with-temp-buffer
-    (let ((dateProc (if (system-is-mac) "gdate" "date")))
+    (let ((dateProc
+           (if (system-is-mac)
+               "gdate"
+             "date")))
       (if epoch
           (call-process dateProc nil t nil "-d" human-string "+%s")
         (call-process dateProc nil t nil "-d" human-string)))
@@ -635,7 +675,10 @@ If DATE is nil, check today instead.
 
 Requires the utility date to be installed."
   (with-temp-buffer
-    (let ((dateProc (if (system-is-mac) "gdate" "date")))
+    (let ((dateProc
+           (if (system-is-mac)
+               "gdate"
+             "date")))
       (if date
           (call-process dateProc nil t nil "-d" date "+%A")
         (call-process dateProc nil t nil "+%A")))
@@ -655,9 +698,11 @@ If FRAME is omitted or nil, use currently selected frame."
            (monitor-w (display-pixel-width display))
            (monitor-h (display-pixel-height display))
            ;; NS doesn't report menu bar as outside monitor
-           (monitor-h (if (eq window-system 'ns) (- monitor-h 22) monitor-h))
-           (center (list (/ (- monitor-w frame-w) 2)
-                         (/ (- monitor-h frame-h) 2))))
+           (monitor-h
+            (if (eq window-system 'ns)
+                (- monitor-h 22)
+              monitor-h))
+           (center (list (/ (- monitor-w frame-w) 2) (/ (- monitor-h frame-h) 2))))
       (apply 'set-frame-position (flatten-list (list frame center))))))
 
 (defun aero/ctags-create-tags (rootdir &optional ctags-cmd)
@@ -669,24 +714,28 @@ specify it with CTAGS-CMD."
   (let ((default-directory rootdir)
         (cmd (or ctags-cmd "ctags"))
         (buf (get-buffer-create " *aero/ctags-create-tags*")))
-    (async-shell-command
-     (concat cmd " --kinds-all='*' --fields='*' --extras='*' --langmap=TCL:.tcl.rvt -R")
-     buf)))
+    (async-shell-command (concat
+                          cmd
+                          " --kinds-all='*' --fields='*' --extras='*' --langmap=TCL:.tcl.rvt -R")
+                         buf)))
 
 (defun aero/open-with (arg)
   "Open visited file in default external program.
 When in dired mode, open file under the cursor.
 With a prefix ARG always prompt for command to use."
   (interactive "P")
-  (let* ((current-file-name (if (eq major-mode 'dired-mode)
-                                (dired-get-file-for-visit)
-                              buffer-file-name))
-         (open (pcase system-type
-                 (`darwin "open")
-                 ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
-         (program (if (or arg (not open))
-                      (read-shell-command "Open current file with: ")
-                    open)))
+  (let* ((current-file-name
+          (if (eq major-mode 'dired-mode)
+              (dired-get-file-for-visit)
+            buffer-file-name))
+         (open
+          (pcase system-type
+            (`darwin "open")
+            ((or `gnu `gnu/linux `gnu/kfreebsd) "xdg-open")))
+         (program
+          (if (or arg (not open))
+              (read-shell-command "Open current file with: ")
+            open)))
     (call-process program nil 0 nil current-file-name)))
 
 (defun pulse-line (&rest _)
@@ -698,14 +747,14 @@ alternative to the beacon package."
 (defun aero/ssh-refresh ()
   "Reset the environment variable SSH_AUTH_SOCK"
   (interactive)
-  (let (ssh-auth-sock-old (getenv "SSH_AUTH_SOCK"))
+  (let (ssh-auth-sock-old
+        (getenv "SSH_AUTH_SOCK"))
     (setenv "SSH_AUTH_SOCK"
-            (car (split-string
-                  (shell-command-to-string
-                   "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
-    (message
-     (format "SSH_AUTH_SOCK %s --> %s"
-             ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
+            (car
+             (split-string
+              (shell-command-to-string
+               "ls -t $(find /tmp/ssh-* -user $USER -name 'agent.*' 2> /dev/null)"))))
+    (message (format "SSH_AUTH_SOCK %s --> %s" ssh-auth-sock-old (getenv "SSH_AUTH_SOCK")))))
 
 (defun aero/insert-pdb ()
   "Inserts PDB set_trace."
