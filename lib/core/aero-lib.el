@@ -76,12 +76,7 @@ to do every few years."
          recipe))
       ,@body))))
 
-(defun aero/elpaca-process-queues ()
-  "Interactive version of `elpaca-process-queues'."
-  (interactive)
-  (elpaca-process-queues))
-
-
+
 ;; utilities
 
 (defun aero/keyboard-quit-context ()
@@ -296,13 +291,6 @@ See `sort-regexp-fields'."
 This is equivalent to SPC U M-x eshell"
   (interactive)
   (eshell t))
-
-(defun htop ()
-  (interactive)
-  (if (get-buffer "*htop*")
-      (switch-to-buffer "*htop*")
-    (ansi-term "/bin/zsh" "htop")
-    (comint-send-string "*htop*" "htop\n")))
 
 (defmacro aero/async-shell-command-with-path (command &optional buffer error-buffer)
   "Run COMMAND asynchronously like `async-shell-command' but with PATH loaded."
