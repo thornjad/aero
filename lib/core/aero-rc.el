@@ -44,6 +44,7 @@
  make-pointer-invisible t ; le curseur est une chienne
  auto-revert-interval 10 ; wait just a little longer (default is 5)
  pop-up-windows nil ; make new window for pop-ups
+ window-sides-slots '(0 1 1 1) ; side-window slots (left top right bottom)
  shared-game-score-directory (expand-file-name "game-scores/" aero-etc-dir)
  idle-update-delay 0.5 ; default is 0.5
  bidi-paragraph-direction 'left-to-right ; no need to check
@@ -259,10 +260,12 @@
   "Override ridiculous built-in crap."
   (message "Aero est prêt"))
 
-;; open these buffers in the same window
 (add-to-list 'display-buffer-alist
-             '("*Help*" display-buffer-same-window)
-             '("*helpful*" display-buffer-same-window))
+             ;; Put eshell in bottom side window
+             '("e?shell\\*\\(?:<[[:digit:]]+>\\)?\\'"
+               (display-buffer-reuse-window display-buffer-in-side-window)
+                (side . bottom)
+                (window-height . 23)))
 
 ;; If we leave a buffer, set its mark as inactive
 (transient-mark-mode 1)
