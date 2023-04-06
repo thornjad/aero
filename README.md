@@ -78,7 +78,6 @@ Like the Borg, Aero amalgamates macros, functions, bindings and packages modifie
 - [John Wiegley](https://github.com/jwiegley/dot-emacs)
 - [Steve Purcell](https://github.com/purcell/emacs.d)
 - [Samuel Barreto](https://github.com/sam217pa/emacs-config)
-- [Xah Lee](http://xahlee.info/emacs)
 
 ## License
 
