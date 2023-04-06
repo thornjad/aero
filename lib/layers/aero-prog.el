@@ -59,14 +59,14 @@
   :hook (company-mode . company-box-mode))
 
 ;; required by very old unicode-escape.el, used by tabnine
-(require 'cl-lib)
-(defalias 'defun* 'cl-defun)
-(defalias 'list* 'cl-list*)
-(package! company-tabnine :auto
-  ;; Manages and provides Tabnine interface
-  :after (company)
-  :hook (kill-emacs . company-tabnine-kill-process)
-  :init (add-to-list 'company-backends #'company-tabnine))
+;; (require 'cl-lib)
+;; (defalias 'defun* 'cl-defun)
+;; (defalias 'list* 'cl-list*)
+;; (package! company-tabnine :auto
+;;   ;; Manages and provides Tabnine interface
+;;   :after (company)
+;;   :hook (kill-emacs . company-tabnine-kill-process)
+;;   :init (add-to-list 'company-backends #'company-tabnine))
 
 
 ;; LSP
