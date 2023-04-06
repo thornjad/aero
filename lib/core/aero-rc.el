@@ -102,7 +102,7 @@
                                  (abbreviate-file-name (buffer-file-name))
                                "%b"))
                       (:eval (when (and (buffer-modified-p) (not buffer-read-only))
-                                 " •")))
+                               " •")))
  ns-use-proxy-icon nil ; remove icon from frame title in NS
 
  ;; startup with scratch buffer instead of the splash screen
