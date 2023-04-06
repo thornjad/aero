@@ -941,6 +941,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :commands (gptel gptel-send)
   :custom
   (gptel-api-key openai-api-key)
+  (gptel-playback t) ; playback in chunks instead of all at once
   :init
   (aero-leader-def
     "ai" 'gptel
