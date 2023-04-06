@@ -137,27 +137,6 @@
   :after eshell
   :config (setup-esh-help-eldoc))
 
-;; TODO not working, subsequent calls override previous shells. Doesn't work with project-eshell
-(package! shell-pop :auto :defer t
-  :custom
-  (shell-pop-full-span t)
-  (shell-pop-shell-type '("eshell" "*eshell*" (lambda nil (eshell))))
-  :config
-  (defun aero/pop-eshell ()
-    (interactive)
-    (let ((shell-pop-shell-type '("eshell" "*eshell*" (lambda nil (eshell)))))
-      (call-interactively #'shell-pop)))
-  (defun aero/pop-project-eshell ()
-    (interactive)
-    (require 'project)
-    (let* ((default-directory (project-root (project-current t)))
-           (project-name (file-name-nondirectory
-                          (directory-file-name (file-name-directory default-directory))))
-           (shell-pop-shell-type '((concat "eshell-" project-name)
-                                   (concat "*eshell-" project-name "*")
-                                   (lambda nil (eshell)))))
-      (call-interactively #'shell-pop))))
-
 
 ;; vterm
 
