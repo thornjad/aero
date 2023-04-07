@@ -200,21 +200,18 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
             map))
 
 ;;;###autoload
-(defun aero-teletype-gpt (&optional initial)
+(defun aero-teletype-gpt (&optional initial new)
   "Switch to or start a Teletype GPT session.
 
-With a prefix arg, start a new session.
-
-If region is active, it is used as the INITIAL prompt."
+If NEW, start a new session. If region is active, it is used as the INITIAL prompt."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
 
   (unless aero/gpt-openai-api-key
     (user-error "Must set `aero/gpt-openai-api-key'"))
 
-  (let ((buf (get-buffer-create
-              (if current-prefix-arg
-                  (generate-new-buffer-name aero/gpt-main-session)
-                aero/gpt-main-session))))
+  (let ((buf (get-buffer-create (if new
+                                    (generate-new-buffer-name aero/gpt-main-session)
+                                  aero/gpt-main-session))))
     (with-current-buffer buf
       (require 'markdown-mode)
       (markdown-mode)
@@ -224,3 +221,10 @@ If region is active, it is used as the INITIAL prompt."
       (setf (point) (point-max))
       (skip-chars-backward "\t\r\n")
       (message "Send your prompt with C-Return"))))
+
+(defun aero-teletype-gpt-new (&optional initial)
+  "Start a new Teletype GPT session.
+
+If region is active, it is used as the INITIAL prompt."
+  (interactive)
+  (funcall-interactively #'aero-teletype-gpt initial t))
