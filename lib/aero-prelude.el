@@ -936,20 +936,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; startup profiler
 (package! esup :auto :commands (esup))
 
-(package! gptel (:host github :repo "karthink/gptel")
-  :after (general)
-  :commands (gptel gptel-send)
-  :custom
-  (gptel-api-key openai-api-key)
-  (gptel-playback t) ; playback in chunks instead of all at once
-  :init
-  (aero-leader-def
-    "ai" 'gptel
-    "aI" 'gptel-send)
-  :config
-  (general-define-key :keymaps 'gptel-mode-map
-    (kbd "<C-return>") 'gptel-send))
-
 ;; Mark passive voice, duplicate words and weasel words
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
