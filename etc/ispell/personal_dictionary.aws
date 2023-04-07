@@ -1,4 +1,4 @@
-personal_ws-1.1 en 526 
+personal_ws-1.1 en 528 
 ACL
 APIs
 Aireon
@@ -63,6 +63,7 @@ GDAL
 GDPR
 GHE
 GPL
+GPT
 GQL
 GSM
 GTK
@@ -219,6 +220,7 @@ analytics
 applescript
 appstream
 architecting
+arg
 args
 async
 autocorrect
