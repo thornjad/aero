@@ -83,40 +83,71 @@ for details.")
 See https://platform.openai.com/docs/guides/chat/introduction.")
 
 (defvar aero/gpt--debug-mode nil
-  "If non-nil, log more.")
+  "If non-nil, log to a debug buffer.")
 
-(defvar aero/gpt--busy nil)
+(defvar aero/gpt--status-timer nil)
+
+(defvar aero/gpt--status-spinner '("Querying GPT"
+                                   "Querying GPT."
+                                   "Querying GPT.."
+                                   "Querying GPT..."))
 
 (defun aero/teletype-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
-  (if aero/gpt--busy
-      (user-error "GPT already busy, please wait until the previous request finishes.")
-    (message "Querying GPT...")
-    (let* ((prompt (aero/gpt--create-prompt))
-           (buf (current-buffer))
-           (marker (point-marker))
-           (inhibit-message t)
-           (message-log-max nil)
-           (url-request-method "POST")
-           (url-request-extra-headers
-            `(("Content-Type" . "application/json")
-              ("Authorization" . ,(concat "Bearer " aero/gpt-openai-api-key))))
-           (url-request-data (encode-coding-string
-                              (json-encode `(:model ,aero/gpt-model
-                                             :messages [,@prompt]
-                                             :temperature ,aero/gpt-temp
-                                             :max_tokens ,aero/gpt-max-tokens))
-                              'utf-8)))
-      (setq aero/gpt--busy t)
-      (url-retrieve "https://api.openai.com/v1/chat/completions"
-                    (lambda (_)
-                      (aero/gpt--insert-response
-                       (aero/gpt--parse-response (current-buffer))
-                       buf marker)
-                      (setq aero/gpt--busy nil)
-                      (kill-buffer))
-                    nil (not aero/gpt--debug-mode) nil))))
+  (message "Querying GPT...")
+  (aero/gpt--start-status-spinner)
+  (let* ((prompt (aero/gpt--create-prompt))
+         (buf (current-buffer))
+         (marker (point-marker))
+         (inhibit-message t)
+         (message-log-max nil)
+         (url-show-status aero/gpt--debug-mode)
+         (url-show-headers aero/gpt--debug-mode)
+         (url-request-method "POST")
+         (url-request-extra-headers
+          `(("Content-Type" . "application/json")
+            ("Authorization" . ,(concat "Bearer " aero/gpt-openai-api-key))))
+         (url-request-data (encode-coding-string
+                            (json-encode `(:model ,aero/gpt-model
+                                           :messages [,@prompt]
+                                           :temperature ,aero/gpt-temp
+                                           :max_tokens ,aero/gpt-max-tokens))
+                            'utf-8)))
+    (url-retrieve "https://api.openai.com/v1/chat/completions"
+                  (lambda (_)
+                    (aero/gpt--end-status-spinner)
+                    (aero/gpt--insert-response
+                     (aero/gpt--parse-response (current-buffer))
+                     buf marker)
+                    (kill-buffer))
+                  nil (not aero/gpt--debug-mode) nil)))
+
+(defun aero/gpt--start-status-spinner (buf)
+  (with-current-buffer buf
+    (save-excursion
+      (setf (point) (point-max))
+      (insert "\n\n")
+      (let ((spinner-index 0))
+        (insert (propertize (car aero/gpt--status-spinner) 'aero-gpt 'status))
+        (setq aero/gpt--status-timer
+              (run-with-timer 0.5 0.5
+                              (lambda ()
+                                (let ((new-index (mod (1+ spinner-index)
+                                                      (length aero/gpt--status-spinner))))
+                                  (forward-line)
+                                  (delete-region (line-beginning-position) (line-end-position))
+                                  (insert (propertize
+                                           (nth new-index aero/gpt--status-spinner)
+                                           'aero-gpt 'status))
+                                  (setq spinner-index new-index)))))))))
+
+(defun aero/gpt--stop-status-spinner (buf)
+  (when aero/gpt--status-timer (cancel-timer aero/gpt--status-timer))
+  (with-current-buffer buf
+    (save-excursion
+      (setf (point) (text-property-search-backward 'aero-gpt 'status))
+      (delete-region (line-end-position -1) (line-end-position +2)))))
 
 (defun aero/gpt--create-prompt ()
   "Return a full prompt from the contents of this buffer."
@@ -126,10 +157,10 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
           (prop) (prompts (list)))
       (while (and (or (not max-entries) (>= max-entries 0))
                   (setq prop (text-property-search-backward
-                              'gptel 'response
+                              'aero-gpt 'response
                               (not (not (get-char-property
                                          (max (point-min) (1- (point)))
-                                         'gptel))))))
+                                         'aero-gpt))))))
         (push (list :role (if (prop-match-value prop) "assistant" "user")
                     :content (string-trim
                               (buffer-substring-no-properties (prop-match-beginning prop)
@@ -146,7 +177,7 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
     (message "Querying GPT... Done.")
     (if content
         (with-current-buffer buffer
-          (put-text-property 0 (length content) 'aero/gpt 'response content)
+          (put-text-property 0 (length content) 'aero-gpt 'response content)
           (setf (point) marker)
           (unless (bobp) (insert-before-markers-and-inherit "\n\n"))
           (let ((p (point)))
