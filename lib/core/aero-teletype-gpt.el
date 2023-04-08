@@ -131,13 +131,13 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
         (and max-entries (cl-decf max-entries)))
       (cons (list :role "system" :content aero/gpt--system-directive) prompts))))
 
-(defun aero/gpt--insert-response (response buffer marker)
-  "Insert GPT's RESPONSE into BUFFER at MARKER."
+(defun aero/gpt--insert-response (response marker)
+  "Insert GPT's RESPONSE into GPT session buffer at MARKER."
   (let ((content (plist-get response :content))
         (status (plist-get response :status)))
     (message "Querying GPT... Done.")
     (if content
-        (with-current-buffer buffer
+        (with-current-buffer (get-buffer aero/gpt--session)
           (put-text-property 0 (length content) 'aero-gpt 'response content)
           (setf (point) marker)
           (unless (bobp) (insert-before-markers-and-inherit "\n\n"))
@@ -150,21 +150,23 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
       (error "GPT response error: %s" status))))
 
 (defun aero/gpt--parse-response (buffer)
-  "Parse the GPT response in BUFFER."
+  "Parse the GPT response in URL BUFFER."
   (when (buffer-live-p buffer)
-    (when aero/gpt--debug-mode
-      (with-current-buffer buffer (clone-buffer "*aero-gpt-error*" 'show)))
     (with-current-buffer buffer
+      (when aero/gpt--debug-mode (clone-buffer "*aero-gpt-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
-                (response (progn
-                            (forward-paragraph)
-                            (let ((json-str (decode-coding-string
-                                             (buffer-substring-no-properties (point) (point-max))
-                                             'utf-8)))
-                              (condition-case nil
-                                  (json-read-from-string json-str)
-                                (json-readtable-error 'json-read-error))))))
+                (response
+                 (progn
+                   (forward-paragraph)
+                   (let ((json-str
+                          (decode-coding-string
+                           (buffer-substring-no-properties (point) (point-max))
+                           'utf-8)))
+                     (condition-case nil
+                         (json-read-from-string json-str)
+                       (json-readtable-error 'json-read-error))))))
+
           (cond
            ((string-match-p "200 OK" status)
             (list :content (string-trim (map-nested-elt response
@@ -192,18 +194,16 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
             map))
 
 ;;;###autoload
-(defun aero-teletype-gpt (&optional initial new)
+(defun aero-teletype-gpt (&optional initial)
   "Switch to or start a Teletype GPT session.
 
-If NEW, start a new session. If region is active, it is used as the INITIAL prompt."
+If region is active, it is used as the INITIAL prompt."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
 
   (unless aero/gpt-openai-api-key
     (user-error "Must set `aero/gpt-openai-api-key'"))
 
-  (let ((buf (get-buffer-create (if new
-                                    (generate-new-buffer-name aero/gpt-main-session)
-                                  aero/gpt-main-session))))
+  (let ((buf (get-buffer-create aero/gpt--session)))
     (with-current-buffer buf
       (require 'markdown-mode)
       (markdown-mode)
@@ -213,10 +213,3 @@ If NEW, start a new session. If region is active, it is used as the INITIAL prom
       (setf (point) (point-max))
       (skip-chars-backward "\t\r\n")
       (message "Send your prompt with C-Return"))))
-
-(defun aero-teletype-gpt-new (&optional initial)
-  "Start a new Teletype GPT session.
-
-If region is active, it is used as the INITIAL prompt."
-  (interactive)
-  (funcall-interactively #'aero-teletype-gpt initial t))
