@@ -73,32 +73,20 @@ This is a number between 0.0 and 2.0 which informs GPT's randomness. A nil value
 See https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature
 for details.")
 
-(defvar aero/gpt-main-session "*Teletype GPT*"
-  "Name of the main Aero GPT session.")
-
 (defvar-local aero/gpt--system-directive
     "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Markdown formatting."
   "The system directive helps set GPT's response behavior.
 
 See https://platform.openai.com/docs/guides/chat/introduction.")
 
-(defvar aero/gpt--debug-mode nil
-  "If non-nil, log to a debug buffer.")
-
-(defvar aero/gpt--status-timer nil)
-
-(defvar aero/gpt--status-spinner '("Querying GPT"
-                                   "Querying GPT."
-                                   "Querying GPT.."
-                                   "Querying GPT..."))
+(defvar aero/gpt--debug-mode t)
+(defvar aero/gpt--session "*Teletype GPT*")
 
 (defun aero/teletype-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
   (message "Querying GPT...")
-  (aero/gpt--start-status-spinner)
   (let* ((prompt (aero/gpt--create-prompt))
-         (buf (current-buffer))
          (marker (point-marker))
          (inhibit-message t)
          (message-log-max nil)
@@ -116,38 +104,11 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (aero/gpt--end-status-spinner)
                     (aero/gpt--insert-response
                      (aero/gpt--parse-response (current-buffer))
-                     buf marker)
+                     (get-buffer aero/gpt--session) marker)
                     (kill-buffer))
                   nil (not aero/gpt--debug-mode) nil)))
-
-(defun aero/gpt--start-status-spinner (buf)
-  (with-current-buffer buf
-    (save-excursion
-      (setf (point) (point-max))
-      (insert "\n\n")
-      (let ((spinner-index 0))
-        (insert (propertize (car aero/gpt--status-spinner) 'aero-gpt 'status))
-        (setq aero/gpt--status-timer
-              (run-with-timer 0.5 0.5
-                              (lambda ()
-                                (let ((new-index (mod (1+ spinner-index)
-                                                      (length aero/gpt--status-spinner))))
-                                  (forward-line)
-                                  (delete-region (line-beginning-position) (line-end-position))
-                                  (insert (propertize
-                                           (nth new-index aero/gpt--status-spinner)
-                                           'aero-gpt 'status))
-                                  (setq spinner-index new-index)))))))))
-
-(defun aero/gpt--stop-status-spinner (buf)
-  (when aero/gpt--status-timer (cancel-timer aero/gpt--status-timer))
-  (with-current-buffer buf
-    (save-excursion
-      (setf (point) (text-property-search-backward 'aero-gpt 'status))
-      (delete-region (line-end-position -1) (line-end-position +2)))))
 
 (defun aero/gpt--create-prompt ()
   "Return a full prompt from the contents of this buffer."
