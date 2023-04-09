@@ -152,7 +152,7 @@
                                                         '(:choices 0 :message :content)))
                   :tokens (plist-get response :usage)
                   :time (plist-get response :created)
-                  :stop (plist-get (plist-get (plist-get (plist-get response :choices) 0) :finish_reason))
+                  :stop (plist-get (plist-get (plist-get response :choices) 0) :finish_reason)
                   :status status))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
