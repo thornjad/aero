@@ -48,7 +48,7 @@
   :type 'string)
 
 (defvar aero/gpt--debug-mode t)
-(defvar aero/gpt--session "*Teletype GPT*")
+(defvar aero/gpt--session-name "*Teletype GPT*")
 
 (defun aero/teletype-gpt-send ()
   "Submit the current prompt to GPT."
@@ -74,8 +74,8 @@
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
                     (aero/gpt--insert-response
-                     (aero/gpt--parse-response (current-buffer))
-                     (get-buffer aero/gpt--session) marker)
+                     (aero/gpt--parse-response (current-buffer)) marker)
+                    ;; (kill-buffer)
                     )
                   nil (not aero/gpt--debug-mode) nil)))
 
@@ -112,6 +112,7 @@
     (if content
         (aero/gpt--system-report-response tokens time stop)
       (aero/buffer-max-excursion aero/gpt--session
+      (aero/buffer-max-excursion aero/gpt--session-name
         (put-text-property 0 (length content) 'aero-gpt 'response content)
         (let ((line "# GPT\n\n"))
           (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
@@ -207,7 +208,7 @@
     (aero/gpt--insert-at-end content)))
 
 (defun aero/gpt--clear-last-system-status ()
-  (aero/buffer-max-excursion aero/gpt--session
+  (aero/buffer-max-excursion aero/gpt--session-name
     (let ((status-prop (text-property-search-backward
                         'aero-gpt 'system-status
                         (not (not (get-char-property
@@ -227,7 +228,7 @@
                        (prop-match-end status-prop))))))
 
 (defun aero/gpt--insert-at-end (content)
-  (aero/buffer-max-excursion aero/gpt--session
+  (aero/buffer-max-excursion aero/gpt--session-name
     (skip-chars-backward "\t\r\n\v")
     (let ((pt (point)))
       (narrow-to-region pt (point-max))
@@ -249,7 +250,7 @@
   (interactive)
   (unless aero/gpt-openai-api-key
     (user-error "Must set `aero/gpt-openai-api-key'"))
-  (let ((buf (get-buffer-create aero/gpt--session)))
+  (let ((buf (get-buffer-create aero/gpt--session-name)))
     (with-current-buffer buf
       (require 'markdown-mode)
       (markdown-mode)
