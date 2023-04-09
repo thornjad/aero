@@ -193,7 +193,7 @@
                          (plist-get tokens :total_tokens)
                          (plist-get tokens :prompt_tokens)
                          (plist-get tokens :completion_tokens)))
-         (time (format-time-string "%a %H:%M:%S" (seconds-to-time time)))
+         (time (format-time-string "Time: %a %H:%M:%S" (seconds-to-time time)))
          (stop (cond
                 ((string= stop "stop") "")
                 ((string= stop "length") "Stop Reason: Token Limit")
