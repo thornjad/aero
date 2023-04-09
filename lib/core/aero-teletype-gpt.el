@@ -76,7 +76,7 @@
                     (aero/gpt--insert-response
                      (aero/gpt--parse-response (current-buffer))
                      (get-buffer aero/gpt--session) marker)
-                    (kill-buffer))
+                    )
                   nil (not aero/gpt--debug-mode) nil)))
 
 (defun aero/gpt--gather-prompt ()
