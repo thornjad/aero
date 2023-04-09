@@ -1,6 +1,7 @@
 ;;; aero-teletype-gpt.el --- Aero GPT client  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
+;; Package-Requires: ((emacs "27.1"))
 ;;
 ;; This file is not part of GNU Emacs
 ;;
