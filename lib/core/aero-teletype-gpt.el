@@ -23,6 +23,8 @@
 ;; Requires `aero/openai-api-key' to be set, doing so in an `init.local.el' is the right place to do this
 ;; in Aero.
 ;;
+;; API Reference: https://platform.openai.com/docs/guides/chat
+;;
 ;; TODO usage tracker, insert at end of response?
 
 (declare-function markdown-mode "markdown-mode")
@@ -38,46 +40,10 @@
 
 ;;; Code:
 
-(defgroup aero/gpt nil
-  "A GPT Client for Aero."
-  :group 'emacs-ml)
-
 (defcustom aero/gpt-openai-api-key nil
   "An OpenAI API key."
-  :group 'aero/gpt
+  :group 'emacs-ml
   :type 'string)
-
-(defvar aero/gpt-max-tokens nil
-  "Max tokens per response.
-
-This is roughly correlated with the number of words in the response. Figure 100-400 for shorter
-answers, more for longer responses.
-
-When nil, GPT will generally respond at around 40% of the total token count of the conversation so
-far, so messages naturally grow as the dialogue develops.")
-
-(defvar aero/gpt-model "gpt-3.5-turbo"
-  "The GPT model to be used.
-
-The list of models supported is documented at
-https://platform.openai.com/docs/models/model-endpoint-compatibility.
-
-Be aware that different models have different pricing structures, refer to the OpenAI pricing page
-for specifics.")
-
-(defvar aero/gpt-temp nil
-  "The temperature of the GPT response.
-
-This is a number between 0.0 and 2.0 which informs GPT's randomness. A nil value will not send this configuration to GPT.
-
-See https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature
-for details.")
-
-(defvar-local aero/gpt--system-directive
-    "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Markdown formatting."
-  "The system directive helps set GPT's response behavior.
-
-See https://platform.openai.com/docs/guides/chat/introduction.")
 
 (defvar aero/gpt--debug-mode t)
 (defvar aero/gpt--session "*Teletype GPT*")
@@ -97,10 +63,10 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
           `(("Content-Type" . "application/json")
             ("Authorization" . ,(concat "Bearer " aero/gpt-openai-api-key))))
          (url-request-data (encode-coding-string
-                            (json-encode `(:model ,aero/gpt-model
+                            (json-encode `(:model "gpt-3.5-turbo"
                                            :messages [,@prompt]
-                                           :temperature ,aero/gpt-temp
-                                           :max_tokens ,aero/gpt-max-tokens))
+                                           :temperature nil
+                                           :max_tokens nil))
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
@@ -129,7 +95,9 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
                               "[*# \t\n\r]+"))
               prompts)
         (and max-entries (cl-decf max-entries)))
-      (cons (list :role "system" :content aero/gpt--system-directive) prompts))))
+      (cons (list :role "system"
+                  :content "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s")
+            prompts))))
 
 (defun aero/gpt--insert-response (response marker)
   "Insert GPT's RESPONSE into GPT session buffer at MARKER."
