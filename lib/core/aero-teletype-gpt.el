@@ -38,6 +38,8 @@
 (require 'map)
 (require 'text-property-search)
 
+(require 'aero-lib)
+
 ;;; Code:
 
 (defcustom aero/gpt-openai-api-key nil
@@ -109,21 +111,21 @@
         (stop (plist-get response :stop)))
     (if content
         (aero/gpt--system-report-response tokens time stop)
-        (aero/gpt-buffer-max-excursion
-          (put-text-property 0 (length content) 'aero-gpt 'response content)
-          (let ((line "# GPT\n\n"))
-            (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
-            (aero/gpt--insert-at-end content))
-          (let ((p (point)))
-            (insert content)
-            (pulse-momentary-highlight-region p (point)))
-          (let ((line "\f\n"))
-            (put-text-property 0 (length content)
-                               'aero-gpt 'system-separator content)
-            (aero/gpt--insert-at-end content))
-          (when aero/teletype-gpt-mode
-            (aero/gpt--user-prompt)
-            (message "GPT Ready")))
+      (aero/buffer-max-excursion aero/gpt--session
+        (put-text-property 0 (length content) 'aero-gpt 'response content)
+        (let ((line "# GPT\n\n"))
+          (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
+          (aero/gpt--insert-at-end content))
+        (let ((p (point)))
+          (insert content)
+          (pulse-momentary-highlight-region p (point)))
+        (let ((line "\f\n"))
+          (put-text-property 0 (length content)
+                             'aero-gpt 'system-separator content)
+          (aero/gpt--insert-at-end content))
+        (when aero/teletype-gpt-mode
+          (aero/gpt--user-prompt)
+          (message "GPT Ready")))
       (aero/gpt--status-error (format "GPT response error: %s" status)))))
 
 (defun aero/gpt--parse-response (buffer)
@@ -205,7 +207,7 @@
     (aero/gpt--insert-at-end content)))
 
 (defun aero/gpt--clear-last-system-status ()
-  (aero/gpt-buffer-max-excursion
+  (aero/buffer-max-excursion aero/gpt--session
     (let ((status-prop (text-property-search-backward
                         'aero-gpt 'system-status
                         (not (not (get-char-property
@@ -225,7 +227,7 @@
                        (prop-match-end status-prop))))))
 
 (defun aero/gpt--insert-at-end (content)
-  (aero/gpt-buffer-max-excursion
+  (aero/buffer-max-excursion aero/gpt--session
     (skip-chars-backward "\t\r\n\v")
     (let ((pt (point)))
       (narrow-to-region pt (point-max))
@@ -233,18 +235,6 @@
       (widen))
     (insert content))
   (setf (point) (point-max)))
-
-(defmacro aero/gpt-buffer-excursion (&rest body)
-  (declare (indent defun))
-  `(with-current-buffer (get-buffer aero/gpt--session)
-     (save-excursion
-       ,@body)))
-
-(defmacro aero/gpt-buffer-max-excursion (&rest body)
-  (declare (indent defun))
-  `(aero/gpt-buffer-excursion
-     (setf (point) (point-max))
-     ,@body))
 
 (define-minor-mode aero/teletype-gpt-mode
   "Minor mode for Aero Teletype GPT."
