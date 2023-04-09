@@ -201,7 +201,7 @@
                 ((string= stop "content_filter") "Stop Reason: Content Filter Flag")
                 (t "")))
          (content (concat
-                   (string-join (list header tokens time stop) "\n")
+                   (string-join (list header time tokens stop) "\n")
                    "\n")))
     (aero/gpt--clear-last-system-status)
     (put-text-property 0 (length content) 'aero-gpt 'system-status content)
