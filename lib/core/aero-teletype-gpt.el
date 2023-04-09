@@ -85,8 +85,8 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
 (defun aero/teletype-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
-  (message "Querying GPT...")
-  (let* ((prompt (aero/gpt--create-prompt))
+  (aero/gpt--system-querying)
+  (let* ((prompt (aero/gpt--gather-prompt))
          (marker (point-marker))
          (inhibit-message t)
          (message-log-max nil)
@@ -110,7 +110,7 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
                     (kill-buffer))
                   nil (not aero/gpt--debug-mode) nil)))
 
-(defun aero/gpt--create-prompt ()
+(defun aero/gpt--gather-prompt ()
   "Return a full prompt from the contents of this buffer."
   (save-excursion
     (setf (point) (point-max))
@@ -134,20 +134,27 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
 (defun aero/gpt--insert-response (response marker)
   "Insert GPT's RESPONSE into GPT session buffer at MARKER."
   (let ((content (plist-get response :content))
-        (status (plist-get response :status)))
-    (message "Querying GPT... Done.")
+        (status (plist-get response :status))
+        (tokens (plist-get response :tokens))
+        (time (plist-get response :time)))
     (if content
-        (with-current-buffer (get-buffer aero/gpt--session)
+        (when (and tokens time) (aero/gpt--system-report-response tokens time))
+        (aero/gpt-buffer-max-excursion
           (put-text-property 0 (length content) 'aero-gpt 'response content)
-          (setf (point) marker)
-          (unless (bobp) (insert-before-markers-and-inherit "\n\n"))
+          (let ((line "# GPT\n\n"))
+            (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
+            (aero/gpt--insert-at-end content))
           (let ((p (point)))
             (insert content)
             (pulse-momentary-highlight-region p (point)))
+          (let ((line "\f\n"))
+            (put-text-property 0 (length content)
+                               'aero-gpt 'system-separator content)
+            (aero/gpt--insert-at-end content))
           (when aero/teletype-gpt-mode
-            (insert "\n\n### ")
+            (aero/gpt--user-prompt)
             (message "GPT Ready")))
-      (error "GPT response error: %s" status))))
+      (aero/gpt--status-error (format "GPT response error: %s" status)))))
 
 (defun aero/gpt--parse-response (buffer)
   "Parse the GPT response in URL BUFFER."
@@ -171,6 +178,8 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
            ((string-match-p "200 OK" status)
             (list :content (string-trim (map-nested-elt response
                                                         '(:choices 0 :message :content)))
+                  :tokens (plist-get response :usage)
+                  :time (plist-get response :created)
                   :status status))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
@@ -186,6 +195,81 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
         (message "ChatGPT error: Could not parse HTTP response.")
         (list :content nil :status (concat status ": Could not parse HTTP response."))))))
 
+(defun aero/gpt--user-prompt ()
+  (let ((content "# User\n\n"))
+    (put-text-property 0 (length content) 'aero-gpt 'system-prompt content)
+    (aero/gpt--insert-at-end content)))
+
+(defun aero/gpt--system-querying ()
+  (let ((content "\n\n### System\n\nQuerying...\n\n"))
+    (aero/gpt--clear-last-system-status)
+    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
+    (aero/gpt--insert-at-end content)))
+
+(defun aero/gpt--status-error (status)
+  (let ((content (format
+                  "\n\n### System\n\nStatus: Error\nMessage: %s\n\n"
+                  (propertize status 'face 'error))))
+    (aero/gpt--clear-last-system-status)
+    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
+    (aero/gpt--insert-at-end content)))
+
+(defun aero/gpt--system-report-response (tokens time &optional error)
+  (let* ((header "\n\n### System\n")
+         (tokens (format "Tokens: %s (%s prompt, %s response)"
+                         (plist-get tokens :total_tokens)
+                         (plist-get tokens :prompt_tokens)
+                         (plist-get tokens :completion_tokens)))
+         (time (format-time-string "%a %H:%M:%S" (seconds-to-time time)))
+         (content (concat
+                   (string-join (list header tokens time) "\n")
+                   "\n")))
+    (aero/gpt--clear-last-system-status)
+    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
+    (aero/gpt--insert-at-end content)))
+
+(defun aero/gpt--clear-last-system-status ()
+  (aero/gpt-buffer-max-excursion
+    (let ((status-prop (text-property-search-backward
+                        'aero-gpt 'system-status
+                        (not (not (get-char-property
+                                   (max (point-min) (1- (point)))
+                                   'aero-gpt)))))
+          (response-prop (text-property-search-backward
+                          'aero-gpt 'response
+                          (not (not (get-char-property
+                                     (max (point-min) (1- (point)))
+                                     'aero-gpt))))))
+      ;; Only delete if last status is more recent than the most recent response, if there is one
+      (when (and status-prop
+                 (or (not response-prop)
+                     (> (prop-match-end response-prop)
+                        (prop-match-beginning status-prop))))
+        (delete-region (prop-match-beginning status-prop)
+                       (prop-match-end status-prop))))))
+
+(defun aero/gpt--insert-at-end (content)
+  (aero/gpt-buffer-max-excursion
+    (skip-chars-backward "\t\r\n\v")
+    (let ((pt (point)))
+      (narrow-to-region pt (point-max))
+      (delete-region (point-min) (point-max))
+      (widen))
+    (insert content))
+  (setf (point) (point-max)))
+
+(defmacro aero/gpt-buffer-excursion (&rest body)
+  (declare (indent defun))
+  `(with-current-buffer (get-buffer aero/gpt--session)
+     (save-excursion
+       ,@body)))
+
+(defmacro aero/gpt-buffer-max-excursion (&rest body)
+  (declare (indent defun))
+  `(aero/gpt-buffer-excursion
+     (setf (point) (point-max))
+     ,@body))
+
 (define-minor-mode aero/teletype-gpt-mode
   "Minor mode for Aero Teletype GPT."
   :global nil
@@ -194,22 +278,17 @@ See https://platform.openai.com/docs/guides/chat/introduction.")
             map))
 
 ;;;###autoload
-(defun aero-teletype-gpt (&optional initial)
-  "Switch to or start a Teletype GPT session.
-
-If region is active, it is used as the INITIAL prompt."
-  (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-
+(defun aero-teletype-gpt ()
+  "Switch to or start a Teletype GPT session."
+  (interactive)
   (unless aero/gpt-openai-api-key
     (user-error "Must set `aero/gpt-openai-api-key'"))
-
   (let ((buf (get-buffer-create aero/gpt--session)))
     (with-current-buffer buf
       (require 'markdown-mode)
       (markdown-mode)
       (unless aero/teletype-gpt-mode (aero/teletype-gpt-mode +1))
-      (when (bobp) (insert (or initial "### ")))
+      (when (bobp) (aero/gpt--user-prompt))
       (pop-to-buffer buf)
       (setf (point) (point-max))
-      (skip-chars-backward "\t\r\n")
       (message "Send your prompt with C-Return"))))
