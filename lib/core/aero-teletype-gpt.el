@@ -63,6 +63,7 @@
           `(("Content-Type" . "application/json")
             ("Authorization" . ,(concat "Bearer " aero/gpt-openai-api-key))))
          (url-request-data (encode-coding-string
+                            ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model "gpt-3.5-turbo"
                                            :messages [,@prompt]
                                            :temperature nil
@@ -80,7 +81,7 @@
   "Return a full prompt from the contents of this buffer."
   (save-excursion
     (setf (point) (point-max))
-    (let ((max-entries nil)
+    (let ((max-entries 10)
           (prop) (prompts (list)))
       (while (and (or (not max-entries) (>= max-entries 0))
                   (setq prop (text-property-search-backward
