@@ -25,7 +25,6 @@
 ;;
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
-;; TODO usage tracker, insert at end of response?
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -99,7 +98,7 @@
               prompts)
         (and max-entries (cl-decf max-entries)))
       (cons (list :role "system"
-                  :content "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s")
+                  :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
             prompts))))
 
 (defun aero/gpt--insert-response (response marker)
