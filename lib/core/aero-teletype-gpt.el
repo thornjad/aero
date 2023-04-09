@@ -87,10 +87,10 @@
           (prop) (prompts (list)))
       (while (and (or (not max-entries) (>= max-entries 0))
                   (setq prop (text-property-search-backward
-                              'aero-gpt 'response
+                              'aero-gpt-prompt t
                               (not (not (get-char-property
                                          (max (point-min) (1- (point)))
-                                         'aero-gpt))))))
+                                         'aero-gpt-prompt))))))
         (push (list :role (if (prop-match-value prop) "assistant" "user")
                     :content (string-trim
                               (buffer-substring-no-properties (prop-match-beginning prop)
@@ -111,9 +111,9 @@
         (stop (plist-get response :stop)))
     (if content
         (aero/gpt--system-report-response tokens time stop)
-      (aero/buffer-max-excursion aero/gpt--session
       (aero/buffer-max-excursion aero/gpt--session-name
         (put-text-property 0 (length content) 'aero-gpt 'response content)
+        (put-text-property 0 (length content) 'aero-gpt-prompt t content)
         (let ((line "# GPT\n\n"))
           (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
           (aero/gpt--insert-at-end content))
