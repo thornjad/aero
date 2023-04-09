@@ -258,3 +258,7 @@
       (pop-to-buffer buf)
       (setf (point) (point-max))
       (message "Send your prompt with C-Return"))))
+
+(provide 'aero-teletype-gpt)
+
+;;; aero-teletype-gpt.el ends here
