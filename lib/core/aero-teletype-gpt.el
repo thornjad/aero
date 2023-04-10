@@ -186,7 +186,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
         (buf (get-buffer-create aero/gpt--session-name)))
     (with-current-buffer buf
-      (aero/teletype-gpt-input-mode +1)
+      (aero/teletype-gpt-input-mode)
       (erase-buffer)
       (call-interactively #'set-mark-command)
       (setf (point) (point-min)))
@@ -245,7 +245,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
   "Display the most recent history message."
   (aero/with-buffer-max-excursion aero/gpt--session-name
     (aero/without-readonly
-      (let* ((message (car (last)))
+      (let* ((message (car (last aero/gpt--history)))
              (role (plist-get message :role)))
         (unless (bobp) (insert "\n\n"))
         (cond
@@ -319,7 +319,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
     (user-error "Must set `aero/gpt-openai-api-key'"))
   (let ((buf (get-buffer-create aero/gpt--session-name)))
     (with-current-buffer buf
-      (unless aero/teletype-gpt-mode (aero/teletype-gpt-mode +1))
+      (unless aero/teletype-gpt-mode (aero/teletype-gpt-mode))
       (when (string-empty-p (buffer-string)) (aero/gpt--insert-tip))
       (pop-to-buffer buf)
       (setf (point) (point-max)))))
