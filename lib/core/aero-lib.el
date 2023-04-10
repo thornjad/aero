@@ -749,16 +749,21 @@ alternative to the beacon package."
   (interactive)
   (insert "import pdb; pdb.set_trace()"))
 
-(defmacro aero/buffer-excursion (buffer-name &rest body)
+(defmacro aero/with-buffer-excursion (buffer-name &rest body)
   (declare (indent 1))
   `(with-current-buffer (get-buffer ,buffer-name)
      (save-excursion
        ,@body)))
 
-(defmacro aero/buffer-max-excursion (buffer-name &rest body)
+(defmacro aero/with-buffer-max-excursion (buffer-name &rest body)
   (declare (indent 1))
-  `(aero/gpt-buffer-excursion ,buffer-name
+  `(aero/with-buffer-excursion ,buffer-name
      (setf (point) (point-max))
+     ,@body))
+
+(defmacro aero/without-readonly (&rest body)
+  (declare (indent 0))
+  `(let ((inhibit-read-only t))
      ,@body))
 
 (provide 'aero-lib)
