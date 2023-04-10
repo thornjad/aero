@@ -1,7 +1,7 @@
 ;;; aero-teletype-gpt.el --- Aero GPT client  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
-;; Package-Requires: ((emacs "27.1"))
+;; Package-Requires: ((emacs "27.1") (ht "2.0") (markdown-mode "2.1") (spinner "1.7.4"))
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -26,6 +26,7 @@
 ;;
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
+;; TODO new session option, clear history and buffer
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -34,28 +35,67 @@
   (require 'subr-x)
   (require 'cl-lib))
 (require 'url)
+(require 'spinner)
 (require 'json)
-(require 'map)
-(require 'text-property-search)
+(require 'markdown-mode)
 
 (require 'aero-lib)
 
 ;;; Code:
 
+(defgroup aero/teletype-gpt nil
+  "Aero Teletype GPT."
+  :prefix "aero/gpt-"
+  :group 'emacs-ml)
+
 (defcustom aero/gpt-openai-api-key nil
   "An OpenAI API key."
-  :group 'emacs-ml
+  :group 'aero/teletype-gpt
   :type 'string)
+
+(defface aero/gpt-system-ui
+  '((t :inherit font-lock-builtin-face))
+  "Face for Teletype GPT UI elements."
+  :group 'aero/teletype-gpt)
+
+(defface aero/gpt-tip
+  '((t :inherit font-lock-comment-face))
+  "Face for Teletype GPT tips."
+  :group 'aero/teletype-gpt)
+
+(defface aero/gpt-info
+  '((t :inherit font-lock-comment-face :height 0.8))
+  "Face for GPT info like tokens."
+  :group 'aero/teletype-gpt)
+
+(defface aero/gpt-error
+  '((t :inherit error))
+  "Face for GPT errors."
+  :group 'aero/teletype-gpt)
+
+;; (defface aero/gpt-status
+;;   '((t :inherit font-lock-function-name-face :italic t))
+;;   "Face for GPT current status."
+;;   :group 'aero/teletype-gpt)
 
 (defvar aero/gpt--debug-mode t)
 (defvar aero/gpt--session-name "*Teletype GPT*")
+(defvar aero/gpt--input-buffer-name "*Teletype GPT Input*")
+(defvar-local aero/gpt--token-history nil)
+(defvar-local aero/gpt--history '())
+(defvar-local aero/gpt--response-buffer nil)
+(defvar-local aero/gpt--busy-p nil)
+(defvar-local aero/gpt--spinner nil)
+
+
+;; API
 
 (defun aero/teletype-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
-  (aero/gpt--system-querying)
+  (unless aero/gpt-openai-api-key
+    (user-error "Must set `aero/gpt-openai-api-key'"))
   (let* ((prompt (aero/gpt--gather-prompt))
-         (marker (point-marker))
          (inhibit-message t)
          (message-log-max nil)
          (url-show-status aero/gpt--debug-mode)
@@ -73,61 +113,31 @@
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (aero/gpt--insert-response
-                     (aero/gpt--parse-response (current-buffer)) marker)
-                    ;; (kill-buffer)
-                    )
+                    (aero/gpt--register-response (aero/gpt--parse-response (current-buffer)))
+                    (aero/gpt--display-last-message)
+                    (setq-local aero/gpt--busy-p nil)
+                    (spinner-stop aero/gpt--spinner)
+                    (kill-buffer))
                   nil (not aero/gpt--debug-mode) nil)))
 
 (defun aero/gpt--gather-prompt ()
-  "Return a full prompt from the contents of this buffer."
-  (save-excursion
-    (setf (point) (point-max))
-    (let ((max-entries 10)
-          (prop) (prompts (list)))
-      (while (and (or (not max-entries) (>= max-entries 0))
-                  (setq prop (text-property-search-backward
-                              'aero-gpt-prompt t
-                              (not (not (get-char-property
-                                         (max (point-min) (1- (point)))
-                                         'aero-gpt-prompt))))))
-        (push (list :role (if (prop-match-value prop) "assistant" "user")
-                    :content (string-trim
-                              (buffer-substring-no-properties (prop-match-beginning prop)
-                                                              (prop-match-end prop))
-                              "[*# \t\n\r]+"))
-              prompts)
-        (and max-entries (cl-decf max-entries)))
-      (cons (list :role "system"
-                  :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
-            prompts))))
+  "Return a full prompt from chat history, prepended with a system prompt.
 
-(defun aero/gpt--insert-response (response marker)
-  "Insert GPT's RESPONSE into GPT session buffer at MARKER."
-  (let ((content (plist-get response :content))
-        (status (plist-get response :status))
-        (tokens (plist-get response :tokens))
-        (time (plist-get response :time))
-        (stop (plist-get response :stop)))
-    (if content
-        (aero/gpt--system-report-response tokens time stop)
-      (aero/buffer-max-excursion aero/gpt--session-name
-        (put-text-property 0 (length content) 'aero-gpt 'response content)
-        (put-text-property 0 (length content) 'aero-gpt-prompt t content)
-        (let ((line "# GPT\n\n"))
-          (put-text-property 0 (length content) 'aero-gpt 'gpt-header content)
-          (aero/gpt--insert-at-end content))
-        (let ((p (point)))
-          (insert content)
-          (pulse-momentary-highlight-region p (point)))
-        (let ((line "\f\n"))
-          (put-text-property 0 (length content)
-                             'aero-gpt 'system-separator content)
-          (aero/gpt--insert-at-end content))
-        (when aero/teletype-gpt-mode
-          (aero/gpt--user-prompt)
-          (message "GPT Ready")))
-      (aero/gpt--status-error (format "GPT response error: %s" status)))))
+GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
+  (let ((max-entries 10))
+    (cons (list :role "system"
+                :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
+          (nreverse (seq-take aero/gpt--history max-entries)))))
+
+(defun aero/gpt--register-response (response)
+  "Add GPT response to history."
+  (push (list :role "assistant" :content response)
+        aero/gpt--history))
+
+(defun aero/gpt--register-user-message (input)
+  "Add user message to history."
+  (push (list :role "user" :content (string-trim input " \t\n\r"))
+        aero/gpt--history))
 
 (defun aero/gpt--parse-response (buffer)
   "Parse the GPT response in URL BUFFER."
@@ -149,100 +159,157 @@
 
           (cond
            ((string-match-p "200 OK" status)
-            (list :content (string-trim (map-nested-elt response
-                                                        '(:choices 0 :message :content)))
-                  :tokens (plist-get response :usage)
-                  :time (plist-get response :created)
-                  :stop (plist-get (plist-get (plist-get response :choices) 0) :finish_reason)
-                  :status status))
+            (let ((choices (plist-get (plist-get response :choices) 0)))
+              (list :content (string-trim (plist-get (plist-get choices :message) :content))
+                    :tokens (plist-get response :usage)
+                    :time (plist-get response :created)
+                    :stop (plist-get choices :finish_reason)
+                    :status status)))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
                    (error-msg (plist-get error-plist :message))
                    (error-type (plist-get error-plist :type)))
-              (message "ChatGPT error: %s" error-msg)
               (list :content nil :status (concat status ": " error-type))))
            ((eq response 'json-read-error)
-            (message "ChatGPT error: Malformed JSON in response.")
             (list :content nil :status (concat status ": Malformed JSON in response.")))
-           (t (message "ChatGPT error: Could not parse HTTP response.")
-              (list :content nil :status (concat status ": Could not parse HTTP response."))))
-        (message "ChatGPT error: Could not parse HTTP response.")
+           (t (list :content nil :status (concat status ": Could not parse HTTP response."))))
         (list :content nil :status (concat status ": Could not parse HTTP response."))))))
 
-(defun aero/gpt--user-prompt ()
-  (let ((content "# User\n\n"))
-    (put-text-property 0 (length content) 'aero-gpt 'system-prompt content)
-    (aero/gpt--insert-at-end content)))
+
+;; User input
 
-(defun aero/gpt--system-querying ()
-  (let ((content "\n\n### System\n\nQuerying...\n\n"))
-    (aero/gpt--clear-last-system-status)
-    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
-    (aero/gpt--insert-at-end content)))
+(defun aero/teletype-gpt-begin-input ()
+  (interactive)
+  (when aero/gpt--busy-p
+    (user-error "BUSY: Waiting for GPT complete its response..."))
+  (aero/gpt-input--exit)
+  (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
+        (buf (get-buffer-create aero/gpt--session-name)))
+    (with-current-buffer buf
+      (aero/teletype-gpt-input-mode +1)
+      (erase-buffer)
+      (call-interactively #'set-mark-command)
+      (setf (point) (point-min)))
+    (pop-to-buffer buf `((display-buffer-in-direction)
+                         (direction . ,dir)
+                         (dedicated . t)
+                         (window-height . fit-window-to-buffer)))))
 
-(defun aero/gpt--status-error (status)
-  (let ((content (format
-                  "\n\n### System\n\nStatus: Error\nMessage: %s\n\n"
-                  (propertize status 'face 'error))))
-    (aero/gpt--clear-last-system-status)
-    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
-    (aero/gpt--insert-at-end content)))
+(defun aero/gpt-input--exit ()
+  (kill-buffer aero/gpt--input-buffer-name))
 
-(defun aero/gpt--system-report-response (&optional tokens time stop)
-  (let* ((header "\n\n### System\n")
-         (tokens (format "Tokens: %s (%s prompt, %s response)"
-                         (plist-get tokens :total_tokens)
-                         (plist-get tokens :prompt_tokens)
-                         (plist-get tokens :completion_tokens)))
-         (time (format-time-string "Time: %a %H:%M:%S" (seconds-to-time time)))
-         (stop (cond
-                ((string= stop "stop") "")
-                ((string= stop "length") "Stop Reason: Token Limit")
-                ((string= stop "content_filter") "Stop Reason: Content Filter Flag")
-                (t "")))
-         (content (concat
-                   (string-join (list header time tokens stop) "\n")
-                   "\n")))
-    (aero/gpt--clear-last-system-status)
-    (put-text-property 0 (length content) 'aero-gpt 'system-status content)
-    (aero/gpt--insert-at-end content)))
+(defun aero/teletype-gpt-input-send ()
+  (interactive)
+  (when (not (eq major-mode #'aero/teletype-gpt-input-mode))
+    (user-error "Must be called from the Aero Teletype GPT input window. Try `aero/teletype-gpt-begin-input' first."))
+  (when aero/gpt--busy-p
+    (user-error "BUSY: Waiting for GPT complete its response..."))
+  (let ((input (buffer-substring-no-properties (point-min) (point-max))))
+    (when (string-empty-p input)
+      (user-error "No input to send"))
+    (aero/gpt--send-input input))
+  (aero/gpt-input--exit))
 
-(defun aero/gpt--clear-last-system-status ()
-  (aero/buffer-max-excursion aero/gpt--session-name
-    (let ((status-prop (text-property-search-backward
-                        'aero-gpt 'system-status
-                        (not (not (get-char-property
-                                   (max (point-min) (1- (point)))
-                                   'aero-gpt)))))
-          (response-prop (text-property-search-backward
-                          'aero-gpt 'response
-                          (not (not (get-char-property
-                                     (max (point-min) (1- (point)))
-                                     'aero-gpt))))))
-      ;; Only delete if last status is more recent than the most recent response, if there is one
-      (when (and status-prop
-                 (or (not response-prop)
-                     (> (prop-match-end response-prop)
-                        (prop-match-beginning status-prop))))
-        (delete-region (prop-match-beginning status-prop)
-                       (prop-match-end status-prop))))))
+(defun aero/gpt--send-input (input)
+  (aero/gpt--register-user-message input)
+  (aero/gpt--display-last-message)
+  (setq-local aero/gpt--busy-p t)
+  (spinner-start aero/gpt--spinner)
+  (aero/teletype-gpt-send))
 
-(defun aero/gpt--insert-at-end (content)
-  (aero/buffer-max-excursion aero/gpt--session-name
-    (skip-chars-backward "\t\r\n\v")
-    (let ((pt (point)))
-      (narrow-to-region pt (point-max))
-      (delete-region (point-min) (point-max))
-      (widen))
-    (insert content))
-  (setf (point) (point-max)))
+(defun aero/gpt-input--post-command ()
+  "Resize window after input."
+  (let ((max-lines (line-number-at-pos (point-max))))
+    (fit-window-to-buffer)
+    (enlarge-window (- max-lines (window-text-height)))))
 
-(define-minor-mode aero/teletype-gpt-mode
-  "Minor mode for Aero Teletype GPT."
-  :global nil
-  :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "C-<return>") #'aero/teletype-gpt-send)
-            map))
+(defvar aero/teletype-gpt-input-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-<return>") #'aero/teletype-gpt-input-send)
+    map))
+
+(define-derived-mode aero/teletype-gpt-input-mode markdown-mode "TeletypeGPT Input"
+  "Major mode for Aero Teletype GPT input mode.
+
+\\<aero/teletype-gpt-input-mode-map>"
+  (add-hook 'post-command-hook #'aero/gpt-input--post-command nil t))
+
+
+;; Chat display
+
+(defun aero/gpt--insert-tip ()
+  (aero/without-readonly
+    (insert (propertize "Press C-return to begin a prompt.\n" 'face 'aero/gpt-tip))))
+
+(defun aero/gpt--display-last-message ()
+  "Display the most recent history message."
+  (aero/with-buffer-max-excursion aero/gpt--session-name
+    (aero/without-readonly
+      (let* ((message (car (last)))
+             (role (plist-get message :role)))
+        (unless (bobp) (insert "\n\n"))
+        (cond
+         ((string= role "user")
+          (insert "# User\n\n" message))
+
+         ((string= role "assistant")
+          (insert (aero/gpt--format-response message)))
+
+         ((eq role nil)
+          (insert "# GPT Assistant [Error]\n\n"
+                  (propertize (plist-get message :status) 'face 'aero/gpt-error))))))))
+
+(defun aero/gpt--format-response (response)
+  "Format GPT response for display."
+  (let ((content (plist-get response :content))
+        ;; (status (plist-get response :status))
+        (tokens (plist-get response :tokens))
+        ;; (time (plist-get response :time))
+        (stop (plist-get response :stop)))
+    (insert "# GPT Assistant "
+            ;; Tokens
+            (propertize (format "Tokens: %s (%s prompt, %s response)"
+                                (plist-get tokens :total_tokens)
+                                (plist-get tokens :prompt_tokens)
+                                (plist-get tokens :completion_tokens))
+                        'face 'aero/gpt-info)
+            "\n\n" content "\n\n"
+            (cond
+             ((string= stop "length") "Stop Reason: Token Limit")
+             ((string= stop "content_filter") "Stop Reason: Content Filter Flag")
+             (t ""))
+            "\f\n")))
+
+(defun aero/gpt-kill-buffer-hook ()
+  "Kill response buffer hook."
+  (spinner-stop aero/gpt--spinner)
+  (setq-local aero/gpt--history '())
+  (setq-local aero/gpt--response-buffer nil))
+
+(defun aero/gpt--header-line ()
+  "Display header line."
+  (format " %s — %s history — %s tokens (% prompt, %s response)"
+          (if-let ((spinner (spinner-print aero/gpt--spinner)))
+              (concat spinner " ")
+            " ")
+          (length aero/gpt--history)
+          (plist-get aero/gpt--token-history :total)
+          (plist-get aero/gpt--token-history :prompt)
+          (plist-get aero/gpt--token-history :response)))
+
+(defvar aero/teletype-gpt-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-<return>") #'aero/teletype-gpt-begin-input)
+    map))
+
+(define-derived-mode aero/teletype-gpt-mode markdown-mode "TeletypeGPT"
+  "Major mode for Aero Teletype GPT response mode.
+
+\\<aero/teletype-gpt-mode-map>"
+  (setq-local buffer-read-only t)
+  (setq-local header-line-format `((:eval (aero/gpt--header-line))))
+  (setq-local aero/gpt--spinner (spinner-create 'horizontal-breathing-long t))
+  (add-hook 'kill-buffer-hook #'aero/gpt-kill-buffer-hook nil t))
 
 ;;;###autoload
 (defun aero-teletype-gpt ()
@@ -252,13 +319,10 @@
     (user-error "Must set `aero/gpt-openai-api-key'"))
   (let ((buf (get-buffer-create aero/gpt--session-name)))
     (with-current-buffer buf
-      (require 'markdown-mode)
-      (markdown-mode)
       (unless aero/teletype-gpt-mode (aero/teletype-gpt-mode +1))
-      (when (bobp) (aero/gpt--user-prompt))
+      (when (string-empty-p (buffer-string)) (aero/gpt--insert-tip))
       (pop-to-buffer buf)
-      (setf (point) (point-max))
-      (message "Send your prompt with C-Return"))))
+      (setf (point) (point-max)))))
 
 (provide 'aero-teletype-gpt)
 
