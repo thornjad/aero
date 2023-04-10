@@ -87,14 +87,6 @@
   (setq use-package-expand-minimally byte-compile-current-file
         use-package-verbose init-file-debug))
 
-(defvar aero-unattended-idle-timer nil
-  "Timer for Emacs being idle so long it is considered unattended.")
-
-(defun aero/on-idle-unattended-cleanup ()
-  "Functions to be executed when unattended timer hits limit."
-  (message "Emacs has been idle for one hour, cleaning up resources.")
-  (eglot-shutdown-all))
-
 (defun aero/load-layers ()
   "Load all Aero layers.
 
@@ -123,11 +115,6 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 
   ;; Load local init if it exists
   (load (expand-file-name "init.local" user-emacs-directory) t t)
-
-  ;; Set up unattended timer
-  (unless aero-unattended-idle-timer
-    (setq aero-unattended-idle-timer
-          (run-with-idle-timer (* 60 60) nil #'aero/on-idle-unattended-cleanup)))
 
   ;; Expand GC parameters so we use fewer, larger collections instead of more, smaller ones. On
   ;; modern systems with plenty of RAM, this should speed up Emacs slightly, at least in theory.
