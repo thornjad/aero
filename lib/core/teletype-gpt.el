@@ -28,6 +28,8 @@
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
 ;; TODO new session option, clear history and buffer
+;; TODO record running token history
+;; TODO better initial view
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -97,7 +99,7 @@
   (interactive)
   (unless teletype-gpt-openai-api-key
     (user-error "Must set `teletype-gpt-openai-api-key'"))
-  (let* ((prompt (teletype-gpt--gather-prompt))
+  (let* ((prompt (teletype-gpt--gather-prompts))
          (inhibit-message t)
          (message-log-max nil)
          (url-show-status teletype-gpt--debug-mode)
@@ -123,7 +125,7 @@
                       (kill-buffer)))
                   nil (not teletype-gpt--debug-mode) nil)))
 
-(defun teletype-gpt--gather-prompt ()
+(defun teletype-gpt--gather-prompts ()
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
@@ -165,8 +167,8 @@ these may be nil and still be a valid message, they need only exist."
   (when hist
     (if (funcall pred (car hist))
         (cons (teletype-gpt--format-prompt (car hist))
-              (teletype-gpt--filter-history-prompts pred (cdr hist)))
-      (teletype-gpt--filter-history-prompts pred (cdr hist)))))
+              (teletype-gpt--filter-history-prompts-format pred (cdr hist)))
+      (teletype-gpt--filter-history-prompts-format pred (cdr hist)))))
 
 (defun teletype-gpt--format-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
@@ -297,8 +299,9 @@ these may be nil and still be a valid message, they need only exist."
   "Display the most recent history message."
   (unless (teletype-gpt--valid-message-p message)
     (error "Message is not valid: %s" message))
-  (aero/with-buffer-max-excursion teletype-gpt--session-name
+  (with-current-buffer teletype-gpt--session-name
     (aero/without-readonly
+      (setf (point) (point-max))
       (let* ((message-content (plist-get message :content))
              (role (plist-get message :role)))
         (unless (bobp) (insert "\n\n"))
@@ -313,17 +316,16 @@ these may be nil and still be a valid message, they need only exist."
                                               "Error: invalid message: %s")
                                           message))
                               'face 'teletype-gpt-error)
-                  "\f\n"))
+                  "\n\f\n"))
 
          ((string= role "user")
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (teletype-gpt--format-response message)))))))
+          (insert (teletype-gpt--format-response message))))
 
-  ;; And move to the bottom
-  (with-current-buffer teletype-gpt--session-name
-    (aero/without-readonly (setf (point) (point-max)))))
+        ;; move point to bottom
+        (setf (point) (point-max))))))
 
 (defun teletype-gpt--format-response (response)
   "Format GPT response for display."
@@ -367,7 +369,8 @@ these may be nil and still be a valid message, they need only exist."
 
 \\<teletype-gpt-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format `((:eval (teletype-gpt--header-line))))
+  (setq header-line-format '((:eval (teletype-gpt--header-line))
+                             " | C-RET to input a prompt"))
   (setq teletype-gpt--spinner (spinner-create 'horizontal-breathing-long t))
   (add-hook 'kill-buffer-hook #'teletype-gpt-kill-buffer-hook nil t))
 
