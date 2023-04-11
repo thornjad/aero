@@ -941,6 +941,9 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
+(package! teletype-gpt :local :load-path "lib/core/teletype-gpt.el"
+  :custom (teletype-gpt-openai-api-key openai-api-key))
+
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
   :after (general)
