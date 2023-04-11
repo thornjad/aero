@@ -328,15 +328,15 @@ these may be nil and still be a valid message, they need only exist."
         (stop (plist-get response :stop)))
     (concat "# GPT Assistant "
             ;; Tokens
-            (propertize (format " — (%s tokens; %s prompt, %s response)"
+            (propertize (format "— (%s tokens: %s prompt, %s response)"
                                 (plist-get tokens :total_tokens)
                                 (plist-get tokens :prompt_tokens)
                                 (plist-get tokens :completion_tokens))
                         'face 'teletype-gpt-info)
             "\n\n" content "\n\n"
             (cond
-             ((string= stop "length") "Stop Reason: Token Limit")
-             ((string= stop "content_filter") "Stop Reason: Content Filter Flag")
+             ((string= stop "length") "> Stop Reason: Token Limit")
+             ((string= stop "content_filter") "> Stop Reason: Content Filter Flag")
              (t ""))
             "\f\n")))
 
