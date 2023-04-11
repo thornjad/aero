@@ -350,6 +350,7 @@ these may be nil and still be a valid message, they need only exist."
 (defvar teletype-gpt-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-<return>") #'teletype-gpt-begin-input)
+    (define-key map (kbd "C-c C-c") #'teletype-gpt-begin-input)
     map))
 
 (define-derived-mode teletype-gpt-mode markdown-mode "TeletypeGPT"
