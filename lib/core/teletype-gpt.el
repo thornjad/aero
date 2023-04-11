@@ -28,9 +28,11 @@
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
 ;; TODO new session option, clear history and buffer
-;; TODO record running token history
 ;; TODO better initial view
-;; TODO move point to max always
+;; TODO streaming response
+;; TODO rename tele-gpt?
+;; TODO turn into package?
+;; TODO fix faces
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -60,11 +62,6 @@
   "Face for Teletype GPT UI elements."
   :group 'teletype-gpt)
 
-(defface teletype-gpt-tip
-  '((t :inherit font-lock-comment-face))
-  "Face for Teletype GPT tips."
-  :group 'teletype-gpt)
-
 (defface teletype-gpt-info
   '((t :inherit font-lock-comment-face :height 0.8))
   "Face for GPT info like tokens."
@@ -75,10 +72,9 @@
   "Face for GPT errors."
   :group 'teletype-gpt)
 
-(defvar teletype-gpt--debug-mode t)
+(defvar teletype-gpt-debug-mode nil)
 (defvar teletype-gpt--session-name "*Teletype GPT*")
 (defvar teletype-gpt--input-buffer-name "*Teletype GPT Input*")
-(defvar teletype-gpt--token-history '())
 (defvar teletype-gpt--history '())
 (defvar teletype-gpt--response-buffer nil)
 (defvar teletype-gpt--busy-p nil)
@@ -89,7 +85,6 @@
   (spinner-stop teletype-gpt--spinner)
   (setq teletype-gpt--busy-p nil)
   (setq teletype-gpt--history '())
-  (setq teletype-gpt--token-history '())
   (setq teletype-gpt--response-buffer nil))
 
 
@@ -103,8 +98,8 @@
   (let* ((prompt (teletype-gpt--gather-prompts))
          (inhibit-message t)
          (message-log-max nil)
-         (url-show-status teletype-gpt--debug-mode)
-         (url-show-headers teletype-gpt--debug-mode)
+         (url-show-status teletype-gpt-debug-mode)
+         (url-show-headers teletype-gpt-debug-mode)
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
@@ -124,7 +119,7 @@
                       (setq teletype-gpt--busy-p nil)
                       (spinner-stop teletype-gpt--spinner)
                       (kill-buffer)))
-                  nil (not teletype-gpt--debug-mode) nil)))
+                  nil (not teletype-gpt-debug-mode) nil)))
 
 (defun teletype-gpt--gather-prompts ()
   "Return a full prompt from chat history, prepended with a system prompt.
@@ -193,7 +188,7 @@ these may be nil and still be a valid message, they need only exist."
   "Parse the GPT response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when teletype-gpt--debug-mode (clone-buffer "*teletype-gpt-error*" 'show))
+      (when teletype-gpt-debug-mode (clone-buffer "*teletype-gpt-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
                 (response
@@ -351,14 +346,10 @@ these may be nil and still be a valid message, they need only exist."
 
 (defun teletype-gpt--header-line ()
   "Display header line."
-  (format " %s %s history — %s tokens (%s prompt, %s response)"
+  (format " %s Teletype GPT  |  C-RET to input a prompt"
           (if-let ((spinner (spinner-print teletype-gpt--spinner)))
               (concat spinner " ")
-            " ")
-          (length teletype-gpt--history)
-          (plist-get teletype-gpt--token-history :total)
-          (plist-get teletype-gpt--token-history :prompt)
-          (plist-get teletype-gpt--token-history :response)))
+            " ")))
 
 (defvar teletype-gpt-mode-map
   (let ((map (make-sparse-keymap)))
@@ -370,8 +361,7 @@ these may be nil and still be a valid message, they need only exist."
 
 \\<teletype-gpt-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format '((:eval (teletype-gpt--header-line))
-                             " | C-RET to input a prompt"))
+  (setq header-line-format '((:eval (teletype-gpt--header-line))))
   (setq teletype-gpt--spinner (spinner-create 'horizontal-breathing-long t))
   (add-hook 'kill-buffer-hook #'teletype-gpt-kill-buffer-hook nil t))
 
