@@ -337,7 +337,7 @@ these may be nil and still be a valid message, they need only exist."
         (stop (plist-get response :stop)))
     (concat "# GPT Assistant "
             ;; Tokens
-            (propertize (format "Tokens: %s (%s prompt, %s response)"
+            (propertize (format " — (%s tokens; %s prompt, %s response)"
                                 (plist-get tokens :total_tokens)
                                 (plist-get tokens :prompt_tokens)
                                 (plist-get tokens :completion_tokens))
