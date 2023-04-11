@@ -55,21 +55,6 @@
   :group 'teletype-gpt
   :type 'string)
 
-(defface teletype-gpt-system-ui
-  '((t :inherit font-lock-builtin-face))
-  "Face for Teletype GPT UI elements."
-  :group 'teletype-gpt)
-
-(defface teletype-gpt-info
-  '((t :inherit font-lock-comment-face :height 0.8))
-  "Face for GPT info like tokens."
-  :group 'teletype-gpt)
-
-(defface teletype-gpt-error
-  '((t :inherit error))
-  "Face for GPT errors."
-  :group 'teletype-gpt)
-
 (defvar teletype-gpt-debug-mode nil)
 (defvar teletype-gpt--session-name "*Teletype GPT*")
 (defvar teletype-gpt--input-buffer-name "*Teletype GPT Input*")
@@ -300,14 +285,13 @@ these may be nil and still be a valid message, they need only exist."
         (cond
          ((or (plist-get message :error) (eq role nil))
           (insert "# GPT Assistant [Error]\n\n"
-                  (propertize (or (plist-get message :status)
-                                  (format (or (and (plist-get message :error)
-                                                   "Error: unknown error: %s")
-                                              (and (eq role nil)
-                                                   "Error: message has no role: %s")
-                                              "Error: invalid message: %s")
-                                          message))
-                              'face 'teletype-gpt-error)
+                  (or (plist-get message :status)
+                      (format (or (and (plist-get message :error)
+                                       "Error: unknown error: %s")
+                                  (and (eq role nil)
+                                       "Error: message has no role: %s")
+                                  "Error: invalid message: %s")
+                              message))
                   "\n\f\n"))
 
          ((string= role "user")
@@ -328,11 +312,10 @@ these may be nil and still be a valid message, they need only exist."
         (stop (plist-get response :stop)))
     (concat "# GPT Assistant "
             ;; Tokens
-            (propertize (format "— (%s tokens: %s prompt, %s response)"
-                                (plist-get tokens :total_tokens)
-                                (plist-get tokens :prompt_tokens)
-                                (plist-get tokens :completion_tokens))
-                        'face 'teletype-gpt-info)
+            (format "— (%s tokens: %s prompt, %s response)"
+                    (plist-get tokens :total_tokens)
+                    (plist-get tokens :prompt_tokens)
+                    (plist-get tokens :completion_tokens))
             "\n\n" content "\n\n"
             (cond
              ((string= stop "length") "> Stop Reason: Token Limit")
