@@ -213,7 +213,7 @@ these may be nil and still be a valid message, they need only exist."
                         :tokens (plist-get response :usage)
                         :time (plist-get response :created)
                         :stop (plist-get choices :finish_reason)
-                        :status status)
+                        :status (substring-no-properties status))
                 (list :error t :status "No message received"))))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
