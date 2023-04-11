@@ -127,7 +127,7 @@
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
-  (let ((prompts (teletype-gpt--filter-history-prompts
+  (let ((prompts (teletype-gpt--filter-history-prompts-format
                   #'teletype-gpt--valid-prompt-p
                   (seq-take teletype-gpt--history 10)))) ; number is max entries to send
     (when (not prompts)
@@ -142,7 +142,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
 A prompt is a valid message which has a role of either user or assistant and contains message
 content and no error marker."
-  (and (teletype-gpt--valid-message-p)
+  (and (teletype-gpt--valid-message-p item)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
@@ -160,12 +160,18 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun teletype-gpt--filter-history-prompts (pred hist)
+(defun teletype-gpt--filter-history-prompts-format (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (car hist) (teletype-gpt--filter-history-prompts pred (cdr hist)))
+        (cons (teletype-gpt--format-prompt (car hist))
+              (teletype-gpt--filter-history-prompts pred (cdr hist)))
       (teletype-gpt--filter-history-prompts pred (cdr hist)))))
+
+(defun teletype-gpt--format-prompt (prompt)
+  "Format PROMPT using only keys allowed by the API."
+  (list :role (plist-get prompt :role)
+        :content (plist-get prompt :content)))
 
 (defun teletype-gpt--register-response (response)
   "Add GPT response to history, return prompt alist."
@@ -313,7 +319,11 @@ these may be nil and still be a valid message, they need only exist."
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (teletype-gpt--format-response message))))))))
+          (insert (teletype-gpt--format-response message)))))))
+
+  ;; And move to the bottom
+  (with-current-buffer teletype-gpt--session-name
+    (aero/without-readonly (setf (point) (point-max)))))
 
 (defun teletype-gpt--format-response (response)
   "Format GPT response for display."
