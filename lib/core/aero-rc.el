@@ -146,7 +146,7 @@
  diff-switches "-u" ; unified diff by default
 
  eldoc-echo-area-use-multiline-p t ; don't truncate documentation
- eldoc-idle-delay 0.4
+ eldoc-idle-delay 0.5
 
  ;; files
  confirm-nonexistent-file-or-buffer nil ; don't ask to create a buffer
