@@ -126,10 +126,30 @@
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
-  (let ((max-entries 10))
+  (let ((prompts (teletype-gpt--filter-history-prompts
+                  #'teletype-gpt--prompt-p
+                  (seq-take teletype-gpt--history 10)))) ; number is max entries to send
+    (when (not prompts)
+      (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
                 :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
-          (nreverse (seq-take teletype-gpt--history max-entries)))))
+          ;; Need to reverse so latest comes last
+          (nreverse prompts))))
+
+(defun teletype-gpt--prompt-p (item)
+  "Return t if ITEM is a valid prompt."
+  (and (plistp item)
+       (not (plist-get item :error))
+       (and (or (string= (plist-get item :role) "user")
+                (string= (plist-get item :role) "assistant"))
+            (not (string-empty-p (plist-get item :content))))))
+
+(defun teletype-gpt--filter-history-prompts (pred hist)
+  "Filter HIST alist for prompts."
+  (when hist
+    (if (funcall pred (car hist))
+        (cons (car hist) (teletype-gpt--filter-history-prompts pred (cdr hist)))
+      (teletype-gpt--filter-history-prompts pred (cdr hist)))))
 
 (defun teletype-gpt--register-response (response)
   "Add GPT response to history."
