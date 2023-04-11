@@ -1,4 +1,4 @@
-;;; teletype-gpt.el --- Aero GPT client  -*- lexical-binding: t; -*-
+;;; tele-gpt.el --- TeleGPT client  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
 ;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (spinner "1.7.4"))
@@ -20,10 +20,9 @@
 ;;
 ;;; Commentary:
 ;;
-;; A simple markdown-based GPT client for Aero Emacs.
+;; A simple markdown-based GPT client for Emacs.
 ;;
-;; Requires `teletype-gpt-openai-api-key' to be set, doing so in an `init.local.el' is the right
-;; place to do this in Aero.
+;; Requires `tele-gpt-openai-api-key' to be set
 ;;
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 
@@ -36,50 +35,54 @@
 (require 'json)
 (require 'map)
 (require 'markdown-mode)
-(require 'aero-lib)
 
 ;;; Code:
 
-(defgroup teletype-gpt nil
-  "Aero Teletype GPT."
-  :prefix "teletype-gpt-"
+(defgroup tele-gpt nil
+  "TeleGPT."
+  :prefix "tele-gpt-"
   :group 'emacs-ml)
 
-(defcustom teletype-gpt-openai-api-key nil
+(defcustom tele-gpt-openai-api-key nil
   "An OpenAI API key."
-  :group 'teletype-gpt
+  :group 'tele-gpt
   :type 'string)
 
-(defvar teletype-gpt-debug-mode nil)
-(defvar teletype-gpt--session-name "*Teletype GPT*")
-(defvar teletype-gpt--input-buffer-name "*Teletype GPT Input*")
-(defvar teletype-gpt--history '())
-(defvar teletype-gpt--busy-p nil)
-(defvar teletype-gpt--spinner nil)
+(defvar tele-gpt-debug-mode nil)
+(defvar tele-gpt--session-name "*TeleGPT*")
+(defvar tele-gpt--input-buffer-name "*TeleGPT Input*")
+(defvar tele-gpt--history '())
+(defvar tele-gpt--busy-p nil)
+(defvar tele-gpt--spinner nil)
 
-(defun teletype-gpt-kill-buffer-hook ()
+(defun tele-gpt-kill-buffer-hook ()
   "Kill response buffer hook."
-  (spinner-stop teletype-gpt--spinner)
-  (setq teletype-gpt--busy-p nil)
-  (setq teletype-gpt--history '()))
+  (spinner-stop tele-gpt--spinner)
+  (setq tele-gpt--busy-p nil)
+  (setq tele-gpt--history '()))
+
+(defmacro tele-gpt-without-readonly (&rest body)
+  (declare (indent 0))
+  `(let ((inhibit-read-only t))
+     ,@body))
 
 
 ;; API
 
-(defun teletype-gpt-send ()
+(defun tele-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
-  (unless teletype-gpt-openai-api-key
-    (user-error "Must set `teletype-gpt-openai-api-key'"))
-  (let* ((prompt (teletype-gpt--gather-prompts))
+  (unless tele-gpt-openai-api-key
+    (user-error "Must set `tele-gpt-openai-api-key'"))
+  (let* ((prompt (tele-gpt--gather-prompts))
          (inhibit-message t)
          (message-log-max nil)
-         (url-show-status teletype-gpt-debug-mode)
-         (url-show-headers teletype-gpt-debug-mode)
+         (url-show-status tele-gpt-debug-mode)
+         (url-show-headers tele-gpt-debug-mode)
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
-            ("Authorization" . ,(concat "Bearer " teletype-gpt-openai-api-key))))
+            ("Authorization" . ,(concat "Bearer " tele-gpt-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model "gpt-3.5-turbo"
@@ -89,21 +92,21 @@
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (let ((message (teletype-gpt--register-response
-                                    (teletype-gpt--parse-response (current-buffer)))))
-                      (teletype-gpt--display-message message)
-                      (setq teletype-gpt--busy-p nil)
-                      (spinner-stop teletype-gpt--spinner)
+                    (let ((message (tele-gpt--register-response
+                                    (tele-gpt--parse-response (current-buffer)))))
+                      (tele-gpt--display-message message)
+                      (setq tele-gpt--busy-p nil)
+                      (spinner-stop tele-gpt--spinner)
                       (kill-buffer)))
-                  nil (not teletype-gpt-debug-mode) nil)))
+                  nil (not tele-gpt-debug-mode) nil)))
 
-(defun teletype-gpt--gather-prompts ()
+(defun tele-gpt--gather-prompts ()
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
-  (let ((prompts (teletype-gpt--filter-history-prompts-format
-                  #'teletype-gpt--valid-prompt-p
-                  (seq-take teletype-gpt--history 10)))) ; number is max entries to send
+  (let ((prompts (tele-gpt--filter-history-prompts-format
+                  #'tele-gpt--valid-prompt-p
+                  (seq-take tele-gpt--history 10)))) ; number is max entries to send
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
@@ -111,18 +114,18 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
-(defun teletype-gpt--valid-prompt-p (item)
+(defun tele-gpt--valid-prompt-p (item)
   "Return t if ITEM is a valid prompt.
 
 A prompt is a valid message which has a role of either user or assistant and contains message
 content and no error marker."
-  (and (teletype-gpt--valid-message-p item)
+  (and (tele-gpt--valid-message-p item)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
             (not (string-empty-p (plist-get item :content))))))
 
-(defun teletype-gpt--valid-message-p (item)
+(defun tele-gpt--valid-message-p (item)
   "Return t if ITEM is a valid message.
 
 A valid message is a plist containing either an error and a status or a role and content. Any of
@@ -134,37 +137,37 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun teletype-gpt--filter-history-prompts-format (pred hist)
+(defun tele-gpt--filter-history-prompts-format (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (teletype-gpt--format-prompt (car hist))
-              (teletype-gpt--filter-history-prompts-format pred (cdr hist)))
-      (teletype-gpt--filter-history-prompts-format pred (cdr hist)))))
+        (cons (tele-gpt--format-prompt (car hist))
+              (tele-gpt--filter-history-prompts-format pred (cdr hist)))
+      (tele-gpt--filter-history-prompts-format pred (cdr hist)))))
 
-(defun teletype-gpt--format-prompt (prompt)
+(defun tele-gpt--format-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun teletype-gpt--register-response (response)
+(defun tele-gpt--register-response (response)
   "Add GPT response to history, return prompt alist."
   (let ((prompt (map-merge 'plist '(:role "assistant") response)))
-    (push prompt teletype-gpt--history)
+    (push prompt tele-gpt--history)
     prompt))
 
-(defun teletype-gpt--register-user-message (input)
+(defun tele-gpt--register-user-message (input)
   "Add user message to history, return prompt alist."
   (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
-    (push prompt teletype-gpt--history)
+    (push prompt tele-gpt--history)
     prompt)
   )
 
-(defun teletype-gpt--parse-response (buffer)
+(defun tele-gpt--parse-response (buffer)
   "Parse the GPT response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when teletype-gpt-debug-mode (clone-buffer "*teletype-gpt-error*" 'show))
+      (when tele-gpt-debug-mode (clone-buffer "*tele-gpt-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
                 (response
@@ -202,75 +205,71 @@ these may be nil and still be a valid message, they need only exist."
 
 ;; User input
 
-(defun teletype-gpt-begin-input ()
+(defun tele-gpt-begin-input ()
   (interactive)
-  (when teletype-gpt--busy-p
+  (when tele-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
-  (teletype-gpt-input-exit)
+  (tele-gpt-input-exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
-        (buf (get-buffer-create teletype-gpt--input-buffer-name)))
+        (buf (get-buffer-create tele-gpt--input-buffer-name)))
     (with-current-buffer buf
-      (teletype-gpt-input-mode)
+      (tele-gpt-input-mode)
       (erase-buffer)
       (call-interactively #'set-mark-command)
       (setf (point) (point-min)))
     (pop-to-buffer buf `((display-buffer-in-direction)
+                         (reusable-frames . nil)
                          (direction . ,dir)
                          (dedicated . t)
-                         (window-height . fit-window-to-buffer)))))
+                         (window-height . 30)))))
 
-(defun teletype-gpt-input-exit ()
-  (when-let ((buf (get-buffer teletype-gpt--input-buffer-name)))
+(defun tele-gpt-input-exit ()
+  (interactive)
+  (when-let ((buf (get-buffer tele-gpt--input-buffer-name)))
     (kill-buffer buf)))
 
-(defun teletype-gpt-input-send ()
+(defun tele-gpt-input-send ()
   (interactive)
-  (when teletype-gpt--busy-p
+  (when tele-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
-  (with-current-buffer teletype-gpt--input-buffer-name
+  (with-current-buffer tele-gpt--input-buffer-name
     (let ((input (buffer-substring-no-properties (point-min) (point-max))))
       (when (string-empty-p input)
         (user-error "No input to send"))
-      (teletype-gpt--send-input input)
-      (teletype-gpt-input-exit))))
+      (tele-gpt--send-input input)
+      (tele-gpt-input-exit))))
 
-(defun teletype-gpt--send-input (input)
-  (let ((message (teletype-gpt--register-user-message input) ))
-    (teletype-gpt--display-message message)
-    (setq teletype-gpt--busy-p t)
-    (spinner-start teletype-gpt--spinner)
-    (teletype-gpt-send)))
+(defun tele-gpt--send-input (input)
+  (let ((message (tele-gpt--register-user-message input) ))
+    (tele-gpt--display-message message)
+    (setq tele-gpt--busy-p t)
+    (spinner-start tele-gpt--spinner)
+    (tele-gpt-send)))
 
-(defun teletype-gpt-input--post-command ()
-  "Resize window after input."
-  (let ((max-lines (line-number-at-pos (point-max))))
-    (fit-window-to-buffer)
-    (enlarge-window (- max-lines (window-text-height)))))
-
-(defvar teletype-gpt-input-mode-map
+(defvar tele-gpt-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'teletype-gpt-input-send)
-    (define-key map (kbd "C-c C-c") #'teletype-gpt-input-send)
-    (define-key map (kbd "C-c C-k") #'teletype-gpt-input-exit)
+    (define-key map (kbd "C-<return>") #'tele-gpt-input-send)
+    (define-key map (kbd "C-c C-c") #'tele-gpt-input-send)
+    (define-key map (kbd "C-c C-k") #'tele-gpt-input-exit)
     map))
 
-(define-derived-mode teletype-gpt-input-mode markdown-mode "TeletypeGPT Input"
-  "Major mode for Aero Teletype GPT input mode.
+(define-derived-mode tele-gpt-input-mode markdown-mode "TeleGPT Input"
+  "Major mode for TeleGPT input mode.
 
-\\<teletype-gpt-input-mode-map>"
-  (add-hook 'post-command-hook #'teletype-gpt-input--post-command nil t)
+\\<tele-gpt-input-mode-map>"
+  (setq header-line-format '(" TeleGPT Input  |  C-c C-c to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
-    (evil-set-initial-state 'teletype-gpt-input-mode 'insert)))
+    (evil-set-initial-state 'tele-gpt-input-mode 'insert)))
 
 
 ;; Chat display
 
-(defun teletype-gpt--display-message (message)
+(defun tele-gpt--display-message (message)
   "Display the most recent history message."
-  (unless (teletype-gpt--valid-message-p message)
+  (unless (tele-gpt--valid-message-p message)
     (error "Message is not valid: %s" message))
-  (with-current-buffer teletype-gpt--session-name
-    (aero/without-readonly
+  (with-current-buffer tele-gpt--session-name
+    (tele-gpt-without-readonly
       (setf (point) (point-max))
       (let* ((message-content (plist-get message :content))
              (role (plist-get message :role)))
@@ -291,12 +290,12 @@ these may be nil and still be a valid message, they need only exist."
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (teletype-gpt--format-response message))))
+          (insert (tele-gpt--format-response message))))
 
         ;; move point to bottom
         (setf (point) (point-max))))))
 
-(defun teletype-gpt--format-response (response)
+(defun tele-gpt--format-response (response)
   "Format GPT response for display."
   (let ((content (plist-get response :content))
         ;; (status (plist-get response :status))
@@ -316,54 +315,53 @@ these may be nil and still be a valid message, they need only exist."
              (t ""))
             "\f\n")))
 
-(defun teletype-gpt-clear-history ()
+(defun tele-gpt-clear-history ()
   (interactive)
-  (when (y-or-n-p "Clear Teletype GPT history forever?")
-    (with-current-buffer teletype-gpt--session-name
-      (aero/without-readonly
-        (setq teletype-gpt--history '())
+  (when (y-or-n-p "Clear TeleGPT history forever?")
+    (with-current-buffer tele-gpt--session-name
+      (tele-gpt-without-readonly
+        (setq tele-gpt--history '())
         (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
-(defun teletype-gpt--header-line ()
+(defun tele-gpt--header-line ()
   "Display header line."
-  (format " %s Teletype GPT  |  C-RET to input a prompt"
-          (if-let ((spinner (spinner-print teletype-gpt--spinner)))
+  (format " %s TeleGPT  |  C-RET to input a prompt"
+          (if-let ((spinner (spinner-print tele-gpt--spinner)))
               (concat spinner " ")
             " ")))
 
-(defvar teletype-gpt-mode-map
+(defvar tele-gpt-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'teletype-gpt-begin-input)
-    (define-key map (kbd "C-c C-c") #'teletype-gpt-begin-input)
-    (define-key map (kbd "C-c C-k") #'teletype-gpt-clear-history)
+    (define-key map (kbd "C-<return>") #'tele-gpt-begin-input)
+    (define-key map (kbd "C-c C-k") #'tele-gpt-clear-history)
     map))
 
-(define-derived-mode teletype-gpt-mode markdown-mode "TeletypeGPT"
-  "Major mode for Aero Teletype GPT response mode.
+(define-derived-mode tele-gpt-mode markdown-mode "TeleGPT"
+  "Major mode for TeleGPT response mode.
 
-\\<teletype-gpt-mode-map>"
+\\<tele-gpt-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format '((:eval (teletype-gpt--header-line))))
-  (setq teletype-gpt--spinner (spinner-create 'horizontal-breathing-long t))
-  (add-hook 'kill-buffer-hook #'teletype-gpt-kill-buffer-hook nil t))
+  (setq header-line-format '((:eval (tele-gpt--header-line))))
+  (setq tele-gpt--spinner (spinner-create 'horizontal-breathing-long t))
+  (add-hook 'kill-buffer-hook #'tele-gpt-kill-buffer-hook nil t))
 
 ;;;###autoload
-(defun teletype-gpt ()
-  "Switch to or start a Teletype GPT session."
+(defun tele-gpt ()
+  "Switch to or start a TeleGPT session."
   (interactive)
-  (unless teletype-gpt-openai-api-key
-    (user-error "Must set `teletype-gpt-openai-api-key'"))
-  (let ((buf (get-buffer-create teletype-gpt--session-name)))
+  (unless tele-gpt-openai-api-key
+    (user-error "Must set `tele-gpt-openai-api-key'"))
+  (let ((buf (get-buffer-create tele-gpt--session-name)))
     (with-current-buffer buf
-      (unless (derived-mode-p 'teletype-gpt-mode)
-        (teletype-gpt-mode))
+      (unless (derived-mode-p 'tele-gpt-mode)
+        (tele-gpt-mode))
       (let ((blank (string-empty-p (buffer-string))))
-        (aero/without-readonly
+        (tele-gpt-without-readonly
           (when blank (insert "> Use the window below to input your prompt, then C-RET to send. "))
           (pop-to-buffer buf)
           (setf (point) (point-max))
-          (when blank (teletype-gpt-begin-input)))))))
+          (when blank (tele-gpt-begin-input)))))))
 
-(provide 'teletype-gpt)
+(provide 'tele-gpt)
 
-;;; teletype-gpt.el ends here
+;;; tele-gpt.el ends here
