@@ -81,6 +81,14 @@
 (defvar teletype-gpt--busy-p nil)
 (defvar teletype-gpt--spinner nil)
 
+(defun teletype-gpt-kill-buffer-hook ()
+  "Kill response buffer hook."
+  (spinner-stop teletype-gpt--spinner)
+  (setq teletype-gpt--busy-p nil)
+  (setq teletype-gpt--history '())
+  (setq teletype-gpt--token-history '())
+  (setq teletype-gpt--response-buffer nil))
+
 
 ;; API
 
@@ -282,12 +290,6 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
              ((string= stop "content_filter") "Stop Reason: Content Filter Flag")
              (t ""))
             "\f\n")))
-
-(defun teletype-gpt-kill-buffer-hook ()
-  "Kill response buffer hook."
-  (spinner-stop teletype-gpt--spinner)
-  (setq teletype-gpt--history '())
-  (setq teletype-gpt--response-buffer nil))
 
 (defun teletype-gpt--header-line ()
   "Display header line."
