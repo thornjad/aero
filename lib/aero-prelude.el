@@ -185,7 +185,7 @@
    "U" 'universal-argument
 
    "a" '(:ignore t :wk "applications")
-   "ai" 'teletype-gpt
+   "ai" 'tele-gpt
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
@@ -919,12 +919,15 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; General crap
 
+;; My pomodoro package
 (package! pomp (:host gitlab :repo "thornjad/pomp")
   :after (general evil)
   :commands (pomp)
+  :custom
+  (pomp-pomodoro-length 55)
+  (pomp-short-break-length 10)
+  (pomp-long-break-length 15)
   :init
-  (evil-set-initial-state 'pomp-mode 'emacs)
-  (global-set-key (kbd "<f12>") 'pomp)
   (aero-leader-def "ap" 'pomp))
 
 (package! editorconfig :auto
@@ -942,8 +945,8 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
-(package! teletype-gpt :local :load-path "lib/core/teletype-gpt.el"
-  :custom (teletype-gpt-openai-api-key openai-api-key))
+(package! tele-gpt :local :load-path "lib/core/tele-gpt.el"
+  :custom (tele-gpt-openai-api-key openai-api-key))
 
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
