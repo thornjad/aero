@@ -48,6 +48,13 @@
   :group 'tele-gpt
   :type 'string)
 
+(defcustom tele-gpt-max-entries nil
+  "Max chat entries to send to GPT for context.
+
+Nil means no maximum."
+  :group 'tele-gpt
+  :type 'number)
+
 (defvar tele-gpt-debug-mode nil)
 (defvar tele-gpt--session-name "*TeleGPT*")
 (defvar tele-gpt--input-buffer-name "*TeleGPT Input*")
@@ -106,7 +113,9 @@
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
   (let ((prompts (tele-gpt--filter-history-prompts-format
                   #'tele-gpt--valid-prompt-p
-                  (seq-take tele-gpt--history 10)))) ; number is max entries to send
+                  (or (and tele-gpt-max-entries
+                           (seq-take tele-gpt--history tele-gpt-max-entries))
+                      tele-gpt--history))))
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
