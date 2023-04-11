@@ -214,7 +214,7 @@ these may be nil and still be a valid message, they need only exist."
 
 ;; User input
 
-(defun tele-gpt-begin-input ()
+(defun tele-gpt-begin-input (&optional init)
   (interactive)
   (when tele-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
@@ -224,6 +224,7 @@ these may be nil and still be a valid message, they need only exist."
     (with-current-buffer buf
       (tele-gpt-input-mode)
       (erase-buffer)
+      (when init (insert init))
       (call-interactively #'set-mark-command)
       (setf (point) (point-min)))
     (pop-to-buffer buf `((display-buffer-in-direction)
@@ -355,9 +356,11 @@ these may be nil and still be a valid message, they need only exist."
   (add-hook 'kill-buffer-hook #'tele-gpt-kill-buffer-hook nil t))
 
 ;;;###autoload
-(defun tele-gpt ()
-  "Switch to or start a TeleGPT session."
-  (interactive)
+(defun tele-gpt (&optional init)
+  "Switch to or start a TeleGPT session.
+
+If region is active, prefill input buffer with the region."
+  (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
   (unless tele-gpt-openai-api-key
     (user-error "Must set `tele-gpt-openai-api-key'"))
   (let ((buf (get-buffer-create tele-gpt--session-name)))
@@ -369,7 +372,7 @@ these may be nil and still be a valid message, they need only exist."
           (when blank (insert "> Use the window below to input your prompt, then C-RET to send. "))
           (pop-to-buffer buf)
           (setf (point) (point-max))
-          (when blank (tele-gpt-begin-input)))))))
+          (when blank (tele-gpt-begin-input init)))))))
 
 (provide 'tele-gpt)
 
