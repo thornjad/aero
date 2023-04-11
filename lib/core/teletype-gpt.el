@@ -30,6 +30,7 @@
 ;; TODO new session option, clear history and buffer
 ;; TODO record running token history
 ;; TODO better initial view
+;; TODO move point to max always
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
