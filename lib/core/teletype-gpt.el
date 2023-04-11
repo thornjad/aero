@@ -115,11 +115,12 @@
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (teletype-gpt--register-response (teletype-gpt--parse-response (current-buffer)))
-                    (teletype-gpt--display-last-message)
-                    (setq teletype-gpt--busy-p nil)
-                    (spinner-stop teletype-gpt--spinner)
-                    (kill-buffer))
+                    (let ((message (teletype-gpt--register-response
+                                    (teletype-gpt--parse-response (current-buffer)))))
+                     (teletype-gpt--display-message message)
+                     (setq teletype-gpt--busy-p nil)
+                     (spinner-stop teletype-gpt--spinner)
+                     (kill-buffer)))
                   nil (not teletype-gpt--debug-mode) nil)))
 
 (defun teletype-gpt--gather-prompt ()
@@ -152,14 +153,17 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
       (teletype-gpt--filter-history-prompts pred (cdr hist)))))
 
 (defun teletype-gpt--register-response (response)
-  "Add GPT response to history."
-  (push (map-merge 'alist '(:role "assistant") response)
-        teletype-gpt--history))
+  "Add GPT response to history, return prompt alist."
+  (let ((prompt (map-merge 'alist '(:role "assistant") response)))
+    (push prompt teletype-gpt--history)
+    prompt))
 
 (defun teletype-gpt--register-user-message (input)
-  "Add user message to history."
-  (push (list :role "user" :content (string-trim input " \t\n\r"))
-        teletype-gpt--history))
+  "Add user message to history, return prompt alist."
+  (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
+    (push prompt teletype-gpt--history)
+    prompt)
+  )
 
 (defun teletype-gpt--parse-response (buffer)
   "Parse the GPT response in URL BUFFER."
@@ -236,11 +240,11 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
       (teletype-gpt-input--exit))))
 
 (defun teletype-gpt--send-input (input)
-  (teletype-gpt--register-user-message input)
-  (teletype-gpt--display-last-message)
-  (setq teletype-gpt--busy-p t)
-  (spinner-start teletype-gpt--spinner)
-  (teletype-gpt-send))
+  (let ((message (teletype-gpt--register-user-message input) ))
+    (teletype-gpt--display-message message)
+    (setq teletype-gpt--busy-p t)
+    (spinner-start teletype-gpt--spinner)
+    (teletype-gpt-send)))
 
 (defun teletype-gpt-input--post-command ()
   "Resize window after input."
@@ -268,14 +272,13 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
   (aero/without-readonly
     (insert (propertize "Press C-return to begin a prompt.\n" 'face 'teletype-gpt-tip))))
 
-(defun teletype-gpt--display-last-message ()
+(defun teletype-gpt--display-message (message)
   "Display the most recent history message."
+  (unless message (error "Message is somehow empty, cannot continue without a type system."))
   (aero/with-buffer-max-excursion teletype-gpt--session-name
     (aero/without-readonly
-      (let* ((message (car (last teletype-gpt--history)))
-             (message-content (plist-get message :content))
+      (let* ((message-content (plist-get message :content))
              (role (plist-get message :role)))
-        (unless message (error "Teletype history corrupted, cannot continue"))
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
