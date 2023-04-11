@@ -28,9 +28,7 @@
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
 ;; TODO new session option, clear history and buffer
-;; TODO better initial view
 ;; TODO turn into package?
-;; TODO fix faces
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -59,7 +57,6 @@
 (defvar teletype-gpt--session-name "*Teletype GPT*")
 (defvar teletype-gpt--input-buffer-name "*Teletype GPT Input*")
 (defvar teletype-gpt--history '())
-(defvar teletype-gpt--response-buffer nil)
 (defvar teletype-gpt--busy-p nil)
 (defvar teletype-gpt--spinner nil)
 
@@ -67,8 +64,7 @@
   "Kill response buffer hook."
   (spinner-stop teletype-gpt--spinner)
   (setq teletype-gpt--busy-p nil)
-  (setq teletype-gpt--history '())
-  (setq teletype-gpt--response-buffer nil))
+  (setq teletype-gpt--history '()))
 
 
 ;; API
