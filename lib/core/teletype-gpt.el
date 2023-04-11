@@ -287,10 +287,6 @@ these may be nil and still be a valid message, they need only exist."
 
 ;; Chat display
 
-(defun teletype-gpt--insert-tip ()
-  (aero/without-readonly
-    (insert (propertize "Press C-return to begin a prompt.\n" 'face 'teletype-gpt-tip))))
-
 (defun teletype-gpt--display-message (message)
   "Display the most recent history message."
   (unless (teletype-gpt--valid-message-p message)
@@ -375,9 +371,12 @@ these may be nil and still be a valid message, they need only exist."
     (with-current-buffer buf
       (unless (derived-mode-p 'teletype-gpt-mode)
         (teletype-gpt-mode))
-      (when (string-empty-p (buffer-string)) (teletype-gpt--insert-tip))
-      (pop-to-buffer buf)
-      (setf (point) (point-max)))))
+      (let ((blank (string-empty-p (buffer-string))))
+        (aero/without-readonly
+          (when blank (insert "> Use the window below to input your prompt, then C-RET to send. "))
+          (pop-to-buffer buf)
+          (setf (point) (point-max))
+          (when blank (teletype-gpt-begin-input)))))))
 
 (provide 'teletype-gpt)
 
