@@ -41,6 +41,7 @@
 (package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
 (package! async (:host github :repo "jwiegley/emacs-async") :commands (async-save))
 (package! popup :auto)
+(package! spinner :auto)
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
