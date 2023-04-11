@@ -228,7 +228,7 @@ these may be nil and still be a valid message, they need only exist."
   (interactive)
   (when teletype-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
-  (teletype-gpt-input--exit)
+  (teletype-gpt-input-exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
         (buf (get-buffer-create teletype-gpt--input-buffer-name)))
     (with-current-buffer buf
@@ -241,7 +241,7 @@ these may be nil and still be a valid message, they need only exist."
                          (dedicated . t)
                          (window-height . fit-window-to-buffer)))))
 
-(defun teletype-gpt-input--exit ()
+(defun teletype-gpt-input-exit ()
   (when-let ((buf (get-buffer teletype-gpt--input-buffer-name)))
     (kill-buffer buf)))
 
@@ -254,7 +254,7 @@ these may be nil and still be a valid message, they need only exist."
       (when (string-empty-p input)
         (user-error "No input to send"))
       (teletype-gpt--send-input input)
-      (teletype-gpt-input--exit))))
+      (teletype-gpt-input-exit))))
 
 (defun teletype-gpt--send-input (input)
   (let ((message (teletype-gpt--register-user-message input) ))
@@ -272,6 +272,8 @@ these may be nil and still be a valid message, they need only exist."
 (defvar teletype-gpt-input-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-<return>") #'teletype-gpt-input-send)
+    (define-key map (kbd "C-c C-c") #'teletype-gpt-input-send)
+    (define-key map (kbd "C-c C-k") #'teletype-gpt-input-exit)
     map))
 
 (define-derived-mode teletype-gpt-input-mode markdown-mode "TeletypeGPT Input"
