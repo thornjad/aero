@@ -26,9 +26,6 @@
 ;; place to do this in Aero.
 ;;
 ;; API Reference: https://platform.openai.com/docs/guides/chat
-;;
-;; TODO new session option, clear history and buffer
-;; TODO turn into package?
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -319,6 +316,14 @@ these may be nil and still be a valid message, they need only exist."
              (t ""))
             "\f\n")))
 
+(defun teletype-gpt-clear-history ()
+  (interactive)
+  (when (y-or-n-p "Clear Teletype GPT history forever?")
+    (with-current-buffer teletype-gpt--session-name
+      (aero/without-readonly
+        (setq teletype-gpt--history '())
+        (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
+
 (defun teletype-gpt--header-line ()
   "Display header line."
   (format " %s Teletype GPT  |  C-RET to input a prompt"
@@ -330,6 +335,7 @@ these may be nil and still be a valid message, they need only exist."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-<return>") #'teletype-gpt-begin-input)
     (define-key map (kbd "C-c C-c") #'teletype-gpt-begin-input)
+    (define-key map (kbd "C-c C-k") #'teletype-gpt-clear-history)
     map))
 
 (define-derived-mode teletype-gpt-mode markdown-mode "TeletypeGPT"
