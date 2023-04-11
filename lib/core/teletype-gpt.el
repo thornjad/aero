@@ -278,17 +278,17 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
         (unless message (error "Teletype history corrupted, cannot continue"))
         (unless (bobp) (insert "\n\n"))
         (cond
+         ((or (plist-get message :error) (eq role nil))
+          (insert "# GPT Assistant [Error]\n\n"
+                  (propertize (or (plist-get message :status)
+                                  "Error: no status")
+                              'face 'teletype-gpt-error)))
+
          ((string= role "user")
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (teletype-gpt--format-response message)))
-
-         ((eq role nil)
-          (insert "# GPT Assistant [Error]\n\n"
-                  (propertize (or (plist-get message :status)
-                                  "Error: no status")
-                              'face 'teletype-gpt-error))))))))
+          (insert (teletype-gpt--format-response message))))))))
 
 (defun teletype-gpt--format-response (response)
   "Format GPT response for display."
