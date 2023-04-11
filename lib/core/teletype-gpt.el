@@ -200,7 +200,7 @@ these may be nil and still be a valid message, they need only exist."
 
           (cond
            ((string-match-p "200 OK" status)
-            (let* ((choices (plist-get (plist-get response :choices) 0))
+            (let* ((choices (aref (plist-get response :choices) 0))
                    (message (plist-get choices :message)))
               (if choices
                   (list :content (string-trim (substring-no-properties (plist-get message :content)))
