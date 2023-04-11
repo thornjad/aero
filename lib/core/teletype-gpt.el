@@ -29,8 +29,6 @@
 ;;
 ;; TODO new session option, clear history and buffer
 ;; TODO better initial view
-;; TODO streaming response
-;; TODO rename tele-gpt?
 ;; TODO turn into package?
 ;; TODO fix faces
 
@@ -131,7 +129,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
-                :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
+                :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
