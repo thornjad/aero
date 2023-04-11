@@ -36,6 +36,7 @@
 (require 'url)
 (require 'spinner)
 (require 'json)
+(require 'map)
 (require 'markdown-mode)
 (require 'aero-lib)
 
@@ -124,7 +125,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
 (defun teletype-gpt--register-response (response)
   "Add GPT response to history."
-  (push (list :role "assistant" :content response)
+  (push (map-merge 'alist '(:role "assistant") response)
         teletype-gpt--history))
 
 (defun teletype-gpt--register-user-message (input)
@@ -155,21 +156,21 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
             (let* ((choices (plist-get (plist-get response :choices) 0))
                    (message (plist-get choices :message)))
               (if choices
-                  (list :content (string-trim (plist-get message :content))
+                  (list :content (string-trim (substring-no-properties (plist-get message :content)))
                         :tokens (plist-get response :usage)
                         :time (plist-get response :created)
                         :stop (plist-get choices :finish_reason)
                         :status status)
-                (list :content nil :status "No message received"))))
+                (list :error t :status "No message received"))))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
                    (error-msg (plist-get error-plist :message))
                    (error-type (plist-get error-plist :type)))
-              (list :content nil :status (concat status ": " error-type))))
+              (list :error t :status (concat status ": " error-type))))
            ((eq response 'json-read-error)
-            (list :content nil :status (concat status ": Malformed JSON in response.")))
-           (t (list :content nil :status (concat status ": Could not parse HTTP response."))))
-        (list :content nil :status (concat status ": Could not parse HTTP response."))))))
+            (list :error t :status (concat status ": Malformed JSON in response.")))
+           (t (list :error t :status (concat status ": Could not parse HTTP response."))))
+        (list :error t :status (concat status ": Could not parse HTTP response."))))))
 
 
 ;; User input
