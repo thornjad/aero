@@ -117,10 +117,10 @@
                   (lambda (_)
                     (let ((message (teletype-gpt--register-response
                                     (teletype-gpt--parse-response (current-buffer)))))
-                     (teletype-gpt--display-message message)
-                     (setq teletype-gpt--busy-p nil)
-                     (spinner-stop teletype-gpt--spinner)
-                     (kill-buffer)))
+                      (teletype-gpt--display-message message)
+                      (setq teletype-gpt--busy-p nil)
+                      (spinner-stop teletype-gpt--spinner)
+                      (kill-buffer)))
                   nil (not teletype-gpt--debug-mode) nil)))
 
 (defun teletype-gpt--gather-prompt ()
@@ -128,7 +128,7 @@
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
   (let ((prompts (teletype-gpt--filter-history-prompts
-                  #'teletype-gpt--prompt-p
+                  #'teletype-gpt--valid-prompt-p
                   (seq-take teletype-gpt--history 10)))) ; number is max entries to send
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
@@ -137,13 +137,28 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
-(defun teletype-gpt--prompt-p (item)
-  "Return t if ITEM is a valid prompt."
-  (and (plistp item)
+(defun teletype-gpt--valid-prompt-p (item)
+  "Return t if ITEM is a valid prompt.
+
+A prompt is a valid message which has a role of either user or assistant and contains message
+content and no error marker."
+  (and (teletype-gpt--valid-message-p)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
             (not (string-empty-p (plist-get item :content))))))
+
+(defun teletype-gpt--valid-message-p (item)
+  "Return t if ITEM is a valid message.
+
+A valid message is a plist containing either an error and a status or a role and content. Any of
+these may be nil and still be a valid message, they need only exist."
+  (and item
+       (plistp item)
+       (or (and (plist-member item :error)
+                (plist-member item :status))
+           (and (plist-member item :role)
+                (plist-member item :content)))))
 
 (defun teletype-gpt--filter-history-prompts (pred hist)
   "Filter HIST alist for prompts."
@@ -154,7 +169,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
 (defun teletype-gpt--register-response (response)
   "Add GPT response to history, return prompt alist."
-  (let ((prompt (map-merge 'alist '(:role "assistant") response)))
+  (let ((prompt (map-merge 'plist '(:role "assistant") response)))
     (push prompt teletype-gpt--history)
     prompt))
 
@@ -274,7 +289,8 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
 (defun teletype-gpt--display-message (message)
   "Display the most recent history message."
-  (unless message (error "Message is somehow empty, cannot continue without a type system."))
+  (unless (teletype-gpt--valid-message-p message)
+    (error "Message is not valid: %s" message))
   (aero/with-buffer-max-excursion teletype-gpt--session-name
     (aero/without-readonly
       (let* ((message-content (plist-get message :content))
@@ -284,7 +300,12 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
          ((or (plist-get message :error) (eq role nil))
           (insert "# GPT Assistant [Error]\n\n"
                   (propertize (or (plist-get message :status)
-                                  "Error: no status")
+                                  (format (or (and (plist-get message :error)
+                                                   "Error: unknown error: %s")
+                                              (and (eq role nil)
+                                                   "Error: message has no role: %s")
+                                              "Error: invalid message: %s")
+                                          message))
                               'face 'teletype-gpt-error)))
 
          ((string= role "user")
