@@ -306,7 +306,8 @@ these may be nil and still be a valid message, they need only exist."
                                                    "Error: message has no role: %s")
                                               "Error: invalid message: %s")
                                           message))
-                              'face 'teletype-gpt-error)))
+                              'face 'teletype-gpt-error)
+                  "\f\n"))
 
          ((string= role "user")
           (insert "# User\n\n" message-content))
@@ -321,7 +322,7 @@ these may be nil and still be a valid message, they need only exist."
         (tokens (plist-get response :tokens))
         ;; (time (plist-get response :time))
         (stop (plist-get response :stop)))
-    (insert "# GPT Assistant "
+    (concat "# GPT Assistant "
             ;; Tokens
             (propertize (format "Tokens: %s (%s prompt, %s response)"
                                 (plist-get tokens :total_tokens)
