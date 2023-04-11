@@ -1,7 +1,8 @@
-;;; aero-teletype-gpt.el --- Aero GPT client  -*- lexical-binding: t; -*-
+;;; teletype-gpt.el --- Aero GPT client  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
-;; Package-Requires: ((emacs "27.1") (ht "2.0") (markdown-mode "2.1") (spinner "1.7.4"))
+;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (spinner "1.7.4"))
+;; Package-Version: 0.1.0
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -21,8 +22,8 @@
 ;;
 ;; A simple markdown-based GPT client for Aero Emacs.
 ;;
-;; Requires `aero/openai-api-key' to be set, doing so in an `init.local.el' is the right place to do this
-;; in Aero.
+;; Requires `teletype-gpt-openai-api-key' to be set, doing so in an `init.local.el' is the right
+;; place to do this in Aero.
 ;;
 ;; API Reference: https://platform.openai.com/docs/guides/chat
 ;;
@@ -31,79 +32,71 @@
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
 
-(eval-when-compile
-  (require 'subr-x)
-  (require 'cl-lib))
+(eval-when-compile (require 'subr-x))
 (require 'url)
 (require 'spinner)
 (require 'json)
 (require 'markdown-mode)
-
 (require 'aero-lib)
 
 ;;; Code:
 
-(defgroup aero/teletype-gpt nil
+(defgroup teletype-gpt nil
   "Aero Teletype GPT."
-  :prefix "aero/gpt-"
+  :prefix "teletype-gpt-"
   :group 'emacs-ml)
 
-(defcustom aero/gpt-openai-api-key nil
+(defcustom teletype-gpt-openai-api-key nil
   "An OpenAI API key."
-  :group 'aero/teletype-gpt
+  :group 'teletype-gpt
   :type 'string)
 
-(defface aero/gpt-system-ui
+(defface teletype-gpt-system-ui
   '((t :inherit font-lock-builtin-face))
   "Face for Teletype GPT UI elements."
-  :group 'aero/teletype-gpt)
+  :group 'teletype-gpt)
 
-(defface aero/gpt-tip
+(defface teletype-gpt-tip
   '((t :inherit font-lock-comment-face))
   "Face for Teletype GPT tips."
-  :group 'aero/teletype-gpt)
+  :group 'teletype-gpt)
 
-(defface aero/gpt-info
+(defface teletype-gpt-info
   '((t :inherit font-lock-comment-face :height 0.8))
   "Face for GPT info like tokens."
-  :group 'aero/teletype-gpt)
+  :group 'teletype-gpt)
 
-(defface aero/gpt-error
+(defface teletype-gpt-error
   '((t :inherit error))
   "Face for GPT errors."
-  :group 'aero/teletype-gpt)
+  :group 'teletype-gpt)
 
-;; (defface aero/gpt-status
-;;   '((t :inherit font-lock-function-name-face :italic t))
-;;   "Face for GPT current status."
-;;   :group 'aero/teletype-gpt)
-
-(defvar aero/gpt--debug-mode t)
-(defvar aero/gpt--session-name "*Teletype GPT*")
-(defvar aero/gpt--input-buffer-name "*Teletype GPT Input*")
-(defvar-local aero/gpt--token-history nil)
-(defvar-local aero/gpt--history '())
-(defvar-local aero/gpt--response-buffer nil)
-(defvar-local aero/gpt--busy-p nil)
-(defvar-local aero/gpt--spinner nil)
+(defvar teletype-gpt--debug-mode t)
+(defvar teletype-gpt--session-name "*Teletype GPT*")
+(defvar teletype-gpt--input-buffer-name "*Teletype GPT Input*")
+(defvar teletype-gpt--token-history '())
+(defvar teletype-gpt--history '())
+(defvar teletype-gpt--response-buffer nil)
+(defvar teletype-gpt--busy-p nil)
+(defvar teletype-gpt--spinner nil)
 
 
 ;; API
 
-(defun aero/teletype-gpt-send ()
+(defun teletype-gpt-send ()
   "Submit the current prompt to GPT."
   (interactive)
-  (unless aero/gpt-openai-api-key
-    (user-error "Must set `aero/gpt-openai-api-key'"))
-  (let* ((prompt (aero/gpt--gather-prompt))
+  (unless teletype-gpt-openai-api-key
+    (user-error "Must set `teletype-gpt-openai-api-key'"))
+  (let* ((prompt (teletype-gpt--gather-prompt))
          (inhibit-message t)
          (message-log-max nil)
-         (url-show-status aero/gpt--debug-mode)
-         (url-show-headers aero/gpt--debug-mode)
+         (url-show-status teletype-gpt--debug-mode)
+         (url-show-headers teletype-gpt--debug-mode)
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
-            ("Authorization" . ,(concat "Bearer " aero/gpt-openai-api-key))))
+            ("Authorization" . ,(concat "Bearer " teletype-gpt-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model "gpt-3.5-turbo"
@@ -113,37 +106,37 @@
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (aero/gpt--register-response (aero/gpt--parse-response (current-buffer)))
-                    (aero/gpt--display-last-message)
-                    (setq-local aero/gpt--busy-p nil)
-                    (spinner-stop aero/gpt--spinner)
+                    (teletype-gpt--register-response (teletype-gpt--parse-response (current-buffer)))
+                    (teletype-gpt--display-last-message)
+                    (setq teletype-gpt--busy-p nil)
+                    (spinner-stop teletype-gpt--spinner)
                     (kill-buffer))
-                  nil (not aero/gpt--debug-mode) nil)))
+                  nil (not teletype-gpt--debug-mode) nil)))
 
-(defun aero/gpt--gather-prompt ()
+(defun teletype-gpt--gather-prompt ()
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
   (let ((max-entries 10))
     (cons (list :role "system"
                 :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Github-flavored Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
-          (nreverse (seq-take aero/gpt--history max-entries)))))
+          (nreverse (seq-take teletype-gpt--history max-entries)))))
 
-(defun aero/gpt--register-response (response)
+(defun teletype-gpt--register-response (response)
   "Add GPT response to history."
   (push (list :role "assistant" :content response)
-        aero/gpt--history))
+        teletype-gpt--history))
 
-(defun aero/gpt--register-user-message (input)
+(defun teletype-gpt--register-user-message (input)
   "Add user message to history."
   (push (list :role "user" :content (string-trim input " \t\n\r"))
-        aero/gpt--history))
+        teletype-gpt--history))
 
-(defun aero/gpt--parse-response (buffer)
+(defun teletype-gpt--parse-response (buffer)
   "Parse the GPT response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when aero/gpt--debug-mode (clone-buffer "*aero-gpt-error*" 'show))
+      (when teletype-gpt--debug-mode (clone-buffer "*teletype-gpt-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
                 (response
@@ -159,12 +152,15 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
           (cond
            ((string-match-p "200 OK" status)
-            (let ((choices (plist-get (plist-get response :choices) 0)))
-              (list :content (string-trim (plist-get (plist-get choices :message) :content))
-                    :tokens (plist-get response :usage)
-                    :time (plist-get response :created)
-                    :stop (plist-get choices :finish_reason)
-                    :status status)))
+            (let* ((choices (plist-get (plist-get response :choices) 0))
+                   (message (plist-get choices :message)))
+              (if choices
+                  (list :content (string-trim (plist-get message :content))
+                        :tokens (plist-get response :usage)
+                        :time (plist-get response :created)
+                        :stop (plist-get choices :finish_reason)
+                        :status status)
+                (list :content nil :status "No message received"))))
            ((plist-get response :error)
             (let* ((error-plist (plist-get response :error))
                    (error-msg (plist-get error-plist :message))
@@ -178,15 +174,15 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
 
 ;; User input
 
-(defun aero/teletype-gpt-begin-input ()
+(defun teletype-gpt-begin-input ()
   (interactive)
-  (when aero/gpt--busy-p
+  (when teletype-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
-  (aero/gpt-input--exit)
+  (teletype-gpt-input--exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
-        (buf (get-buffer-create aero/gpt--session-name)))
+        (buf (get-buffer-create teletype-gpt--input-buffer-name)))
     (with-current-buffer buf
-      (aero/teletype-gpt-input-mode)
+      (teletype-gpt-input-mode)
       (erase-buffer)
       (call-interactively #'set-mark-command)
       (setf (point) (point-min)))
@@ -195,71 +191,77 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
                          (dedicated . t)
                          (window-height . fit-window-to-buffer)))))
 
-(defun aero/gpt-input--exit ()
-  (kill-buffer aero/gpt--input-buffer-name))
+(defun teletype-gpt-input--exit ()
+  (when-let ((buf (get-buffer teletype-gpt--input-buffer-name)))
+    (kill-buffer buf)))
 
-(defun aero/teletype-gpt-input-send ()
+(defun teletype-gpt-input-send ()
   (interactive)
-  (when (not (eq major-mode #'aero/teletype-gpt-input-mode))
-    (user-error "Must be called from the Aero Teletype GPT input window. Try `aero/teletype-gpt-begin-input' first."))
-  (when aero/gpt--busy-p
+  (when teletype-gpt--busy-p
     (user-error "BUSY: Waiting for GPT complete its response..."))
-  (let ((input (buffer-substring-no-properties (point-min) (point-max))))
-    (when (string-empty-p input)
-      (user-error "No input to send"))
-    (aero/gpt--send-input input))
-  (aero/gpt-input--exit))
+  (with-current-buffer teletype-gpt--input-buffer-name
+    (let ((input (buffer-substring-no-properties (point-min) (point-max))))
+      (when (string-empty-p input)
+        (user-error "No input to send"))
+      (teletype-gpt--send-input input)
+      (teletype-gpt-input--exit))))
 
-(defun aero/gpt--send-input (input)
-  (aero/gpt--register-user-message input)
-  (aero/gpt--display-last-message)
-  (setq-local aero/gpt--busy-p t)
-  (spinner-start aero/gpt--spinner)
-  (aero/teletype-gpt-send))
+(defun teletype-gpt--send-input (input)
+  (teletype-gpt--register-user-message input)
+  (teletype-gpt--display-last-message)
+  (setq teletype-gpt--busy-p t)
+  (spinner-start teletype-gpt--spinner)
+  (teletype-gpt-send))
 
-(defun aero/gpt-input--post-command ()
+(defun teletype-gpt-input--post-command ()
   "Resize window after input."
   (let ((max-lines (line-number-at-pos (point-max))))
     (fit-window-to-buffer)
     (enlarge-window (- max-lines (window-text-height)))))
 
-(defvar aero/teletype-gpt-input-mode-map
+(defvar teletype-gpt-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aero/teletype-gpt-input-send)
+    (define-key map (kbd "C-<return>") #'teletype-gpt-input-send)
     map))
 
-(define-derived-mode aero/teletype-gpt-input-mode markdown-mode "TeletypeGPT Input"
+(define-derived-mode teletype-gpt-input-mode markdown-mode "TeletypeGPT Input"
   "Major mode for Aero Teletype GPT input mode.
 
-\\<aero/teletype-gpt-input-mode-map>"
-  (add-hook 'post-command-hook #'aero/gpt-input--post-command nil t))
+\\<teletype-gpt-input-mode-map>"
+  (add-hook 'post-command-hook #'teletype-gpt-input--post-command nil t)
+  (when (fboundp 'evil-set-initial-state)
+    (evil-set-initial-state 'teletype-gpt-input-mode 'insert)))
 
 
 ;; Chat display
 
-(defun aero/gpt--insert-tip ()
+(defun teletype-gpt--insert-tip ()
   (aero/without-readonly
-    (insert (propertize "Press C-return to begin a prompt.\n" 'face 'aero/gpt-tip))))
+    (insert (propertize "Press C-return to begin a prompt.\n" 'face 'teletype-gpt-tip))))
 
-(defun aero/gpt--display-last-message ()
+(defun teletype-gpt--display-last-message ()
   "Display the most recent history message."
-  (aero/with-buffer-max-excursion aero/gpt--session-name
+  (aero/with-buffer-max-excursion teletype-gpt--session-name
     (aero/without-readonly
-      (let* ((message (car (last aero/gpt--history)))
+      (let* ((message (car (last teletype-gpt--history)))
+             (message-content (plist-get message :content))
              (role (plist-get message :role)))
+        (unless message (error "Teletype history corrupted, cannot continue"))
         (unless (bobp) (insert "\n\n"))
         (cond
          ((string= role "user")
-          (insert "# User\n\n" message))
+          (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (aero/gpt--format-response message)))
+          (insert (teletype-gpt--format-response message)))
 
          ((eq role nil)
           (insert "# GPT Assistant [Error]\n\n"
-                  (propertize (plist-get message :status) 'face 'aero/gpt-error))))))))
+                  (propertize (or (plist-get message :status)
+                                  "Error: no status")
+                              'face 'teletype-gpt-error))))))))
 
-(defun aero/gpt--format-response (response)
+(defun teletype-gpt--format-response (response)
   "Format GPT response for display."
   (let ((content (plist-get response :content))
         ;; (status (plist-get response :status))
@@ -272,7 +274,7 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
                                 (plist-get tokens :total_tokens)
                                 (plist-get tokens :prompt_tokens)
                                 (plist-get tokens :completion_tokens))
-                        'face 'aero/gpt-info)
+                        'face 'teletype-gpt-info)
             "\n\n" content "\n\n"
             (cond
              ((string= stop "length") "Stop Reason: Token Limit")
@@ -280,50 +282,51 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
              (t ""))
             "\f\n")))
 
-(defun aero/gpt-kill-buffer-hook ()
+(defun teletype-gpt-kill-buffer-hook ()
   "Kill response buffer hook."
-  (spinner-stop aero/gpt--spinner)
-  (setq-local aero/gpt--history '())
-  (setq-local aero/gpt--response-buffer nil))
+  (spinner-stop teletype-gpt--spinner)
+  (setq teletype-gpt--history '())
+  (setq teletype-gpt--response-buffer nil))
 
-(defun aero/gpt--header-line ()
+(defun teletype-gpt--header-line ()
   "Display header line."
-  (format " %s — %s history — %s tokens (% prompt, %s response)"
-          (if-let ((spinner (spinner-print aero/gpt--spinner)))
+  (format " %s %s history — %s tokens (%s prompt, %s response)"
+          (if-let ((spinner (spinner-print teletype-gpt--spinner)))
               (concat spinner " ")
             " ")
-          (length aero/gpt--history)
-          (plist-get aero/gpt--token-history :total)
-          (plist-get aero/gpt--token-history :prompt)
-          (plist-get aero/gpt--token-history :response)))
+          (length teletype-gpt--history)
+          (plist-get teletype-gpt--token-history :total)
+          (plist-get teletype-gpt--token-history :prompt)
+          (plist-get teletype-gpt--token-history :response)))
 
-(defvar aero/teletype-gpt-mode-map
+(defvar teletype-gpt-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aero/teletype-gpt-begin-input)
+    (define-key map (kbd "C-<return>") #'teletype-gpt-begin-input)
     map))
 
-(define-derived-mode aero/teletype-gpt-mode markdown-mode "TeletypeGPT"
+(define-derived-mode teletype-gpt-mode markdown-mode "TeletypeGPT"
   "Major mode for Aero Teletype GPT response mode.
 
-\\<aero/teletype-gpt-mode-map>"
-  (setq-local buffer-read-only t)
-  (setq-local header-line-format `((:eval (aero/gpt--header-line))))
-  (setq-local aero/gpt--spinner (spinner-create 'horizontal-breathing-long t))
-  (add-hook 'kill-buffer-hook #'aero/gpt-kill-buffer-hook nil t))
+\\<teletype-gpt-mode-map>"
+  (setq buffer-read-only t)
+  (setq header-line-format `((:eval (teletype-gpt--header-line))))
+  (setq teletype-gpt--spinner (spinner-create 'horizontal-breathing-long t))
+  (add-hook 'kill-buffer-hook #'teletype-gpt-kill-buffer-hook nil t))
 
 ;;;###autoload
-(defun aero-teletype-gpt ()
+(defun teletype-gpt ()
   "Switch to or start a Teletype GPT session."
   (interactive)
-  (unless aero/gpt-openai-api-key
-    (user-error "Must set `aero/gpt-openai-api-key'"))
-  (let ((buf (get-buffer-create aero/gpt--session-name)))
+  (unless teletype-gpt-openai-api-key
+    (user-error "Must set `teletype-gpt-openai-api-key'"))
+  (let ((buf (get-buffer-create teletype-gpt--session-name)))
     (with-current-buffer buf
-      (unless aero/teletype-gpt-mode (aero/teletype-gpt-mode))
-      (when (string-empty-p (buffer-string)) (aero/gpt--insert-tip))
+      (unless (derived-mode-p 'teletype-gpt-mode)
+        (teletype-gpt-mode))
+      (when (string-empty-p (buffer-string)) (teletype-gpt--insert-tip))
       (pop-to-buffer buf)
       (setf (point) (point-max)))))
 
-(provide 'aero-teletype-gpt)
+(provide 'teletype-gpt)
 
-;;; aero-teletype-gpt.el ends here
+;;; teletype-gpt.el ends here

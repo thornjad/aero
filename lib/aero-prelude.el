@@ -184,7 +184,7 @@
    "U" 'universal-argument
 
    "a" '(:ignore t :wk "applications")
-   "ai" 'aero/teletype-gpt
+   "ai" 'teletype-gpt
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
