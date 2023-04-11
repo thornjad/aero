@@ -280,7 +280,7 @@ these may be nil and still be a valid message, they need only exist."
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
-          (insert "# GPT Assistant [Error]\n\n"
+          (insert "## GPT Assistant [Error]\n\n"
                   (or (plist-get message :status)
                       (format (or (and (plist-get message :error)
                                        "Error: unknown error: %s")
@@ -306,7 +306,7 @@ these may be nil and still be a valid message, they need only exist."
         (tokens (plist-get response :tokens))
         ;; (time (plist-get response :time))
         (stop (plist-get response :stop)))
-    (concat "# GPT Assistant "
+    (concat "## GPT Assistant "
             ;; Tokens
             (format "— (%s tokens: %s prompt, %s response)"
                     (plist-get tokens :total_tokens)
