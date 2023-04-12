@@ -47,5 +47,12 @@
 (global-unset-key (kbd "C-x m"))
 (defun goto-address-find-address-at-point () "Disabled by Aero." nil)
 
-;; One less file to load at startup, and we'll never use it
-(setq site-run-file nil)
+(setq site-run-file nil ; One less file to load at startup, and we'll never use it
+      frame-inhibit-implied-resize t ; only explicit resize
+      window-resize-pixelwise t
+      frame-resize-pixelwise t
+      inhibit-startup-screen t
+      inhibit-splash-screen t
+      inhibit-startup-echo-area-message t
+      initial-buffer-choice t ; use scratch buffer
+      initial-major-mode 'fundamental-mode)
