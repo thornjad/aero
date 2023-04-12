@@ -31,6 +31,7 @@
 
 (eval-when-compile (require 'subr-x))
 (require 'url)
+(require 'aero-lib)
 (require 'spinner)
 (require 'json)
 (require 'map)
