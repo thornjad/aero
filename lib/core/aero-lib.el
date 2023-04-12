@@ -21,7 +21,9 @@
 ;; A home for utilities
 
 (require 'cl-lib)
-(require 'aero-pbcopier) ; Can be found in this dir
+(require 'aero-pbcopier
+         (expand-file-name "lib/localpackages/aero-pbcopier.el"
+                           user-emacs-directory))
 
 ;;; Code:
 

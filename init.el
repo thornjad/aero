@@ -40,7 +40,7 @@
   "Bootstrap major components and set up for use"
 
   ;; Get our on hooks early
-  (require 'on (expand-file-name "lib/core/on.el" user-emacs-directory))
+  (require 'on (expand-file-name "lib/localpackages/on.el" user-emacs-directory))
 
   (with-eval-after-load 'gnutls
     (eval-when-compile (require 'gnutls))
@@ -109,11 +109,6 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 (defun aero/init ()
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
-
-  ;; Benchmarking
-  (use-package benchmark-init :straight t
-    ;; disable after init
-    :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
   ;; Packages used by most stuff
   (require 'subr-x)

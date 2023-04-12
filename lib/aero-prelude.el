@@ -946,7 +946,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :hook ((text-mode) . writegood-mode))
 
 ;; GPT interface
-(package! tele-gpt :local :load-path "lib/core/tele-gpt.el"
+(package! tele-gpt :local :load-path "lib/localpackages"
   :custom (tele-gpt-openai-api-key openai-api-key))
 
 ;; Mark E′ violations
