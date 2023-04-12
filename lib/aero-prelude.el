@@ -653,7 +653,13 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (setq ivy-rich-path-style 'abbrev)
   (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
   (ivy-rich-mode +1)
-  (ivy-rich-project-root-cache-mode +1))
+  (ivy-rich-project-root-cache-mode +1)
+
+  (defun aero/ivy-rich--switch-buffer-directory (orig-fun &rest args)
+    "Advice to help ivy-rich see that files are not directories."
+    (cl-letf (((symbol-function 'directory-file-name) #'file-name-directory))
+      (apply orig-fun args)))
+  (advice-add 'ivy-rich--switch-buffer-directory :around #'aero/ivy-rich--switch-buffer-directory))
 
 (package! ivy-posframe :auto
   ;; ivy-posframe moves all ivy functions to a floating posframe in the centerish of the screen,
@@ -690,12 +696,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :after (all-the-icons ivy-rich)
   :functions (all-the-icons-ivy-rich-mode)
   :config (all-the-icons-ivy-rich-mode +1))
-
-(defun aero/ivy-rich--switch-buffer-directory (orig-fun &rest args)
-  "Advice to help ivy-rich see that files are not directories."
-  (cl-letf (((symbol-function 'directory-file-name) #'file-name-directory))
-    (apply orig-fun args)))
-(advice-add 'ivy-rich--switch-buffer-directory :around #'aero/ivy-rich--switch-buffer-directory)
 
 (package! swiper :auto
   ;; Search utility
@@ -984,26 +984,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
-
-;; Eldoc
-(defun aero/advice-elisp-get-fnsym-args-string (fn sym &rest args)
-  "If SYM is a function, append its docstring."
-  (concat
-   (apply fn sym args)
-   (let ((doc (and (fboundp sym) (documentation sym 'raw))))
-     (and doc
-          (stringp doc)
-          (not (string= "" doc))
-          (concat "\n\n" (propertize doc 'face 'italic))))))
-(advice-add 'elisp-get-fnsym-args-string :around #'aero/advice-elisp-get-fnsym-args-string)
-
-(define-advice comment-indent-new-line (:after (&optional soft) at-least-one-space)
-  "Ensure that at least one space is added after the comment-start."
-  (let ((start (regexp-quote comment-start)))
-    (when (and (nth 4 (syntax-ppss))
-               (looking-back start (+ (point) (length start)))
-               (not (looking-back " "  (+ (point) 1))))
-      (insert " "))))
 
 
 ;; Games, etc.

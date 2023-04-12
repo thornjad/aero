@@ -204,14 +204,6 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
-;; Don't kill scratch buffer, just bury it if something tries to
-(defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "Don't kill my scratch!"
-  (let ((buffer-to-kill (ad-get-arg 0)))
-    (if (equal buffer-to-kill "*scratch*")
-        (bury-buffer)
-      ad-do-it)))
-
 ;; Enable mouse in TTY
 (unless (display-graphic-p)
   ;; activate mouse-based scrolling

@@ -414,24 +414,6 @@ buffer will be recentered to the line at point."
   (let ((fill-column 80))
     (fill-paragraph)))
 
-(defun advice-unadvice (sym)
-  "Remove all advices from symbol SYM."
-  (interactive "aFunction symbol: ")
-  (advice-mapc (lambda (advice _props) (advice-remove sym advice)) sym))
-
-(defun aero/advice-disable-subword (orig-fun &rest args)
-  "Disable `subword-mode' around the given function."
-  (let ((original-mode subword-mode))
-    (subword-mode -1)
-    (apply orig-fun args)
-    (subword-mode original-mode)))
-
-(defun aero/advice-no-message (fn &rest args)
-  "Advise function FN with ARGS not to message at all."
-  (let ((message-log-max nil)
-        (inhibit-message t))
-    (apply fn args)))
-
 (defun aero/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)
