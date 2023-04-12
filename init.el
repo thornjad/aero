@@ -83,8 +83,12 @@
   ;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
   (eval-when-compile
     (defvar use-package-expand-minimally)
+    (defvar use-package-compute-statistics)
+    (defvar use-package-minimum-reported-time)
     (defvar use-package-verbose))
   (setq use-package-expand-minimally byte-compile-current-file
+        use-package-compute-statistics t ; `use-package-report' to find packages not used
+        use-package-minimum-reported-time 0.1
         use-package-verbose init-file-debug))
 
 (defun aero/load-layers ()
@@ -105,6 +109,11 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 (defun aero/init ()
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
+
+  ;; Benchmarking
+  (use-package benchmark-init :straight t
+    ;; disable after init
+    :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
   ;; Packages used by most stuff
   (require 'subr-x)
