@@ -87,7 +87,7 @@
     (defvar use-package-minimum-reported-time)
     (defvar use-package-verbose))
   (setq use-package-expand-minimally byte-compile-current-file
-        use-package-compute-statistics t ; `use-package-report' to find packages not used
+        use-package-compute-statistics nil ; t then `use-package-report' to find packages not used
         use-package-minimum-reported-time 0.1
         use-package-verbose init-file-debug))
 
