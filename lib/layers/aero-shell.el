@@ -138,48 +138,6 @@
   :config (setup-esh-help-eldoc))
 
 
-;; vterm
-
-;; NOTE: vterm requires libvterm-dev, which may not be installed. See
-;; https://github.com/akermu/emacs-libvterm for full install instructions. Also requires shell-side
-;; configuration.
-(when (aero/has-modules-p)
-  (package! vterm :auto :defer t
-    :after (general)
-    :custom
-    (vterm-max-scrollback 5000)
-    (vterm-kill-buffer-on-exit t)
-
-    :init
-    ;; HACK vterm clumsily forces vterm-module.so to compile when the package is loaded. This is
-    ;; necessary to prevent compilation when use-package is evaluated during byte- or
-    ;; native-compilation of _this_ file.
-    (when noninteractive
-      (advice-add #'vterm-module-compile :override #'ignore)
-      (provide 'vterm-module))
-    (aero-leader-def
-      "Stv" 'vterm
-      "S'" 'vterm)))
-
-(package! multi-vterm :auto :defer t
-  :after general
-  :init
-  (aero-leader-def
-    "`" 'multi-vterm-dedicated-toggle
-    "p`" 'multi-vterm-project)
-
-  :config
-	(add-hook 'vterm-mode-hook
-			      (lambda ()
-			        (setq-local evil-insert-state-cursor 'bar)
-			        (evil-insert-state)))
-
-  (aero-mode-leader-def 'vterm-mode-map
-    "c" 'multi-vterm
-    "n" 'mutli-vterm-next
-    "p" 'multi-vterm-prev))
-
-
 ;;; shell scripting
 
 (package! sh-script :builtin :defer t
