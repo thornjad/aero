@@ -945,6 +945,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
+;; GPT interface
 (package! tele-gpt :local :load-path "lib/core/tele-gpt.el"
   :custom (tele-gpt-openai-api-key openai-api-key))
 

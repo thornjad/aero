@@ -125,18 +125,6 @@
   (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
-(package! echo-bar (:host github :repo "qaiviq/echo-bar.el")
-  :defer 4
-  :config
-  (defun aero/echo-bar-function ()
-    (concat
-     (format-time-string "[ %R | %A, %d %b")
-     (when-let ((bat (ignore-errors (funcall battery-status-function))))
-       (concat " | " (cdr (cadr bat)) "%"))
-     " ]"))
-  (setq echo-bar-function #'aero/echo-bar-function)
-  (echo-bar-mode +1))
-
 ;; make links in comments clickable
 (global-goto-address-mode +1)
 
