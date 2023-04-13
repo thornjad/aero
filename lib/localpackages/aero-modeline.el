@@ -18,13 +18,10 @@
 ;;
 ;;; Commentary:
 ;;
-;; It looks a lot like doom modeline, but that's really more like convergent evolution than copying.
-;; Though I will admit I more or less stole that sweet bar on the left side of the line.
-;;
 ;;; Code:
 
 (defgroup aero/modeline nil
-  "A minimal mode-line configuration inspired by doom-modeline."
+  "A minimal mode-line with useful information."
   :group 'mode-line)
 
 (defvar aero/modeline--bar-active nil)
