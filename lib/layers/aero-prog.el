@@ -140,7 +140,6 @@
 
 (package! markdown-mode :auto
   :after (general)
-  :commands (markdown-mode gfm-mode)
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
          ("github\\.com.*\\.txt\\'" . gfm-mode))
@@ -149,12 +148,14 @@
   ;; Fix table to teach it that quotes mean string, regardless of what the dev says
   (markdown-mode-syntax-table (make-syntax-table text-mode-syntax-table))
   (markdown-header-scaling t)
+  (markdown-display-remote-images t)
+  (markdown-header-scaling-values '(1.3 1.2 1.1 1.0 1.0 1.0))
+  (markdown-enable-wiki-links t)
+  (markdown-italic-underscore t)
+  (markdown-make-gfm-checkboxes-buttons t)
+  (markdown-gfm-additional-languages '("sh"))
 
   :init
-  (setq markdown-enable-wiki-links t
-        markdown-italic-underscore t
-        markdown-make-gfm-checkboxes-buttons t
-        markdown-gfm-additional-languages '("sh"))
   (add-hook 'markdown-mode-hook #'flyspell-mode)
 
   :config
