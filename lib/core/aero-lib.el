@@ -21,6 +21,7 @@
 ;; A home for utilities
 
 (require 'cl-lib)
+(require 'aero-advice)
 (require 'aero-pbcopier
          (expand-file-name "lib/localpackages/aero-pbcopier.el"
                            user-emacs-directory))
