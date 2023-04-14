@@ -186,6 +186,7 @@
 
    "a" '(:ignore t :wk "applications")
    "ai" 'tele-gpt
+   "aI" 'tele-gpt-frame
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet

@@ -376,6 +376,18 @@ If region is active, prefill input buffer with the region."
           (setf (point) (point-max))
           (when blank (tele-gpt-begin-input init)))))))
 
+;;;###autoload
+(defun tele-gpt-frame ()
+  "Create a new dedicated frame and start a TeleGPT session."
+  (interactive)
+  (unless tele-gpt-openai-api-key
+    (user-error "Must set `tele-gpt-openai-api-key'"))
+  (select-frame-set-input-focus
+   (make-frame '((name . "TeleGPT")
+                 (width . 100)
+                 (height . 60))))
+  (tele-gpt))
+
 (provide 'tele-gpt)
 
 ;;; tele-gpt.el ends here
