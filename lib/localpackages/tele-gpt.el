@@ -248,7 +248,8 @@ these may be nil and still be a valid message, they need only exist."
       (when (string-empty-p input)
         (user-error "No input to send"))
       (tele-gpt--send-input input)
-      (tele-gpt-input-exit))))
+      (tele-gpt-input-exit)
+      (pop-to-buffer tele-gpt--session-name))))
 
 (defun tele-gpt--send-input (input)
   (let ((message (tele-gpt--register-user-message input) ))
