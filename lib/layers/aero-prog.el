@@ -71,6 +71,9 @@
 
 ;; LSP
 
+;; Used by Eglot, but we want to always have the latest
+(package! jsonrpc :auto)
+
 (package! eglot :builtin
   :hook ((python-mode
           python-ts-mode
