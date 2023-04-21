@@ -27,5 +27,32 @@
   "Sends prompts to StableLM Chat."
   (let* ((prompt (aero/assistant--gather-prompts-stablelm)))))
 
+(defun aero/assistant--gather-prompts-stablelm ()
+  "Return a full prompt from chat history, prepended with a system prompt."
+  (let ((prompts (aero/assistant--filter-history-prompts-format-stablelm
+                  #'aero/assistant--valid-prompt-p
+                  (or (and aero/assistant-max-entries
+                           (seq-take aero/assistant--history aero/assistant-max-entries))
+                      aero/assistant--history))))
+    (when (not prompts)
+      (user-error "Prompt history contains nothing to send."))
+    (cons (list :role "system"
+                :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
+          ;; Need to reverse so latest comes last
+          (nreverse prompts))))
+
+(defun aero/assistant--filter-history-prompts-format-stablelm (pred hist)
+  "Filter HIST alist for prompts."
+  (when hist
+    (if (funcall pred (car hist))
+        (cons (aero/assistant--format-stablelm-prompt (car hist))
+              (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))
+      (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))))
+
+(defun aero/assistant--format-stablelm-prompt (prompt)
+  "Format PROMPT using only keys allowed by the API."
+  (list :role (plist-get prompt :role)
+        :content (plist-get prompt :content)))
+
 (provide 'aero-assistant-stablelm)
 ;;; aero-assistant-stablelm.el ends here

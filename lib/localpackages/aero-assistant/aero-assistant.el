@@ -65,8 +65,7 @@ Nil means no maximum."
 (defvar aero/assistant--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
-    "StableLM"
-    ))
+    "StableLM"))
 
 (defun aero/assistant-kill-buffer-hook ()
   "Kill response buffer hook."
