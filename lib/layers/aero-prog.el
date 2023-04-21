@@ -200,12 +200,14 @@
 
 (package! flymake :builtin
   :after (general)
-  :config
+  :custom
   ;; left-fringe is the default, but we're being explicit because git-gutter also uses left-fringe.
   ;; Usually this works itself out.
-  (setq flymake-fringe-indicator-position 'left-fringe
-        flymake-wrap-around t)
+  (flymake-fringe-indicator-position 'left-fringe)
+  (flymake-wrap-around t)
+  (flymake-no-changes-timeout 0.6)
 
+  :config
   ;; Use ruff with python
   (add-hook 'python-base-mode-hook 'flymake-mode)
   (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
