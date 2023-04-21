@@ -38,7 +38,7 @@
 ;;; Code:
 
 (defgroup aero/assistant nil
-  "AeroAssistant."
+  "Aero Assistant."
   :prefix "aero/assistant-"
   :group 'emacs-ml)
 
@@ -55,11 +55,18 @@ Nil means no maximum."
   :type 'number)
 
 (defvar aero/assistant-debug-mode nil)
-(defvar aero/assistant--session-name "*AeroAssistant*")
-(defvar aero/assistant--input-buffer-name "*AeroAssistant Input*")
+(defvar aero/assistant--session-name "*Aero Assistant*")
+(defvar aero/assistant--input-buffer-name "*Aero Assistant Input*")
 (defvar aero/assistant--history '())
 (defvar aero/assistant--busy-p nil)
 (defvar aero/assistant--spinner nil)
+
+(defvar aero/assistant--model "gpt-3.5-turbo")
+(defvar aero/assistant--model-options
+  '("gpt-3.5-turbo"
+    ;; "gpt-4" ; on API wait list
+
+    ))
 
 (defun aero/assistant-kill-buffer-hook ()
   "Kill response buffer hook."
@@ -91,7 +98,7 @@ Nil means no maximum."
             ("Authorization" . ,(concat "Bearer " aero/assistant-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
-                            (json-encode `(:model "gpt-3.5-turbo"
+                            (json-encode `(:model aero/assistant--model
                                            :messages [,@prompt]
                                            :temperature nil
                                            :max_tokens nil))
@@ -263,11 +270,11 @@ these may be nil and still be a valid message, they need only exist."
     (define-key map (kbd "C-c C-k") #'aero/assistant-input-exit)
     map))
 
-(define-derived-mode aero/assistant-input-mode markdown-mode "AeroAssistant Input"
-  "Major mode for AeroAssistant input mode.
+(define-derived-mode aero/assistant-input-mode markdown-mode "Aero Assistant Input"
+  "Major mode for Aero Assistant input mode.
 
 \\<aero/assistant-input-mode-map>"
-  (setq header-line-format '(" AeroAssistant Input  |  C-c C-c to send, C-c C-k to cancel "))
+  (setq header-line-format '(" Aero Assistant Input  |  C-RET to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
     (evil-set-initial-state 'aero/assistant-input-mode 'insert)))
 
@@ -327,7 +334,7 @@ these may be nil and still be a valid message, they need only exist."
 
 (defun aero/assistant-clear-history ()
   (interactive)
-  (when (y-or-n-p "Clear AeroAssistant history forever?")
+  (when (y-or-n-p "Clear Aero Assistant history forever?")
     (with-current-buffer aero/assistant--session-name
       (aero/assistant-without-readonly
         (setq aero/assistant--history '())
@@ -335,10 +342,11 @@ these may be nil and still be a valid message, they need only exist."
 
 (defun aero/assistant--header-line ()
   "Display header line."
-  (format " %s AeroAssistant  |  C-RET to input a prompt"
+  (format " %s Aero Assistant  |  Using model: %s"
           (if-let ((spinner (spinner-print aero/assistant--spinner)))
               (concat spinner " ")
-            " ")))
+            " ")
+          aero/assistant--model))
 
 (defvar aero/assistant-mode-map
   (let ((map (make-sparse-keymap)))
@@ -346,8 +354,8 @@ these may be nil and still be a valid message, they need only exist."
     (define-key map (kbd "C-c C-k") #'aero/assistant-clear-history)
     map))
 
-(define-derived-mode aero/assistant-mode markdown-mode "AeroAssistant"
-  "Major mode for AeroAssistant response mode.
+(define-derived-mode aero/assistant-mode markdown-mode "Aero Assistant"
+  "Major mode for Aero Assistant response mode.
 
 \\<aero/assistant-mode-map>"
   (setq buffer-read-only t)
@@ -373,18 +381,6 @@ If region is active, prefill input buffer with the region."
           (pop-to-buffer buf)
           (setf (point) (point-max))
           (when blank (aero/assistant-begin-input init)))))))
-
-;;;###autoload
-(defun aero/assistant-frame ()
-  "Create a new dedicated frame and start an Aero Assistant session."
-  (interactive)
-  (unless aero/assistant-openai-api-key
-    (user-error "Must set `aero/assistant-openai-api-key'"))
-  (select-frame-set-input-focus
-   (make-frame '((name . "AeroAssistant")
-                 (width . 100)
-                 (height . 60))))
-  (aero/assistant))
 
 (provide 'aero-assistant)
 

@@ -186,7 +186,6 @@
 
    "a" '(:ignore t :wk "applications")
    "ai" 'aero/assistant
-   "aI" 'aero/assistant-frame
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
