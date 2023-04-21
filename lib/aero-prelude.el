@@ -185,8 +185,8 @@
    "U" 'universal-argument
 
    "a" '(:ignore t :wk "applications")
-   "ai" 'tele-gpt
-   "aI" 'tele-gpt-frame
+   "ai" 'aero/assistant
+   "aI" 'aero/assistant-frame
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
@@ -947,10 +947,10 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :hook ((text-mode) . writegood-mode))
 
 ;; GPT interface
-(package! tele-gpt :local :load-path "lib/localpackages"
+(package! aero-assistant :local :load-path "lib/localpackages"
 	:after markdown-mode
-  :commands (tele-gpt)
-  :custom (tele-gpt-openai-api-key openai-api-key))
+  :commands (aero/assistant)
+  :custom (aero/assistant-openai-api-key openai-api-key))
 
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")

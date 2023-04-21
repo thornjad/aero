@@ -1,4 +1,4 @@
-;;; tele-gpt.el --- TeleGPT client  -*- lexical-binding: t; -*-
+;;; aero-assistant.el --- Aero AI Assistant client  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
 ;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (spinner "1.7.4"))
@@ -20,11 +20,9 @@
 ;;
 ;;; Commentary:
 ;;
-;; A simple markdown-based GPT client for Emacs.
+;; A simple markdown-based AI client for Aero Emacs.
 ;;
-;; Requires `tele-gpt-openai-api-key' to be set
-;;
-;; API Reference: https://platform.openai.com/docs/guides/chat
+;; Requires `aero/assistant-openai-api-key' to be set
 
 (declare-function markdown-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -39,37 +37,37 @@
 
 ;;; Code:
 
-(defgroup tele-gpt nil
-  "TeleGPT."
-  :prefix "tele-gpt-"
+(defgroup aero/assistant nil
+  "AeroAssistant."
+  :prefix "aero/assistant-"
   :group 'emacs-ml)
 
-(defcustom tele-gpt-openai-api-key nil
+(defcustom aero/assistant-openai-api-key nil
   "An OpenAI API key."
-  :group 'tele-gpt
+  :group 'aero/assistant
   :type 'string)
 
-(defcustom tele-gpt-max-entries nil
-  "Max chat entries to send to GPT for context.
+(defcustom aero/assistant-max-entries nil
+  "Max chat entries to send to remote LLM for context.
 
 Nil means no maximum."
-  :group 'tele-gpt
+  :group 'aero/assistant
   :type 'number)
 
-(defvar tele-gpt-debug-mode nil)
-(defvar tele-gpt--session-name "*TeleGPT*")
-(defvar tele-gpt--input-buffer-name "*TeleGPT Input*")
-(defvar tele-gpt--history '())
-(defvar tele-gpt--busy-p nil)
-(defvar tele-gpt--spinner nil)
+(defvar aero/assistant-debug-mode nil)
+(defvar aero/assistant--session-name "*AeroAssistant*")
+(defvar aero/assistant--input-buffer-name "*AeroAssistant Input*")
+(defvar aero/assistant--history '())
+(defvar aero/assistant--busy-p nil)
+(defvar aero/assistant--spinner nil)
 
-(defun tele-gpt-kill-buffer-hook ()
+(defun aero/assistant-kill-buffer-hook ()
   "Kill response buffer hook."
-  (spinner-stop tele-gpt--spinner)
-  (setq tele-gpt--busy-p nil)
-  (setq tele-gpt--history '()))
+  (spinner-stop aero/assistant--spinner)
+  (setq aero/assistant--busy-p nil)
+  (setq aero/assistant--history '()))
 
-(defmacro tele-gpt-without-readonly (&rest body)
+(defmacro aero/assistant-without-readonly (&rest body)
   (declare (indent 0))
   `(let ((inhibit-read-only t))
      ,@body))
@@ -77,20 +75,20 @@ Nil means no maximum."
 
 ;; API
 
-(defun tele-gpt-send ()
-  "Submit the current prompt to GPT."
+(defun aero/assistant-send ()
+  "Submit the current prompt to Assistant."
   (interactive)
-  (unless tele-gpt-openai-api-key
-    (user-error "Must set `tele-gpt-openai-api-key'"))
-  (let* ((prompt (tele-gpt--gather-prompts))
+  (unless aero/assistant-openai-api-key
+    (user-error "Must set `aero/assistant-openai-api-key'"))
+  (let* ((prompt (aero/assistant--gather-prompts))
          (inhibit-message t)
          (message-log-max nil)
-         (url-show-status tele-gpt-debug-mode)
-         (url-show-headers tele-gpt-debug-mode)
+         (url-show-status aero/assistant-debug-mode)
+         (url-show-headers aero/assistant-debug-mode)
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
-            ("Authorization" . ,(concat "Bearer " tele-gpt-openai-api-key))))
+            ("Authorization" . ,(concat "Bearer " aero/assistant-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model "gpt-3.5-turbo"
@@ -100,23 +98,23 @@ Nil means no maximum."
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (let ((message (tele-gpt--register-response
-                                    (tele-gpt--parse-response (current-buffer)))))
-                      (tele-gpt--display-message message)
-                      (setq tele-gpt--busy-p nil)
-                      (spinner-stop tele-gpt--spinner)
+                    (let ((message (aero/assistant--register-response
+                                    (aero/assistant--parse-response (current-buffer)))))
+                      (aero/assistant--display-message message)
+                      (setq aero/assistant--busy-p nil)
+                      (spinner-stop aero/assistant--spinner)
                       (kill-buffer)))
-                  nil (not tele-gpt-debug-mode) nil)))
+                  nil (not aero/assistant-debug-mode) nil)))
 
-(defun tele-gpt--gather-prompts ()
+(defun aero/assistant--gather-prompts ()
   "Return a full prompt from chat history, prepended with a system prompt.
 
 GPT-3 does not always respect the system prompt, though GPT-4 should be better at this."
-  (let ((prompts (tele-gpt--filter-history-prompts-format
-                  #'tele-gpt--valid-prompt-p
-                  (or (and tele-gpt-max-entries
-                           (seq-take tele-gpt--history tele-gpt-max-entries))
-                      tele-gpt--history))))
+  (let ((prompts (aero/assistant--filter-history-prompts-format
+                  #'aero/assistant--valid-prompt-p
+                  (or (and aero/assistant-max-entries
+                           (seq-take aero/assistant--history aero/assistant-max-entries))
+                      aero/assistant--history))))
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
@@ -124,18 +122,18 @@ GPT-3 does not always respect the system prompt, though GPT-4 should be better a
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
-(defun tele-gpt--valid-prompt-p (item)
+(defun aero/assistant--valid-prompt-p (item)
   "Return t if ITEM is a valid prompt.
 
 A prompt is a valid message which has a role of either user or assistant and contains message
 content and no error marker."
-  (and (tele-gpt--valid-message-p item)
+  (and (aero/assistant--valid-message-p item)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
             (not (string-empty-p (plist-get item :content))))))
 
-(defun tele-gpt--valid-message-p (item)
+(defun aero/assistant--valid-message-p (item)
   "Return t if ITEM is a valid message.
 
 A valid message is a plist containing either an error and a status or a role and content. Any of
@@ -147,37 +145,37 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun tele-gpt--filter-history-prompts-format (pred hist)
+(defun aero/assistant--filter-history-prompts-format (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (tele-gpt--format-prompt (car hist))
-              (tele-gpt--filter-history-prompts-format pred (cdr hist)))
-      (tele-gpt--filter-history-prompts-format pred (cdr hist)))))
+        (cons (aero/assistant--format-prompt (car hist))
+              (aero/assistant--filter-history-prompts-format pred (cdr hist)))
+      (aero/assistant--filter-history-prompts-format pred (cdr hist)))))
 
-(defun tele-gpt--format-prompt (prompt)
+(defun aero/assistant--format-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun tele-gpt--register-response (response)
-  "Add GPT response to history, return prompt alist."
+(defun aero/assistant--register-response (response)
+  "Add Assistant response to history, return prompt alist."
   (let ((prompt (map-merge 'plist '(:role "assistant") response)))
-    (push prompt tele-gpt--history)
+    (push prompt aero/assistant--history)
     prompt))
 
-(defun tele-gpt--register-user-message (input)
+(defun aero/assistant--register-user-message (input)
   "Add user message to history, return prompt alist."
   (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
-    (push prompt tele-gpt--history)
+    (push prompt aero/assistant--history)
     prompt)
   )
 
-(defun tele-gpt--parse-response (buffer)
-  "Parse the GPT response in URL BUFFER."
+(defun aero/assistant--parse-response (buffer)
+  "Parse the Assitant response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when tele-gpt-debug-mode (clone-buffer "*tele-gpt-error*" 'show))
+      (when aero/assistant-debug-mode (clone-buffer "*aero/assistant-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
                 (response
@@ -215,15 +213,15 @@ these may be nil and still be a valid message, they need only exist."
 
 ;; User input
 
-(defun tele-gpt-begin-input (&optional init)
+(defun aero/assistant-begin-input (&optional init)
   (interactive)
-  (when tele-gpt--busy-p
-    (user-error "BUSY: Waiting for GPT complete its response..."))
-  (tele-gpt-input-exit)
+  (when aero/assistant--busy-p
+    (user-error "BUSY: Waiting for Assistant complete its response..."))
+  (aero/assistant-input-exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
-        (buf (get-buffer-create tele-gpt--input-buffer-name)))
+        (buf (get-buffer-create aero/assistant--input-buffer-name)))
     (with-current-buffer buf
-      (tele-gpt-input-mode)
+      (aero/assistant-input-mode)
       (erase-buffer)
       (when init (insert init))
       (call-interactively #'set-mark-command)
@@ -234,61 +232,61 @@ these may be nil and still be a valid message, they need only exist."
                          (dedicated . t)
                          (window-height . 30)))))
 
-(defun tele-gpt-input-exit ()
+(defun aero/assistant-input-exit ()
   (interactive)
-  (when-let ((buf (get-buffer tele-gpt--input-buffer-name)))
+  (when-let ((buf (get-buffer aero/assistant--input-buffer-name)))
     (kill-buffer buf)))
 
-(defun tele-gpt-input-send ()
+(defun aero/assistant-input-send ()
   (interactive)
-  (when tele-gpt--busy-p
-    (user-error "BUSY: Waiting for GPT complete its response..."))
-  (with-current-buffer tele-gpt--input-buffer-name
+  (when aero/assistant--busy-p
+    (user-error "BUSY: Waiting for Assistant complete its response..."))
+  (with-current-buffer aero/assistant--input-buffer-name
     (let ((input (buffer-substring-no-properties (point-min) (point-max))))
       (when (string-empty-p input)
         (user-error "No input to send"))
-      (tele-gpt--send-input input)
-      (tele-gpt-input-exit)
-      (pop-to-buffer tele-gpt--session-name))))
+      (aero/assistant--send-input input)
+      (aero/assistant-input-exit)
+      (pop-to-buffer aero/assistant--session-name))))
 
-(defun tele-gpt--send-input (input)
-  (let ((message (tele-gpt--register-user-message input) ))
-    (tele-gpt--display-message message)
-    (setq tele-gpt--busy-p t)
-    (spinner-start tele-gpt--spinner)
-    (tele-gpt-send)))
+(defun aero/assistant--send-input (input)
+  (let ((message (aero/assistant--register-user-message input) ))
+    (aero/assistant--display-message message)
+    (setq aero/assistant--busy-p t)
+    (spinner-start aero/assistant--spinner)
+    (aero/assistant-send)))
 
-(defvar tele-gpt-input-mode-map
+(defvar aero/assistant-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'tele-gpt-input-send)
-    (define-key map (kbd "C-c C-c") #'tele-gpt-input-send)
-    (define-key map (kbd "C-c C-k") #'tele-gpt-input-exit)
+    (define-key map (kbd "C-<return>") #'aero/assistant-input-send)
+    (define-key map (kbd "C-c C-c") #'aero/assistant-input-send)
+    (define-key map (kbd "C-c C-k") #'aero/assistant-input-exit)
     map))
 
-(define-derived-mode tele-gpt-input-mode markdown-mode "TeleGPT Input"
-  "Major mode for TeleGPT input mode.
+(define-derived-mode aero/assistant-input-mode markdown-mode "AeroAssistant Input"
+  "Major mode for AeroAssistant input mode.
 
-\\<tele-gpt-input-mode-map>"
-  (setq header-line-format '(" TeleGPT Input  |  C-c C-c to send, C-c C-k to cancel "))
+\\<aero/assistant-input-mode-map>"
+  (setq header-line-format '(" AeroAssistant Input  |  C-c C-c to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
-    (evil-set-initial-state 'tele-gpt-input-mode 'insert)))
+    (evil-set-initial-state 'aero/assistant-input-mode 'insert)))
 
 
 ;; Chat display
 
-(defun tele-gpt--display-message (message)
+(defun aero/assistant--display-message (message)
   "Display the most recent history message."
-  (unless (tele-gpt--valid-message-p message)
+  (unless (aero/assistant--valid-message-p message)
     (error "Message is not valid: %s" message))
-  (with-current-buffer tele-gpt--session-name
-    (tele-gpt-without-readonly
+  (with-current-buffer aero/assistant--session-name
+    (aero/assistant-without-readonly
       (setf (point) (point-max))
       (let* ((message-content (plist-get message :content))
              (role (plist-get message :role)))
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
-          (insert "## GPT Assistant [Error]\n\n"
+          (insert "## Assistant [Error]\n\n"
                   (or (plist-get message :status)
                       (format (or (and (plist-get message :error)
                                        "Error: unknown error: %s")
@@ -302,19 +300,19 @@ these may be nil and still be a valid message, they need only exist."
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (tele-gpt--format-response message))))
+          (insert (aero/assistant--format-response message))))
 
         ;; move point to bottom
         (setf (point) (point-max))))))
 
-(defun tele-gpt--format-response (response)
-  "Format GPT response for display."
+(defun aero/assistant--format-response (response)
+  "Format Assistant response for display."
   (let ((content (plist-get response :content))
         ;; (status (plist-get response :status))
         (tokens (plist-get response :tokens))
         ;; (time (plist-get response :time))
         (stop (plist-get response :stop)))
-    (concat "## GPT Assistant "
+    (concat "## Assistant "
             ;; Tokens
             (format "— (%s tokens: %s prompt, %s response)"
                     (plist-get tokens :total_tokens)
@@ -327,67 +325,67 @@ these may be nil and still be a valid message, they need only exist."
              (t ""))
             "\f\n")))
 
-(defun tele-gpt-clear-history ()
+(defun aero/assistant-clear-history ()
   (interactive)
-  (when (y-or-n-p "Clear TeleGPT history forever?")
-    (with-current-buffer tele-gpt--session-name
-      (tele-gpt-without-readonly
-        (setq tele-gpt--history '())
+  (when (y-or-n-p "Clear AeroAssistant history forever?")
+    (with-current-buffer aero/assistant--session-name
+      (aero/assistant-without-readonly
+        (setq aero/assistant--history '())
         (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
-(defun tele-gpt--header-line ()
+(defun aero/assistant--header-line ()
   "Display header line."
-  (format " %s TeleGPT  |  C-RET to input a prompt"
-          (if-let ((spinner (spinner-print tele-gpt--spinner)))
+  (format " %s AeroAssistant  |  C-RET to input a prompt"
+          (if-let ((spinner (spinner-print aero/assistant--spinner)))
               (concat spinner " ")
             " ")))
 
-(defvar tele-gpt-mode-map
+(defvar aero/assistant-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'tele-gpt-begin-input)
-    (define-key map (kbd "C-c C-k") #'tele-gpt-clear-history)
+    (define-key map (kbd "C-<return>") #'aero/assistant-begin-input)
+    (define-key map (kbd "C-c C-k") #'aero/assistant-clear-history)
     map))
 
-(define-derived-mode tele-gpt-mode markdown-mode "TeleGPT"
-  "Major mode for TeleGPT response mode.
+(define-derived-mode aero/assistant-mode markdown-mode "AeroAssistant"
+  "Major mode for AeroAssistant response mode.
 
-\\<tele-gpt-mode-map>"
+\\<aero/assistant-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format '((:eval (tele-gpt--header-line))))
-  (setq tele-gpt--spinner (spinner-create 'horizontal-breathing-long t))
-  (add-hook 'kill-buffer-hook #'tele-gpt-kill-buffer-hook nil t))
+  (setq header-line-format '((:eval (aero/assistant--header-line))))
+  (setq aero/assistant--spinner (spinner-create 'horizontal-breathing-long t))
+  (add-hook 'kill-buffer-hook #'aero/assistant-kill-buffer-hook nil t))
 
 ;;;###autoload
-(defun tele-gpt (&optional init)
-  "Switch to or start a TeleGPT session.
+(defun aero/assistant (&optional init)
+  "Switch to or start an Aero Assistant session.
 
 If region is active, prefill input buffer with the region."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (unless tele-gpt-openai-api-key
-    (user-error "Must set `tele-gpt-openai-api-key'"))
-  (let ((buf (get-buffer-create tele-gpt--session-name)))
+  (unless aero/assistant-openai-api-key
+    (user-error "Must set `aero/assistant-openai-api-key'"))
+  (let ((buf (get-buffer-create aero/assistant--session-name)))
     (with-current-buffer buf
-      (unless (derived-mode-p 'tele-gpt-mode)
-        (tele-gpt-mode))
+      (unless (derived-mode-p 'aero/assistant-mode)
+        (aero/assistant-mode))
       (let ((blank (string-empty-p (buffer-string))))
-        (tele-gpt-without-readonly
+        (aero/assistant-without-readonly
           (when blank (insert "> Use the window below to input your prompt, then C-RET to send. "))
           (pop-to-buffer buf)
           (setf (point) (point-max))
-          (when blank (tele-gpt-begin-input init)))))))
+          (when blank (aero/assistant-begin-input init)))))))
 
 ;;;###autoload
-(defun tele-gpt-frame ()
-  "Create a new dedicated frame and start a TeleGPT session."
+(defun aero/assistant-frame ()
+  "Create a new dedicated frame and start an Aero Assistant session."
   (interactive)
-  (unless tele-gpt-openai-api-key
-    (user-error "Must set `tele-gpt-openai-api-key'"))
+  (unless aero/assistant-openai-api-key
+    (user-error "Must set `aero/assistant-openai-api-key'"))
   (select-frame-set-input-focus
-   (make-frame '((name . "TeleGPT")
+   (make-frame '((name . "AeroAssistant")
                  (width . 100)
                  (height . 60))))
-  (tele-gpt))
+  (aero/assistant))
 
-(provide 'tele-gpt)
+(provide 'aero-assistant)
 
-;;; tele-gpt.el ends here
+;;; aero-assistant.el ends here
