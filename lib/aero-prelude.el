@@ -946,7 +946,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :hook ((text-mode) . writegood-mode))
 
 ;; GPT interface
-(package! aero-assistant :local :load-path "lib/localpackages"
+(package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
 	:after markdown-mode
   :commands (aero/assistant)
   :custom (aero/assistant-openai-api-key openai-api-key))
