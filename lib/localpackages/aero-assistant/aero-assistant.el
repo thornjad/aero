@@ -42,6 +42,11 @@
   :prefix "aero/assistant-"
   :group 'emacs-ml)
 
+(defcustom aero/assistant-openai-api-key nil
+  "An OpenAI API key."
+  :group 'aero/assistant
+  :type 'string)
+
 (defcustom aero/assistant-max-entries nil
   "Max chat entries to send to remote LLM for context.
 
@@ -56,10 +61,11 @@ Nil means no maximum."
 (defvar aero/assistant--busy-p nil)
 (defvar aero/assistant--spinner nil)
 
-(defvar aero/assistant--model "gpt-3.5-turbo")
+(defvar aero/assistant--model "GPT 3.5")
 (defvar aero/assistant--model-options
-  '("gpt-3.5-turbo"
-    ;; "gpt-4" ; on API wait list
+  '("GPT 3.5"
+    "GPT 4" ; on API wait list
+    "StableLM"
     ))
 
 (defun aero/assistant-kill-buffer-hook ()
@@ -99,19 +105,6 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun aero/assistant--filter-history-prompts-format (pred hist)
-  "Filter HIST alist for prompts."
-  (when hist
-    (if (funcall pred (car hist))
-        (cons (aero/assistant--format-prompt (car hist))
-              (aero/assistant--filter-history-prompts-format pred (cdr hist)))
-      (aero/assistant--filter-history-prompts-format pred (cdr hist)))))
-
-(defun aero/assistant--format-prompt (prompt)
-  "Format PROMPT using only keys allowed by the API."
-  (list :role (plist-get prompt :role)
-        :content (plist-get prompt :content)))
-
 (defun aero/assistant--register-response (response)
   "Add Assistant response to history, return prompt alist."
   (let ((prompt (map-merge 'plist '(:role "assistant") response)))
@@ -150,9 +143,14 @@ these may be nil and still be a valid message, they need only exist."
   "Submit the current prompt to Assistant."
   (interactive)
   (cond
-   ((string= aero/assistant--model "gpt-3.5-turbo")
+   ((string= aero/assistant--model "GPT 3.5")
     (require 'aero-assistant-gpt)
-    (aero/assistant--send-gpt-3.5-turbo))))
+    (aero/assistant--send-gpt-3.5-turbo))
+   ((string= aero/assistant--model "GPT 4")
+    (user-error "not implemented -- API access not yet available"))
+   ((string= aero/assistant--model "StableLM")
+    (require 'aero-assistant-stablelm)
+    (aero/assistant--send-stablelm))))
 
 (defun aero/assistant-input-exit ()
   (interactive)
@@ -271,7 +269,8 @@ these may be nil and still be a valid message, they need only exist."
                          aero/assistant--model))
   ;; check for keys
   (cond
-   ((string= aero/assistant--model "gpt-3.5-turbo")
+   ((or (string= aero/assistant--model "GPT 3.5")
+        (string= aero/assistant--model "GPT 4"))
     (unless aero/assistant-openai-api-key (user-error "Must set `aero/assistant-openai-api-key'")))))
 
 (defvar aero/assistant-mode-map

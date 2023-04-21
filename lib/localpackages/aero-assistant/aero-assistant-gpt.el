@@ -1,4 +1,4 @@
-;;; aero-assistant-gpt.el --- GPT API Functions for Aero Assistant  -*- lexical-binding: t; -*-
+;;; aero-assistant-gpt.el --- GPT API for Aero Assistant  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
 ;;
@@ -18,16 +18,12 @@
 ;;
 ;;; Commentary:
 ;;
-;; A simple markdown-based AI client for Aero Emacs.
+;; This package provides the API functions for Aero Assistant interface with
+;; GPT 3.5 and 4.
 ;;
 ;; Requires `aero/assistant-openai-api-key' to be set
 
 ;;; Code:
-
-(defcustom aero/assistant-openai-api-key nil
-  "An OpenAI API key."
-  :group 'aero/assistant
-  :type 'string)
 
 (defun aero/assistant--send-gpt-3.5-turbo ()
   "Send prompts to GPT 3.5 Turbo."
@@ -61,7 +57,7 @@
 
 (defun aero/assistant--gather-prompts-gpt ()
   "Return a full prompt from chat history, prepended with a system prompt."
-  (let ((prompts (aero/assistant--filter-history-prompts-format
+  (let ((prompts (aero/assistant--filter-history-prompts-format-gpt
                   #'aero/assistant--valid-prompt-p
                   (or (and aero/assistant-max-entries
                            (seq-take aero/assistant--history aero/assistant-max-entries))
@@ -72,6 +68,20 @@
                 :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
+
+
+(defun aero/assistant--filter-history-prompts-format-gpt (pred hist)
+  "Filter HIST alist for prompts."
+  (when hist
+    (if (funcall pred (car hist))
+        (cons (aero/assistant--format-gpt-prompt (car hist))
+              (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))
+      (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))))
+
+(defun aero/assistant--format-gpt-prompt (prompt)
+  "Format PROMPT using only keys allowed by the API."
+  (list :role (plist-get prompt :role)
+        :content (plist-get prompt :content)))
 
 (defun aero/assistant--parse-response-gpt (buffer)
   "Parse the Assitant response in URL BUFFER."
