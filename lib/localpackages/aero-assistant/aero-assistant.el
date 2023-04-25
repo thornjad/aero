@@ -146,13 +146,22 @@ these may be nil and still be a valid message, they need only exist."
                          (dedicated . t)
                          (window-height . 30)))))
 
+(defun aero/assistant-try-again ()
+  "In the case of an error, try again."
+  (interactive)
+  (unless aero/assistant--history
+    (user-error "No Assistant history to try again with."))
+  (aero/assistant-send))
+
 (defun aero/assistant-send ()
   "Submit the current prompt to Assistant."
   (interactive)
+  (when (string= aero/assistant--model "GPT 4")
+    (user-error "not implemented -- API access not yet available"))
   (let ((model (gethash aero/assistant--model aero/assistant--model-name-map)))
+    (setq aero/assistant--busy-p t)
+    (spinner-start aero/assistant--spinner)
     (cond
-     ((string= aero/assistant--model "GPT 4")
-      (user-error "not implemented -- API access not yet available"))
      ((member aero/assistant--model aero/assistant--openai-models)
       (require 'aero-assistant-openai)
       (aero/assistant--send-openai model))
@@ -173,21 +182,16 @@ these may be nil and still be a valid message, they need only exist."
     (let ((input (buffer-substring-no-properties (point-min) (point-max))))
       (when (string-empty-p input)
         (user-error "No input to send"))
-      (aero/assistant--send-input input)
+      (aero/assistant--display-message (aero/assistant--register-user-message input))
+      (aero/assistant-send)
       (aero/assistant-input-exit)
       (pop-to-buffer aero/assistant--session-name))))
-
-(defun aero/assistant--send-input (input)
-  (let ((message (aero/assistant--register-user-message input) ))
-    (aero/assistant--display-message message)
-    (setq aero/assistant--busy-p t)
-    (spinner-start aero/assistant--spinner)
-    (aero/assistant-send)))
 
 (defvar aero/assistant-input-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-<return>") #'aero/assistant-input-send)
     (define-key map (kbd "C-c C-c") #'aero/assistant-input-send)
+    (define-key map (kbd "C-c C-r") #'aero/assistant-try-again)
     (define-key map (kbd "C-c C-k") #'aero/assistant-input-exit)
     map))
 
@@ -214,7 +218,7 @@ these may be nil and still be a valid message, they need only exist."
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
-          (insert "## Assistant [Error]\n\n"
+          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aero/assistant-try-again]\n\n"
                   (or (plist-get message :status)
                       (format (or (and (plist-get message :error)
                                        "Error: unknown error: %s")
@@ -222,7 +226,7 @@ these may be nil and still be a valid message, they need only exist."
                                        "Error: message has no role: %s")
                                   "Error: invalid message: %s")
                               message))
-                  "\n\f\n"))
+                  "\n\n\f\n"))
 
          ((string= role "user")
           (insert "# User\n\n" message-content))
