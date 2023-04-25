@@ -1,4 +1,4 @@
-;;; aero-assistant-gpt.el --- GPT API for Aero Assistant  -*- lexical-binding: t; -*-
+;;; aero-assistant-openai.el --- OpenAI API for Aero Assistant  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Jade Michael Thornton
 ;;
@@ -19,17 +19,17 @@
 ;;; Commentary:
 ;;
 ;; This package provides the API functions for Aero Assistant interface with
-;; GPT 3.5 and 4.
+;; GPT 3.5 and 4, and Davinci.
 ;;
 ;; Requires `aero/assistant-openai-api-key' to be set
 
 ;;; Code:
 
-(defun aero/assistant--send-gpt-3.5-turbo ()
-  "Send prompts to GPT 3.5 Turbo."
+(defun aero/assistant--send-openai (model)
+  "Send prompts to OpenAI MODEL."
   (unless aero/assistant-openai-api-key
     (user-error "Must set `aero/assistant-openai-api-key'"))
-  (let* ((prompt (aero/assistant--gather-prompts-gpt))
+  (let* ((prompt (aero/assistant--gather-prompts-openai))
          (inhibit-message t)
          (message-log-max nil)
          (url-show-status aero/assistant-debug-mode)
@@ -37,10 +37,10 @@
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
-            ("Authorization" . ,(concat "Bearer " aero/assistant-openai-api-key))))
+            ("Authorization" . ,(format "Bearer %s" aero/assistant-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
-                            (json-encode `(:model "gpt-3.5-turbo"
+                            (json-encode `(:model ,model
                                            :messages [,@prompt]
                                            :temperature nil
                                            :max_tokens nil))
@@ -48,16 +48,16 @@
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
                     (let ((message (aero/assistant--register-response
-                                    (aero/assistant--parse-response-gpt (current-buffer)))))
+                                    (aero/assistant--parse-response-openai (current-buffer)))))
                       (aero/assistant--display-message message)
                       (setq aero/assistant--busy-p nil)
                       (spinner-stop aero/assistant--spinner)
                       (kill-buffer)))
                   nil (not aero/assistant-debug-mode) nil)))
 
-(defun aero/assistant--gather-prompts-gpt ()
+(defun aero/assistant--gather-prompts-openai ()
   "Return a full prompt from chat history, prepended with a system prompt."
-  (let ((prompts (aero/assistant--filter-history-prompts-format-gpt
+  (let ((prompts (aero/assistant--filter-history-prompts-format-openai
                   #'aero/assistant--valid-prompt-p
                   (or (and aero/assistant-max-entries
                            (seq-take aero/assistant--history aero/assistant-max-entries))
@@ -70,20 +70,20 @@
           (nreverse prompts))))
 
 
-(defun aero/assistant--filter-history-prompts-format-gpt (pred hist)
+(defun aero/assistant--filter-history-prompts-format-openai (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (aero/assistant--format-gpt-prompt (car hist))
-              (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))
-      (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))))
+        (cons (aero/assistant--format-openai-prompt (car hist))
+              (aero/assistant--filter-history-prompts-format-openai pred (cdr hist)))
+      (aero/assistant--filter-history-prompts-format-openai pred (cdr hist)))))
 
-(defun aero/assistant--format-gpt-prompt (prompt)
+(defun aero/assistant--format-openai-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun aero/assistant--parse-response-gpt (buffer)
+(defun aero/assistant--parse-response-openai (buffer)
   "Parse the Assitant response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
@@ -122,5 +122,5 @@
            (t (list :error t :status (concat status ": Could not parse HTTP response."))))
         (list :error t :status (concat status ": Could not parse HTTP response."))))))
 
-(provide 'aero-assistant-gpt)
-;;; aero-assistant-gpt.el ends here
+(provide 'aero-assistant-openai)
+;;; aero-assistant-openai.el ends here

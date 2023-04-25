@@ -65,7 +65,15 @@ Nil means no maximum."
 (defvar aero/assistant--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
+    "Davinci"
     "StableLM"))
+(defvar aero/assistant--openai-models '("GPT 3.5" "GPT 4" "Davinci"))
+(defvar aero/assistant--model-name-map
+  #s(hash-table size 10 test equal data
+                ("GPT 3.5" "gpt-3.5-turbo"
+                 "GPT 4" "gpt-4"
+                 "Davinci" "text-davinci-003"
+                 "StableLM" "TODO")))
 
 (defun aero/assistant-kill-buffer-hook ()
   "Kill response buffer hook."
@@ -141,15 +149,16 @@ these may be nil and still be a valid message, they need only exist."
 (defun aero/assistant-send ()
   "Submit the current prompt to Assistant."
   (interactive)
-  (cond
-   ((string= aero/assistant--model "GPT 3.5")
-    (require 'aero-assistant-gpt)
-    (aero/assistant--send-gpt-3.5-turbo))
-   ((string= aero/assistant--model "GPT 4")
-    (user-error "not implemented -- API access not yet available"))
-   ((string= aero/assistant--model "StableLM")
-    (require 'aero-assistant-stablelm)
-    (aero/assistant--send-stablelm))))
+  (let ((model (gethash aero/assistant--model aero/assistant--model-name-map)))
+    (cond
+     ((string= aero/assistant--model "GPT 4")
+      (user-error "not implemented -- API access not yet available"))
+     ((member aero/assistant--model aero/assistant--openai-models)
+      (require 'aero-assistant-openai)
+      (aero/assistant--send-openai model))
+     ((string= aero/assistant--model "StableLM")
+      (require 'aero-assistant-stability)
+      (aero/assistant--send-stability model)))))
 
 (defun aero/assistant-input-exit ()
   (interactive)
@@ -254,7 +263,7 @@ these may be nil and still be a valid message, they need only exist."
 
 (defun aero/assistant--header-line ()
   "Display header line."
-  (format " %s Aero Assistant  |  Using model: %s"
+  (format " %s Aero Assistant  |  %s"
           (if-let ((spinner (spinner-print aero/assistant--spinner)))
               (concat spinner " ")
             " ")
@@ -268,8 +277,7 @@ these may be nil and still be a valid message, they need only exist."
                          aero/assistant--model))
   ;; check for keys
   (cond
-   ((or (string= aero/assistant--model "GPT 3.5")
-        (string= aero/assistant--model "GPT 4"))
+   ((member aero/assistant--model aero/assistant--openai-models)
     (unless aero/assistant-openai-api-key (user-error "Must set `aero/assistant-openai-api-key'")))))
 
 (defvar aero/assistant-mode-map
