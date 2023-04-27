@@ -120,8 +120,8 @@
     "lrf" 'eglot-format
     "lro" 'eglot-code-action-organize-imports))
 
-;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
-(package! eldoc-box :auto :commands (eldoc-box-hover-mode))
+;; puts eldoc in a child frame instead of the echo area
+(package! eldoc-box :auto :hook (prog-mode . eldoc-box-hover-mode))
 
 
 ;; C language
