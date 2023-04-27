@@ -372,6 +372,14 @@ buffer will be recentered to the line at point."
   "Insert current timestamp."
   (interactive)
   (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+(defun aero/insert-unix-time-seconds ()
+  "Insert current Unix timestamp."
+  (interactive)
+  (insert (format-time-string "%s")))
+(defun aero/insert-unix-time-milliseconds ()
+  "Insert current Unix timestamp."
+  (interactive)
+  (insert (number-to-string (truncate (* 1000 (float-time))))))
 
 (defun aero/copy-file-relative-to-project ()
   "Copy the path of current buffer relative to the project."
