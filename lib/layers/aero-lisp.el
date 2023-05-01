@@ -132,8 +132,7 @@ does not specify a special indentation."
 
 (package! clojure-mode :auto :mode "\\.\\(cljs?\\|cljs.*\\|edn\\|boot\\)\\'")
 (package! cider :auto
-  :hook ((clojure-mode . cider-mode)
-         (cider-mode . eldoc-mode))
+  :hook (clojure-mode . cider-mode)
   :after (clojure-mode general)
   :commands (cider
              cider-jack-in)

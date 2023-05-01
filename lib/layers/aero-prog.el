@@ -24,7 +24,7 @@
   :hook ((prog-mode . company-mode)
          (company-mode-hook . evil-normalize-keymaps))
   :init
-  (setq company-idle-delay 0.1
+  (setq company-idle-delay 0.2
         company-selection-wrap-around t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
@@ -34,18 +34,8 @@
         company-show-numbers t
 	      company-tooltip-align-annotations t
         company-dabbrev-other-buffers t ; only look in open buffers with same major mode
-        company-global-modes '(not erc-mode
-                                   message-mode
-                                   help-mode
-                                   gud-mode
-                                   vterm-mode))
-  :config
-  ;; allow eldoc trigger after completion
-  (with-eval-after-load 'eldoc
-    (eldoc-add-command 'company-complete-selection
-                       'company-complete-common
-                       'company-capf
-                       'company-abort)))
+        company-global-modes '(not
+                               erc-mode message-mode help-mode gud-mode vterm-mode)))
 
 (package! company-prescient :auto
   ;; Move commonly-used completions to the top
@@ -97,7 +87,10 @@
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
-  (eglot-events-buffer-size #x10000) ; default is 2MiB, which is unnecessary
+  (eglot-events-buffer-size 0) ; disable event logging
+  (eglot-send-changes-idle-time 0.75)
+  ;; use highlight-thing instead
+  (eglot-ignored-server-capabilities '(:hoverProvider :documentHighlightProvider))
   :config
   ;; Re-add flymake checkers because eglot clobbers them all on server start
   (add-hook 'eglot-managed-mode-hook
@@ -121,7 +114,26 @@
     "lro" 'eglot-code-action-organize-imports))
 
 ;; puts eldoc in a child frame instead of the echo area
-(package! eldoc-box :auto :hook (prog-mode . eldoc-box-hover-mode))
+(package! eldoc-box :auto
+  :after general
+  :config
+  (setq eldoc-echo-area-use-multiline-p nil) ; stop normal eldoc from resizing
+  (defun aero/eldoc-box-help-at-point ()
+    (interactive)
+    (if (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+        (call-interactively #'eldoc-box-eglot-help-at-point)
+      (call-interactively #'eldoc-box-help-at-point)))
+  (aero-leader-def
+    "i" 'aero/eldoc-box-help-at-point
+    "li" 'eldoc-box-eglot-help-at-point)
+  (with-eval-after-load 'eglot
+    ;; Show all of the available eldoc information when we want it. This way Flymake errors
+    ;; don't just get clobbered by docstrings.
+    (add-hook 'eglot-managed-mode-hook
+              (lambda ()
+                "Make sure Eldoc will show us all of the feedback at point."
+                (setq-local eldoc-documentation-strategy
+                            #'eldoc-documentation-compose)))))
 
 
 ;; C language
