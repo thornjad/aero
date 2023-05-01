@@ -29,28 +29,6 @@
   (add-hook 'rust-mode-hook
             (lambda () (setq indent-tabs-mode t))))
 
-(package! racer :auto
-  :defines (racer-cmd
-            racer-rust-src-path)
-  :hook (rust-mode . racer-mode)
-
-  :config
-  ;; TODO make these more better
-  (setq
-   racer-cmd "~/.cargo/bin/racer"
-   racer-rust-src-path
-   "~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src")
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode))
-
-(package! company-racer :auto
-  :hook (rust-mode . racer-mode)
-  :after company
-  :config
-  (require 'company)
-  (defvar company-backends)
-  (push 'company-racer company-backends))
-
 (package! cargo :auto
   :commands cargo-minor-mode
   :hook (rust-mode . cargo-minor-mode))
