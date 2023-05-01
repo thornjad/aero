@@ -104,6 +104,17 @@
   (declare-function global-formfeeder-mode "formfeeder.el")
   (global-formfeeder-mode 1))
 
+(package! highlight-thing :auto
+  :custom
+  (highlight-thing-delay-seconds 0.5)
+
+  ;; In large buffers, only look in close-by lines
+  (highlight-thing-limit-to-region-in-large-buffers-p t)
+  (highlight-thing-narrow-region-lines 70)
+  (highlight-thing-large-buffer-limit 5000)
+  :config
+  (global-highlight-thing-mode))
+
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
