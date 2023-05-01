@@ -955,8 +955,10 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after company-box
   :commands (copilot-mode)
-  :custom (copilot-idle-delay 0.1)
-  :config (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion))
+  :custom (copilot-idle-delay 0.5)
+  :config
+  (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion))
 
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
