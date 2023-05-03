@@ -979,7 +979,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
 (package! virtual-comment :auto
-  ;; Not working well in Emacs 29, and doesn't persist through buffer destruction.
   ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
   ;; to disk.
   :hook (find-file-hook . virtual-comment-mode)
@@ -992,7 +991,9 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
     "vp" 'virtual-comment-previous
     "vk" 'virtual-comment-delete
     "vP" 'virtual-comment-paste
-    "vs" 'virtual-comment-show))
+    "vs" 'virtual-comment-show)
+  :config
+  (evil-set-initial-state 'virtual-comment-mode 'insert))
 
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
