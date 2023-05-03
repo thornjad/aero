@@ -127,12 +127,10 @@
 
 ### Promised yesterday
 
-### Since yesterday
+### Since yesterday (tech design status, hotfixes, tough investigations, QA work, etc.)
 
 
 ### Today
-
-#### Most important thing today
 
 ### Achievements
 
