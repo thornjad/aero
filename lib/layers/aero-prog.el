@@ -99,14 +99,20 @@
    (make-lsp-client
     :new-connection (lsp-stdio-connection
                      `("snyk-ls"
-                       "-c" ,(expand-file-name "~/.config/snyk/snyk-ls.json")
-                       "-l" "info"
+                       ;; "-c" ,(expand-file-name "~/.config/snyk/snyk-ls.json")
+                       "-l" "info" ; TODO back off when this is working well for a while
+                       "-o" "md" ; use markdown for issues
                        "-f" ,(expand-file-name "log/snyk-ls.log" aero-etc-dir)))
     :major-modes '(python-mode
                    python-ts-mode
                    typescript-mode
                    typescript-ts-mode)
     :add-on? t
+    :initialization-options '(:integrationName "Emacs"
+                              :integrationVersion emacs-version
+                              :scanningMode "auto"
+                              :activateSnykCodeSecurity "true"
+                              :activateSnykCodeQuality "true")
     :server-id 'snyk))
 
   (defun aero/snyk-code-test ()
