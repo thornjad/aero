@@ -34,6 +34,8 @@
         company-show-numbers t
 	      company-tooltip-align-annotations t
         company-dabbrev-other-buffers t ; only look in open buffers with same major mode
+        ;; disable company completion after point
+        company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)
         company-global-modes '(not
                                erc-mode message-mode help-mode gud-mode vterm-mode)))
 
