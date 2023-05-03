@@ -954,6 +954,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; Not auto-enabled. Works best with company-box, hence the :after
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after company-box
+  :hook (prog-mode . copilot-mode)
   :commands (copilot-mode)
   :custom (copilot-idle-delay 0.5)
   :config
