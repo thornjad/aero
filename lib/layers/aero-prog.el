@@ -61,10 +61,104 @@
 
 ;; LSP
 
+(package! lsp-mode :auto
+  :after (general)
+  :hook ((prog-mode . lsp-deferred)
+         (lsp-mode . lsp-enable-which-key-integration)
+         (lsp-mode . lsp-headerline-breadcrumb-mode))
+  :commands (lsp lsp-deferred)
+  :custom
+  (lsp-idle-delay 0.5)
+  (lsp-lens-enable t)
+  (lsp-completion-provider :capf)
+  (lsp-keep-workspace-alive nil)
+  (lsp-headerline-breadcrumb-segments '(symbols))
+  (lsp-headerline-breadcrumb-icons-enable nil)
+  (lsp-headerline-arrow "»")
+  (lsp-enable-file-watchers nil) ; burns through max files
+  (lsp-enable-on-type-formatting t)
+  (lsp-eldoc-enable-hover t) ; show documentation in minibuffer on hover
+  (lsp-use-plists t) ; requires shell env LSP_USE_PLISTS=true
+  (lsp-warn-no-matched-clients nil) ; don't warn when no matching client for mode
+
+  ;; unused by aero modeline
+  (lsp-modeline-code-actions-enable nil)
+  (lsp-modeline-diagnostics-enable nil)
+
+  :config
+  (aero-leader-def
+    "la" 'lsp-execute-code-action
+    "lr" '(:ignore t :wk "references")
+    "lrf" 'lsp-find-definition
+    "lrt" 'lsp-find-type-definition
+    "lra" '(xref-find-apropos :wk "find symbols matching pattern")
+    "lrr" 'lsp-rename
+    "lro" 'lsp-organize-imports
+    "ld" 'lsp-describe-thing-at-point
+    "lt" '(:ignore t :wk "text")
+    "ltf" 'lsp-format-buffer
+    "ltr" 'lsp-format-region
+    "lS" '(:ignore t :wk "server")
+    "lSr" '(lsp :wk "server restart")
+    "lSd" 'lsp-describe-session)
+
+
+  (defun aero/snyk-code-test ()
+    "Run Snyk Code Test on the current project."
+    (let ((default-director (project-root (project-current))))
+     (async-shell-command "snyk code test" "*Snyk Code Test*"))))
+
+(package! lsp-treemacs :auto
+  :after (general lsp-mode treemacs)
+  :config
+  (lsp-treemacs-sync-mode +1)
+  (aero-leader-def
+    "le" 'lsp-treemacs-errors-list
+    "ls" 'lsp-treemacs-symbols
+    "lh" 'lsp-treemacs-type-hierarchy))
+
+(package! lsp-ui :auto
+  :after (general)
+  :hook ((lsp-mode . lsp-ui-mode)
+         (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
+  :custom
+   (lsp-ui-doc-enable t)
+   (lsp-ui-doc-position 'top)
+   (lsp-ui-doc-include-signature t)
+   (lsp-ui-doc-delay 1)
+   (lsp-ui-doc-use-childframe t)
+   (lsp-ui-doc-use-webkit nil)  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+   (lsp-ui-doc-show-with-cursor t)
+   (lsp-ui-imenu-enable nil)
+   (lsp-ui-sideline-enable nil)
+   (lsp-ui-sideline-show-diagnostics nil)
+
+  :config
+  (aero-leader-def
+    "li" 'lsp-ui-imenu
+    "lp" '(:ignore t :wk "peek")
+    "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
+    "lpr" '(lsp-ui-peek-find-references :wk "peek references")
+    "lps" '(lsp-ui-peek-find-workspace-symbol :wk "peek symbol")
+    "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")
+    "lff" '(lsp-ui-doc-focus-frame :wk "focus frame"))
+
+  (evil-define-key 'normal 'lsp-ui-doc-frame-mode
+    [?q] #'lsp-ui-doc-unfocus-frame))
+
+(package! lsp-ivy :auto
+  :after general
+  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol)
+  :init
+  (aero-leader-def
+    "lf" '(:ignore t :wk "find")
+    "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
+    "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols")))
+
 ;; Used by Eglot, but we want to always have the latest
 (package! jsonrpc :auto)
 
-(package! eglot :builtin
+(package! eglot :builtin :disabled
   :hook ((python-mode
           python-ts-mode
           scss-mode
@@ -83,14 +177,15 @@
           tuareg-mode
           rust-mode)
          . eglot-ensure)
+  :commands (eglot-ensure)
   :after (general)
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
   (eglot-events-buffer-size 0) ; disable event logging
   (eglot-send-changes-idle-time 0.75)
-  ;; use highlight-thing instead
-  (eglot-ignored-server-capabilities '(:hoverProvider :documentHighlightProvider))
+  ;; lsp highlighting is ridiculously slow, we use highlight-thing instead
+  (eglot-ignored-server-capabilities '(:documentHighlightProvider))
   :config
   ;; Re-add flymake checkers because eglot clobbers them all on server start
   (add-hook 'eglot-managed-mode-hook
@@ -117,7 +212,7 @@
 (package! eldoc-box :auto
   :after general
   :config
-  (setq eldoc-echo-area-use-multiline-p nil) ; stop normal eldoc from resizing
+  ;; (setq eldoc-echo-area-use-multiline-p nil) ; stop normal eldoc from resizing
   (defun aero/eldoc-box-help-at-point ()
     (interactive)
     (if (and (fboundp 'eglot-managed-p) (eglot-managed-p))
