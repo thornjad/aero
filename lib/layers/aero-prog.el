@@ -249,7 +249,7 @@
 ;; Markup
 
 (package! markdown-mode :auto
-  :after (general)
+  :after (general smartparens)
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
          ("github\\.com.*\\.txt\\'" . gfm-mode))
