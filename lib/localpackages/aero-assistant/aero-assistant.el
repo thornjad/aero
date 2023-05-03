@@ -305,7 +305,8 @@ these may be nil and still be a valid message, they need only exist."
 
 If region is active, prefill input buffer with the region."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (aero/assistant--set-model)
+  (unless (get-buffer aero/assistant--session-name)
+    (aero/assistant--set-model))
   (let ((buf (get-buffer-create aero/assistant--session-name)))
     (with-current-buffer buf
       (unless (derived-mode-p 'aero/assistant-mode)
