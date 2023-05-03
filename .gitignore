@@ -44,6 +44,7 @@ elpaca/
 elpy/
 eshell/*
 etc/cache/
+etc/log/*
 etc/lsp-session
 etc/recentf
 etc/saveplace
