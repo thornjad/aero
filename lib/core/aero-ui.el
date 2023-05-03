@@ -105,7 +105,8 @@
   (global-formfeeder-mode 1))
 
 (package! highlight-thing :auto
-  :hook (prog-mode . highlight-thing-mode)
+  ;; :hook (prog-mode . highlight-thing-mode)
+  :commands (highlight-thing-mode)
   :custom
   (highlight-thing-delay-seconds 0.5)
 
