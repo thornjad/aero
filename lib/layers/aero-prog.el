@@ -102,6 +102,20 @@
     "lSr" '(lsp :wk "server restart")
     "lSd" 'lsp-describe-session)
 
+  ;; Snyk language server
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection
+                     `("snyk-ls"
+                       "-c" ,(expand-file-name "~/.config/snyk/snyk-ls.json")
+                       "-l" "info"
+                       "-f" ,(expand-file-name "log/snyk-ls.log" aero-etc-dir)))
+    :major-modes '(python-mode
+                   python-ts-mode
+                   typescript-mode
+                   typescript-ts-mode)
+    :add-on? t
+    :server-id 'snyk))
 
   (defun aero/snyk-code-test ()
     "Run Snyk Code Test on the current project."
