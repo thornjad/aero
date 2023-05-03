@@ -18,6 +18,9 @@
 ;;
 ;;; Commentary:
 ;;
+
+(require 'cl-lib)
+
 ;;; Code:
 
 (defgroup aero/modeline nil
@@ -178,7 +181,6 @@ Only Git is supported because I'm not an animal."
                    (substring vc-mode 5)
                  "")))
       (concat
-       " "
        (propertize
         (let ((max 13))
           (if (> (length str) max)
@@ -212,6 +214,29 @@ Only Git is supported because I'm not an animal."
   "Displays the current value of `mode-line-process' in the mode-line."
   (when mode-line-process
     (list mode-line-process "  ")))
+
+(declare-function flymake--mode-line-counter "flymake")
+(defun aero/modeline-segment-flymake ()
+  "Displays information about current flymake status."
+  (when (bound-and-true-p flymake-mode)
+    (list (flymake--mode-line-counter :error t)
+          "/" (flymake--mode-line-counter :warning t)
+          "  ")))
+
+(defun aero/modeline-segment-lsp ()
+  "Displays information about LSP status."
+  (cond
+   ((bound-and-true-p lsp-mode)
+    (list (propertize ""
+                      'help-echo
+                      (string-join
+                       (mapcar (lambda (w)
+                                 (format "[%s]\n" (lsp--workspace-print w)))
+                               (lsp-workspaces))))
+          "  "))
+
+   ((bound-and-true-p eglot--managed-mode)
+    (list "" "  "))))
 
 (defun aero/modeline-segment-major-mode ()
   "Displays the current major mode in the mode-line."
@@ -268,6 +293,8 @@ WIDTH and HEIGHT are the image size in pixels."
                       ;; Right
                       (format-mode-line
                        '((:eval (aero/modeline-segment-process))
+                         (:eval (aero/modeline-segment-flymake))
+                         (:eval (aero/modeline-segment-lsp))
                          (:eval (aero/modeline-segment-git-state))
                          (:eval (aero/modeline-segment-remote))
                          (:eval (aero/modeline-segment-major-mode))
