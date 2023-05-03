@@ -182,7 +182,7 @@ Only Git is supported because I'm not an animal."
                  "")))
       (concat
        (propertize
-        (let ((max 13))
+        (let ((max 25))
           (if (> (length str) max)
               (concat (substring str 0 (- max 3)) "…") ; substring 3 less than length limit
             str))
