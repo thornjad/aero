@@ -34,10 +34,11 @@
         company-show-numbers t
 	      company-tooltip-align-annotations t
         company-dabbrev-other-buffers t ; only look in open buffers with same major mode
-        ;; disable company completion after point
-        company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)
         company-global-modes '(not
-                               erc-mode message-mode help-mode gud-mode vterm-mode)))
+                               erc-mode message-mode help-mode gud-mode vterm-mode))
+	:config
+	;; Wait until it's defined, then disable preview after point
+  (setq company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)))
 
 (package! company-prescient :auto
   ;; Move commonly-used completions to the top
