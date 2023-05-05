@@ -86,13 +86,15 @@ Requires watchman."
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
-(package! json-mode :auto
-  :unless (treesitterp)
-	:mode "\\.json\\'")
-(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode)))
+(if (treesitterp)
+    (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
+  (package! json-mode :auto :unless (treesitterp) :mode "\\.json\\'"))
 
-(package! typescript-mode :auto :unless (treesitterp) :mode "\\.tsx?\\'")
-(when (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
+(if (treesitterp)
+    (progn
+      (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+      (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
+  (package! typescript-mode :auto :unless (treesitterp) :mode "\\.tsx?\\'"))
 
 
 ;; the rest
