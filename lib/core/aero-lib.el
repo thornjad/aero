@@ -759,4 +759,12 @@ alternative to the beacon package."
   `(let ((inhibit-read-only t))
      ,@body))
 
+(defun aero/plist-merge (&rest plists)
+  "Merge PLISTS into a single plist."
+  (let ((result (copy-sequence (car plists))))
+    (dolist (plist plists)
+      (cl-loop for (key value) on plist by #'cddr
+               do (plist-put result key value)))
+    result))
+
 (provide 'aero-lib)
