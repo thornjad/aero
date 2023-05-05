@@ -100,30 +100,31 @@
     "lSd" 'lsp-describe-session)
 
   ;; Snyk language server
+  (defvar snyk-ls-token "")
+  (defvar snyk-ls-initialization-options `(:integrationName "Emacs"
+                                           :integrationVersion ,emacs-version
+                                           :token ,snyk-ls-token
+                                           :activateSnykCodeSecurity "true"
+                                           :activateSnykCodeQuality "true")
+    "Initialization options plist for Snyk language server.")
+
   (lsp-register-client
    (make-lsp-client
-    :new-connection (lsp-stdio-connection
-                     `("snyk-ls"
-                       ;; "-c" ,(expand-file-name "~/.config/snyk/snyk-ls.json")
-                       "-l" "info" ; TODO back off when this is working well for a while
-                       "-o" "md" ; use markdown for issues
-                       "-f" ,(expand-file-name "log/snyk-ls.log" aero-etc-dir)))
+    :server-id 'snyk-ls
+    :new-connection (lsp-stdio-connection '("snyk-ls" "-o" "md"))
     :major-modes '(python-mode
                    python-ts-mode
                    typescript-mode
                    typescript-ts-mode)
+    :initialization-options (lambda () snyk-ls-initialization-options)
     :add-on? t
-    :initialization-options '(:integrationName "Emacs"
-                              :integrationVersion emacs-version
-                              :scanningMode "auto"
-                              :activateSnykCodeSecurity "true"
-                              :activateSnykCodeQuality "true")
-    :server-id 'snyk))
+    :priority -2))
 
   (defun aero/snyk-code-test ()
     "Run Snyk Code Test on the current project."
-    (let ((default-director (project-root (project-current))))
-     (async-shell-command "snyk code test" "*Snyk Code Test*"))))
+    (interactive)
+    (let ((default-directory (project-root (project-current))))
+      (async-shell-command "snyk code test" "*Snyk Code Test*"))))
 
 (package! lsp-treemacs :auto
   :after (general lsp-mode treemacs)
@@ -139,16 +140,16 @@
   :hook ((lsp-mode . lsp-ui-mode)
          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
   :custom
-   (lsp-ui-doc-enable t)
-   (lsp-ui-doc-position 'top)
-   (lsp-ui-doc-include-signature t)
-   (lsp-ui-doc-delay 1)
-   (lsp-ui-doc-use-childframe t)
-   (lsp-ui-doc-use-webkit nil)  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
-   (lsp-ui-doc-show-with-cursor t)
-   (lsp-ui-imenu-enable nil)
-   (lsp-ui-sideline-enable nil)
-   (lsp-ui-sideline-show-diagnostics nil)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-include-signature t)
+  (lsp-ui-doc-delay 1)
+  (lsp-ui-doc-use-childframe t)
+  (lsp-ui-doc-use-webkit nil)  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-imenu-enable nil)
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-sideline-show-diagnostics nil)
 
   :config
   (aero-leader-def
