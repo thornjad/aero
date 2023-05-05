@@ -74,6 +74,10 @@
   (lsp-use-plists t) ; requires shell env LSP_USE_PLISTS=true
   (lsp-warn-no-matched-clients nil) ; don't warn when no matching client for mode
 
+  ;; graphql is really annoying, and for some reason angular-ls take priority over ts-ls, and ts-ls
+  ;; is way better so we use that
+  (lsp-disabled-clients '(graphql-lsp angular-ls))
+
   ;; unused by aero modeline
   (lsp-modeline-code-actions-enable nil)
   (lsp-modeline-diagnostics-enable nil)
