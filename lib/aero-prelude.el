@@ -953,12 +953,16 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; Not auto-enabled. Works best with company-box, hence the :after
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-  :after company-box
+  :after (company-box general)
   :hook (prog-mode . copilot-mode)
-  :config
-  (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
   :custom (copilot-idle-delay 0.7)
-  (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion))
+  :config
+  (general-define-key
+   :states '(insert visual motion)
+   :keymaps 'copilot-mode-map
+    (kbd "C-<tab>") 'copilot-accept-completion
+    (kbd "C-c C-n") 'copilot-next-completion
+    (kbd "C-c C-p") 'copilot-previous-completion))
 
 ;; Mark E′ violations
 (package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
