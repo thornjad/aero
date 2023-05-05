@@ -67,7 +67,7 @@ Nil means no maximum."
     "GPT 4" ; on API wait list
     "Davinci"
     "StableLM"))
-(defvar aero/assistant--openai-models '("GPT 3.5" "GPT 4" "Davinci"))
+(defvar aero/assistant--openai-models '("GPT 4" "GPT 3.5" "Davinci"))
 (defvar aero/assistant--model-name-map
   #s(hash-table size 10 test equal data
                 ("GPT 3.5" "gpt-3.5-turbo"
@@ -156,8 +156,6 @@ these may be nil and still be a valid message, they need only exist."
 (defun aero/assistant-send ()
   "Submit the current prompt to Assistant."
   (interactive)
-  (when (string= aero/assistant--model "GPT 4")
-    (user-error "not implemented -- API access not yet available"))
   (let ((model (gethash aero/assistant--model aero/assistant--model-name-map)))
     (setq aero/assistant--busy-p t)
     (spinner-start aero/assistant--spinner)
@@ -313,7 +311,6 @@ If region is active, prefill input buffer with the region."
         (aero/assistant-mode))
       (let ((blank (string-empty-p (buffer-string))))
         (aero/assistant-without-readonly
-          (when blank (insert "> Use the window below to input your prompt, then C-RET to send. "))
           (pop-to-buffer buf)
           (setf (point) (point-max))
           (when blank (aero/assistant-begin-input init)))))))
