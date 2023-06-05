@@ -65,7 +65,7 @@
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
-                :content (format "You are a large language model living in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely, but cite sources for factual claims. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
+                :content (format "I want you to act as a brilliant senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely, and cite sources for factual claims. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
