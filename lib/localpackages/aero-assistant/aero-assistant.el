@@ -61,7 +61,7 @@ Nil means no maximum."
 (defvar aero/assistant--busy-p nil)
 (defvar aero/assistant--spinner nil)
 
-(defvar aero/assistant--model "GPT 3.5")
+(defvar aero/assistant--model "GPT 4")
 (defvar aero/assistant--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
