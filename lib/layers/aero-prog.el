@@ -211,9 +211,6 @@
               (when (derived-mode-p 'python-base-mode)
                 (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
 
-  ;; Experimental homebrew LSP headerline, without any frills
-  ;; (require 'aero-eglot-headerline)
-
   (aero-leader-def
     "la" 'eglot-code-actions
     "lf" '(:ignore t :wk "find")
