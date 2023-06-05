@@ -334,6 +334,13 @@
   (add-hook 'python-base-mode-hook 'flymake-mode)
   (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
 
+  ;; Buffer diagnostics in bottom window
+  (add-to-list 'display-buffer-alist
+               '("\\*Flymake diagnostics for.*"
+                 (display-buffer-reuse-window display-buffer-in-side-window)
+                 (side . bottom)
+                 (window-height . 23)))
+
   (aero-leader-def
     "en" 'flymake-goto-next-error
     "ep" 'flymake-goto-prev-error
