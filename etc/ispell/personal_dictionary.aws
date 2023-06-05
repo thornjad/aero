@@ -1,4 +1,4 @@
-personal_ws-1.1 en 530 
+personal_ws-1.1 en 531 
 ACL
 APIs
 Aireon
@@ -275,6 +275,7 @@ dev
 dicts
 dir
 dired
+discoverability
 diskutil
 docstring
 doi
