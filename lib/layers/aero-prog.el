@@ -108,17 +108,18 @@
                                            :activateSnykCodeQuality "true")
     "Initialization options plist for Snyk language server.")
 
-  (lsp-register-client
-   (make-lsp-client
-    :server-id 'snyk-ls
-    :new-connection (lsp-stdio-connection '("snyk-ls" "-o" "md"))
-    :major-modes '(python-mode
-                   python-ts-mode
-                   typescript-mode
-                   typescript-ts-mode)
-    :initialization-options (lambda () snyk-ls-initialization-options)
-    :add-on? t
-    :priority -2))
+  ;; Disabled for now for testing
+  ;; (lsp-register-client
+  ;;  (make-lsp-client
+  ;;   :server-id 'snyk-ls
+  ;;   :new-connection (lsp-stdio-connection '("snyk-ls" "-o" "md"))
+  ;;   :major-modes '(python-mode
+  ;;                  python-ts-mode
+  ;;                  typescript-mode
+  ;;                  typescript-ts-mode)
+  ;;   :initialization-options (lambda () snyk-ls-initialization-options)
+  ;;   :add-on? t
+  ;;   :priority -2))
 
   (defun aero/snyk-code-test ()
     "Run Snyk Code Test on the current project."
