@@ -90,6 +90,20 @@
 
 (global-hl-line-mode +1)
 
+;; Adds a breadcrumb to the headerline
+(package! breadcrumb (:host github :repo "joaotavora/breadcrumb")
+  :hook ((prog-mode . breadcrumb-local-mode))
+  :config
+
+  ;; No breadcrumbs when the better lsp-headerline is available
+  (with-eval-after-load 'lsp-headerline
+    (add-hook 'lsp-headerline-breadcrumb-mode-hook (lambda () (breadcrumb-local-mode -1))))
+
+  ;; Disable breadcrumb project portion by overriding the function
+  (defun breadcrumb-project-crumbs ()
+    "Disabled by Aero."
+    ""))
+
 (package! good-scroll (:host github :repo "io12/good-scroll.el")
   :functions (good-scroll-mode)
   :init
