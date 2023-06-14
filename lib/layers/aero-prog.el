@@ -518,25 +518,22 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
 (package! apheleia :auto
   :after general
+  :init (apheleia-global-mode +1)
   :config
-  ;; For some reason, prettier won't read the config file from package.json. I'm just hard-coding
-  ;; the config here because I'm done with the day. This will eventually come back to bite me, but
-  ;; that's future-me's problem.
-  (setf (alist-get 'prettier apheleia-formatters)
-        '(npx "prettier" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
-  (setf (alist-get 'prettier-typescript apheleia-formatters)
-        '(npx "prettier" "--stdin-filepath" filepath "--parser=typescript" "--single-quote" "--trailing-comma" "all" "--print-width" "110"))
+  (dolist (cmd '((elm-format . (npx "elm-format" "--yes" "--stdin"))
+                 (cljfmt . ("lein" "cljfmt" "fix" input))
 
-  ;; By default Apheleia tries to use elm-format directly, but I'd prefer to use npx
-  (setf (alist-get 'elm-format apheleia-formatters)
-        '(npx "elm-format" "--yes" "--stdin"))
+                 ;; For some reason, prettier won't read the config file from package.json. I'm just
+                 ;; hard-coding the config here because I'm done with the day. This will eventually
+                 ;; come back to bite me, but that's future-me's problem.
+                 (prettier . (npx "prettier" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
+                 (prettier-typescript . (npx "prettier" "--stdin-filepath" filepath "--parser=typescript" "--single-quote" "--trailing-comma" "all" "--print-width" "110" "--tab-width" "2"))))
+    (add-to-list 'apheleia-formatters cmd))
 
-  (add-to-list 'apheleia-formatters '(cljfmt "lein" "cljfmt" "fix" input))
   (add-to-list 'apheleia-mode-alist '(clojure-mode . cljfmt))
 
   (aero-leader-def
-    "bI" 'apheleia-format-buffer)
-  (apheleia-global-mode +1))
+    "bI" 'apheleia-format-buffer))
 
 
 ;;; auto modes and stuff
