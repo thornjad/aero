@@ -202,7 +202,6 @@ so we use more cycles but less space, but not too little space.")
   (aero/init)
 
   (setq warning-minimum-level :error) ; Log warnings but don't let them pop up
-  (setq debug-on-error nil) ; Disable debug for normal runtime
-  (setq load-prefer-newer nil))
+  (setq debug-on-error nil))
 
 ;;; init.el ends here
