@@ -31,6 +31,7 @@
         '((".*google.*maps.*" . browse-url-generic)
           ("docs.google.com" . browse-url-generic)
           ("*.atlassian.com" . browse-url-generic)
+          ("*.atlassian.net" . browse-url-generic)
           ("http.*\/\/github.com" . browse-url-generic)
           ("melpa.org" . browse-url-generic)
           ("zoom.us" . browse-url-generic)
