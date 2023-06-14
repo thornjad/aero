@@ -23,17 +23,17 @@
 
 ;;; Code:
 
-(defun aero/assistant--send-stablelm ()
+(defun aa--send-stablelm ()
   "Sends prompts to StableLM Chat."
-  (let* ((prompt (aero/assistant--gather-prompts-stablelm)))))
+  (let* ((prompt (aa--gather-prompts-stablelm)))))
 
-(defun aero/assistant--gather-prompts-stablelm ()
+(defun aa--gather-prompts-stablelm ()
   "Return a full prompt from chat history, prepended with a system prompt."
-  (let ((prompts (aero/assistant--filter-history-prompts-format-stablelm
-                  #'aero/assistant--valid-prompt-p
-                  (or (and aero/assistant-max-entries
-                           (seq-take aero/assistant--history aero/assistant-max-entries))
-                      aero/assistant--history))))
+  (let ((prompts (aa--filter-history-prompts-format-stablelm
+                  #'aa--valid-prompt-p
+                  (or (and aa-max-entries
+                           (seq-take aa--history aa-max-entries))
+                      aa--history))))
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
@@ -41,18 +41,22 @@
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
-(defun aero/assistant--filter-history-prompts-format-stablelm (pred hist)
+(defun aa--filter-history-prompts-format-stablelm (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (aero/assistant--format-stablelm-prompt (car hist))
-              (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))
-      (aero/assistant--filter-history-prompts-format-gpt pred (cdr hist)))))
+        (cons (aa--format-stablelm-prompt (car hist))
+              (aa--filter-history-prompts-format-gpt pred (cdr hist)))
+      (aa--filter-history-prompts-format-gpt pred (cdr hist)))))
 
-(defun aero/assistant--format-stablelm-prompt (prompt)
+(defun aa--format-stablelm-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
 (provide 'aero-assistant-stablelm)
 ;;; aero-assistant-stablelm.el ends here
+
+;; Local Variables:
+;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
+;; End:

@@ -21,23 +21,23 @@
 ;; This package provides the API functions for Aero Assistant interface with
 ;; GPT 3.5 and 4, and Davinci.
 ;;
-;; Requires `aero/assistant-openai-api-key' to be set
+;; Requires `aa-openai-api-key' to be set
 
 ;;; Code:
 
-(defun aero/assistant--send-openai (model)
+(defun aa--send-openai (model)
   "Send prompts to OpenAI MODEL."
-  (unless aero/assistant-openai-api-key
-    (user-error "Must set `aero/assistant-openai-api-key'"))
-  (let* ((prompt (aero/assistant--gather-prompts-openai))
+  (unless aa-openai-api-key
+    (user-error "Must set `aa-openai-api-key'"))
+  (let* ((prompt (aa--gather-prompts-openai))
          (inhibit-message t)
          (message-log-max nil)
-         (url-show-status aero/assistant-debug-mode)
-         (url-show-headers aero/assistant-debug-mode)
+         (url-show-status aa-debug-mode)
+         (url-show-headers aa-debug-mode)
          (url-request-method "POST")
          (url-request-extra-headers
           `(("Content-Type" . "application/json")
-            ("Authorization" . ,(format "Bearer %s" aero/assistant-openai-api-key))))
+            ("Authorization" . ,(format "Bearer %s" aa-openai-api-key))))
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model ,model
@@ -47,21 +47,21 @@
                             'utf-8)))
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (let ((message (aero/assistant--register-response
-                                    (aero/assistant--parse-response-openai (current-buffer)))))
-                      (aero/assistant--display-message message)
-                      (setq aero/assistant--busy-p nil)
-                      (spinner-stop aero/assistant--spinner)
+                    (let ((message (aa--register-response
+                                    (aa--parse-response-openai (current-buffer)))))
+                      (aa--display-message message)
+                      (setq aa--busy-p nil)
+                      (spinner-stop aa--spinner)
                       (kill-buffer)))
-                  nil (not aero/assistant-debug-mode) nil)))
+                  nil (not aa-debug-mode) nil)))
 
-(defun aero/assistant--gather-prompts-openai ()
+(defun aa--gather-prompts-openai ()
   "Return a full prompt from chat history, prepended with a system prompt."
-  (let ((prompts (aero/assistant--filter-history-prompts-format-openai
-                  #'aero/assistant--valid-prompt-p
-                  (or (and aero/assistant-max-entries
-                           (seq-take aero/assistant--history aero/assistant-max-entries))
-                      aero/assistant--history))))
+  (let ((prompts (aa--filter-history-prompts-format-openai
+                  #'aa--valid-prompt-p
+                  (or (and aa-max-entries
+                           (seq-take aa--history aa-max-entries))
+                      aa--history))))
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
@@ -70,24 +70,24 @@
           (nreverse prompts))))
 
 
-(defun aero/assistant--filter-history-prompts-format-openai (pred hist)
+(defun aa--filter-history-prompts-format-openai (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (aero/assistant--format-openai-prompt (car hist))
-              (aero/assistant--filter-history-prompts-format-openai pred (cdr hist)))
-      (aero/assistant--filter-history-prompts-format-openai pred (cdr hist)))))
+        (cons (aa--format-openai-prompt (car hist))
+              (aa--filter-history-prompts-format-openai pred (cdr hist)))
+      (aa--filter-history-prompts-format-openai pred (cdr hist)))))
 
-(defun aero/assistant--format-openai-prompt (prompt)
+(defun aa--format-openai-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun aero/assistant--parse-response-openai (buffer)
+(defun aa--parse-response-openai (buffer)
   "Parse the Assitant response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (when aero/assistant-debug-mode (clone-buffer "*aero/assistant-error*" 'show))
+      (when aa-debug-mode (clone-buffer "*aa-error*" 'show))
       (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
                 (json-object-type 'plist)
                 (response
@@ -124,3 +124,7 @@
 
 (provide 'aero-assistant-openai)
 ;;; aero-assistant-openai.el ends here
+
+;; Local Variables:
+;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
+;; End:

@@ -22,7 +22,7 @@
 ;;
 ;; A simple markdown-based AI client for Aero Emacs.
 ;;
-;; GPT model requires `aero/assistant-openai-api-key' to be set
+;; GPT model requires `aa-openai-api-key' to be set
 
 (declare-function gfm-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -39,49 +39,49 @@
 
 (defgroup aero/assistant nil
   "Aero Assistant."
-  :prefix "aero/assistant-"
+  :prefix "aa-"
   :group 'emacs-ml)
 
-(defcustom aero/assistant-openai-api-key nil
+(defcustom aa-openai-api-key nil
   "An OpenAI API key."
   :group 'aero/assistant
   :type 'string)
 
-(defcustom aero/assistant-max-entries nil
+(defcustom aa-max-entries nil
   "Max chat entries to send to remote LLM for context.
 
 Nil means no maximum."
   :group 'aero/assistant
   :type 'number)
 
-(defvar aero/assistant-debug-mode nil)
-(defvar aero/assistant--session-name "*Aero Assistant*")
-(defvar aero/assistant--input-buffer-name "*Aero Assistant Input*")
-(defvar aero/assistant--history '())
-(defvar aero/assistant--busy-p nil)
-(defvar aero/assistant--spinner nil)
+(defvar aa-debug-mode nil)
+(defvar aa--session-name "*Aero Assistant*")
+(defvar aa--input-buffer-name "*Aero Assistant Input*")
+(defvar aa--history '())
+(defvar aa--busy-p nil)
+(defvar aa--spinner nil)
 
-(defvar aero/assistant--model "GPT 4")
-(defvar aero/assistant--model-options
+(defvar aa--model "GPT 4")
+(defvar aa--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
     "Davinci"
     "StableLM"))
-(defvar aero/assistant--openai-models '("GPT 4" "GPT 3.5" "Davinci"))
-(defvar aero/assistant--model-name-map
+(defvar aa--openai-models '("GPT 4" "GPT 3.5" "Davinci"))
+(defvar aa--model-name-map
   #s(hash-table size 10 test equal data
                 ("GPT 3.5" "gpt-3.5-turbo"
                  "GPT 4" "gpt-4"
                  "Davinci" "text-davinci-003"
                  "StableLM" "TODO")))
 
-(defun aero/assistant-kill-buffer-hook ()
+(defun aa-kill-buffer-hook ()
   "Kill response buffer hook."
-  (spinner-stop aero/assistant--spinner)
-  (setq aero/assistant--busy-p nil)
-  (setq aero/assistant--history '()))
+  (spinner-stop aa--spinner)
+  (setq aa--busy-p nil)
+  (setq aa--history '()))
 
-(defmacro aero/assistant-without-readonly (&rest body)
+(defmacro aa-without-readonly (&rest body)
   (declare (indent 0))
   `(let ((inhibit-read-only t))
      ,@body))
@@ -89,18 +89,18 @@ Nil means no maximum."
 
 ;; API interaction
 
-(defun aero/assistant--valid-prompt-p (item)
+(defun aa--valid-prompt-p (item)
   "Return t if ITEM is a valid prompt.
 
 A prompt is a valid message which has a role of either user or assistant and contains message
 content and no error marker."
-  (and (aero/assistant--valid-message-p item)
+  (and (aa--valid-message-p item)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
             (not (string-empty-p (plist-get item :content))))))
 
-(defun aero/assistant--valid-message-p (item)
+(defun aa--valid-message-p (item)
   "Return t if ITEM is a valid message.
 
 A valid message is a plist containing either an error and a status or a role and content. Any of
@@ -112,30 +112,30 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun aero/assistant--register-response (response)
+(defun aa--register-response (response)
   "Add Assistant response to history, return prompt alist."
   (let ((prompt (map-merge 'plist '(:role "assistant") response)))
-    (push prompt aero/assistant--history)
+    (push prompt aa--history)
     prompt))
 
-(defun aero/assistant--register-user-message (input)
+(defun aa--register-user-message (input)
   "Add user message to history, return prompt alist."
   (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
-    (push prompt aero/assistant--history)
+    (push prompt aa--history)
     prompt))
 
 
 ;; User input
 
-(defun aero/assistant-begin-input (&optional init)
+(defun aa-begin-input (&optional init)
   (interactive)
-  (when aero/assistant--busy-p
+  (when aa--busy-p
     (user-error "BUSY: Waiting for Assistant complete its response..."))
-  (aero/assistant-input-exit)
+  (aa-input-exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
-        (buf (get-buffer-create aero/assistant--input-buffer-name)))
+        (buf (get-buffer-create aa--input-buffer-name)))
     (with-current-buffer buf
-      (aero/assistant-input-mode)
+      (aa-input-mode)
       (erase-buffer)
       (when init (insert init))
       (call-interactively #'set-mark-command)
@@ -146,77 +146,167 @@ these may be nil and still be a valid message, they need only exist."
                          (dedicated . t)
                          (window-height . 30)))))
 
-(defun aero/assistant-try-again ()
+(defun aa-try-again ()
   "In the case of an error, try again."
   (interactive)
-  (unless aero/assistant--history
+  (unless aa--history
     (user-error "No Assistant history to try again with."))
-  (aero/assistant-send))
+  (aa-send))
 
-(defun aero/assistant-send ()
+(defun aa-send ()
   "Submit the current prompt to Assistant."
   (interactive)
-  (let ((model (gethash aero/assistant--model aero/assistant--model-name-map)))
-    (setq aero/assistant--busy-p t)
-    (spinner-start aero/assistant--spinner)
+  (let ((model (gethash aa--model aa--model-name-map)))
+    (setq aa--busy-p t)
+    (spinner-start aa--spinner)
     (cond
-     ((member aero/assistant--model aero/assistant--openai-models)
+     ((member aa--model aa--openai-models)
       (require 'aero-assistant-openai)
-      (aero/assistant--send-openai model))
-     ((string= aero/assistant--model "StableLM")
+      (aa--send-openai model))
+     ((string= aa--model "StableLM")
       (require 'aero-assistant-stability)
-      (aero/assistant--send-stability model)))))
+      (aa--send-stability model)))))
 
-(defun aero/assistant-input-exit ()
+(defun aa-input-exit ()
   (interactive)
-  (when-let ((buf (get-buffer aero/assistant--input-buffer-name)))
+  (when-let ((buf (get-buffer aa--input-buffer-name)))
     (kill-buffer buf)))
 
-(defun aero/assistant-input-send ()
+(defun aa-input-send ()
   (interactive)
-  (when aero/assistant--busy-p
+  (when aa--busy-p
     (user-error "BUSY: Waiting for Assistant complete its response..."))
-  (with-current-buffer aero/assistant--input-buffer-name
+  (with-current-buffer aa--input-buffer-name
     (let ((input (buffer-substring-no-properties (point-min) (point-max))))
       (when (string-empty-p input)
         (user-error "No input to send"))
-      (aero/assistant--display-message (aero/assistant--register-user-message input))
-      (aero/assistant-send)
-      (aero/assistant-input-exit)
-      (pop-to-buffer aero/assistant--session-name))))
+      (aa--display-message (aa--register-user-message input))
+      (aa-send)
+      (aa-input-exit)
+      (pop-to-buffer aa--session-name))))
 
-(defvar aero/assistant-input-mode-map
+(defvar aa-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aero/assistant-input-send)
-    (define-key map (kbd "C-c C-c") #'aero/assistant-input-send)
-    (define-key map (kbd "C-c C-r") #'aero/assistant-try-again)
-    (define-key map (kbd "C-c C-k") #'aero/assistant-input-exit)
+    (define-key map (kbd "C-<return>") #'aa-input-send)
+    (define-key map (kbd "C-c C-c") #'aa-input-send)
+    (define-key map (kbd "C-c C-r") #'aa-try-again)
+    (define-key map (kbd "C-c C-k") #'aa-input-exit)
     map))
 
-(define-derived-mode aero/assistant-input-mode gfm-mode "Aero Assistant Input"
+(define-derived-mode aa-input-mode gfm-mode "Aero Assistant Input"
   "Major mode for Aero Assistant input mode.
 
-\\<aero/assistant-input-mode-map>"
+\\<aa-input-mode-map>"
   (setq header-line-format '(" Aero Assistant Input  |  C-RET to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
-    (evil-set-initial-state 'aero/assistant-input-mode 'insert)))
+    (evil-set-initial-state 'aa-input-mode 'insert)))
+
+
+;; Eshell integration, based on chatgpt-shell
+
+;; (defun aa-add-??-command-to-eshell ()
+;;   "Add `??' command to `eshell'."
+
+;;   (defun eshell/?? (&rest _args)
+;;     "Implements `??' eshell command."
+;;     (interactive)
+;;     (let ((prompt (concat
+;;                    "What's wrong with the following command execution?\n\n"
+;;                    (aa--eshell-last-last-command)))
+;;           (prompt-file (concat temporary-file-directory
+;;                                "chatgpt-shell-command-line-prompt")))
+;;       (when (file-exists-p prompt-file)
+;;         (delete-file prompt-file))
+;;       (with-temp-file prompt-file nil nil t
+;;                       (insert prompt))
+;;       (chatgpt-shell--source-eshell-string
+;;        (concat
+;;         (file-truename (expand-file-name invocation-name invocation-directory)) " "
+;;         "--quick --batch --eval "
+;;         "'"
+;;         (prin1-to-string
+;;          `(progn
+;;             (interactive)
+;;             (load ,(find-library-name "shell-maker") nil t)
+;;             (load ,(find-library-name "chatgpt-shell") nil t)
+;;             (require (intern "chatgpt-shell") nil t)
+;;             (setq chatgpt-shell-model-temperature 0)
+;;             (setq chatgpt-shell-openai-key ,(chatgpt-shell-openai-key))
+;;             (chatgpt-shell-command-line-from-prompt-file ,prompt-file)))
+;;         "'"))))
+
+;;   (add-hook 'eshell-post-command-hook
+;;             (defun aa--eshell-post-??-execution ()
+;;               (when (string-match (symbol-name #'chatgpt-shell-command-line-from-prompt-file)
+;;                                   (string-join eshell-last-arguments " "))
+;;                 (save-excursion
+;;                   (save-restriction
+;;                     (narrow-to-region (eshell-beginning-of-output)
+;;                                       (eshell-end-of-output))
+;;                     (chatgpt-shell--put-source-block-overlays))))))
+
+;;   (require 'esh-cmd)
+
+;;   (add-to-list 'eshell-complex-commands "??"))
+
+(defun aa--eshell-last-last-command ()
+  "Get second to last eshell command."
+  (save-excursion
+    (if (string= major-mode "eshell-mode")
+        (let ((cmd-start)
+              (cmd-end))
+          ;; Find command start and end positions
+          (goto-char eshell-last-output-start)
+          (re-search-backward eshell-prompt-regexp nil t)
+          (setq cmd-start (point))
+          (goto-char eshell-last-output-start)
+          (setq cmd-end (point))
+
+          ;; Find output start and end positions
+          (goto-char eshell-last-output-start)
+          (forward-line 1)
+          (re-search-forward eshell-prompt-regexp nil t)
+          (forward-line -1)
+          (concat "What's wrong with this command?\n\n"
+                  (buffer-substring-no-properties cmd-start cmd-end)))
+      (message "Current buffer is not an eshell buffer."))))
+
+;; Based on https://emacs.stackexchange.com/a/48215
+(defun aa--source-eshell-string (string)
+  "Execute eshell command in STRING."
+  (let ((orig (point))
+        (here (point-max))
+        (inhibit-point-motion-hooks t))
+    (goto-char (point-max))
+    (with-silent-modifications
+      ;; FIXME: Use temporary buffer and avoid insert/delete.
+      (insert string)
+      (goto-char (point-max))
+      (throw 'eshell-replace-command
+             (prog1
+                 (list 'let
+                       (list (list 'eshell-command-name (list 'quote "source-string"))
+                             (list 'eshell-command-arguments '()))
+                       (eshell-parse-command (cons here (point))))
+               (delete-region here (point))
+               (goto-char orig))))))
 
 
 ;; Chat init and display
 
-(defun aero/assistant--display-message (message)
+(defun aa--display-message (message)
   "Display the most recent history message."
-  (unless (aero/assistant--valid-message-p message)
+  (unless (aa--valid-message-p message)
     (error "Message is not valid: %s" message))
-  (with-current-buffer aero/assistant--session-name
-    (aero/assistant-without-readonly
+  (with-current-buffer aa--session-name
+    (aa-without-readonly
       (setf (point) (point-max))
       (let* ((message-content (plist-get message :content))
              (role (plist-get message :role)))
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
-          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aero/assistant-try-again]\n\n"
+          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aa-try-again]\n\n"
                   (or (plist-get message :status)
                       (format (or (and (plist-get message :error)
                                        "Error: unknown error: %s")
@@ -230,12 +320,12 @@ these may be nil and still be a valid message, they need only exist."
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (aero/assistant--format-response message))))
+          (insert (aa--format-response message))))
 
         ;; move point to bottom
         (setf (point) (point-max))))))
 
-(defun aero/assistant--format-response (response)
+(defun aa--format-response (response)
   "Format Assistant response for display."
   (let ((content (plist-get response :content))
         ;; (status (plist-get response :status))
@@ -255,47 +345,47 @@ these may be nil and still be a valid message, they need only exist."
              (t ""))
             "\f\n")))
 
-(defun aero/assistant-clear-history ()
+(defun aa-clear-history ()
   (interactive)
   (when (y-or-n-p "Clear Aero Assistant history forever?")
-    (with-current-buffer aero/assistant--session-name
-      (aero/assistant-without-readonly
-        (setq aero/assistant--history '())
+    (with-current-buffer aa--session-name
+      (aa-without-readonly
+        (setq aa--history '())
         (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
-(defun aero/assistant--header-line ()
+(defun aa--header-line ()
   "Display header line."
   (format " %s Aero Assistant  |  %s"
-          (if-let ((spinner (spinner-print aero/assistant--spinner)))
+          (if-let ((spinner (spinner-print aa--spinner)))
               (concat spinner " ")
             " ")
-          aero/assistant--model))
+          aa--model))
 
-(defun aero/assistant--set-model ()
+(defun aa--set-model ()
   "Prompt user to set the Assistant model and verify key if required."
-  (setq aero/assistant--model
-        (completing-read "Assistant model: " aero/assistant--model-options
+  (setq aa--model
+        (completing-read "Assistant model: " aa--model-options
                          nil nil nil nil
-                         aero/assistant--model))
+                         aa--model))
   ;; check for keys
   (cond
-   ((member aero/assistant--model aero/assistant--openai-models)
-    (unless aero/assistant-openai-api-key (user-error "Must set `aero/assistant-openai-api-key'")))))
+   ((member aa--model aa--openai-models)
+    (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'")))))
 
-(defvar aero/assistant-mode-map
+(defvar aa-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aero/assistant-begin-input)
-    (define-key map (kbd "C-c C-k") #'aero/assistant-clear-history)
+    (define-key map (kbd "C-<return>") #'aa-begin-input)
+    (define-key map (kbd "C-c C-k") #'aa-clear-history)
     map))
 
-(define-derived-mode aero/assistant-mode gfm-mode "Aero Assistant"
+(define-derived-mode aa-mode gfm-mode "Aero Assistant"
   "Major mode for Aero Assistant response mode.
 
-\\<aero/assistant-mode-map>"
+\\<aa-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format '((:eval (aero/assistant--header-line))))
-  (setq aero/assistant--spinner (spinner-create 'horizontal-breathing-long t))
-  (add-hook 'kill-buffer-hook #'aero/assistant-kill-buffer-hook nil t))
+  (setq header-line-format '((:eval (aa--header-line))))
+  (setq aa--spinner (spinner-create 'horizontal-breathing-long t))
+  (add-hook 'kill-buffer-hook #'aa-kill-buffer-hook nil t))
 
 ;;;###autoload
 (defun aero/assistant (&optional init)
@@ -303,17 +393,21 @@ these may be nil and still be a valid message, they need only exist."
 
 If region is active, prefill input buffer with the region."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (unless (get-buffer aero/assistant--session-name)
-    (aero/assistant--set-model))
-  (let ((buf (get-buffer-create aero/assistant--session-name)))
+  (unless (get-buffer aa--session-name)
+    (aa--set-model))
+  (let ((buf (get-buffer-create aa--session-name)))
     (with-current-buffer buf
-      (unless (derived-mode-p 'aero/assistant-mode)
-        (aero/assistant-mode))
+      (unless (derived-mode-p 'aa-mode)
+        (aa-mode))
       (let ((blank (string-empty-p (buffer-string))))
-        (aero/assistant-without-readonly
+        (aa-without-readonly
           (pop-to-buffer buf)
           (setf (point) (point-max))
-          (when blank (aero/assistant-begin-input init)))))))
+          (when blank (aa-begin-input init)))))))
 
 (provide 'aero-assistant)
 ;;; aero-assistant.el ends here
+
+;; Local Variables:
+;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
+;; End:
