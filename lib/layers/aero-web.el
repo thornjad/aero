@@ -23,9 +23,6 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(when (treesitterp)
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode)))
-
 (package! yarn (:host github :repo "jmfirth/yarn.el")
   :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
                         yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
@@ -54,8 +51,6 @@ Requires watchman."
 (package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\)\\'"
   :config
-  ;; If we have tree-sitter, prefer tsx-ts-mode over web-mode (which will also load eglot)
-  (unless (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
   (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
 
 (package! instant-rename-tag
@@ -86,15 +81,8 @@ Requires watchman."
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
-(if (treesitterp)
-    (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
-  (package! json-mode :auto :unless (treesitterp) :mode "\\.json\\'"))
-
-(if (treesitterp)
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-      (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
-  (package! typescript-mode :auto :unless (treesitterp) :mode "\\.tsx?\\'"))
+(package! json-mode :auto :mode "\\.json\\'")
+(package! typescript-mode :auto :mode "\\.tsx?\\'")
 
 
 ;; the rest
