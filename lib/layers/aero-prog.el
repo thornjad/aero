@@ -490,11 +490,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
    "sK" '(aero/copy-sexp-as-kill :wk "copy as kill"))
 
   (sp-local-pair 'web-mode "<?" "?>")
-  (sp-local-pair 'web-mode "<? " " ?>")
   (sp-local-pair 'web-mode "{" "}")
-  (sp-local-pair 'web-mode "{ " " }")
   (sp-local-pair 'web-mode "{%" "%}")
-  (sp-local-pair 'web-mode "{% " " %}")
   (sp-local-pair 'web-mode "`" "`")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
@@ -502,22 +499,14 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-local-pair 'markdown-mode "```" "```" :post-handlers '(:add ("||\n[i]" "RET")))
 
   (sp-pair "<" ">")
-  (sp-pair "< " " >")
-  (sp-pair "{ " " }")
-  (sp-pair "( " " )")
-  (sp-pair "[ " " ]")
 
   ;; For these pairs, when hitting RET inside them, we add an extra newline to the middle and indent
   ;; accordingly.
   (sp-pair "{" "}" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "[" "]" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "(" ")" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "{ " " }" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "[ " " ]" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "( " " )" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "/** " " */" :post-handlers '(:add ("* ||\n[i]" "RET")))
+  (sp-pair "/**" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
   (sp-pair "/*" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
-  (sp-pair "/* " " */" :post-handlers '(:add ("* ||\n[i]" "RET")))
 
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
