@@ -91,9 +91,7 @@ install-deps:
 	npm i -g emmet-ls vscode-json-languageserver || true
 	gem install bundler prettier_print syntax_tree syntax_tree-haml syntax_tree-rbs && npm i -g prettier @prettier/plugin-ruby || true
 
-	pip3 install python-lsp-server pyls-mypy mypy ruff black pyls-black pyls-isort "ptvsd>=4.2" \
-|| pip install python-lsp-server pyls-mypy mypy ruff black pyls-black pyls-isort "ptvsd>=4.2" \
-|| true
+	pip install python-lsp-server "python-lsp-server[all]" ruff-lsp pylsp-mypy mypy ruff black python-lsp-black "ptvsd>=4.2" || true
 
 	rustup component add rls rust-analysis rust-src || true
 	brew install clojure-lsp/brew/clojure-lsp-native || true
