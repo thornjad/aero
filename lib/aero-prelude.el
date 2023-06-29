@@ -933,5 +933,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   (emojify-display-style 'unicode)
   (emojify-emoji-styles '(unicode)))
 
+(require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 (provide 'aero-prelude)
