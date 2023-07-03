@@ -603,6 +603,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 (package! all-the-icons :auto
   ;; Add support for icon insertion, and use as a lib in other packages
   :after (general)
+  :when (display-graphic-p)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
 (package! all-the-icons-ivy-rich (:host github :repo "seagle0128/all-the-icons-ivy-rich")
