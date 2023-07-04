@@ -57,18 +57,13 @@ clean-aero-macos:
 	rm -rf /Applications/Emacs\ \(Aero\).app
 
 build-emacs-linux: nongnu-elpa
-	./bin/build/linux-requirements.zsh
-	cd ${EMACS_BUILD_DIR} && \
-	git stash -m "Emacs build autostash" && \
-	git pull --rebase && \
-	./autogen.sh && \
-	./configure --with-native-compilation --with-json --with-threads --with-compress-install --with-modules --with-gnutls=ifavailable --without-mailutils CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" && \
-	make -j12 && \
-	sudo make install
+	./bin/build/linux.zsh
 
 install-aero-linux:
 	mkdir -p ~/.local/share/applications/
 	cp ./bin/aero-emacs.desktop ~/.local/share/applications/
+
+linux: build-emacs-linux install-aero-linux
 
 .PHONY: nongnu-elpa
 nongnu-elpa:
