@@ -127,15 +127,6 @@
     (let ((default-directory (project-root (project-current))))
       (async-shell-command "snyk code test" "*Snyk Code Test*"))))
 
-(package! lsp-treemacs :auto
-  :after (general lsp-mode treemacs)
-  :config
-  (lsp-treemacs-sync-mode +1)
-  (aero-leader-def
-    "le" 'lsp-treemacs-errors-list
-    "ls" 'lsp-treemacs-symbols
-    "lh" 'lsp-treemacs-type-hierarchy))
-
 (package! lsp-ui :auto
   :after (general)
   :hook ((lsp-mode . lsp-ui-mode)
