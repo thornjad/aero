@@ -295,6 +295,14 @@ This is equivalent to SPC U M-x eshell"
   (interactive)
   (eshell t))
 
+(defun aero/project-eshell-new ()
+  "Open a new project Eshell.
+
+This is equivalent to SPC U SPC p '."
+  (interactive)
+  (let ((current-prefix-arg t))
+    (project-eshell)))
+
 (defmacro aero/async-shell-command-with-path (command &optional buffer error-buffer)
   "Run COMMAND asynchronously like `async-shell-command' but with PATH loaded."
   `(let ((shell-command-switch "-ic"))
