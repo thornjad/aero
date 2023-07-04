@@ -66,6 +66,10 @@ build-emacs-linux: nongnu-elpa
 	make -j12 && \
 	sudo make install
 
+install-aero-linux:
+	mkdir -p ~/.local/share/applications/
+	cp ./bin/aero-emacs.desktop ~/.local/share/applications/
+
 .PHONY: nongnu-elpa
 nongnu-elpa:
 	# nongnu-elpa is corrupted somehow, this fixes it by cloning without fsck whether or not it's already there
