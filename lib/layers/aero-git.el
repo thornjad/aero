@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2022 Jade Michael Thornton
+;; Copyright (c) 2019-2023 Jade Michael Thornton
 ;;
 ;; This program is free software; you may redistribute it and/or modify it under
 ;; the terms of the GNU General Public License version 3, as published by the
