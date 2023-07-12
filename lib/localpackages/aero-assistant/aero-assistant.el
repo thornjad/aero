@@ -62,6 +62,7 @@ Nil means no maximum."
 (defvar aa--spinner nil)
 
 (defvar aa--model "GPT 4")
+(defvar aa-commit-model "GPT 3.5")
 (defvar aa--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
@@ -404,6 +405,29 @@ If region is active, prefill input buffer with the region."
           (pop-to-buffer buf)
           (setf (point) (point-max))
           (when blank (aa-begin-input init)))))))
+
+;;;###autoload
+(defun aero/assistant-commit-message ()
+  "Aero Assistant generates a commit message.
+
+This is intended to be called by `git-commit-setup-hook'. It then analyzes the changes and generates a commit message, which may then be altered before committing.
+
+Independently of `aero/assistant', this function uses the model defined by `aero/assistant-commit-model'.
+
+Requires `magit'."
+  (interactive)
+  (unless (require 'magit nil t)
+    (user-error "This function requires `magit'"))
+  (let ((buf (current-buffer)))
+    (aa-commit--gen-message)))
+
+(defun aero/assistant-toggle-debug ()
+  "Toggle Aero Assistant debug mode."
+  (interactive)
+  (setq aa-debug-mode (not aa-debug-mode))
+  (if aa-debug-mode
+      (message "Aero Assistant debug mode enabled")
+    (message "Aero Assistant debug mode disabled")))
 
 (provide 'aero-assistant)
 ;;; aero-assistant.el ends here
