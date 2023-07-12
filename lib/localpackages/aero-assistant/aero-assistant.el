@@ -62,10 +62,9 @@ Nil means no maximum."
 (defvar aa--spinner nil)
 
 (defvar aa--model "GPT 4")
-(defvar aa--commit-model "GPT 4")
 (defvar aa--model-options
   '("GPT 3.5"
-    "GPT 4" ; on API wait list
+    "GPT 4"
     "Davinci"
     "StableLM"))
 (defvar aa--openai-models '("GPT 4" "GPT 3.5" "Davinci"))
@@ -419,7 +418,7 @@ Requires `magit'."
   (unless (require 'magit nil t)
     (user-error "This function requires `magit'"))
   (let ((buf (current-buffer))
-        (model (gethash aa--commit-model aa--model-name-map)))
+        (model (gethash aa--model aa--model-name-map)))
     (aa--gen-commit-message-openai
      model
      (lambda (message)

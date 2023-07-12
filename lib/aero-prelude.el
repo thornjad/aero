@@ -869,7 +869,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   (with-eval-after-load 'magit
     (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)))
 
-;; Not auto-enabled. Works best with company-box, hence the :after
+;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after (company-box general)
   :hook (prog-mode . copilot-mode)
