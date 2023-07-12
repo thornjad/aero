@@ -25,12 +25,45 @@
 
 ;;; Code:
 
+(defconst aa-openai-system-prompt
+  "You will act as a brilliant senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely, and cite sources for factual claims. Use Markdown formatting in all messages. Current date: %s")
+
+(defconst aa-commit-system-prompt
+  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message.
+
+The structure of a commit message is as follows:
+
+```
+<description>
+
+[optional body]
+```
+
+- The description must not exceed 72 characters.
+- The description must be in the imperative mood.
+- The description must begin with a lower-case letter, unless the first word is a proper noun.
+- The description must not end with a period, and should not end with any other punctuation.
+- The description must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
+- The body is optional, and should only be included if the description is not sufficient.
+- The body must be separated from the description by a blank line.
+")
+
 (defun aa--send-openai (model)
   "Send prompts to OpenAI MODEL."
-  (unless aa-openai-api-key
-    (user-error "Must set `aa-openai-api-key'"))
-  (let* ((prompt (aa--gather-prompts-openai))
-         (inhibit-message t)
+  (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
+  (aa--send-openai-request
+   model
+   (aa--gather-prompts-openai)
+   (lambda (response)
+     (let ((message (aa--register-response response)))
+       (aa--display-message message)
+       (setq aa--busy-p nil)
+       (spinner-stop aa--spinner)))))
+
+(defun aa--send-openai-request (model message callback)
+  "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
+  (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
+  (let* ((inhibit-message t)
          (message-log-max nil)
          (url-show-status aa-debug-mode)
          (url-show-headers aa-debug-mode)
@@ -41,18 +74,15 @@
          (url-request-data (encode-coding-string
                             ;; https://platform.openai.com/docs/api-reference/chat/create
                             (json-encode `(:model ,model
-                                           :messages [,@prompt]
+                                           :messages [,@message]
                                            :temperature nil
                                            :max_tokens nil))
                             'utf-8)))
+
     (url-retrieve "https://api.openai.com/v1/chat/completions"
                   (lambda (_)
-                    (let ((message (aa--register-response
-                                    (aa--parse-response-openai (current-buffer)))))
-                      (aa--display-message message)
-                      (setq aa--busy-p nil)
-                      (spinner-stop aa--spinner)
-                      (kill-buffer)))
+                    (funcall callback (aa--parse-response-openai (current-buffer)))
+                    (kill-buffer))
                   nil (not aa-debug-mode) nil)))
 
 (defun aa--gather-prompts-openai ()
@@ -65,7 +95,7 @@
     (when (not prompts)
       (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
-                :content (format "I want you to act as a brilliant senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely, and cite sources for factual claims. Use Markdown formatting in all messages. Current date: %s" (format-time-string "%Y-%m-%d")))
+                :content (format aa-openai-system-prompt (format-time-string "%Y-%m-%d")))
           ;; Need to reverse so latest comes last
           (nreverse prompts))))
 
@@ -121,6 +151,16 @@
             (list :error t :status (concat status ": Malformed JSON in response.")))
            (t (list :error t :status (concat status ": Could not parse HTTP response."))))
         (list :error t :status (concat status ": Could not parse HTTP response."))))))
+
+(defun aa-commit--gen-message (callback)
+  "Generate a commit message and pass it to CALLBACK."
+  (unless (require 'magit nil t)
+    (user-error "This function requires `magit'"))
+
+  (let* ((diff-lines (magit-git-lines "diff" "--cached"))
+         (changes (string-join diff-lines "\n"))
+         (message (cons (list :role "system" :content aa-commit-system-prompt)
+                        (list :role "user" :content changes))))))
 
 (provide 'aero-assistant-openai)
 ;;; aero-assistant-openai.el ends here
