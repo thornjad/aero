@@ -418,8 +418,17 @@ Requires `magit'."
   (interactive)
   (unless (require 'magit nil t)
     (user-error "This function requires `magit'"))
-  (let ((buf (current-buffer)))
-    (aa-commit--gen-message)))
+  (let ((buf (current-buffer))
+        (model (gethash aa--commit-model aa--model-name-map)))
+    (aa--gen-commit-message-openai
+     model
+     (lambda (message)
+       (unless message (user-error "Aero Assistant commit message error: no response"))
+       (when (plist-get message :error)
+         (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
+       (let ((content (plist-get message :content)))
+         (unless content (user-error "Aero Assistant commit message error: no response content"))
+         (with-current-buffer buf (insert content)))))))
 
 (defun aero/assistant-toggle-debug ()
   "Toggle Aero Assistant debug mode."

@@ -29,23 +29,15 @@
   "You will act as a brilliant senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer. Respond concisely, and cite sources for factual claims. Use Markdown formatting in all messages. Current date: %s")
 
 (defconst aa-commit-system-prompt
-  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message.
+  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message. Please follow them carefully.
 
-The structure of a commit message is as follows:
-
-```
-<description>
-
-[optional body]
-```
-
-- The description must not exceed 72 characters.
-- The description must be in the imperative mood.
-- The description must begin with a lower-case letter, unless the first word is a proper noun.
-- The description must not end with a period, and should not end with any other punctuation.
-- The description must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
-- The body is optional, and should only be included if the description is not sufficient.
-- The body must be separated from the description by a blank line.
+- The message must NEVER exceed 50 characters.
+- The message must be in the imperative mood.
+- The message must always begin with a lower-case letter
+- The message must not end with a period, and should not end with any other punctuation.
+- The message must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
+- The message must not include a commit body, respond with the commit message only.
+- The message should not include file names unless the commit is only renaming or moving files.
 ")
 
 (defun aa--send-openai (model)
@@ -59,6 +51,17 @@ The structure of a commit message is as follows:
        (aa--display-message message)
        (setq aa--busy-p nil)
        (spinner-stop aa--spinner)))))
+
+(defun aa--gen-commit-message-openai (model callback)
+  "Generate a commit message and pass it to CALLBACK."
+  (unless (require 'magit nil t) (user-error "This function requires `magit'"))
+  (let* ((diff-lines (magit-git-lines "diff" "--cached"))
+         (changes (string-join diff-lines "\n"))
+         (message (list (list :role "system" :content aa-commit-system-prompt)
+                        (list :role "user" :content changes))))
+    (unless message (user-error "No changes to commit"))
+    (message "Aero Assistant is generating a commit message...")
+    (aa--send-openai-request model message callback)))
 
 (defun aa--send-openai-request (model message callback)
   "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
@@ -92,8 +95,7 @@ The structure of a commit message is as follows:
                   (or (and aa-max-entries
                            (seq-take aa--history aa-max-entries))
                       aa--history))))
-    (when (not prompts)
-      (user-error "Prompt history contains nothing to send."))
+    (when (not prompts) (user-error "Prompt history contains nothing to send."))
     (cons (list :role "system"
                 :content (format aa-openai-system-prompt (format-time-string "%Y-%m-%d")))
           ;; Need to reverse so latest comes last
@@ -114,7 +116,7 @@ The structure of a commit message is as follows:
         :content (plist-get prompt :content)))
 
 (defun aa--parse-response-openai (buffer)
-  "Parse the Assitant response in URL BUFFER."
+  "Parse the Assistant response in URL BUFFER."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
       (when aa-debug-mode (clone-buffer "*aa-error*" 'show))
@@ -152,19 +154,11 @@ The structure of a commit message is as follows:
            (t (list :error t :status (concat status ": Could not parse HTTP response."))))
         (list :error t :status (concat status ": Could not parse HTTP response."))))))
 
-(defun aa-commit--gen-message (callback)
-  "Generate a commit message and pass it to CALLBACK."
-  (unless (require 'magit nil t)
-    (user-error "This function requires `magit'"))
-
-  (let* ((diff-lines (magit-git-lines "diff" "--cached"))
-         (changes (string-join diff-lines "\n"))
-         (message (cons (list :role "system" :content aa-commit-system-prompt)
-                        (list :role "user" :content changes))))))
-
 (provide 'aero-assistant-openai)
 ;;; aero-assistant-openai.el ends here
 
 ;; Local Variables:
 ;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
 ;; End:
+
+; LocalWords:  aa
