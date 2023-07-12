@@ -864,7 +864,10 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
 	:after markdown-mode
   :commands (aero/assistant)
-  :custom (aero/assistant-openai-api-key openai-api-key))
+  :custom (aero/assistant-openai-api-key openai-api-key)
+  :config
+  (with-eval-after-load 'magit
+    (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)))
 
 ;; Not auto-enabled. Works best with company-box, hence the :after
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
