@@ -62,7 +62,7 @@ Nil means no maximum."
 (defvar aa--spinner nil)
 
 (defvar aa--model "GPT 4")
-(defvar aa-commit-model "GPT 3.5")
+(defvar aa--commit-model "GPT 4")
 (defvar aa--model-options
   '("GPT 3.5"
     "GPT 4" ; on API wait list
