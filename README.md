@@ -34,6 +34,10 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 
 For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long.
 
+### AI Assistant
+
+Aero includes a built-in package, Aero Assistant, which interfaces with [currently only] OpenAI models like GPT. Aero provides a text interface for free-form GPT interaction, plus a growing list of features, including writing commit messages.
+
 ### Custom theme with simplified mode line
 
 Aero replaces the default awful color scheme with the eponymous `aero-theme`, which pulls loose inspiration from the [Tao themes](https://github.com/11111000000/tao-theme-emacs) and colors inspired by northern Minnesota in Autumn. The theme package also contains `aero-dark`, which incorporates further inspiration from my own [ClearNight Retro](https://github.com/ClearNight/clearnight-retro-syntax) theme for [Atom](https://atom.io) (may it rest in peace).
