@@ -337,7 +337,10 @@ Requires `magit'."
          (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
        (let ((content (plist-get message :content)))
          (unless content (user-error "Aero Assistant commit message error: no response content"))
-         (with-current-buffer buf (insert content)))))))
+         (with-current-buffer buf
+           (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
+             ;; Only insert if message line is emtpy
+             (insert content))))))))
 
 (defun aero/assistant-toggle-debug ()
   "Toggle Aero Assistant debug mode."
