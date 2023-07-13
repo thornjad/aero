@@ -38,16 +38,17 @@ Always show code snippets in markdown blocks with language labels.
 Current date: %s")
 
 (defconst aa-commit-system-prompt
-  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message. Please follow them carefully.
+  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
 
-- The message must NEVER exceed 50 characters.
-- The message must be in the imperative mood.
-- The message must always begin with a lower-case letter
+- The message MUST NEVER exceed 50 characters.
+- The message MUST always begin with a lower-case letter
+- The message MUST be in the imperative mood.
 - The message must not end with a period, and should not end with any other punctuation.
 - The message must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
 - The message must not include a commit body, you must respond with the commit message only.
 - The message should not include file names unless the commit is only renaming or moving files.
 - The message should avoid using the verb \"to be\".
+- Once again, the message must never ever exceed 50 characters.
 ")
 
 (defun aa--send-openai (model)
