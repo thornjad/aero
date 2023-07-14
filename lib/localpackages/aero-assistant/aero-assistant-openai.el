@@ -37,8 +37,12 @@ Use Markdown formatting liberally in all messages.
 Always show code snippets in markdown blocks with language labels.
 Current date: %s")
 
+(defconst aa-commit-git-command
+  '("diff" "--cached" "--summary" "-U25" "--no-color")
+  "The git command given to Magit to get the commit diff.")
+
 (defconst aa-commit-system-prompt
-  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running `git diff --cached'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
+  "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running 'git %s'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
 
 - The message MUST NEVER exceed 50 characters.
 - The message MUST always begin with a lower-case letter
@@ -68,7 +72,8 @@ Current date: %s")
   (unless (require 'magit nil t) (user-error "This function requires `magit'"))
   (let* ((diff-lines (magit-git-lines "diff" "--cached"))
          (changes (string-join diff-lines "\n"))
-         (message (list (list :role "system" :content aa-commit-system-prompt)
+         (system-prompt (format aa-commit-system-prompt (string-join aa-commit-git-command " ")))
+         (message (list (list :role "system" :content system-prompt)
                         (list :role "user" :content changes))))
     (unless message (user-error "No changes to commit"))
     (message "Aero Assistant is generating a commit message...")
