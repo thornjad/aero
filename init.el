@@ -44,10 +44,7 @@
 
   (with-eval-after-load 'gnutls
     (eval-when-compile (require 'gnutls))
-    (setq gnutls-verify-error t) ; Do not allow insecure TLS connections.
-    (when (< gnutls-min-prime-bits 3072)
-      ;; Make TLS use an acceptable modern value if it isn't already
-      (setq gnutls-min-prime-bits 3072)))
+    (setq gnutls-verify-error t)) ; Do not allow insecure TLS connections.
 
   ;; Use the more-cutting-edge develop branch of straight, and don't allow it to check for
   ;; modifications in every repo on Emacs init, saving some startup time.
