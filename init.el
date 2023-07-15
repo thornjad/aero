@@ -24,8 +24,8 @@
 
 ;; Catch-all version check, should be updated when we use a new feature that's not
 ;; backward-compatible.
-(when (or (not (member "--no-version-check" command-line-args))
-          (version< emacs-version "28"))
+(when (and (not (member "--no-version-check" command-line-args))
+           (version< emacs-version "28"))
   (error "Aero requires at least Emacs version 28. Please upgrade or use --no-version-check"))
 
 
