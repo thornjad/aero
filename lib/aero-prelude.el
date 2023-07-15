@@ -863,9 +863,9 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; LLM assistant interface
 (package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
 	:after markdown-mode
-  :commands (aero/assistant)
+  :commands (aero/assistant aero/assistant-commit-message)
   :custom (aero/assistant-openai-api-key openai-api-key)
-  :config
+  :init
   (with-eval-after-load 'magit
     (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)))
 
