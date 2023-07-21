@@ -74,6 +74,14 @@
   (lsp-use-plists t) ; requires shell env LSP_USE_PLISTS=true
   (lsp-warn-no-matched-clients nil) ; don't warn when no matching client for mode
 
+  ;; Enable plugins for python
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)))
+  (lsp-pyls-plugins-flake8-enabled t)
+
   ;; graphql is really annoying, and for some reason angular-ls take priority over ts-ls, and ts-ls
   ;; is way better so we use that
   (lsp-disabled-clients '(graphql-lsp angular-ls))
@@ -133,9 +141,10 @@
          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
   :custom
   (lsp-ui-doc-enable t)
-  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-header t)
   (lsp-ui-doc-include-signature t)
-  (lsp-ui-doc-delay 1)
+  (lsp-ui-doc-delay 2)
   (lsp-ui-doc-use-childframe t)
   (lsp-ui-doc-use-webkit nil)  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
   (lsp-ui-doc-show-with-cursor t)
@@ -482,7 +491,10 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
   (sp-local-pair 'web-mode "<?" "?>")
   (sp-local-pair 'web-mode "{" "}")
+  (sp-local-pair 'web-mode "{ " " }")
   (sp-local-pair 'web-mode "{%" "%}")
+  (sp-local-pair 'web-mode "{% " " %}")
+  (sp-local-pair 'web-mode "{{ " " }}")
   (sp-local-pair 'web-mode "`" "`")
   (sp-local-pair 'org-mode "$" "$")
   (sp-local-pair 'org-mode "=" "=")
@@ -496,8 +508,6 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (sp-pair "{" "}" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "[" "]" :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-pair "(" ")" :post-handlers '(:add ("||\n[i]" "RET")))
-  (sp-pair "/**" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
-  (sp-pair "/*" "*/" :post-handlers '(:add ("* ||\n[i]" "RET")))
 
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
