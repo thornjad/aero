@@ -50,8 +50,8 @@ Requires watchman."
 
 (package! web-mode :auto
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\)\\'"
-  :config
-  (setq web-mode-engines-alist '(("ctemplate" . "\\.tpl\\'"))))
+  :custom
+  (web-mode-enable-engine-detection t))
 
 (package! instant-rename-tag
   (:host github :repo "manateelazycat/instant-rename-tag")
