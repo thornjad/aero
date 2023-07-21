@@ -1,10 +1,48 @@
 ;;; aero-assistant.el --- Aero AI Assistant client  -*- lexical-binding: t; -*-
 ;;
+;; Author: Jade Michael Thornton
 ;; Copyright (c) 2023 Jade Michael Thornton
 ;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (spinner "1.7.4"))
-;; Package-Version: 0.1.0
+;; URL: https://github.com/thornjad/aero/blob/master/lib/localpackages/aero-assistant
+;; Version: 0.1.0
 ;;
 ;; This file is not part of GNU Emacs
+
+;;; Commentary:
+;;
+;; Aero Assistant is an Emacs Lisp package that acts as an AI client for Aero Emacs. It leverages
+;; various AI models, including GPT-4, GPT-3.5-turbo, and Davinci, to facilitate a broad range of
+;; natural language processing tasks right within your Emacs.
+
+;; OpenAI API Key:
+;;
+;; GPT requires setting `aero/assistant-openai-api-key' to your own API key
+
+
+;; Usage:
+;;
+;; Simply call the `aero/assistant' function to start or switch to an Aero Assistant session:
+;;
+;; (aero/assistant)
+;;
+;; If a region is active, `aero/assistant' will prefill the input buffer with the content of the
+;; region.
+
+;; Using Aero Assistant for Git Commit Messages in Magit:
+;;
+;; The `aero/assistant-commit-message' function can add an Aero Assistant- generated commit message.
+;; This function requires [Magit](https://github.com/magit/magit). Add
+;; `aero/assistant-commit-message' to `git-commit-setup-hook' in your init file:
+;;
+;; (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)
+;;
+;; Whenever you commit using Magit, `aero/assistant-commit-message' will automatically generate a
+;; commit message based on the changes, unless the commit message already has content (like in a
+;; rebase commit, or if you start typing immediately).
+
+;;; License:
+;;
+;; Copyright (c) 2023 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -17,12 +55,8 @@
 ;; loss of use, data or profits, whether in an action of contract, negligence or
 ;; other tortious action, arising out of or in connection with the use or
 ;; performance of this software.
-;;
-;;; Commentary:
-;;
-;; A simple markdown-based AI client for Aero Emacs.
-;;
-;; GPT model requires `aa-openai-api-key' to be set
+
+;;; Code:
 
 (declare-function gfm-mode "markdown-mode")
 (declare-function pulse-momentary-highlight-region "pulse")
@@ -34,8 +68,6 @@
 (require 'json)
 (require 'map)
 (require 'markdown-mode)
-
-;;; Code:
 
 (defgroup aero/assistant nil
   "Aero Assistant."
@@ -329,6 +361,7 @@ Requires `magit'."
     (user-error "This function requires `magit'"))
   (let ((buf (current-buffer))
         (model (gethash aa--model aa--model-name-map)))
+    (require 'aero-assistant-openai)
     (aa--gen-commit-message-openai
      model
      (lambda (message)
