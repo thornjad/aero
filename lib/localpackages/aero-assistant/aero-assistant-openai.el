@@ -38,20 +38,21 @@ Always show code snippets in markdown blocks with language labels.
 Current date: %s")
 
 (defconst aa-commit-git-command
-  '("diff" "--cached" "--summary" "-U25" "--no-color")
+  '("diff" "--cached" "--summary" "-U10" "--no-color")
   "The git command given to Magit to get the commit diff.")
 
 (defconst aa-commit-system-prompt
   "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running 'git %s'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
 
 - The message MUST NEVER exceed 50 characters.
-- The message MUST always begin with a lower-case letter
+- The message MUST always begin with a lower-case letter.
 - The message MUST be in the imperative mood.
 - The message must not end with a period, and should not end with any other punctuation.
 - The message must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
 - The message must not include a commit body, you must respond with the commit message only.
-- The message should not include file names unless the commit is only renaming or moving files.
+- The message should not include file names.
 - The message should avoid using the verb \"to be\".
+- The message should not use the word \"refactor\".
 - Once again, the message must never ever exceed 50 characters.
 ")
 
