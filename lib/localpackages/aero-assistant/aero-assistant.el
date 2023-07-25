@@ -18,7 +18,6 @@
 ;;
 ;; GPT requires setting `aero/assistant-openai-api-key' to your own API key
 
-
 ;; Usage:
 ;;
 ;; Simply call the `aero/assistant' function to start or switch to an Aero Assistant session:
@@ -94,6 +93,7 @@ Nil means no maximum."
 (defvar aa--spinner nil)
 
 (defvar aa--model "GPT 4")
+(defvar aa-commit-model "GPT 3.5")
 (defvar aa--model-options
   '("GPT 3.5"
     "GPT 4"
@@ -359,21 +359,22 @@ Requires `magit'."
   (interactive)
   (unless (require 'magit nil t)
     (user-error "This function requires `magit'"))
-  (let ((buf (current-buffer))
-        (model (gethash aa--model aa--model-name-map)))
-    (require 'aero-assistant-openai)
-    (aa--gen-commit-message-openai
-     model
-     (lambda (message)
-       (unless message (user-error "Aero Assistant commit message error: no response"))
-       (when (plist-get message :error)
-         (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
-       (let ((content (plist-get message :content)))
-         (unless content (user-error "Aero Assistant commit message error: no response content"))
-         (with-current-buffer buf
-           (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
-             ;; Only insert if message line is emtpy
-             (insert content))))))))
+  (unless (git-commit-buffer-message)
+    (let ((buf (current-buffer))
+          (model (gethash aa-commit-model aa--model-name-map)))
+      (require 'aero-assistant-openai)
+      (aa--gen-commit-message-openai
+       model
+       (lambda (message)
+         (unless message (user-error "Aero Assistant commit message error: no response"))
+         (when (plist-get message :error)
+           (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
+         (let ((content (plist-get message :content)))
+           (unless content (user-error "Aero Assistant commit message error: no response content"))
+           (with-current-buffer buf
+             (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
+               ;; Only insert if message line is empty
+               (insert content)))))))))
 
 (defun aero/assistant-toggle-debug ()
   "Toggle Aero Assistant debug mode."
