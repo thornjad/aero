@@ -30,14 +30,10 @@
 ;; Using Aero Assistant for Git Commit Messages in Magit:
 ;;
 ;; The `aero/assistant-commit-message' function can add an Aero Assistant- generated commit message.
-;; This function requires [Magit](https://github.com/magit/magit). Add
-;; `aero/assistant-commit-message' to `git-commit-setup-hook' in your init file:
+;; This function requires [Magit](https://github.com/magit/magit).
 ;;
-;; (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)
-;;
-;; Whenever you commit using Magit, `aero/assistant-commit-message' will automatically generate a
-;; commit message based on the changes, unless the commit message already has content (like in a
-;; rebase commit, or if you start typing immediately).
+;; Whenever you commit using Magit, calling `aero/assistant-commit-message' will automatically
+;; generate a commit message based on the staged git changes
 
 ;;; License:
 ;;
@@ -351,8 +347,6 @@ If region is active, prefill input buffer with the region."
 (defun aero/assistant-commit-message ()
   "Aero Assistant generates a commit message.
 
-This is intended to be called by `git-commit-setup-hook'. It then analyzes the changes and generates a commit message, which may then be altered before committing.
-
 Independently of `aero/assistant', this function uses the model defined by `aero/assistant-commit-model'.
 
 Requires `magit'."
@@ -363,6 +357,7 @@ Requires `magit'."
     (let ((buf (current-buffer))
           (model (gethash aa-commit-model aa--model-name-map)))
       (require 'aero-assistant-openai)
+      ;; TODO count tokens first
       (aa--gen-commit-message-openai
        model
        (lambda (message)

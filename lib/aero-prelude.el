@@ -185,7 +185,9 @@
    "U" 'universal-argument
 
    "a" '(:ignore t :wk "applications")
-   "ai" 'aero/assistant
+   "ai" '(:ignore t :wk "Aero Assistant")
+   "aic" '(aero/assistant :wk "assistant chat")
+   "aig" '(aero/assistant-commit-message :wk "write commit message")
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
@@ -864,10 +866,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
 	:after markdown-mode
   :commands (aero/assistant aero/assistant-commit-message)
-  :custom (aero/assistant-openai-api-key openai-api-key)
-  :init
-  (with-eval-after-load 'magit
-    (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)))
+  :custom (aero/assistant-openai-api-key openai-api-key))
 
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))

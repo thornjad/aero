@@ -23,14 +23,10 @@ region.
 ## Using Aero Assistant for Git Commit Messages in Magit
 
 The `aero/assistant-commit-message` function can add an Aero Assistant- generated commit message.
-This function requires [Magit](https://github.com/magit/magit). Add
-`aero/assistant-commit-message` to `git-commit-setup-hook` in your init file:
+This function requires [Magit](https://github.com/magit/magit).
 
-    (add-hook 'git-commit-setup-hook #'aero/assistant-commit-message)
-
-Whenever you commit using Magit, `aero/assistant-commit-message` will automatically generate a
-commit message based on the changes, unless the commit message already has content (like in a
-rebase commit, or if you start typing immediately).
+Whenever you commit using Magit, calling `aero/assistant-commit-message` will automatically
+generate a commit message based on the staged git changes
 
 
 ---
