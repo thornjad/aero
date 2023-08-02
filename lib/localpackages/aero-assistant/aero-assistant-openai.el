@@ -45,7 +45,7 @@ Current date: %s")
   "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running 'git %s'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
 
 - The message MUST NEVER exceed 50 characters.
-- The message MUST always begin with a lower-case letter.
+- The message MUST ALWAYS begin with a lower-case letter.
 - The message MUST be in the imperative mood.
 - The message must not end with a period, and should not end with any other punctuation.
 - The message must not begin with a commit type (e.g. \"fix:\", \"feat:\", \"docs:\", etc.)
@@ -53,6 +53,7 @@ Current date: %s")
 - The message should not include file names.
 - The message should avoid using the verb \"to be\".
 - The message should not use the word \"refactor\".
+- When a submodule is being updated, the commit message should mention the name of the submodule.
 - Once again, the message must never ever exceed 50 characters.
 ")
 
@@ -78,7 +79,19 @@ Current date: %s")
                         (list :role "user" :content changes))))
     (unless message (user-error "No changes to commit"))
     (message "Aero Assistant is generating a commit message...")
-    (aa--send-openai-request model message callback)))
+    (aa--send-openai-request
+     model message
+     (lambda (message)
+       (funcall callback (aa--downcase-first-content message))))))
+
+(defun aa--downcase-first-content (message)
+  "Return MESSAGE with it's :content downcased."
+  (let* ((content (plist-get message :content))
+         (down (if (> (length content) 0)
+                   (concat (downcase (substring content 0 1))
+                           (substring content 1))
+                 content)))
+    (plist-put message :content down)))
 
 (defun aa--send-openai-request (model message callback)
   "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
@@ -178,4 +191,4 @@ Current date: %s")
 ;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
 ;; End:
 
-; LocalWords:  aa
+                                        ; LocalWords:  aa
