@@ -82,16 +82,19 @@ Current date: %s")
     (aa--send-openai-request
      model message
      (lambda (message)
-       (funcall callback (aa--downcase-first-content message))))))
+       (funcall callback (aa--format-commit-message-content message))))))
 
-(defun aa--downcase-first-content (message)
+(defun aa--format-commit-message-content (message)
   "Return MESSAGE with it's :content downcased."
   (let* ((content (plist-get message :content))
-         (down (if (> (length content) 0)
+         (content (if (> (length content) 0)
                    (concat (downcase (substring content 0 1))
                            (substring content 1))
-                 content)))
-    (plist-put message :content down)))
+                   content))
+         (content (if (string-suffix-p "." content)
+                      (string-remove-suffix "." content)
+                    content)))
+    (plist-put message :content content)))
 
 (defun aa--send-openai-request (model message callback)
   "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
