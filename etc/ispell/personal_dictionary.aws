@@ -1,4 +1,4 @@
-personal_ws-1.1 en 541 
+personal_ws-1.1 en 542 
 ACL
 APIs
 Aireon
@@ -271,6 +271,7 @@ customizations
 dBm
 dataset
 de
+debounce
 decrement
 defund
 deliverables
