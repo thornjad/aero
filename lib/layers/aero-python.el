@@ -139,7 +139,7 @@
   :hook ((python-mode ein-mode) . elpy-mode)
   :config
   (setq elpy-rpc-virtualenv-path 'default
-        elpy-rpc-python-command "python"
+        elpy-rpc-python-command "python3"
         py-return-key #'py-newline-and-indent)
   (elpy-enable)
 
