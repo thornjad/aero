@@ -215,7 +215,7 @@ these may be nil and still be a valid message, they need only exist."
 
 (defvar aa-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aa-input-send)
+    (define-key map (kbd "<C-return>") #'aa-input-send)
     (define-key map (kbd "C-c C-c") #'aa-input-send)
     (define-key map (kbd "C-c C-r") #'aa-try-again)
     (define-key map (kbd "C-c C-k") #'aa-input-exit)
