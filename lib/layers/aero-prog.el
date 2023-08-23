@@ -142,7 +142,7 @@
          (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
   :custom
   (lsp-ui-doc-enable t)
-  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-position 'top)
   (lsp-ui-doc-header t)
   (lsp-ui-doc-include-signature t)
   (lsp-ui-doc-delay 2)
