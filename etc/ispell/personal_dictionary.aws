@@ -1,4 +1,4 @@
-personal_ws-1.1 en 542 
+personal_ws-1.1 en 559 
 ACL
 APIs
 Aireon
@@ -35,6 +35,7 @@ Comeet
 Comeet's
 Covid
 Customizable
+DDC
 DNS
 Davinci
 DoD
@@ -99,6 +100,7 @@ KiB
 Kosovo
 Kubernetes
 LD
+LGBTQ
 LIFR
 LLC
 LMB
@@ -121,6 +123,7 @@ Mapbox's
 Memoization
 MiB
 Mongo
+NGO
 NSR
 NVM
 NVME
@@ -149,6 +152,7 @@ POSTs
 PRs
 PSU
 Patreon
+Ph
 PiAware
 PoC
 Postgres
@@ -336,6 +340,8 @@ hardcode
 hardcoded
 headerline
 hella
+hideable
+hitmen
 hoc
 homebrew
 homebrewed
@@ -343,6 +349,7 @@ hostname
 hotfix
 hotfixed
 hotfixing
+hotline
 href
 http
 https
@@ -358,9 +365,11 @@ init
 instantiation
 itcl
 jmthornton
+jpg
 json
 jupyter
 keyframe
+keyframes
 keymap
 keyring
 kutil
@@ -377,6 +386,7 @@ matchup
 mbtiles
 mc
 md
+megacorporations
 memoization
 memoize
 memoized
@@ -411,7 +421,9 @@ npx
 nw
 onboarded
 onboarding
+ortho
 pano
+panos
 paren
 passant
 pbf
@@ -424,6 +436,7 @@ pomodoros
 pre
 prepend
 prepended
+preprocessed
 preprocessor
 println
 proc
@@ -446,6 +459,7 @@ rebase
 recentered
 referer
 regionalization
+reimplemented
 repl
 repo
 repos
@@ -465,6 +479,7 @@ runnable
 runtime
 rvt
 scada
+selectable
 sexp
 shader
 shaders
@@ -525,6 +540,8 @@ umounted
 une
 unicode
 unindent
+unironically
+upsell
 usr
 util
 utils
