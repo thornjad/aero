@@ -175,6 +175,13 @@
     "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
     "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols")))
 
+(package! lsp-grammarly :auto
+  :after lsp
+  :custom (lsp-grammarly-active-modes '(text-mode latex-mode org-mode markdown-mode gfm-mode))
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-grammarly)
+                       (lsp-deferred))))
+
 ;; Used by Eglot, but we want to always have the latest
 (package! jsonrpc :auto)
 
