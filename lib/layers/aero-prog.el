@@ -57,6 +57,7 @@
 (package! lsp-mode :auto
   :after (general)
   :hook ((prog-mode . lsp-deferred)
+         (text-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . lsp-headerline-breadcrumb-mode))
   :commands (lsp lsp-deferred)
