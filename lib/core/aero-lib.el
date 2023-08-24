@@ -258,7 +258,9 @@ See `sort-regexp-fields'."
 (defun aero/toggle-compilation-buffer ()
   "Pop-up the compilation buffer."
   (interactive)
-  (aero/toggle-popup-buffer "*compilation*"))
+  (aero/toggle-popup-buffer "*compilation*")
+  (with-current-buffer "*compilation*"
+    (goto-char (point-max))))
 
 (defun aero/toggle-popup-buffer (buf)
   "Pop-up BUF in a buffer below."
