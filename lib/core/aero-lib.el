@@ -103,10 +103,10 @@ with some parts omitted and some custom behavior added."
     nil)
 
    (defining-kbd-macro
-    (message
-     (substitute-command-keys
-      "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
-    (cancel-kbd-macro-events))
+     (message
+      (substitute-command-keys
+       "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
+     (cancel-kbd-macro-events))
 
    ((active-minibuffer-window)
     (when (get-buffer-window "*Completions*")
@@ -224,12 +224,12 @@ See `sort-regexp-fields'."
   "Switch back and forth between current and last buffer in the current window."
   (interactive)
   (cl-destructuring-bind
-   (buf start pos)
-   (or (cl-find (window-buffer window) (window-prev-buffers) :key #'car :test-not #'eq)
-       (list (other-buffer) nil nil))
-   (if (not buf)
-       (message "Last buffer not found")
-     (set-window-buffer-start-and-point window buf start pos))))
+      (buf start pos)
+      (or (cl-find (window-buffer window) (window-prev-buffers) :key #'car :test-not #'eq)
+          (list (other-buffer) nil nil))
+    (if (not buf)
+        (message "Last buffer not found")
+      (set-window-buffer-start-and-point window buf start pos))))
 
 (defun aero/alternate-window ()
   "Switch back and forth between current and last window in the current frame."
