@@ -270,10 +270,12 @@ See `sort-regexp-fields'."
         (aero/bury-buffer-kill-window win)
 
       ;; else we need to pop it up
-      (display-buffer buf
-                      '((display-buffer-below-selected)
-                        (reusable-frames . nil) ;; only search this frame
-                        (window-height . 20))))))
+      (progn
+        (display-buffer buf
+                        '((display-buffer-below-selected)
+                          (reusable-frames . nil) ;; only search this frame
+                          (window-height . 20)))
+        (set-window-dedicated-p (get-buffer-window buf) t)))))
 
 (defun aero/incr-compilation-buffer ()
   "Renames existing compilation buffer so you can create more."
