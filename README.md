@@ -10,7 +10,7 @@
 
 # Aero Emacs
 
-Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skilfullness. There are many like it, but this one is mine.
+Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skillfulness. There are many like it, but this one is mine.
 
 <br>
 
