@@ -149,4 +149,11 @@
 ;; make links in comments clickable
 (global-goto-address-mode +1)
 
+;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
+(unless (display-graphic-p)
+  (package! evil-terminal-cursor-changer :auto
+    :after evil
+    :functions (evil-terminal-cursor-changer-activate)
+    :config (evil-terminal-cursor-changer-activate)))
+
 (provide 'aero-ui)

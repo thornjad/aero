@@ -54,164 +54,18 @@
 
 ;; LSP
 
-(package! lsp-mode :auto
-  :after (general)
-  :hook ((prog-mode . lsp-deferred)
-         (text-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . lsp-headerline-breadcrumb-mode))
-  :commands (lsp lsp-deferred)
-  :custom
-  (lsp-idle-delay 0.5)
-  (lsp-lens-enable t)
-  (lsp-completion-provider :capf)
-  (lsp-keep-workspace-alive nil)
-  (lsp-headerline-breadcrumb-segments '(symbols))
-  (lsp-headerline-breadcrumb-icons-enable nil)
-  (lsp-headerline-arrow "»")
-  (lsp-enable-file-watchers nil) ; burns through max files
-  (lsp-enable-on-type-formatting t)
-  (lsp-eldoc-enable-hover t) ; show documentation in minibuffer on hover
-  (lsp-use-plists t) ; requires shell env LSP_USE_PLISTS=true
-  (lsp-warn-no-matched-clients nil) ; don't warn when no matching client for mode
-
-  ;; Enable plugins for python
-  (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)))
-  (lsp-pyls-plugins-flake8-enabled t)
-
-  ;; graphql is really annoying, and for some reason angular-ls take priority over ts-ls, and ts-ls
-  ;; is way better so we use that
-  (lsp-disabled-clients '(graphql-lsp angular-ls))
-
-  ;; unused by aero modeline
-  (lsp-modeline-code-actions-enable nil)
-  (lsp-modeline-diagnostics-enable nil)
-
-  :config
-  (aero-leader-def
-    "la" 'lsp-execute-code-action
-    "lr" '(:ignore t :wk "references")
-    "lrf" 'lsp-find-definition
-    "lrt" 'lsp-find-type-definition
-    "lra" '(xref-find-apropos :wk "find symbols matching pattern")
-    "lrr" 'lsp-rename
-    "lro" 'lsp-organize-imports
-    "ld" 'lsp-describe-thing-at-point
-    "lt" '(:ignore t :wk "text")
-    "ltf" 'lsp-format-buffer
-    "ltr" 'lsp-format-region
-    "lS" '(:ignore t :wk "server")
-    "lSr" '(lsp :wk "server restart")
-    "lSd" 'lsp-describe-session)
-
-  ;; Snyk language server
-  (defvar snyk-ls-token "")
-  (defvar snyk-ls-initialization-options `(:integrationName "Emacs"
-                                           :integrationVersion ,emacs-version
-                                           :token ,snyk-ls-token
-                                           :activateSnykCodeSecurity "true"
-                                           :activateSnykCodeQuality "true")
-    "Initialization options plist for Snyk language server.")
-
-  ;; Disabled for now for testing
-  ;; (lsp-register-client
-  ;;  (make-lsp-client
-  ;;   :server-id 'snyk-ls
-  ;;   :new-connection (lsp-stdio-connection '("snyk-ls" "-o" "md"))
-  ;;   :major-modes '(python-mode
-  ;;                  python-ts-mode
-  ;;                  typescript-mode
-  ;;                  typescript-ts-mode)
-  ;;   :initialization-options (lambda () snyk-ls-initialization-options)
-  ;;   :add-on? t
-  ;;   :priority -2))
-
-  (defun aero/snyk-code-test ()
-    "Run Snyk Code Test on the current project."
-    (interactive)
-    (let ((default-directory (project-root (project-current))))
-      (async-shell-command "snyk code test" "*Snyk Code Test*"))))
-
-(package! lsp-ui :auto
-  :after (general)
-  :hook ((lsp-mode . lsp-ui-mode)
-         (lsp-ui-mode . lsp-ui-sideline-toggle-symbols-info))
-  :custom
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-doc-header t)
-  (lsp-ui-doc-include-signature t)
-  (lsp-ui-doc-delay 2)
-  (lsp-ui-doc-use-childframe t)
-  (lsp-ui-doc-use-webkit nil)  ; appears broken, https://github.com/emacs-lsp/lsp-ui/issues/349
-  (lsp-ui-doc-show-with-cursor t)
-  (lsp-ui-imenu-enable nil)
-  (lsp-ui-sideline-enable nil)
-  (lsp-ui-sideline-show-diagnostics nil)
-
-  :config
-  (aero-leader-def
-    "li" 'lsp-ui-imenu
-    "lp" '(:ignore t :wk "peek")
-    "lpd" '(lsp-ui-peek-find-definitions :wk "peek definitions")
-    "lpr" '(lsp-ui-peek-find-references :wk "peek references")
-    "lps" '(lsp-ui-peek-find-workspace-symbol :wk "peek symbol")
-    "lpi" '(lsp-ui-peek-find-implementation :wk "peek implementations")
-    "lff" '(lsp-ui-doc-focus-frame :wk "focus frame"))
-
-  (evil-define-key 'normal 'lsp-ui-doc-frame-mode
-    [?q] #'lsp-ui-doc-unfocus-frame))
-
-(package! lsp-ivy :auto
-  :after general
-  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol)
-  :init
-  (aero-leader-def
-    "lf" '(:ignore t :wk "find")
-    "lfs" '(lsp-ivy-workspace-symbol :wk "find symbols")
-    "lfg" '(lsp-ivy-global-workspace-symbol :wk "global find symbols")))
-
-(package! lsp-grammarly :auto
-  :after lsp
-  :custom (lsp-grammarly-active-modes '(text-mode latex-mode org-mode markdown-mode gfm-mode))
-  :hook (text-mode . (lambda ()
-                       (require 'lsp-grammarly)
-                       (lsp-deferred))))
-
-;; Used by Eglot, but we want to always have the latest
+;; Used by Eglot, we want to make sure we have the latest version rather than what eglot asks for
 (package! jsonrpc :auto)
 
-(package! eglot :builtin :disabled
-  :hook ((python-mode
-          python-ts-mode
-          scss-mode
-          css-mode
-          clojure-mode
-          java-mode
-          sh-mode
-          json-mode
-          json-ts-mode
-          js2-mode
-          typescript-mode
-          typescript-ts-mode
-          tsx-ts-mode
-          elm-mode
-          nix-mode
-          tuareg-mode
-          rust-mode)
-         . eglot-ensure)
-  :commands (eglot-ensure)
+(package! eglot :builtin
+  :hook ((prog-mode) . eglot-ensure)
   :after (general)
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
   (eglot-events-buffer-size 0) ; disable event logging
   (eglot-send-changes-idle-time 0.75)
-  ;; lsp highlighting is ridiculously slow, we use highlight-thing instead
+  ;; LSP highlighting is ridiculously slow, we use highlight-thing instead
   (eglot-ignored-server-capabilities '(:documentHighlightProvider))
   :config
   ;; Re-add flymake checkers because eglot clobbers them all on server start

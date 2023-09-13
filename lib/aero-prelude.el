@@ -467,13 +467,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Provides defaults for many modes which evil proper overlooks
 (package! evil-collection :auto :after evil :config (evil-collection-init))
 
-;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
-(unless (display-graphic-p)
-  (package! evil-terminal-cursor-changer :auto
-    :after evil
-    :functions (evil-terminal-cursor-changer-activate)
-    :config (evil-terminal-cursor-changer-activate)))
-
 (package! evil-matchit :auto :defer 5
   ;; allows % to jump matching tags
   :after evil
