@@ -255,12 +255,18 @@ See `sort-regexp-fields'."
     (split-window-right))
   (balance-windows))
 
+(defun aero/tail-compilation-buffer ()
+  "Reset tailing the compilation buffer."
+  (interactive)
+  (let* ((window (get-buffer-window "*compilation*"))
+         (pos (with-current-buffer "*compilation*" (point-max))))
+    (set-window-point window pos)))
+
 (defun aero/toggle-compilation-buffer ()
   "Pop-up the compilation buffer."
   (interactive)
   (aero/toggle-popup-buffer "*compilation*")
-  (with-current-buffer "*compilation*"
-    (goto-char (point-max))))
+  (aero/tail-compilation-buffer))
 
 (defun aero/toggle-popup-buffer (buf)
   "Pop-up BUF in a buffer below."
