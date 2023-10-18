@@ -919,16 +919,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 (package! typing (:host github :repo "thornjad/emacswiki-typing")
   :commands (typing-of-emacs))
 
-(package! emojify :auto
-  :after general
-  :commands (emojify-insert-emoji)
-  :init
-  (bind-key* (kbd "C-c .") #'emojify-insert-emoji)
-  (aero-leader-def "te" 'emojify-insert-emoji)
-  :custom
-  (emojify-display-style 'unicode)
-  (emojify-emoji-styles '(unicode)))
-
 (require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 
