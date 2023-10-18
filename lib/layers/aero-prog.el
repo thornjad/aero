@@ -67,12 +67,17 @@
   (eglot-send-changes-idle-time 0.75)
   ;; LSP highlighting is ridiculously slow, we use highlight-thing instead
   (eglot-ignored-server-capabilities '(:documentHighlightProvider))
+
   :config
-  ;; Re-add flymake checkers because eglot clobbers them all on server start
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              (when (derived-mode-p 'python-base-mode)
-                (add-hook 'flymake-diagnostic-functions 'python-flymake nil t))))
+
+  ;; Individual server configuration
+  (setq-default eglot-workspace-configuration
+                '(:pylsp (:plugins (:pycodestyle (:enabled :json-false)
+                                    ;; :pyflakes (:enabled :json-false)
+                                    :pyls_mypy (:enabled t
+                                                :live_mode :json-false)
+                                    :pyls_black (:enabled t)
+                                    :pyls_isort (:enabled t)))))
 
   (aero-leader-def
     "la" 'eglot-code-actions
@@ -193,10 +198,6 @@
   (flymake-no-changes-timeout 0.6)
 
   :config
-  ;; Use ruff with python
-  (add-hook 'python-base-mode-hook 'flymake-mode)
-  (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
-
   ;; Buffer diagnostics in bottom window
   (add-to-list 'display-buffer-alist
                '("\\*Flymake diagnostics for.*"
@@ -215,6 +216,7 @@
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
 (package! flymake-eslint :auto
+  :after (eglot)
   :init
   ;; Need to add after eglot so eglot doesn't clobber
   (add-hook 'eglot-managed-mode-hook
@@ -225,12 +227,25 @@
                 (flymake-eslint-enable)))))
 
 (package! flymake-mypy (:host github :repo "com4/flymake-mypy")
+  :after (eglot)
   :init
   ;; Need to add after eglot so eglot doesn't clobber
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (when (derived-mode-p 'python-mode)
                 (flymake-mypy-enable)))))
+
+(package! flymake-ruff :auto
+  :after (eglot)
+  :functions (flymake-ruff-load)
+  :init
+  ;; Need to add after eglot so eglot doesn't clobber
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-managed-mode-hook
+              (lambda ()
+                (when (derived-mode-p 'python-base-mode)
+                  (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
+                  (flymake-ruff-load))))))
 
 (package! flyspell :builtin
   :after (general)
