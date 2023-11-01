@@ -54,7 +54,6 @@
  ns-use-srgb-colorspace nil ;; REVIEW what is this?
  show-paren-context-when-offscreen 'overlay ; for some langs, show context in a header bar
  mail-user-agent nil ; disable email click opening mail message; error instead
- show-trailing-whitespace t
  context-menu-mode t ; enable context menu when clicked, should be default
 
  isearch-forward t ; ensures evil repeats searches in the correct direction
@@ -188,6 +187,9 @@
 ;; make case statements indent properly
 (with-eval-after-load 'prog-mode
   (c-set-offset 'case-label '++))
+
+;; Show trailing whitespace in prog modes
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 ;; prevent savehist cpu hogging
 (setq history-length 100)
