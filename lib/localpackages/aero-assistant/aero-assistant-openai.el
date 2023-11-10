@@ -60,14 +60,15 @@ Current date: %s")
 (defun aa--send-openai (model)
   "Send prompts to OpenAI MODEL."
   (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
-  (aa--send-openai-request
-   model
-   (aa--gather-prompts-openai)
-   (lambda (response)
-     (let ((message (aa--register-response response)))
-       (aa--display-message message)
-       (setq aa--busy-p nil)
-       (spinner-stop aa--spinner)))))
+  (let ((single-prompt (string= model (gethash "DALL-E" aa--model-name-map))))
+    (aa--send-openai-request
+     model
+     (aa--gather-prompts-openai single-prompt)
+     (lambda (response)
+       (let ((message (aa--register-response response)))
+         (aa--display-message message)
+         (setq aa--busy-p nil)
+         (spinner-stop aa--spinner))))))
 
 (defun aa--gen-commit-message-openai (model callback)
   "Generate a commit message and pass it to CALLBACK."
@@ -88,9 +89,9 @@ Current date: %s")
   "Return MESSAGE with it's :content downcased."
   (let* ((content (plist-get message :content))
          (content (if (> (length content) 0)
-                   (concat (downcase (substring content 0 1))
-                           (substring content 1))
-                   content))
+                      (concat (downcase (substring content 0 1))
+                              (substring content 1))
+                    content))
          (content (if (string-suffix-p "." content)
                       (string-remove-suffix "." content)
                     content)))
@@ -99,41 +100,78 @@ Current date: %s")
 (defun aa--send-openai-request (model message callback)
   "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
   (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
-  (let* ((inhibit-message t)
-         (message-log-max nil)
-         (url-show-status aa-debug-mode)
-         (url-show-headers aa-debug-mode)
-         (url-request-method "POST")
-         (url-request-extra-headers
-          `(("Content-Type" . "application/json")
-            ("Authorization" . ,(format "Bearer %s" aa-openai-api-key))))
-         (url-request-data (encode-coding-string
-                            ;; https://platform.openai.com/docs/api-reference/chat/create
-                            (json-encode `(:model ,model
-                                           :messages [,@message]
-                                           :temperature nil
-                                           :max_tokens nil))
-                            'utf-8)))
+  (let ((inhibit-message t)
+        (message-log-max nil)
+        (url-show-status aa-debug-mode)
+        (url-show-headers aa-debug-mode)
+        (url-request-method "POST")
+        (url-request-extra-headers
+         `(("Content-Type" . "application/json")
+           ("Authorization" . ,(format "Bearer %s" aa-openai-api-key))))
+        (url-request-data (aa--request-data model message)))
 
-    (url-retrieve "https://api.openai.com/v1/chat/completions"
+    (url-retrieve (aa--openapi-api-url model)
                   (lambda (_)
-                    (funcall callback (aa--parse-response-openai (current-buffer)))
+                    (funcall callback (aa--parse-response-openai model (current-buffer)))
                     (kill-buffer))
                   nil (not aa-debug-mode) nil)))
 
-(defun aa--gather-prompts-openai ()
-  "Return a full prompt from chat history, prepended with a system prompt."
+(defun aa--request-data (model message)
+  "Get request data for MODEL with MESSAGE"
+  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+         (aa--request-data-dall-e model message))
+        ((string= model (gethash "GPT-3.5" aa--model-name-map))
+         (aa--request-data-gpt model message))
+        ((string= model (gethash "GPT-4" aa--model-name-map))
+         (aa--request-data-gpt model message))
+        (t (user-error "Model %s not supported" model))))
+
+(defun aa--openapi-api-url (model)
+  "Get the OpenAI API URL for MODEL."
+  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+         "https://api.openai.com/v1/images/generations")
+        ((string= model (gethash "GPT-3.5" aa--model-name-map))
+         "https://api.openai.com/v1/chat/completions")
+        ((string= model (gethash "GPT-4" aa--model-name-map))
+         "https://api.openai.com/v1/chat/completions")
+        (t (user-error "Model %s not supported" model))))
+
+(defun aa--request-data-dall-e (model message)
+  "Get the request data for a DALL-E MODEL call with MESSAGE."
+  (encode-coding-string
+   (json-encode `(:model ,model
+                  :prompt ,message
+                  :n 1 ;; only 1 is supported for dall-e 3
+                  :quality ,aa-dall-e-quality
+                  :style ,aa-dall-e-style))
+   'utf-8))
+
+(defun aa--request-data-gpt (model messages)
+  "Get the request data for a GPT MODEL call with MESSAGES."
+  (encode-coding-string
+   ;; https://platform.openai.com/docs/api-reference/chat/create
+   (json-encode `(:model ,model
+                  :messages [,@messages]
+                  :temperature nil
+                  :max_tokens nil))
+   'utf-8))
+
+(defun aa--gather-prompts-openai (single-prompt)
+  "Return a full prompt from chat history, or last prompt if SINGLE-PROMPT."
   (let ((prompts (aa--filter-history-prompts-format-openai
                   #'aa--valid-prompt-p
                   (or (and aa-max-entries
                            (seq-take aa--history aa-max-entries))
                       aa--history))))
     (when (not prompts) (user-error "Prompt history contains nothing to send."))
-    (cons (list :role "system"
-                :content (format aa-openai-system-prompt (format-time-string "%Y-%m-%d")))
-          ;; Need to reverse so latest comes last
-          (nreverse prompts))))
-
+    (if single-prompt
+        (let ((last-prompt (car aa--history)))
+          (when (string= "user" (plist-get last-prompt :role))
+            (plist-get last-prompt :content)))
+      (cons (list :role "system"
+                  :content (format aa-openai-system-prompt (format-time-string "%Y-%m-%d")))
+            ;; Need to reverse so latest comes last
+            (nreverse prompts)))))
 
 (defun aa--filter-history-prompts-format-openai (pred hist)
   "Filter HIST alist for prompts."
@@ -148,44 +186,94 @@ Current date: %s")
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun aa--parse-response-openai (buffer)
-  "Parse the Assistant response in URL BUFFER."
-  (when (buffer-live-p buffer)
-    (with-current-buffer buffer
-      (when aa-debug-mode (clone-buffer "*aa-error*" 'show))
-      (if-let* ((status (buffer-substring (line-beginning-position) (line-end-position)))
-                (json-object-type 'plist)
-                (response
-                 (progn
-                   (forward-paragraph)
-                   (let ((json-str
-                          (decode-coding-string
-                           (buffer-substring-no-properties (point) (point-max))
-                           'utf-8)))
-                     (condition-case nil
-                         (json-read-from-string json-str)
-                       (json-readtable-error 'json-read-error))))))
+(defun aa--parse-response-openai (model buffer)
+  "Parse the Assistant response for GPT in BUFFER for MODEL."
+  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+         (aa--parse-response-openai-dall-e buffer))
+        ((string= model (gethash "GPT-3.5" aa--model-name-map))
+         (aa--parse-response-openai-gpt buffer))
+        ((string= model (gethash "GPT-4" aa--model-name-map))
+         (aa--parse-response-openai-gpt buffer))
+        (t (user-error "Model %s not supported" model))))
 
-          (cond
-           ((string-match-p "200 OK" status)
-            (let* ((choices (aref (plist-get response :choices) 0))
-                   (message (plist-get choices :message)))
-              (if choices
-                  (list :content (string-trim (substring-no-properties (plist-get message :content)))
-                        :tokens (plist-get response :usage)
-                        :time (plist-get response :created)
-                        :stop (plist-get choices :finish_reason)
-                        :status (substring-no-properties status))
-                (list :error t :status "No message received"))))
-           ((plist-get response :error)
-            (let* ((error-plist (plist-get response :error))
-                   (error-msg (plist-get error-plist :message))
-                   (error-type (plist-get error-plist :type)))
-              (list :error t :status (concat status ": " error-type))))
-           ((eq response 'json-read-error)
-            (list :error t :status (concat status ": Malformed JSON in response.")))
-           (t (list :error t :status (concat status ": Could not parse HTTP response."))))
-        (list :error t :status (concat status ": Could not parse HTTP response."))))))
+(defun aa--parse-response-openai-dall-e (buffer)
+  "Parse the Assistant response for DALL-E in BUFFER."
+  (when (buffer-live-p buffer)
+    (aa--show-debug-buffer buffer)
+    (if-let ((status (aa--get-response-status buffer))
+             (response (aa--get-response-json buffer)))
+        (cond
+         ((string-match-p "200 OK" status)
+          (let ((response-data (aref (plist-get response :data) 0)))
+            (list :content (string-trim  (plist-get response-data :url))
+                  :revised_prompt (plist-get response-data :revised_prompt)
+                  :show_image t
+                  :time (plist-get response :created)
+                  :status status)))
+
+         ((plist-get response :error)
+          (let* ((error-plist (plist-get response :error))
+                 (error-msg (plist-get error-plist :message))
+                 (error-type (plist-get error-plist :type)))
+            (list :error t :status (concat status ": " error-type))))
+
+         ((eq response 'json-read-error)
+          (list :error t :status (concat status ": Malformed JSON in response.")))
+
+         (t (list :error t :status (concat status ": Could not parse HTTP response."))))
+
+      ;; if-let errored
+      (list :error t :status (concat status ": Could not parse HTTP response.")))))
+
+(defun aa--parse-response-openai-gpt (buffer)
+  "Parse the Assistant response for GPT in BUFFER."
+  (when (buffer-live-p buffer)
+    (aa--show-debug-buffer buffer)
+    (if-let ((status (aa--get-response-status buffer))
+             (response (aa--get-response-json buffer)))
+        (cond
+         ((string-match-p "200 OK" status)
+          (let* ((choices (aref (plist-get response :choices) 0))
+                 (message (plist-get choices :message)))
+            (if choices
+                (list :content (string-trim (substring-no-properties (plist-get message :content)))
+                      :tokens (plist-get response :usage)
+                      :time (plist-get response :created)
+                      :stop (plist-get choices :finish_reason)
+                      :status (substring-no-properties status))
+              (list :error t :status "No message received"))))
+         ((plist-get response :error)
+          (let* ((error-plist (plist-get response :error))
+                 (error-msg (plist-get error-plist :message))
+                 (error-type (plist-get error-plist :type)))
+            (list :error t :status (concat status ": " error-type))))
+         ((eq response 'json-read-error)
+          (list :error t :status (concat status ": Malformed JSON in response.")))
+         (t (list :error t :status (concat status ": Could not parse HTTP response."))))
+      (list :error t :status (concat status ": Could not parse HTTP response.")))))
+
+(defun aa--get-response-status (buffer)
+  "Get the response status from BUFFER."
+  (with-current-buffer buffer
+    (buffer-substring (line-beginning-position) (line-end-position))))
+
+(defun aa--get-response-json (buffer)
+  "Get the response JSON from BUFFER."
+  (with-current-buffer buffer
+    (let ((json-object-type 'plist))
+      (progn
+        (forward-paragraph)
+        (let ((json-str
+               (decode-coding-string
+                (buffer-substring-no-properties (point) (point-max))
+                'utf-8)))
+          (condition-case nil
+              (json-read-from-string json-str)
+            (json-readtable-error 'json-read-error)))))))
+
+(defun aa--show-debug-buffer (buffer)
+  "Show debug BUFFER if desired."
+  (with-current-buffer buffer (when aa-debug-mode (clone-buffer "*aa-error*" 'show))))
 
 (provide 'aero-assistant-openai)
 ;;; aero-assistant-openai.el ends here

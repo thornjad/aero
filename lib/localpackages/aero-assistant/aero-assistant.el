@@ -93,15 +93,43 @@ Nil means no maximum."
 (defvar aa--model-options
   '("GPT 3.5"
     "GPT 4"
-    "Davinci"
-    "StableLM"))
-(defvar aa--openai-models '("GPT 4" "GPT 3.5" "Davinci"))
+    "DALL-E"
+    ))
+(defvar aa--openai-models '("GPT 4" "GPT 3.5" "DALL-E"))
 (defvar aa--model-name-map
   #s(hash-table size 10 test equal data
-                ("GPT 3.5" "gpt-3.5-turbo"
-                 "GPT 4" "gpt-4"
-                 "Davinci" "text-davinci-003"
-                 "StableLM" "TODO")))
+                ("GPT 3.5" "gpt-3.5-turbo-1106"
+                 "GPT 4" "gpt-4-1106-preview"
+                 "DALL-E" "dall-e-3"
+                 )))
+(defvar aa-dall-e-quality "standard")
+(defvar aa-dall-e-style "vivid")
+
+(defun aero/assistant-toggle-debug ()
+  "Toggle Aero Assistant debug mode."
+  (interactive)
+  (setq aa-debug-mode (not aa-debug-mode))
+  (if aa-debug-mode
+      (message "Aero Assistant debug mode enabled")
+    (message "Aero Assistant debug mode disabled")))
+
+(defun aero/assistant-set-dall-e-quality ()
+  "Set DALL-E quality.
+
+The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image"
+  (setq aa-dall-e-quality
+        (completing-read "DALL-E Quality: " '("standard" "hd")
+                         nil nil nil nil
+                         aa-dall-e-quality)))
+
+(defun aero/assistant-set-dall-e-style ()
+  "Set DALL-E style.
+
+Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images"
+  (setq aa-dall-e-style
+        (completing-read "DALL-E Style: " '("vivid" "natural")
+                         nil nil nil nil
+                         aa-dall-e-style)))
 
 (defun aa-kill-buffer-hook ()
   "Kill response buffer hook."
@@ -156,7 +184,7 @@ these may be nil and still be a valid message, they need only exist."
 ;; User input
 
 (defun aa-begin-input (&optional init)
-  (interactive)
+  (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
   (when aa--busy-p
     (user-error "BUSY: Waiting for Assistant complete its response..."))
   (aa-input-exit)
@@ -244,7 +272,7 @@ these may be nil and still be a valid message, they need only exist."
         (unless (bobp) (insert "\n\n"))
         (cond
          ((or (plist-get message :error) (eq role nil))
-          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aa-try-again]\n\n"
+          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aero/assistant-try-again]\n\n"
                   (or (plist-get message :status)
                       (format (or (and (plist-get message :error)
                                        "Error: unknown error: %s")
@@ -266,17 +294,30 @@ these may be nil and still be a valid message, they need only exist."
 (defun aa--format-response (response)
   "Format Assistant response for display."
   (let ((content (plist-get response :content))
-        ;; (status (plist-get response :status))
         (tokens (plist-get response :tokens))
-        ;; (time (plist-get response :time))
+        (revised-prompt (plist-get response :revised_prompt))
+        (show-image (plist-get response :show_image))
+        (time (plist-get response :time))
         (stop (plist-get response :stop)))
-    (concat "## Assistant "
-            ;; Tokens
-            (format "\n\n> %s tokens: %s prompt, %s response"
-                    (plist-get tokens :total_tokens)
-                    (plist-get tokens :prompt_tokens)
-                    (plist-get tokens :completion_tokens))
-            "\n\n" content "\n\n"
+    (concat "## Assistant"
+            (when time
+              ;; Format time
+              (format "\n\n> [%s]" (format-time-string "%Y-%m-%d %H:%M:%S" time)))
+            (when tokens
+              (concat
+               "\n"
+               (unless time "\n")
+               (format "> %s tokens: %s prompt, %s response"
+                       (plist-get tokens :total_tokens)
+                       (plist-get tokens :prompt_tokens)
+                       (plist-get tokens :completion_tokens)))
+              )
+            (when revised-prompt
+              (concat "\n\n> " revised-prompt))
+            "\n\n"
+            content
+            "\n\n"
+            (when show-image (concat "![](" content ")\n\n"))
             (cond
              ((string= stop "length") "> Stop Reason: Token Limit")
              ((string= stop "content_filter") "> Stop Reason: Content Filter Flag")
@@ -323,6 +364,7 @@ these may be nil and still be a valid message, they need only exist."
   (setq buffer-read-only t)
   (setq header-line-format '((:eval (aa--header-line))))
   (setq aa--spinner (spinner-create 'horizontal-breathing-long t))
+  (markdown-display-inline-images)
   (add-hook 'kill-buffer-hook #'aa-kill-buffer-hook nil t))
 
 ;;;###autoload
@@ -370,14 +412,6 @@ Requires `magit'."
              (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
                ;; Only insert if message line is empty
                (insert content)))))))))
-
-(defun aero/assistant-toggle-debug ()
-  "Toggle Aero Assistant debug mode."
-  (interactive)
-  (setq aa-debug-mode (not aa-debug-mode))
-  (if aa-debug-mode
-      (message "Aero Assistant debug mode enabled")
-    (message "Aero Assistant debug mode disabled")))
 
 (provide 'aero-assistant)
 ;;; aero-assistant.el ends here
