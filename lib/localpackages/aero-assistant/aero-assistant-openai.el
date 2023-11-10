@@ -60,13 +60,14 @@ Current date: %s")
 (defun aa--send-openai (model)
   "Send prompts to OpenAI MODEL."
   (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
-  (let ((single-prompt (string= model (gethash "DALL-E" aa--model-name-map))))
+  (let ((single-prompt (member model aa--dall-e-models)))
     (aa--send-openai-request
      model
      (aa--gather-prompts-openai single-prompt)
      (lambda (response)
        (let ((message (aa--register-response response)))
          (aa--display-message message)
+         (markdown-display-inline-images)
          (setq aa--busy-p nil)
          (spinner-stop aa--spinner))))))
 
@@ -118,21 +119,17 @@ Current date: %s")
 
 (defun aa--request-data (model message)
   "Get request data for MODEL with MESSAGE"
-  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+  (cond ((member model aa--dall-e-models)
          (aa--request-data-dall-e model message))
-        ((string= model (gethash "GPT 3.5" aa--model-name-map))
-         (aa--request-data-gpt model message))
-        ((string= model (gethash "GPT 4" aa--model-name-map))
+        ((member model aa--gpt-models)
          (aa--request-data-gpt model message))
         (t (user-error "Model %s not supported" model))))
 
 (defun aa--openapi-api-url (model)
   "Get the OpenAI API URL for MODEL."
-  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+  (cond ((member model aa--dall-e-models)
          "https://api.openai.com/v1/images/generations")
-        ((string= model (gethash "GPT 3.5" aa--model-name-map))
-         "https://api.openai.com/v1/chat/completions")
-        ((string= model (gethash "GPT 4" aa--model-name-map))
+        ((member model aa--gpt-models)
          "https://api.openai.com/v1/chat/completions")
         (t (user-error "Model %s not supported" model))))
 
@@ -188,11 +185,9 @@ Current date: %s")
 
 (defun aa--parse-response-openai (model buffer)
   "Parse the Assistant response for GPT in BUFFER for MODEL."
-  (cond ((string= model (gethash "DALL-E" aa--model-name-map))
+  (cond ((member model aa--dall-e-models)
          (aa--parse-response-openai-dall-e buffer))
-        ((string= model (gethash "GPT 3.5" aa--model-name-map))
-         (aa--parse-response-openai-gpt buffer))
-        ((string= model (gethash "GPT 4" aa--model-name-map))
+        ((member model aa--gpt-models)
          (aa--parse-response-openai-gpt buffer))
         (t (user-error "Model %s not supported" model))))
 

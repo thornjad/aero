@@ -93,15 +93,17 @@ Nil means no maximum."
 (defvar aa--model-options
   '("GPT 3.5"
     "GPT 4"
-    "DALL-E"
-    ))
-(defvar aa--openai-models '("GPT 4" "GPT 3.5" "DALL-E"))
+    "DALL-E 3"
+    "DALL-E 2"))
+(defvar aa--openai-models '("GPT 4" "GPT 3.5" "DALL-E 3" "DALL-E 2"))
+(defvar aa--dall-e-models '("dall-e-3" "dall-e-2"))
+(defvar aa--gpt-models '("gpt-4-1106-preview" "gpt-3.5-turbo-1106"))
 (defvar aa--model-name-map
   #s(hash-table size 10 test equal data
                 ("GPT 3.5" "gpt-3.5-turbo-1106"
                  "GPT 4" "gpt-4-1106-preview"
-                 "DALL-E" "dall-e-3"
-                 )))
+                 "DALL-E 3" "dall-e-3"
+                 "DALL-E 2" "dall-e-2")))
 (defvar aa-dall-e-quality "standard")
 (defvar aa-dall-e-style "vivid")
 
@@ -317,7 +319,7 @@ these may be nil and still be a valid message, they need only exist."
             "\n\n"
             content
             "\n\n"
-            (when show-image (concat "![](" content ")\n\n"))
+            ;; (when show-image (concat "![](" content ")\n\n"))
             (cond
              ((string= stop "length") "> Stop Reason: Token Limit")
              ((string= stop "content_filter") "> Stop Reason: Content Filter Flag")
