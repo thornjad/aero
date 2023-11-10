@@ -1,4 +1,4 @@
-personal_ws-1.1 en 570 
+personal_ws-1.1 en 571 
 ACL
 AEC
 APIs
@@ -163,6 +163,7 @@ PoC
 Postgres
 Prebuilt
 QGIS
+Qase
 RESTful
 RET
 RMQ
