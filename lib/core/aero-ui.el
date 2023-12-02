@@ -104,6 +104,8 @@
     "Disabled by Aero."
     ""))
 
+;; improved pixel-based smooth scrolling. Mostly used when screen sharing, doesn't really do much
+;; for normal navigation
 (package! good-scroll (:host github :repo "io12/good-scroll.el")
   :functions (good-scroll-mode)
   :init
@@ -111,6 +113,7 @@
   (setq good-scroll-avoid-vscroll-reset nil)
   :config (good-scroll-mode +1))
 
+;; Display formfeed characters
 (package! formfeeder (:host gitlab :repo "thornjad/formfeeder" :branch "main")
   :defines (formfeeder-line-width)
   :config
@@ -118,6 +121,8 @@
   (declare-function global-formfeeder-mode "formfeeder.el")
   (global-formfeeder-mode 1))
 
+;; Highlight the current thing at point, kind of like what lsp-ui does for some language, but in all
+;; buffers and modes
 (package! highlight-thing :auto
   :hook (prog-mode . highlight-thing-mode)
   :commands (highlight-thing-mode)
@@ -132,6 +137,7 @@
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
+;; show indentation guides
 (package! highlight-indent-guides :auto
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method 'character
