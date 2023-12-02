@@ -134,6 +134,11 @@
   (highlight-thing-narrow-region-lines 70)
   (highlight-thing-large-buffer-limit 5000))
 
+;; show all matching selections (from region)
+(package! selection-highlight-mode (:host github :repo "balloneij/selection-highlight-mode")
+  :hook (prog-mode . selection-highlight-mode))
+
+;; highlight todo and similar words
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :hook ((prog-mode text-mode) . todo-light-mode))
 
