@@ -16,7 +16,7 @@ fi
 echo "AERO --- Temporary work dir: ${WORK_DIR}"
 
 function cleanup() {
-  rm -rf "$WORK_DIR"
+  rm -rf "$WORK_DIR" || { echo "AERO --- Failed to remove temporary work directory, but this is okay, continuing..." }
 }
 
 # on exit signal, clean up
@@ -31,7 +31,7 @@ sudo -v
 # Keep alive existing `sudo` time stamp until the script has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-sudo apt update
+sudo apt update || { echo "AERO --- Failed to update apt"; exit 1; }
 
 libs=(
   autoconf
@@ -55,6 +55,12 @@ libs=(
   texinfo
 )
 sudo apt install -y ${libs[@]}
+
+if [[ $? -ne 0 ]]; then
+  print "Error: Apt install failed, check the output above for details"
+  exit 1
+fi
+
 echo "AERO --- Done with requirements"
 
 echo "AERO --- Getting Emacs source"
@@ -80,10 +86,22 @@ pwd
 # CFLAGS: enables CPU optimizations, using native architecture
 
 ./autogen.sh && ./configure --with-native-compilation=aot --with-json --with-threads --with-compress-install --with-modules --with-tree-sitter --with-gnutls=ifavailable --without-mailutils --without-pop CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+
+if [[ $? -ne 0 ]]; then
+  print "Error: Configure failed, check the output above for details"
+  exit 1
+fi
+
+# Verify that configure worked, sometimes it doesn't
+if [[ ! -e "${WORK_DIR}/Makefile" ]]; then
+  echo "Error: Configure script failed to create Makefile in ${WORK_DIR}. Contents of the directory:"
+  exit 1
+fi
+
 echo "AERO --- Building Emacs"
-make -j12
+make -j12 || { echo "AERO --- Failed to build Emacs"; exit 1; }
 echo "AERO --- Installing Emacs"
-sudo make install
+sudo make install || { echo "AERO --- Failed to install Emacs"; exit 1; }
 echo "AERO --- Cleaning up"
 cleanup()
 echo "AERO --- Done"
