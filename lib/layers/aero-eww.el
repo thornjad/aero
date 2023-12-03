@@ -226,16 +226,14 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :init
   (aero-leader-def "hD" 'devdocs-lookup)
   (add-hook 'python-mode-hook
-            (lambda ()
-              (setq-local devdocs-current-docs '("python~3.10"))))
+            (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (add-hook 'python-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
   (add-hook 'typescript-mode-hook
-            (lambda ()
-              (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
+            (lambda () (setq-local devdocs-current-docs '("typescript" "rxjs" "angular" "javascript"))))
   (add-hook 'ng2-ts-mode-hook
-            (lambda ()
-              (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript" "html"))))
+            (lambda () (setq-local devdocs-current-docs '("typescript" "angular" "rxjs" "javascript" "html"))))
   (add-hook 'web-mode-hook
-            (lambda ()
-              (setq-local devdocs-current-docs '("angular" "rxjs" "javascript" "html")))))
+            (lambda () (setq-local devdocs-current-docs '("angular" "rxjs" "javascript" "html")))))
 
 (provide 'aero-eww)
