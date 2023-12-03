@@ -58,7 +58,15 @@
 (package! jsonrpc :auto)
 
 (package! eglot :builtin
-  :hook ((prog-mode) . eglot-ensure)
+  :hook ((python-mode
+          python-ts-mode
+          typescript-mode
+          typescript-ts-mode
+          js-mode
+          js-ts-mode
+          json-mode
+          json-ts-mode)
+         . eglot-ensure)
   :after (general)
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
@@ -232,7 +240,7 @@
   ;; Need to add after eglot so eglot doesn't clobber
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
-              (when (derived-mode-p 'python-mode)
+              (when (or (derived-mode-p 'python-mode) (derived-mode-p 'python-ts-mode))
                 (flymake-mypy-enable)))))
 
 (package! flymake-ruff :auto
