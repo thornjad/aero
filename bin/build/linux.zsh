@@ -73,10 +73,6 @@ fi
 
 echo "AERO --- Done with requirements"
 
-echo "AERO --- Getting Emacs source"
-git clone https://git.savannah.gnu.org/git/emacs.git "$WORK_DIR" || { echo "AERO --- Failed to clone repository"; exit 1; }
-cd "$WORK_DIR"
-
 echo "AERO --- Configuring Emacs build in directory:"
 pwd
 
