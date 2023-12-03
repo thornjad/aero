@@ -7,12 +7,21 @@
 # temp directory will be removed when the script exits.
 #################################
 
+echo "AERO --- Sudo is required for apt usage"
+sudo -v
+
+# Keep alive existing `sudo` time stamp until the script has finished.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 echo "AERO --- Creating temporary work directory"
 WORK_DIR=`mktemp -d`
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
   echo "AERO --- Could not create temporary work directory"
   exit 1
 fi
+
+sudo chown -R "$USER" "$WORK_DIR"
+
 echo "AERO --- Temporary work dir: ${WORK_DIR}"
 
 function cleanup() {
@@ -25,11 +34,10 @@ trap cleanup EXIT
 ### main
 
 echo "AERO --- Installing requirements"
-echo "AERO --- Sudo is required for apt usage"
-sudo -v
 
-# Keep alive existing `sudo` time stamp until the script has finished.
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+echo "AERO --- Getting Emacs source"
+git clone https://git.savannah.gnu.org/git/emacs.git "$WORK_DIR" || { echo "AERO --- Failed to clone repository"; exit 1; }
+cd "$WORK_DIR"
 
 sudo apt update || { echo "AERO --- Failed to update apt"; exit 1; }
 
