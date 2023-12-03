@@ -118,18 +118,6 @@
   (custom-set-variables
    '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
-;; extremely difficult to style for some reason
-(package! blamer :auto
-  :commands (blamer-mode)
-  :custom
-  (blamer-view 'overlay-right)
-  (blamer-type 'visual)
-  (blamer-max-commit-message-length 180)
-  (blamer-author-formatter " ● [%s] ")
-  (blamer-commit-formatter "| %s")
-  (blamer-idle-time 0.1)
-  (blamer-min-offset 15))
-
 (package! git-gutter :auto
   :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
   :custom
