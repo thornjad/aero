@@ -55,8 +55,6 @@ git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs && cd ~/.config/e
 make init
 ```
 
-`make init` will set up tree-sitter (the actual language support is not in Emacs core yet), fix nongnu-elpa which is always breaking, and install dependencies as possible (skipping those for which the packaging system isn't present).
-
 Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el`. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
 ### Mirrors
