@@ -1,4 +1,4 @@
-personal_ws-1.1 en 590 
+personal_ws-1.1 en 592 
 ACL
 AEC
 APIs
@@ -238,6 +238,7 @@ Websockets
 Wiegley
 Wojciech
 XBoard
+XWidgets
 XYZ
 YYYY
 absurde
@@ -528,6 +529,7 @@ struct
 subdirectory
 subheader
 submodule
+submodules
 subprocess
 subreddit
 substring
