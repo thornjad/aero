@@ -60,7 +60,24 @@ echo "AERO --- Getting Emacs source"
 git clone https://git.savannah.gnu.org/git/emacs.git "$WORK_DIR" || { echo "AERO --- Failed to clone repository"; exit 1; }
 cd "$WORK_DIR"
 
-echo "AERO --- Configuring Emacs build"
+echo "AERO --- Configuring Emacs build in directory:"
+pwd
+
+# Configure our installation
+#
+# See https://git.savannah.gnu.org/cgit/emacs.git/tree/plain/INSTALL for latest info
+#
+# --with-native-compilation: enables ahead-of-time native compilation [this is SLOW up front]
+# --with-json: enables native JSON support
+# --with-threads: enables support for threads for elisp libraries
+# --with-compress-install: compresses installation files to save space
+# --with-modules: enables dynamic modules
+# --with-tree-sitter: enables tree-sitter support
+# --with-gnutls=ifavailable: enables gnutls support if they're already available
+# --without-mailutils: disables mailutils support which we don't use
+# --without-pop: disables pop support, which is insecure and unused
+# CFLAGS: enables CPU optimizations, using native architecture
+
 ./autogen.sh && ./configure --with-native-compilation=aot --with-json --with-threads --with-compress-install --with-modules --with-tree-sitter --with-gnutls=ifavailable --without-mailutils --without-pop CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 echo "AERO --- Building Emacs"
 make -j12
