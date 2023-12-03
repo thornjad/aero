@@ -66,6 +66,37 @@ Upon starting up Emacs for the first time, further third-party packages will aut
 - https://framagit.org/thornjad/aero.git
 - https://codeberg.org/thornjad/aero.git
 
+### Installation of Emacs using Aero build scripts
+
+Aero includes some convenient scripting to install Emacs on Linux and Mac, with both a stable and cutting-edge version supported for Mac.
+
+#### Build script install Emacs on Linux
+
+``` sh
+make linux
+```
+
+The `linux` target will call `linux.zsh`, which installs requirements, configures, builds and installs the latest version of Emacs.
+
+Features:
+
+- Native compilation
+- Native JSON support
+- Elisp threads
+- Tree-sitter
+- Pure GTK GUI
+
+#### Build script install Emacs on MacOS
+
+Unlike Linux, installing and running Emacs on MacOS can be flaky, so several installation options are provided. Use the one that works best on your machine.
+
+- `build-emacs-macos`: This is the preferred option, installing the development version of Emacs with native compilation and XWidgets support.
+- `build-emacs-macos-stable`: A fallback option, installing the mainline release version of Emacs, with native compilation and XWidgets support.
+- `build-emacs-macos-without-native-comp`: Same as `build-emacs-macos` but without native compilation.
+- `build-emacs-macos-stable-without-native-comp`: Same as `build-emacs-macos-stable` but without native compilation.
+- `build-emacs-cask`: Install the standard Homebrew Cask `emacs-nightly` package, still cutting-edge but should be more stable than the previous options.
+- `build-emacs-cask-stable`: The final fallback, the standard Homebrew Cask `emacs` package.
+
 ## Note
 
 This configuration undergoes constant evolution. Bindings, settings and packages change with no warning and little to no documentation. This project does not exist as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
