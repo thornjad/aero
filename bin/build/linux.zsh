@@ -1,5 +1,12 @@
 #!/usr/bin/env zsh
 
+#################################
+# Build script for Emacs on Linux
+#
+# This downloads the latest development version of Emacs into a temp directory, then builds it. The
+# temp directory will be removed when the script exits.
+#################################
+
 echo "AERO --- Creating temporary work directory"
 WORK_DIR=`mktemp -d`
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
@@ -54,7 +61,7 @@ git clone https://git.savannah.gnu.org/git/emacs.git "$WORK_DIR" || { echo "AERO
 cd "$WORK_DIR"
 
 echo "AERO --- Configuring Emacs build"
-./autogen.sh && ./configure --with-native-compilation --with-json --with-threads --with-compress-install --with-modules --with-gnutls=ifavailable --without-mailutils CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+./autogen.sh && ./configure --with-native-compilation=aot --with-json --with-threads --with-compress-install --with-modules --with-tree-sitter --with-gnutls=ifavailable --without-mailutils --without-pop CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 echo "AERO --- Building Emacs"
 make -j12
 echo "AERO --- Installing Emacs"
