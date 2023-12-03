@@ -279,6 +279,7 @@
     "psC" 'flyspell-correct-at-point
     "psp" 'flyspell-correct-previous
     "psn" 'flyspell-correct-next
+    "psN" 'flyspell-goto-next-error
     "psw" 'flyspell-word
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
