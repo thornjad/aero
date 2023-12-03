@@ -1,4 +1,4 @@
-personal_ws-1.1 en 576 
+personal_ws-1.1 en 590 
 ACL
 AEC
 APIs
@@ -48,7 +48,11 @@ ELPA
 ESC
 Eglot
 Elpaca
+Emacsen
+Emacsian
+Embeddings
 Erikson
+Etherpad
 Ewelina
 Ewelina's
 FATV
@@ -103,6 +107,7 @@ Kat
 Kat's
 KiB
 Kosovo
+Koutline
 Kubernetes
 LD
 LGBTQ
@@ -111,9 +116,12 @@ LLC
 LLM
 LLMs
 LMB
+LPeg
 LSP
+LaTeX
 Libertarianism
 Lichess
+Lua
 MBTiles
 MELPA
 MVFR
@@ -166,6 +174,7 @@ Postgres
 Prebuilt
 QGIS
 Qase
+REPLs
 RESTful
 RET
 RMQ
@@ -226,6 +235,7 @@ Wayde
 Wayland
 WebGL
 Websockets
+Wiegley
 Wojciech
 XBoard
 XYZ
@@ -323,6 +333,7 @@ evcxr
 eww
 facto
 falsy
+featureful
 fichiers
 firehose
 flockmates
@@ -365,6 +376,7 @@ hotline
 href
 http
 https
+hyperdrive
 ident
 idents
 ignorer
@@ -377,6 +389,7 @@ init
 instantiation
 itcl
 jmthornton
+journaling
 jpg
 json
 jupyter
@@ -419,6 +432,7 @@ mortem
 mothership
 multiplanetary
 multivariadic
+nREPL
 nack
 nacking
 namespace
