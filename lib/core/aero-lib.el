@@ -190,6 +190,9 @@ See `sort-regexp-fields'."
 (global-set-key (kbd "C-+") 'aero/increase-font-size)
 (global-set-key (kbd "C--") 'aero/decrease-font-size)
 
+;; also allow = because that's just + without shift
+(global-set-key (kbd "C-=") 'aero/increase-font-size)
+
 
 ;; buffers, windows, frames, tabs
 
