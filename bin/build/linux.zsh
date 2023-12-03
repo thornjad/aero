@@ -49,6 +49,7 @@ libs=(
   libgccjit0
   libgccjit-12-dev
   libgif-dev
+  libglib2.0-dev
   libgnutls30
   libgtk-3-dev
   libgtk-4-dev
@@ -58,6 +59,7 @@ libs=(
   libpng-dev
   libtiff5-dev
   libtree-sitter-dev
+  libx11-dev
   libxml2-dev
   libxpm-dev
   texinfo
