@@ -49,6 +49,7 @@ libs=(
   libncurses-dev
   libpng-dev
   libtiff5-dev
+  libtree-sitter-dev
   libxml2-dev
   libxpm-dev
   texinfo
