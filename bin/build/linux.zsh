@@ -88,14 +88,13 @@ pwd
 # --with-compress-install: compresses installation files to save space
 # --with-modules: enables dynamic modules
 # --with-tree-sitter: enables tree-sitter support
-# --with-pgtk: enable pure GTK+3 port
 # --with-gnutls=ifavailable: enables gnutls support if they're already available
 # --without-mailutils: disables mailutils support which we don't use
 # --without-pop: disables pop support, which is insecure and unused
 # CFLAGS: enables CPU optimizations, using native architecture
 
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
-./autogen.sh && ./configure --with-native-compilation=aot --with-json --with-threads --with-compress-install --with-modules --with-tree-sitter --with-pgtk --with-gnutls=ifavailable --without-mailutils --without-pop CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+./autogen.sh && ./configure --with-native-compilation=aot --with-json --with-threads --with-compress-install --with-modules --with-tree-sitter --with-gnutls=ifavailable --without-mailutils --without-pop CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 
 if [[ $? -ne 0 ]]; then
   print "Error: Configure failed, check the output above for details"

@@ -84,7 +84,6 @@ Features:
 - Native JSON support
 - Elisp threads
 - Tree-sitter
-- Pure GTK GUI
 
 #### Build script install Emacs on MacOS
 
