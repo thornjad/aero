@@ -1,4 +1,4 @@
-personal_ws-1.1 en 596
+personal_ws-1.1 en 598 
 ACL
 AEC
 APIs
@@ -48,6 +48,7 @@ ELPA
 ESC
 Eglot
 Elpaca
+EmacsConf
 Emacsen
 Emacsian
 Embeddings
@@ -374,6 +375,7 @@ homebrewed
 hostname
 hotfix
 hotfixed
+hotfixes
 hotfixing
 hotline
 href
