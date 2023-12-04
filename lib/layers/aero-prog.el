@@ -54,7 +54,7 @@
 
 ;; LSP
 
-;; Used by Eglot, we want to make sure we have the latest version rather than what eglot asks for
+;; Used by Eglot, we want to make sure we have the latest version rather than what Eglot asks for
 (package! jsonrpc :auto)
 
 (package! eglot :builtin
