@@ -136,7 +136,8 @@
 
 ;; show all matching selections (from region)
 (package! selection-highlight-mode (:host github :repo "balloneij/selection-highlight-mode")
-  :hook (prog-mode . selection-highlight-mode))
+  :hook (prog-mode . selection-highlight-mode)
+  :custom (selection-highlight-mode-min-length 3))
 
 ;; highlight todo and similar words
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
