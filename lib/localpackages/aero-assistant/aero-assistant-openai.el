@@ -35,6 +35,8 @@ Respond concisely and cite sources for factual claims.
 Do not explain code snippets unless asked to do so.
 Use Markdown formatting liberally in all messages.
 Always show code snippets in markdown blocks with language labels.
+When using Python, assume the user is using version 3.9 or newer.
+When using Typescript, assume the user is using version 4.8 or newer.
 Current date: %s")
 
 (defconst aa-commit-git-command
