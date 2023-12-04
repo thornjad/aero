@@ -705,7 +705,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :init
   (aero-leader-def
     "/" '(counsel-grep-or-swiper :wk "search")
-    "?" '(swiper-thing-at-point :wk "search thing at point"))
+    "?" '(swiper-thing-at-point :wk "search thing at point")
+    "b/" '(swiper-all :wk "search all buffers")
+    "b?" '(swiper-all-thing-at-point :wk "search thing at point in all buffers"))
   :config
   (setq swiper-action-recenter t))
 
