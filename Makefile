@@ -11,7 +11,7 @@ build-macos: build-emacs-macos install-aero-macos
 # required for Aero, emacs-plus handles the actual Emacs dependencies
 macos-reqs:
 	brew update
-	brew install coreutils git-delta
+	brew install coreutils git-delta tree-sitter
 	brew tap d12frosted/emacs-plus
 
 build-emacs-cask-stable: macos-reqs
@@ -22,7 +22,7 @@ build-emacs-cask: macos-reqs
 
 build-emacs-macos: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets --with-tree-sitter
+	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
@@ -32,7 +32,7 @@ build-emacs-macos-minimal: macos-reqs
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 build-emacs-macos-stable: macos-reqs
-	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets --with-tree-sitter
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
 build-emacs-macos-stable-minimal: macos-reqs

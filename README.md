@@ -91,8 +91,8 @@ Unlike Linux, installing and running Emacs on MacOS can be flaky, so several ins
 
 - `build-emacs-macos`: This is the preferred option, installing the development version of Emacs with native compilation and XWidgets support.
 - `build-emacs-macos-stable`: A fallback option, installing the mainline release version of Emacs, with native compilation and XWidgets support.
-- `build-emacs-macos-minimal`: Same as `build-emacs-macos` but without native compilation nor tree-sitter.
-- `build-emacs-macos-stable-minimal`: Same as `build-emacs-macos-stable` but without native compilation nor tree-sitter.
+- `build-emacs-macos-minimal`: Same as `build-emacs-macos` but without native compilation.
+- `build-emacs-macos-stable-minimal`: Same as `build-emacs-macos-stable` but without native compilation.
 - `build-emacs-cask`: Install the standard Homebrew Cask `emacs-nightly` package, still cutting-edge but should be more stable than the previous options.
 - `build-emacs-cask-stable`: The final fallback, the standard Homebrew Cask `emacs` package.
 
