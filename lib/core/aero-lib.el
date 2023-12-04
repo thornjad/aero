@@ -265,6 +265,14 @@ See `sort-regexp-fields'."
          (pos (with-current-buffer "*compilation*" (point-max))))
     (set-window-point window pos)))
 
+(defun aero/project-compile-popup ()
+  "Run `project-compile' and pop up the compilation buffer."
+  (interactive)
+  (let ((buf (get-buffer-create "*compilation*")))
+    (aero/toggle-compilation-buffer)
+    (project-compile)
+    (aero/tail-compilation-buffer)))
+
 (defun aero/toggle-compilation-buffer ()
   "Pop-up the compilation buffer."
   (interactive)
