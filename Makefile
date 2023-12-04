@@ -22,20 +22,20 @@ build-emacs-cask: macos-reqs
 
 build-emacs-macos: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets --with-tree-sitter
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
-build-emacs-macos-without-native-comp: macos-reqs
+build-emacs-macos-minimal: macos-reqs
 	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 build-emacs-macos-stable: macos-reqs
-	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets --with-tree-sitter
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
-build-emacs-macos-stable-without-native-comp: macos-reqs
+build-emacs-macos-stable-minimal: macos-reqs
 	brew install emacs-plus@29 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@29/Emacs.app /Applications
 
