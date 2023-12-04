@@ -235,7 +235,7 @@ Only Git is supported because I'm not an animal."
                                (lsp-workspaces))))
           "  "))
 
-   ((and (fboundp eglot-managed-p) (eglot-managed-p))
+   ((and (fboundp 'eglot-managed-p) (eglot-managed-p))
     (list "" "  "))))
 
 (defun aero/modeline-segment-major-mode ()
