@@ -67,7 +67,11 @@ Requires watchman."
    'js-mode-hook
    (lambda () (setq emmet-expand-jsx-className? t))))
 
-(package! scss-mode :auto :mode "\\.s?css\\'")
+(package! scss-mode :auto
+  :mode "\\.s?css\\'"
+  :init
+  ;; flymake-proc is deprecated, but scss mode still uses it
+  (require 'flymake-proc))
 
 
 ;; js and jsx
