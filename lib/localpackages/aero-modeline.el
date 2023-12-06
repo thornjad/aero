@@ -219,9 +219,7 @@ Only Git is supported because I'm not an animal."
 (defun aero/modeline-segment-flymake ()
   "Displays information about current flymake status."
   (when (bound-and-true-p flymake-mode)
-    (list (flymake--mode-line-counter :error)
-          "/" (flymake--mode-line-counter :warning)
-          "  ")))
+    (list (flymake--mode-line-counter :error) " ")))
 
 (defun aero/modeline-segment-lsp ()
   "Displays information about LSP status."
@@ -293,8 +291,8 @@ WIDTH and HEIGHT are the image size in pixels."
                       ;; Right
                       (format-mode-line
                        '((:eval (aero/modeline-segment-process))
-                         (:eval (aero/modeline-segment-flymake))
                          (:eval (aero/modeline-segment-lsp))
+                         (:eval (aero/modeline-segment-flymake))
                          (:eval (aero/modeline-segment-git-state))
                          (:eval (aero/modeline-segment-remote))
                          (:eval (aero/modeline-segment-major-mode))))))))))
