@@ -10,7 +10,7 @@
 
 # Aero Emacs
 
-Here lives my own Emacs configuration, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skillfulness. There are many like it, but this one is mine.
+Here lives my own configuration for GNU Emacs, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skillfulness. There are many like it, but this one is mine.
 
 <br>
 
@@ -95,6 +95,7 @@ Unlike Linux, installing and running Emacs on MacOS can be flaky, so several ins
 - `build-emacs-macos-stable-minimal`: Same as `build-emacs-macos-stable` but without native compilation.
 - `build-emacs-cask`: Install the standard Homebrew Cask `emacs-nightly` package, still cutting-edge but should be more stable than the previous options.
 - `build-emacs-cask-stable`: The final fallback, the standard Homebrew Cask `emacs` package.
+- Note that Aero does not profess support for the pre-installed version of Emacs on MacOS; it is infrequently updated and Aero focuses on the development version of Emacs.
 
 ## Note
 
