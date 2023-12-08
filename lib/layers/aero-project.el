@@ -23,6 +23,7 @@
   :custom
   (project-vc-ignores '("node_modules/" "straight/" "target/")) ; globally ignored
   (project-vc-extra-root-markers '(".project.el" ".projectile" ".git"))
+  (project-compilation-buffer-name-function #'project-prefixed-buffer-name)
 
   :config
   (defun aero/project-root-override (dir)
