@@ -261,22 +261,29 @@ See `sort-regexp-fields'."
 (defun aero/tail-compilation-buffer ()
   "Reset tailing the compilation buffer."
   (interactive)
-  (let* ((window (get-buffer-window "*compilation*"))
-         (pos (with-current-buffer "*compilation*" (point-max))))
+  (let* ((buf-name (aero/get-compilation-buffer-name))
+         (window (get-buffer-window buf-name))
+         (pos (with-current-buffer buf-name (point-max))))
     (set-window-point window pos)))
 
 (defun aero/project-compile-popup ()
   "Run `project-compile' and pop up the compilation buffer."
   (interactive)
-  (let ((buf (get-buffer-create "*compilation*")))
+  (let ((buf (get-buffer-create (aero/get-compilation-buffer-name))))
     (aero/toggle-compilation-buffer)
     (project-compile)
     (aero/tail-compilation-buffer)))
 
+(defun aero/get-compilation-buffer-name ()
+  "Return the compilation buffer name for the current project."
+  (if (project-current nil)
+      (project-prefixed-buffer-name "compilation")
+    "*compilation*"))
+
 (defun aero/toggle-compilation-buffer ()
   "Pop-up the compilation buffer."
   (interactive)
-  (aero/toggle-popup-buffer "*compilation*")
+  (aero/toggle-popup-buffer (aero/get-compilation-buffer-name))
   (aero/tail-compilation-buffer))
 
 (defun aero/toggle-popup-buffer (buf)
