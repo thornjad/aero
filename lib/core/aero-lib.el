@@ -756,4 +756,9 @@ alternative to the beacon package."
                do (plist-put result key value)))
     result))
 
+(defun aero/unix-timestamp-to-human (timestamp)
+  "Convert a UNIX TIMESTAMP to a human-readable string."
+  (interactive)
+  (format-time-string "%Y-%m-%d %H:%M:%S" (seconds-to-time timestamp)))
+
 (provide 'aero-lib)
