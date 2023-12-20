@@ -1,4 +1,4 @@
-personal_ws-1.1 en 599 
+personal_ws-1.1 en 616 
 ACL
 AEC
 APIs
@@ -38,7 +38,10 @@ Covid
 Covid's
 Customizable
 DDC
+DDENV
 DNS
+Datadog
+Datadog's
 Davinci
 DoD
 Donal
@@ -71,6 +74,7 @@ Flyspell
 Framagit
 Freiburg
 Frontend
+GCS
 GDAL
 GDPR
 GHE
@@ -123,6 +127,7 @@ LSP
 LaTeX
 Libertarianism
 Lichess
+LocalWords
 Lua
 MBTiles
 MELPA
@@ -131,6 +136,7 @@ MacBook
 MacPorts
 Magit
 Mahr
+Makefile
 MapBox's
 MapServer
 MapTiler
@@ -168,6 +174,7 @@ POSTed
 POSTs
 PRs
 PSU
+PagerDuty
 Patreon
 Ph
 PiAware
@@ -209,7 +216,9 @@ TSV
 TUI
 Tabnine
 Tabstops
+ThELPA
 Theming
+Thornjad's
 TileJSON
 Tmux
 Tohil
@@ -236,6 +245,7 @@ WTF
 Wayde
 Wayland
 WebGL
+Webflow
 Websockets
 Wiegley
 Wojciech
@@ -306,6 +316,8 @@ decrement
 defund
 deliverables
 deprovision
+dequeue
+dequeuer
 des
 destructuring
 dev
@@ -328,6 +340,7 @@ eln
 emacsclient
 encodings
 enfin
+enqueue
 enqueues
 enqueuing
 enum
@@ -356,6 +369,7 @@ fullscreen
 fullscreening
 geojson
 geolocation
+georeferences
 gitlab
 globals
 glyphs
@@ -403,6 +417,7 @@ keyframe
 keyframes
 keymap
 keyring
+kickstarter
 kutil
 le
 learnings
@@ -486,6 +501,7 @@ putain
 px
 pygame
 pylint
+pytest
 quaternion
 quaternions
 rasterization
@@ -554,6 +570,7 @@ tcllib
 tclsh
 terminfo
 termios
+terraform
 th
 theming
 thornjad
