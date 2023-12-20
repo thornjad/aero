@@ -80,7 +80,8 @@ Requires watchman."
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
 (package! json-mode :auto :mode "\\.json\\'")
-(package! typescript-mode :auto :mode "\\.tsx?\\'")
+(package! typescript-mode :auto :mode "\\.ts\\'")
+(when (treesitterp) (package! tsx-ts-mode :builtin :mode "\\.tsx\\'"))
 
 
 ;; the rest
