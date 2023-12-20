@@ -109,8 +109,9 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
   "Perform startup initialization, including all comilation and loading"
   (aero/bootstrap)
 
-  ;; Packages used by most stuff
+  ;; Core packages
   (require 'subr-x)
+  (require 'aero-package)
   (require 'aero-lib)
 
   (aero/load-layers)
