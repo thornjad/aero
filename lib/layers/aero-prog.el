@@ -433,6 +433,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Use text mode for file that doesn't have an extension.
 (add-to-list 'auto-mode-alist '("/[^./]*\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("/\\.dir-locals\\.el\\'" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("/Cask\\'" . emacs-lisp-mode))
 
 ;; somehow makefile-mode stopped activating?
 (add-to-list 'auto-mode-alist '("Makefile" . makefile-mode))
