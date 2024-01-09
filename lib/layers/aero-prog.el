@@ -409,17 +409,21 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   :after general
   :init (apheleia-global-mode +1)
   :config
-  (dolist (cmd '((elm-format . (npx "elm-format" "--yes" "--stdin"))
-                 (cljfmt . ("lein" "cljfmt" "fix" input))
+  ;; Prettier won't read the path from package.json so swe have to specify it manually
+  (let ((config-path (expand-file-name "~/src/angular2/node_modules/ddts/.prettierrc.yml"))
+        (scss-config-path
+         (expand-file-name "~/src/angular2/node_modules/ddts/.prettierrc-scss.yml")))
+    (when (and (file-exists-p config-path) (file-exists-p scss-config-path))
+      (dolist (cmd `((elm-format . (npx "elm-format" "--yes" "--stdin"))
+                     (cljfmt . ("lein" "cljfmt" "fix" input))
 
-                 (prettier-javascript . (npx "prettier" "--stdin-filepath" filepath "--parser=flow" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
-                 (prettier . (npx "prettier" "--stdin-filepath" filepath "--parser=flow" "--single-quote" "--trailing-comma" "all" "--print-width" "110" input))
+                     (prettier-javascript . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path input))
+                     (prettier . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path input))
 
-                 ;; For some reason, prettier won't read the config file from package.json. I'm just
-                 ;; hard-coding the config here because I'm done with the day. This will eventually
-                 ;; come back to bite me, but that's future-me's problem.
-                 (prettier-typescript . (npx "prettier" "--stdin-filepath" filepath "--parser=typescript" "--single-quote" "--trailing-comma" "all" "--print-width" "110" "--tab-width" "2"))))
-    (add-to-list 'apheleia-formatters cmd))
+                     (prettier-scss . (npx "prettier" "--stdin-filepath" filepath "--config" ,scss-config-path input))
+
+                     (prettier-typescript . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path))))
+        (add-to-list 'apheleia-formatters cmd))))
 
   (add-to-list 'apheleia-mode-alist '(clojure-mode . cljfmt))
 
