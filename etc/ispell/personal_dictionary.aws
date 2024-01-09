@@ -1,4 +1,4 @@
-personal_ws-1.1 en 616 
+personal_ws-1.1 en 628 
 ACL
 AEC
 APIs
@@ -47,6 +47,8 @@ DoD
 Donal
 DroneDeploy
 DuckDuckGo
+ECCU
+ECSI
 ELPA
 ESC
 Eglot
@@ -173,6 +175,7 @@ PNG
 POSTed
 POSTs
 PRs
+PSEG
 PSU
 PagerDuty
 Patreon
@@ -191,6 +194,7 @@ RXJS
 Reddit
 Redux
 ResNet
+Robinhood
 Roboto
 SEO
 SHA
@@ -209,7 +213,9 @@ Spotify
 StS
 Standup
 Starbound
+Steph
 StructionSite
+SuperProductivity
 Szulc
 TLS
 TSV
@@ -227,6 +233,7 @@ UBI
 UCI
 UI
 URI
+USAA
 USD
 UTF
 UUID
@@ -234,6 +241,7 @@ UUIDs
 UX
 Unentangling
 VFR
+Venmo
 Verix
 Vinland
 Voici
@@ -417,6 +425,8 @@ keyframe
 keyframes
 keymap
 keyring
+kickstart
+kickstarted
 kickstarter
 kutil
 le
@@ -473,6 +483,7 @@ nw
 onboarded
 onboarding
 ortho
+outsized
 pano
 panos
 paren
@@ -528,6 +539,7 @@ roguelite
 rollout
 rsync
 runbook
+runbooks
 runnable
 runtime
 rvt
