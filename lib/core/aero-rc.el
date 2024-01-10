@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2023 Jade Michael Thornton
+;; Copyright (c) 2018-2024 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;

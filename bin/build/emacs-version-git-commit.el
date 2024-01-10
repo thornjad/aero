@@ -1,6 +1,6 @@
 ;;; emacs-version-git-commit.el ---
 
-;; Copyright © 2021 Jade Michael Thornton
+;; Copyright © 2021, 2024 Jade Michael Thornton
 ;; Copyright © 2012 Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 
 ;; Author: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>

@@ -116,7 +116,7 @@ Like the Borg, Aero amalgamates macros, functions, bindings and packages modifie
 
 ## License
 
-Copyright © 2016-2023 Jade Michael Thornton
+Copyright © 2016-2024 Jade Michael Thornton
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee
 is hereby granted, provided that the above copyright notice and this permission notice appear in all

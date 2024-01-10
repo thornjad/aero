@@ -1,6 +1,6 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2019-2023 Jade Michael Thornton
+;; Copyright (c) 2019-2024 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above

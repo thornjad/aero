@@ -1,6 +1,6 @@
 ;;; init.el --- Aero Emacs -*- lexical-binding: t; coding: utf-8; mode: emacs-lisp; -*-
 ;;
-;; Copyright (c) 2016-2023 Jade Michael Thornton
+;; Copyright (c) 2016-2024 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
