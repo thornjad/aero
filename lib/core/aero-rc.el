@@ -55,8 +55,8 @@
  show-paren-context-when-offscreen 'overlay ; for some langs, show context in a header bar
  mail-user-agent nil ; disable email click opening mail message; error instead
  context-menu-mode t ; enable context menu when clicked, should be default
-
  isearch-forward t ; ensures evil repeats searches in the correct direction
+ debugger-stack-frame-as-list t ; more readable Elisp stack traces
 
  ;; Emacs should just have code that automatically sets this threshold according to some function
  ;; involving a constant, the current date, and Moore's Law.
@@ -250,8 +250,8 @@
              ;; Put eshell in bottom side window
              '("e?shell\\*\\(?:<[[:digit:]]+>\\)?\\'"
                (display-buffer-reuse-window display-buffer-in-side-window)
-                (side . bottom)
-                (window-height . 23)))
+               (side . bottom)
+               (window-height . 23)))
 
 ;; If we leave a buffer, set its mark as inactive
 (transient-mark-mode 1)
