@@ -761,4 +761,22 @@ alternative to the beacon package."
   (interactive)
   (format-time-string "%Y-%m-%d %H:%M:%S" (seconds-to-time timestamp)))
 
+(defun aero/toggle-angular-component-file ()
+  "Toggle between an Angular component's Typescript and HTML files."
+  (interactive)
+  (let ((current-file buffer-file-name))
+    (when current-file
+      (let* ((file-ext (file-name-extension current-file))
+             (base-name (file-name-sans-extension current-file))
+             (toggle-ext (cond ((string-equal file-ext "html") "ts")
+                               ((string-equal file-ext "ts") "html")
+                               (t nil)))
+             (prefered-filename (concat base-name (when (string-equal toggle-ext "ts") ".component") "." toggle-ext)))
+        (if (and prefered-filename (file-exists-p prefered-filename))
+            (find-file prefered-filename)
+          (let ((alternative-filename (concat base-name "." toggle-ext)))
+            (if (and toggle-ext (file-exists-p alternative-filename))
+                (find-file alternative-filename)
+              (message "No corresponding file found for %s" current-file))))))))
+
 (provide 'aero-lib)

@@ -253,6 +253,7 @@
    "fott" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
    "fx" '(aero/xdg-open :wk "xdg-open")
+   "fh" '(aero/toggle-angular-component-file :wk "toggle angular component file")
 
    "g" '(:ignore t :wk "git")
    "gf" '(:ignore t :wk "files")
