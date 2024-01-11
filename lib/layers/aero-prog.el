@@ -229,9 +229,10 @@
   ;; Need to add after eglot so eglot doesn't clobber
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
-              (when (or (derived-mode-p 'typescript-mode)
-                        (derived-mode-p 'js-mode)
-                        (derived-mode-p 'web-mode))
+              (when (and (or (derived-mode-p 'typescript-mode)
+                             (derived-mode-p 'js-mode)
+                             (derived-mode-p 'web-mode))
+                         (not (derived-mode-p 'json-mode)))
                 (flymake-eslint-enable)))))
 
 (package! flymake-mypy (:host github :repo "com4/flymake-mypy")
