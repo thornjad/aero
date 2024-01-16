@@ -18,21 +18,68 @@
 ;;
 ;;; Commentary:
 ;;
-;; Aero custom packaging system, a wrapper around use-package and straight, with package repository
-;; priority given to ThELPA.
-
-(require 'straight)
-
+;; Aero custom packaging system, a wrapper around use-package and straight. Note that we cannot use
+;; aero-lib here yet, this file is loaded earlier than the rest of core.
+;;
 ;;; Code:
+
+;; Use the more-cutting-edge develop branch of straight
+(eval-when-compile
+  (defvar straight-repository-branch)
+  (defvar straight-check-for-modifications))
+(setq straight-repository-branch "develop")
+
+;; Don't allow straight to check for modifications in every repo on Emacs init, saving some startup
+;; time
+(setq straight-check-for-modifications nil)
+
+;; Tell straight that let-alist is a built-in package now, so it doesn't need to be checked if we
+;; (or more likely any dependency) try to pull it in.
+(with-eval-after-load 'straight
+  (add-to-list 'straight-built-in-pseudo-packages 'let-alist))
+
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (setf (point) (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+
+;; use-package
+
+;; Not certain we need to set up straight first, but something got messed up back before use-package
+;; was built-in, so now it will never ever move.
+(require 'use-package)
+
+;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
+(eval-when-compile
+  (defvar use-package-expand-minimally)
+  (defvar use-package-compute-statistics)
+  (defvar use-package-minimum-reported-time)
+  (defvar use-package-verbose))
+(setq use-package-expand-minimally byte-compile-current-file
+      use-package-compute-statistics nil ; t then `use-package-report' to find packages not used
+      use-package-minimum-reported-time 0.1
+      use-package-verbose init-file-debug)
+
+
+;; Aero package macro
 
 (defmacro package! (package recipe &rest body)
   "Get PACKAGE using RECIPE, then evaluate PACKAGE & BODY with `use-package'.
 
 Example:
 
-    (package! foo :auto :commands (foo-bar foo-spam))
-
-If the RECIPE is :auto, use the recipe provided by [M]ELPA.
+    (package! foo (:host gitlab :repo \"thornjad/foo\" :branch \"main\")
+     :commands (foo-bar foo-spam))
 
 If the RECIPE is :builtin or :local, do not search [M]ELPA, only pass BODY to `use-package'. While
 there is no functional difference between these two keywords, :builtin should be used for packages
@@ -42,9 +89,18 @@ require a :load-path for `use-package' to load properly.
 If the BODY contains the keyword :disabled, the package is completely ignored, with an expansion
 indicating the package has been disabled.
 
+DEPRECATED: If the RECIPE is :auto, use the recipe provided by [M]ELPA. This is deprecated in favor of providing an explicit recipe. A recipe allows greater control over packages while also providing an easier path to cutting-edge updates.
+
 Usage of this macro allows simplified refactoring when changing packaging systems, as Aero is wont
 to do every few years."
   (declare (indent defun)) ; indent like use-package
+
+  (when (memq :auto body)
+    (display-warning
+     'aero
+     (format "Package %s uses :auto, which is deprecated. Specify recipe instead" package)
+     :warning))
+
   (cond
    ((memq :disabled body)
     (format "%s :disabled by Aero package!" package))
@@ -70,60 +126,6 @@ to do every few years."
         (t
          recipe))
       ,@body))))
-
-(defun straight-recipes-thelpa-retrieve (package)
-  "Look up a PACKAGE recipe in ThELPA.
-
-PACKAGE should be a symbol. If the package has a recipe listed in
-ThELPA that uses one of the Git fetchers, return it; otherwise
-return nil."
-  (with-temp-buffer
-    (condition-case nil
-        (progn
-          (insert-file-contents-literally (expand-file-name (symbol-name package) "recipes/"))
-          (let ((thelpa-recipe (read (current-buffer)))
-                (plist nil))
-            (cl-destructuring-bind (name . thelpa-plist) thelpa-recipe
-              (straight--put plist :type 'git)
-              (straight--put plist :flavor 'thelpa)
-              (when-let ((files (plist-get thelpa-plist :files)))
-                ;; We must include a *-pkg.el entry in the recipe
-                ;; because that file always needs to be linked over,
-                ;; if it is present, but the `:files' directive might
-                ;; not include it (and doesn't need to, because THELPA
-                ;; always re-creates a *-pkg.el file regardless). See
-                ;; https://github.com/radian-software/straight.el/issues/336.
-                (straight--put plist :files
-                               (append files (list (format "%S-pkg.el" package)))))
-
-              (when-let ((branch (plist-get thelpa-plist :branch)))
-                (straight--put plist :branch branch))
-
-              (pcase (plist-get thelpa-plist :fetcher)
-                ('git (straight--put plist :repo (plist-get thelpa-plist :url)))
-                ((or 'github 'gitlab 'codeberg 'sourcehut)
-                 (straight--put plist :host (plist-get thelpa-plist :fetcher))
-                 (straight--put plist :repo (plist-get thelpa-plist :repo)))
-                ;; This error is caught by `condition-case', no need
-                ;; for a message.
-                (_ (error "")))
-              (cons name plist))))
-      (error nil))))
-
-(defun straight-recipes-thelpa-list ()
-  "Return a list of recipes available in THELPA, as a list of strings."
-  (straight--directory-files "recipes" "^[^.]"))
-
-(defun straight-recipes-thelpa-version ()
-  "Return the current version of the THELPA retriever."
-  1)
-
-(straight-use-recipes '(thelpa :type git :host github
-                               :repo "thornjad/thelpa"
-                               :build nil))
-
-(setq straight-recipe-repositories
-      '(thelpa org-elpa melpa gnu-elpa-mirror nongnu-elpa el-get emacsmirror-mirror))
 
 (provide 'aero-package)
 

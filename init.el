@@ -46,49 +46,10 @@
     (eval-when-compile (require 'gnutls))
     (setq gnutls-verify-error t)) ; Do not allow insecure TLS connections.
 
-  ;; Use the more-cutting-edge develop branch of straight, and don't allow it to check for
-  ;; modifications in every repo on Emacs init, saving some startup time.
-  (eval-when-compile
-    (defvar straight-repository-branch)
-    (defvar straight-check-for-modifications))
-  (setq straight-repository-branch "develop"
-        straight-check-for-modifications nil)
+  (require 'aero-package (expand-file-name "lib/core/aero-package.el" user-emacs-directory))
 
-  ;; Tell straight that let-alist is a built-in package now, so it doesn't need to be checked if we
-  ;; (or more likely any dependency) try to pull it in.
-  (with-eval-after-load 'straight
-    (add-to-list 'straight-built-in-pseudo-packages 'let-alist))
-
-  ;; Bootstrap straight.el
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (setf (point) (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-
-	(require 'use-package)
-
-  (and
-	 (and (functionp 'module-load) (bound-and-true-p module-file-suffix))
-   (require 'treesit nil t))
-
-  ;; Only expand minimally if we're byte-compiling, and only use verbose if we're in --debug-init.
-  (eval-when-compile
-    (defvar use-package-expand-minimally)
-    (defvar use-package-compute-statistics)
-    (defvar use-package-minimum-reported-time)
-    (defvar use-package-verbose))
-  (setq use-package-expand-minimally byte-compile-current-file
-        use-package-compute-statistics nil ; t then `use-package-report' to find packages not used
-        use-package-minimum-reported-time 0.1
-        use-package-verbose init-file-debug))
+  (and (and (functionp 'module-load) (bound-and-true-p module-file-suffix))
+       (require 'treesit nil t)))
 
 (defun aero/load-layers ()
   "Load all Aero layers.
@@ -111,7 +72,6 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 
   ;; Core packages
   (require 'subr-x)
-  (require 'aero-package)
   (require 'aero-lib)
 
   (aero/load-layers)
