@@ -197,6 +197,9 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
+;; Ensure emacsclient frames open with focus
+(add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
+
 ;; Enable mouse in TTY
 (unless (display-graphic-p)
   ;; activate mouse-based scrolling
