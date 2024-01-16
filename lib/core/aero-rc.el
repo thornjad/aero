@@ -52,7 +52,7 @@
  create-lockfiles nil ; tries to solve a non-existent problem and causes trouble doing it
  jit-lock-defer-time 0 ; wait to fontify until input ends, but no longer
  ns-use-srgb-colorspace nil ;; REVIEW what is this?
- show-paren-context-when-offscreen 'overlay ; for some langs, show context in a header bar
+ show-paren-context-when-offscreen t ; for some langs, show context in echo area
  mail-user-agent nil ; disable email click opening mail message; error instead
  context-menu-mode t ; enable context menu when clicked, should be default
  isearch-forward t ; ensures evil repeats searches in the correct direction
