@@ -59,6 +59,9 @@
  debugger-stack-frame-as-list t ; more readable Elisp stack traces
  enable-recursive-minibuffers t ; allow minibuffer commands in the minibuffer
 
+ ;; Do not allow the cursor in the minibuffer prompt
+ minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt)
+
  ;; Emacs should just have code that automatically sets this threshold according to some function
  ;; involving a constant, the current date, and Moore's Law.
  large-file-warning-threshold 500000000
@@ -262,5 +265,8 @@
 
 ;; Word navigation stops inside camelCaseWords and the like
 (global-subword-mode 1)
+
+;; Do not allow the cursor in the minibuffer prompt
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 (provide 'aero-rc)
