@@ -57,6 +57,7 @@
  context-menu-mode t ; enable context menu when clicked, should be default
  isearch-forward t ; ensures evil repeats searches in the correct direction
  debugger-stack-frame-as-list t ; more readable Elisp stack traces
+ enable-recursive-minibuffers t ; allow minibuffer commands in the minibuffer
 
  ;; Emacs should just have code that automatically sets this threshold according to some function
  ;; involving a constant, the current date, and Moore's Law.
