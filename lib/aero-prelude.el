@@ -185,9 +185,7 @@
    "U" 'universal-argument
 
    "a" '(:ignore t :wk "applications")
-   "ai" '(:ignore t :wk "Aero Assistant")
-   "aic" '(aero/assistant :wk "assistant chat")
-   "aig" '(aero/assistant-commit-message :wk "write commit message")
+   "ai" '(:ignore t :wk "AI functions")
    "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
@@ -921,6 +919,81 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
    "fd" 'deer))
 
 
+;; AI
+
+;; Aero LLM assistant interface
+(package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
+	:after markdown-mode
+  :commands (aero/assistant aero/assistant-commit-message)
+  :custom (aero/assistant-openai-api-key openai-api-key))
+
+;; Required by chatgpt-shell
+(package! shell-maker
+  (:host github :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
+
+;; GPT and DALL-E interface
+(package! chatgpt-shell
+  (:host github :repo "xenodium/chatgpt-shell")
+  :requires shell-maker
+  :after general
+  :commands (chatgpt-shell
+             dall-e-shell chatgpt-shell-send-and-review-region
+             chatgpt-shell-write-git-commit chatgpt-shell-explain-code
+             chatgpt-shell-proofread-region chatgpt-shell-refactor-code
+             chatgpt-shell-restore-session-from-transcript
+             chatgpt-shell-generate-unit-test)
+
+  :custom
+  (chatgpt-shell-openai-key openai-api-key)
+  (dall-e-shell-openai-key openai-api-key)
+  (chatgpt-shell-model-versions '("gpt-4-1106-preview" "gpt-3.5-turbo-16k-0613"
+                                  "gpt-3.5-turbo"))
+  (chatgpt-shell-welcome-function nil) ; disable welcome message
+  (chatgpt-shell-system-prompts `(("Aero" . ,aero/assistant-openai-system-prompt)))
+  (chatgpt-shell-history-path aero-cache-dir)
+
+  :init
+  (aero-leader-def
+    "aic" '(chatgpt-shell :wk "chat shell")
+    "air" '(chatgpt-shell-send-and-review-region :wk "send region with review")
+    "aig" '(chatgpt-shell-write-git-commit :wk "write git commit")
+    "aie" '(chatgpt-shell-explain-code :wk "explain code in region")
+    "aip" '(chatgpt-shell-proofread-region :wk "proofread in region")
+    "aif" '(chatgpt-shell-refactor-code :wk "refactor code in region")
+    "ais" '(chatgpt-shell-restore-session-from-transcript :wk "restore session from transcript")
+    "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test")))
+
+;; Works best with company-box, so we consider it a requirement
+(package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :after (company-box general)
+  :hook ((prog-mode eshell-mode) . copilot-mode)
+  :custom (copilot-idle-delay 0.5)
+  :config
+  (general-define-key
+   :states '(insert visual motion)
+   :keymaps 'copilot-mode-map
+   (kbd "C-<tab>") 'copilot-accept-completion
+   (kbd "C-c C-n") 'copilot-next-completion
+   (kbd "C-c C-p") 'copilot-previous-completion))
+
+
+;; Better writing
+
+;; Mark passive voice, duplicate words and weasel words
+(package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
+  :hook ((text-mode) . writegood-mode))
+
+;; Mark E′ violations
+(package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
+  :after (general)
+  ;; :hook text-mode
+  :commands (eprime-check-buffer eprime-mode)
+  :init
+  (aero-leader-def
+    "tp" 'eprime-check-buffer
+    "tP" 'eprime-mode))
+
+
 ;; General crap
 
 ;; My pomodoro package
@@ -944,39 +1017,6 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; startup profiler
 (package! esup :auto :commands (esup))
-
-;; Mark passive voice, duplicate words and weasel words
-(package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
-  :hook ((text-mode) . writegood-mode))
-
-;; LLM assistant interface
-(package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
-	:after markdown-mode
-  :commands (aero/assistant aero/assistant-commit-message)
-  :custom (aero/assistant-openai-api-key openai-api-key))
-
-;; Works best with company-box, so we consider it a requirement
-(package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-  :after (company-box general)
-  :hook (prog-mode . copilot-mode)
-  :custom (copilot-idle-delay 0.7)
-  :config
-  (general-define-key
-   :states '(insert visual motion)
-   :keymaps 'copilot-mode-map
-   (kbd "C-<tab>") 'copilot-accept-completion
-   (kbd "C-c C-n") 'copilot-next-completion
-   (kbd "C-c C-p") 'copilot-previous-completion))
-
-;; Mark E′ violations
-(package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
-  :after (general)
-  ;; :hook text-mode
-  :commands (eprime-check-buffer eprime-mode)
-  :init
-  (aero-leader-def
-    "tp" 'eprime-check-buffer
-    "tP" 'eprime-mode))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
