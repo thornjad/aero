@@ -83,19 +83,6 @@
   (when (require 'evil nil t)
     (evil-scroll-line-to-center (line-number-at-pos))))
 
-(defun last-days-today ()
-  "Get the last-day's today field"
-  (save-excursion
-    (last-day)
-    (re-search-forward "### Today" nil t)
-    (forward-char 1)
-    (let ((start (point)))
-      (re-search-forward "### Achievements" nil t)
-      (beginning-of-line)
-      ;; Subtract 2 to remove both expected newlines
-      (let ((end (- (point) 2)))
-        (buffer-substring start end)))))
-
 (defun last-days-goals ()
   "Get goals from last-day."
   (save-excursion
@@ -120,12 +107,18 @@
       (backward-char 1)
       (buffer-substring start (point)))))
 
+(defun get-last-entry-day ()
+  "Find the last entry's date and return the corresponding day of the week."
+  (save-excursion
+    (goto-char (point-max)) ; Go to the end of the buffer to start searching.
+    (when (re-search-backward "^# \\([A-Za-z]+\\), \\([A-Za-z]+ [0-9]+\\) (\\([0-9-]+\\))" nil t)
+      (let ((date-str (match-string 3)))
+        (format-time-string "%A" (date-to-time date-str))))))
+
 (defvar aero/thornlog-template
   "# TEMPLATE
 
 ## Sync summary
-
-### Promised yesterday
 
 ### Since yesterday (tech design status, hotfixes, tough investigations, QA work, etc.)
 
@@ -156,7 +149,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun new-day-insert ()
   "Insert the contents of the template into the document, for a new day's work."
   (let ((text nil)
-        (case-fold-search nil)) ; This ensures our replacements match "HOURS" not "Worked Hours"
+        (case-fold-search nil)) ; case-insensitive search
     (setf (point) (point-max))
     (save-excursion
       (setq text aero/thornlog-template)
@@ -167,10 +160,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       ;; Fill in yesterday's status as a head start
       (when (last-day-was-last-workday-p)
         (setq text (replace-regexp-in-string
-                    "\\(### Promised yesterday\\|### Promised Friday\\)"
-                    (concat "### Promised yesterday\n" (last-days-today))
-                    text t))
-        (setq text (replace-regexp-in-string
                     "## Goals\n"
                     (concat "## Goals\n" (last-days-goals))
                     text t))
@@ -178,10 +167,11 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                     "## Notes\n"
                     (concat "## Notes\n" (last-days-notes))
                     text t)))
-      ;; Skip the weekend on Monday
-      (when (string= (day-of-week) "Monday")
-        (setq text (replace-regexp-in-string "### Since yesterday" "### Since Friday" text t))
-        (setq text (replace-regexp-in-string "### Promised yesterday" "### Promised Friday" text t)))
+
+      ;; Adjust for arbitrary log gaps, such as weekends
+      (let ((last-entry-day (get-last-entry-day)))
+        (unless (string= (day-of-week) (day-after last-entry-day))
+          (setq text (replace-regexp-in-string "### Since yesterday" (format "### Since %s" last-entry-day) text t))))
 
       ;; Put in a random blocked message
       (setq text (replace-regexp-in-string
@@ -192,8 +182,15 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       ;; Done, insert
       (insert text "\n"))
     (forward-line 1)
-    (outline-hide-sublevels 1)
-    (outline-show-subtree)
+    (outline-hide-sublevels 1) ; collapse all entries
+    (outline-show-subtree) ; expand current day
+
+    ;; Expand previous day too
+    (forward-line -1)
+    (when (re-search-backward "^# .*" nil t)
+      (goto-char (match-beginning 0))
+      (outline-show-subtree))
+
     (setf (point) (point-max))
     (re-search-backward "### Since ")
     (forward-line 1)))

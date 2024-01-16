@@ -639,20 +639,13 @@ Requires the utility date to be installed."
         (call-process dateProc nil t nil "-d" human-string)))
     (replace-regexp-in-string "\n\\'" "" (buffer-string))))
 
-(defun day-of-week (&optional date)
-  "Returns the day of the week for DATE.
-If DATE is nil, check today instead.
+(defun day-of-week ()
+  "Return the current day of the week."
+  (format-time-string "%A"))
 
-Requires the utility date to be installed."
-  (with-temp-buffer
-    (let ((dateProc
-           (if (system-is-mac)
-               "gdate"
-             "date")))
-      (if date
-          (call-process dateProc nil t nil "-d" date "+%A")
-        (call-process dateProc nil t nil "+%A")))
-    (replace-regexp-in-string "\n\\'" "" (buffer-string))))
+(defun day-after (day-name)
+  "Return the name of the day following the day given by 'day-name'."
+  (format-time-string "%A" (time-add (date-to-time (concat day-name " 00:00")) (* 24 60 60))))
 
 (defun aero/frame-recenter (&optional frame)
   "Center FRAME on the screen.
