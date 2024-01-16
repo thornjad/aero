@@ -562,9 +562,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
   (advice-add #'consult-ripgrep :around #'consult--with-orderless))
 
-;; Add prompt indicator to `completing-read-multiple'.
-;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
 (defun crm-indicator (args)
+  "Add prompt indicator to `completing-read-multiple'.
+We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   (cons (format "[CRM%s] %s"
                 (replace-regexp-in-string
                  "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
