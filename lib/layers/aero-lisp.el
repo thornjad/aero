@@ -127,8 +127,6 @@ does not specify a special indentation."
 (add-hook 'common-lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 (add-hook 'lisp-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
-(add-hook 'before-save-hook #'aero/update-thornjad-elisp-signature-when-modified)
-
 
 ;; Clojure
 
