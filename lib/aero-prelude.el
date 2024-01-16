@@ -787,27 +787,28 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; File navigation
 
+;; We use the most up-to-date tramp instead of the built-in since it gave us
+;; trouble in the past
 (package! tramp (tramp :host nil :repo "git://git.savannah.gnu.org/tramp.git")
   :defer t
   :functions tramp-cleanup-all-connection
-  :config
-  (setq tramp-auto-save-directory "~/.cache/emacs/backups"
-        tramp-persistency-file-name "~/.config/emacs/data/tramp"
-        tramp-use-ssh-controlmaster-options nil  ; use system settings instead
-        tramp-default-method "rsync"
-        tramp-terminal-type "tramp"))
+  :custom
+  (tramp-auto-save-directory
+   (expand-file-name "tramp/autosave" aero-cache-dir))
+  (tramp-persistency-file-name
+   (expand-file-name "tramp/persistency" aero-cache-dir))
+  (tramp-use-ssh-controlmaster-options nil)  ; use system settings instead
+  (tramp-default-method "rsync")
+  (tramp-terminal-type "tramp"))
 
+;; We only use this for the deer function, which is a better version of dired.
 (package! ranger :auto
-  ;; We only use this for the deer function, which is a better version of dired.
   :commands (deer)
-  :after general
-  :init
-  (setq ranger-show-hidden t
-        find-directory-functions 'deer)
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "fd" 'deer))
+  :after (general)
+  :custom
+  (ranger-show-hidden t)
+  (find-directory-functions 'deer)
+  :init (aero-leader-def "fd" 'deer))
 
 
 ;; Better writing
