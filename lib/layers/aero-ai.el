@@ -60,7 +60,6 @@ Always show code snippets in markdown blocks with language labels.
 Whenever you output updated code for the user, you only show diffs instead of entire snippets unless asked.
 When using Python, assume the user is using version 3.9 or newer.
 When using Typescript, assume the user is using version 4.8 or newer.")))
-  (chatgpt-shell-history-path aero-cache-dir)
 
   :init
   (aero-leader-def
@@ -71,7 +70,11 @@ When using Typescript, assume the user is using version 4.8 or newer.")))
     "aip" '(chatgpt-shell-proofread-region :wk "proofread in region")
     "aif" '(chatgpt-shell-refactor-code :wk "refactor code in region")
     "ais" '(chatgpt-shell-restore-session-from-transcript :wk "restore session from transcript")
-    "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test")))
+    "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test"))
+
+  :config
+  ;; Seems to reset itself unless put in config
+  (setq chatgpt-shell-history-path aero-cache-dir))
 
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
