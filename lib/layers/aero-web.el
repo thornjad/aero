@@ -373,17 +373,10 @@ Requires watchman."
 (defun aero/html-entity-select ()
   "Select an html entry from the list."
   (interactive)
-  (cond
-   ((and (fboundp #'ivy-completing-read)
-         (bound-and-true-p ivy-mode))
-    (ivy-completing-read "HTML Entity: "
-                         aero/html-entity-list
-                         nil nil
-                         (char-to-string (char-after (point)))))
-   (t (completing-read "HTML Entity: "
-                       aero/html-entity-list
-                       nil nil
-                       (char-to-string (char-after (point)))))))
+  (completing-read "HTML Entity: "
+                   aero/html-entity-list
+                   nil nil
+                   (char-to-string (char-after (point)))))
 
 (defun aero/html-entity-insert ()
   "Select and insert an html entity."

@@ -104,7 +104,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
 
   ;; normal browsing
   (evil-define-key 'normal eww-mode-map
-    "SPC SPC" 'counsel-M-x
+    "SPC SPC" 'execute-extended-command
     "?" 'describe-mode
     "^" 'eww-up-url
     "u" 'eww-up-url

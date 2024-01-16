@@ -288,14 +288,8 @@
 (package! flyspell-lazy (:host github :repo "rolandwalker/flyspell-lazy")
   :hook ((flyspell-mode . flyspell-lazy-mode)))
 
-(package! flyspell-correct-ivy :auto
-  ;; Flyspell interface. Use M-o to access minibuffer actions
-  :after flyspell
-  :commands flyspell-correct-ivy
-  :custom (flyspell-correct-interface #'flyspell-correct-ivy))
-
 
-;; parens
+;; parentheses
 
 (package! smartparens :auto
   :after (general) :defer 5

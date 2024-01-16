@@ -13,9 +13,8 @@
 (require 'aero-prelude)
 
 (package! magit :auto
-  :after (general ivy)
+  :after (general)
 	:commands (magit-blame
-             ivy-magit-todos
              magit-log-buffer-file
              magit-log-trace-definition
              magit-log-head
@@ -37,7 +36,6 @@
 	(aero-leader-def
 	  "gs" 'magit-status
 	  "gb" 'magit-blame
-    "gt" 'ivy-magit-todos
     "gl" '(:ignore t :which-key "log")
     "glb" 'magit-log-buffer-file
     "gld" 'magit-log-trace-definition
@@ -66,8 +64,7 @@
 
   :config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
-  (setq magit-completing-read-function 'ivy-completing-read
-        magit-buffer-name-format "%x%M%v: %t%x"
+  (setq magit-buffer-name-format "%x%M%v: %t%x"
         magit-diff-paint-whitespace-lines 'both
         magit-diff-refine-hunk 'all
         magit-diff-refine-ignore-whitespace t

@@ -55,8 +55,6 @@
 ;; Faster than grep, but requires ripgrep to be installed locally
 (package! ripgrep :auto :defer 3)
 
-(require 'aero-keybindings)
-
 
 ;; Keybindings
 
@@ -68,12 +66,10 @@
   (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
 (package! general :auto
-  :functions (general-define-key)
-  :after (which-key)
+  :functions (general-define-key aero-leader-def aero-mode-leader-def)
   :init
   (setq-default general-override-states
                 '(insert hybrid normal visual motion operator replace))
-  :config
 
   ;; Most bindings will fall under this leader key, so we make a handy macro.
 	(general-create-definer aero-leader-def
@@ -86,6 +82,7 @@
 		:states '(normal visual emacs motion)
 		:prefix "SPC ,")
 
+  :config
   (general-define-key
    :states '(normal visual motion)
    :keymaps 'override
@@ -130,6 +127,7 @@
    "" nil
 
    ;; independent keys
+   "SPC" 'execute-extended-command
    "TAB" '(aero/alternate-buffer :wk "alternate buffer")
    (kbd "ESC") 'keyboard-quit
    (kbd "C-g") 'keyboard-quit
@@ -145,10 +143,10 @@
    "C" '(:ignore t :wk "clue")
 
    "E" '(:ignore t :wk "emacs")
+   "Et" 'load-theme
    "Ed" '(:ignore t :wk "debug")
    "Ede" 'toggle-debug-on-error
    "Edq" 'toggle-debug-on-quit
-   "Et" 'counsel-load-theme
 
    "F" '(:ignore t :wk "frame")
    "FF" 'find-file-other-frame
@@ -195,7 +193,6 @@
 
    "a" '(:ignore t :wk "applications")
    "ai" '(:ignore t :wk "AI functions")
-   "ad" 'counsel-dired
    "ag" '(:ignore t :wk "games")
    "agd" 'dunnet
    "agt" 'tetris
@@ -243,6 +240,7 @@
    "e" '(:ignore t :wk "errors")
 
    "f" '(:ignore t :wk "files")
+   "ff" 'find-file
    "fc" 'aero/copy-file-relative-to-project
    "fC" '(:ignore t :wk "convert")
    "fCd" '(aero/unix2dos :wk "unix2dos")
@@ -269,6 +267,12 @@
    "hI" 'info-apropos
    "hM" 'woman
    "hd" '(:ignore t :wk "describe")
+   "hdF" 'describe-face
+   "hdb" 'describe-bindings
+   "hdM" 'describe-mode
+   "hdK" 'describe-keymap
+   "hdC" 'describe-char
+   "hdp" 'describe-package
    "hi" 'info
    "hm" 'man
    "hw" '(:ignore t :wk "which-key")
@@ -288,7 +292,6 @@
    "ot" 'aero/task
 
    "p" '(:ignore t :wk "project")
-   "p/" 'counsel-rg
    "pr" '(xref-find-definitions :wk "find ref")
 
    "r" '(:ignore t :wk "xref")
@@ -347,8 +350,6 @@
    "w}" 'enlarge-window
 
    "z" 'repeat))
-
-
 
 
 ;; Evil
@@ -501,49 +502,93 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; completion and navigation
 
-(package! counsel :auto
-  :after general
+(package! vertico
+  (:host github :repo "minad/vertico")
+  :init (vertico-mode))
+
+(package! marginalia
+  (:host github :repo "minad/marginalia")
+  :init (marginalia-mode))
+
+;; Orderless completion style: space-separated chunks to match in any order
+(package! orderless
+  (:host github :repo "oantolin/orderless")
+  :custom
+  (completion-styles '(substring orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion))))
+  (read-file-name-completion-ignore-case t)
+  (read-buffer-completion-ignore-case t)
+  (completion-ignore-case t))
+
+(package! consult
+  (:host github :repo "minad/consult")
+  :after (general)
+  :commands (consult-line
+             consult-buffer
+             consult-outline
+             consult-imenu
+             consult-flymake
+             consult-theme
+             consult-ripgrep)
+  :custom
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref)
   :config
-  (setq counsel-find-file-ignore-regexp
-        (concat "\\(?:\\`[#.]\\)\\|\\(?:[#~]\\'\\)"
-                "\\|\\.x\\'\\|\\.d\\'\\|\\.o\\'"
-                "\\|\\.aux\\'"))
-
-  (defun aero/counsel-unicode-char-after ()
-    "Like `counsel-unicode-char', but insert after point"
-    (interactive)
-    (save-excursion
-      (right-char)
-      (counsel-unicode-char)))
-
-  (setq counsel-grep-base-command "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
-        counsel-git-cmd "rg --files"
-        counsel-rg-base-command "rg --with-filename --smart-case --no-heading --line-number --color never %s")
-
   (aero-leader-def
-    "SPC" 'counsel-M-x
-    "ff" 'counsel-find-file
-    "fl" 'counsel-locate
-    "fr" 'counsel-recentf
-    "?" 'counsel-rg
-    "gg" '(counsel-git-grep :wk "git grep")
-    "gff" '(counsel-git :wk "find git file")
-    "qu" '(aero/counsel-unicode-char-after :wk "unicode char")
-    "qU" 'counsel-unicode-char))
+    "/" 'consult-line
+    "bb" 'consult-buffer
+    "jo" 'consult-outline
+    "ji" 'consult-imenu
+    "je" 'consult-flymake
+    "p/" 'consult-ripgrep)
 
-(package! amx :auto
-  ;; Enhances counsel-M-x by showing recently used commands and keyboard shortcuts
-  :after (counsel)
-  :config (amx-mode 1))
+  ;; Support jumping to eshell prompts with consult-outline
+  (add-hook 'eshell-mode-hook (lambda () (setq outline-regexp eshell-prompt-regexp)))
+
+  ;; Use Orderless to compile the regexp for consult-ripgrep
+  (defun consult--orderless-regexp-compiler (input type &rest _config)
+    (setq input (orderless-pattern-compiler input))
+    (cons
+     (mapcar (lambda (r) (consult--convert-regexp r type)) input)
+     (lambda (str) (orderless--highlight input t str))))
+
+  (defun consult--with-orderless (&rest args)
+    (minibuffer-with-setup-hook
+        (lambda ()
+          (setq-local consult--regexp-compiler #'consult--orderless-regexp-compiler))
+      (apply args)))
+
+  (advice-add #'consult-ripgrep :around #'consult--with-orderless))
+
+;; TODO unicode-char insert
+
+;; Add prompt indicator to `completing-read-multiple'.
+;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+(defun crm-indicator (args)
+  (cons (format "[CRM%s] %s"
+                (replace-regexp-in-string
+                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                 crm-separator)
+                (car args))
+        (cdr args)))
+(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+;; Enhances `execute-extended-command' by showing recently used commands and keyboard shortcuts
+(package! amx
+  (:host github :repo "DarwinAwardWinner/amx")
+  :defer 1
+  :init (amx-mode 1))
 
 (package! recentf :builtin
   :defer 1
   ;; Doesn't seem like indent activates properly for me without this intervention. Here we move it
   ;; to a known cache file and set up an auto-save every 5 minutes.
   :defines (recentf-mode)
+  :custom
+  (recentf-save-file (expand-file-name ".recentf" user-emacs-directory))
+  (recentf-max-saved-items 500)
   :config
-  (setq recentf-save-file (expand-file-name ".recentf" user-emacs-directory)
-        recentf-max-saved-items 500)
   (recentf-mode 1)
   (defun aero/recentf-save-list-quiet ()
     "Wrapper for `recentf-save-list' with no message."
@@ -554,99 +599,16 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   ;; constant messaging.
   (run-at-time 60 (* 5 60) #'aero/recentf-save-list-quiet))
 
-(package! ivy :auto
-  ;; Despite a general trend in the (loud part of the) community to move away from ivy, I'm still a
-  ;; big fan. It's fast, its fully-featured and it has many useful integrations.
-  :after general
-  :config
-  ;; Note: flx is a popular fuzzy matching package, but it refuses to prioritize exact matches,
-  ;; which gets too annoying to use.
-
-  (ivy-mode 1)
-  (setq ivy-initial-inputs-alist nil ; don't pre-populate our search
-        ivy-use-virtual-buffers t ; add recentf to `ivy-switch-buffer'
-        ivy-virtual-abbreviate 'full
-        ;; Counting results isn't really that useful and slows down searching large projects
-        ;; significantly, so just forget it.
-        ivy-count-format ""
-        ivy-wrap t ; wrap top to bottom
-        ivy-height 12
-        ivy-fixed-height-minibuffer t ; better visual consistency
-        ivy-on-del-error-function #'ignore ; don't punish me when I accidentally delete search
-        ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-  (aero-leader-def
-    "bb" 'ivy-switch-buffer
-    "R" 'ivy-resume))
-
-(package! ivy-rich :auto
-  ;; Adds information about various results in the ivy buffer
-  :after (counsel ivy)
-  :defines (ivy-rich-path-style)
-  :functions (ivy-rich-mode)
-  :config
-  (setq ivy-rich-path-style 'abbrev)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (ivy-rich-mode +1)
-  (ivy-rich-project-root-cache-mode +1)
-
-  (defun aero/ivy-rich--switch-buffer-directory (orig-fun &rest args)
-    "Advice to help ivy-rich see that files are not directories."
-    (cl-letf (((symbol-function 'directory-file-name) #'file-name-directory))
-      (apply orig-fun args)))
-  (advice-add 'ivy-rich--switch-buffer-directory :around #'aero/ivy-rich--switch-buffer-directory))
-
-(package! ivy-posframe :auto
-  ;; ivy-posframe moves all ivy functions to a floating posframe in the centerish of the screen,
-  ;; much like many other editors.
-  ;;
-  ;; I continually turn this on and off, and cannot decide if I like it. Thus it is not
-  ;; auto-activated, you must call M-x ivy-posframe-mode
-  :after (ivy)
-  :config
-  (setq ivy-posframe-display-functions-alist
-        '((swiper . ivy-display-function-fallback) ; don't cover search results
-          (counsel-rg . ivy-display-function-fallback)
-          (flyspell . ivy-display-function-fallback)
-          (flyspell-correct-next . ivy-display-function-fallback)
-          (flyspell-correct-previous . ivy-display-function-fallback)
-          (complete-symbol . ivy-posframe-display-at-point) ; could cover point
-          (t . ivy-posframe-display)))
-
-  ;; Fix atrocious width jumping
-  (defun aero/ivy-posframe-get-size ()
-    "Set the ivy-posframe size according to the current frame."
-    (let ((height (or ivy-posframe-height (or ivy-height 10)))
-          (width (min (or ivy-posframe-width 200) (round (* .75 (frame-width))))))
-      (list :height height :width width :min-height height :min-width width)))
-  (setq ivy-posframe-size-function 'aero/ivy-posframe-get-size))
-
 (package! all-the-icons :auto
   ;; Add support for icon insertion, and use as a lib in other packages
   :after (general)
+  :defer 1
   :when (display-graphic-p)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
-(package! all-the-icons-ivy-rich (:host github :repo "seagle0128/all-the-icons-ivy-rich")
-  ;; Add icons to ivy via ivy-rich
-  :after (all-the-icons ivy-rich)
-  :functions (all-the-icons-ivy-rich-mode)
-  :config (all-the-icons-ivy-rich-mode +1))
-
-(package! swiper :auto
-  ;; Search utility
-  :after (general counsel)
-  :commands (swiper counsel-grep-or-swiper swiper-thing-at-point)
-  :init
-  (aero-leader-def
-    "/" '(counsel-grep-or-swiper :wk "search")
-    "?" '(swiper-thing-at-point :wk "search thing at point")
-    "b/" '(swiper-all :wk "search all buffers")
-    "b?" '(swiper-all-thing-at-point :wk "search thing at point in all buffers"))
-  :config
-  (setq swiper-action-recenter t))
-
+;; visual navigation utility
 (package! avy :auto
-  ;; visual navigation utility
+  :after (general)
   :init
   (general-define-key
    :states '(normal visual)
@@ -656,8 +618,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
    "jj" '(avy-goto-char :wk "jump to char")
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
+;; jump to search results in eww
 (package! ace-link (:host github :repo "abo-abo/ace-link")
-  ;; jump to search results in eww
   :after (avy eww)
   :functions (ace-link-setup-default)
   :config (ace-link-setup-default))
@@ -665,8 +627,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; other stuff
 
+;; Gives us the M-n and M-p symbol-following ability
 (package! smartscan :auto
-  ;; Gives us the M-n and M-p symbol following ability
   :hook (prog-mode . smartscan-mode)
   :config
   (advice-add 'smartscan-symbol-go-forward :around #'aero/advice-disable-subword)
@@ -783,17 +745,11 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
    :states 'normal
    :prefix "SPC"
    "hdf" 'helpful-function
-   "hdF" 'counsel-faces
    "hda" 'helpful-symbol
-   "hdb" 'describe-bindings
    "hdv" 'helpful-variable
    "hdm" 'helpful-macro
-   "hdM" 'describe-mode
    "hdk" 'helpful-key
-   "hdK" 'describe-keymap
-   "hdc" 'helpful-callable
-   "hdC" 'describe-char
-   "hdp" 'describe-package)
+   "hdc" 'helpful-callable)
 
   :config
   (evil-define-key 'normal helpful-mode-map
@@ -919,6 +875,10 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
+
+(package! savehist :builtin
+  :init (savehist-mode)
+  :custom (savehist-file (expand-file-name "history" aero-cache-dir)))
 
 
 ;; Games, etc.

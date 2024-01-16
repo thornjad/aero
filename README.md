@@ -28,7 +28,7 @@ When I first started using Emacs, I took full advantage of Spacemacs, so the arc
 
 Aero also provides a "mode leader", `SPC ,`, which contains bindings for specific major modes. For example, in Python mode, `SPC , s b` sends the entire buffer to Elpy's inferior Python shell and executes it, and in `restclient`, `SPC , RET` runs the HTTP query at point.
 
-![Aero's spacebar leader with Ivy completion](./etc/images/aero-leader-preview.png)
+![Aero's spacebar leader with completion](./etc/images/aero-leader-preview.png)
 
 > "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 
