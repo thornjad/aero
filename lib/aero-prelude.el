@@ -40,12 +40,14 @@
 ;; Requirements for lib
 (package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
 (package! async (:host github :repo "jwiegley/emacs-async") :commands (async-save))
-(package! popup :auto)
-(package! spinner :auto)
+(package! popup (:host github :repo "auto-complete/popup-el"))
+(package! spinner (:host github :repo "Malabarba/spinner.el"))
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
-(package! exec-path-from-shell :auto :defer 1
+(package! exec-path-from-shell
+  (:host github :repo "purcell/exec-path-from-shell")
+  :defer 1
   :config
   (when (or (window-system) (daemonp))
     (dolist (var '("PATH" "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH" "PATH" "MANPATH" "INFOPATH" "LSP_USE_PLISTS" "HOMEBREW_PREFIX" "HOMEBREW_CELLAR" "HOMEBREW_REPOSITORY"))
@@ -58,14 +60,16 @@
 
 ;; Keybindings
 
-(package! which-key :auto
+(package! which-key
+  (:host github :repo "justbur/emacs-which-key")
   :hook (on-first-input . which-key-mode)
   :defines which-key-mode
   :config
   (which-key-mode)
   (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
-(package! general :auto
+(package! general
+  (:host github :repo "noctuid/general.el")
   :functions (general-define-key aero-leader-def aero-mode-leader-def)
   :init
   (setq-default general-override-states
@@ -355,7 +359,12 @@
 
 ;; Evil
 
-(package! evil :auto
+(package! evil
+  (:host github
+   :repo "emacs-evil/evil"
+   :files (:defaults
+           "doc/build/texinfo/evil.texi"
+           (:exclude "evil-test-helpers.el")))
   :init
   ;; Need to be in init because of something in the way the "want" variables are used
   (setq evil-want-keybinding nil ; handled by evil-collection
@@ -468,10 +477,15 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (evil-mode +1))
 
 ;; Provides defaults for many modes which evil proper overlooks
-(package! evil-collection :auto :after evil :config (evil-collection-init))
+(package! evil-collection
+  (:host github :repo "emacs-evil/evil-collection" :files (:defaults "modes"))
+  :after evil
+  :config (evil-collection-init))
 
-(package! evil-matchit :auto :defer 5
-  ;; allows % to jump matching tags
+;; allows % to jump matching tags
+(package! evil-matchit
+  (:host github :repo "redguardtoo/evil-matchit")
+  :defer 5
   :after evil
   :defines global-evil-matchit-mode
   :config (global-evil-matchit-mode 1))
@@ -479,7 +493,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Treesitter
 
-(package! treesit-auto :auto
+;; Automatically install treesitter grammars when missing
+(package! treesit-auto
+  (:host github :repo "renzmann/treesit-auto")
   :when (treesitterp)
   :custom
   ;; Fix bug where it doesn't set its own source list
@@ -491,7 +507,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Provide selection of functions
 (package! evil-textobj-tree-sitter
-	(:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
+	(:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
   :when (treesitterp)
 	:after (tree-sitter evil)
   :config
@@ -503,17 +519,14 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; completion and navigation
 
-(package! vertico
-  (:host github :repo "minad/vertico")
+(package! vertico (:host github :repo "minad/vertico")
   :init (vertico-mode))
 
-(package! marginalia
-  (:host github :repo "minad/marginalia")
+(package! marginalia (:host github :repo "minad/marginalia")
   :init (marginalia-mode))
 
 ;; Orderless completion style: space-separated chunks to match in any order
-(package! orderless
-  (:host github :repo "oantolin/orderless")
+(package! orderless (:host github :repo "oantolin/orderless")
   :custom
   (completion-styles '(substring orderless basic))
   (completion-category-defaults nil)
@@ -522,8 +535,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t))
 
-(package! consult
-  (:host github :repo "minad/consult")
+(package! consult (:host github :repo "minad/consult")
   :after (general)
   :commands (consult-line
              consult-buffer
@@ -574,8 +586,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
 ;; Enhances `execute-extended-command' by showing recently used commands and keyboard shortcuts
-(package! amx
-  (:host github :repo "DarwinAwardWinner/amx")
+(package! amx (:host github :repo "DarwinAwardWinner/amx")
   :defer 1
   :init (amx-mode 1))
 
@@ -598,15 +609,15 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   ;; constant messaging.
   (run-at-time 60 (* 5 60) #'aero/recentf-save-list-quiet))
 
-(package! all-the-icons :auto
-  ;; Add support for icon insertion, and use as a lib in other packages
+;; Add support for icon insertion, and use as a lib in other packages
+(package! all-the-icons (:host github :repo "domtronn/all-the-icons.el" :files (:defaults "data"))
   :after (general)
   :defer 1
   :when (display-graphic-p)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
 ;; visual navigation utility
-(package! avy :auto
+(package! avy (:host github :repo "abo-abo/avy")
   :after (general)
   :init
   (general-define-key
@@ -627,13 +638,13 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 ;; other stuff
 
 ;; Gives us the M-n and M-p symbol-following ability
-(package! smartscan :auto
+(package! smartscan (:host github :repo "mickeynp/smart-scan")
   :hook (prog-mode . smartscan-mode)
   :config
   (advice-add 'smartscan-symbol-go-forward :around #'aero/advice-disable-subword)
   (advice-add 'smartscan-symbol-go-backward :around #'aero/advice-disable-subword))
 
-(package! undo-tree :auto
+(package! undo-tree (:host github :repo "apchamberlain/undo-tree.el")
   :custom
   ;; Disable undo-in-region. It sounds like a cool feature, but
   ;; unfortunately the implementation is very buggy and usually causes
@@ -694,9 +705,9 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
      ("M-k" . windmove-up)
      ("M-l" . windmove-right))))
 
-(package! winum :auto
+;; Jump to windows by number. 1 is the upper-left-most
+(package! winum (:host github :repo "deb0ch/emacs-winum")
   :defer 5
-  ;; Jump to windows by number. 1 is the upper-left-most
   :after (general which-key)
   :init
   (winum-mode)
@@ -718,8 +729,8 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
         which-key-replacement-alist)
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
-(package! helpful :auto
-  ;; Improved version of help buffers
+;; Improved version of help buffers
+(package! helpful (:host github :repo "Wilfred/helpful")
   :commands (helpful-function
              helpful-variable
              helpful-macro
@@ -781,7 +792,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; TTY also needs some clipboard help. Only works in certain term emulators.
 (unless (display-graphic-p)
-  (package! xclip :auto :config (xclip-mode +1)))
+  (package! xclip (:host github :repo "emacsmirror/xclip") :config (xclip-mode +1)))
 
 
 ;; File navigation
@@ -801,7 +812,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   (tramp-terminal-type "tramp"))
 
 ;; We only use this for the deer function, which is a better version of dired.
-(package! ranger :auto
+(package! ranger (:host github :repo "punassuming/ranger.el")
   :commands (deer)
   :after (general)
   :custom
@@ -840,13 +851,13 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :init
   (aero-leader-def "ap" 'pomp))
 
-(package! editorconfig :auto
+(package! editorconfig (:host github :repo "editorconfig/editorconfig-emacs")
   :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
 ;; startup profiler
-(package! esup :auto :commands (esup))
+(package! esup (:host github :repo "jschaf/esup") :commands (esup))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't

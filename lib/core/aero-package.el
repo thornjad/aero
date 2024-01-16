@@ -127,6 +127,26 @@ to do every few years."
          recipe))
       ,@body))))
 
+
+;; utils
+
+(defun aero/fetch-melpa-recipe (package-name)
+  "Fetch the MELPA recipe for the given PACKAGE-NAME and display it in a buffer."
+  (interactive "sPackage Name: ")
+  (let ((url (format "https://raw.githubusercontent.com/melpa/melpa/master/recipes/%s" package-name)))
+    (with-current-buffer (url-retrieve-synchronously url)
+      (goto-char (point-min))
+      (re-search-forward "\n\n")
+      (delete-region (point-min) (point))
+      (let ((content (buffer-string)))
+        (kill-buffer)
+        (with-current-buffer (get-buffer-create "*MELPA Recipe*")
+          (erase-buffer)
+          (insert content)
+          (goto-char (point-min))
+          (emacs-lisp-mode)
+          (display-buffer (current-buffer)))))))
+
 (provide 'aero-package)
 
 ;;; aero-package.el ends here
