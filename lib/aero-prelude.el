@@ -306,6 +306,7 @@
    "ql" 'insert-lambda
    "qq" 'quoted-insert
    "qp" 'aero/insert-pdb
+   "qu" 'insert-char
 
    "s" '(:ignore t :wk "sexp")
 
@@ -560,8 +561,6 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
       (apply args)))
 
   (advice-add #'consult-ripgrep :around #'consult--with-orderless))
-
-;; TODO unicode-char insert
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
