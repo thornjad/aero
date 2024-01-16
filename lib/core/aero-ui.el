@@ -58,9 +58,6 @@
       window-divider-default-places 'right-only
       window-divider-mode t)
 
-;; Initial window split in half
-;; (split-window-horizontally)
-
 ;; window margins
 (add-hook 'window-configuration-change-hook
           (lambda ()
@@ -70,7 +67,6 @@
 ;; Make sure new frames use window-divider
 (add-hook 'before-make-frame-hook 'window-divider-mode)
 
-
 ;; Better fringe symbols.
 (when (and (require 'disp-table nil 'noerror) standard-display-table)
   (set-display-table-slot standard-display-table 'truncation ?…)
@@ -78,25 +74,24 @@
   (set-display-table-slot standard-display-table 'selective-display
                           (string-to-vector " …")))
 
-
-;;; additional tweaks and packages
-
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
 (pixel-scroll-mode 1)
-(global-visual-line-mode +1) ; allow navigation by visual wrapped lines rather than real lines
-
 (global-hl-line-mode +1)
 
-;; Adds a breadcrumb to the headerline
-(package! breadcrumb (:host github :repo "joaotavora/breadcrumb")
-  :hook ((prog-mode . breadcrumb-local-mode))
-  :config
+;; allow navigation by visual wrapped lines rather than real lines
+(global-visual-line-mode +1)
 
-  ;; No breadcrumbs when the better lsp-headerline is available
+;; Adds a breadcrumb to the headerline
+(package! breadcrumb
+  (:host github :repo "joaotavora/breadcrumb")
+  :hook ((prog-mode markdown-mode gfm-mode) . breadcrumb-local-mode)
+  :custom (breadcrumb-imenu-max-length 0.98)
+  :config
   (with-eval-after-load 'lsp-headerline
+    ;; No breadcrumbs when the better lsp-headerline is available
     (add-hook 'lsp-headerline-breadcrumb-mode-hook (lambda () (breadcrumb-local-mode -1))))
 
   ;; Disable breadcrumb project portion by overriding the function
