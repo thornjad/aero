@@ -654,26 +654,13 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   ;; unfortunately the implementation is very buggy and usually causes
   ;; you to lose your undo history if you use it by accident.
   (undo-tree-enable-undo-in-region nil)
-  (undo-tree-auto-save-history t)
+  (undo-tree-auto-save-history nil)
   (undo-tree-history-directory-alist
    `((".*" . ,(expand-file-name "undo-tree/" aero-cache-dir))))
   (undo-tree-visualizer-timestamps t)
   (undo-tree-visualizer-diff t)
 
   :config
-  (add-hook 'before-save-hook (lambda () (undo-tree-save-history nil t)))
-
-  (defun aero/kill-undo-tree-save-file-for-buffer ()
-    "Deletes the `undo-tree' history file for this buffer.
-Useful for when undo-tree inevitably fucks up the file and it can't be read."
-    (interactive)
-    (if buffer-file-name
-        (let ((filename (undo-tree-make-history-save-file-name buffer-file-name)))
-          (when (y-or-n-p (concat "Kill undo-tree history file " filename "?"))
-            (delete-file filename)))
-      (message "Buffer is not a file")))
-
-  (advice-add 'undo-tree-save-history :around #'aero/advice-no-message)
   (global-undo-tree-mode +1))
 
 (package! winner :builtin
