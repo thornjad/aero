@@ -536,8 +536,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t))
 
-(package! consult (:host github :repo "minad/consult")
-  :after (general)
+(package! consult (:repo "minad/consult")
+  :after (general evil orderless)
   :commands (consult-line
              consult-buffer
              consult-outline
@@ -548,7 +548,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :custom
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
-  :config
+
+  :init
   (aero-leader-def
     "/" 'consult-line
     "bb" 'consult-buffer
@@ -557,6 +558,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "je" 'consult-flymake
     "p/" 'consult-ripgrep)
 
+  :config
   ;; Support jumping to eshell prompts with consult-outline
   (add-hook 'eshell-mode-hook (lambda () (setq outline-regexp eshell-prompt-regexp)))
 
@@ -568,6 +570,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
      (lambda (str) (orderless--highlight input t str))))
 
   (defun consult--with-orderless (&rest args)
+    "Use Orderless to compile the regexp for consult-ripgrep."
     (minibuffer-with-setup-hook
         (lambda ()
           (setq-local consult--regexp-compiler #'consult--orderless-regexp-compiler))
