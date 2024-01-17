@@ -297,6 +297,7 @@
 
    "p" '(:ignore t :wk "project")
    "pr" '(xref-find-definitions :wk "find ref")
+   "ps" '(:ignore t :wk "spelling")
 
    "r" '(:ignore t :wk "xref")
    "rf" 'xref-find-definitions

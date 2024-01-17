@@ -277,12 +277,7 @@
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
 
   (aero-leader-def
-    "ps" '(:ignore t :wk "spelling")
     "psP" 'flyspell-prog-mode
-    "psc" 'flyspell-correct-wrapper
-    "psC" 'flyspell-correct-at-point
-    "psp" 'flyspell-correct-previous
-    "psn" 'flyspell-correct-next
     "psN" 'flyspell-goto-next-error
     "psw" 'flyspell-word
     "psb" 'flyspell-buffer
@@ -290,6 +285,15 @@
 
 (package! flyspell-lazy (:repo "rolandwalker/flyspell-lazy")
   :hook ((flyspell-mode . flyspell-lazy-mode)))
+
+(package! flyspell-correct "d12frosted/flyspell-correct"
+  :after (general flyspell)
+  :config
+  (aero-leader-def
+    "psc" 'flyspell-correct-wrapper
+    "psC" 'flyspell-correct-at-point
+    "psp" 'flyspell-correct-previous
+    "psn" 'flyspell-correct-next))
 
 
 ;; parentheses
