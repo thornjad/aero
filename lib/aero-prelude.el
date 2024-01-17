@@ -373,7 +373,8 @@
         evil-undo-system 'undo-tree
         evil-want-fine-undo t
         evil-want-C-i-jump nil
-        evil-want-C-u-scroll t)
+        evil-want-C-u-scroll t
+        evil-search-module 'isearch)
 
   :config
 
@@ -575,19 +576,36 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
         (lambda ()
           (setq-local consult--regexp-compiler #'consult--orderless-regexp-compiler))
       (apply args)))
+  (advice-add #'consult-ripgrep :around #'consult--with-orderless)
 
-  (advice-add #'consult-ripgrep :around #'consult--with-orderless))
+  (defun aero/consult-line-isearch-history (&rest _)
+    "Add latest `consult-line' search pattern to the isearch history.
 
-(defun crm-indicator (args)
-  "Add prompt indicator to `completing-read-multiple'.
+This allows n and N to continue the search after `consult-line' exits, since consult is happy to simply forget anything happened."
+    (when (and (bound-and-true-p evil-mode)
+               (eq evil-search-module 'isearch)
+               consult--line-history)
+      (let* ((pattern (car consult--line-history))
+             (regexp (if (string-prefix-p "\\_" pattern)
+                         (substring pattern 2)
+                       pattern)))
+        ;; Add to isearch history
+        (add-to-history 'regexp-search-ring regexp)
+        ;; Update evil search pattern for `evil-search-next` and `evil-search-previous`
+        (setq evil-ex-search-pattern (evil-ex-pattern regexp t nil nil))
+        (setq evil-ex-search-direction 'forward))))
+  (advice-add #'consult-line :after #'aero/consult-line-isearch-history)
+
+  (defun crm-indicator (args)
+    "Add prompt indicator to `completing-read-multiple'.
 We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
-  (cons (format "[CRM%s] %s"
-                (replace-regexp-in-string
-                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                 crm-separator)
-                (car args))
-        (cdr args)))
-(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
 
 ;; Enhances `execute-extended-command' by showing recently used commands and keyboard shortcuts
 (package! amx (:repo "DarwinAwardWinner/amx")
