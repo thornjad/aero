@@ -18,8 +18,10 @@
 
 (require 'aero-prelude)
 
-(package! company :auto
-  ;; Standard completions library
+;; Standard completions library
+(package! company
+  (:repo "company-mode/company-mode"
+   :files (:defaults "icons" ("images/small" "doc/images/small/*.png")))
   :after (evil)
   :hook ((prog-mode . company-mode)
          (company-mode-hook . evil-normalize-keymaps))
@@ -40,22 +42,23 @@
 	;; Wait until it's defined, then disable preview after point
   (setq company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)))
 
-(package! company-prescient :auto
-  ;; Move commonly-used completions to the top
+;; Move commonly-used completions to the top
+(package! company-prescient
+  (:host github
+   :repo "radian-software/prescient.el"
+   :files ("company-prescient.el"))
   :after (company)
   :hook (company-mode . company-prescient-mode)
   :custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
   :config (prescient-persist-mode +1))
 
-(package! company-box :auto
-  ;; Better popup interface for company
+;; Better popup interface for company
+(package! company-box
+  (:repo "sebastiencs/company-box" :files (:defaults "images"))
   :hook (company-mode . company-box-mode))
 
 
 ;; LSP
-
-;; Used by Eglot, we want to make sure we have the latest version rather than what Eglot asks for
-(package! jsonrpc :auto)
 
 (package! eglot :builtin
   :hook ((python-mode
@@ -100,7 +103,7 @@
     "lro" 'eglot-code-action-organize-imports))
 
 ;; puts eldoc in a child frame instead of the echo area
-(package! eldoc-box :auto
+(package! eldoc-box (:repo "casouri/eldoc-box")
   :after general
   :config
   ;; (setq eldoc-echo-area-use-multiline-p nil) ; stop normal eldoc from resizing
@@ -124,8 +127,7 @@
 
 ;; C language
 
-(package! cc-mode :auto
-  :after flymake
+(package! cc-mode :builtin
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode)
          ("\\.cpp\\'" . cpp-mode)
@@ -139,7 +141,7 @@
 
 ;; Markup
 
-(package! markdown-mode :auto
+(package! markdown-mode (:repo "jrblevin/markdown-mode")
   :after (general smartparens)
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
@@ -169,10 +171,11 @@
     "t" 'today
     "d" 'new-day))
 
-(package! markdown-toc :auto
+(package! markdown-toc (:repo "ardumont/markdown-toc")
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
 
-(package! yaml-mode :auto :mode "\\.ya?ml\\'")
+(package! yaml-mode (:repo "yoshiki/yaml-mode")
+  :mode "\\.ya?ml\\'")
 
 (package! org :builtin
   :commands org-mode
@@ -219,11 +222,11 @@
     "eb" 'flymake-show-buffer-diagnostics))
 
 ;; makes flymake appear in popup
-(package! flymake-diagnostic-at-point (:host github :repo "meqif/flymake-diagnostic-at-point")
+(package! flymake-diagnostic-at-point (:repo "meqif/flymake-diagnostic-at-point")
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
-(package! flymake-eslint :auto
+(package! flymake-eslint "orzechowskid/flymake-eslint"
   :after (eglot)
   :init
   ;; Need to add after eglot so eglot doesn't clobber
@@ -235,7 +238,7 @@
                          (not (derived-mode-p 'json-mode)))
                 (flymake-eslint-enable)))))
 
-(package! flymake-mypy (:host github :repo "com4/flymake-mypy")
+(package! flymake-mypy (:repo "com4/flymake-mypy")
   :after (eglot)
   :init
   ;; Need to add after eglot so eglot doesn't clobber
@@ -244,7 +247,7 @@
               (when (or (derived-mode-p 'python-mode) (derived-mode-p 'python-ts-mode))
                 (flymake-mypy-enable)))))
 
-(package! flymake-ruff :auto
+(package! flymake-ruff "erickgnavar/flymake-ruff"
   :after (eglot)
   :functions (flymake-ruff-load)
   :init
@@ -285,13 +288,13 @@
     "psb" 'flyspell-buffer
     "psr" 'flyspell-region))
 
-(package! flyspell-lazy (:host github :repo "rolandwalker/flyspell-lazy")
+(package! flyspell-lazy (:repo "rolandwalker/flyspell-lazy")
   :hook ((flyspell-mode . flyspell-lazy-mode)))
 
 
 ;; parentheses
 
-(package! smartparens :auto
+(package! smartparens "Fuco1/smartparens"
   :after (general) :defer 5
   :functions (show-smartparens-global-mode
               sp-kill-sexp sp-local-pair
@@ -394,13 +397,15 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
   (define-key evil-insert-state-map ")" 'aero/smart-closing-parenthesis))
 
-(package! rainbow-delimiters :auto
+(package! rainbow-delimiters "Fanael/rainbow-delimiters"
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
 
 ;;; formatting
 
-(package! apheleia :auto
+(package! apheleia
+  (:repo "radian-software/apheleia"
+   :files (:defaults ("scripts" "scripts/formatters")))
   :after general
   :init (apheleia-global-mode +1)
   :config
@@ -539,7 +544,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! nhexl-mode :auto :defer t) ; improved version of `hexl-mode'
 (package! pdf-tools :auto :defer t)
 (package! terraform-mode :auto :mode "\\.tf\\'")
-(package! glsl-mode (:host github :repo "jimhourihan/glsl-mode")
+(package! glsl-mode (:repo "jimhourihan/glsl-mode")
   :mode "\\.\\(vert\\|frag\\)\\'"
   :config (add-hook 'glsl-mode-hook #'(lambda () (setq tab-width 4 c-basic-offset 4))))
 (package! graphql-mode :auto :mode "\\.graphql\\'")

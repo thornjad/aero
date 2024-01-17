@@ -53,7 +53,7 @@
     "wbn" '(aero/wiki-news :wk "wikipedia news"))
 
 	:config
-  (package! shrface :auto
+  (package! shrface (:host github :repo "chenyanming/shrface")
     :defer t
     :config
     (shrface-basic)
@@ -62,7 +62,8 @@
     (setq shrface-href-versatile t))
   (add-hook 'eww-after-render-hook #'shrface-mode)
 
-  (package! shr-tag-pre-highlight :auto
+  (package! shr-tag-pre-highlight
+    (:host github :repo "xuchunyang/shr-tag-pre-highlight.el")
     :after shr
     :config
     (add-to-list 'shr-external-rendering-functions
@@ -219,7 +220,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
           image)
       (insert (or alt "")))))
 
-(package! devdocs :auto
+(package! devdocs (:host github :repo "astoff/devdocs.el")
   :after (general)
   :commands (devdocs-lookup)
   :custom (devdocs-data-dir (expand-file-name "devdocs" aero-cache-dir))

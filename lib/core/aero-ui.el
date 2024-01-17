@@ -35,8 +35,8 @@
   (load-theme 'aero t))
 
 ;; other themes
-(package! tao-theme :auto :defer t)
-(package! spacemacs-theme :auto :defer t)
+(package! tao-theme (:host github :repo "11111000000/tao-theme-emacs") :defer t)
+(package! spacemacs-theme (:host github :repo "nashamri/spacemacs-theme") :defer t)
 
 (setq default-frame-alist
       ;; width assumes we want a buffer to be 106 columns wide
@@ -118,7 +118,7 @@
 
 ;; Highlight the current thing at point, kind of like what lsp-ui does for some language, but in all
 ;; buffers and modes
-(package! highlight-thing :auto
+(package! highlight-thing (:host github :repo "fgeller/highlight-thing.el")
   :hook (prog-mode . highlight-thing-mode)
   :commands (highlight-thing-mode)
   :custom
@@ -130,7 +130,8 @@
   (highlight-thing-large-buffer-limit 5000))
 
 ;; show all matching selections (from region)
-(package! selection-highlight-mode (:host github :repo "balloneij/selection-highlight-mode")
+(package! selection-highlight-mode
+  (:host github :repo "balloneij/selection-highlight-mode")
   :hook (prog-mode . selection-highlight-mode)
   :custom (selection-highlight-mode-min-length 3))
 
@@ -139,7 +140,8 @@
   :hook ((prog-mode text-mode) . todo-light-mode))
 
 ;; show indentation guides
-(package! highlight-indent-guides :auto
+(package! highlight-indent-guides
+  (:host github :repo "DarthFennec/highlight-indent-guides")
   :hook (prog-mode . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-method 'character
               highlight-indent-guides-responsive 'top)
@@ -158,7 +160,8 @@
 
 ;; Doesn't do anything for GUI, so don't bother. In TUI, use a line when in insert mode
 (unless (display-graphic-p)
-  (package! evil-terminal-cursor-changer :auto
+  (package! evil-terminal-cursor-changer
+    (:host github :repo "7696122/evil-terminal-cursor-changer")
     :after evil
     :functions (evil-terminal-cursor-changer-activate)
     :config (evil-terminal-cursor-changer-activate)))

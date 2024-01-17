@@ -39,14 +39,14 @@
 
 ;; Requirements for lib
 (package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
-(package! async (:host github :repo "jwiegley/emacs-async") :commands (async-save))
-(package! popup (:host github :repo "auto-complete/popup-el"))
-(package! spinner (:host github :repo "Malabarba/spinner.el"))
+(package! async (:repo "jwiegley/emacs-async") :commands (async-save))
+(package! popup (:repo "auto-complete/popup-el"))
+(package! spinner (:repo "Malabarba/spinner.el"))
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
 (package! exec-path-from-shell
-  (:host github :repo "purcell/exec-path-from-shell")
+  (:repo "purcell/exec-path-from-shell")
   :defer 1
   :config
   (when (or (window-system) (daemonp))
@@ -61,7 +61,7 @@
 ;; Keybindings
 
 (package! which-key
-  (:host github :repo "justbur/emacs-which-key")
+  (:repo "justbur/emacs-which-key")
   :hook (on-first-input . which-key-mode)
   :defines which-key-mode
   :config
@@ -69,7 +69,7 @@
   (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
 (package! general
-  (:host github :repo "noctuid/general.el")
+  (:repo "noctuid/general.el")
   :functions (general-define-key aero-leader-def aero-mode-leader-def)
   :init
   (setq-default general-override-states
@@ -478,13 +478,13 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Provides defaults for many modes which evil proper overlooks
 (package! evil-collection
-  (:host github :repo "emacs-evil/evil-collection" :files (:defaults "modes"))
+  (:repo "emacs-evil/evil-collection" :files (:defaults "modes"))
   :after evil
   :config (evil-collection-init))
 
 ;; allows % to jump matching tags
 (package! evil-matchit
-  (:host github :repo "redguardtoo/evil-matchit")
+  (:repo "redguardtoo/evil-matchit")
   :defer 5
   :after evil
   :defines global-evil-matchit-mode
@@ -495,7 +495,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Automatically install treesitter grammars when missing
 (package! treesit-auto
-  (:host github :repo "renzmann/treesit-auto")
+  (:repo "renzmann/treesit-auto")
   :when (treesitterp)
   :custom
   ;; Fix bug where it doesn't set its own source list
@@ -507,7 +507,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Provide selection of functions
 (package! evil-textobj-tree-sitter
-	(:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
+	(:repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
   :when (treesitterp)
 	:after (tree-sitter evil)
   :config
@@ -519,14 +519,14 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; completion and navigation
 
-(package! vertico (:host github :repo "minad/vertico")
+(package! vertico (:repo "minad/vertico")
   :init (vertico-mode))
 
-(package! marginalia (:host github :repo "minad/marginalia")
+(package! marginalia (:repo "minad/marginalia")
   :init (marginalia-mode))
 
 ;; Orderless completion style: space-separated chunks to match in any order
-(package! orderless (:host github :repo "oantolin/orderless")
+(package! orderless (:repo "oantolin/orderless")
   :custom
   (completion-styles '(substring orderless basic))
   (completion-category-defaults nil)
@@ -586,7 +586,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
 ;; Enhances `execute-extended-command' by showing recently used commands and keyboard shortcuts
-(package! amx (:host github :repo "DarwinAwardWinner/amx")
+(package! amx (:repo "DarwinAwardWinner/amx")
   :defer 1
   :init (amx-mode 1))
 
@@ -610,14 +610,14 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   (run-at-time 60 (* 5 60) #'aero/recentf-save-list-quiet))
 
 ;; Add support for icon insertion, and use as a lib in other packages
-(package! all-the-icons (:host github :repo "domtronn/all-the-icons.el" :files (:defaults "data"))
+(package! all-the-icons (:repo "domtronn/all-the-icons.el" :files (:defaults "data"))
   :after (general)
   :defer 1
   :when (display-graphic-p)
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
 ;; visual navigation utility
-(package! avy (:host github :repo "abo-abo/avy")
+(package! avy (:repo "abo-abo/avy")
   :after (general)
   :init
   (general-define-key
@@ -629,7 +629,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
 ;; jump to search results in eww
-(package! ace-link (:host github :repo "abo-abo/ace-link")
+(package! ace-link (:repo "abo-abo/ace-link")
   :after (avy eww)
   :functions (ace-link-setup-default)
   :config (ace-link-setup-default))
@@ -638,13 +638,13 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 ;; other stuff
 
 ;; Gives us the M-n and M-p symbol-following ability
-(package! smartscan (:host github :repo "mickeynp/smart-scan")
+(package! smartscan (:repo "mickeynp/smart-scan")
   :hook (prog-mode . smartscan-mode)
   :config
   (advice-add 'smartscan-symbol-go-forward :around #'aero/advice-disable-subword)
   (advice-add 'smartscan-symbol-go-backward :around #'aero/advice-disable-subword))
 
-(package! undo-tree (:host github :repo "apchamberlain/undo-tree.el")
+(package! undo-tree "apchamberlain/undo-tree.el"
   :custom
   ;; Disable undo-in-region. It sounds like a cool feature, but
   ;; unfortunately the implementation is very buggy and usually causes
@@ -706,7 +706,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
      ("M-l" . windmove-right))))
 
 ;; Jump to windows by number. 1 is the upper-left-most
-(package! winum (:host github :repo "deb0ch/emacs-winum")
+(package! winum (:repo "deb0ch/emacs-winum")
   :defer 5
   :after (general which-key)
   :init
@@ -730,7 +730,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
 ;; Improved version of help buffers
-(package! helpful (:host github :repo "Wilfred/helpful")
+(package! helpful (:repo "Wilfred/helpful")
   :commands (helpful-function
              helpful-variable
              helpful-macro
@@ -792,7 +792,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 
 ;; TTY also needs some clipboard help. Only works in certain term emulators.
 (unless (display-graphic-p)
-  (package! xclip (:host github :repo "emacsmirror/xclip") :config (xclip-mode +1)))
+  (package! xclip (:repo "emacsmirror/xclip") :config (xclip-mode +1)))
 
 
 ;; File navigation
@@ -812,7 +812,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   (tramp-terminal-type "tramp"))
 
 ;; We only use this for the deer function, which is a better version of dired.
-(package! ranger (:host github :repo "punassuming/ranger.el")
+(package! ranger (:repo "punassuming/ranger.el")
   :commands (deer)
   :after (general)
   :custom
@@ -824,7 +824,7 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; Better writing
 
 ;; Mark passive voice, duplicate words and weasel words
-(package! writegood-mode (:host github :repo "bnbeckwith/writegood-mode")
+(package! writegood-mode (:repo "bnbeckwith/writegood-mode")
   :hook ((text-mode) . writegood-mode))
 
 ;; Mark E′ violations
@@ -851,22 +851,22 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
   :init
   (aero-leader-def "ap" 'pomp))
 
-(package! editorconfig (:host github :repo "editorconfig/editorconfig-emacs")
+(package! editorconfig (:repo "editorconfig/editorconfig-emacs")
   :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
 ;; startup profiler
-(package! esup (:host github :repo "jschaf/esup") :commands (esup))
+(package! esup (:repo "jschaf/esup") :commands (esup))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
 ;; think its still modified.
-(package! unmodified-buffer (:host github :repo "arthurcgusmao/unmodified-buffer")
+(package! unmodified-buffer (:repo "arthurcgusmao/unmodified-buffer")
   :defer 1
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
-(package! virtual-comment :auto
+(package! virtual-comment (:repo "thanhvg/emacs-virtual-comment")
   ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
   ;; to disk.
   :hook (find-file-hook . virtual-comment-mode)
@@ -895,10 +895,11 @@ Useful for when undo-tree inevitably fucks up the file and it can't be read."
 ;; Games, etc.
 
 ;; Typing game
-(package! typing (:host github :repo "thornjad/emacswiki-typing")
+(package! typing (:repo "thornjad/emacswiki-typing")
   :commands (typing-of-emacs))
 
-(require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
+(require 'wttrin
+         (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 
 (provide 'aero-prelude)

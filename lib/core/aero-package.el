@@ -89,11 +89,18 @@ require a :load-path for `use-package' to load properly.
 If the BODY contains the keyword :disabled, the package is completely ignored, with an expansion
 indicating the package has been disabled.
 
+If the recipe does not contain a :host, it default to 'github.
+
+If the recipe is only a string, it is considered a github repo.
+
 DEPRECATED: If the RECIPE is :auto, use the recipe provided by [M]ELPA. This is deprecated in favor of providing an explicit recipe. A recipe allows greater control over packages while also providing an easier path to cutting-edge updates.
 
 Usage of this macro allows simplified refactoring when changing packaging systems, as Aero is wont
 to do every few years."
   (declare (indent defun)) ; indent like use-package
+
+  (when (stringp recipe)
+    (setq recipe (list :repo recipe)))
 
   (when (memq :auto body)
     (display-warning
@@ -110,22 +117,12 @@ to do every few years."
 
    ;; Use straight
    (t
-    `(use-package ,package :straight ,(or (equal recipe :auto) recipe) ,@body))
+    (progn
+      (when (and (not (equal recipe :auto))
+	      	 (not (memq :host recipe)))
+        (setq recipe (plist-put recipe :host 'github)))
 
-   ;; Disabled until elpaca matures a little more, it's still in active development, has too many
-   ;; bugs for daily use as of this comment.
-   (nil
-    `(elpaca-use-package
-      ,(cond
-        ((equal recipe :auto)
-         package)
-        ((keywordp (car recipe))
-         ;; Elpaca prefers recipe to start with identifier, but it's redundant in usage, so
-         ;; auto-insert it here if recipe doesn't have it.
-         (cons package recipe))
-        (t
-         recipe))
-      ,@body))))
+      `(use-package ,package :straight ,(or (equal recipe :auto) recipe) ,@body)))))
 
 
 ;; utils
