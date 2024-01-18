@@ -60,18 +60,19 @@
     "gmdbu" 'smerge-diff-base-upper
     "gmdbl" 'smerge-diff-base-lower)
 
-  :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-process-finish-apply-ansi-colors t)
+  (magit-buffer-name-format "%x%M%v: %t%x")
+  (magit-diff-paint-whitespace-lines 'both)
+  (magit-diff-refine-hunk 'all)
+  (magit-diff-refine-ignore-whitespace t)
+  (git-commit-style-convention-checks '(non-empty-second-line overlong-summary-line))
+  (git-commit-summary-max-length 50)
+  (git-commit-fill-column 72)
 
   :config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
-  (setq magit-buffer-name-format "%x%M%v: %t%x"
-        magit-diff-paint-whitespace-lines 'both
-        magit-diff-refine-hunk 'all
-        magit-diff-refine-ignore-whitespace t
-        git-commit-style-convention-checks '(non-empty-second-line
-                                             overlong-summary-line)
-        git-commit-summary-max-length 50
-        git-commit-fill-column 72)
   (magit-auto-revert-mode nil)
   (defadvice magit-diff (after switch-to-diff activate)
     (other-window 1))
