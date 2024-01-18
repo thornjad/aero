@@ -581,18 +581,18 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (defun aero/consult-line-isearch-history (&rest _)
     "Add latest `consult-line' search pattern to the isearch history.
 
-This allows n and N to continue the search after `consult-line' exits, since consult is happy to simply forget anything happened."
+This allows n and N to continue the search after `consult-line' exits.
+
+Note this only supports the first search term when using orderless syntax."
     (when (and (bound-and-true-p evil-mode)
                (eq evil-search-module 'isearch)
                consult--line-history)
       (let* ((pattern (car consult--line-history))
+             (pattern (car (split-string pattern)))
              (regexp (if (string-prefix-p "\\_" pattern)
                          (substring pattern 2)
                        pattern)))
-        ;; Add to isearch history
         (add-to-history 'regexp-search-ring regexp)
-        ;; Update evil search pattern for `evil-search-next` and `evil-search-previous`
-        (setq evil-ex-search-pattern (evil-ex-pattern regexp t nil nil))
         (setq evil-ex-search-direction 'forward))))
   (advice-add #'consult-line :after #'aero/consult-line-isearch-history)
 
