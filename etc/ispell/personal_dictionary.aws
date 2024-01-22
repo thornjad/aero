@@ -1,4 +1,4 @@
-personal_ws-1.1 en 630 
+personal_ws-1.1 en 641 
 ACL
 AEC
 APIs
@@ -8,6 +8,8 @@ Alacritty
 Alexey
 Analytics
 Apheleia
+Aragorn
+Arathorn
 AuthNet
 Autodesk
 Autodesk's
@@ -20,6 +22,7 @@ BSc
 Betlejewska
 Bing
 Boids
+Brandybuck
 Brotli
 CLI
 CORS
@@ -46,6 +49,7 @@ Davinci
 DoD
 Donal
 DroneDeploy
+DroneDeploy's
 DuckDuckGo
 ECCU
 ECSI
@@ -53,6 +57,7 @@ ELPA
 ESC
 Eglot
 Elpaca
+Elven
 EmacsConf
 Emacsen
 Emacsian
@@ -85,6 +90,7 @@ GPT
 GQL
 GSM
 GTK
+Gamgee
 GitLab
 GitLab's
 GraphQL
@@ -127,6 +133,7 @@ LMB
 LPeg
 LSP
 LaTeX
+Legolas
 Libertarianism
 Lichess
 LocalWords
@@ -204,6 +211,7 @@ SSD
 SSHFS
 SVGs
 Sacha
+Samwise
 Shapefiles
 Shopify
 SmashingConf
@@ -222,6 +230,7 @@ TSV
 TUI
 Tabnine
 Tabstops
+TestContext
 ThELPA
 Theming
 Thornjad's
@@ -450,6 +459,7 @@ memoization
 memoize
 memoized
 memoizing
+mentorship
 merchantability
 middot
 minibuffer
@@ -520,6 +530,7 @@ rasterize
 readme
 rearchitecting
 rebase
+recency
 recentered
 referer
 regionalization
