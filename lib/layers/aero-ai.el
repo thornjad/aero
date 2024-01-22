@@ -28,11 +28,10 @@
 
 ;; Required by chatgpt-shell
 (package! shell-maker
-  (:host github :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
+  (:repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
 
 ;; GPT and DALL-E interface
-(package! chatgpt-shell
-  (:host github :repo "xenodium/chatgpt-shell")
+(package! chatgpt-shell "xenodium/chatgpt-shell"
   :requires shell-maker
   :after general
   :commands (chatgpt-shell
