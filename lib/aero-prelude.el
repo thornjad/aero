@@ -39,14 +39,13 @@
 
 ;; Requirements for lib
 (package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
-(package! async (:repo "jwiegley/emacs-async") :commands (async-save))
-(package! popup (:repo "auto-complete/popup-el"))
-(package! spinner (:repo "Malabarba/spinner.el"))
+(package! async "jwiegley/emacs-async" :commands (async-save))
+(package! popup "auto-complete/popup-el")
+(package! spinner "Malabarba/spinner.el")
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
-(package! exec-path-from-shell
-  (:repo "purcell/exec-path-from-shell")
+(package! exec-path-from-shell "purcell/exec-path-from-shell"
   :defer 1
   :config
   (when (or (window-system) (daemonp))
@@ -55,21 +54,19 @@
     (exec-path-from-shell-initialize)))
 
 ;; Faster than grep, but requires ripgrep to be installed locally
-(package! ripgrep :auto :defer 3)
+(package! ripgrep "nlamirault/ripgrep.el" :defer 3)
 
 
 ;; Keybindings
 
-(package! which-key
-  (:repo "justbur/emacs-which-key")
+(package! which-key "justbur/emacs-which-key"
   :hook (on-first-input . which-key-mode)
   :defines which-key-mode
   :config
   (which-key-mode)
   (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL")))
 
-(package! general
-  (:repo "noctuid/general.el")
+(package! general "noctuid/general.el"
   :functions (general-define-key aero-leader-def aero-mode-leader-def)
   :init
   (setq-default general-override-states
@@ -479,14 +476,12 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (evil-mode +1))
 
 ;; Provides defaults for many modes which evil proper overlooks
-(package! evil-collection
-  (:repo "emacs-evil/evil-collection" :files (:defaults "modes"))
+(package! evil-collection (:repo "emacs-evil/evil-collection" :files (:defaults "modes"))
   :after evil
   :config (evil-collection-init))
 
 ;; allows % to jump matching tags
-(package! evil-matchit
-  (:repo "redguardtoo/evil-matchit")
+(package! evil-matchit "redguardtoo/evil-matchit"
   :defer 5
   :after evil
   :defines global-evil-matchit-mode
@@ -496,8 +491,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Treesitter
 
 ;; Automatically install treesitter grammars when missing
-(package! treesit-auto
-  (:repo "renzmann/treesit-auto")
+(package! treesit-auto "renzmann/treesit-auto"
   :when (treesitterp)
   :custom
   ;; Fix bug where it doesn't set its own source list
@@ -521,14 +515,14 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; completion and navigation
 
-(package! vertico (:repo "minad/vertico")
+(package! vertico "minad/vertico"
   :init (vertico-mode))
 
-(package! marginalia (:repo "minad/marginalia")
+(package! marginalia "minad/marginalia"
   :init (marginalia-mode))
 
 ;; Orderless completion style: space-separated chunks to match in any order
-(package! orderless (:repo "oantolin/orderless")
+(package! orderless "oantolin/orderless"
   :custom
   (completion-styles '(substring orderless basic))
   (completion-category-defaults nil)
@@ -537,7 +531,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t))
 
-(package! consult (:repo "minad/consult")
+(package! consult "minad/consult"
   :after (general evil orderless)
   :commands (consult-line
              consult-buffer
@@ -608,7 +602,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
 
 ;; Enhances `execute-extended-command' by showing recently used commands and keyboard shortcuts
-(package! amx (:repo "DarwinAwardWinner/amx")
+(package! amx "DarwinAwardWinner/amx"
   :defer 1
   :init (amx-mode 1))
 
@@ -639,7 +633,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :config (aero-leader-def "qi" 'all-the-icons-insert))
 
 ;; visual navigation utility
-(package! avy (:repo "abo-abo/avy")
+(package! avy "abo-abo/avy"
   :after (general)
   :init
   (general-define-key
@@ -651,7 +645,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
    "jw" '(avy-goto-word-1 :wk "jump to word")))
 
 ;; jump to search results in eww
-(package! ace-link (:repo "abo-abo/ace-link")
+(package! ace-link "abo-abo/ace-link"
   :after (avy eww)
   :functions (ace-link-setup-default)
   :config (ace-link-setup-default))
@@ -660,7 +654,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 ;; other stuff
 
 ;; Gives us the M-n and M-p symbol-following ability
-(package! smartscan (:repo "mickeynp/smart-scan")
+(package! smartscan "mickeynp/smart-scan"
   :hook (prog-mode . smartscan-mode)
   :config
   (advice-add 'smartscan-symbol-go-forward :around #'aero/advice-disable-subword)
@@ -715,7 +709,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
      ("M-l" . windmove-right))))
 
 ;; Jump to windows by number. 1 is the upper-left-most
-(package! winum (:repo "deb0ch/emacs-winum")
+(package! winum "deb0ch/emacs-winum"
   :defer 5
   :after (general which-key)
   :init
@@ -739,7 +733,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
 
 ;; Improved version of help buffers
-(package! helpful (:repo "Wilfred/helpful")
+(package! helpful "Wilfred/helpful"
   :commands (helpful-function
              helpful-variable
              helpful-macro
@@ -860,22 +854,22 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :init
   (aero-leader-def "ap" 'pomp))
 
-(package! editorconfig (:repo "editorconfig/editorconfig-emacs")
+(package! editorconfig "editorconfig/editorconfig-emacs"
   :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
 
 ;; startup profiler
-(package! esup (:repo "jschaf/esup") :commands (esup))
+(package! esup "jschaf/esup" :commands (esup))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
 ;; think its still modified.
-(package! unmodified-buffer (:repo "arthurcgusmao/unmodified-buffer")
+(package! unmodified-buffer "arthurcgusmao/unmodified-buffer"
   :defer 1
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
-(package! virtual-comment (:repo "thanhvg/emacs-virtual-comment")
+(package! virtual-comment "thanhvg/emacs-virtual-comment"
   ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
   ;; to disk.
   :hook (find-file-hook . virtual-comment-mode)
@@ -904,11 +898,10 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 ;; Games, etc.
 
 ;; Typing game
-(package! typing (:repo "thornjad/emacswiki-typing")
+(package! typing "thornjad/emacswiki-typing"
   :commands (typing-of-emacs))
 
-(require 'wttrin
-         (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
+(require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 
 (provide 'aero-prelude)
