@@ -521,7 +521,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (defun aero/vertico-directory-up-maybe ()
     "Go up a directory if completing a file name, otherwise delete char."
     (interactive)
-    (if (and (minibufferp) minibuffer-completing-file-name)
+    (if (and (eq (char-before) ?/)
+             (minibufferp)
+             minibuffer-completing-file-name)
         (vertico-directory-up)
       (delete-char -1)))
   (define-key vertico-map (kbd "DEL") #'aero/vertico-directory-up-maybe))
