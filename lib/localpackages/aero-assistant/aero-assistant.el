@@ -624,7 +624,7 @@ If region is active, prefill input buffer with the region."
         (aa-mode))
       (let ((blank (string-empty-p (buffer-string))))
         (aa-without-readonly
-         (pop-to-buffer buf)
+         (switch-to-buffer buf)
          (setf (point) (point-max))
          (when blank (aa-begin-input init)))))))
 
