@@ -497,7 +497,8 @@ these may be nil and still be a valid message, they need only exist."
 \\<aa-input-mode-map>"
   (setq header-line-format '(" Aero Assistant Input  |  C-RET to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
-    (evil-set-initial-state 'aa-input-mode 'insert)))
+    (evil-set-initial-state 'aa-input-mode 'insert))
+  (markdown-toggle-fontify-code-blocks-natively))
 
 
 ;; Chat init and display
@@ -607,6 +608,7 @@ these may be nil and still be a valid message, they need only exist."
   (setq header-line-format '((:eval (aa--header-line))))
   (setq aa--spinner (spinner-create 'horizontal-breathing-long t))
   (markdown-display-inline-images)
+  (markdown-toggle-fontify-code-blocks-natively)
   (add-hook 'kill-buffer-hook #'aa-kill-buffer-hook nil t))
 
 ;;;###autoload
