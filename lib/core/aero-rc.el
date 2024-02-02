@@ -233,9 +233,6 @@
 (global-unset-key (kbd "s-u"))
 (global-unset-key (kbd "s-w"))
 
-;; Trigger auto-fill after punctutation characters, not just whitespace.
-(mapc (lambda (c) (set-char-table-range auto-fill-chars c t)) "!-=+]};:'\",.?")
-
 ;; type to get rid of active selection
 (delete-selection-mode t)
 
