@@ -583,8 +583,9 @@ these may be nil and still be a valid message, they need only exist."
             " ")
           aa--model))
 
-(defun aa--set-model ()
+(defun aa-set-model ()
   "Prompt user to set the Assistant model and verify key if required."
+  (interactive)
   (setq aa--model
         (completing-read "Assistant model: " aa--model-options
                          nil nil nil nil
@@ -617,8 +618,6 @@ these may be nil and still be a valid message, they need only exist."
 
 If region is active, prefill input buffer with the region."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (unless (get-buffer aa--session-name)
-    (aa--set-model))
   (let ((buf (get-buffer-create aa--session-name)))
     (with-current-buffer buf
       (unless (derived-mode-p 'aa-mode)
