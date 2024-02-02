@@ -43,6 +43,10 @@
 (package! popup "auto-complete/popup-el")
 (package! spinner "Malabarba/spinner.el")
 
+;; Required by eglot and dape. This is actually built-in but the version on GNU ELPA is more
+;; up-to-date and tends to work better.
+(package! jsonrpc (:type gnu))
+
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
 (package! exec-path-from-shell "purcell/exec-path-from-shell"
