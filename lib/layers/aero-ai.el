@@ -22,9 +22,10 @@
 
 ;; Aero LLM assistant interface
 (package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
-	:after markdown-mode
+	:after (markdown-mode general)
   :commands (aero/assistant aero/assistant-commit-message)
-  :custom (aero/assistant-openai-api-key openai-api-key))
+  :custom (aero/assistant-openai-api-key openai-api-key)
+  :init (aero-leader-def "aic" 'aero/assistant))
 
 ;; Required by chatgpt-shell
 (package! shell-maker
@@ -61,16 +62,16 @@ Whenever you output updated code for the user, you only show diffs instead of en
 When using Python, assume the user is using version 3.9 or newer.
 When using Typescript, assume the user is using version 4.8 or newer.")))
 
-  :init
-  (aero-leader-def
-    "aic" '(chatgpt-shell :wk "chat shell")
-    "air" '(chatgpt-shell-send-and-review-region :wk "send region with review")
-    "aig" '(chatgpt-shell-write-git-commit :wk "write git commit")
-    "aie" '(chatgpt-shell-explain-code :wk "explain code in region")
-    "aip" '(chatgpt-shell-proofread-region :wk "proofread in region")
-    "aif" '(chatgpt-shell-refactor-code :wk "refactor code in region")
-    "ais" '(chatgpt-shell-restore-session-from-transcript :wk "restore session from transcript")
-    "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test"))
+  ;; :init
+  ;; (aero-leader-def
+  ;;   "aic" '(chatgpt-shell :wk "chat shell")
+  ;;   "air" '(chatgpt-shell-send-and-review-region :wk "send region with review")
+  ;;   "aig" '(chatgpt-shell-write-git-commit :wk "write git commit")
+  ;;   "aie" '(chatgpt-shell-explain-code :wk "explain code in region")
+  ;;   "aip" '(chatgpt-shell-proofread-region :wk "proofread in region")
+  ;;   "aif" '(chatgpt-shell-refactor-code :wk "refactor code in region")
+  ;;   "ais" '(chatgpt-shell-restore-session-from-transcript :wk "restore session from transcript")
+  ;;   "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test"))
 
   :config
   ;; Seems to reset itself unless put in config
