@@ -27,13 +27,16 @@
 ;; If a region is active, `aero/assistant' will prefill the input buffer with the content of the
 ;; region.
 
-;; Using Aero Assistant for Git Commit Messages in Magit:
+;; Using Aero Assistant for Git Commit Messages in Magit [Experimental]:
 ;;
 ;; The `aero/assistant-commit-message' function can add an Aero Assistant- generated commit message.
 ;; This function requires [Magit](https://github.com/magit/magit).
 ;;
 ;; Whenever you commit using Magit, calling `aero/assistant-commit-message' will automatically
 ;; generate a commit message based on the staged git changes
+;;
+;; CAUTION: GPT isn't actually very good at writing commit messages, so consider this feature
+;; experimental, probably forever
 
 ;;; License:
 ;;
