@@ -119,8 +119,8 @@ to do every few years."
    (t
     (progn
       (when (and (not (equal recipe :auto))
-	      	       (and (not (memq :host recipe))
-                      (not (memq :type recipe))))
+                 (and (not (memq :host recipe))
+                      (not (memq :source recipe))))
         (setq recipe (plist-put recipe :host 'github)))
 
       `(use-package ,package :straight ,(or (equal recipe :auto) recipe) ,@body)))))
