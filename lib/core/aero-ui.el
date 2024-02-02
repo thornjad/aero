@@ -51,7 +51,7 @@
 (set-frame-parameter (selected-frame)
                      'internal-border-width 8)
 (when (fboundp 'pixel-scroll-precision-mode)
-	(pixel-scroll-precision-mode +1))
+  (pixel-scroll-precision-mode +1))
 
 (setq window-divider-default-right-width 1
       window-divider-default-bottom-width 1

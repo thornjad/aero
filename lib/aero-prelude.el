@@ -77,15 +77,15 @@
                 '(insert hybrid normal visual motion operator replace))
 
   ;; Most bindings will fall under this leader key, so we make a handy macro.
-	(general-create-definer aero-leader-def
-		:states '(normal visual emacs motion)
-		:prefix "SPC"
-		:non-normal-prefix "C-SPC")
+  (general-create-definer aero-leader-def
+    :states '(normal visual emacs motion)
+    :prefix "SPC"
+    :non-normal-prefix "C-SPC")
 
   ;; Mode-leader lets us put keybindings only in specific modes (usually major modes).
-	(general-create-definer aero-mode-leader-def
-		:states '(normal visual emacs motion)
-		:prefix "SPC ,")
+  (general-create-definer aero-mode-leader-def
+    :states '(normal visual emacs motion)
+    :prefix "SPC ,")
 
   :config
   (general-define-key
@@ -95,7 +95,7 @@
    :non-normal-prefix "C-SPC"
    "" nil)
 
-	;; Main configuration
+  ;; Main configuration
 
   (general-def
     ;; Emacs chose ^? for the help system for some despicable reason. Fuck that.
@@ -507,9 +507,9 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 ;; Provide selection of functions
 (package! evil-textobj-tree-sitter
-	(:repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
+  (:repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
   :when (treesitterp)
-	:after (tree-sitter evil)
+  :after (tree-sitter evil)
   :config
   ;; vaf, select function outer
   (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
@@ -790,8 +790,8 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 (when (system-is-mac)
   (declare-function aero/pbcopier-select-text "aero-pbcopier.el")
   (declare-function aero/pbcopier-selection-value "aero-pbcopier.el")
-	(setq interprogram-cut-function #'aero/pbcopier-select-text)
-	(setq interprogram-paste-function #'aero/pbcopier-selection-value)
+  (setq interprogram-cut-function #'aero/pbcopier-select-text)
+  (setq interprogram-paste-function #'aero/pbcopier-selection-value)
 
   (setq-default ns-use-native-fullscreen nil)
   (if (executable-find "gls")
