@@ -48,8 +48,8 @@ Requires watchman."
   (let ((default-directory (project-root (project-current))))
     (compile "npx jest")))
 
-(package! web-mode :auto
-  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|svg\\|jsx\\|s?css\\)\\'"
+(package! web-mode "fxbois/web-mode"
+  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|erb\\|svg\\|jsx\\|s?css\\)\\'"
   :custom
   (web-mode-enable-engine-detection t))
 
