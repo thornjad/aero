@@ -34,12 +34,12 @@
         company-tooltip-margin 2
         company-require-match nil
         company-show-numbers t
-	      company-tooltip-align-annotations t
+        company-tooltip-align-annotations t
         company-dabbrev-other-buffers t ; only look in open buffers with same major mode
         company-global-modes '(not
                                erc-mode message-mode help-mode gud-mode vterm-mode))
-	:config
-	;; Wait until it's defined, then disable preview after point
+  :config
+  ;; Wait until it's defined, then disable preview after point
   (setq company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)))
 
 ;; Move commonly-used completions to the top
@@ -181,10 +181,10 @@
   :commands org-mode
   :config
   (setq org-src-preserve-indentation t
-	      org-footnote-auto-adjust t
-	      org-footnote-section nil
-	      org-startup-with-inline-images t
-	      org-startup-indented t)
+        org-footnote-auto-adjust t
+        org-footnote-section nil
+        org-startup-with-inline-images t
+        org-startup-indented t)
 
   ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
@@ -262,7 +262,7 @@
 (package! flyspell :builtin
   :after (general)
   :hook ((prog-mode . flyspell-prog-mode)
-	       (text-mode . flyspell-mode))
+         (text-mode . flyspell-mode))
   :config
   (defvar aero-etc-dir)
   (setq
@@ -550,6 +550,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! groovy-mode :auto :mode "\\(\\.groovy\\'\\|Jenkinsfile\\)")
 (package! csv-mode :auto :mode "\\.csv\\'")
 (package! logstash-conf :auto :commands (logstash-conf-mode))
+
+(add-hook
+ 'orson-mode-hook
+ (lambda ()
+   (setq-local indent-tabs-mode nil)
+   (prettify-symbols-mode nil)))
 
 ;; Elm-mode is supposed to enable elm-indent-mode by default, but for some reason it stopped doing
 ;; this on Dec 21, 2022. Probably caused this myself, but this fixes it.
