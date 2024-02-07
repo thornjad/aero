@@ -29,7 +29,7 @@ Whenever you commit using Magit, calling `aero/assistant-commit-message` will au
 generate a commit message based on the staged git changes
 
 CAUTION: GPT isn't actually very good at writing commit messages, so consider this feature
-experimental.
+experimental, probably forever
 
 
 ---

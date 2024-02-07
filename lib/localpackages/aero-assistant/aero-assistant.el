@@ -55,7 +55,6 @@
 ;;; Code:
 
 (declare-function gfm-mode "markdown-mode")
-(declare-function pulse-momentary-highlight-region "pulse")
 
 (eval-when-compile (require 'subr-x))
 (require 'url)
