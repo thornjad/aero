@@ -60,7 +60,7 @@ Requires watchman."
 
 (package! emmet-mode :auto
   :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
-	:init (setq emmet-self-closing-tag-style " /")
+  :init (setq emmet-self-closing-tag-style " /")
 
   :config
   (add-hook
@@ -87,7 +87,7 @@ Requires watchman."
 ;; the rest
 
 (package! restclient :auto
-	:after (general)
+  :after (general)
   :commands (restclient-mode)
   :mode ("\\.http\\'" . restclient-mode)
   :config

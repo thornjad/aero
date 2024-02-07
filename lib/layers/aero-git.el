@@ -14,7 +14,7 @@
 
 (package! magit :auto
   :after (general)
-	:commands (magit-blame
+  :commands (magit-blame
              magit-log-buffer-file
              magit-log-trace-definition
              magit-log-head
@@ -32,16 +32,16 @@
              magit-status
              magit-unstage-file
              magit-blame-mode)
-	:init
-	(aero-leader-def
-	  "gs" 'magit-status
-	  "gb" 'magit-blame
+  :init
+  (aero-leader-def
+    "gs" 'magit-status
+    "gb" 'magit-blame
     "gl" '(:ignore t :which-key "log")
     "glb" 'magit-log-buffer-file
     "gld" 'magit-log-trace-definition
     "gll" 'magit-log-head
-	  "gfS" 'magit-stage-file
-	  "gfU" 'magit-unstage-file
+    "gfS" 'magit-stage-file
+    "gfU" 'magit-unstage-file
     "gm" '(:ignore t :which-key "smerge")
     "gmm" 'smerge-start-session
     "gmu" 'smerge-keep-upper

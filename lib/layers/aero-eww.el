@@ -40,7 +40,7 @@
           ("youtube.com" . browse-url-generic)
           ("." . eww-browse-url)))
   (setq browse-url-generic-program "firefox"
-	      eww-search-prefix "https://lite.duckduckgo.com/lite?q="
+        eww-search-prefix "https://lite.duckduckgo.com/lite?q="
         shr-max-width 90
         shr-indentation 2)
 
@@ -52,7 +52,7 @@
     "wbd" '(aero/ddg :wk "duckduckgo")
     "wbn" '(aero/wiki-news :wk "wikipedia news"))
 
-	:config
+  :config
   (package! shrface (:host github :repo "chenyanming/shrface")
     :defer t
     :config
@@ -76,16 +76,16 @@
   (add-hook 'eww-mode-hook #'toggle-word-wrap)
   (add-hook 'eww-mode-hook #'visual-line-mode)
 
-	(add-hook
+  (add-hook
    'eww-after-render-hook
    (lambda ()
-		 "Rename eww mode buffer so the title of the page is displayed, making
-		 fake-tabbed-browsing easier"
-		 (let ((title (plist-get eww-data :title)))
-			 (when (eq major-mode 'eww-mode)
-				 (if title
-						 (rename-buffer (concat "eww - " title) t)
-					 (rename-buffer "eww" t))))))
+     "Rename eww mode buffer so the title of the page is displayed, making
+     fake-tabbed-browsing easier"
+     (let ((title (plist-get eww-data :title)))
+       (when (eq major-mode 'eww-mode)
+         (if title
+             (rename-buffer (concat "eww - " title) t)
+           (rename-buffer "eww" t))))))
 
   (defun aero/ace-link-eww-new-buffer ()
     "Call `ace-link-eww' but open in a new buffer.

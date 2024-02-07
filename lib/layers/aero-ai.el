@@ -22,7 +22,7 @@
 
 ;; Aero LLM assistant interface
 (package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
-	:after (markdown-mode general)
+  :after (markdown-mode general)
   :commands (aero/assistant aero/assistant-commit-message)
   :custom (aero/assistant-openai-api-key openai-api-key)
   :init (aero-leader-def "aic" 'aero/assistant))
