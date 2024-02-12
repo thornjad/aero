@@ -38,6 +38,7 @@
 (package! gnu-elpa-keyring-update :auto)
 
 ;; Requirements for lib
+(package! dash "magnars/dash.el")
 (package! memo (:host gitlab :repo "thornjad/emacs-memo" :branch "main"))
 (package! async "jwiegley/emacs-async" :commands (async-save))
 (package! popup "auto-complete/popup-el")
@@ -290,11 +291,6 @@
    "m" '(tmm-menubar :wk "Context menu")
 
    "o" '(:ignore t :wk "org")
-   "oa" 'org-agenda
-   "oe" '(:ignore t :wk "org edit")
-   "oet" '(:ignore t :wk "org table")
-   "oets" 'org-table-sort-lines
-   "ot" 'aero/task
 
    "p" '(:ignore t :wk "project")
    "pr" '(xref-find-definitions :wk "find ref")
@@ -565,7 +561,10 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "jo" 'consult-outline
     "ji" 'consult-imenu
     "je" 'consult-flymake
-    "p/" 'consult-ripgrep)
+    "ja" 'consult-org-agenda
+    "jh" 'consult-org-heading
+    "p/" 'consult-ripgrep
+    )
 
   :config
   ;; Support jumping to eshell prompts with consult-outline

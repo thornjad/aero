@@ -177,25 +177,6 @@
 (package! yaml-mode (:repo "yoshiki/yaml-mode")
   :mode "\\.ya?ml\\'")
 
-(package! org :builtin
-  :commands org-mode
-  :config
-  (setq org-src-preserve-indentation t
-        org-footnote-auto-adjust t
-        org-footnote-section nil
-        org-startup-with-inline-images t
-        org-startup-indented t)
-
-  ;; re-scale images to 400px if no with attribute is set (see
-  ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
-  (setq org-image-actual-width '(400))
-
-  ;; org tries to take this binding back, so wrest control back once more
-  (define-key org-mode-map (kbd "M-h") #'windmove-left)
-
-  ;; start with all levels collapsed
-  (add-hook 'org-mode-hook #'org-hide-block-all))
-
 
 ;; flymake
 

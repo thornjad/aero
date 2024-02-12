@@ -772,4 +772,25 @@ alternative to the beacon package."
                 (find-file alternative-filename)
               (message "No corresponding file found for %s" current-file))))))))
 
+(defun aero/org-convert-region-from-markdown (beg end)
+  (interactive "r")
+  (shell-command-on-region beg end "pandoc -t org" nil t))
+
+(defun find-latest-time (times)
+  "Find the latest time in TIMES, which is a list of time values."
+  (let ((latest (car times)))
+    (dolist (time times latest)
+      (when (> (float-time time) (float-time latest))
+        (setq latest time)))))
+
+(defun find-latest-time-before-today (times)
+  "Find the latest time in TIMES that is before today."
+  (let ((latest (car times))
+        (today (org-today)))
+    (dolist (time times latest)
+      (let ((time-date (org-time-string-to-time (format-time-string "%Y-%m-%d" time))))
+        (when (and (> (float-time time) (float-time latest))
+                   (< (time-to-days time-date) today))
+          (setq latest time))))))
+
 (provide 'aero-lib)

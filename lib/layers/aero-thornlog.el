@@ -223,10 +223,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (aero/thornlog-log)
   (today))
 
-(defvar aero/thornlog-path
-  (expand-file-name "~/Documents/thornlog/")
-  "Location of the thornlog on this filesystem.")
-
 (defun aero/thornlog-dir ()
   "Personal persistent log."
   (interactive)
