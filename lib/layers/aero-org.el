@@ -60,7 +60,7 @@
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)))
 
-  (org-agenda-span 5) ; days to show at a time
+  (org-agenda-span 10) ; days to show at a time
   (org-agenda-tags-column -70) ; shift tags over
   (org-agenda-sticky nil) ; don't bury on close buffer
   (org-agenda-use-tag-inheritance t)
@@ -71,7 +71,7 @@
   (org-agenda-window-setup 'current-window)
   (org-agenda-restore-windows-after-quit t)
   (org-agenda-skip-unavailable-files t)
-  (org-agenda-start-day "-3d")
+  (org-agenda-start-day "-7d")
   (org-agenda-inhibit-startup t) ; skip unnecessary loading time
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
   (org-archive-location (concat (expand-file-name "archive/archive.org" aero/thornlog-path) "::* From %s"))
@@ -82,6 +82,7 @@
     "oTt" 'org-time-stamp
     "oTd" 'insert-todays-timestamp-at-entry-end
     "ot" 'org-todo
+    "og" 'org-set-tags-command
     "oA" 'org-archive-subtree-default
     "oa" '(:ignore t :wk "agenda")
     "oaa" 'aero/org-agenda-list
