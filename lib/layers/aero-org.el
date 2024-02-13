@@ -40,6 +40,7 @@
   (org-startup-indented t)
   (org-log-done 'time) ; log time when item is marked done
   (org-fontify-done-headline t) ; let theme strike out done items
+  (org-clock-persist 'history)
 
   ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
@@ -61,7 +62,8 @@
   ;;   '(org-load-modules-maybe t))
 
   ;; all agenda files
-  (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)))
+  (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
+                      ,(expand-file-name "log.org" aero/thornlog-path)))
 
   (org-agenda-span 10) ; days to show at a time
   (org-agenda-tags-column -70) ; shift tags over
@@ -83,7 +85,12 @@
   (aero-leader-def
     "oT" '(:ignore t :wk "time")
     "oTt" 'org-time-stamp
-    "oTd" 'insert-todays-timestamp-at-entry-end
+    "oTe" 'insert-todays-timestamp-at-entry-end
+    "oTd" 'org-deadline
+    "otD" '(:ignore t :wk "deadline")
+    "otDt" 'aero/org-deadline-next-workday
+    "otDw" 'aero/org-deadline-next-week
+    "oTs" 'org-schedule
     "ot" 'org-todo
     "og" 'org-set-tags-command
     "oA" 'org-archive-subtree-default
@@ -94,22 +101,29 @@
     "oax" 'aero/org-agenda-done
     "oaF" 'aero/org-agenda-done-and-followup
     "oaN" 'aero/org-agenda-new
-    "oap" '(:ignore t :wk "priority")
     "op" '(:ignore t :wk "priority")
     "opp" 'org-priority
     "opu" 'org-priority-up
     "opd" 'org-priority-down
     "ops" 'org-priority-show
-    "on" 'org-forward-heading-same-level
-    "oN" 'org-backward-heading-same-level
+    "of" 'org-forward-heading-same-level
+    "oF" 'org-backward-heading-same-level
+    "on" 'org-add-note
     "oe" '(:ignore t :wk "org edit")
     "oet" '(:ignore t :wk "org table")
     "oets" 'org-table-sort-lines
     "oi" '(:ignore t :wk "insert")
     "oil" '(org-insert-link :wk "link")
     "oid" '(org-insert-drawer :wk "drawer")
-    "oc" '(:ignore t :wk "cell")
+    "oc" '(:ignore t :wk "cell/clock")
     "occ" '(org-babel-execute-src-block :wk "exec cell")
+    "oci" 'org-clock-in
+    "oco" 'org-clock-out
+    "ock" 'org-clock-cancel
+    "ocj" 'org-clock-goto
+    "ocs" 'org-clock-display
+    "oce" 'org-set-effort
+    "ocE" 'org-clock-modify-effort-estimate
     "oh" '(outline-hide-body :wk "hide all")
     "oS" '(outline-show-all :wk "show all")
     "os" 'org-sort-entries)
@@ -119,6 +133,9 @@
 
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all)
+
+  ;; set up stuff for clock persistence
+  (org-clock-persistence-insinuate)
 
   ;; Show agenda when Emacs is idle for 10 minutes, from
   ;; https://sachachua.com/dotemacs/index.html#idle-timer
@@ -276,6 +293,24 @@
     (end-of-line)
     (insert " ")
     (org-insert-time-stamp (current-time) nil)))
+
+(defun aero/org-deadline-next-workday ()
+  (interactive)
+  (let* ((current-time (current-time))
+         (decoded-time (decode-time current-time))
+         (current-week-day (nth 6 decoded-time))
+         (days-to-add (if (>= current-week-day 5) (- 8 current-week-day) 1))
+         (next-workday (time-add current-time (days-to-time days-to-add))))
+    (org-deadline 1 next-workday)))
+
+(defun aero/org-deadline-next-week ()
+  (interactive)
+  (let* ((current-time (current-time))
+         (decoded-time (decode-time current-time))
+         (current-week-day (nth 6 decoded-time))
+         (days-to-add (- 7 current-week-day)) ;; Calculate days until next Sunday
+         (next-monday (time-add current-time (days-to-time (+ days-to-add 1))))) ;; Add one day to get to Monday
+    (org-deadline 1 next-monday)))
 
 
 ;; Thornlog management
