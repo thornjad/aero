@@ -22,8 +22,9 @@
 
 (require 'aero-prelude)
 (require 'outline)
-(require 'org-ql)
 (require 'dash)
+
+(package! org-ql "alphapapa/org-ql")
 
 (defvar aero/org-eval-safe-list
   '(expand-file-name "~/doc/thornlog/")
@@ -165,8 +166,6 @@
   :hook (org-mode . org-fancy-priorities-mode)
   :custom
   (org-fancy-priorities-list '("❗" "⬆" "■" "↓")))
-
-(package! org-ql "alphapapa/org-ql" :after org)
 
 
 ;; Functions for agenda and stuff
