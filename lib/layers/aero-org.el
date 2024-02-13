@@ -21,6 +21,9 @@
 ;;; Code:
 
 (require 'aero-prelude)
+(require 'outline)
+(require 'org-ql)
+(require 'dash)
 
 (defvar aero/org-eval-safe-list
   '(expand-file-name "~/doc/thornlog/")
@@ -246,8 +249,6 @@
 
 (defun org-agenda-list-last-closed ()
   (interactive)
-  (require 'org-ql)
-  (require 'dash)
   (let* ((archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
          (all-files (append org-agenda-files (list archive-file)))
          (last-closed-time
@@ -275,6 +276,90 @@
     (end-of-line)
     (insert " ")
     (org-insert-time-stamp (current-time) nil)))
+
+
+;; Thornlog management
+
+(defun new-day ()
+  "Create a new entry for today, if not already present."
+  (interactive)
+  (cond
+   ((not (string-match "thornlog/log\\.org" (buffer-file-name)))
+    (message "Not in Thornlog file"))
+   ((today) (message "Entry for today already present"))
+   (t (progn
+        (new-day-insert)
+        (evil-scroll-line-to-center (line-number-at-pos))))))
+
+(defun today ()
+  (interactive)
+  (let* ((today (format-time-string "<%Y-%m-%d %a>"))
+         (entry-found nil)
+         (query `(and (level 1)
+                      (ts-active :on ,today))))
+    (org-ql-select (current-buffer)
+      query
+      :action (lambda ()
+                (setq entry-found t)
+                (evil-scroll-line-to-center (point))))
+    entry-found))
+
+(defun replace-thornlog-placeholders (template prev-day-date prev-day-summary prev-day-goals prev-day-notes blocked-message)
+  "Replace placeholders in TEMPLATE with values from previous sections and BLOCKED-MESSAGE."
+  (let* ((day-of-week (calendar-day-name (calendar-current-date)))
+         (today (format-time-string "%A, %B %d <%Y-%m-%d>"))
+         (yesterday (format-time-string "%A, %B %d <%Y-%m-%d>" (time-subtract (current-time) (days-to-time 1))))
+         (since-string (if (string= (match-string 1 prev-day-date) yesterday)
+                           "yesterday"
+                         (car (split-string prev-day-date ", "))))
+         (template (replace-regexp-in-string "<new-day-template>" today template))
+         (template (replace-regexp-in-string "<previous-entry-day>" since-string template))
+         (template (replace-regexp-in-string "<previous-day-summary>" prev-day-summary template))
+         (template (replace-regexp-in-string "<previous-day-goals>" prev-day-goals template))
+         (template (replace-regexp-in-string "<previous-day-notes>" prev-day-notes template))
+         (template (replace-regexp-in-string "<blocked-message>" blocked-message template)))
+    template))
+
+(defun extract-section-content (title)
+  "Extract the content of the section with TITLE."
+  (save-excursion
+    (re-search-forward (regexp-quote title) nil t)
+    (org-back-to-heading t)
+    (org-end-of-meta-data t)
+    (let ((content-start (point))
+          (content-end (progn (org-end-of-subtree) (point))))
+      (string-trim (buffer-substring-no-properties content-start content-end)))))
+
+(defun new-day-insert ()
+  "Insert a new day entry based on a template."
+  (interactive)
+  (setf (point) (point-max))
+  (re-search-backward "^\\* [[:alpha:]]+, [[:alpha:]]+ [[:digit:]]+" nil t)
+  (let* ((template (with-temp-buffer
+                     (insert-file-contents
+                      (expand-file-name "template/new-day.org" aero/thornlog-path))
+                     (buffer-string)))
+         (element (org-element-at-point))
+         (prev-day (org-element-property :title element))
+         (prev-summary (extract-section-content "*** Today"))
+         (prev-goals (extract-section-content "** Goals"))
+         (prev-notes (extract-section-content "** Notes"))
+         (blocked-message (rand-nth aero/thornlog-blocked-response-list))
+         (new-day-entry (replace-thornlog-placeholders
+                         template prev-day prev-summary
+                         prev-goals prev-notes blocked-message)))
+    (outline-hide-sublevels 1)
+    (setf (point) (point-max))
+    (org-cycle-hide-drawers 'all)
+    (org-previous-visible-heading 1)
+    (org-show-subtree)
+    (org-end-of-subtree)
+    (insert "\n\n" new-day-entry "\n")
+    (org-previous-visible-heading 1)
+    (org-show-subtree)
+    (goto-char (point-max))
+    (search-backward "*** Today")
+    (forward-line)))
 
 
 (provide 'aero-org)
