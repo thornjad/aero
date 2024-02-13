@@ -25,7 +25,7 @@
 (require 'aero-prelude)
 (require 'outline)
 
-(defun new-day ()
+(defun new-day-md ()
   "Create a new entry for today, if one isn't already present."
   (interactive)
   (cond
@@ -137,16 +137,7 @@
 "
   "Template for a new day in the thornlog")
 
-(defvar aero/thornlog-blocked-response-list
-  '("none" "none" "none" "none" "none" "none" "none"
-    "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
-    "∅" "nada" "pas une chose" "無" "żadnych")
-  "List of template responses for blocked, to be chosen randomly.
-
-'none' is included multiple times so as to give it increased weight, it being the 'normal'
-response. I'm too lazy to create a weights map or something, this is easier.")
-
-(defun new-day-insert ()
+(defun new-day-insert-md ()
   "Insert the contents of the template into the document, for a new day's work."
   (let ((text nil)
         (case-fold-search nil)) ; case-insensitive search
@@ -195,7 +186,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     (re-search-backward "### Since ")
     (forward-line 1)))
 
-(defun today (&optional nomsg)
+(defun today-md (&optional nomsg)
   "Visit today's entry, if it exists, message if NOMSG is nil."
   (interactive)
   (let ((pos nil))
@@ -222,27 +213,5 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (interactive)
   (aero/thornlog-log)
   (today))
-
-(defun aero/thornlog-dir ()
-  "Personal persistent log."
-  (interactive)
-  (declare-function deer "ranger.el")
-  (when (require 'ranger nil t)
-    (deer aero/thornlog-path)))
-
-(defun aero/thornlog-log ()
-  "Personal persistent log."
-  (interactive)
-  (find-file (expand-file-name "log.md" aero/thornlog-path)))
-
-(defun aero/thornlog-notes ()
-  "Personal notes file."
-  (interactive)
-  (find-file (expand-file-name "notes.md" aero/thornlog-path)))
-
-(defun aero/thornlog-todo ()
-  "Personal todo list."
-  (interactive)
-  (find-file (expand-file-name "todo.md" aero/thornlog-path)))
 
 (provide 'aero-thornlog)
