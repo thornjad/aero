@@ -258,10 +258,10 @@
    "foP" 'aero/open-emacs-problems
    "fof" 'aero/open-local-init
    "fot" '(:ignore t :wk "thornlog")
-   "fotd" '(aero/thornlog-todo :wk "thornlog todo")
+   "fott" '(aero/thornlog-todo :wk "thornlog todo")
    "fotl" '(aero/thornlog-today :wk "thornlog log")
    "fotn" '(aero/thornlog-notes :wk "thornlog notes")
-   "fott" '(aero/thornlog-dir :wk "thornlog all")
+   "fotd" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
    "fx" '(aero/xdg-open :wk "xdg-open")
    "fh" '(aero/toggle-angular-component-file :wk "toggle angular component file")
