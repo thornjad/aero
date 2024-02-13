@@ -30,6 +30,15 @@
   '(expand-file-name "~/doc/thornlog/")
   "Directories which will have their contents evaluated without prompting.")
 
+(defvar aero/thornlog-blocked-response-list
+  '("none" "none" "none" "none" "none" "none" "none"
+    "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
+    "∅" "nada" "pas une chose" "無" "żadnych")
+  "List of template responses for blocked, to be chosen randomly.
+
+'none' is included multiple times so as to give it increased weight, it being the 'normal'
+response. I'm too lazy to create a weights map or something, this is easier.")
+
 (package! org :builtin
   :custom
   (org-insert-heading-respect-content t)
@@ -348,13 +357,16 @@
   (let* ((day-of-week (calendar-day-name (calendar-current-date)))
          (today (format-time-string "%A, %B %d <%Y-%m-%d>"))
          (yesterday (format-time-string "%A, %B %d <%Y-%m-%d>" (time-subtract (current-time) (days-to-time 1))))
-         (since-string (if (string= (match-string 1 prev-day-date) yesterday)
+         (since-string (if (string= prev-day-date yesterday)
                            "yesterday"
                          (car (split-string prev-day-date ", "))))
          (template (replace-regexp-in-string "<new-day-template>" today template))
          (template (replace-regexp-in-string "<previous-entry-day>" since-string template))
+         (prev-day-summary (if (string= "" prev-day-summary) "" (concat prev-day-summary "\n")))
          (template (replace-regexp-in-string "<previous-day-summary>" prev-day-summary template))
+         (prev-day-goals (if (string= "" prev-day-goals) "" (concat prev-day-goals "\n")))
          (template (replace-regexp-in-string "<previous-day-goals>" prev-day-goals template))
+         (prev-day-notes (if (string= "" prev-day-notes) "" (concat prev-day-notes "\n")))
          (template (replace-regexp-in-string "<previous-day-notes>" prev-day-notes template))
          (template (replace-regexp-in-string "<blocked-message>" blocked-message template)))
     template))
@@ -364,10 +376,12 @@
   (save-excursion
     (re-search-forward (regexp-quote title) nil t)
     (org-back-to-heading t)
-    (org-end-of-meta-data t)
-    (let ((content-start (point))
-          (content-end (progn (org-end-of-subtree) (point))))
-      (string-trim (buffer-substring-no-properties content-start content-end)))))
+    (org-mark-subtree)
+    (forward-line 1) ; deselect the heading
+    (let ((content
+           (string-trim (buffer-substring-no-properties (region-beginning) (region-end)))))
+      (deactivate-mark)
+      content)))
 
 (defun new-day-insert ()
   "Insert a new day entry based on a template."
@@ -399,6 +413,28 @@
     (goto-char (point-max))
     (search-backward "*** Today")
     (forward-line)))
+
+(defun aero/thornlog-dir ()
+  "Personal persistent log."
+  (interactive)
+  (declare-function deer "ranger.el")
+  (when (require 'ranger nil t)
+    (deer aero/thornlog-path)))
+
+(defun aero/thornlog-log ()
+  "Personal persistent log."
+  (interactive)
+  (find-file (expand-file-name "log.org" aero/thornlog-path)))
+
+(defun aero/thornlog-notes ()
+  "Personal notes file."
+  (interactive)
+  (find-file (expand-file-name "notes.md" aero/thornlog-path)))
+
+(defun aero/thornlog-todo ()
+  "Personal todo list."
+  (interactive)
+  (find-file (expand-file-name "todo.org" aero/thornlog-path)))
 
 
 (provide 'aero-org)
