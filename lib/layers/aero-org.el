@@ -88,9 +88,9 @@
     "oTt" 'org-time-stamp
     "oTe" 'insert-todays-timestamp-at-entry-end
     "oTd" 'org-deadline
-    "otD" '(:ignore t :wk "deadline")
-    "otDt" 'aero/org-deadline-next-workday
-    "otDw" 'aero/org-deadline-next-week
+    "oTD" '(:ignore t :wk "deadline")
+    "oTDt" 'aero/org-deadline-next-workday
+    "oTDw" 'aero/org-deadline-next-week
     "oTs" 'org-schedule
     "ot" 'org-todo
     "og" 'org-set-tags-command
@@ -128,6 +128,11 @@
     "oh" '(outline-hide-body :wk "hide all")
     "oS" '(outline-show-all :wk "show all")
     "os" 'org-sort-entries)
+
+  (aero-mode-leader-def
+    :keymaps 'org-mode-map
+    "t" 'today
+    "d" 'new-day)
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
