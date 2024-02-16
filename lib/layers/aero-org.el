@@ -180,6 +180,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all)
 
+  ;; Save org files when using clock or changing todo status
+  (advice-add 'org-agenda-clock-in :after 'org-save-all-org-buffers)
+  (advice-add 'org-agenda-clock-out :after 'org-save-all-org-buffers)
+  (advice-add 'org-clock-in :after 'org-save-all-org-buffers)
+  (advice-add 'org-clock-out :after 'org-save-all-org-buffers)
+  (advice-add 'org-todo :after 'org-save-all-org-buffers)
+
   ;; set up stuff for clock persistence
   (org-clock-persistence-insinuate)
 
