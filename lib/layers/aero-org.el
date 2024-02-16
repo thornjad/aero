@@ -115,10 +115,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-agenda-window-setup 'current-window)
   (org-agenda-restore-windows-after-quit t)
   (org-agenda-skip-unavailable-files t)
-  (org-agenda-start-day "-7d")
   (org-agenda-inhibit-startup t) ; skip unnecessary loading time
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
-  (org-archive-location (concat (expand-file-name "archive/archive.org" aero/thornlog-path) "::* From %s"))
+  (org-reverse-note-order nil) ; put notes at the end of the entry
+  (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
   :config
   (aero-leader-def
