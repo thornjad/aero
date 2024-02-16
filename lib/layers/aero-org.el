@@ -73,9 +73,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
-                      ,(expand-file-name "log.org" aero/thornlog-path)))
-
-  (org-agenda-span 10) ; days to show at a time
+                      ,(expand-file-name "log.org" aero/thornlog-path)
+                      ,(expand-file-name "notes.org" aero/thornlog-path)
+                      ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
 
   (org-capture-templates `(("t" "Task" entry
                             (file+headline
@@ -98,6 +98,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                              "Mistakes")
                             "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
                            ))
+
+  (org-agenda-log-mode-items '(closed))
+  (org-todo-keywords '((sequence "TODO" "DONE")
+                       (sequence "MEETING" "DONE")))
+  (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
+  (org-agenda-span 4) ; days to show at a time
+  (org-agenda-start-day "-1d") ; day to start at
   (org-agenda-tags-column -70) ; shift tags over
   (org-agenda-sticky nil) ; don't bury on close buffer
   (org-agenda-use-tag-inheritance t)
