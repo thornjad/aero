@@ -165,7 +165,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "ocE" 'org-clock-modify-effort-estimate
     "oh" '(outline-hide-body :wk "hide all")
     "oS" '(outline-show-all :wk "show all")
-    "os" 'org-sort-entries)
+    "os" 'org-sort-entries
+    "om" 'insert-meeting-task
+    "vo" 'org-capture)
 
   (aero-mode-leader-def
     :keymaps 'org-mode-map
