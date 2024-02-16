@@ -456,7 +456,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun aero/thornlog-notes ()
   "Personal notes file."
   (interactive)
-  (find-file (expand-file-name "notes.md" aero/thornlog-path)))
+  (find-file (expand-file-name "notes.org" aero/thornlog-path)))
 
 (defun aero/thornlog-todo ()
   "Personal todo list."
