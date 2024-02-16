@@ -76,6 +76,28 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                       ,(expand-file-name "log.org" aero/thornlog-path)))
 
   (org-agenda-span 10) ; days to show at a time
+
+  (org-capture-templates `(("t" "Task" entry
+                            (file+headline
+                             ,(expand-file-name "notes.org" aero/thornlog-path)
+                             "Tasks")
+                            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
+                           ("n" "Note" entry
+                            (file+headline
+                             ,(expand-file-name "notes.org" aero/thornlog-path)
+                             "Notes")
+                            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+                           ("s" "Time sink" entry
+                            (file+headline
+                             ,(expand-file-name "notes.org" aero/thornlog-path)
+                             "Time sinks")
+                            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+                           ("m" "Mistake" entry
+                            (file+headline
+                             ,(expand-file-name "notes.org" aero/thornlog-path)
+                             "Mistakes")
+                            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+                           ))
   (org-agenda-tags-column -70) ; shift tags over
   (org-agenda-sticky nil) ; don't bury on close buffer
   (org-agenda-use-tag-inheritance t)
