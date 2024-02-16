@@ -147,6 +147,7 @@ so we use more cycles but less space, but not too little space.")
   (defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
   (defconst pcache-directory (expand-file-name "pcache/" aero-cache-dir))
   (defvar aero/thornlog-path (expand-file-name "~/Documents/thornlog/"))
+  (defvar aero/thornlog-archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
   (unless (file-exists-p aero-cache-dir)
     (make-directory aero-cache-dir))
 
