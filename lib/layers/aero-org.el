@@ -463,5 +463,12 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (interactive)
   (find-file (expand-file-name "todo.org" aero/thornlog-path)))
 
+(defun insert-meeting-task ()
+  (interactive)
+  (let* ((meeting-name (read-string "Meeting Name: "))
+         (today (format-time-string "%Y-%m-%d"))
+         (task-string (format "*** MEETING %s :meeting:\nSCHEDULED: <%s>\n" meeting-name today)))
+    (insert task-string)))
+
 
 (provide 'aero-org)
