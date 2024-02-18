@@ -23,6 +23,7 @@
 (require 'aero-prelude)
 (require 'outline)
 (require 'dash)
+(require 'notifications)
 
 (package! org-ql "alphapapa/org-ql")
 
@@ -180,12 +181,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all)
 
-  ;; Save org files when using clock or changing todo status
-  (advice-add 'org-agenda-clock-in :after 'org-save-all-org-buffers)
-  (advice-add 'org-agenda-clock-out :after 'org-save-all-org-buffers)
-  (advice-add 'org-clock-in :after 'org-save-all-org-buffers)
-  (advice-add 'org-clock-out :after 'org-save-all-org-buffers)
-  (advice-add 'org-todo :after 'org-save-all-org-buffers)
+  ;; Save org files when using clock
+  (add-hook 'org-clock-in-hook #'org-save-all-org-buffers)
+  (add-hook 'org-clock-out-hook #'org-save-all-org-buffers)
 
   ;; set up stuff for clock persistence
   (org-clock-persistence-insinuate)
@@ -469,6 +467,66 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          (today (format-time-string "%Y-%m-%d"))
          (task-string (format "*** MEETING %s :meeting:\nSCHEDULED: <%s>\n" meeting-name today)))
     (insert task-string)))
+
+
+;; Notifications
+
+(defun aero/thornlog-notification (title message)
+  "Send a notification with TITLE and MESSAGE."
+  (notifications-notify
+   :title title
+   :body message
+   :app-name "Emacs :: Thornlog"))
+
+(defun aero/thornlog-check-effort-against-clock ()
+  "Check if current clock exceeds effort estimate, notify if it has exceeded."
+  (when (and (org-clocking-p)
+             (org-entry-get org-clock-marker "Effort"))
+    (let* ((effort (org-duration-to-minutes (org-entry-get org-clock-marker "Effort")))
+           (clocked (org-clock-get-clocked-time)))
+      (when (> clocked effort)
+        (aero/thornlog-notification
+         "Effort exceeded"
+         "The current org task has exceeded its effort estimate.")))))
+
+(defun aero/thornlog-notify-on-excessive-work-time ()
+  "Notify when org-clock has exceeded the continuous work limit."
+  (when (and (org-clocking-p)
+             (> (org-clock-get-clocked-time) 120))
+    (aero/thornlog-notification
+     "Two-hour check-in"
+     "You've been working for two hours straight.")))
+
+(defvar aero/thornlog-effort-timer nil
+  "Timer for checking effort against clock.")
+
+(defvar aero/thornlog-continuous-work-timer nil
+  "Timer for checking continuous work time.")
+
+(defun aero/thornlog-set-effort-timer ()
+  "Check if current clock exceeds effort estimate, notify if it has exceeded."
+  (setq aero/thornlog-effort-timer (run-with-timer 0 60 'aero/thornlog-check-effort-against-clock)))
+
+(defun aero/thornlog-cancel-effort-timer ()
+  "Cancel the effort timer."
+  (when aero/thornlog-effort-timer (cancel-timer aero/thornlog-effort-timer)))
+
+(defun aero/thornlog-set-continuous-work-timer ()
+  "Notify when org-clock has exceeded the continuous work limit."
+  (setq aero/thornlog-continuous-work-timer
+        (run-with-timer 0 60 'aero/thornlog-notify-on-excessive-work-time)))
+
+(defun aero/thornlog-cancel-continuous-work-timer ()
+  "Cancel the continuous work timer."
+  (when aero/thornlog-continuous-work-timer (cancel-timer aero/thornlog-continuous-work-timer)))
+
+(add-hook 'org-clock-in-hook 'aero/thornlog-set-effort-timer)
+(add-hook 'org-clock-out-hook 'aero/thornlog-cancel-effort-timer)
+(add-hook 'org-clock-cancel-hook 'aero/thornlog-cancel-effort-timer)
+
+(add-hook 'org-clock-in-hook 'aero/thornlog-set-continuous-work-timer)
+(add-hook 'org-clock-out-hook 'aero/thornlog-cancel-continuous-work-timer)
+(add-hook 'org-clock-cancel-hook 'aero/thornlog-cancel-continuous-work-timer)
 
 
 (provide 'aero-org)
