@@ -528,5 +528,22 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (add-hook 'org-clock-out-hook 'aero/thornlog-cancel-continuous-work-timer)
 (add-hook 'org-clock-cancel-hook 'aero/thornlog-cancel-continuous-work-timer)
 
+;; TODO
+;; (defun my-add-clocked-time-property ()
+;;   (when (markerp org-clock-marker)
+;;     (let ((total-time (org-clock-get-clocked-time)))
+;;       (save-excursion
+;;         (goto-char org-clock-marker)
+;;         (org-back-to-heading t)
+;;         (let ((current-prop-val (org-entry-get (point) "CLOCKED_TIME")))
+;;           (if current-prop-val
+;;               (org-entry-put (point) "CLOCKED_TIME"
+;;                              (org-duration-from-minutes
+;;                               (+ (org-duration-to-minutes current-prop-val)
+;;                                  total-time)))
+;;             (org-entry-put (point) "CLOCKED_TIME"
+;;                            (org-duration-from-minutes total-time))))))))
+;; (add-hook 'org-clock-out-hook 'my-add-clocked-time-property)
+
 
 (provide 'aero-org)
