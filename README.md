@@ -57,7 +57,7 @@ make init
 
 The `make init` will install dependencies needed for LSP servers, using any tools already available on the system (e.g. it will not error if `opam` isn't installed). It will also set up and update any submodules required for Aero.
 
-Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el`. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
+Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el**. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
 ### Mirrors
 
@@ -96,6 +96,10 @@ Unlike Linux, installing and running Emacs on MacOS can be flaky, so several ins
 - `build-emacs-cask`: Install the standard Homebrew Cask `emacs-nightly` package, still cutting-edge but should be more stable than the previous options.
 - `build-emacs-cask-stable`: The final fallback, the standard Homebrew Cask `emacs` package.
 - Note that Aero does not profess support for the pre-installed version of Emacs on MacOS; it is infrequently updated and Aero focuses on the development version of Emacs.
+
+## Local configuration
+
+Your environment may require specific configuration, such as secret keys, environment variables, or work-specific functions, which should not appear in a git repository. Aero features the ability to read an `init.local.el` when it exists in the same directory as Aero's `init.el`. This local file may contain arbitrary ELisp, which is executed after everything else in Aero.
 
 ## Note
 
