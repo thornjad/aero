@@ -279,6 +279,7 @@
    "hdK" 'describe-keymap
    "hdC" 'describe-char
    "hdp" 'describe-package
+   "hdl" '(find-library :wk "describe library")
    "hi" 'info
    "hm" 'man
    "hw" '(:ignore t :wk "which-key")
