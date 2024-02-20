@@ -480,10 +480,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 (defun aero/thornlog-check-effort-against-clock ()
   "Check if current clock exceeds effort estimate, notify if it has exceeded."
-  (when (and (org-clocking-p)
-             (org-entry-get org-clock-marker "Effort"))
-    (let* ((effort (org-duration-to-minutes (org-entry-get org-clock-marker "Effort")))
-           (clocked (org-clock-get-clocked-time)))
+  (when (org-clocking-p)
+    (when-let* ((marker (org-entry-get org-clock-marker "Effort"))
+                (effort (org-duration-to-minutes marker))
+                (clocked (org-clock-get-clocked-time)))
       (when (> clocked effort)
         (aero/thornlog-notification
          "Effort exceeded"
