@@ -520,30 +520,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   "Cancel the continuous work timer."
   (when aero/thornlog-continuous-work-timer (cancel-timer aero/thornlog-continuous-work-timer)))
 
-(add-hook 'org-clock-in-hook 'aero/thornlog-set-effort-timer)
-(add-hook 'org-clock-out-hook 'aero/thornlog-cancel-effort-timer)
-(add-hook 'org-clock-cancel-hook 'aero/thornlog-cancel-effort-timer)
+(add-hook 'org-clock-in-hook #'aero/thornlog-set-effort-timer)
+(add-hook 'org-clock-out-hook #'aero/thornlog-cancel-effort-timer)
+(add-hook 'org-clock-cancel-hook #'aero/thornlog-cancel-effort-timer)
 
-(add-hook 'org-clock-in-hook 'aero/thornlog-set-continuous-work-timer)
-(add-hook 'org-clock-out-hook 'aero/thornlog-cancel-continuous-work-timer)
-(add-hook 'org-clock-cancel-hook 'aero/thornlog-cancel-continuous-work-timer)
-
-;; TODO
-;; (defun my-add-clocked-time-property ()
-;;   (when (markerp org-clock-marker)
-;;     (let ((total-time (org-clock-get-clocked-time)))
-;;       (save-excursion
-;;         (goto-char org-clock-marker)
-;;         (org-back-to-heading t)
-;;         (let ((current-prop-val (org-entry-get (point) "CLOCKED_TIME")))
-;;           (if current-prop-val
-;;               (org-entry-put (point) "CLOCKED_TIME"
-;;                              (org-duration-from-minutes
-;;                               (+ (org-duration-to-minutes current-prop-val)
-;;                                  total-time)))
-;;             (org-entry-put (point) "CLOCKED_TIME"
-;;                            (org-duration-from-minutes total-time))))))))
-;; (add-hook 'org-clock-out-hook 'my-add-clocked-time-property)
+(add-hook 'org-clock-in-hook #'aero/thornlog-set-continuous-work-timer)
+(add-hook 'org-clock-out-hook #'aero/thornlog-cancel-continuous-work-timer)
+(add-hook 'org-clock-cancel-hook #'aero/thornlog-cancel-continuous-work-timer)
 
 
 (provide 'aero-org)
