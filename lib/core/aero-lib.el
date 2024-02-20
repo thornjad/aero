@@ -521,6 +521,7 @@ This function does NOT remove remote buffers, only their connections."
 
 (defun aero/xdg-open (arg)
   "Pass the specified ARG to \"xdg-open\".
+
 This can be used to open Nautilus/Finder, the default browser, etc. See \"man
 xdg-open\" for more."
   (interactive (list (read-string "Open: ")))
@@ -538,7 +539,12 @@ xdg-open\" for more."
   "Pass the specified URL to `aero/xdg-open'.
 
 Ignored arg is due to the way `funcall-interactively' calls stuff."
-  (interactive (browse-url-interactive-arg "URL: "))
+  (interactive
+   (let ((link (and (derived-mode-p 'org-mode)
+                    (org-element-context))))
+     (if (and link (eq (car link) 'link))
+         (list (org-element-property :raw-link link))
+       (browse-url-interactive-arg "URL: "))))
   (aero/xdg-open url))
 
 
