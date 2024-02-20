@@ -51,7 +51,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-startup-indented t)
   (org-log-done 'time) ; log time when item is marked done
   (org-fontify-done-headline t) ; let theme strike out done items
-  (org-clock-persist 'history)
+  (org-clock-persist nil)
 
   ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
