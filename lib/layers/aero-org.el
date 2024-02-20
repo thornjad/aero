@@ -80,8 +80,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   (org-capture-templates `(("t" "Task" entry
                             (file+headline
-                             ,(expand-file-name "notes.org" aero/thornlog-path)
-                             "Tasks")
+                             ,(expand-file-name "todo.org" aero/thornlog-path)
+                             "General Todo")
                             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
                            ("n" "Note" entry
                             (file+headline
