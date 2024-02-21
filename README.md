@@ -12,6 +12,10 @@
 
 Here lives my own configuration for GNU Emacs, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skillfulness. There are many like it, but this one is mine.
 
+Aero is not intended as a general distribution. It undergoes constant evolution; bindings, settings and packages change with no warning and little to no documentation. This project is open source as a reference or source of ideas. Use at your own risk.
+
+To get started with Emacs, I highly recommend the distribution responsible for hooking me in: [Spacemacs](https://spacemacs.org).
+
 <br>
 
 > "Configuring Emacs is more of a lifestyle choice than a task that one completes."<br><br>  — Stephen Ramsey
@@ -100,12 +104,6 @@ Unlike Linux, installing and running Emacs on MacOS can be flaky, so several ins
 ## Local configuration
 
 Your environment may require specific configuration, such as secret keys, environment variables, or work-specific functions, which should not appear in a git repository. Aero features the ability to read an `init.local.el` when it exists in the same directory as Aero's `init.el`. This local file may contain arbitrary ELisp, which is executed after everything else in Aero.
-
-## Note
-
-This configuration undergoes constant evolution. Bindings, settings and packages change with no warning and little to no documentation. This project does not exist as a prebuilt configuration like Spacemacs, but rather as a reference or source of ideas. Use at your own risk.
-
-To get started with Emacs, I highly recommend [Spacemacs](https://spacemacs.org).
 
 ## Credits and acknowledgments
 
