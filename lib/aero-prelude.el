@@ -883,12 +883,26 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :defer 1
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
+;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
+;; to disk.
 (package! virtual-comment "thanhvg/emacs-virtual-comment"
-  ;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
-  ;; to disk.
-  :hook (find-file-hook . virtual-comment-mode)
-  :after (general)
+  :hook ((find-file-hook . virtual-comment-mode)
+         (virtual-comment-make-mode . evil-insert-state))
+  :after (general evil)
+  :commands (virtual-comment-make
+             virtual-comment-next
+             virtual-comment-previous
+             virtual-comment-delete
+             virtual-comment-paste
+             virtual-comment-show)
+  :custom (virtual-comment-face 'virtual-comment-face)
   :init
+  ;; Doesn't define its own faces, using a variable instead, so we need to declare it
+  (defface virtual-comment-face
+    '((t :inherit highlight))
+    "Face for virtual comments"
+    :group 'virtual-comment)
+
   (aero-leader-def
     "v" '(:ignore t :wk "virtual comment")
     "vv" 'virtual-comment-make
@@ -896,9 +910,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
     "vp" 'virtual-comment-previous
     "vk" 'virtual-comment-delete
     "vP" 'virtual-comment-paste
-    "vs" 'virtual-comment-show)
-  :config
-  (evil-set-initial-state 'virtual-comment-mode 'insert))
+    "vs" 'virtual-comment-show))
 
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
