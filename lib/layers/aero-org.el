@@ -118,6 +118,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-agenda-skip-unavailable-files t)
   (org-agenda-inhibit-startup t) ; skip unnecessary loading time
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
+  (org-priority-highest ?A)
+  (org-priority-lowest ?D) ; default is C, this adds another
   (org-reverse-note-order nil) ; put notes at the end of the entry
   (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
