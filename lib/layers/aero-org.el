@@ -104,15 +104,15 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-todo-keywords '((sequence "TODO" "DONE")
                        (sequence "MEETING" "DONE")))
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
-  (org-agenda-span 4) ; days to show at a time
-  (org-agenda-start-day "-1d") ; day to start at
+  (org-agenda-span 3) ; days to show at a time
+  (org-agenda-start-day nil) ; day to start at
+  (org-agenda-start-on-weekday nil) ; start week on current day
   (org-agenda-tags-column -70) ; shift tags over
   (org-agenda-sticky nil) ; don't bury on close buffer
   (org-agenda-use-tag-inheritance t)
   (org-agenda-show-log t)
   (org-agenda-skip-deadline-if-done t)
   (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-  (org-agenda-start-on-weekday 1) ; start week on Monday
   (org-agenda-window-setup 'current-window)
   (org-agenda-restore-windows-after-quit t)
   (org-agenda-skip-unavailable-files t)
