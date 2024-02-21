@@ -114,7 +114,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-agenda-skip-deadline-if-done t)
   (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
   (org-agenda-window-setup 'current-window)
-  (org-agenda-restore-windows-after-quit t)
+  (org-agenda-restore-windows-after-quit nil)
   (org-agenda-skip-unavailable-files t)
   (org-agenda-inhibit-startup t) ; skip unnecessary loading time
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
