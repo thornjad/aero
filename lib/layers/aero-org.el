@@ -188,6 +188,14 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (add-hook 'org-clock-in-hook #'org-save-all-org-buffers)
   (add-hook 'org-clock-out-hook #'org-save-all-org-buffers)
 
+  ;; Force org-capture to not open new windows
+  (defun aero/org-capture-place-template-dont-delete-windows (oldfun &rest args)
+    (cl-letf (((symbol-function 'delete-other-windows) 'ignore))
+      (apply oldfun args)))
+  (with-eval-after-load "org-capture"
+    (advice-add 'org-capture-place-template
+                :around #'aero/org-capture-place-template-dont-delete-windows))
+
   ;; set up stuff for clock persistence
   (org-clock-persistence-insinuate)
 
