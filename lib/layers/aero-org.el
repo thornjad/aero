@@ -490,10 +490,12 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 (defun aero/thornlog-notification (title message)
   "Send a notification with TITLE and MESSAGE."
-  (notifications-notify
-   :title title
-   :body message
-   :app-name "Emacs :: Thornlog"))
+  (if (featurep 'dbusbind)
+      (notifications-notify
+       :title title
+       :body message
+       :app-name "Emacs :: Thornlog")
+    (message (format "Thornlog :: %s :: %s" title message))))
 
 (defun aero/thornlog-check-effort-against-clock ()
   "Check if current clock exceeds effort estimate, notify if it has exceeded."
@@ -504,8 +506,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (when (> clocked effort)
         (aero/thornlog-notification
          "Effort exceeded"
-         "The current org task has exceeded its effort estimate.")
-        (message "The current org task has exceeded its effort estimate!")))))
+         "The current org task has exceeded its effort estimate.")))))
 
 (defun aero/thornlog-notify-on-excessive-work-time ()
   "Notify when org-clock has exceeded the continuous work limit."
@@ -513,8 +514,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
              (> (org-clock-get-clocked-time) 120))
     (aero/thornlog-notification
      "Two-hour check-in"
-     "You've been working for two hours straight.")
-    (message "You've been working for two hours straight!")))
+     "You've been working for two hours straight.")))
 
 (defvar aero/thornlog-effort-timer nil
   "Timer for checking effort against clock.")
