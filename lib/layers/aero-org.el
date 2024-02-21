@@ -469,6 +469,19 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          (task-string (format "*** MEETING %s :meeting:\nSCHEDULED: <%s>\n" meeting-name today)))
     (insert task-string)))
 
+(defun aero/org-collapse-entry-if-done ()
+  "Collapse the current entry if it is marked as DONE."
+  (when (member org-state '("DONE"))
+    (hide-subtree)))
+
+(defun aero/org-expand-entry-if-todo ()
+  "Expand the current entry if it is marked as TODO."
+  (when (member org-state '("TODO"))
+    (show-subtree)))
+
+(add-hook 'org-after-todo-state-change-hook #'aero/org-collapse-entry-if-done)
+(add-hook 'org-after-todo-state-change-hook #'aero/org-expand-entry-if-todo)
+
 
 ;; Notifications
 
