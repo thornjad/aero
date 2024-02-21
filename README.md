@@ -22,6 +22,26 @@ To get started with Emacs, I highly recommend the distribution responsible for h
 
 <br>
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Features](#features)
+    - [Spacemacs-like leader keys](#spacemacs-like-leader-keys)
+    - [AI Assistant](#ai-assistant)
+    - [Custom theme with simplified mode line](#custom-theme-with-simplified-mode-line)
+- [Requirements](#requirements)
+- [Installation](#installation)
+    - [Mirrors](#mirrors)
+    - [Installation of Emacs using Aero build scripts](#installation-of-emacs-using-aero-build-scripts)
+        - [Build script install Emacs on Linux](#build-script-install-emacs-on-linux)
+        - [Build script install Emacs on MacOS](#build-script-install-emacs-on-macos)
+- [Local configuration](#local-configuration)
+- [Credits and acknowledgments](#credits-and-acknowledgments)
+- [License](#license)
+
+<!-- markdown-toc end -->
+
+
 ## Features
 
 ### Spacemacs-like leader keys
