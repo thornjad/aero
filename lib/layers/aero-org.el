@@ -155,6 +155,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "oi" '(:ignore t :wk "insert")
     "oil" '(org-insert-link :wk "link")
     "oid" '(org-insert-drawer :wk "drawer")
+    "oim" 'insert-meeting-task
+    "oiR" 'aero/insert-todos-from-ritual-with-date
     "oc" '(:ignore t :wk "cell/clock")
     "occ" '(org-babel-execute-src-block :wk "exec cell")
     "oci" 'org-clock-in
@@ -167,7 +169,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "oh" '(outline-hide-body :wk "hide all")
     "oS" '(outline-show-all :wk "show all")
     "os" 'org-sort-entries
-    "om" 'insert-meeting-task
     "vo" 'org-capture)
 
   (aero-mode-leader-def
