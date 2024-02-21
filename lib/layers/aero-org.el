@@ -511,12 +511,14 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          "The current org task has exceeded its effort estimate.")))))
 
 (defun aero/thornlog-notify-on-excessive-work-time ()
-  "Notify when org-clock has exceeded the continuous work limit."
-  (when (and (org-clocking-p)
-             (> (org-clock-get-clocked-time) 120))
-    (aero/thornlog-notification
-     "Two-hour check-in"
-     "You've been working for two hours straight.")))
+  "Notify when the current org-clock has exceeded the continuous work limit."
+  (when-let ((clocked-time (floor (org-time-convert-to-integer (time-since org-clock-start-time))
+		                              60)))
+    (when (and (org-clocking-p)
+               (> clocked-time 120))
+      (aero/thornlog-notification
+       "Two-hour check-in"
+       "You've been working for two hours straight."))))
 
 (defvar aero/thornlog-effort-timer nil
   "Timer for checking effort against clock.")
