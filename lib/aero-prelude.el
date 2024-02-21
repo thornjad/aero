@@ -279,6 +279,7 @@
    "hdK" 'describe-keymap
    "hdC" 'describe-char
    "hdp" 'describe-package
+   "hdi" '(emacs-index-search :wk "search emacs manual")
    "hdl" '(find-library :wk "describe library")
    "hi" 'info
    "hm" 'man
