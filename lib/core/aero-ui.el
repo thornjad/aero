@@ -137,7 +137,7 @@
 
 ;; highlight todo and similar words
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
-  :hook ((prog-mode text-mode) . todo-light-mode))
+  :init (global-todo-light-mode +1))
 
 ;; show indentation guides
 (package! highlight-indent-guides
