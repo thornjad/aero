@@ -102,7 +102,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   (org-agenda-log-mode-items '(closed))
   (org-todo-keywords '((sequence "TODO" "DONE")
-                       (sequence "MEETING" "DONE")))
+                       (sequence "MEETING" "DONE")
+                       (sequence "RITUAL" "DONE")))
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
   (org-agenda-span 3) ; days to show at a time
   (org-agenda-start-day nil) ; day to start at
