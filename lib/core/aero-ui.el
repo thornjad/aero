@@ -167,7 +167,13 @@
     :config (evil-terminal-cursor-changer-activate)))
 
 ;; Pulse the current line when changing windows
-(dolist (fn '(other-window windmove-up windmove-down windmove-left windmove-right))
+(dolist (fn '(other-window
+              windmove-up
+              windmove-down
+              windmove-left
+              windmove-right
+              aero/alternate-buffer
+              aero/alternate-window))
   (advice-add fn :after #'pulse-line))
 
 (provide 'aero-ui)
