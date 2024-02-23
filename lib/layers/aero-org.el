@@ -500,8 +500,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                               meeting-name today meeting-time)))
     (goto-char (point-max))
     (re-search-backward "^\\*+ Meetings" nil t)
-    (forward-line 1)
-    (insert task-string)))
+    (org-end-of-subtree)
+    (insert "\n\n" task-string)))
 
 (defun aero/org-collapse-entry-if-done ()
   "Collapse the current entry if it is marked as DONE."
