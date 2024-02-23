@@ -242,6 +242,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
      (:name "Past scheduled" :scheduled past)
      (:priority<= "B" :order 1)
      (:name "Due soon" :deadline future)))
+
+  ;; Fixes super-agenda overriding evil-org bindings
+  (org-super-agenda-header-map (make-sparse-keymap))
+
   :config
   (org-super-agenda-mode))
 
