@@ -229,6 +229,22 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   :custom
   (org-fancy-priorities-list '("❗" "⬆" "■" "↓")))
 
+(package! org-super-agenda "alphapapa/org-super-agenda"
+  :after org
+  :custom
+  (org-super-agenda-groups
+   '(;; Each group has an implicit boolean OR operator between its selectors.
+     (:name "Daily Ritual" :tag "ritual")
+     (:time-grid t)
+     (:name "Important" :priority "A")
+     (:name "Overdue" :deadline past)
+     (:name "Due today" :deadline today)
+     (:name "Past scheduled" :scheduled past)
+     (:priority<= "B" :order 1)
+     (:name "Due soon" :deadline future)))
+  :config
+  (org-super-agenda-mode))
+
 
 ;; Functions for agenda and stuff
 
