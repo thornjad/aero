@@ -248,7 +248,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     (save-excursion
       ;; Search for daily ritual heading in the current buffer, not the temp buffer
       (goto-char (point-min))
-      (when (re-search-forward "^\\*+ Daily Ritual" nil t)
+      (when (re-search-forward "^\\* Daily Ritual" nil t)
         (setq insertion-point (save-excursion
                                 ;; Find the next heading or end of buffer to determine where to insert tasks
                                 (if (re-search-forward "^\\*+ " nil t)
@@ -259,18 +259,20 @@ response. I'm too lazy to create a weights map or something, this is easier.")
         (with-temp-buffer
           (insert-file-contents ritual-file-path)
           (goto-char (point-min))
-          (while (re-search-forward "^\\*+ TODO" nil t)
+          (while (re-search-forward "^\\*+ RITUAL" nil t)
             (let ((todo-start (match-beginning 0))
                   (todo-end (save-excursion
                               (if (re-search-forward "^\\*+ " nil t)
                                   (match-beginning 0)
                                 (point-max)))))
-              (let ((todo-entry (buffer-substring-no-properties todo-start todo-end)))
-                (with-current-buffer (other-buffer (current-buffer) t)
-                  (goto-char insertion-point)
-                  (unless (bolp) (insert "\n"))
-                  (insert "*" todo-entry "SCHEDULED: " today "\n\n")
-                  (setq insertion-point (point)))))))))))
+              (when (or (not (org-entry-get (point) "Weekly"))
+                        (string= (format-time-string "%A") (org-entry-get (point) "Weekly")))
+                (let ((todo-entry (buffer-substring-no-properties todo-start todo-end)))
+                  (with-current-buffer (other-buffer (current-buffer) t)
+                    (goto-char insertion-point)
+                    (unless (bolp) (insert "\n"))
+                    (insert "*" todo-entry "SCHEDULED: " today "\n\n")
+                    (setq insertion-point (point))))))))))))
 
 (defun aero/org-agenda-list ()
   "`org-agenda', skipping command menu to list."
