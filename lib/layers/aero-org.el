@@ -405,8 +405,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun replace-thornlog-placeholders (template prev-day-date)
   "Replace placeholders in TEMPLATE with reference to PREV-DAY-DATE."
   (let* ((day-of-week (calendar-day-name (calendar-current-date)))
-         (today (format-time-string "%A, %B %d <%Y-%m-%d>"))
-         (yesterday (format-time-string "%A, %B %d <%Y-%m-%d>" (time-subtract (current-time) (days-to-time 1))))
+         (today (format-time-string "%A, %B %d"))
+         (yesterday (format-time-string "%A, %B %d" (time-subtract (current-time) (days-to-time 1))))
          (since-string (if (string= prev-day-date yesterday)
                            "yesterday"
                          (car (split-string prev-day-date ", "))))
