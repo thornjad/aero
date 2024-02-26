@@ -102,6 +102,12 @@
     "lrf" 'eglot-format
     "lro" 'eglot-code-action-organize-imports))
 
+;; Make eglot send more info to eldoc, including parameter and function documentation
+(package! eglot-signature-eldoc-talkative
+  (:host codeberg :repo "mekeor/emacs-eglot-signature-eldoc-talkative" :branch "default")
+  :after (eglot)
+  :config (advice-add #'eglot-signature-eldoc-function :override #'eglot-signature-eldoc-talkative))
+
 ;; puts eldoc in a child frame instead of the echo area
 (package! eldoc-box (:repo "casouri/eldoc-box")
   :after general
