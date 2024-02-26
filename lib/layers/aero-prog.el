@@ -527,6 +527,12 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 (package! docker-compose-mode :auto :mode "docker-compose.*\.yml\\'")
 (package! dockerfile-mode :auto :mode "Dockerfile[a-zA-Z.-]*\\'")
 
+;; Compilation prettify
+(package! fancy-compilation
+  (:host codeberg :repo "ideasman42/emacs-fancy-compilation" :branch "main")
+  :commands (fancy-compilation-mode)
+  :init (with-eval-after-load 'compile (fancy-compilation-mode)))
+
 
 ;;; additional packages which might not fit elsewhere
 
