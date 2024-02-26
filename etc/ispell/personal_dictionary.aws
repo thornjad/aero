@@ -1,4 +1,4 @@
-personal_ws-1.1 en 655 
+personal_ws-1.1 en 656 
 ACL
 AEC
 APIs
@@ -58,6 +58,7 @@ ECCU
 ECSI
 ELPA
 ESC
+EXIF
 Eglot
 Elpaca
 Elven
