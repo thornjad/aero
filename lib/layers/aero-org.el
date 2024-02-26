@@ -247,6 +247,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
      (:priority<= "B")
      (:name "Due soon" :deadline future)))
 
+  ;; add space between dates by adding space after the final group
+  (org-super-agenda-final-group-separator "\n")
 
   :config
   (org-super-agenda-mode)
