@@ -234,6 +234,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 (package! org-super-agenda "alphapapa/org-super-agenda"
   :after org
+
   :custom
   (org-super-agenda-groups
    '(;; Each group has an implicit boolean OR operator between its selectors.
@@ -246,11 +247,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
      (:priority<= "B")
      (:name "Due soon" :deadline future)))
 
-  ;; Fixes super-agenda overriding evil-org bindings
-  (org-super-agenda-header-map (make-sparse-keymap))
 
   :config
-  (org-super-agenda-mode))
+  (org-super-agenda-mode)
+
+  ;; Fixes super-agenda overriding evil-org bindings. MUST be set after the mode initializes, else
+  ;; it overrides it again
+  (setq org-super-agenda-header-map (make-sparse-keymap)))
 
 
 ;; Functions for agenda and stuff
