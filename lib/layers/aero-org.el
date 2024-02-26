@@ -213,13 +213,15 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 ;; Use evil in org, particularly in org-agenda. Also unblocks using aero-leader chords. See
 ;; https://github.com/Somelauw/evil-org-mode for a list of available commands
 (package! evil-org-mode "Somelauw/evil-org-mode"
-  :after (evil org)
-  :hook (org-mode . evil-org-mode)
-  :init
+  :after (evil org org-super-agenda)
+  :preface
   (defun aero/evil-org-agenda-mode ()
     "Shim in org-agenda evil mode."
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys))
+
+  :hook (org-mode . evil-org-mode)
+  :init
   ;; Can't be in :hook because we're defining it here, which is for the byte-compiler
   (add-hook 'org-agenda-mode-hook #'aero/evil-org-agenda-mode))
 
