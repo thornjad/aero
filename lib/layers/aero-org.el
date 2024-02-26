@@ -155,11 +155,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "oe" '(:ignore t :wk "org edit")
     "oet" '(:ignore t :wk "org table")
     "oets" 'org-table-sort-lines
-    "oi" '(:ignore t :wk "insert")
-    "oil" '(org-insert-link :wk "link")
-    "oid" '(org-insert-drawer :wk "drawer")
-    "oim" 'insert-meeting-task
-    "oiR" 'aero/insert-todos-from-ritual-with-date
     "oc" '(:ignore t :wk "cell/clock")
     "occ" '(org-babel-execute-src-block :wk "exec cell")
     "oci" 'org-clock-in
@@ -177,7 +172,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (aero-mode-leader-def
     :keymaps 'org-mode-map
     "t" 'today
-    "d" 'new-day)
+    "d" 'new-day
+    "i" '(:ignore t :wk "insert")
+    "il" '(org-insert-link :wk "link")
+    "id" '(org-insert-drawer :wk "drawer")
+    "im" 'insert-meeting-task
+    "iR" 'aero/insert-todos-from-ritual-with-date
+    "A" 'archive-all-done-tasks)
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
