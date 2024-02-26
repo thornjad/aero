@@ -235,6 +235,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (package! org-super-agenda "alphapapa/org-super-agenda"
   :after org
 
+  :hook ((org-agenda-after-show . recenter))
+
   :custom
   (org-super-agenda-groups
    '(;; Each group has an implicit boolean OR operator between its selectors.
