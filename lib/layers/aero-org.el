@@ -417,7 +417,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
    ((today) (message "Entry for today already present"))
    (t (progn
         (new-day-insert)
-        (evil-scroll-line-to-center (line-number-at-pos))))))
+        (recenter)))))
 
 (defun today ()
   (interactive)
@@ -429,7 +429,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       query
       :action (lambda ()
                 (setq entry-found t)
-                (evil-scroll-line-to-center (point))))
+                (recenter)))
     entry-found))
 
 (defun replace-thornlog-placeholders (template prev-day-date)
