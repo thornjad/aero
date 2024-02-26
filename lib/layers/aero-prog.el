@@ -111,24 +111,30 @@
 ;; puts eldoc in a child frame instead of the echo area
 (package! eldoc-box (:repo "casouri/eldoc-box")
   :after general
-  :config
-  ;; (setq eldoc-echo-area-use-multiline-p nil) ; stop normal eldoc from resizing
+
+  :preface
+  (defun aero/eldoc-set-documentation-strategy ()
+    (setq-local eldoc-documentation-strategy #'eldoc-documentation-compose))
+
   (defun aero/eldoc-box-help-at-point ()
     (interactive)
     (if (and (fboundp 'eglot-managed-p) (eglot-managed-p))
         (call-interactively #'eldoc-box-eglot-help-at-point)
       (call-interactively #'eldoc-box-help-at-point)))
+
+  ;; Fix documentation strategy to show all of the available eldoc information when we want it. This
+  ;; way Flymake errors don't just get clobbered by docstrings.
+  :hook ((eglot-managed-mode . aero/eldoc-set-documentation-strategy)
+         (prog-mode . eldoc-box-hover-mode))
+
+  :custom
+  (eldoc-idle-delay 0.5)
+  (eldoc-box-only-multi-line t) ; leave single-line docs in minibuffer
+
+  :config
   (aero-leader-def
     "i" 'aero/eldoc-box-help-at-point
-    "li" 'eldoc-box-eglot-help-at-point)
-  (with-eval-after-load 'eglot
-    ;; Show all of the available eldoc information when we want it. This way Flymake errors
-    ;; don't just get clobbered by docstrings.
-    (add-hook 'eglot-managed-mode-hook
-              (lambda ()
-                "Make sure Eldoc will show us all of the feedback at point."
-                (setq-local eldoc-documentation-strategy
-                            #'eldoc-documentation-compose)))))
+    "li" 'eldoc-box-eglot-help-at-point))
 
 
 ;; C language
