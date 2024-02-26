@@ -241,7 +241,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
      (:name "Overdue" :deadline past)
      (:name "Due today" :deadline today)
      (:name "Past scheduled" :scheduled past)
-     (:priority<= "B" :order 1)
+     (:priority<= "B")
      (:name "Due soon" :deadline future)))
 
   ;; Fixes super-agenda overriding evil-org bindings
