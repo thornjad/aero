@@ -131,11 +131,11 @@ Once again, the message must never ever exceed 50 characters.
     "DALL-E 2"))
 (defvar aa--openai-models '("GPT 4" "GPT 3.5" "DALL-E 3" "DALL-E 2"))
 (defvar aa--dall-e-models '("dall-e-3" "dall-e-2"))
-(defvar aa--gpt-models '("gpt-4-1106-preview" "gpt-3.5-turbo-1106"))
+(defvar aa--gpt-models '("gpt-4-turbo-preview" "gpt-3.5-turbo-1106"))
 (defvar aa--model-name-map
   #s(hash-table size 10 test equal data
                 ("GPT 3.5" "gpt-3.5-turbo-1106"
-                 "GPT 4" "gpt-4-1106-preview"
+                 "GPT 4" "gpt-4-turbo-preview"
                  "DALL-E 3" "dall-e-3"
                  "DALL-E 2" "dall-e-2")))
 (defvar aa-dall-e-quality "standard")
