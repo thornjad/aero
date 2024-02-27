@@ -21,8 +21,7 @@ build-emacs-cask: macos-reqs
 	brew install --cask emacs-nightly
 
 build-emacs-macos: macos-reqs
-	# NOTE: dbus isn't working on M1 yet.
-	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets
+	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-native-comp --with-xwidgets --with-dbus
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
@@ -82,9 +81,9 @@ clear-straight:
 # Clear out packages and re-init
 hard-init: clear-straight init
 
+# Continues even on failures. This lets us only install what the system can install, but can
+# swallow up errors
 install-deps:
-	# Continues even on failures. This lets us only install what the system can install, but can
-	# swallow up errors
 	npm i -g bash-language-server @types/node || true
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
 	npm i -g emmet-ls vscode-json-languageserver || true
@@ -97,3 +96,11 @@ install-deps:
 	gem install solargraph || true
 	opam install ocaml-lsp-server || true
 	nix-env -i rnix-lsp || true
+
+lsp-booster:
+	if [ -d ~/.config/emacs/tmp/emacs-lsp-booster ]; then \
+		cd ~/.config/emacs/tmp/emacs-lsp-booster && git pull; \
+	else git clone git@github.com:blahgeek/emacs-lsp-booster.git ~/.config/emacs/tmp/emacs-lsp-booster; \
+	fi
+	cd ~/.config/emacs/tmp/emacs-lsp-booster && cargo build --release
+	ln -sf ~/.config/emacs/tmp/emacs-lsp-booster/target/release/emacs-lsp-booster ~/.local/bin/emacs-lsp-booster

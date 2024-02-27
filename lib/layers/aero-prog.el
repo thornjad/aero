@@ -100,10 +100,14 @@
     "lr" '(:ignore t :wk "refactor")
     "lrr" 'eglot-rename
     "lrf" 'eglot-format
-    "lro" 'eglot-code-action-organize-imports)
+    "lro" 'eglot-code-action-organize-imports))
 
-  ;; Don't waste time logging events
-  (fset #'jsonrpc--log-event #'ignore))
+;; Optimizations to Eglot, using emacs-lsp-booster under the hood. emacs-lsp-booster must have been
+;; installed already (its a Rust binary), which can be done with `make install-deps' or the more
+;; specific `make lsp-booster'
+(package! eglot-booster "jdtsmith/eglot-booster"
+  :after eglot
+  :config (eglot-booster-mode))
 
 ;; Make eglot send more info to eldoc, including parameter and function documentation
 (package! eglot-signature-eldoc-talkative
