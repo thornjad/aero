@@ -55,6 +55,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
     "p&" 'project-async-shell-command
     "p'" 'project-eshell
     "p\"" 'aero/project-eshell-new
+    "p`" 'project-shell
     "p%" 'project-query-replace-regexp
     "cp" 'project-compile))
 
