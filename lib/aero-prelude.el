@@ -46,7 +46,10 @@
 
 ;; Required by eglot and dape. This is actually built-in but the version on GNU ELPA is more
 ;; up-to-date and tends to work better.
-(package! jsonrpc (:source gnu-elpa-mirror))
+(package! jsonrpc (:source gnu-elpa-mirror)
+  :config
+  ;; Don't waste time logging events
+  (fset #'jsonrpc--log-event #'ignore))
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
