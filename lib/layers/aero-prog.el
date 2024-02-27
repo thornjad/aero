@@ -71,6 +71,7 @@
           json-ts-mode)
          . eglot-ensure)
   :after (general)
+
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
   (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
@@ -80,7 +81,6 @@
   (eglot-ignored-server-capabilities '(:documentHighlightProvider))
 
   :config
-
   ;; Individual server configuration
   (setq-default eglot-workspace-configuration
                 '(:pylsp (:plugins (:pycodestyle (:enabled :json-false)
@@ -100,7 +100,10 @@
     "lr" '(:ignore t :wk "refactor")
     "lrr" 'eglot-rename
     "lrf" 'eglot-format
-    "lro" 'eglot-code-action-organize-imports))
+    "lro" 'eglot-code-action-organize-imports)
+
+  ;; Don't waste time logging events
+  (fset #'jsonrpc--log-event #'ignore))
 
 ;; Make eglot send more info to eldoc, including parameter and function documentation
 (package! eglot-signature-eldoc-talkative
