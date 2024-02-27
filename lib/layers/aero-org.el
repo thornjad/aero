@@ -124,17 +124,14 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   :config
   (aero-leader-def
-    "oT" '(:ignore t :wk "time")
-    "oTt" 'org-time-stamp
-    "oTe" 'insert-todays-timestamp-at-entry-end
-    "oTd" 'org-deadline
-    "oTD" '(:ignore t :wk "deadline")
-    "oTDt" 'aero/org-deadline-next-workday
-    "oTDw" 'aero/org-deadline-next-week
-    "oTs" 'org-schedule
+    "od" 'org-deadline
+    "os" 'org-schedule
     "ot" 'org-todo
     "og" 'org-set-tags-command
     "oA" 'org-archive-subtree-default
+    "oT" '(:ignore t :wk "time")
+    "oTt" 'org-time-stamp
+    "oTe" 'insert-todays-timestamp-at-entry-end
     "oa" '(:ignore t :wk "agenda")
     "oaa" 'aero/org-agenda-list
     "oat" 'aero/org-agenda-todo
@@ -164,7 +161,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "ocE" 'org-clock-modify-effort-estimate
     "oh" '(outline-hide-body :wk "hide all")
     "oS" '(outline-show-all :wk "show all")
-    "os" 'org-sort-entries
     "vo" 'org-capture)
 
   (aero-mode-leader-def
