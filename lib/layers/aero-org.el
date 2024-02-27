@@ -25,8 +25,6 @@
 (require 'dash)
 (require 'notifications)
 
-(package! org-ql "alphapapa/org-ql")
-
 (defvar aero/org-eval-safe-list
   '(expand-file-name "~/doc/thornlog/")
   "Directories which will have their contents evaluated without prompting.")
@@ -171,8 +169,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   (aero-mode-leader-def
     :keymaps 'org-mode-map
-    "t" 'today
-    "d" 'new-day
+    "t" 'thornlog-today
+    "d" 'thornlog-new-day
     "i" '(:ignore t :wk "insert")
     "il" '(org-insert-link :wk "link")
     "id" '(org-insert-drawer :wk "drawer")
@@ -357,27 +355,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          (specific-day (format-time-string "%Y-%m-%d" (time-subtract today (days-to-time days-back)))))
     (org-agenda-list nil specific-day 'day)))
 
-(defun org-agenda-list-last-closed ()
-  (interactive)
-  (let* ((archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
-         (all-files (append org-agenda-files (list archive-file)))
-         (last-closed-time
-          (find-latest-time
-           (-non-nil
-            (-mapcat (lambda (file)
-                       (org-ql-select file
-                         `(closed)
-                         :action (lambda ()
-                                   (let ((closed-time (org-entry-get (point) "CLOSED")))
-                                     (when closed-time
-                                       (org-time-string-to-time closed-time))))))
-                     all-files)))))
-    ;; Proceed only if there is at least one CLOSED entry
-    (if last-closed-time
-        (let ((date-string (format-time-string "%Y-%m-%d" last-closed-time)))
-          (org-agenda-list nil date-string 'day))
-      (message "No closed tasks found."))))
-
 (defun insert-todays-timestamp-at-entry-end ()
   "Insert today's timestamp at the end of the current org entry."
   (interactive)
@@ -408,29 +385,28 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 ;; Thornlog management
 
-(defun new-day ()
+(defun thornlog-new-day ()
   "Create a new entry for today, if not already present."
   (interactive)
   (cond
    ((not (string-match "thornlog/log\\.org" (buffer-file-name)))
     (message "Not in Thornlog file"))
-   ((today) (message "Entry for today already present"))
+   ((thornlog-today) (message "Entry for today already present"))
    (t (progn
-        (new-day-insert)
+        (thornlog-new-day-insert)
         (recenter)))))
 
-(defun today ()
+(defun thornlog-today ()
+  "Jump to today's entry, if present, return t if found."
   (interactive)
-  (let* ((today (format-time-string "<%Y-%m-%d %a>"))
-         (entry-found nil)
-         (query `(and (level 1)
-                      (ts-active :on ,today))))
-    (org-ql-select (current-buffer)
-      query
-      :action (lambda ()
-                (setq entry-found t)
-                (recenter)))
-    entry-found))
+  (let ((today-str (format-time-string "* %A, %B %d"))
+        (found nil))
+    (goto-char (point-max))
+    (when  (search-backward today-str nil t)
+      (setq found t)
+      (outline-show-entry)
+      (recenter))
+    found))
 
 (defun replace-thornlog-placeholders (template prev-day-date)
   "Replace placeholders in TEMPLATE with reference to PREV-DAY-DATE."
@@ -458,7 +434,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (deactivate-mark)
       content)))
 
-(defun new-day-insert ()
+(defun thornlog-new-day-insert ()
   "Insert a new day entry based on a template."
   (interactive)
   (setf (point) (point-max))
