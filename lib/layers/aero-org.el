@@ -121,7 +121,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-agenda-window-setup 'current-window)
   (org-agenda-restore-windows-after-quit nil)
   (org-agenda-skip-unavailable-files t)
-  (org-agenda-inhibit-startup t) ; skip unnecessary loading time
+  (org-agenda-inhibit-startup nil)
+  (org-agenda-show-future-repeats nil)
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
   (org-priority-highest ?A)
   (org-priority-lowest ?D) ; default is C, this adds another
