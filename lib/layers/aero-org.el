@@ -156,6 +156,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "oe" '(:ignore t :wk "org edit")
     "oet" '(:ignore t :wk "org table")
     "oets" 'org-table-sort-lines
+    "ol" '(org-tags-view :wk "tags view")
     "oc" '(:ignore t :wk "cell/clock")
     "occ" '(org-babel-execute-src-block :wk "exec cell")
     "oci" 'org-clock-in
