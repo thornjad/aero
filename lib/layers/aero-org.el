@@ -73,6 +73,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
                       ,(expand-file-name "log.org" aero/thornlog-path)
+                      ,(expand-file-name "daily-ritual.org" aero/thornlog-path)
+                      ,(expand-file-name "notes/dd/experimentation.org"
+                                         aero/thornlog-path)
                       ,(expand-file-name "notes.org" aero/thornlog-path)
                       ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
 
@@ -86,6 +89,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                              ,(expand-file-name "notes.org" aero/thornlog-path)
                              "Notes")
                             "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+                           ("e" "Experimentation idea" entry
+                            (file
+                             ,(expand-file-name "notes/dd/experimentation.org" aero/thornlog-path))
+                            "* TODO %? :experimentation:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
                            ("s" "Time sink" entry
                             (file+headline
                              ,(expand-file-name "notes.org" aero/thornlog-path)
@@ -95,8 +102,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                             (file+headline
                              ,(expand-file-name "notes.org" aero/thornlog-path)
                              "Mistakes")
-                            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
-                           ))
+                            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")))
 
   (org-agenda-log-mode-items '(closed))
   (org-todo-keywords '((sequence "TODO" "DONE")
