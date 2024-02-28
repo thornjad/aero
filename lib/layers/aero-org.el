@@ -179,7 +179,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "il" '(org-insert-link :wk "link")
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
-    "iR" 'aero/insert-todos-from-ritual-with-date
     "A" 'archive-all-done-tasks)
 
   ;; org tries to take this binding back, so wrest control back once more
@@ -241,8 +240,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   :custom
   (org-super-agenda-groups
-   '(;; Each group has an implicit boolean OR operator between its selectors.
-     (:name "Daily Ritual" :tag "ritual")
+   '((:name "Daily Ritual" :tag "ritual")
      (:time-grid t)
      (:name "Important" :priority "A")
      (:name "Overdue" :deadline past)
@@ -271,40 +269,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
      (org-archive-subtree-default)
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'file))
-
-(defun aero/insert-todos-from-ritual-with-date ()
-  (interactive)
-  (let ((ritual-file-path (expand-file-name "template/ritual.org" aero/thornlog-path))
-        (today (format-time-string "<%Y-%m-%d>"))
-        insertion-point)
-    (save-excursion
-      ;; Search for daily ritual heading in the current buffer, not the temp buffer
-      (goto-char (point-min))
-      (when (re-search-forward "^\\* Daily Ritual" nil t)
-        (setq insertion-point (save-excursion
-                                ;; Find the next heading or end of buffer to determine where to insert tasks
-                                (if (re-search-forward "^\\*+ " nil t)
-                                    (match-beginning 0)
-                                  (point-max)))))
-      ;; Insert tasks after insertion-point determined from the current buffer
-      (when insertion-point
-        (with-temp-buffer
-          (insert-file-contents ritual-file-path)
-          (goto-char (point-min))
-          (while (re-search-forward "^\\*+ RITUAL" nil t)
-            (let ((todo-start (match-beginning 0))
-                  (todo-end (save-excursion
-                              (if (re-search-forward "^\\*+ " nil t)
-                                  (match-beginning 0)
-                                (point-max)))))
-              (when (or (not (org-entry-get (point) "Weekly"))
-                        (string= (format-time-string "%A") (org-entry-get (point) "Weekly")))
-                (let ((todo-entry (buffer-substring-no-properties todo-start todo-end)))
-                  (with-current-buffer (other-buffer (current-buffer) t)
-                    (goto-char insertion-point)
-                    (unless (bolp) (insert "\n"))
-                    (insert "*" todo-entry "SCHEDULED: " today "\n\n")
-                    (setq insertion-point (point))))))))))))
 
 (defun aero/org-agenda-list ()
   "`org-agenda', skipping command menu to list."
