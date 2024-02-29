@@ -39,6 +39,15 @@
 response. I'm too lazy to create a weights map or something, this is easier.")
 
 (package! org :builtin
+  :preface
+  (defun archive-all-done-tasks ()
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree-default)
+       (setq org-map-continue-from (outline-previous-heading)))
+     "/DONE" 'file))
+
   :custom
   (org-insert-heading-respect-content t)
   (org-fold-catch-invisible-edits 'smart)
@@ -262,14 +271,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 
 ;; Functions for agenda and stuff
-
-(defun archive-all-done-tasks ()
-  (interactive)
-  (org-map-entries
-   (lambda ()
-     (org-archive-subtree-default)
-     (setq org-map-continue-from (outline-previous-heading)))
-   "/DONE" 'file))
 
 (defun aero/org-agenda-list ()
   "`org-agenda', skipping command menu to list."
