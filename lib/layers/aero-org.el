@@ -145,7 +145,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "os" 'org-schedule
     "ot" 'org-todo
     "og" 'org-set-tags-command
-    "oA" 'org-archive-subtree-default
     "oT" '(:ignore t :wk "time")
     "oTt" 'org-time-stamp
     "oTe" 'insert-todays-timestamp-at-entry-end
@@ -163,7 +162,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "ops" 'org-priority-show
     "of" 'org-forward-heading-same-level
     "oF" 'org-backward-heading-same-level
-    "on" 'org-add-note
     "oe" '(:ignore t :wk "org edit")
     "oet" '(:ignore t :wk "org table")
     "oets" 'org-table-sort-lines
@@ -252,7 +250,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (org-super-agenda-groups
    '((:name "Daily Ritual" :tag "ritual")
      (:time-grid t)
-     (:name "Important" :priority "A")
+     (:name "Important" :and (:priority "A" :not (:todo "PR")))
+     (:todo "PR")
      (:name "Overdue" :deadline past)
      (:name "Due today" :deadline today)
      (:name "Past scheduled" :scheduled past)
