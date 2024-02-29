@@ -89,10 +89,11 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                       ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
 
   (org-capture-templates `(("t" "Task" entry
-                            (file+headline
-                             ,(expand-file-name "todo.org" aero/thornlog-path)
-                             "General Todo")
+                            (file ,(expand-file-name "todo.org" aero/thornlog-path))
                             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
+                           ("p" "Ticket (PR)" entry
+                            (file ,(expand-file-name "todo.org" aero/thornlog-path))
+                            "* TICKET %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
                            ("n" "Note" entry
                             (file+headline
                              ,(expand-file-name "notes.org" aero/thornlog-path)
