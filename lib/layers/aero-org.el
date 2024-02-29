@@ -82,7 +82,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
                       ,(expand-file-name "log.org" aero/thornlog-path)
-                      ,(expand-file-name "daily-ritual.org" aero/thornlog-path)
+                      ,(expand-file-name "ritual.org" aero/thornlog-path)
                       ,(expand-file-name "notes/dd/experimentation.org"
                                          aero/thornlog-path)
                       ,(expand-file-name "notes.org" aero/thornlog-path)
