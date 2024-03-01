@@ -25,19 +25,6 @@
 (require 'dash)
 (require 'notifications)
 
-(defvar aero/org-eval-safe-list
-  '(expand-file-name "~/doc/thornlog/")
-  "Directories which will have their contents evaluated without prompting.")
-
-(defvar aero/thornlog-blocked-response-list
-  '("none" "none" "none" "none" "none" "none" "none"
-    "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
-    "∅" "nada" "pas une chose" "無" "żadnych")
-  "List of template responses for blocked, to be chosen randomly.
-
-'none' is included multiple times so as to give it increased weight, it being the 'normal'
-response. I'm too lazy to create a weights map or something, this is easier.")
-
 (package! org :builtin
   :preface
   (defun archive-all-done-tasks ()
@@ -47,6 +34,16 @@ response. I'm too lazy to create a weights map or something, this is easier.")
        (org-archive-subtree-default)
        (setq org-map-continue-from (outline-previous-heading)))
      "/DONE" 'file))
+
+  (defun aero/org-collapse-entry-if-done ()
+    "Collapse the current entry if it is marked as DONE."
+    (when (member org-state '("DONE"))
+      (hide-subtree)))
+
+  (defun aero/org-expand-entry-if-todo ()
+    "Expand the current entry if it is marked as TODO."
+    (when (member org-state '("TODO"))
+      (show-subtree)))
 
   :custom
   (org-insert-heading-respect-content t)
@@ -63,21 +60,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
   (org-image-actual-width '(400))
-
-  ;; TODO org-modules, here are sacha's:
-  ;; (setq org-modules '(org-habit
-  ;;                     org-mouse
-  ;;                     org-protocol
-  ;;                     org-annotate-file
-  ;;                     org-eval
-  ;;                     org-expiry
-  ;;                     org-interactive-query
-  ;;                     org-collector
-  ;;                     org-panel
-  ;;                     org-screen
-  ;;                     org-toc))
-  ;; (eval-after-load 'org
-  ;;   '(org-load-modules-maybe t))
 
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
@@ -192,6 +174,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
+
+  ;; Collapse entries when they are marked as done, and expand when reopened
+  (add-hook 'org-after-todo-state-change-hook #'aero/org-collapse-entry-if-done)
+  (add-hook 'org-after-todo-state-change-hook #'aero/org-expand-entry-if-todo)
+
+  ;; Also save after state change
+  (add-hook 'org-after-todo-state-change-hook #'org-save-all-org-buffers)
 
   ;; start with all levels collapsed
   (add-hook 'org-mode-hook #'org-hide-block-all)
@@ -355,6 +344,15 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 ;; Thornlog management
 
+(defvar aero/thornlog-blocked-response-list
+  '("none" "none" "none" "none" "none" "none" "none"
+    "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
+    "∅" "nada" "pas une chose" "無" "żadnych")
+  "List of template responses for blocked, to be chosen randomly.
+
+'none' is included multiple times so as to give it increased weight, it being the 'normal'
+response. I'm too lazy to create a weights map or something, this is easier.")
+
 (defun thornlog-new-day ()
   "Create a new entry for today, if not already present."
   (interactive)
@@ -465,19 +463,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     (re-search-backward "^\\*+ Meetings" nil t)
     (org-end-of-subtree)
     (insert "\n\n" task-string)))
-
-(defun aero/org-collapse-entry-if-done ()
-  "Collapse the current entry if it is marked as DONE."
-  (when (member org-state '("DONE"))
-    (hide-subtree)))
-
-(defun aero/org-expand-entry-if-todo ()
-  "Expand the current entry if it is marked as TODO."
-  (when (member org-state '("TODO"))
-    (show-subtree)))
-
-(add-hook 'org-after-todo-state-change-hook #'aero/org-collapse-entry-if-done)
-(add-hook 'org-after-todo-state-change-hook #'aero/org-expand-entry-if-todo)
 
 
 ;; Notifications
