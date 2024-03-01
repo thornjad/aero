@@ -46,16 +46,17 @@
       (show-subtree)))
 
   :custom
-  (org-insert-heading-respect-content t)
-  (org-fold-catch-invisible-edits 'smart)
-  (org-src-preserve-indentation t)
-  (org-footnote-auto-adjust t)
-  (org-footnote-section nil)
-  (org-startup-with-inline-images t)
-  (org-startup-indented t)
+  (org-insert-heading-respect-content t) ; insert headings after current subtree
+  (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
+  (org-startup-with-inline-images t) ; default to showing images on startup
+  (org-startup-indented t) ; default to indenting properly
   (org-log-done 'time) ; log time when item is marked done
+  (org-log-into-drawer t) ; put logs in LOGBOOK
+  (org-refile-use-outline-path t) ; show path to outline level during refile
   (org-fontify-done-headline t) ; let theme strike out done items
-  (org-clock-persist nil)
+
+  ;; always put blank before new headings, but be smart about list items
+  (org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
   ;; re-scale images to 400px if no with attribute is set (see
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
@@ -71,10 +72,14 @@
                       ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
 
   (org-capture-templates `(("t" "Task" entry
-                            (file ,(expand-file-name "todo.org" aero/thornlog-path))
+                            (file+headline
+                             ,(expand-file-name "todo.org" aero/thornlog-path)
+                             "Inbox")
                             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
                            ("p" "Ticket (PR)" entry
-                            (file ,(expand-file-name "todo.org" aero/thornlog-path))
+                            (file+headline
+                             ,(expand-file-name "todo.org" aero/thornlog-path)
+                             "Inbox")
                             "* TICKET %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n")
                            ("n" "Note" entry
                             (file+headline
@@ -111,15 +116,14 @@
   (org-agenda-show-log t)
   (org-agenda-skip-deadline-if-done t)
   (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-  (org-agenda-window-setup 'current-window)
-  (org-agenda-restore-windows-after-quit nil)
+  (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
+  (org-agenda-restore-windows-after-quit nil) ; let agenda just act like a normal buffer
   (org-agenda-skip-unavailable-files t)
-  (org-agenda-inhibit-startup nil)
-  (org-agenda-show-future-repeats nil)
+  (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
   (org-priority-highest ?A)
-  (org-priority-lowest ?D) ; default is C, this adds another
-  (org-reverse-note-order nil) ; put notes at the end of the entry
+  (org-priority-lowest ?D) ; default is C
+  (org-reverse-note-order nil) ; put notes at the end of the entry, instead of the top
   (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
   :config
@@ -166,6 +170,7 @@
     :keymaps 'org-mode-map
     "t" 'thornlog-today
     "d" 'thornlog-new-day
+    "r" 'org-refile
     "i" '(:ignore t :wk "insert")
     "il" '(org-insert-link :wk "link")
     "id" '(org-insert-drawer :wk "drawer")
