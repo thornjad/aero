@@ -12,3 +12,4 @@ alias stsdev psql -h localhost -U postgres Constructive_development
 alias clear (recenter 0)
 alias magit (magit-status-setup-buffer default-directory)
 alias fixcanvas rm -r ./node_modules/canvas && rm ./node_modules/__ngcc_entry_points__.json
+alias ff find-file $1
