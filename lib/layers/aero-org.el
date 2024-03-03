@@ -140,12 +140,19 @@
   (org-reverse-note-order nil) ; put notes at the end of the entry, instead of the top
   (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
+  (org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                          (vm-imap . vm-visit-imap-folder-other-frame)
+                          (gnus . org-gnus-no-new-news)
+                          (file . find-file)
+                          (wl . wl-other-frame)))
+
   :config
   (aero-leader-def
     "od" 'org-deadline
     "os" 'org-schedule
     "ot" 'org-todo
     "og" 'org-set-tags-command
+    "oo" 'org-open-at-point
     "oT" '(:ignore t :wk "time")
     "oTt" 'org-time-stamp
     "oTe" 'insert-todays-timestamp-at-entry-end
@@ -189,6 +196,7 @@
     "il" '(org-insert-link :wk "link")
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
+    "f" 'aero/org-add-file-tag
     "A" 'archive-all-done-tasks)
 
   ;; org tries to take this binding back, so wrest control back once more
@@ -483,6 +491,30 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     (org-end-of-subtree)
     (insert "\n\n" task-string)))
 
+(defun aero/org-add-file-tag ()
+  "Prompts for a tag with completion from all org-roam tags and adds it to the file's tags, placing it after the #+title: line if it exists."
+  (interactive)
+  (let* ((case-fold-search t)
+         (all-tags-query "SELECT DISTINCT tag FROM tags")
+         (all-tags-result (org-roam-db-query all-tags-query))
+         (all-tags (mapcar #'car all-tags-result))
+         (tag (completing-read "Tag: " all-tags)))
+    (save-excursion
+      (goto-char (point-min))
+      (if (re-search-forward "^#\\+filetags: \\(.*\\)$" nil t)
+          (let ((existing-tags (match-string-no-properties 1)))
+            (beginning-of-line)
+            (kill-line)
+            (insert (format "#+filetags: %s%s:" existing-tags tag)))
+        ;; No existing tags, search for title line to place new tags after
+        (goto-char (point-min))
+        (if (re-search-forward "^#\\+title:.*$" nil t)
+            (progn
+              (end-of-line)
+              (insert (format "\n#+filetags: :%s:" tag)))
+          (goto-char (point-min))
+          (insert (format "#+filetags: :%s:\n" tag)))))))
+
 
 ;; Notifications
 
@@ -546,6 +578,40 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (add-hook 'org-clock-in-hook #'aero/thornlog-set-continuous-work-timer)
 (add-hook 'org-clock-out-hook #'aero/thornlog-cancel-continuous-work-timer)
 (add-hook 'org-clock-cancel-hook #'aero/thornlog-cancel-continuous-work-timer)
+
+
+;; Roam
+
+(package! org-roam
+  (:repo "org-roam/org-roam" :files (:defaults "extensions/*"))
+  :defer 1  ; don't load immediately, but soon after init
+
+  :after (general org)
+
+  :custom
+  (org-roam-directory (expand-file-name "roam" aero/thornlog-path))
+  (org-roam-mode-sections
+   (list #'org-roam-backlinks-section
+         #'org-roam-reflinks-section
+         #'org-roam-unlinked-references-section))
+
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :immediate-finish t  ; skip capture buffer, just open the file
+      :unnarrowed t)))
+
+  (org-roam-node-display-template
+   (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
+
+  :config
+  (org-roam-db-autosync-mode)
+
+  (aero-leader-def
+    "vf" 'org-roam-node-find
+    "vF" 'org-roam-capture
+    "vi" 'org-roam-node-insert
+    "vb" 'org-roam-buffer-toggle))
 
 
 (provide 'aero-org)
