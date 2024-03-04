@@ -152,55 +152,42 @@
   (org-agenda-skip-unavailable-files t)
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
 
-  :config
+  :init
   (aero-leader-def
-    "od" 'org-deadline
-    "os" 'org-schedule
-    "ot" 'org-todo
-    "og" 'org-set-tags-command
-    "oo" 'org-open-at-point
-    "oT" '(:ignore t :wk "time")
-    "oTt" 'org-time-stamp
-    "oTe" 'insert-todays-timestamp-at-entry-end
-    "oa" '(:ignore t :wk "agenda")
-    "oaa" 'aero/org-agenda-list
-    "oat" 'aero/org-agenda-todo
-    "oay" 'org-agenda-todo-yesterday
-    "oax" 'aero/org-agenda-done
-    "oaF" 'aero/org-agenda-done-and-followup
-    "oaN" 'aero/org-agenda-new
-    "op" '(:ignore t :wk "priority")
-    "opp" 'org-priority
-    "opu" 'org-priority-up
-    "opd" 'org-priority-down
-    "ops" 'org-priority-show
-    "of" 'org-forward-heading-same-level
-    "oF" 'org-backward-heading-same-level
+    "oa" '(aero/org-agenda-list :wk "agenda")
     "ol" '(org-tags-view :wk "tags view")
-    "oc" '(:ignore t :wk "cell/clock")
-    "occ" '(org-babel-execute-src-block :wk "exec cell")
-    "oci" 'org-clock-in
-    "oco" 'org-clock-out
-    "ock" 'org-clock-cancel
-    "ocj" 'org-clock-goto
-    "ocs" 'org-clock-display
-    "oce" 'org-set-effort
-    "ocE" 'org-clock-modify-effort-estimate
-    "oh" '(outline-hide-body :wk "hide all")
-    "oS" '(outline-show-all :wk "show all")
     "vo" 'org-capture)
 
+  :config
   (aero-mode-leader-def
     :keymaps 'org-mode-map
-    "t" 'thornlog-today
-    "d" 'thornlog-new-day
+    "d" 'org-todo
+    "n" 'thornlog-new-day
+    "t" '(:ignore t :wk "time/tags")
+    "ts" 'org-schedule
+    "td" 'org-deadline
+    "tf" 'aero/org-add-file-tag
+    "tt" 'org-set-tags-command
+    "tT" 'org-time-stamp
+    "f" 'org-forward-heading-same-level
+    "F" 'org-backward-heading-same-level
+    "w" 'org-open-at-point
+    "p" 'org-priority
     "r" 'org-refile
     "i" '(:ignore t :wk "insert")
     "il" '(org-insert-link :wk "link")
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
-    "f" 'aero/org-add-file-tag
-    "A" 'archive-all-done-tasks)
+    "A" 'archive-all-done-tasks
+    "c" '(:ignore t :wk "clock / cell")
+    "cc" '(org-babel-execute-src-block :wk "exec cell")
+    "ci" 'org-clock-in
+    "co" 'org-clock-out
+    "ck" 'org-clock-cancel
+    "cj" 'org-clock-goto
+    "cs" 'org-clock-display
+    "ce" 'org-set-effort
+    "cE" 'org-clock-modify-effort-estimate)
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
