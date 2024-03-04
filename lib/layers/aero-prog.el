@@ -160,11 +160,12 @@
 
 ;; Markup
 
-(package! markdown-mode (:repo "jrblevin/markdown-mode")
+(package! markdown-mode "jrblevin/markdown-mode"
   :after (general smartparens)
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
          ("github\\.com.*\\.txt\\'" . gfm-mode))
+  :hook (markdown-mode . flyspell-mode)
 
   :custom
   ;; Fix table to teach it that quotes mean string, regardless of what the dev says
@@ -177,18 +178,9 @@
   (markdown-make-gfm-checkboxes-buttons t)
   (markdown-gfm-additional-languages '("sh"))
 
-  :init
-  (add-hook 'markdown-mode-hook #'flyspell-mode)
-
   :config
   ;; Don't expand checkboxes
-  (sp-local-pair 'gfm-mode "- [ " "]")
-
-  (require 'aero-thornlog)
-  (aero-mode-leader-def
-    :keymaps 'markdown-mode-map
-    "t" 'today
-    "d" 'new-day))
+  (sp-local-pair 'gfm-mode "- [ " "]"))
 
 (package! markdown-toc (:repo "ardumont/markdown-toc")
   :commands (markdown-toc-generate-toc markdown-toc-refresh-toc))
