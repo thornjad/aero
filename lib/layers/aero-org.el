@@ -275,6 +275,15 @@
   ;; add space between dates by adding space after the final group
   (org-super-agenda-final-group-separator "\n"))
 
+;; Allow drag-and-drop of images from browser, finder, etc.
+(package! org-download "abo-abo/org-download"
+  :after (org general)
+  :custom (org-download-method 'directory)
+  :init
+  (aero-mode-leader-def
+    :keymaps 'org-mode-map
+    "ii" '(org-download-clipboard :wk "insert image from clipboard")))
+
 
 ;; Functions for agenda and stuff
 
