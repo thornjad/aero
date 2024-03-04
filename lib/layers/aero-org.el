@@ -339,24 +339,6 @@
     (insert " ")
     (org-insert-time-stamp (current-time) nil)))
 
-(defun aero/org-deadline-next-workday ()
-  (interactive)
-  (let* ((current-time (current-time))
-         (decoded-time (decode-time current-time))
-         (current-week-day (nth 6 decoded-time))
-         (days-to-add (if (>= current-week-day 5) (- 8 current-week-day) 1))
-         (next-workday (time-add current-time (days-to-time days-to-add))))
-    (org-deadline 1 next-workday)))
-
-(defun aero/org-deadline-next-week ()
-  (interactive)
-  (let* ((current-time (current-time))
-         (decoded-time (decode-time current-time))
-         (current-week-day (nth 6 decoded-time))
-         (days-to-add (- 7 current-week-day)) ;; Calculate days until next Sunday
-         (next-monday (time-add current-time (days-to-time (+ days-to-add 1))))) ;; Add one day to get to Monday
-    (org-deadline 1 next-monday)))
-
 
 ;; Thornlog management
 
