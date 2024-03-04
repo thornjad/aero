@@ -170,9 +170,6 @@
     "ops" 'org-priority-show
     "of" 'org-forward-heading-same-level
     "oF" 'org-backward-heading-same-level
-    "oe" '(:ignore t :wk "org edit")
-    "oet" '(:ignore t :wk "org table")
-    "oets" 'org-table-sort-lines
     "ol" '(org-tags-view :wk "tags view")
     "oc" '(:ignore t :wk "cell/clock")
     "occ" '(org-babel-execute-src-block :wk "exec cell")
