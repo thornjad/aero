@@ -140,7 +140,7 @@
                       ,(expand-file-name "notes.org" aero/thornlog-path)
                       ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
 
-  (org-agenda-log-mode-items '(closed))
+  (org-agenda-log-mode-items nil) ; don't show closed nor clocked items
   (org-agenda-tags-column -70) ; shift tags over
   (org-agenda-sticky nil) ; don't bury on close buffer
   (org-agenda-use-tag-inheritance t)
