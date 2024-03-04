@@ -249,29 +249,30 @@
 (package! org-super-agenda "alphapapa/org-super-agenda"
   :after org
 
-  :hook ((org-agenda-after-show . recenter))
+  :preface
+  (defun aero/org-super-agenda-without-keymap ()
+    "Stops super-agenda from overriding evil-org bindings."
+    (org-super-agenda-mode)
+    (setq org-super-agenda-header-map (make-sparse-keymap)))
+
+  :hook ((org-agenda-after-show . recenter)
+         (org-agenda-mode . aero/org-super-agenda-without-keymap))
 
   :custom
   (org-super-agenda-groups
    '((:name "Daily Ritual" :tag "ritual")
      (:time-grid t)
-     (:name "Important" :and (:priority "A" :not (:todo "PR")))
+     (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
      (:todo "PR")
-     (:name "Overdue" :deadline past)
-     (:name "Due today" :deadline today)
-     (:name "Past scheduled" :scheduled past)
-     (:priority<= "B")
+     (:deadline past)
+     (:deadline today)
+     (:name "Past scheduled" :and (:scheduled past :not (:todo "WAITING" :todo "BLOCKED")))
+     (:name "Lesser Priority" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
+     (:name "Waiting/Blocked" :todo "WAITING" :todo "BLOCKED")
      (:name "Due soon" :deadline future)))
 
   ;; add space between dates by adding space after the final group
-  (org-super-agenda-final-group-separator "\n")
-
-  :config
-  (org-super-agenda-mode)
-
-  ;; Fixes super-agenda overriding evil-org bindings. MUST be set after the mode initializes, else
-  ;; it overrides it again
-  (setq org-super-agenda-header-map (make-sparse-keymap)))
+  (org-super-agenda-final-group-separator "\n"))
 
 
 ;; Functions for agenda and stuff
