@@ -295,7 +295,9 @@
    "m" '(:ignore t :wk "mode")
    "m" '(tmm-menubar :wk "Context menu")
 
-   "o" '(:ignore t :wk "org")
+   "o" '(:ignore t :wk "org / outline")
+   "oh" '(outline-hide-body :wk "hide all")
+   "oS" '(outline-show-all :wk "show all")
 
    "p" '(:ignore t :wk "project")
    "pr" '(xref-find-definitions :wk "find ref")
