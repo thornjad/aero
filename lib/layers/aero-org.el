@@ -236,10 +236,8 @@
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys))
 
-  :hook (org-mode . evil-org-mode)
-  :init
-  ;; Can't be in :hook because we're defining it here, which is for the byte-compiler
-  (add-hook 'org-agenda-mode-hook #'aero/evil-org-agenda-mode))
+  :hook ((org-mode . evil-org-mode)
+         (org-agenda-mode . aero/evil-org-agenda-mode)))
 
 ;; Custom display of org priorities
 (package! org-fancy-priorities "harrybournis/org-fancy-priorities"
