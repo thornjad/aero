@@ -504,7 +504,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (if (re-search-forward "^#\\+filetags: \\(.*\\)$" nil t)
           (let ((existing-tags (match-string-no-properties 1)))
             (beginning-of-line)
-            (kill-line)
+            (delete-region (point) (line-end-position))
             (insert (format "#+filetags: %s%s:" existing-tags tag)))
         ;; No existing tags, search for title line to place new tags after
         (goto-char (point-min))
