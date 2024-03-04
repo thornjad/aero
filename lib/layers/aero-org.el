@@ -266,8 +266,9 @@
      (:todo "PR")
      (:deadline past)
      (:deadline today)
+     (:name "Priority B" :and (:priority "B" :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Past scheduled" :and (:scheduled past :not (:todo "WAITING" :todo "BLOCKED")))
-     (:name "Lesser Priority" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
+     (:name "Prioritized" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Waiting/Blocked" :todo "WAITING" :todo "BLOCKED")
      (:name "Due soon" :deadline future)))
 
