@@ -62,15 +62,6 @@
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01402.html)
   (org-image-actual-width '(400))
 
-  ;; all agenda files
-  (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
-                      ,(expand-file-name "log.org" aero/thornlog-path)
-                      ,(expand-file-name "ritual.org" aero/thornlog-path)
-                      ,(expand-file-name "notes/dd/experimentation.org"
-                                         aero/thornlog-path)
-                      ,(expand-file-name "notes.org" aero/thornlog-path)
-                      ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
-
   (org-capture-templates
    `(("t" "Inbox Task" entry
       (file+headline
@@ -115,25 +106,14 @@
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)))
 
-  (org-agenda-log-mode-items '(closed))
-  (org-todo-keywords '((sequence "TODO" "DONE")
-                       (sequence "TICKET" "PR" "DONE")
-                       (sequence "MEETING" "DONE")
-                       (sequence "RITUAL" "DONE")))
+  (org-todo-keywords
+   '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "REMOVED(k)")
+     (sequence "TICKET(t)" "PR(p!)" "|" "DONE(d!)")
+     (sequence "MEETING" "DONE")
+     (sequence "RITUAL" "DONE")))
+  (org-use-fast-todo-selection 'expert) ; don't fuck up the window layout
+
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
-  (org-agenda-span 3) ; days to show at a time
-  (org-agenda-start-day nil) ; day to start at
-  (org-agenda-start-on-weekday nil) ; start week on current day
-  (org-agenda-tags-column -70) ; shift tags over
-  (org-agenda-sticky nil) ; don't bury on close buffer
-  (org-agenda-use-tag-inheritance t)
-  (org-agenda-show-log t)
-  (org-agenda-skip-deadline-if-done t)
-  (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-  (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
-  (org-agenda-restore-windows-after-quit nil) ; let agenda just act like a normal buffer
-  (org-agenda-skip-unavailable-files t)
-  (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
   (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
   (org-priority-highest ?A)
   (org-priority-lowest ?D) ; default is C
@@ -145,6 +125,32 @@
                           (gnus . org-gnus-no-new-news)
                           (file . find-file)
                           (wl . wl-other-frame)))
+
+  ;; Agenda
+  (org-agenda-span 3) ; days to show at a time
+  (org-agenda-start-day nil) ; day to start at
+  (org-agenda-start-on-weekday nil) ; start week on current day
+
+  ;; all agenda files
+  (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
+                      ,(expand-file-name "log.org" aero/thornlog-path)
+                      ,(expand-file-name "ritual.org" aero/thornlog-path)
+                      ,(expand-file-name "notes/dd/experimentation.org"
+                                         aero/thornlog-path)
+                      ,(expand-file-name "notes.org" aero/thornlog-path)
+                      ,(expand-file-name "archive/archive.org" aero/thornlog-path)))
+
+  (org-agenda-log-mode-items '(closed))
+  (org-agenda-tags-column -70) ; shift tags over
+  (org-agenda-sticky nil) ; don't bury on close buffer
+  (org-agenda-use-tag-inheritance t)
+  (org-agenda-show-log t)
+  (org-agenda-skip-deadline-if-done t)
+  (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+  (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
+  (org-agenda-restore-windows-after-quit nil) ; let agenda just act like a normal buffer
+  (org-agenda-skip-unavailable-files t)
+  (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
 
   :config
   (aero-leader-def
