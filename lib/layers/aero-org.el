@@ -146,6 +146,10 @@
   (org-agenda-show-log t)
   (org-agenda-skip-deadline-if-done t)
   (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+  (org-agenda-skip-scheduled-if-done t)
+  (org-agenda-skip-scheduled-if-deadline-is-shown t) ; don't duplicate deadline & scheduled
+  (org-agenda-skip-timestamp-if-done t)
+  (org-agenda-skip-timestamp-if-deadline-is-shown t)
   (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
   (org-agenda-restore-windows-after-quit nil) ; let agenda just act like a normal buffer
   (org-agenda-skip-unavailable-files t)
