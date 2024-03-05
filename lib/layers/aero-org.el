@@ -154,20 +154,18 @@
   :init
   (aero-leader-def
     "oa" '(aero/org-agenda-list :wk "agenda")
-    "ol" '(org-tags-view :wk "tags view")
+    "os" 'org-schedule
+    "od" 'org-deadline
+    "ot" 'org-set-tags-command
+    "of" 'aero/org-add-file-tag
+    "ol" '(org-tags-view :wk "list tags")
     "vo" 'org-capture)
 
   :config
   (aero-mode-leader-def
     :keymaps 'org-mode-map
-    "d" 'org-todo
-    "n" 'thornlog-new-day
-    "t" '(:ignore t :wk "time/tags")
-    "ts" 'org-schedule
-    "td" 'org-deadline
-    "tf" 'aero/org-add-file-tag
-    "tt" 'org-set-tags-command
-    "tT" 'org-time-stamp
+    "t" 'org-todo
+    "d" 'thornlog-new-day
     "f" 'org-forward-heading-same-level
     "F" 'org-backward-heading-same-level
     "w" 'org-open-at-point
@@ -175,6 +173,7 @@
     "r" 'org-refile
     "i" '(:ignore t :wk "insert")
     "il" '(org-insert-link :wk "link")
+    "it" 'org-time-stamp
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
     "A" 'archive-all-done-tasks
