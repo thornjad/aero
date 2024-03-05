@@ -245,8 +245,6 @@
   (org-fancy-priorities-list '("❗" "⬆" "■" "↓")))
 
 (package! org-super-agenda "alphapapa/org-super-agenda"
-  :after org
-
   :preface
   (defun aero/org-super-agenda-without-keymap ()
     "Stops super-agenda from overriding evil-org bindings."
