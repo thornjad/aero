@@ -108,8 +108,8 @@
 
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "REMOVED(k)")
-     (sequence "TICKET(T)" "PR(p!)" "|" "DONE(d!)" "CLOSED(k)")
-     (sequence "MEETING(m)" "|" "DONE(d)" "CANCELLED(k)")))
+     (sequence "TICKET(T)" "PR(p!)" "|" "DONE(d!)" "CLOSED(x)")
+     (sequence "MEETING(m)" "|" "DONE(d)" "CANCELLED(c)" "SKIPPED(s)")))
 
   (org-use-fast-todo-selection 'expert) ; don't fuck up the window layout
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
