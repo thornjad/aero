@@ -81,7 +81,7 @@ git clone https://gitlab.com/thornjad/aero.git ~/.config/emacs && cd ~/.config/e
 make init
 ```
 
-The `make init` will install dependencies needed for LSP servers, using any tools already available on the system (e.g. it will not error if `opam` isn't installed). It will also set up and update any submodules required for Aero.
+The `make init` will install dependencies needed for LSP servers, using any tools already available on the system (e.g. it will not error if `opam` isn't installed), as well as dependencies like `graphviz` and `lsp-booster`. It will also set up and update any submodules required for Aero.
 
 Upon starting up Emacs for the first time, further third-party packages will automatically download and install via `straight.el**. Subsequent startups should take one or two seconds. If you encounter any errors at this stage, try restarting Emacs and/or opening a bug.
 
