@@ -443,6 +443,12 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (interactive)
   (find-file (expand-file-name "log.org" aero/thornlog-path)))
 
+(defun aero/thornlog-today ()
+  "Go to today's log if it exists."
+  (interactive)
+  (aero/thornlog-log)
+  (thornlog-today))
+
 (defun aero/thornlog-notes ()
   "Personal notes file."
   (interactive)
