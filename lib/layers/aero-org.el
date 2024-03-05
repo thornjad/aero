@@ -158,7 +158,8 @@
     "od" 'org-deadline
     "ot" 'org-set-tags-command
     "of" 'aero/org-add-file-tag
-    "ol" '(org-tags-view :wk "list tags")
+    "ol" 'org-store-link
+    "oT" '(org-tags-view :wk "list tags")
     "vo" 'org-capture)
 
   :config
