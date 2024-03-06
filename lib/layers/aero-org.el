@@ -45,6 +45,34 @@
     (when (member org-state '("TODO"))
       (show-subtree)))
 
+  (defun jump-to-org-agenda ()
+    "Go to the org agenda. Used on idle timer."
+    (interactive)
+    (let ((buf (get-buffer "*Org Agenda*"))
+          wind)
+      (if buf
+          (if (setq wind (get-buffer-window buf))
+              (select-window wind)
+            (if (called-interactively-p 'any)
+                (progn
+                  (select-window (display-buffer buf t t))
+                  (org-fit-window-to-buffer))
+              (with-selected-window (display-buffer buf)
+                (org-fit-window-to-buffer))))
+        (call-interactively 'org-agenda-list))))
+
+  (defun org-schedule-and-refile ()
+    "Schedule the current entry and refile it."
+    (interactive)
+    (org-schedule t)
+    (org-refile))
+
+  (defun org-deadline-and-refile ()
+    "Deadline the current entry and refile it."
+    (interactive)
+    (org-deadline t)
+    (org-refile))
+
   :custom
   (org-insert-heading-respect-content t) ; insert headings after current subtree
   (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
@@ -157,6 +185,7 @@
   :init
   (aero-leader-def
     "oa" '(aero/org-agenda-list :wk "agenda")
+    "oA" '(org-agenda :wk "agenda menu")
     "os" 'org-schedule
     "od" 'org-deadline
     "ot" 'org-set-tags-command
@@ -297,47 +326,26 @@
   (interactive)
   (org-agenda nil "t"))
 
-(defun aero/org-agenda-done ()
-  "Mark the current TODO as done."
-  (interactive)
-  (org-agenda-todo "DONE"))
-
-(defun aero/org-agenda-done-and-followup ()
-  "Mark the current TODO as done and add another task after it."
-  (interactive)
-  (org-agenda-todo "DONE")
-  (org-agenda-switch-to)
-  (org-capture 0 "t"))
-
 (defun aero/org-agenda-new ()
   "Create a new task at the current agenda item."
   (interactive)
   (org-agenda-switch-to)
   (org-capture 0))
 
-(defun jump-to-org-agenda ()
-  (interactive)
-  (let ((buf (get-buffer "*Org Agenda*"))
-        wind)
-    (if buf
-        (if (setq wind (get-buffer-window buf))
-            (select-window wind)
-          (if (called-interactively-p 'any)
-              (progn
-                (select-window (display-buffer buf t t))
-                (org-fit-window-to-buffer))
-            (with-selected-window (display-buffer buf)
-              (org-fit-window-to-buffer))))
-      (call-interactively 'org-agenda-list))))
-
 (defun org-agenda-list-closed-on-last-workday ()
   (interactive)
   (let* ((org-agenda-files (list (buffer-file-name)
-                                 (expand-file-name "archive/archive.org" aero/thornlog-path)))
+                                 (expand-file-name "archive/archive.org" aero/thornlog-path)
+                                 (expand-file-name "log.org" aero/thornlog-path)))
          (today (current-time))
          (weekday (format-time-string "%u" today))
          (days-back (if (string= weekday "1") 3 1)) ; If today is Monday (1), go back 3 days to Friday
-         (specific-day (format-time-string "%Y-%m-%d" (time-subtract today (days-to-time days-back)))))
+         (specific-day (format-time-string "%Y-%m-%d" (time-subtract today (days-to-time days-back))))
+         (org-agenda-log-mode-items '(closed))
+         (org-agenda-skip-deadline-if-done nil)
+         (org-agenda-skip-scheduled-if-done nil)
+         (org-agenda-skipp-timestamp-if-done nil)
+         (org-super-agenda-groups '((:time-grid t))))
     (org-agenda-list nil specific-day 'day)))
 
 (defun insert-todays-timestamp-at-entry-end ()
