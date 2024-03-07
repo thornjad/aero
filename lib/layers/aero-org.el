@@ -27,13 +27,13 @@
 
 (package! org :builtin
   :preface
-  (defun archive-all-done-tasks ()
+  (defun archive-buffer-closed-tasks ()
     (interactive)
     (org-map-entries
      (lambda ()
-       (org-archive-subtree-default)
-       (setq org-map-continue-from (outline-previous-heading)))
-     "/DONE" 'file))
+       (when (member (org-get-todo-state) org-done-keywords)
+         (org-archive-subtree-default)))
+     nil 'file))
 
   (defun aero/org-collapse-entry-if-done ()
     "Collapse the current entry if it is marked as DONE."
@@ -209,7 +209,7 @@
     "it" 'org-time-stamp
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
-    "A" 'archive-all-done-tasks
+    "A" 'archive-buffer-closed-tasks
     "c" '(:ignore t :wk "clock / cell")
     "cc" '(org-babel-execute-src-block :wk "exec cell")
     "ci" 'org-clock-in
