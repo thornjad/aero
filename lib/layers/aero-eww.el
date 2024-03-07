@@ -49,8 +49,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
             (message "Added: %s" url)
           (message "Failed to add to Pocket")))))
 
-  :hook ((eww-mode . toggle-word-mode)
-         (eww-mode . visual-line-mode)
+  :hook ((eww-mode . visual-line-mode)
          (eww-after-render . aero/set-eww-buffer-title))
 
   :custom
