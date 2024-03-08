@@ -292,7 +292,7 @@
    '((:name "Daily Ritual" :tag "ritual")
      (:time-grid t)
      (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
-     (:todo "PR")
+     (:name "Tickets and PRs" :todo "PR" :todo "TICKET")
      (:deadline past)
      (:deadline today)
      (:name "Priority B" :and (:priority "B" :not (:todo "WAITING" :todo "BLOCKED")))
