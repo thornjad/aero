@@ -178,7 +178,7 @@
   (org-agenda-skip-timestamp-if-done t)
   (org-agenda-skip-timestamp-if-deadline-is-shown t)
   (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
-  (org-agenda-restore-windows-after-quit nil) ; let agenda just act like a normal buffer
+  (org-agenda-restore-windows-after-quit t) ; don't pull up altered org files on quit
   (org-agenda-skip-unavailable-files t)
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
 
