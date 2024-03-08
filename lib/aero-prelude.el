@@ -225,6 +225,7 @@
    "bx" 'kill-buffer-and-window
 
    "c" '(:ignore t :wk "compile")
+   "ct" 'aero/tail-compilation-buffer
    "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
    "cR" 'byte-recompile-file
    "cc" 'compile
