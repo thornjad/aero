@@ -122,6 +122,9 @@ When a submodule is being updated, the commit message should mention the name of
 Once again, the message must never ever exceed 50 characters.
 ")
 
+(defconst aa-gen-qa-system-prompt
+  "You are a brilliant and experienced senior software engineer. The user will provide the result of running a git diff, including only changes to test files. You will provide QA testing steps which match the tests which have been added or changed. The result must be in the form of a markdown checkbox list, though the list may be broken into sections for multiple features. The wording should use Gherkin keywords such as 'given', 'when' and 'then'.")
+
 (defvar aa--model "GPT 4")
 (defvar aa-commit-model "GPT 3.5")
 (defvar aa--model-options
@@ -178,6 +181,11 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
   `(let ((inhibit-read-only t))
      ,@body))
 
+(defmacro aa--get-model (model-var)
+  "Get the model set for MODEL-VAR."
+  (declare (indent 0))
+  `(gethash ,model-var aa--model-name-map))
+
 
 ;; API interaction
 
@@ -198,18 +206,23 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
 
 (defun aa--gen-commit-message-openai (model callback)
   "Generate a commit message and pass it to CALLBACK."
-  (unless (require 'magit nil t) (user-error "This function requires `magit'"))
   (let* ((diff-lines (magit-git-lines "diff" "--cached"))
          (changes (string-join diff-lines "\n"))
          (system-prompt (format aa-commit-system-prompt (string-join aa-commit-git-command " ")))
          (message (list (list :role "system" :content system-prompt)
                         (list :role "user" :content changes))))
-    (unless message (user-error "No changes to commit"))
     (message "Aero Assistant is generating a commit message...")
     (aa--send-openai-request
      model message
      (lambda (message)
        (funcall callback (aa--format-commit-message-content message))))))
+
+(defun aa--gen-qa-steps (diff callback)
+  "Generate QA steps from DIFF, then call CALLBACK with the result."
+  (let* ((model (aa--get-model aa-commit-model))
+         (message (list (list :role "system" :content aa-gen-qa-system-prompt)
+                        (list :role "user" :content diff))))
+    (aa--send-openai-request model message (lambda (message) (funcall callback message)))))
 
 (defun aa--format-commit-message-content (message)
   "Return MESSAGE with it's :content downcased."
@@ -240,7 +253,7 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
                   (lambda (_)
                     (funcall callback (aa--parse-response-openai model (current-buffer)))
                     (kill-buffer))
-                  nil (not aa-debug-mode) nil)))
+                  nil nil nil)))
 
 (defun aa--request-data (model message)
   "Get request data for MODEL with MESSAGE"
@@ -393,7 +406,7 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
 
 (defun aa--show-debug-buffer (buffer)
   "Show debug BUFFER if desired."
-  (with-current-buffer buffer (when aa-debug-mode (clone-buffer "*aa-error*" 'show))))
+  (with-current-buffer buffer (when aa-debug-mode (clone-buffer "*aero/assistant-error*" 'show))))
 
 (defun aa--valid-prompt-p (item)
   "Return t if ITEM is a valid prompt.
@@ -429,6 +442,12 @@ these may be nil and still be a valid message, they need only exist."
   (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
     (push prompt aa--history)
     prompt))
+
+(defun aa--git-diff-spec-files ()
+  (let ((default-directory (or (project-root (project-current)) (vc-root-dir) default-directory)))
+    (if (zerop (call-process "git" nil nil nil "fetch" "origin" "master:refs/remotes/origin/master"))
+        (shell-command-to-string "git diff origin/master...HEAD --summary -U10 --no-color -- '**/specs/**' '*.spec.ts'")
+      "Failed to fetch origin/master.")))
 
 
 ;; User input
@@ -585,6 +604,35 @@ these may be nil and still be a valid message, they need only exist."
             " ")
           aa--model))
 
+(defun aa--assert-message-not-error (message)
+  "Throw user-error if MESSAGE is empty or has an error."
+  (unless message (user-error "Aero Assistant commit message error: no response"))
+  (when (plist-get message :error)
+    (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
+  (unless (plist-get message :content)
+    (user-error "Aero Assistant commit message error: no response content")))
+
+(defun aa--insert-commit-message (message buf)
+  "Insert content of MESSAGE at the start of buffer BUF.
+
+MESSAGE should be an aero-assistant formatted plist."
+  (aa--assert-message-not-error message)
+  (let ((content (plist-get message :content)))
+    (with-current-buffer buf
+      (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
+        ;; Only insert if message line is empty
+        (insert content)))))
+
+(defun aa--display-qa-steps (message)
+  "Display content of MESSAGE in a display buffer."
+  (aa--assert-message-not-error message)
+  (let ((content (plist-get message :content)))
+    (with-current-buffer (get-buffer-create "*aero/assistant-diff-qa-steps*")
+      (erase-buffer)
+      (insert "# Aero Assistant QA Steps\n\n" content)))
+  (markdown-mode)
+  (markdown-toggle-fontify-code-blocks-natively))
+
 (defun aa-set-model ()
   "Prompt user to set the Assistant model and verify key if required."
   (interactive)
@@ -642,21 +690,20 @@ Requires `magit'."
     (user-error "This function requires `magit'"))
   (unless (git-commit-buffer-message)
     (let ((buf (current-buffer))
-          (model (gethash aa-commit-model aa--model-name-map)))
-      (require 'aero-assistant-openai)
+          (model (aa--get-model aa-commit-model)))
       ;; TODO count tokens first
-      (aa--gen-commit-message-openai
-       model
-       (lambda (message)
-         (unless message (user-error "Aero Assistant commit message error: no response"))
-         (when (plist-get message :error)
-           (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
-         (let ((content (plist-get message :content)))
-           (unless content (user-error "Aero Assistant commit message error: no response content"))
-           (with-current-buffer buf
-             (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
-               ;; Only insert if message line is empty
-               (insert content)))))))))
+      (aa--gen-commit-message-openai model #'aa--insert-commit-message))))
+
+(defun aero/assistant-diff-qa-steps ()
+  "Create Gherkin-like QA steps from the git diff.
+
+Currently only respects .spec.ts files diffed against a master branch. If the default branch is main or something else, this won't work at the moment."
+  (interactive)
+  (let ((diff (aa--git-diff-spec-files)))
+    (pop-to-buffer (get-buffer-create "*aero/assistant-diff-qa-steps*"))
+    (erase-buffer)
+    (insert "Aero Assistant is generating QA steps...\n\n")
+    (aa--gen-qa-steps diff #'aa--display-qa-steps)))
 
 (provide 'aero-assistant)
 ;;; aero-assistant.el ends here
