@@ -199,6 +199,7 @@
     "oA" '(org-agenda :wk "agenda menu")
     "os" 'org-schedule
     "od" 'org-deadline
+    "oj" 'org-clock-goto
     "ot" 'org-set-tags-command
     "of" 'aero/org-add-file-tag
     "ol" 'org-store-link
