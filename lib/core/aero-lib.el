@@ -799,4 +799,11 @@ alternative to the beacon package."
                    (< (time-to-days time-date) today))
           (setq latest time))))))
 
+(defun aero/open-agenda-file ()
+  "Open an org-agenda file from a list of all agenda files."
+  (interactive)
+  (let ((file (completing-read "Select agenda file: " (org-agenda-files))))
+    (when file
+      (find-file file))))
+
 (provide 'aero-lib)

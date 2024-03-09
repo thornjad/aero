@@ -262,6 +262,7 @@
    "foP" 'aero/open-emacs-problems
    "fof" 'aero/open-local-init
    "fot" '(:ignore t :wk "thornlog")
+   "fota" 'aero/open-agenda-file
    "fott" '(aero/thornlog-todo :wk "thornlog todo")
    "fotl" '(aero/thornlog-today :wk "thornlog log")
    "fotn" '(aero/thornlog-notes :wk "thornlog notes")
