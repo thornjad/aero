@@ -61,6 +61,18 @@
                 (org-fit-window-to-buffer))))
         (call-interactively 'org-agenda-list))))
 
+  ;; https://ag91.github.io/blog/2022/03/12/org-agenda-keep-the-buffer-order-untouched-after-saving-all-modified-org-buffers/
+  (defun aero/reorder-buffer-list (new-list)
+    (while new-list
+      (bury-buffer (car new-list))
+      (setq new-list (cdr new-list))))
+
+  (defun aero/keep-buffer-list-unaltered (orig-fun &rest args)
+    (let ((buffers (buffer-list))
+          (result (apply orig-fun args)))
+      (aero/reorder-buffer-list buffers)
+      result))
+
   (defun org-schedule-and-refile ()
     "Schedule the current entry and refile it."
     (interactive)
@@ -178,7 +190,6 @@
   (org-agenda-skip-timestamp-if-done t)
   (org-agenda-skip-timestamp-if-deadline-is-shown t)
   (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
-  (org-agenda-restore-windows-after-quit t) ; don't pull up altered org files on quit
   (org-agenda-skip-unavailable-files t)
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
 
@@ -215,10 +226,12 @@
     "ci" 'org-clock-in
     "co" 'org-clock-out
     "ck" 'org-clock-cancel
-    "cj" 'org-clock-goto
     "cs" 'org-clock-display
     "ce" 'org-set-effort
     "cE" 'org-clock-modify-effort-estimate)
+
+  ;; keep org-save-all from messing up buffer list
+  (advice-add 'org-save-all-org-buffers :around #'aero/keep-buffer-list-unaltered)
 
   ;; org tries to take this binding back, so wrest control back once more
   (define-key org-mode-map (kbd "M-h") #'windmove-left)
