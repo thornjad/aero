@@ -3,8 +3,7 @@
 ;; Author: Jade Michael Thornton
 ;; Copyright (c) 2023-2024 Jade Michael Thornton
 ;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (spinner "1.7.4"))
-;; URL: https://github.com/thornjad/aero/blob/master/lib/localpackages/aero-assistant
-;; Version: 0.1.0
+;; Version: 0.9.0
 ;;
 ;; This file is not part of GNU Emacs
 
