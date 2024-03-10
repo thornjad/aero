@@ -21,61 +21,15 @@
 ;;; Code:
 
 ;; Aero LLM assistant interface
-(package! aero-assistant :local :load-path "lib/localpackages/aero-assistant"
+(package! assist :local :load-path "lib/localpackages/assist"
   :after (general)
-  :commands (aero/assistant aero/assistant-commit-message)
-  :custom (aero/assistant-openai-api-key openai-api-key)
-  :init (aero-leader-def "aic" 'aero/assistant))
-
-;; Required by chatgpt-shell
-(package! shell-maker
-  (:repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
-
-;; GPT and DALL-E interface
-(package! chatgpt-shell "xenodium/chatgpt-shell"
-  :requires shell-maker
-  :after general
-  :commands (chatgpt-shell
-             dall-e-shell chatgpt-shell-send-and-review-region
-             chatgpt-shell-write-git-commit chatgpt-shell-explain-code
-             chatgpt-shell-proofread-region chatgpt-shell-refactor-code
-             chatgpt-shell-restore-session-from-transcript
-             chatgpt-shell-generate-unit-test)
-
+  :commands (assist-chat assist-commit-message assist-diff-qa-steps)
   :custom
-  (chatgpt-shell-openai-key openai-api-key)
-  (dall-e-shell-openai-key openai-api-key)
-  (chatgpt-shell-model-versions '("gpt-4-1106-preview" "gpt-3.5-turbo-16k-0613"
-                                  "gpt-3.5-turbo"))
-  (chatgpt-shell-welcome-function nil) ; disable welcome message
-  (chatgpt-shell-system-prompt 0)
-  (chatgpt-shell-system-prompts '(("Aero" . "You will act as a brilliant and experienced senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer.
-The user is a senior software engineer with limited time.
-You treat the user's time as precious, but you are not afraid to ask for clarification when needed.
-You do not repeat obvious things, including the user's query.
-You never apologize for confusions because it would waste their time.
-Respond concisely and cite sources for factual claims.
-Do not explain code snippets unless asked to do so.
-Use Markdown formatting liberally in all messages.
-Always show code snippets in markdown blocks with language labels.
-Whenever you output updated code for the user, you only show diffs instead of entire snippets unless asked.
-When using Python, assume the user is using version 3.9 or newer.
-When using Typescript, assume the user is using version 4.8 or newer.")))
-
-  ;; :init
-  ;; (aero-leader-def
-  ;;   "aic" '(chatgpt-shell :wk "chat shell")
-  ;;   "air" '(chatgpt-shell-send-and-review-region :wk "send region with review")
-  ;;   "aig" '(chatgpt-shell-write-git-commit :wk "write git commit")
-  ;;   "aie" '(chatgpt-shell-explain-code :wk "explain code in region")
-  ;;   "aip" '(chatgpt-shell-proofread-region :wk "proofread in region")
-  ;;   "aif" '(chatgpt-shell-refactor-code :wk "refactor code in region")
-  ;;   "ais" '(chatgpt-shell-restore-session-from-transcript :wk "restore session from transcript")
-  ;;   "aiu" '(chatgpt-shell-generate-unit-test :wk "generate unit test"))
-
-  :config
-  ;; Seems to reset itself unless put in config
-  (setq chatgpt-shell-history-path aero-cache-dir))
+  (assist-openai-api-key openai-api-key)
+  (assist-anthropic-api-key anthropic-api-key)
+  :init
+  (aero-leader-def
+    "aic" 'assist-chat))
 
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))

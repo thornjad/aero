@@ -1,4 +1,4 @@
-;;; aero-assistant.el --- Aero AI Assistant client  -*- lexical-binding: t; -*-
+;;; assist.el --- Aero AI Assistant client  -*- lexical-binding: t; -*-
 ;;
 ;; Author: Jade Michael Thornton
 ;; Copyright (c) 2023-2024 Jade Michael Thornton
@@ -9,33 +9,42 @@
 
 ;;; Commentary:
 ;;
-;; Aero Assistant is an Emacs Lisp package that acts as an AI client for Aero Emacs. It leverages
-;; various AI models, including GPT-4, GPT-3.5-turbo, and Davinci, to facilitate a broad range of
-;; natural language processing tasks right within your Emacs.
+;; Assist is an Emacs Lisp package that acts as an AI client for Aero Emacs. It leverages various AI
+;; models, including GPT-4, Claude and DALL-E to facilitate a broad range of assistant tasks.
 
-;; OpenAI API Key:
+;; API Key:
 ;;
-;; GPT requires setting `aero/assistant-openai-api-key' to your own API key
+;; GPT and DALL-E usage requires setting `assist-openai-api-key' to your own API key.
+;;
+;; Claude usage requires setting `assist-anthropic-api-key' to your own API key.
 
 ;; Usage:
 ;;
-;; Simply call the `aero/assistant' function to start or switch to an Aero Assistant session:
+;; Simply call the `assist-chat' function to start or switch to an Assist session:
 ;;
-;; (aero/assistant)
+;; (assist-chat)
 ;;
-;; If a region is active, `aero/assistant' will prefill the input buffer with the content of the
+;; If a region is active, `assist' will prefill the input buffer with the content of the
 ;; region.
 
-;; Using Aero Assistant for Git Commit Messages in Magit [Experimental]:
+;; Using Assist for Git Commit Messages in Magit [Experimental]:
 ;;
-;; The `aero/assistant-commit-message' function can add an Aero Assistant- generated commit message.
+;; The `assist-commit-message' function can add an Aero Assist- generated commit message.
 ;; This function requires [Magit](https://github.com/magit/magit).
 ;;
-;; Whenever you commit using Magit, calling `aero/assistant-commit-message' will automatically
+;; Whenever you commit using Magit, calling `assist-commit-message' will automatically
 ;; generate a commit message based on the staged git changes
 ;;
 ;; CAUTION: GPT isn't actually very good at writing commit messages, so consider this feature
 ;; experimental, probably forever
+
+;; Using Assist to generate Gherkin comments from spec files [Experimental]:
+;;
+;; Use the `assist-diff-qa-steps'.
+
+;; Enable request debugging
+;;
+;; To see the output from API requests, toggle on debugging mode with `assist-toggle-debug'.
 
 ;;; License:
 ;;
@@ -63,31 +72,31 @@
 (require 'map)
 (require 'markdown-mode)
 
-(defgroup aero/assistant nil
-  "Aero Assistant."
-  :prefix "aa-"
+(defgroup assist nil
+  "Aero Assist."
+  :prefix "assist-"
   :group 'emacs-ml)
 
-(defcustom aa-openai-api-key nil
+(defcustom assist-openai-api-key nil
   "An OpenAI API key."
-  :group 'aero/assistant
+  :group 'assist
   :type 'string)
 
-(defcustom aa-max-entries nil
+(defcustom assist-max-entries nil
   "Max chat entries to send to remote LLM for context.
 
 Nil means no maximum."
-  :group 'aero/assistant
+  :group 'assist
   :type 'number)
 
-(defvar aa-debug-mode nil)
-(defvar aa--session-name "*Aero Assistant*")
-(defvar aa--input-buffer-name "*Aero Assistant Input*")
-(defvar aa--history '())
-(defvar aa--busy-p nil)
-(defvar aa--spinner nil)
+(defvar assist-debug-mode nil)
+(defvar assist--session-name "*Aero Assist*")
+(defvar assist--input-buffer-name "*Aero Assist Input*")
+(defvar assist--history '())
+(defvar assist--busy-p nil)
+(defvar assist--spinner nil)
 
-(defconst aa-openai-system-prompt
+(defconst assist-openai-system-prompt
   "You will act as a brilliant and experienced senior software engineer working in Emacs; you are a helpful assistant and a careful, wise programmer. You do not have feelings and you do not apologize.
 The user is a senior software engineer with limited time.
 You treat the user's time as precious, but you are not afraid to ask for clarification when needed.
@@ -101,11 +110,11 @@ Whenever you output updated code for the user, you only show diffs instead of en
 When using Python, assume the user is using version 3.9 or newer.
 When using Typescript, assume the user is using version 4.8 or newer.")
 
-(defconst aa-commit-git-command
+(defconst assist-commit-git-command
   '("diff" "--cached" "--summary" "-U10" "--no-color")
   "The git command given to Magit to get the commit diff.")
 
-(defconst aa-commit-system-prompt
+(defconst assist-commit-system-prompt
   "You are acting as a brilliant and experienced senior software engineer. The user will provide the result of running 'git %s'. You will suggest a commit message based on the diff. Do not respond with anything other than the commit message. The following describes guidelines for a proper commit message; you must follow them carefully at all times.
 
 The message MUST NEVER exceed 50 characters.
@@ -121,109 +130,109 @@ When a submodule is being updated, the commit message should mention the name of
 Once again, the message must never ever exceed 50 characters.
 ")
 
-(defconst aa-gen-qa-system-prompt
+(defconst assist-gen-qa-system-prompt
   "You are a brilliant and experienced senior software engineer. The user will provide the result of running a git diff, including only changes to test files. You will provide QA testing steps which match the tests which have been added or changed. The result must be in the form of a markdown checkbox list, though the list may be broken into sections for multiple features. The wording should use Gherkin keywords such as 'given', 'when' and 'then'.")
 
-(defvar aa--model "GPT 4")
-(defvar aa-commit-model "GPT 3.5")
-(defvar aa--model-options
+(defvar assist--model "GPT 4")
+(defvar assist-commit-model "GPT 3.5")
+(defvar assist--model-options
   '("GPT 3.5"
     "GPT 4"
     "DALL-E 3"
     "DALL-E 2"))
-(defvar aa--openai-models '("GPT 4" "GPT 3.5" "DALL-E 3" "DALL-E 2"))
-(defvar aa--dall-e-models '("dall-e-3" "dall-e-2"))
-(defvar aa--gpt-models '("gpt-4-turbo-preview" "gpt-3.5-turbo-1106"))
-(defvar aa--model-name-map
+(defvar assist--openai-models '("GPT 4" "GPT 3.5" "DALL-E 3" "DALL-E 2"))
+(defvar assist--dall-e-models '("dall-e-3" "dall-e-2"))
+(defvar assist--gpt-models '("gpt-4-turbo-preview" "gpt-3.5-turbo-1106"))
+(defvar assist--model-name-map
   #s(hash-table size 10 test equal data
                 ("GPT 3.5" "gpt-3.5-turbo-1106"
                  "GPT 4" "gpt-4-turbo-preview"
                  "DALL-E 3" "dall-e-3"
                  "DALL-E 2" "dall-e-2")))
-(defvar aa-dall-e-quality "standard")
-(defvar aa-dall-e-style "vivid")
+(defvar assist-dall-e-quality "standard")
+(defvar assist-dall-e-style "vivid")
 
-(defun aero/assistant-toggle-debug ()
-  "Toggle Aero Assistant debug mode."
+(defun assist-toggle-debug ()
+  "Toggle Aero Assist debug mode."
   (interactive)
-  (setq aa-debug-mode (not aa-debug-mode))
-  (if aa-debug-mode
-      (message "Aero Assistant debug mode enabled")
-    (message "Aero Assistant debug mode disabled")))
+  (setq assist-debug-mode (not assist-debug-mode))
+  (if assist-debug-mode
+      (message "Aero Assist debug mode enabled")
+    (message "Aero Assist debug mode disabled")))
 
-(defun aero/assistant-set-dall-e-quality ()
+(defun assist-set-dall-e-quality ()
   "Set DALL-E quality.
 
 The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image"
-  (setq aa-dall-e-quality
+  (setq assist-dall-e-quality
         (completing-read "DALL-E Quality: " '("standard" "hd")
                          nil nil nil nil
-                         aa-dall-e-quality)))
+                         assist-dall-e-quality)))
 
-(defun aero/assistant-set-dall-e-style ()
+(defun assist-set-dall-e-style ()
   "Set DALL-E style.
 
 Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images"
-  (setq aa-dall-e-style
+  (setq assist-dall-e-style
         (completing-read "DALL-E Style: " '("vivid" "natural")
                          nil nil nil nil
-                         aa-dall-e-style)))
+                         assist-dall-e-style)))
 
-(defun aa-kill-buffer-hook ()
+(defun assist-kill-buffer-hook ()
   "Kill response buffer hook."
-  (spinner-stop aa--spinner)
-  (setq aa--busy-p nil)
-  (setq aa--history '()))
+  (spinner-stop assist--spinner)
+  (setq assist--busy-p nil)
+  (setq assist--history '()))
 
-(defmacro aa-without-readonly (&rest body)
+(defmacro assist-without-readonly (&rest body)
   (declare (indent 0))
   `(let ((inhibit-read-only t))
      ,@body))
 
-(defmacro aa--get-model (model-var)
+(defmacro assist--get-model (model-var)
   "Get the model set for MODEL-VAR."
   (declare (indent 0))
-  `(gethash ,model-var aa--model-name-map))
+  `(gethash ,model-var assist--model-name-map))
 
 
 ;; API interaction
 
 
-(defun aa--send-openai (model)
+(defun assist--send-openai (model)
   "Send prompts to OpenAI MODEL."
-  (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
-  (let ((single-prompt (member model aa--dall-e-models)))
-    (aa--send-openai-request
+  (unless assist-openai-api-key (user-error "Must set `assist-openai-api-key'"))
+  (let ((single-prompt (member model assist--dall-e-models)))
+    (assist--send-openai-request
      model
-     (aa--gather-prompts-openai single-prompt)
+     (assist--gather-prompts-openai single-prompt)
      (lambda (response)
-       (let ((message (aa--register-response response)))
-         (aa--display-message message)
+       (let ((message (assist--register-response response)))
+         (assist--display-message message)
          (markdown-display-inline-images)
-         (setq aa--busy-p nil)
-         (spinner-stop aa--spinner))))))
+         (setq assist--busy-p nil)
+         (spinner-stop assist--spinner))))))
 
-(defun aa--gen-commit-message-openai (model callback)
+(defun assist--gen-commit-message-openai (model callback)
   "Generate a commit message and pass it to CALLBACK."
   (let* ((diff-lines (magit-git-lines "diff" "--cached"))
          (changes (string-join diff-lines "\n"))
-         (system-prompt (format aa-commit-system-prompt (string-join aa-commit-git-command " ")))
+         (system-prompt (format assist-commit-system-prompt (string-join assist-commit-git-command " ")))
          (message (list (list :role "system" :content system-prompt)
                         (list :role "user" :content changes))))
-    (message "Aero Assistant is generating a commit message...")
-    (aa--send-openai-request
+    (message "Aero Assist is generating a commit message...")
+    (assist--send-openai-request
      model message
      (lambda (message)
-       (funcall callback (aa--format-commit-message-content message))))))
+       (funcall callback (assist--format-commit-message-content message))))))
 
-(defun aa--gen-qa-steps (diff callback)
+(defun assist--gen-qa-steps (diff callback)
   "Generate QA steps from DIFF, then call CALLBACK with the result."
-  (let* ((model (aa--get-model aa-commit-model))
-         (message (list (list :role "system" :content aa-gen-qa-system-prompt)
+  (let* ((model (assist--get-model assist-commit-model))
+         (message (list (list :role "system" :content assist-gen-qa-system-prompt)
                         (list :role "user" :content diff))))
-    (aa--send-openai-request model message (lambda (message) (funcall callback message)))))
+    (assist--send-openai-request model message (lambda (message) (funcall callback message)))))
 
-(defun aa--format-commit-message-content (message)
+(defun assist--format-commit-message-content (message)
   "Return MESSAGE with it's :content downcased."
   (let* ((content (plist-get message :content))
          (content (if (> (length content) 0)
@@ -235,52 +244,52 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
                     content)))
     (plist-put message :content content)))
 
-(defun aa--send-openai-request (model message callback)
+(defun assist--send-openai-request (model message callback)
   "Send MESSAGE to OpenAI MODEL and call CALLBACK with the response."
-  (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'"))
+  (unless assist-openai-api-key (user-error "Must set `assist-openai-api-key'"))
   (let ((inhibit-message t)
         (message-log-max nil)
-        (url-show-status aa-debug-mode)
-        (url-show-headers aa-debug-mode)
+        (url-show-status assist-debug-mode)
+        (url-show-headers assist-debug-mode)
         (url-request-method "POST")
         (url-request-extra-headers
          `(("Content-Type" . "application/json")
-           ("Authorization" . ,(format "Bearer %s" aa-openai-api-key))))
-        (url-request-data (aa--request-data model message)))
+           ("Authorization" . ,(format "Bearer %s" assist-openai-api-key))))
+        (url-request-data (assist--request-data model message)))
 
-    (url-retrieve (aa--openapi-api-url model)
+    (url-retrieve (assist--openapi-api-url model)
                   (lambda (_)
-                    (funcall callback (aa--parse-response-openai model (current-buffer)))
+                    (funcall callback (assist--parse-response-openai model (current-buffer)))
                     (kill-buffer))
                   nil nil nil)))
 
-(defun aa--request-data (model message)
+(defun assist--request-data (model message)
   "Get request data for MODEL with MESSAGE"
-  (cond ((member model aa--dall-e-models)
-         (aa--request-data-dall-e model message))
-        ((member model aa--gpt-models)
-         (aa--request-data-gpt model message))
+  (cond ((member model assist--dall-e-models)
+         (assist--request-datassist-dall-e model message))
+        ((member model assist--gpt-models)
+         (assist--request-datassist-gpt model message))
         (t (user-error "Model %s not supported" model))))
 
-(defun aa--openapi-api-url (model)
+(defun assist--openapi-api-url (model)
   "Get the OpenAI API URL for MODEL."
-  (cond ((member model aa--dall-e-models)
+  (cond ((member model assist--dall-e-models)
          "https://api.openai.com/v1/images/generations")
-        ((member model aa--gpt-models)
+        ((member model assist--gpt-models)
          "https://api.openai.com/v1/chat/completions")
         (t (user-error "Model %s not supported" model))))
 
-(defun aa--request-data-dall-e (model message)
+(defun assist--request-datassist-dall-e (model message)
   "Get the request data for a DALL-E MODEL call with MESSAGE."
   (encode-coding-string
    (json-encode `(:model ,model
                   :prompt ,message
                   :n 1 ;; only 1 is supported for dall-e 3
-                  :quality ,aa-dall-e-quality
-                  :style ,aa-dall-e-style))
+                  :quality ,assist-dall-e-quality
+                  :style ,assist-dall-e-style))
    'utf-8))
 
-(defun aa--request-data-gpt (model messages)
+(defun assist--request-datassist-gpt (model messages)
   "Get the request data for a GPT MODEL call with MESSAGES."
   (encode-coding-string
    ;; https://platform.openai.com/docs/api-reference/chat/create
@@ -290,50 +299,50 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
                   :max_tokens nil))
    'utf-8))
 
-(defun aa--gather-prompts-openai (single-prompt)
+(defun assist--gather-prompts-openai (single-prompt)
   "Return a full prompt from chat history, or last prompt if SINGLE-PROMPT."
-  (let ((prompts (aa--filter-history-prompts-format-openai
-                  #'aa--valid-prompt-p
-                  (or (and aa-max-entries
-                           (seq-take aa--history aa-max-entries))
-                      aa--history))))
+  (let ((prompts (assist--filter-history-prompts-format-openai
+                  #'assist--valid-prompt-p
+                  (or (and assist-max-entries
+                           (seq-take assist--history assist-max-entries))
+                      assist--history))))
     (when (not prompts) (user-error "Prompt history contains nothing to send."))
     (if single-prompt
-        (let ((last-prompt (car aa--history)))
+        (let ((last-prompt (car assist--history)))
           (when (string= "user" (plist-get last-prompt :role))
             (plist-get last-prompt :content)))
       (cons (list :role "system"
-                  :content aa-openai-system-prompt)
+                  :content assist-openai-system-prompt)
             ;; Need to reverse so latest comes last
             (nreverse prompts)))))
 
-(defun aa--filter-history-prompts-format-openai (pred hist)
+(defun assist--filter-history-prompts-format-openai (pred hist)
   "Filter HIST alist for prompts."
   (when hist
     (if (funcall pred (car hist))
-        (cons (aa--format-openai-prompt (car hist))
-              (aa--filter-history-prompts-format-openai pred (cdr hist)))
-      (aa--filter-history-prompts-format-openai pred (cdr hist)))))
+        (cons (assist--format-openai-prompt (car hist))
+              (assist--filter-history-prompts-format-openai pred (cdr hist)))
+      (assist--filter-history-prompts-format-openai pred (cdr hist)))))
 
-(defun aa--format-openai-prompt (prompt)
+(defun assist--format-openai-prompt (prompt)
   "Format PROMPT using only keys allowed by the API."
   (list :role (plist-get prompt :role)
         :content (plist-get prompt :content)))
 
-(defun aa--parse-response-openai (model buffer)
+(defun assist--parse-response-openai (model buffer)
   "Parse the Assistant response for GPT in BUFFER for MODEL."
-  (cond ((member model aa--dall-e-models)
-         (aa--parse-response-openai-dall-e buffer))
-        ((member model aa--gpt-models)
-         (aa--parse-response-openai-gpt buffer))
+  (cond ((member model assist--dall-e-models)
+         (assist--parse-response-openai-dall-e buffer))
+        ((member model assist--gpt-models)
+         (assist--parse-response-openai-gpt buffer))
         (t (user-error "Model %s not supported" model))))
 
-(defun aa--parse-response-openai-dall-e (buffer)
-  "Parse the Assistant response for DALL-E in BUFFER."
+(defun assist--parse-response-openai-dall-e (buffer)
+  "Parse the assistant response for DALL-E in BUFFER."
   (when (buffer-live-p buffer)
-    (aa--show-debug-buffer buffer)
-    (if-let ((status (aa--get-response-status buffer))
-             (response (aa--get-response-json buffer)))
+    (assist--show-debug-buffer buffer)
+    (if-let ((status (assist--get-response-status buffer))
+             (response (assist--get-response-json buffer)))
         (cond
          ((string-match-p "200 OK" status)
           (let ((response-data (aref (plist-get response :data) 0)))
@@ -357,12 +366,12 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
       ;; if-let errored
       (list :error t :status (concat status ": Could not parse HTTP response.")))))
 
-(defun aa--parse-response-openai-gpt (buffer)
-  "Parse the Assistant response for GPT in BUFFER."
+(defun assist--parse-response-openai-gpt (buffer)
+  "Parse the assistant response for GPT in BUFFER."
   (when (buffer-live-p buffer)
-    (aa--show-debug-buffer buffer)
-    (if-let ((status (aa--get-response-status buffer))
-             (response (aa--get-response-json buffer)))
+    (assist--show-debug-buffer buffer)
+    (if-let ((status (assist--get-response-status buffer))
+             (response (assist--get-response-json buffer)))
         (cond
          ((string-match-p "200 OK" status)
           (let* ((choices (aref (plist-get response :choices) 0))
@@ -384,12 +393,12 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
          (t (list :error t :status (concat status ": Could not parse HTTP response."))))
       (list :error t :status (concat status ": Could not parse HTTP response.")))))
 
-(defun aa--get-response-status (buffer)
+(defun assist--get-response-status (buffer)
   "Get the response status from BUFFER."
   (with-current-buffer buffer
     (buffer-substring (line-beginning-position) (line-end-position))))
 
-(defun aa--get-response-json (buffer)
+(defun assist--get-response-json (buffer)
   "Get the response JSON from BUFFER."
   (with-current-buffer buffer
     (let ((json-object-type 'plist))
@@ -403,22 +412,22 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
               (json-read-from-string json-str)
             (json-readtable-error 'json-read-error)))))))
 
-(defun aa--show-debug-buffer (buffer)
+(defun assist--show-debug-buffer (buffer)
   "Show debug BUFFER if desired."
-  (with-current-buffer buffer (when aa-debug-mode (clone-buffer "*aero/assistant-error*" 'show))))
+  (with-current-buffer buffer (when assist-debug-mode (clone-buffer "*assist-error*" 'show))))
 
-(defun aa--valid-prompt-p (item)
+(defun assist--valid-prompt-p (item)
   "Return t if ITEM is a valid prompt.
 
 A prompt is a valid message which has a role of either user or assistant and contains message
 content and no error marker."
-  (and (aa--valid-message-p item)
+  (and (assist--valid-message-p item)
        (not (plist-get item :error))
        (and (or (string= (plist-get item :role) "user")
                 (string= (plist-get item :role) "assistant"))
             (not (string-empty-p (plist-get item :content))))))
 
-(defun aa--valid-message-p (item)
+(defun assist--valid-message-p (item)
   "Return t if ITEM is a valid message.
 
 A valid message is a plist containing either an error and a status or a role and content. Any of
@@ -430,19 +439,19 @@ these may be nil and still be a valid message, they need only exist."
            (and (plist-member item :role)
                 (plist-member item :content)))))
 
-(defun aa--register-response (response)
-  "Add Assistant response to history, return prompt alist."
+(defun assist--register-response (response)
+  "Add assistant response to history, return prompt alist."
   (let ((prompt (map-merge 'plist '(:role "assistant") response)))
-    (push prompt aa--history)
+    (push prompt assist--history)
     prompt))
 
-(defun aa--register-user-message (input)
+(defun assist--register-user-message (input)
   "Add user message to history, return prompt alist."
   (let ((prompt (list :role "user" :content (string-trim input " \t\n\r"))))
-    (push prompt aa--history)
+    (push prompt assist--history)
     prompt))
 
-(defun aa--git-diff-spec-files ()
+(defun assist--git-diff-spec-files ()
   (let ((default-directory (or (project-root (project-current)) (vc-root-dir) default-directory)))
     (if (zerop (call-process "git" nil nil nil "fetch" "origin" "master:refs/remotes/origin/master"))
         (shell-command-to-string "git diff origin/master...HEAD --summary -U10 --no-color -- '**/specs/**' '*.spec.ts'")
@@ -451,15 +460,15 @@ these may be nil and still be a valid message, they need only exist."
 
 ;; User input
 
-(defun aa-begin-input (&optional init)
+(defun assist-begin-input (&optional init)
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (when aa--busy-p
-    (user-error "BUSY: Waiting for Assistant complete its response..."))
-  (aa-input-exit)
+  (when assist--busy-p
+    (user-error "BUSY: Waiting for assistant complete its response..."))
+  (assist-input-exit)
   (let ((dir (if (window-parameter nil 'window-side) 'bottom 'down))
-        (buf (get-buffer-create aa--input-buffer-name)))
+        (buf (get-buffer-create assist--input-buffer-name)))
     (with-current-buffer buf
-      (aa-input-mode)
+      (assist-input-mode)
       (erase-buffer)
       (when init (insert init))
       (call-interactively #'set-mark-command)
@@ -470,92 +479,92 @@ these may be nil and still be a valid message, they need only exist."
                          (dedicated . t)
                          (window-height . 30)))))
 
-(defun aa-try-again ()
+(defun assist-try-again ()
   "In the case of an error, try again."
   (interactive)
-  (unless aa--history
-    (user-error "No Assistant history to try again with."))
-  (aa-send))
+  (unless assist--history
+    (user-error "No assistant history to try again with."))
+  (assist-send))
 
-(defun aa-send ()
-  "Submit the current prompt to Assistant."
+(defun assist-send ()
+  "Submit the current prompt to assistant."
   (interactive)
-  (let ((model (gethash aa--model aa--model-name-map)))
-    (setq aa--busy-p t)
-    (spinner-start aa--spinner)
-    (aa--send-openai model)))
+  (let ((model (gethash assist--model assist--model-name-map)))
+    (setq assist--busy-p t)
+    (spinner-start assist--spinner)
+    (assist--send-openai model)))
 
-(defun aa-input-exit ()
+(defun assist-input-exit ()
   (interactive)
-  (when-let ((buf (get-buffer aa--input-buffer-name)))
+  (when-let ((buf (get-buffer assist--input-buffer-name)))
     (kill-buffer buf)))
 
-(defun aa-input-send ()
+(defun assist-input-send ()
   (interactive)
-  (when aa--busy-p
-    (user-error "BUSY: Waiting for Assistant complete its response..."))
-  (with-current-buffer aa--input-buffer-name
+  (when assist--busy-p
+    (user-error "BUSY: Waiting for assistant complete its response..."))
+  (with-current-buffer assist--input-buffer-name
     (let ((input (buffer-substring-no-properties (point-min) (point-max))))
       (when (string-empty-p input)
         (user-error "No input to send"))
-      (aa--display-message (aa--register-user-message input))
-      (aa-send)
-      (aa-input-exit)
-      (pop-to-buffer aa--session-name))))
+      (assist--display-message (assist--register-user-message input))
+      (assist-send)
+      (assist-input-exit)
+      (pop-to-buffer assist--session-name))))
 
-(defvar aa-input-mode-map
+(defvar assist-input-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "<C-return>") #'aa-input-send)
-    (define-key map (kbd "C-c C-c") #'aa-input-send)
-    (define-key map (kbd "C-c C-r") #'aa-try-again)
-    (define-key map (kbd "C-c C-k") #'aa-input-exit)
+    (define-key map (kbd "<C-return>") #'assist-input-send)
+    (define-key map (kbd "C-c C-c") #'assist-input-send)
+    (define-key map (kbd "C-c C-r") #'assist-try-again)
+    (define-key map (kbd "C-c C-k") #'assist-input-exit)
     map))
 
-(define-derived-mode aa-input-mode gfm-mode "Aero Assistant Input"
-  "Major mode for Aero Assistant input mode.
+(define-derived-mode assist-input-mode gfm-mode "Aero Assist Input"
+  "Major mode for Aero Assist input mode.
 
-\\<aa-input-mode-map>"
-  (setq header-line-format '(" Aero Assistant Input  |  C-RET to send, C-c C-k to cancel "))
+\\<assist-input-mode-map>"
+  (setq header-line-format '(" Aero Assist Input  |  C-RET to send, C-c C-k to cancel "))
   (when (fboundp 'evil-set-initial-state)
-    (evil-set-initial-state 'aa-input-mode 'insert))
+    (evil-set-initial-state 'assist-input-mode 'insert))
   (markdown-toggle-fontify-code-blocks-natively))
 
 
 ;; Chat init and display
 
-(defun aa--display-message (message)
+(defun assist--display-message (message)
   "Display the most recent history message."
-  (unless (aa--valid-message-p message)
+  (unless (assist--valid-message-p message)
     (error "Message is not valid: %s" message))
-  (with-current-buffer aa--session-name
-    (aa-without-readonly
-     (setf (point) (point-max))
-     (let* ((message-content (plist-get message :content))
-            (role (plist-get message :role)))
-       (unless (bobp) (insert "\n\n"))
-       (cond
-        ((or (plist-get message :error) (eq role nil))
-         (insert "## Assistant [Error]\n\n> Try again with C-c C-r [aero/assistant-try-again]\n\n"
-                 (or (plist-get message :status)
-                     (format (or (and (plist-get message :error)
-                                      "Error: unknown error: %s")
-                                 (and (eq role nil)
-                                      "Error: message has no role: %s")
-                                 "Error: invalid message: %s")
-                             message))
-                 "\n\n\f\n"))
+  (with-current-buffer assist--session-name
+    (assist-without-readonly
+      (setf (point) (point-max))
+      (let* ((message-content (plist-get message :content))
+             (role (plist-get message :role)))
+        (unless (bobp) (insert "\n\n"))
+        (cond
+         ((or (plist-get message :error) (eq role nil))
+          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [assist-try-again]\n\n"
+                  (or (plist-get message :status)
+                      (format (or (and (plist-get message :error)
+                                       "Error: unknown error: %s")
+                                  (and (eq role nil)
+                                       "Error: message has no role: %s")
+                                  "Error: invalid message: %s")
+                              message))
+                  "\n\n\f\n"))
 
-        ((string= role "user")
-         (insert "# User\n\n" message-content))
+         ((string= role "user")
+          (insert "# User\n\n" message-content))
 
-        ((string= role "assistant")
-         (insert (aa--format-response message))))
+         ((string= role "assistant")
+          (insert (assist--format-response message))))
 
-       ;; move point to bottom
-       (setf (point) (point-max))))))
+        ;; move point to bottom
+        (setf (point) (point-max))))))
 
-(defun aa--format-response (response)
-  "Format Assistant response for display."
+(defun assist--format-response (response)
+  "Format assistant response for display."
   (let ((content (plist-get response :content))
         (tokens (plist-get response :tokens))
         (revised-prompt (plist-get response :revised_prompt))
@@ -587,101 +596,101 @@ these may be nil and still be a valid message, they need only exist."
              (t ""))
             "\f\n")))
 
-(defun aa-clear-history ()
+(defun assist-clear-history ()
   (interactive)
-  (when (y-or-n-p "Clear Aero Assistant history forever?")
-    (with-current-buffer aa--session-name
-      (aa-without-readonly
-       (setq aa--history '())
-       (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
+  (when (y-or-n-p "Clear Aero Assist history forever?")
+    (with-current-buffer assist--session-name
+      (assist-without-readonly
+        (setq assist--history '())
+        (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
-(defun aa--header-line ()
+(defun assist--header-line ()
   "Display header line."
-  (format " %s Aero Assistant  |  %s"
-          (if-let ((spinner (spinner-print aa--spinner)))
+  (format " %s Aero Assist  |  %s"
+          (if-let ((spinner (spinner-print assist--spinner)))
               (concat spinner " ")
             " ")
-          aa--model))
+          assist--model))
 
-(defun aa--assert-message-not-error (message)
+(defun assist--assert-message-not-error (message)
   "Throw user-error if MESSAGE is empty or has an error."
-  (unless message (user-error "Aero Assistant commit message error: no response"))
+  (unless message (user-error "Aero Assist commit message error: no response"))
   (when (plist-get message :error)
-    (user-error "Aero Assistant commit message error: %s" (plist-get message :status)))
+    (user-error "Aero Assist commit message error: %s" (plist-get message :status)))
   (unless (plist-get message :content)
-    (user-error "Aero Assistant commit message error: no response content")))
+    (user-error "Aero Assist commit message error: no response content")))
 
-(defun aa--insert-commit-message (message buf)
+(defun assist--insert-commit-message (message buf)
   "Insert content of MESSAGE at the start of buffer BUF.
 
-MESSAGE should be an aero-assistant formatted plist."
-  (aa--assert-message-not-error message)
+MESSAGE should be an assist formatted plist."
+  (assist--assert-message-not-error message)
   (let ((content (plist-get message :content)))
     (with-current-buffer buf
       (when (string-match-p "\\`\\s-*$" (thing-at-point 'line))
         ;; Only insert if message line is empty
         (insert content)))))
 
-(defun aa--display-qa-steps (message)
+(defun assist--display-qa-steps (message)
   "Display content of MESSAGE in a display buffer."
-  (aa--assert-message-not-error message)
+  (assist--assert-message-not-error message)
   (let ((content (plist-get message :content)))
-    (with-current-buffer (get-buffer-create "*aero/assistant-diff-qa-steps*")
+    (with-current-buffer (get-buffer-create "*assist-diff-qa-steps*")
       (erase-buffer)
-      (insert "# Aero Assistant QA Steps\n\n" content)))
+      (insert "# Aero Assist QA Steps\n\n" content)))
   (markdown-mode)
   (markdown-toggle-fontify-code-blocks-natively))
 
-(defun aa-set-model ()
-  "Prompt user to set the Assistant model and verify key if required."
+(defun assist-set-model ()
+  "Prompt user to set the assistant model and verify key if required."
   (interactive)
-  (setq aa--model
-        (completing-read "Assistant model: " aa--model-options
+  (setq assist--model
+        (completing-read "Assistant model: " assist--model-options
                          nil nil nil nil
-                         aa--model))
+                         assist--model))
   ;; check for keys
   (cond
-   ((member aa--model aa--openai-models)
-    (unless aa-openai-api-key (user-error "Must set `aa-openai-api-key'")))))
+   ((member assist--model assist--openai-models)
+    (unless assist-openai-api-key (user-error "Must set `assist-openai-api-key'")))))
 
-(defvar aa-mode-map
+(defvar assist-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<return>") #'aa-begin-input)
-    (define-key map (kbd "C-c C-k") #'aa-clear-history)
+    (define-key map (kbd "C-<return>") #'assist-begin-input)
+    (define-key map (kbd "C-c C-k") #'assist-clear-history)
     map))
 
-(define-derived-mode aa-mode gfm-mode "Aero Assistant"
-  "Major mode for Aero Assistant response mode.
+(define-derived-mode assist-mode gfm-mode "Aero Assist"
+  "Major mode for Aero Assist response mode.
 
-\\<aa-mode-map>"
+\\<assist-mode-map>"
   (setq buffer-read-only t)
-  (setq header-line-format '((:eval (aa--header-line))))
-  (setq aa--spinner (spinner-create 'horizontal-breathing-long t))
+  (setq header-line-format '((:eval (assist--header-line))))
+  (setq assist--spinner (spinner-create 'horizontal-breathing-long t))
   (markdown-display-inline-images)
   (markdown-toggle-fontify-code-blocks-natively)
-  (add-hook 'kill-buffer-hook #'aa-kill-buffer-hook nil t))
+  (add-hook 'kill-buffer-hook #'assist-kill-buffer-hook nil t))
 
 ;;;###autoload
-(defun aero/assistant (&optional init)
-  "Switch to or start an Aero Assistant session.
+(defun assist-chat (&optional init)
+  "Switch to or start an Aero Assist chat session.
 
 If region is active, prefill input buffer with the region."
   (interactive (list (and (use-region-p) (buffer-substring (region-beginning) (region-end)))))
-  (let ((buf (get-buffer-create aa--session-name)))
+  (let ((buf (get-buffer-create assist--session-name)))
     (with-current-buffer buf
-      (unless (derived-mode-p 'aa-mode)
-        (aa-mode))
+      (unless (derived-mode-p 'assist-mode)
+        (assist-mode))
       (let ((blank (string-empty-p (buffer-string))))
-        (aa-without-readonly
-         (switch-to-buffer buf)
-         (setf (point) (point-max))
-         (when blank (aa-begin-input init)))))))
+        (assist-without-readonly
+          (switch-to-buffer buf)
+          (setf (point) (point-max))
+          (when blank (assist-begin-input init)))))))
 
 ;;;###autoload
-(defun aero/assistant-commit-message ()
-  "Aero Assistant generates a commit message.
+(defun assist-commit-message ()
+  "Aero Assist generates a commit message.
 
-Independently of `aero/assistant', this function uses the model defined by `aero/assistant-commit-model'.
+Independently of `assist', this function uses the model defined by `assist-commit-model'.
 
 Requires `magit'."
   (interactive)
@@ -689,24 +698,20 @@ Requires `magit'."
     (user-error "This function requires `magit'"))
   (unless (git-commit-buffer-message)
     (let ((buf (current-buffer))
-          (model (aa--get-model aa-commit-model)))
+          (model (assist--get-model assist-commit-model)))
       ;; TODO count tokens first
-      (aa--gen-commit-message-openai model #'aa--insert-commit-message))))
+      (assist--gen-commit-message-openai model #'assist--insert-commit-message))))
 
-(defun aero/assistant-diff-qa-steps ()
+(defun assist-diff-qa-steps ()
   "Create Gherkin-like QA steps from the git diff.
 
 Currently only respects .spec.ts files diffed against a master branch. If the default branch is main or something else, this won't work at the moment."
   (interactive)
-  (let ((diff (aa--git-diff-spec-files)))
-    (pop-to-buffer (get-buffer-create "*aero/assistant-diff-qa-steps*"))
+  (let ((diff (assist--git-diff-spec-files)))
+    (pop-to-buffer (get-buffer-create "*assist-diff-qa-steps*"))
     (erase-buffer)
-    (insert "Aero Assistant is generating QA steps...\n\n")
-    (aa--gen-qa-steps diff #'aa--display-qa-steps)))
+    (insert "Aero Assist is generating QA steps...\n\n")
+    (assist--gen-qa-steps diff #'assist--display-qa-steps)))
 
-(provide 'aero-assistant)
-;;; aero-assistant.el ends here
-
-;; Local Variables:
-;; read-symbol-shorthands: (("aa-" . "aero/assistant-"))
-;; End:
+(provide 'assist)
+;;; assist.el ends here
