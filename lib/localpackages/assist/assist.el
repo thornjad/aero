@@ -62,6 +62,51 @@
 
 ;;; Code:
 
+
+;; History management
+
+(defvar assist-chat-history nil
+  "A list of chat histories by session-id
+
+This is a list of cons cells, where the car is the session-id and the cdr is a list of chat")
+
+(defmacro assist-get-session-id ()
+  "Get a new session ID."
+  (gensym "assist-session-id"))
+
+(defun assist-chat-add-to-history (session-id item))
+
+(defun assist-chat-get-history (session-id)
+  "Get the chat history for SESSION-ID."
+  (cdr (assoc session-id assist-chat-history)))
+
+(defun assist-chat-get-history-last-item (session-id))
+
+
+;; Requests
+
+(defvar assist-model-aliases '((gpt-4 . "gpt-4-turbo-preview")
+                               (gpt-3 . "gpt-3.5-turbo-1106")
+                               (dall-e-3 . "dall-e-3"))
+  "A list of model aliases.")
+
+(defvar assist-session-models nil
+  "A list of session IDs and the models they're using.
+
+This is a list of cons cells, where the car is the session ID and the cdr is
+the model name.")
+
+(defun assist-decode-model-alias (alias)
+  "Decode an ALIAS into the actual model name."
+  (cdr (assoc alias assist-model-aliases)))
+
+(defun assist-get-session-model (session)
+  "Get the model for SESSION."
+  (cdr (assoc session assist-session-models)))
+
+
+;;;;;; OOOOLLLLDDDD
+
 (declare-function gfm-mode "markdown-mode")
 
 (eval-when-compile (require 'subr-x))
@@ -196,7 +241,6 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
 
 
 ;; API interaction
-
 
 (defun assist--send-openai (model)
   "Send prompts to OpenAI MODEL."
