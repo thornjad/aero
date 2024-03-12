@@ -137,6 +137,8 @@
   :custom
   (eldoc-idle-delay 0.5)
   (eldoc-box-only-multi-line t) ; leave single-line docs in minibuffer
+  (eldoc-box-max-pixel-width 600)
+  (eldoc-box-max-pixel-height 600)
 
   :config
   (aero-leader-def
