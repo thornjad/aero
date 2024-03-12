@@ -33,7 +33,7 @@
      (lambda ()
        (when (member (org-get-todo-state) org-done-keywords)
          (org-archive-subtree-default)))
-     nil 'file))
+     nil nil))
 
   (defun aero/org-collapse-entry-if-done ()
     "Collapse the current entry if it is marked as DONE."
