@@ -151,6 +151,17 @@
  delete-auto-save-files t ; auto-delete auto-save auto-files automatically
  vc-follow-symlinks t ; don't ask to follow symlinks
 
+ world-clock-list '(("America/New_York" "Home")
+                    ("America/Los_Angeles" "San Francisco")
+                    ("Europe/Warsaw" "Poland")
+                    ("Europe/Amsterdam" "Netherlands")
+                    ("America/Chicago" "Texas")
+                    ("America/Denver" "Utah")
+                    ("Pacific/Auckland" "New Zealand")
+                    ("Australia/Sydney" "Sydney"))
+
+ world-clock-time-format "%R %Z (%z) %a %d %b "
+
  ;; xref
  ;; Use separate xref history for each window, allowing independent code navigation
  xref-history-storage #'xref-window-local-history
