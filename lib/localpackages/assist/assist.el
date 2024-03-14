@@ -85,8 +85,7 @@ This is a list of cons cells, where the car is the session-id and the cdr is a l
 
 ;; Requests
 
-(defvar assist-model-aliases '((gpt-4 . "gpt-4-turbo-preview")
-                               (gpt-3 . "gpt-3.5-turbo-1106")
+(defvar assist-model-aliases '((gpt-4 . "gpt-4-0125-preview")
                                (dall-e-3 . "dall-e-3"))
   "A list of model aliases.")
 
