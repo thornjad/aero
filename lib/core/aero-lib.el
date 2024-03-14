@@ -757,8 +757,12 @@ alternative to the beacon package."
 
 (defun aero/unix-timestamp-to-human (timestamp)
   "Convert a UNIX TIMESTAMP to a human-readable string."
-  (interactive)
-  (format-time-string "%Y-%m-%d %H:%M:%S" (seconds-to-time timestamp)))
+  (interactive (list (read-string "Timestamp: " (thing-at-point 'word))))
+  ;; convert from milliseconds if it looks like milliseconds
+  (let ((timestamp (if (>= (string-to-number timestamp) 10000000000)
+                       (/ (string-to-number timestamp) 1000)
+                     (string-to-number timestamp))))
+    (message (format-time-string "%Y-%m-%d %H:%M:%S" (seconds-to-time timestamp)))))
 
 (defun aero/toggle-angular-component-file ()
   "Toggle between an Angular component's Typescript and HTML files."
