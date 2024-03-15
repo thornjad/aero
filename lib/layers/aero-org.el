@@ -218,9 +218,11 @@
     "w" 'org-open-at-point
     "p" 'org-priority
     "r" 'org-refile
+    "s" 'org-set-property
     "i" '(:ignore t :wk "insert")
     "il" '(org-insert-link :wk "link")
     "it" 'org-time-stamp
+    "ii" 'org-insert-structure-template
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
     "A" 'archive-buffer-closed-tasks
