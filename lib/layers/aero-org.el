@@ -32,8 +32,10 @@
     (org-map-entries
      (lambda ()
        (when (member (org-get-todo-state) org-done-keywords)
-         (org-archive-subtree-default)))
-     nil nil))
+         (org-archive-subtree-default)
+         ;; the archive alters the tree, so just go back to the top
+         (setq org-map-continue-from (point-min))))
+     nil 'file))
 
   (defun aero/org-collapse-entry-if-done ()
     "Collapse the current entry if it is marked as DONE."
