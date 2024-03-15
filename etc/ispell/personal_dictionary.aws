@@ -1,4 +1,4 @@
-personal_ws-1.1 en 670 
+personal_ws-1.1 en 674 
 ACL
 AEC
 APIs
@@ -282,6 +282,7 @@ WSL
 WTF
 Wayde
 Wayland
+WebDAV
 WebGL
 Webflow
 Websockets
@@ -389,6 +390,8 @@ eshell
 eval
 evcxr
 eww
+exobrain
+exobrains
 facto
 falsy
 featureful
@@ -652,6 +655,7 @@ une
 unicode
 unindent
 unironically
+unprocessable
 upsell
 usr
 util
