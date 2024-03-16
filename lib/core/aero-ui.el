@@ -40,13 +40,14 @@
 
 (setq default-frame-alist
       ;; width assumes we want a buffer to be 106 columns wide
-      (append (list '(width  . 106) '(height . 60)
+      (append (list '(width  . 212) '(height . 62)
                     '(tool-bar-lines . 0)
                     '(menu-bar-lines . 0)
                     '(internal-border-width . 8)
                     '(left-fringe . 8) '(right-fringe . 8)
                     '(vertical-scroll-bars . nil)
                     '(ns-transparent-titlebar . t))))
+(split-window-horizontally) ; default to two windows
 (if (fboundp 'fringe-mode) (fringe-mode '8))
 (set-frame-parameter (selected-frame)
                      'internal-border-width 8)
