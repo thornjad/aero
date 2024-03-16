@@ -1,4 +1,4 @@
-personal_ws-1.1 en 674 
+personal_ws-1.1 en 677 
 ACL
 AEC
 APIs
@@ -80,6 +80,7 @@ FBOs
 FIXME
 FOSS
 FTB
+FastComet
 FlashBack
 FlighAware
 FlightAware
@@ -146,6 +147,7 @@ LaunchDarkly
 Legolas
 Libertarianism
 Lichess
+Linode
 LocalWords
 Lua
 MBTiles
@@ -211,6 +213,7 @@ RESTful
 RET
 RMQ
 ROG
+RSS
 RXJS
 Reddit
 Redux
