@@ -407,21 +407,9 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   :after general
   :init (apheleia-global-mode +1)
   :config
-  ;; Prettier won't read the path from package.json so swe have to specify it manually
-  (let ((config-path (expand-file-name "~/src/angular2/node_modules/ddts/.prettierrc.yml"))
-        (scss-config-path
-         (expand-file-name "~/src/angular2/node_modules/ddts/.prettierrc-scss.yml")))
-    (when (and (file-exists-p config-path) (file-exists-p scss-config-path))
-      (dolist (cmd `((elm-format . (npx "elm-format" "--yes" "--stdin"))
-                     (cljfmt . ("lein" "cljfmt" "fix" input))
-
-                     (prettier-javascript . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path input))
-                     (prettier . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path input))
-
-                     (prettier-scss . (npx "prettier" "--stdin-filepath" filepath "--config" ,scss-config-path input))
-
-                     (prettier-typescript . (npx "prettier" "--stdin-filepath" filepath "--config" ,config-path))))
-        (add-to-list 'apheleia-formatters cmd))))
+  (dolist (cmd `((elm-format . (npx "elm-format" "--yes" "--stdin"))
+                 (cljfmt . ("lein" "cljfmt" "fix" input))))
+    (add-to-list 'apheleia-formatters cmd))
 
   (add-to-list 'apheleia-mode-alist '(clojure-mode . cljfmt))
 
