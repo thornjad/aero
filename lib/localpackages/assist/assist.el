@@ -253,7 +253,10 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
          (assist--display-message message)
          (markdown-display-inline-images)
          (setq assist--busy-p nil)
-         (spinner-stop assist--spinner))))))
+         (spinner-stop assist--spinner)
+         ;; move point to bottom, then scroll to have margin
+         (setf (point) (point-max))
+         (recenter -15))))))
 
 (defun assist--gen-commit-message-openai (model callback)
   "Generate a commit message and pass it to CALLBACK."
@@ -553,7 +556,10 @@ these may be nil and still be a valid message, they need only exist."
       (assist--display-message (assist--register-user-message input))
       (assist-send)
       (assist-input-exit)
-      (pop-to-buffer assist--session-name))))
+      (pop-to-buffer assist--session-name)
+      ;; move point to bottom, then scroll to have margin
+      (setf (point) (point-max))
+      (recenter -15))))
 
 (defvar assist-input-mode-map
   (let ((map (make-sparse-keymap)))
@@ -601,11 +607,7 @@ these may be nil and still be a valid message, they need only exist."
           (insert "# User\n\n" message-content))
 
          ((string= role "assistant")
-          (insert (assist--format-response message))))
-
-        ;; move point to bottom, then scroll to have margin
-        (setf (point) (point-max))
-        (recenter -15)))))
+          (insert (assist--format-response message))))))))
 
 (defun assist--format-response (response)
   "Format assistant response for display."
