@@ -408,7 +408,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   :init (apheleia-global-mode +1)
   :config
   (dolist (cmd `((elm-format . (npx "elm-format" "--yes" "--stdin"))
-                 (cljfmt . ("lein" "cljfmt" "fix" input))))
+                 (cljfmt . ("lein" "cljfmt" "fix" filepath))))
     (add-to-list 'apheleia-formatters cmd))
 
   (add-to-list 'apheleia-mode-alist '(clojure-mode . cljfmt))
