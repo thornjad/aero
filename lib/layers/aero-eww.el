@@ -157,6 +157,9 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
                                             '("typescript" "angular" "rxjs" "javascript" "html"))))
   (add-hook 'web-mode-hook (lambda ()
                              (setq-local devdocs-current-docs
-                                         '("angular" "rxjs" "javascript" "html")))))
+                                         '("angular" "rxjs" "javascript" "html"))))
+  (add-hook 'clojure-mode-hook (lambda ()
+                                 (setq-local devdocs-current-docs
+                                             '("clojure~1.11")))))
 
 (provide 'aero-eww)
