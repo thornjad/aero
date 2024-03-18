@@ -603,8 +603,9 @@ these may be nil and still be a valid message, they need only exist."
          ((string= role "assistant")
           (insert (assist--format-response message))))
 
-        ;; move point to bottom
-        (setf (point) (point-max))))))
+        ;; move point to bottom, then scroll to have margin
+        (setf (point) (point-max))
+        (recenter -15)))))
 
 (defun assist--format-response (response)
   "Format assistant response for display."
