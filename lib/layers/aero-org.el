@@ -536,7 +536,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (interactive)
   (when (org-roam-file-p)
     (unless (org-entry-get (point-min) "created" t)
-      (let ((creation-time (aero/org-roam-extract-timestamp-from-filepath (buffer-file-name))))
+      (let ((creation-time (aero/org-roam-extract-timestamp-from-filepath
+                            (buffer-file-name))))
         (when creation-time
           (save-excursion
             (goto-char (point-min))
@@ -545,21 +546,22 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun aero/org-roam-extract-timestamp-from-filepath (filepath)
   "Extract timestamp from the Org-roam FILEPATH assuming it follows the default naming scheme."
   (let ((filename (file-name-nondirectory filepath)))
-    (if (string-match "\\([0-9]\\{8\\}\\)\\([0-9]\\{4\\}\\)" filename)
-        (format "[%s-%s-%s %s:%s]"
-                (substring filename (match-beginning 1) (+ (match-beginning 1) 4))
-                (substring filename (+ (match-beginning 1) 4) (+ (match-beginning 1) 6))
-                (substring filename (+ (match-beginning 1) 6) (+ (match-beginning 1) 8))
-                (substring filename (match-beginning 2) (+ (match-beginning 2) 2))
-                (substring filename (+ (match-beginning 2) 2) (+ (match-beginning 2) 4)))
-      nil)))
+    (when (string-match "\\([0-9]\\{8\\}\\)\\([0-9]\\{4\\}\\)" filename)
+      (let ((year (substring filename (match-beginning 1) (+ (match-beginning 1) 4)))
+            (month (substring filename (+ (match-beginning 1) 4) (+ (match-beginning 1) 6)))
+            (day (substring filename (+ (match-beginning 1) 6) (+ (match-beginning 1) 8)))
+            (hour (substring filename (match-beginning 2) (+ (match-beginning 2) 2)))
+            (minute (substring filename (+ (match-beginning 2) 2) (+ (match-beginning 2) 4))))
+        (format "[%s-%s-%s %s:%s]" year month day hour minute)))))
 
 (defun aero/org-roam-insert-modified-property ()
   "Update the :modified: property for an Org-roam node upon saving."
   (when (org-roam-file-p)
     (save-excursion
+      ;; Ensure property is applied to the whole file
       (goto-char (point-min))
-      (org-set-property "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
+      (org-set-property
+       "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
 
 (add-hook 'org-roam-find-file-hook 'aero/org-roam-insert-created-property)
 (add-hook 'before-save-hook 'aero/org-roam-insert-modified-property)
