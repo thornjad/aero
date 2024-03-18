@@ -74,9 +74,12 @@
   :config
   (add-hook 'with-editor-mode-hook #'evil-insert-state)
   (magit-auto-revert-mode nil)
-  (defadvice magit-diff (after switch-to-diff activate)
-    (other-window 1))
-  (add-hook 'magit-status-mode-hook (lambda () (toggle-truncate-lines -1)))
+
+  (defun aero/truncate-lines-off () (toggle-truncate-lines -1))
+  (add-hook 'magit-status-mode-hook #'aero/truncate-lines-off)
+
+  (defun aero/magit-switch-to-diff () (other-window 1))
+  (advice-add 'magit-diff :after #'aero/magit-switch-to-diff)
 
   (defun aero/magit-diff-default-branch (&optional args)
     "Show diff of default branch to working tree."
