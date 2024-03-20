@@ -224,6 +224,12 @@
    "bw" '(whitespace-mode :wk "whitespace")
    "bx" 'kill-buffer-and-window
 
+   "n" '(:ignore t :wk "narrow")
+   "nn" 'narrow-to-region
+   "np" 'narrow-to-page
+   "nw" 'widen
+   "nd" 'narrow-to-defun
+
    "c" '(:ignore t :wk "compile")
    "ct" 'aero/tail-compilation-buffer
    "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
