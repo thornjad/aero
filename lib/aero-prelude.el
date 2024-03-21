@@ -230,6 +230,11 @@
    "nw" 'widen
    "nd" 'narrow-to-defun
 
+   "h" '(:ignore :wk "hide/show")
+   "hh" 'hs-toggle-hiding
+   "hH" 'hs-hide-all
+   "hS" 'hs-show-all
+
    "c" '(:ignore t :wk "compile")
    "ct" 'aero/tail-compilation-buffer
    "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")

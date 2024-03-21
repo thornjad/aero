@@ -206,6 +206,8 @@
 ;; Show trailing whitespace in prog modes
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
+;; Hide/show (code folding)
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 ;; prevent savehist cpu hogging
 (setq history-length 100)
 (put 'minibuffer-history 'history-length 50)
