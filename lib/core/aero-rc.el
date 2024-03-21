@@ -208,6 +208,10 @@
 
 ;; Hide/show (code folding)
 (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+;; enable narrow to region without asking
+(put 'narrow-to-region 'disabled nil)
+
 ;; prevent savehist cpu hogging
 (setq history-length 100)
 (put 'minibuffer-history 'history-length 50)
