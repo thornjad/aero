@@ -563,8 +563,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (org-set-property
        "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
 
-(add-hook 'org-roam-find-file-hook 'aero/org-roam-insert-created-property)
-(add-hook 'before-save-hook 'aero/org-roam-insert-modified-property)
+(add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
+(add-hook 'before-save-hook #'aero/org-roam-insert-modified-property)
 
 
 ;; Notifications
