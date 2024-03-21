@@ -11,6 +11,6 @@ alias srup cd ~/src/smart-track/dev && docker-compose down && docker-compose up 
 alias stsdev psql -h localhost -U postgres Constructive_development
 alias clear (recenter 0)
 alias magit (magit-status-setup-buffer default-directory)
-alias fixcanvas rm -r ./node_modules/canvas && rm ./node_modules/__ngcc_entry_points__.json
+alias fixcanvas rm -rf ./node_modules && yarn cache clean && yarn install && cd ./node_modules/canvas && npm run install
 alias ff find-file $1
 alias yt yarn && yarn test $*
