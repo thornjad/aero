@@ -123,6 +123,12 @@
        "Tasks")
       "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
       :empty-lines 1)
+     ("r" "Review (PR or tech design)" entry
+      (file+headline
+       ,(expand-file-name "todo.org" aero/thornlog-path)
+       "Tasks")
+      "* TODO [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      :empty-lines 1)
      ("n" "Note" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
@@ -310,6 +316,7 @@
    '((:name "Daily Ritual" :tag "ritual")
      (:time-grid t)
      (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
+     (:name "Reviews" :tag "review")
      (:name "Tickets and PRs" :todo "PR" :todo "TICKET")
      (:deadline past)
      (:deadline today)
