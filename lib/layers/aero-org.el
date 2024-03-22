@@ -646,7 +646,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          #'org-roam-reflinks-section
          #'org-roam-unlinked-references-section))
 
-  (org-id-locations-file (expand-file-name ".org-id-locations" aero/thornlog-path))
+  (org-id-locations-file (expand-file-name ".org-id-locations" aero-cache-dir))
 
   (org-roam-capture-templates
    '(("d" "default" plain "%?"
