@@ -19,65 +19,35 @@
 
 (require 'aero-prelude)
 
-(package! elfeed :auto
+(package! elfeed "skeeto/elfeed"
   :commands elfeed
   :after (general evil)
   :custom
-  (elfeed-use-curl t)
   (elfeed-feeds
-   '(("https://sachachua.com/blog/category/emacs/feed/" emacs)
-     ("https://nullprogram.com/feed/" emacs)
-     ("http://www.wilfred.me.uk/rss.xml" emacs)
-     ("https://oremacs.com/atom.xml" emacs)
-     ("https://emacsredux.com/atom.xml" emacs)
-     ("http://endlessparentheses.com/atom.xml" emacs)
-     ("http://irreal.org/blog/?feed=rss2" emacs)
-     ("http://emacshorrors.com/feed.atom" emacs)
-     ("http://howardism.org/index.xml" emacs)
-     ("https://feeds.feedburner.com/SanityInc" emacs)
-     ("http://www.lunaryorn.com/feed.atom" emacs)
-     ("http://www.masteringemacs.org/feed/" emacs)
-
-     ("https://cscheerleader.com/feed")
-     ("https://julesjacobs.github.io/feed.xml")
-     ("http://standardsandfreedom.net/index.php/feed/")
-     ("https://www.defmacro.org/feed.xml")
-     ("http://www.philipzucker.com/feed/")
-     ("https://cestlaz.github.io/rss.xml" edu)
-     ("https://jachinrupe.name/index.xml")
-     ("https://blag.xkcd.com/feed/")
-     ("https://whatthefuck.computer/rss.xml")
-     ("https://feeds.feedburner.com/codinghorror")
-     ("http://lambda-the-ultimate.org/rss.xml")
-     ("https://rachelbythebay.com/w/atom.xml")
-     ("http://neverworkintheory.org/feed.xml")
-     ("https://blog.computationalcomplexity.org/feeds/posts/default")
-     ("http://matt.might.net/articles/feed.rss")
-
-     ("https://thefeature.net/rss" news)
-     ("https://opensource.com/feed" news tech)
-     ("https://blog.mozilla.org/feed/" news)
-     ("https://protonmail.com/blog/feed/" news)
-
-     ("http://feeds.feedburner.com/ClojureAndMe" clojure)
-     ("http://clojure.com/blog/atom.xml" clojure)
-     ("http://feeds.feedburner.com/disclojure" clojure)
-
-     ("https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish" tech)
-     ("https://modernstoicism.com/feed/" philosophy)
-     ("https://secularbuddhism.com/feed" philosophy)
-     ("https://secularbuddhism.org/category/articles/feed" philosophy)
-     ("https://www.everydaybuddhist.org/blog/atom.xml" philosophy)
-     ("https://www.sgi-usa.org/sgi-usa-blog/feed" philosophy)
-     ("https://tricycle.org/trikedaily/feed" philosophy)
-     ))
+   '("https://sachachua.com/blog/category/emacs/feed/"
+     "https://nullprogram.com/feed/"
+     "http://www.wilfred.me.uk/rss.xml"
+     "http://endlessparentheses.com/atom.xml"
+     "http://irreal.org/blog/?feed=rss2"
+     "http://emacshorrors.com/feed.atom"
+     "https://cscheerleader.com/feed"
+     "https://cestlaz.github.io/rss.xml"
+     "https://jachinrupe.name/index.xml"
+     "http://lambda-the-ultimate.org/rss.xml"
+     "https://rachelbythebay.com/w/atom.xml"
+     "http://matt.might.net/articles/feed.rss"
+     "https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish"
+     "https://secularbuddhism.com/feed"
+     "https://secularbuddhism.org/category/articles/feed"
+     "https://www.everydaybuddhist.org/blog/atom.xml"
+     "https://tricycle.org/trikedaily/feed"
+     "https://www.jquiambao.com/feed.rss"
+     "https://blog.jmthornton.net/feed/jade.atom"))
+  (elfeed-search-title-max-width 120)
 
   :config
   (evil-set-initial-state 'elfeed-search-mode 'emacs)
   (evil-set-initial-state 'elfeed-show-mode 'emacs)
-
-  ;; increase title width for papers
-  (setq-default elfeed-search-title-max-width 120)
 
   (general-define-key
    :keymaps 'elfeed-search-mode-map
@@ -95,19 +65,14 @@
    "C-u" 'evil-scroll-up
    "C-d" 'evil-scroll-down))
 
-(package! elfeed-summary (:host github :repo "SqrtMinusOne/elfeed-summary")
-  :after (general elfeed)
-  :commands (elfeed-summary)
-  :init (aero-leader-def "af" 'elfeed-summary))
-
-(package! elfeed-protocol :auto
+(package! elfeed-protocol "fasheng/elfeed-protocol"
   :after (elfeed)
   :custom (elfeed-protocol-enabled-protocols '(fever newsblur owncloud ttrss))
   :config (elfeed-protocol-enable))
 
 
 
-(package! pocket-reader :auto
+(package! pocket-reader "alphapapa/pocket-reader.el"
   :after (general)
   :commands (pocket-reader)
   :custom
@@ -117,7 +82,7 @@
   ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
-(package! hackernews :auto
+(package! hackernews "clarete/hackernews.el"
   :after (general)
   :commands (hackernews)
   :init (aero-leader-def "an" 'hackernews))
