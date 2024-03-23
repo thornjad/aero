@@ -152,7 +152,6 @@
    "C" '(:ignore t :wk "clue")
 
    "E" '(:ignore t :wk "emacs")
-   "Et" 'load-theme
    "Ed" '(:ignore t :wk "debug")
    "Ede" 'toggle-debug-on-error
    "Edq" 'toggle-debug-on-quit
@@ -584,7 +583,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "ja" 'consult-org-agenda
     "jh" 'consult-org-heading
     "p/" 'consult-ripgrep
-    )
+    "Et" 'consult-theme
+    "RET" 'consult-mark)
 
   :config
   ;; Support jumping to eshell prompts with consult-outline
