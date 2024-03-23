@@ -177,4 +177,8 @@
               aero/alternate-window))
   (advice-add fn :after #'pulse-line))
 
+;; Hide mode line for certain modes
+(package! hide-mode-line "hlissner/emacs-hide-mode-line"
+  :hook (eshell-mode . hide-mode-line-mode))
+
 (provide 'aero-ui)
