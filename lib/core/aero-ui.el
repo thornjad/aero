@@ -179,6 +179,7 @@
 
 ;; Hide mode line for certain modes
 (package! hide-mode-line "hlissner/emacs-hide-mode-line"
-  :hook (eshell-mode . hide-mode-line-mode))
+  :hook (eshell-mode . hide-mode-line-mode)
+  :commands (hide-mode-line-mode))
 
 (provide 'aero-ui)
