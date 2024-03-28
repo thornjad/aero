@@ -64,6 +64,7 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   (magit-process-finish-apply-ansi-colors t)
   (magit-buffer-name-format "%x%M%v: %t%x")
+  (magit-list-refs-sortby "-creatordate")
   (magit-diff-paint-whitespace-lines 'both)
   (magit-diff-refine-hunk 'all)
   (magit-diff-refine-ignore-whitespace t)
