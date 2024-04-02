@@ -558,16 +558,15 @@ response. I'm too lazy to create a weights map or something, this is easier.")
             (day (substring filename (+ (match-beginning 1) 6) (+ (match-beginning 1) 8)))
             (hour (substring filename (match-beginning 2) (+ (match-beginning 2) 2)))
             (minute (substring filename (+ (match-beginning 2) 2) (+ (match-beginning 2) 4))))
-        (format "[%s-%s-%s %s:%s]" year month day hour minute)))))
+        (let ((time-struct (date-to-time (format "%s-%s-%sT%s:%s" year month day hour minute))))
+          (format-time-string "[%Y-%m-%d %a %H:%M]" time-struct))))))
 
 (defun aero/org-roam-insert-modified-property ()
   "Update the :modified: property for an Org-roam node upon saving."
   (when (org-roam-file-p)
     (save-excursion
-      ;; Ensure property is applied to the whole file
-      (goto-char (point-min))
-      (org-set-property
-       "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
+      (goto-char (point-min))  ; Ensure property is applied to the whole file
+      (org-set-property "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
 
 (add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
 (add-hook 'before-save-hook #'aero/org-roam-insert-modified-property)
