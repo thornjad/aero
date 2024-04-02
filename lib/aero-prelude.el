@@ -584,7 +584,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
     "jh" 'consult-org-heading
     "p/" 'consult-ripgrep
     "Et" 'consult-theme
-    "RET" 'consult-mark)
+    "j'" 'consult-mark)
 
   :config
   ;; Support jumping to eshell prompts with consult-outline
