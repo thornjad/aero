@@ -203,7 +203,7 @@ does not specify a special indentation."
 
 ;; Elisp-specific
 
-(package! package-lint :auto
+(package! package-lint "purcell/package-lint"
   :commands (package-lint-current-buffer))
 
 (package! elisp-autofmt :auto
