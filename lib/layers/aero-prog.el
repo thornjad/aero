@@ -399,7 +399,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
 
-;;; formatting
+;;; formatting & debugging
 
 (package! apheleia
   (:repo "radian-software/apheleia"
@@ -415,6 +415,14 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 
   (aero-leader-def
     "bI" 'apheleia-format-buffer))
+
+(package! dape "svaante/dape"
+  :after (general)
+  :config
+  (dape-buffer-window-arrangement 'right)
+  :config
+  ;; Save buffers on startup, useful for interpreted languages
+  (add-hook 'dape-on-start-hooks (lambda () (save-some-buffers t t))))
 
 
 ;;; auto modes and stuff
