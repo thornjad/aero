@@ -36,6 +36,7 @@ bin/Emacs\ (Aero).app
 bookmarks
 build-logs/
 crown/
+debug-adapters/
 eclipse*
 eln-cache/
 elnode/
