@@ -48,6 +48,10 @@ Requires watchman."
   (let ((default-directory (project-root (project-current))))
     (compile "npx jest")))
 
+(package! jest "thornjad/emacs-jest"
+  :commands (jest jest-file jest-test)
+  :after (general))
+
 (package! web-mode "fxbois/web-mode"
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|erb\\|svg\\|jsx\\|s?css\\)\\'"
   :custom
