@@ -15,19 +15,9 @@
 (package! magit :auto
   :after (general)
   :commands (magit-blame
-             magit-log-buffer-file
-             magit-log-trace-definition
-             magit-log-head
              magit-commit
-             magit-commit-popup
-             magit-diff-popup
              magit-diff-unstaged
-             magit-fetch-popup
              magit-init
-             magit-log-popup
-             magit-pull-popup
-             magit-push-popup
-             magit-revert
              magit-stage-file
              magit-status
              magit-unstage-file
@@ -109,16 +99,6 @@
       (shell-command fetch-command)
       (magit-status)
       (message "Checked out PR as %s" new-branch))))
-
-(package! magit-todos :auto
-  :commands (magit-todos-mode)
-  :hook (magit-mode . magit-todos-mode)
-  :config
-  (setq magit-todos-recursive t
-        magit-todos-depth 10
-        magit-todos-exclude-globs '("*Pods*" ".git/" "*elpa*" "*var/lsp/*"))
-  (custom-set-variables
-   '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
 (package! git-gutter :auto
   :hook ((prog-mode text-mode conf-mode) . git-gutter-mode)
