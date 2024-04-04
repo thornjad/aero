@@ -335,7 +335,7 @@
   :init
   (aero-mode-leader-def
     :keymaps 'org-mode-map
-    "ii" '(org-download-clipboard :wk "insert image from clipboard")))
+    "ic" '(org-download-clipboard :wk "insert image from clipboard")))
 
 
 ;; Functions for agenda and stuff
