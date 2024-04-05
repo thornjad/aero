@@ -86,8 +86,8 @@
 (global-visual-line-mode +1)
 
 ;; Adds a breadcrumb to the headerline
-(package! breadcrumb
-  (:host github :repo "joaotavora/breadcrumb")
+(package! breadcrumb "joaotavora/breadcrumb"
+  :after (project)
   :hook ((prog-mode markdown-mode gfm-mode) . breadcrumb-local-mode)
   :custom (breadcrumb-imenu-max-length 0.98)
   :config
