@@ -683,6 +683,50 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :config (ace-link-setup-default))
 
 
+;; Project
+
+(package! project :builtin
+  :after (general)
+  :custom
+  (project-vc-ignores '("node_modules/" "straight/" "target/")) ; globally ignored
+  (project-vc-extra-root-markers '(".project.el" ".projectile" ".git"))
+  (project-compilation-buffer-name-function #'project-prefixed-buffer-name)
+
+  :config
+  (defun aero/project-root-override (dir)
+    "Find DIR's project root by searching for a '.project.el' file.
+
+If this file exists, it marks the project root. For convenient compatibility with Projectile, '.projectile' is also considered a project root marker.
+
+https://blog.jmthornton.net/p/emacs-project-override"
+    (let ((root (or (locate-dominating-file dir ".project.el")
+                    (locate-dominating-file dir ".projectile")))
+          (backend (ignore-errors (vc-responsible-backend dir))))
+      (when root (if (version<= emacs-version "28")
+                     (cons 'vc root)
+                   (list 'vc backend root)))))
+
+  ;; Note that we cannot use :hook here because `project-find-functions' doesn't end in "-hook", and
+  ;; we can't use this in :init because it won't be defined yet.
+  (add-hook 'project-find-functions #'aero/project-root-override)
+
+  ;; Set our own list of actions on `project-switch-project'
+  (setq project-switch-commands '((project-find-file "Find file" "f")
+                                  (magit-status "Magit status" "g")
+                                  (project-eshell "Eshell" "e")))
+
+  (aero-leader-def
+    "pf" 'project-find-file
+    "pp" 'project-switch-project
+    "p:" 'project-shell-command
+    "p&" 'project-async-shell-command
+    "p'" 'project-eshell
+    "p\"" 'aero/project-eshell-new
+    "p`" 'project-shell
+    "p%" 'project-query-replace-regexp
+    "cp" 'project-compile))
+
+
 ;; other stuff
 
 ;; Gives us the M-n and M-p symbol-following ability
