@@ -23,31 +23,6 @@
 (require 'aero-lib)
 (require 'aero-prelude)
 
-(package! yarn (:host github :repo "jmfirth/yarn.el")
-  :commands (yarn-clean yarn-info yarn-init yarn-install yarn-add yarn-link yarn-run yarn-remove
-                        yarn-update yarn-self-update yarn-test yarn-unlink yarn-why))
-(package! npm :auto :commands (npm))
-
-(defun aero/jest-file ()
-  "Run jest on the file in this buffer."
-  (interactive)
-  (let ((file (buffer-file-name))
-        (default-directory (project-root (project-current))))
-    (compile (concat "npx jest " file))))
-(defun aero/jest-file-watch ()
-  "Run jest on the file in this buffer and watch.
-
-Requires watchman."
-  (interactive)
-  (let ((file (buffer-file-name))
-        (default-directory (project-root (project-current))))
-    (compile (concat "npx jest --watch " file))))
-(defun aero/jest ()
-  "Run jest in this project."
-  (interactive)
-  (let ((default-directory (project-root (project-current))))
-    (compile "npx jest")))
-
 (package! jest "thornjad/emacs-jest"
   :commands (jest jest-file jest-test)
   :after (general))
