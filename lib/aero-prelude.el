@@ -44,9 +44,8 @@
 (package! popup "auto-complete/popup-el")
 (package! spinner "Malabarba/spinner.el")
 
-;; Required by eglot and dape. This is actually built-in but the version on GNU ELPA is more
-;; up-to-date and tends to work better.
-(package! jsonrpc (:source gnu-elpa-mirror)
+;; Used by eglot, dape, copilot, etc
+(package! jsonrpc :builtin
   :config
   ;; Don't waste time logging events
   (fset #'jsonrpc--log-event #'ignore))
