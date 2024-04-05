@@ -70,7 +70,7 @@
           json-mode
           json-ts-mode)
          . eglot-ensure)
-  :after (general)
+  :after (general project)
 
   :custom
   (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
@@ -417,8 +417,8 @@ that have been defined using `sp-pair' or `sp-local-pair'."
     "bI" 'apheleia-format-buffer))
 
 (package! dape "svaante/dape"
-  :after (general)
-  :config
+  :after (general project eglot)
+  :custom
   (dape-buffer-window-arrangement 'right)
   :config
   ;; Save buffers on startup, useful for interpreted languages
@@ -550,5 +550,14 @@ that have been defined using `sp-pair' or `sp-local-pair'."
 ;; Elm-mode is supposed to enable elm-indent-mode by default, but for some reason it stopped doing
 ;; this on Dec 21, 2022. Probably caused this myself, but this fixes it.
 (package! elm-mode :auto :hook (elm-mode . elm-indent-mode))
+
+(package! tcl :builtin
+  :mode ("\\(\\.tcl\\|\\.test\\)\\'" . tcl-mode)
+  :custom
+  (tcl-application "tclsh")
+  :config
+  (add-to-list 'tcl-type-alist '("namespace" "eval" tcl-expr tcl-commands)))
+
+(package! rivet-mode "thornjad/rivet-mode")
 
 (provide 'aero-prog)
