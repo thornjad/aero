@@ -112,8 +112,11 @@ to do every few years."
    ((memq :disabled body)
     (format "%s :disabled by Aero package!" package))
 
-   ((or (equal recipe :builtin) (equal recipe :local))
-    `(use-package ,package ,@body))
+   ((equal recipe :builtin)
+    `(use-package ,package :straight (:type built-in) ,@body))
+
+   ((equal recipe :local)
+    `(use-package ,package :straight nil ,@body))
 
    ;; Use straight
    (t
