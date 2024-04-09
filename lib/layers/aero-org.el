@@ -110,50 +110,56 @@
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Inbox")
       "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
-      :empty-lines 1)
+      :empty-lines 2)
      ("T" "Deadline/Scheduled Task" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
-      :empty-lines 1)
+      :empty-lines 2)
      ("p" "Ticket (PR)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
-      :empty-lines 1)
+      :empty-lines 2)
      ("r" "Review (PR or tech design)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TODO [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
-      :empty-lines 1)
+      :empty-lines 2)
      ("n" "Note" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Notes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :jump-to-captured t
-      :empty-lines 1)
+      :empty-lines 2)
      ("e" "Experimentation idea" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Experimentation")
       "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
-      :empty-lines 1)
+      :empty-lines 2)
+     ("R" "Reading" entry
+      (file+headline
+       ,(expand-file-name "todo.org" aero/thornlog-path)
+       "Reading")
+      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      :empty-lines 2)
      ("s" "Time sink" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Time sinks")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 1)
+      :empty-lines 2)
      ("m" "Mistake" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Mistakes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 1)))
+      :empty-lines 2)))
 
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "REMOVED(k)")
