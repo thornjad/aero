@@ -167,6 +167,9 @@
   (org-reverse-note-order nil) ; put notes at the end of the entry, instead of the top
   (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
+  ;; don't consider empty lines between entries to be part of the entry
+  (org-cycle-separator-lines -2)
+
   (org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                           (vm-imap . vm-visit-imap-folder-other-frame)
                           (gnus . org-gnus-no-new-news)
