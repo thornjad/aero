@@ -137,9 +137,10 @@
       :jump-to-captured t
       :empty-lines 1)
      ("e" "Experimentation idea" entry
-      (file
-       ,(expand-file-name "notes/dd/experimentation.org" aero/thornlog-path))
-      "* TODO %? :experimentation:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      (file+headline
+       ,(expand-file-name "todo.org" aero/thornlog-path)
+       "Experimentation")
+      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
       :empty-lines 1)
      ("s" "Time sink" entry
       (file+headline
@@ -181,8 +182,6 @@
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
                       ,(expand-file-name "log.org" aero/thornlog-path)
                       ,(expand-file-name "ritual.org" aero/thornlog-path)
-                      ,(expand-file-name "notes/dd/experimentation.org"
-                                         aero/thornlog-path)
                       ,(expand-file-name "notes.org" aero/thornlog-path)))
 
   (org-agenda-log-mode-items nil) ; don't show closed nor clocked items
