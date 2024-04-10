@@ -687,12 +687,8 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 
 (package! project :builtin
   :after (general)
-  :custom
-  (project-vc-ignores '("node_modules/" "straight/" "target/")) ; globally ignored
-  (project-vc-extra-root-markers '(".project.el" ".projectile" ".git"))
-  (project-compilation-buffer-name-function #'project-prefixed-buffer-name)
 
-  :config
+  :preface
   (defun aero/project-root-override (dir)
     "Find DIR's project root by searching for a '.project.el' file.
 
@@ -706,14 +702,29 @@ https://blog.jmthornton.net/p/emacs-project-override"
                      (cons 'vc root)
                    (list 'vc backend root)))))
 
+  (defun aero/project-switch-magit ()
+    "Call magit-status on the project being switched to."
+    (interactive)
+    (magit-status project-current-directory-override))
+
+  :custom
+  (project-vc-ignores '("node_modules/" "straight/" "target/")) ; globally ignored
+  (project-vc-extra-root-markers '(".project.el" ".projectile" ".git"))
+  (project-compilation-buffer-name-function #'project-prefixed-buffer-name)
+
+  :config
   ;; Note that we cannot use :hook here because `project-find-functions' doesn't end in "-hook", and
   ;; we can't use this in :init because it won't be defined yet.
   (add-hook 'project-find-functions #'aero/project-root-override)
 
   ;; Set our own list of actions on `project-switch-project'
   (setq project-switch-commands '((project-find-file "Find file" "f")
-                                  (magit-status "Magit status" "g")
-                                  (project-eshell "Eshell" "e")))
+                                  (aero/project-switch-magit "Magit status" "g")
+                                  (project-eshell "Eshell" "e")
+                                  (project-compile "Compile" "c")
+                                  (project-find-dir "Find directory" "d")
+                                  (project-find-regexp "Find regexp" "r")
+                                  (project-any-command "Any command" "a")))
 
   (aero-leader-def
     "pf" 'project-find-file
