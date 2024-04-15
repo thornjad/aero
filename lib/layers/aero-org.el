@@ -109,25 +109,25 @@
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Inbox")
-      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("T" "Deadline/Scheduled Task" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("p" "Ticket (PR)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("r" "Review (PR or tech design)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* TODO [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TODO [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("n" "Note" entry
       (file+headline
@@ -140,13 +140,13 @@
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Experimentation")
-      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("R" "Reading" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Reading")
-      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n"
+      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 2)
      ("s" "Time sink" entry
       (file+headline
