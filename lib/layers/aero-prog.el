@@ -66,9 +66,7 @@
           typescript-mode
           typescript-ts-mode
           js-mode
-          js-ts-mode
-          json-mode
-          json-ts-mode)
+          js-ts-mode)
          . eglot-ensure)
   :after (general project)
 
