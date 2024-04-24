@@ -306,7 +306,7 @@
   :after (org)
   :hook (org-mode . org-fancy-priorities-mode)
   :custom
-  (org-fancy-priorities-list '("❗" "⬆" "■" "↓")))
+  (org-fancy-priorities-list '("!!" "↑" "·" "↓")))
 
 (package! org-super-agenda "alphapapa/org-super-agenda"
   :preface
