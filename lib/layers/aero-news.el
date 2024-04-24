@@ -24,51 +24,39 @@
   :after (general evil)
   :custom
   (elfeed-feeds
-   '("https://sachachua.com/blog/category/emacs/feed/"
-     "https://nullprogram.com/feed/"
-     "http://www.wilfred.me.uk/rss.xml"
-     "http://endlessparentheses.com/atom.xml"
-     "http://irreal.org/blog/?feed=rss2"
-     "http://emacshorrors.com/feed.atom"
+   '(("https://sachachua.com/blog/category/emacs/feed/" emacs)
+     ("https://nullprogram.com/feed/" emacs)
+     ("http://www.wilfred.me.uk/rss.xml" emacs)
+     ("http://endlessparentheses.com/atom.xml" emacs)
+     ("http://irreal.org/blog/?feed=rss2" emacs)
+     ("http://emacshorrors.com/feed.atom" emacs)
+     ("http://howardism.org/index.xml" emacs)
+     ("http://www.masteringemacs.org/feed/" emacs)
      "https://cscheerleader.com/feed"
+     "https://julesjacobs.com/feed.xml"
+     "https://www.defmacro.org/feed.xml"
      "https://cestlaz.github.io/rss.xml"
      "https://jachinrupe.name/index.xml"
-     "http://lambda-the-ultimate.org/rss.xml"
+     "https://blag.xkcd.com/feed/"
      "https://rachelbythebay.com/w/atom.xml"
      "http://matt.might.net/articles/feed.rss"
      "https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish"
      "https://secularbuddhism.com/feed"
      "https://secularbuddhism.org/category/articles/feed"
      "https://www.everydaybuddhist.org/blog/atom.xml"
-     "https://tricycle.org/trikedaily/feed"
+     "https://maia.crimew.gay/feed.xml"
+     "https://jvns.ca/atom.xml"
+     "https://acoup.blog/feed"
+     "http://www.aaronsw.com/2002/feeds/pgessays.rss"
+     "https://ntietz.com/atom.xml"
+     "https://tonsky.me/atom.xml"
      "https://www.jquiambao.com/feed.rss"
      "https://blog.jmthornton.net/feed/jade.atom"))
   (elfeed-search-title-max-width 120)
 
   :config
-  (evil-set-initial-state 'elfeed-search-mode 'emacs)
-  (evil-set-initial-state 'elfeed-show-mode 'emacs)
-
-  (general-define-key
-   :keymaps 'elfeed-search-mode-map
-   "R" 'elfeed-update
-   "j" 'next-line
-   "k" 'previous-line)
-
-  (general-define-key
-   :keymaps 'elfeed-show-mode-map
-   "j" 'next-line
-   "k" 'previous-line
-   "o" 'elfeed-search-browse-url
-   "SPC" nil ; don't scroll
-   "TAB" 'elfeed-show-next-link
-   "C-u" 'evil-scroll-up
-   "C-d" 'evil-scroll-down))
-
-(package! elfeed-protocol "fasheng/elfeed-protocol"
-  :after (elfeed)
-  :custom (elfeed-protocol-enabled-protocols '(fever newsblur owncloud ttrss))
-  :config (elfeed-protocol-enable))
+  (evil-set-initial-state 'elfeed-search-mode 'normal)
+  (evil-set-initial-state 'elfeed-show-mode 'normal))
 
 
 
