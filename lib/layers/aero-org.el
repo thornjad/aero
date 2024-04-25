@@ -121,13 +121,13 @@
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
+      "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 2)
      ("r" "Review (PR or tech design)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* TODO [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
+      "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: \n"
       :empty-lines 2)
      ("n" "Note" entry
       (file+headline
@@ -146,7 +146,7 @@
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Reading")
-      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
+      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 2)
      ("s" "Time sink" entry
       (file+headline
@@ -163,7 +163,8 @@
 
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "REMOVED(k)")
-     (sequence "TICKET(T)" "PR(p!)" "|" "DONE(d!)" "CLOSED(x)")))
+     (sequence "TICKET(T)" "PR(p!)" "|" "DONE(d!)" "CLOSED(x)")
+     (sequence "REVIEW(r)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "CLOSED(x)")))
 
   (org-use-fast-todo-selection 'expert) ; don't fuck up the window layout
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
