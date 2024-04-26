@@ -110,56 +110,56 @@
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Inbox")
       "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("T" "Deadline/Scheduled Task" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("p" "Ticket (PR)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("r" "Review (PR or tech design)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: \n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("n" "Note" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Notes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :jump-to-captured t
-      :empty-lines 2)
+      :empty-lines 1)
      ("e" "Experimentation idea" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Experimentation")
       "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("R" "Reading" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Reading")
       "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("s" "Time sink" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Time sinks")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 2)
+      :empty-lines 1)
      ("m" "Mistake" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
        "Mistakes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
-      :empty-lines 2)))
+      :empty-lines 1)))
 
   (org-todo-keywords
    '((sequence "TODO(t)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "REMOVED(k)")
