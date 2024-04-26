@@ -504,6 +504,21 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (interactive)
   (find-file (expand-file-name "todo.org" aero/thornlog-path)))
 
+(defun aero/thornlog-commit-and-push ()
+  "Automates the git commit in thornlog."
+  (interactive)
+  (let* ((default-directory aero/thornlog-path)
+         (timestamp (format-time-string "%Y-%m-%d %H:%M")))
+    (save-some-buffers t)
+    (shell-command "git fetch origin")
+    (if (not (zerop (shell-command "git diff ...origin")))
+        (message "Remote has changes, manual commit required")
+      (progn
+        (shell-command "git add -A")
+        (shell-command (format "git commit -m '%s'" timestamp))
+        (shell-command "git push origin")
+        (message "Done, see messages buffer for shell-command output")))))
+
 (defun insert-meeting-task ()
   (interactive)
   (let* ((meeting-name (read-string "Meeting Name: "))
