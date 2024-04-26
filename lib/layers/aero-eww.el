@@ -135,9 +135,20 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
     (kbd "RET") 'eww-bookmark-browse
     "q" 'quit-window))
 
+;; Add some org-like features
+(package! shrface (:host github :repo "chenyanming/shrface")
+  :defer t
+  :after (eww)
+  :hook (eww-after-render . shrface-mode)
+  :custom (shrface-href-versatile t)
+  :config
+  (shrface-basic)
+  (shrface-trial)
+  (shrface-default-keybindings))
+
 ;; Add syntax highlighting to HTML pre tags
 (package! shr-tag-pre-highlight "xuchunyang/shr-tag-pre-highlight.el"
-  :after shr
+  :after (shr)
   :config
   (add-to-list 'shr-external-rendering-functions '(pre . shr-tag-pre-highlight)))
 
