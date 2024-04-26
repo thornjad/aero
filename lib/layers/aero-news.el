@@ -28,12 +28,18 @@
      ("https://nullprogram.com/feed/" emacs)
      ("http://www.wilfred.me.uk/rss.xml" emacs)
      ("http://endlessparentheses.com/atom.xml" emacs)
+     ("https://lifeofpenguin.blogspot.com/feeds/posts/default" emacs)
+     ("https://protesilaos.com/codelog.xml" emacs)
      ("http://irreal.org/blog/?feed=rss2" emacs)
      ("http://emacshorrors.com/feed.atom" emacs)
      ("http://howardism.org/index.xml" emacs)
      ("http://www.masteringemacs.org/feed/" emacs)
      "https://cscheerleader.com/feed"
      "https://julesjacobs.com/feed.xml"
+     "https://nora.codes/index.xml"
+     "https://andrewkelley.me/rss.xml"
+     "https://danluu.com/atom/index.xml"
+     "https://without.boats/index.xml"
      "https://www.defmacro.org/feed.xml"
      "https://cestlaz.github.io/rss.xml"
      "https://jachinrupe.name/index.xml"
@@ -50,9 +56,11 @@
      "http://www.aaronsw.com/2002/feeds/pgessays.rss"
      "https://ntietz.com/atom.xml"
      "https://tonsky.me/atom.xml"
+     ("https://oremacs.com/atom.xml" emacs)
      "https://www.jquiambao.com/feed.rss"
      "https://blog.jmthornton.net/feed/jade.atom"))
   (elfeed-search-title-max-width 120)
+  (elfeed-db-directory (expand-file-name "elfeed/" aero/thornlog-path))
 
   :config
   (evil-set-initial-state 'elfeed-search-mode 'normal)
