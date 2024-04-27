@@ -34,6 +34,7 @@
      ("http://emacshorrors.com/feed.atom" emacs)
      ("http://howardism.org/index.xml" emacs)
      ("http://www.masteringemacs.org/feed/" emacs)
+     "https://fy.blackhats.net.au/rss.xml"
      "https://cscheerleader.com/feed"
      "https://julesjacobs.com/feed.xml"
      "https://nora.codes/index.xml"
