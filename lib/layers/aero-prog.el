@@ -63,6 +63,7 @@
 (package! eglot :builtin
   :hook ((python-mode
           python-ts-mode
+          clojure-mode
           typescript-mode
           typescript-ts-mode
           js-mode
