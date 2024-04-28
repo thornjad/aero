@@ -61,6 +61,30 @@
 ;; performance of this software.
 
 ;;; Code:
+(declare-function gfm-mode "markdown-mode")
+
+(eval-when-compile (require 'subr-x))
+(require 'url)
+(require 'aero-lib)
+(require 'spinner)
+(require 'json)
+(require 'map)
+(require 'markdown-mode)
+
+(defgroup assist nil
+  "Aero Assist."
+  :prefix "assist-"
+  :group 'emacs-ml)
+
+(defcustom assist-openai-api-key nil
+  "Your OpenAI API key."
+  :group 'assist
+  :type 'string)
+
+(defcustom assist-anthropic-api-key nil
+  "Your Anthropic API key."
+  :group 'assist
+  :type 'string)
 
 
 ;; History management
@@ -105,33 +129,6 @@ the model name.")
 
 
 ;;;;;; OOOOLLLLDDDD
-
-(declare-function gfm-mode "markdown-mode")
-
-(eval-when-compile (require 'subr-x))
-(require 'url)
-(require 'aero-lib)
-(require 'spinner)
-(require 'json)
-(require 'map)
-(require 'markdown-mode)
-
-(defgroup assist nil
-  "Aero Assist."
-  :prefix "assist-"
-  :group 'emacs-ml)
-
-(defcustom assist-openai-api-key nil
-  "An OpenAI API key."
-  :group 'assist
-  :type 'string)
-
-(defcustom assist-max-entries nil
-  "Max chat entries to send to remote LLM for context.
-
-Nil means no maximum."
-  :group 'assist
-  :type 'number)
 
 (defvar assist-debug-mode nil)
 (defvar assist--session-name "*Aero Assist*")
@@ -349,9 +346,7 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
   "Return a full prompt from chat history, or last prompt if SINGLE-PROMPT."
   (let ((prompts (assist--filter-history-prompts-format-openai
                   #'assist--valid-prompt-p
-                  (or (and assist-max-entries
-                           (seq-take assist--history assist-max-entries))
-                      assist--history))))
+                  assist--history)))
     (when (not prompts) (user-error "Prompt history contains nothing to send."))
     (if single-prompt
         (let ((last-prompt (car assist--history)))
@@ -587,27 +582,27 @@ these may be nil and still be a valid message, they need only exist."
     (error "Message is not valid: %s" message))
   (with-current-buffer assist--session-name
     (assist-without-readonly
-      (setf (point) (point-max))
-      (let* ((message-content (plist-get message :content))
-             (role (plist-get message :role)))
-        (unless (bobp) (insert "\n\n"))
-        (cond
-         ((or (plist-get message :error) (eq role nil))
-          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [assist-try-again]\n\n"
-                  (or (plist-get message :status)
-                      (format (or (and (plist-get message :error)
-                                       "Error: unknown error: %s")
-                                  (and (eq role nil)
-                                       "Error: message has no role: %s")
-                                  "Error: invalid message: %s")
-                              message))
-                  "\n\n\f\n"))
+     (setf (point) (point-max))
+     (let* ((message-content (plist-get message :content))
+            (role (plist-get message :role)))
+       (unless (bobp) (insert "\n\n"))
+       (cond
+        ((or (plist-get message :error) (eq role nil))
+         (insert "## Assistant [Error]\n\n> Try again with C-c C-r [assist-try-again]\n\n"
+                 (or (plist-get message :status)
+                     (format (or (and (plist-get message :error)
+                                      "Error: unknown error: %s")
+                                 (and (eq role nil)
+                                      "Error: message has no role: %s")
+                                 "Error: invalid message: %s")
+                             message))
+                 "\n\n\f\n"))
 
-         ((string= role "user")
-          (insert "# User\n\n" message-content))
+        ((string= role "user")
+         (insert "# User\n\n" message-content))
 
-         ((string= role "assistant")
-          (insert (assist--format-response message))))))))
+        ((string= role "assistant")
+         (insert (assist--format-response message))))))))
 
 (defun assist--format-response (response)
   "Format assistant response for display."
@@ -647,8 +642,8 @@ these may be nil and still be a valid message, they need only exist."
   (when (y-or-n-p "Clear Aero Assist history forever?")
     (with-current-buffer assist--session-name
       (assist-without-readonly
-        (setq assist--history '())
-        (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
+       (setq assist--history '())
+       (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
 (defun assist--header-line ()
   "Display header line."
@@ -728,9 +723,9 @@ If region is active, prefill input buffer with the region."
         (assist-mode))
       (let ((blank (string-empty-p (buffer-string))))
         (assist-without-readonly
-          (switch-to-buffer buf)
-          (setf (point) (point-max))
-          (when blank (assist-begin-input init)))))))
+         (switch-to-buffer buf)
+         (setf (point) (point-max))
+         (when blank (assist-begin-input init)))))))
 
 ;;;###autoload
 (defun assist-commit-message ()
