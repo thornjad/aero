@@ -35,6 +35,13 @@
   (gptel-api-key openai-api-key)
   (gptel-use-header-line t)
   (gptel-display-buffer-action '(pop-to-buffer-same-window)) ; chat in same window
+  (gptel-prompt-prefix-alist '((markdown-mode . "\n### ")
+                               (org-mode . "-----\n*** ")
+                               (text-mode . "------\n### ")))
+  (gptel-response-prefix-alist '((markdown-mode . "\n")
+                                 (org-mode . "-----\n")
+                                 (text-mode . "------\n")))
+
   :init
   (aero-leader-def
     "aic" 'gptel
