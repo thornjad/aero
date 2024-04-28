@@ -26,16 +26,36 @@
   :commands (assist-chat assist-commit-message assist-diff-qa-steps)
   :custom
   (assist-openai-api-key openai-api-key)
-  (assist-anthropic-api-key anthropic-api-key)
+  (assist-anthropic-api-key anthropic-api-key))
+
+(package! gptel "karthink/gptel"
+  :after (general)
+  :commands (gptel)
+  :custom
+  (gptel-api-key openai-api-key)
+  (gptel-use-header-line t)
+  (gptel-display-buffer-action '(pop-to-buffer-same-window)) ; chat in same window
   :init
   (aero-leader-def
-    "aic" 'assist-chat))
+    "aic" 'gptel
+    "ais" '(gptel-send :wk "send region or buffer to point")
+    "aim" 'gptel-menu
+    "air" 'gptel-rewrite-menu)
+  (general-define-key
+   :keymaps 'gptel-mode-map
+   (kbd "C-<return>") 'gptel-send)
+  :config
+  ;; Register Claude backend and set it as the default, if we have a key
+  (when anthropic-api-key
+    (let ((backend (gptel-make-anthropic "Claude" :stream t :key anthropic-api-key)))
+      (setq gptel-backend backend
+            gptel-model "claude-3-sonnet-20240229"))))
 
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after (company-box general)
-  :hook ((prog-mode eshell-mode) . copilot-mode)
-  :custom (copilot-idle-delay 0.5)
+  :hook (prog-mode . copilot-mode)
+  :custom (copilot-idle-delay 0.1)
   :config
   (general-define-key
    :states '(insert visual motion)
