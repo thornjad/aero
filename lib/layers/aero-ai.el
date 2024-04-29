@@ -29,8 +29,8 @@
   (assist-anthropic-api-key anthropic-api-key))
 
 (package! gptel "karthink/gptel"
-  :after (general markdown-mode)
-  :commands (gptel)
+  :after (general)
+  :commands (gptel gptel-send gptel-menu)
   :custom
   (gptel-api-key openai-api-key)
   (gptel-use-header-line t)
