@@ -511,7 +511,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          (timestamp (format-time-string "%Y-%m-%d %H:%M")))
     (save-some-buffers t)
     (shell-command "git fetch origin")
-    (if (not (zerop (shell-command "git diff ...origin")))
+    (if (not (zerop (shell-command "git rev-list --count @{u}..")))
         (message "Remote has changes, manual commit required")
       (progn
         (shell-command "git add -A")
