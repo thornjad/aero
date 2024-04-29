@@ -29,7 +29,7 @@
   (assist-anthropic-api-key anthropic-api-key))
 
 (package! gptel "karthink/gptel"
-  :after (general)
+  :after (general markdown-mode)
   :commands (gptel)
   :custom
   (gptel-api-key openai-api-key)
@@ -46,11 +46,20 @@
   (aero-leader-def
     "aic" 'gptel
     "ais" '(gptel-send :wk "send region or buffer to point")
-    "aim" 'gptel-menu
-    "air" 'gptel-rewrite-menu)
+    "aim" 'gptel-menu)
+
+  (defun aero/gptel-send-buffer ()
+    "If in gptel buffer, goto end and call gptel-send."
+    (interactive)
+    (when gptel-mode
+      (save-excursion
+        (goto-char (point-max))
+        (call-interactively 'gptel-send))))
+
   (general-define-key
    :keymaps 'gptel-mode-map
-   (kbd "C-<return>") 'gptel-send)
+   (kbd "C-<return>") 'aero/gptel-send-buffer)
+
   :config
   ;; Register Claude backend and set it as the default, if we have a key
   (when anthropic-api-key
