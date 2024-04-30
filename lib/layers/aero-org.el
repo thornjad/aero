@@ -454,7 +454,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun thornlog-new-day-insert ()
   "Insert a new day entry based on a template."
   (interactive)
-  (setf (point) (point-max))
+  (goto-char (point-max))
   (re-search-backward "^\\* [[:alpha:]]+, [[:alpha:]]+ [[:digit:]]+" nil t)
   (let* ((template (with-temp-buffer
                      (insert-file-contents
@@ -464,7 +464,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
          (prev-day (org-element-property :title element))
          (new-day-entry (replace-thornlog-placeholders template prev-day)))
     (outline-hide-sublevels 1)
-    (setf (point) (point-max))
+    (goto-char (point-max))
     (org-cycle-hide-drawers 'all)
     (org-previous-visible-heading 1)
     (org-show-subtree)

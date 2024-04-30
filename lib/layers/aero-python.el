@@ -105,7 +105,7 @@
                 (with-current-buffer buffer
                   (while (null comint-redirect-completed)
                     (accept-process-output nil 0.1)))
-                (setf (point) (point-min))
+                (goto-char (point-min))
                 ;; Skip first line in case process echoes input
                 (unless (= (count-lines (point-min) (point-max)) 1)
                   (forward-line 1))
@@ -147,7 +147,7 @@
     "Jump to the import header."
     (interactive)
     (evil-set-jump)
-    (setf (point) (point-min))
+    (goto-char (point-min))
     (re-search-forward "^import"))
 
   (defun elpy-shell-goto-last-error ()
@@ -155,7 +155,7 @@
     (interactive)
     (let ((filename (buffer-file-name)))
       (elpy-shell-switch-to-shell)
-      (setf (point) (point-max))
+      (goto-char (point-max))
       (search-backward filename nil t)
       (while (condition-case nil
                  (progn (compile-goto-error) nil)

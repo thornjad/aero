@@ -342,13 +342,13 @@ buffer will be recentered to the line at point."
         ;; If total lines have not changed, we can reasonably guess that the
         ;; content has not changed significantly (if at all), so we can jump
         ;; right back to the initial point.
-        (setf (point) initial-point)
+        (goto-char initial-point)
       ;; If total lines /have/ changed, we can reasonably guess that the initial
       ;; point is contextually not where we were before. The best thing we can
       ;; do now is return to the same line number, and hope it's close. Getting
       ;; closer than this would require text parsing, which is more complex than
       ;; we need for a simple file replacement.
-      (setf (point) initial-line))
+      (goto-char initial-line))
     ;; Finally, recenter the line. We may not have been centered before, but this is more often than
     ;; not what we want.
     (recenter)))
@@ -739,7 +739,7 @@ alternative to the beacon package."
 (defmacro aero/with-buffer-max-excursion (buffer-name &rest body)
   (declare (indent 1))
   `(aero/with-buffer-excursion ,buffer-name
-     (setf (point) (point-max))
+     (goto-char (point-max))
      ,@body))
 
 (defmacro aero/without-readonly (&rest body)

@@ -252,7 +252,7 @@ Vivid causes the model to lean towards generating hyper-real and dramatic images
          (setq assist--busy-p nil)
          (spinner-stop assist--spinner)
          ;; move point to bottom, then scroll to have margin
-         (setf (point) (point-max))
+         (goto-char (point-max))
          (recenter -15))))))
 
 (defun assist--gen-commit-message-openai (model callback)
@@ -513,7 +513,7 @@ these may be nil and still be a valid message, they need only exist."
       (erase-buffer)
       (when init (insert init))
       (call-interactively #'set-mark-command)
-      (setf (point) (point-min)))
+      (goto-char (point-min)))
     (pop-to-buffer buf `((display-buffer-in-direction)
                          (reusable-frames . nil)
                          (direction . ,dir)
@@ -553,7 +553,7 @@ these may be nil and still be a valid message, they need only exist."
       (assist-input-exit)
       (pop-to-buffer assist--session-name)
       ;; move point to bottom, then scroll to have margin
-      (setf (point) (point-max))
+      (goto-char (point-max))
       (recenter -15))))
 
 (defvar assist-input-mode-map
@@ -582,7 +582,7 @@ these may be nil and still be a valid message, they need only exist."
     (error "Message is not valid: %s" message))
   (with-current-buffer assist--session-name
     (assist-without-readonly
-     (setf (point) (point-max))
+     (goto-char (point-max))
      (let* ((message-content (plist-get message :content))
             (role (plist-get message :role)))
        (unless (bobp) (insert "\n\n"))
@@ -724,7 +724,7 @@ If region is active, prefill input buffer with the region."
       (let ((blank (string-empty-p (buffer-string))))
         (assist-without-readonly
          (switch-to-buffer buf)
-         (setf (point) (point-max))
+         (goto-char (point-max))
          (when blank (assist-begin-input init)))))))
 
 ;;;###autoload

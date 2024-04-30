@@ -75,7 +75,7 @@ This function returns either the indentation to use, or nil if the Lisp function
 does not specify a special indentation."
      (let ((normal-indent (current-column))
            (orig-point (point)))
-       (setf (point) (1+ (elt state 1)))
+       (goto-char (1+ (elt state 1)))
        (defvar calculate-lisp-indent-last-sexp)
        (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
        (cond
@@ -85,7 +85,7 @@ does not specify a special indentation."
                   (looking-at ":")))
          (if (not (> (save-excursion (forward-line 1) (point))
                      calculate-lisp-indent-last-sexp))
-             (progn (setf (point) calculate-lisp-indent-last-sexp)
+             (progn (goto-char calculate-lisp-indent-last-sexp)
                     (beginning-of-line)
                     (parse-partial-sexp (point)
                                         calculate-lisp-indent-last-sexp 0 t)))
@@ -96,14 +96,14 @@ does not specify a special indentation."
          (backward-prefix-chars)
          (current-column))
         ((and (save-excursion
-                (setf (point) indent-point)
+                (goto-char indent-point)
                 (skip-syntax-forward " ")
                 (not (looking-at ":")))
               (save-excursion
-                (setf (point) orig-point)
+                (goto-char orig-point)
                 (looking-at ":")))
          (save-excursion
-           (setf (point) (+ 2 (elt state 1)))
+           (goto-char (+ 2 (elt state 1)))
            (current-column)))
         (t
          (let ((function (buffer-substring (point)
