@@ -947,7 +947,25 @@ https://blog.jmthornton.net/p/emacs-project-override"
   :config (editorconfig-mode +1))
 
 ;; startup profiler
-(package! esup "jschaf/esup" :commands (esup))
+(package! esup "jschaf/esup"
+  :commands (esup)
+  :config
+  ;; Work around a bug where esup tries to profile cl-lib and fails by doing some nil checking
+  (defun esup-read-results ()
+    "Read all `esup-result' objects from `esup-incoming-results-buffer'.
+
+HACKED by Aero to add nil checking."
+    (let (results sep-end-point)
+      (with-current-buffer (get-buffer esup-incoming-results-buffer)
+        (goto-char esup-last-result-start-point)
+        (message "at %s" esup-last-result-start-point)
+        (unless (eobp)
+          (while (setq sep-end-point (esup-next-separator-end-point))
+            (when-let ((result (car (esup-read-result (point)))))
+              (push result results))
+            (setq esup-last-result-start-point sep-end-point)
+            (goto-char esup-last-result-start-point))))
+      (nreverse results))))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
