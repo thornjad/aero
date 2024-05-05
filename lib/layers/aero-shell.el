@@ -30,7 +30,7 @@
   (advice-add 'compilation-filter :around #'aero/advice-compilation-filter))
 
 
-;;; eshell
+;; eshell
 
 (package! eshell :builtin
   :after (general evil)
@@ -138,7 +138,7 @@
   :config (setup-esh-help-eldoc))
 
 
-;;; shell scripting
+;; shell scripting
 
 (package! sh-script :builtin :defer t
   :mode ("\\.\\(sh\\|bash\\|zsh\\|zsh-theme\\)\\'" . sh-mode)
