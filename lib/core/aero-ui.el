@@ -182,8 +182,4 @@
   :hook (eshell-mode . hide-mode-line-mode)
   :commands (hide-mode-line-mode))
 
-;; Add padding to windows and frames, more like nano or org-modern
-(package! spacious-padding (:host gitlab :repo "protesilaos/spacious-padding")
-  :config (spacious-padding-mode +1))
-
 (provide 'aero-ui)
