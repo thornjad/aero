@@ -35,6 +35,7 @@
      ("http://howardism.org/index.xml" emacs)
      ("http://www.masteringemacs.org/feed/" emacs)
      "https://fy.blackhats.net.au/rss.xml"
+     ("https://akib.codeberg.page/blog.xml" emacs)
      "https://www.wheresyoured.at/rss/"
      "https://cscheerleader.com/feed"
      "https://julesjacobs.com/feed.xml"
