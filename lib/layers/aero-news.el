@@ -34,6 +34,9 @@
      ("http://emacshorrors.com/feed.atom" emacs)
      ("http://howardism.org/index.xml" emacs)
      ("http://www.masteringemacs.org/feed/" emacs)
+     ("https://takeonrules.com/index.atom" emacs)
+     ("https://ypei.org/blog-feed.xml" emacs)
+     ("https://ypei.org/microblog-feed.xml" emacs)
      "https://fy.blackhats.net.au/rss.xml"
      ("https://akib.codeberg.page/blog.xml" emacs)
      "https://www.wheresyoured.at/rss/"
