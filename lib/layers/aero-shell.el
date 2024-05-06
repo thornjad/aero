@@ -109,6 +109,22 @@
         (find-file pattern)
       (mapc #'find-file (mapcar #'expand-file-name pattern))))
 
+  (defun eshell/rmdanglingdockers ()
+    (let ((dangling-images (shell-command-to-string "docker images -f \"dangling=true\" -q")))
+      (if (string-empty-p dangling-images)
+          (message "No dangling images found.")
+        (eshell-command (concat "docker rmi " dangling-images)))))
+
+  (defun eshell/dockerkillorphans ()
+    (let ((orphan-volumes (shell-command-to-string "docker volume ls -qf dangling=true")))
+      (if (string-empty-p orphan-volumes)
+          (message "No orphan volumes found.")
+        (eshell-command (concat "docker volume rm " orphan-volumes)))))
+
+  (defun eshell/dockercleanup ()
+    (eshell/dockerkillorphans)
+    (eshell/rmdanglingdockers))
+
   ;; So the history vars are defined
   (require 'em-hist)
   (when (boundp 'eshell-save-history-on-exit)
