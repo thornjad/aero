@@ -178,7 +178,7 @@
   (markdown-italic-underscore t)
   (markdown-make-gfm-checkboxes-buttons t)
   (markdown-gfm-additional-languages '("sh"))
-  (markdown-toggle-fontify-code-blocks-natively t)
+  (markdown-fontify-code-blocks-natively t)
 
   :config
   ;; Don't expand checkboxes
