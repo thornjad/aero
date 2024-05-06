@@ -45,6 +45,11 @@
      "https://sameoldzen.blogspot.com/feeds/posts/default"
      "https://nora.codes/index.xml"
      "https://andrewkelley.me/rss.xml"
+     "https://blog.andrewcantino.com/feed.xml"
+     "https://bernsteinbear.com/feed.xml"
+     "https://drewdevault.com/blog/index.xml"
+     "https://danielchasehooper.com/feed.xml"
+     "https://matklad.github.io/feed.xml"
      "https://danluu.com/atom.xml"
      "https://without.boats/index.xml"
      "https://www.defmacro.org/feed.xml"
@@ -54,7 +59,7 @@
      "https://blag.xkcd.com/feed/"
      "https://rachelbythebay.com/w/atom.xml"
      "http://matt.might.net/articles/feed.rss"
-     "https://feeds.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish"
+     "https://solar.lowtechmagazine.com/posts/index.xml"
      "https://secularbuddhism.org/category/articles/feed"
      "https://www.everydaybuddhist.org/blog/atom.xml"
      "https://www.lionsroar.com/feed"
@@ -66,6 +71,12 @@
      "https://tonsky.me/atom.xml"
      ("https://oremacs.com/atom.xml" emacs)
      "https://www.jquiambao.com/feed.rss"
+
+     ;; probation
+     ("https://moretothat.com/feed" probation)
+     ("https://www.construction-physics.com/feed" probation)
+
+     ;; me
      "https://blog.jmthornton.net/feed/jade.atom"))
   (elfeed-search-title-max-width 120)
   (elfeed-db-directory (expand-file-name "elfeed/" aero/thornlog-path))
