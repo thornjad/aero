@@ -370,10 +370,14 @@ buffer will be recentered to the line at point."
   (interactive)
   (insert (number-to-string (truncate (* 1000 (float-time))))))
 
+(defun aero/filename-relative-to-project ()
+  "Return the path of the current buffer relative to the project root."
+  (file-relative-name (buffer-file-name) (project-root (project-current))))
+
 (defun aero/copy-file-relative-to-project ()
   "Copy the path of current buffer relative to the project."
   (interactive)
-  (kill-new (file-relative-name (buffer-file-name) (project-root (project-current)))))
+  (kill-new (aero/filename-relative-to-project)))
 
 (defun aero/delete-this-file ()
   "Delete the current file, and kill the buffer."
@@ -809,5 +813,28 @@ alternative to the beacon package."
   (let ((file (completing-read "Select agenda file: " (org-agenda-files))))
     (when file
       (find-file file))))
+
+(defun aero/eslint-fix-file ()
+  "Run eslint --fix on the current buffer's file."
+  (interactive)
+
+  (when (buffer-modified-p)
+    (if (y-or-n-p (format "Save file %s? " buffer-file-name))
+        (save-buffer)
+      (user-error "ESLint refusing to run on a modified buffer")))
+
+  (message "Running ESLint fix...")
+
+  (let* ((default-directory (project-root (project-current)))
+         (filename (aero/filename-relative-to-project))
+         (error-buffer (get-buffer-create "*ESLint Fix Errors*"))
+         (exit-code (call-process "npx" nil error-buffer nil
+                                  "eslint" "--fix" buffer-file-name)))
+    (if (zerop exit-code)
+        (progn
+          (message "ESLint fix complete")
+          (revert-buffer t t t))
+      (message "ESLint fix failed with error code %d" exit-code)
+      (pop-to-buffer error-buffer))))
 
 (provide 'aero-lib)
