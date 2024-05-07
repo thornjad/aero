@@ -325,6 +325,7 @@
      (:time-grid t)
      (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
      (:name "Reviews" :tag "review")
+     (:name "Support" :tag "support")
      (:name "Tickets and PRs" :todo "PR" :todo "TICKET")
      (:deadline past)
      (:deadline today)
