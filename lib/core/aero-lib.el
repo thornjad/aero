@@ -129,7 +129,7 @@ See `sort-regexp-fields'."
 
 (defun treesitterp ()
   "Evaluate whether Emacs has treesitter support."
-  (and (functionp 'treesit-available-p) (treesit-available-p)))
+  (and aero/use-treesit-p (functionp 'treesit-available-p) (treesit-available-p)))
 
 
 ;; program-wide

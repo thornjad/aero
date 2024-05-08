@@ -36,6 +36,16 @@
   :group 'starter-kit
   :prefix 'aero/)
 
+(defcustom aero/use-treesit-p nil
+  "Whether to use Treesit for syntax highlighting.
+
+Disabled by default right now because the treesit lib does not have a
+backward-compatible ABI, which makes for too unstable of a platform for
+my taste, since I use this for my job every day. Consider enabling again
+if treesit gains full Emacs core support (i.e. no ABI breaking changes
+within the same Emacs version)."
+  :group 'aero)
+
 (defun aero/bootstrap ()
   "Bootstrap major components and set up for use"
 
@@ -48,7 +58,7 @@
 
   (require 'aero-package (expand-file-name "lib/core/aero-package.el" user-emacs-directory))
 
-  (and (and (functionp 'module-load) (bound-and-true-p module-file-suffix))
+  (and (and aero/use-treesit-p (functionp 'module-load) (bound-and-true-p module-file-suffix))
        (require 'treesit nil t)))
 
 (defun aero/load-layers ()
