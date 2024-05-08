@@ -137,10 +137,12 @@
 
 (package! elpy (:host github :repo "jorgenschaefer/elpy")
   :hook ((python-mode ein-mode) . elpy-mode)
+  :custom
+  (elpy-rpc-virtualenv-path 'default)
+  (elpy-rpc-python-command "python3")
+  (py-return-key #'py-newline-and-indent)
+
   :config
-  (setq elpy-rpc-virtualenv-path 'default
-        elpy-rpc-python-command "python3"
-        py-return-key #'py-newline-and-indent)
   (elpy-enable)
 
   (defun elpy-goto-import-header ()
