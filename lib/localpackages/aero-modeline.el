@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2019-2022 Jade Michael Thornton
+;; Copyright (c) 2019-2024 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -32,6 +32,16 @@
 
 (defvar aero/modeline-height 30)
 (defvar aero/modeline-bar-width 5)
+
+(defvar aero/modeline--default-mode-line mode-line-format
+  "Store the default mode-line format so it's not lost.")
+
+(defvar-local aero/modeline-hide--old-format nil
+  "Storage for the old `mode-line-format', so it can be restored when
+`aero/modeline-hide-mode' is disabled.")
+
+;; Ensure major-mode or theme changes can't overwrite this
+(put 'aero/modeline-hide--old-format 'permanent-local t)
 
 (defface aero/modeline-status-grayed-out '((t (:inherit (font-lock-doc-face) :slant italic)))
   "Face used for neutral or inactive status indicators in the mode-line."
@@ -264,10 +274,8 @@ WIDTH and HEIGHT are the image size in pixels."
         (aero/modeline-create-bar-image 'aero/modeline-bar width height)
       (aero/modeline-create-bar-image 'aero/modeline-bar-inactive width height))))
 
-;;; Activation function
-
-;; Store the default mode-line format
-(defvar aero/modeline--default-mode-line mode-line-format)
+
+;; Activation function
 
 ;;;###autoload
 (define-minor-mode aero/modeline-mode
@@ -300,6 +308,23 @@ WIDTH and HEIGHT are the image size in pixels."
 ;;;###autoload
 (define-globalized-minor-mode aero/modeline-global-mode aero/modeline-mode
   (lambda () (aero/modeline-mode 1)))
+
+;;;###autoload
+(define-minor-mode aero/modeline-hide-mode
+  "Minor mode to hide the mode-line in the current buffer."
+  :init-value nil
+  :global nil
+  (if aero/modeline-hide-mode
+      (progn
+        (add-hook 'after-change-major-mode-hook #'aero/modeline-hide-mode nil t)
+        (unless aero/modeline-hide--old-format
+          (setq aero/modeline-hide--old-format mode-line-format))
+        (setq mode-line-format nil))
+    (remove-hook 'after-change-major-mode-hook #'aero/modeline-hide-mode t)
+    (setq mode-line-format aero/modeline-hide--old-format
+          aero/modeline-hide--old-format nil))
+  (when (called-interactively-p 'any)
+    (redraw-display)))
 
 (provide 'aero-modeline)
 

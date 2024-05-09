@@ -23,6 +23,7 @@
 (require 'aero-prelude)
 
 (package! aero-modeline :localpackage
+  :hook (eshell-mode . aero/modeline-hide-mode)
   :config (aero/modeline-global-mode +1))
 
 (package! aero-theme :local :load-path "lib/aero-theme"
@@ -180,10 +181,8 @@
               aero/alternate-window))
   (advice-add fn :after #'pulse-line))
 
-;; Hide mode line for certain modes
-(package! hide-mode-line "hlissner/emacs-hide-mode-line"
-  :hook (eshell-mode . hide-mode-line-mode)
-  :commands (hide-mode-line-mode))
+
+;; Hide mode line minor mode. Based on Henrik Lissner's aero/hide-mode-line package, except simpler.
 
 (provide 'aero-ui)
 
