@@ -302,3 +302,5 @@ WIDTH and HEIGHT are the image size in pixels."
   (lambda () (aero/modeline-mode 1)))
 
 (provide 'aero-modeline)
+
+;;; aero-modeline.el ends here
