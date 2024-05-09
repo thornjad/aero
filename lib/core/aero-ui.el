@@ -181,9 +181,6 @@
               aero/alternate-window))
   (advice-add fn :after #'pulse-line))
 
-
-;; Hide mode line minor mode. Based on Henrik Lissner's aero/hide-mode-line package, except simpler.
-
 (provide 'aero-ui)
 
 ;;; aero-ui.el ends here
