@@ -167,12 +167,11 @@ so we use more cycles but less space, but not too little space.")
   (mapc 'add-to-load-path-if-exists
         `(,aero-core-dir ,aero-layers-dir ,aero-lib-dir))
 
-  ;; Do garbage collection when I'm not actively doing anything
-  (run-with-idle-timer 7 t 'garbage-collect)
-
   ;; burn baby burn
   (aero/init)
 
+  ;; Do garbage collection when I'm not actively doing anything
+  (run-with-idle-timer 7 t 'garbage-collect)
 
   ;; Log warnings but don't let them pop up
   (setq warning-minimum-level :error))
