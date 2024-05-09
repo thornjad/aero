@@ -59,12 +59,14 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
      ("docs.google.com" . browse-url-generic)
      ("*.atlassian.com" . browse-url-generic)
      ("*.atlassian.net" . browse-url-generic)
-     ("http.*\/\/github.com" . browse-url-generic)
+     ("github.com" . browse-url-generic)
+     ("gitlab.com" . browse-url-generic)
      ("melpa.org" . browse-url-generic)
      ("zoom.us" . browse-url-generic)
      ("t.co" . browse-url-generic)
      ("twitter.com" . browse-url-generic)
      ("youtube.com" . browse-url-generic)
+     ("reddit.com" . browse-url-generic)
      ("." . eww-browse-url)))
 
   ;; MacOS needs its hand held to find the binary
