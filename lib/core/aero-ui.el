@@ -156,6 +156,30 @@
   (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
 
+(package! echo-bar "qaiviq/echo-bar.el"
+  :defer 4
+
+  :custom
+  (echo-bar-update-interval 1)
+  (echo-bar-right-padding (if (display-graphic-p) 0 2))
+
+  :config
+  ;; TODO get currently tracking org task?
+  ;; TODO what does battery look like on desktop? Might need to check against it saying N/A or
+  ;; something similar
+  (require 'battery)
+  (defun aero/echo-bar-function ()
+    (concat
+     (when-let ((status (ignore-errors (funcall battery-status-function)))
+                (percent (round (string-to-number (battery-format "%p" status))))
+                (power-method (battery-format "%L" status)))
+       (format "%s%% %s  |  "
+               percent
+               (if (string= power-method "AC") "[charging]" "" )))
+     (format-time-string "%A, %d %b — %R")))
+  (setq echo-bar-function #'aero/echo-bar-function)
+  (echo-bar-mode +1))
+
 ;; make links in comments clickable
 (global-goto-address-mode +1)
 
