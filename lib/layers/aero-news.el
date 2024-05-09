@@ -23,6 +23,9 @@
   :commands elfeed
   :after (general evil)
   :custom
+  (elfeed-search-title-max-width 120)
+  (elfeed-db-directory (expand-file-name "elfeed/" aero/thornlog-path))
+  (elfeed-search-filter "+unread")
   (elfeed-feeds
    '(("https://sachachua.com/blog/category/emacs/feed/" emacs)
      ("https://nullprogram.com/feed/" emacs)
@@ -71,15 +74,8 @@
      "https://tonsky.me/atom.xml"
      ("https://oremacs.com/atom.xml" emacs)
      "https://www.jquiambao.com/feed.rss"
-
-     ;; probation
-     ("https://moretothat.com/feed" probation)
-     ("https://www.construction-physics.com/feed" probation)
-
-     ;; me
+     "https://www.construction-physics.com/feed"
      "https://blog.jmthornton.net/feed/jade.atom"))
-  (elfeed-search-title-max-width 120)
-  (elfeed-db-directory (expand-file-name "elfeed/" aero/thornlog-path))
 
   :config
   (evil-set-initial-state 'elfeed-search-mode 'normal)
