@@ -77,7 +77,7 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
   (require 'aero-rc))
 
 (defun aero/init ()
-  "Perform startup initialization, including all comilation and loading"
+  "Perform startup initialization, including all compilation and loading"
   (aero/bootstrap)
 
   ;; Core packages
@@ -138,7 +138,7 @@ so we use more cycles but less space, but not too little space.")
 	;; falling back to *.el.gz files if it can't find native- or byte-compiled versions of a package.
 	;; This breaks often enough that it's not worth it to copy this behavior.
 
-  ;; BUT, trade memory for less cycles when using the minibuffer
+  ;; BUT, trade memory for fewer cycles when using the minibuffer
   (add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold (car (car aero/gc-cons)))))
   (add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold (car (cadr aero/gc-cons)))))
 
