@@ -132,7 +132,8 @@ so we use more cycles but less space, but not too little space.")
 ;; Avoid garbage collection during startup by increasing thresholds.
 ;; Also disable some other crap which would just slow us down.
 (let ((gc-cons-threshold (car (car aero/gc-cons)))
-      (gc-cons-percentage (cadr (car aero/gc-cons))))
+      (gc-cons-percentage (cadr (car aero/gc-cons)))
+      (debug-on-error t))
 	;; NOTE to future self, Doom has an optimization where `file-name-handler-alist' is set to nil
 	;; during startup because many IO functions consult it needlessly. However, this stops Emacs from
 	;; falling back to *.el.gz files if it can't find native- or byte-compiled versions of a package.
@@ -142,7 +143,6 @@ so we use more cycles but less space, but not too little space.")
   (add-hook 'minibuffer-setup-hook (lambda () (setq gc-cons-threshold (car (car aero/gc-cons)))))
   (add-hook 'minibuffer-exit-hook (lambda () (setq gc-cons-threshold (car (cadr aero/gc-cons)))))
 
-  (setq debug-on-error t) ; verifier les erreurs dans ce fichier
   (setq load-prefer-newer t) ; Load newest code during init
   (prefer-coding-system 'utf-8) ; Just in case early-init missed this one, or old Emacs
   (setq ad-redefinition-action 'accept) ; Accept advice redefinition without complaining
@@ -173,7 +173,8 @@ so we use more cycles but less space, but not too little space.")
   ;; burn baby burn
   (aero/init)
 
-  (setq warning-minimum-level :error) ; Log warnings but don't let them pop up
-  (setq debug-on-error nil))
+
+  ;; Log warnings but don't let them pop up
+  (setq warning-minimum-level :error))
 
 ;;; init.el ends here
