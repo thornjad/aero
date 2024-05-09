@@ -161,7 +161,8 @@
 
   :custom
   (echo-bar-update-interval 1)
-  (echo-bar-right-padding (if (display-graphic-p) 0 2))
+  ;; Looks better at 0 on GUI, but need at least 1 to not mess with completing read stuff
+  (echo-bar-right-padding (if (display-graphic-p) 1 4))
 
   :config
   ;; TODO get currently tracking org task?
