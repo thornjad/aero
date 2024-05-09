@@ -22,7 +22,7 @@
 
 (require 'aero-prelude)
 
-(package! aero-modeline :local :load-path "lib/localpackages"
+(package! aero-modeline :localpackage
   :config (aero/modeline-global-mode +1))
 
 (package! aero-theme :local :load-path "lib/aero-theme"

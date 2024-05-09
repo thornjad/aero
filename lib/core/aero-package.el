@@ -118,6 +118,9 @@ to do every few years."
    ((equal recipe :local)
     `(use-package ,package :straight nil ,@body))
 
+   ((equal recipe :localpackage)
+    `(use-package ,package :straight nil :load-path "lib/localpackages" ,@body))
+
    ;; Use straight
    (t
     (progn
