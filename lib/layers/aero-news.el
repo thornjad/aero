@@ -30,9 +30,9 @@
   (elfeed-db-directory aero/thornlog-elfeed-directory)
   (elfeed-search-filter "+unread")
   :config
-  (if (not (file-directory-p thornlog-elfeed-directory))
-      (message "The Thornlog elfeed directory does not exist, you must define your own feeds if you want to use elfeed.")
-    (require 'thornlog-rss (expand-file-name "thornlog-rss.el" aero/thornlog-elfeed-directory) t))
+  (if (file-directory-p thornlog-elfeed-directory)
+      (require 'thornlog-rss (expand-file-name "thornlog-rss.el" aero/thornlog-elfeed-directory) t)
+    (message "The Thornlog elfeed directory does not exist, you must define your own feeds if you want to use elfeed."))
   (evil-set-initial-state 'elfeed-search-mode 'normal)
   (evil-set-initial-state 'elfeed-show-mode 'normal))
 
