@@ -23,8 +23,10 @@
 (require 'aero-prelude)
 
 (package! aero-modeline :localpackage
-  :hook (eshell-mode . aero/modeline-hide-mode)
-  :config (aero/modeline-global-mode +1))
+  :config
+  (aero/modeline-global-mode +1)
+  ;; Not using :hook since it's not defined yet for some reason
+  (add-hook 'eshell-mode-hook 'aero/modeline-hide-mode))
 
 (package! aero-theme :local :load-path "lib/aero-theme"
   :init
