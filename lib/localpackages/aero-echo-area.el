@@ -93,9 +93,9 @@
 
 (defun aero/echo-area-format-function ()
   "Return the text to be displayed in the echo area."
-  (let ((status (ignore-errors (funcall battery-status-function)))
-        (percent (when status (round (string-to-number (battery-format "%p" status)))))
-        (power-method (when status (battery-format "%L" status))))
+  (let* ((status (ignore-errors (funcall battery-status-function)))
+         (percent (when status (round (string-to-number (battery-format "%p" status)))))
+         (power-method (when status (battery-format "%L" status))))
     (format "%s%% %s  |  %s"
             (or percent "")
             (if (string= power-method "AC") "[charging]" "")
