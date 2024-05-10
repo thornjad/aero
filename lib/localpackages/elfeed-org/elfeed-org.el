@@ -65,29 +65,23 @@ Return all headlines."
 
 (defun elfeed-org-convert-tree-to-headlines (parsed-org)
   "Get the inherited tags from PARSED-ORG structure."
-  (let* ((tags '())
-         (level 1))
+  (let ((tags-stack '()))
     (org-element-map parsed-org 'headline
       (lambda (h)
-        (pcase-let*
-            ((current-level (org-element-property :level h))
-             (delta-level (- current-level level))
-             (delta-tags (mapcar (lambda (tag)
-                                   (intern (substring-no-properties tag)))
-                                 (org-element-property :tags h)))
-             (link (org-element-property :raw-value h))
-             (blog-title (org-element-property :BLOG-TITLE h)))
-          ;; update the tags stack when we visit a parent or sibling
-          (unless (> delta-level 0)
-            (let ((drop-num (+ 1 (- delta-level))))
-              (setq tags (nthcdr drop-num tags))))
-          ;; save current level to compare with next heading that will be visited
-          (setq level current-level)
-          ;; save the tags that might apply to potential children of the current heading
-          (push (append (car tags) delta-tags) tags)
-          ;; return the heading, inherited tags, and blog title (if available)
+        (let* ((current-level (org-element-property :level h))
+               (delta-tags (mapcar (lambda (tag)
+                                     (intern (substring-no-properties tag)))
+                                   (org-element-property :tags h)))
+               (link (org-element-property :raw-value h))
+               (blog-title (org-element-property :BLOG-TITLE h)))
+          ;; Pop tags from the stack until we reach the current level
+          (while (and tags-stack (> (length tags-stack) current-level))
+            (pop tags-stack))
+          ;; Push the current tags onto the stack
+          (push (append (car tags-stack) delta-tags) tags-stack)
+          ;; Return the headline, inherited tags, and blog title (if available)
           (append (list link)
-                  (car tags)
+                  (car tags-stack)
                   (when blog-title (list blog-title))))))))
 
 (defun elfeed-org-filter-relevant (list)
