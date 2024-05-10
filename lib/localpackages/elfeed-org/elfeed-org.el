@@ -24,7 +24,7 @@
 
 ;; Example:
 ;; ``` org
-;; * Blogs                                                              :elfeed:
+;; * Blogs
 ;; Text under headlines is ignored
 ;; ** https://example.com/feed.xml  :feedtag:
 ;; ** [[http://orgmode.org][Org Mode Links supported as well]]
@@ -47,50 +47,22 @@
   :prefix "elfeed-org-"
   :group 'comm)
 
-(defcustom elfeed-org-tree-id "elfeed"
-  "The tag or ID property on the trees containing the RSS feeds."
-  :group 'elfeed-org
-  :type 'string)
-
-(defcustom elfeed-org-auto-ignore-invalid-feeds nil
-  "Tag feeds to ignore them when a feed could not loaded."
-  :group 'elfeed-org
-  :type 'bool)
-
 (defcustom elfeed-org-files (list (locate-user-emacs-file "elfeed.org"))
-  "The files where we look to find trees with the `elfeed-org-tree-id'.
+  "The files where we look to find trees with RSS feeds.
 In this file paths can be given relative to `org-directory'."
   :group 'elfeed-org
   :type '(repeat (file :tag "org-mode file")))
 
-(defun elfeed-org-check-configuration-file (file)
-  "Make sure FILE exists."
-  (when (not (file-exists-p (expand-file-name file org-directory)))
-    (error "Elfeed-org cannot open %s.  Make sure it exists or customize the variable \'elfeed-org-files\'"
-           (abbreviate-file-name file))))
-
-(defun elfeed-org-is-headline-contained-in-elfeed-tree ()
-  "Is any ancestor a headline with the elfeed tree id.
-Return t if it does or nil if it does not."
-  (let ((result nil))
-    (save-excursion
-      (while (and (not result) (org-up-heading-safe))
-        (setq result (member elfeed-org-tree-id (org-get-tags))))
-      result)))
-
-(defun elfeed-org-import-trees (tree-id)
-  "Get trees with \":ID:\" property or tag of value TREE-ID.
-Return trees with TREE-ID as the value of the id property or
-with a tag of the same value.  Setting an \":ID:\" property is not
-recommended but I support it for backward compatibility of
-current users."
+(defun elfeed-org-import-headlines ()
+  "Get all headlines as potential feed containers.
+Return all headlines."
   (org-element-map
       (org-element-parse-buffer)
       'headline
     (lambda (h) h)))
 
 (defun elfeed-org-convert-tree-to-headlines (parsed-org)
-  "Get the inherited tags from PARSED-ORG structure if MATCH-FUNC is t.
+  "Get the inherited tags from PARSED-ORG structure.
 The algorithm to gather inherited tags depends on the tree being
 visited depth first by `org-element-map'.  The reason I don't use
 `org-get-tags-at' for this is that I can reuse the parsed org
@@ -135,14 +107,6 @@ all.  Which in my opinion makes the process more traceable."
             (append (list (if link link heading))
                     (car tags))))))))
 
-;; TODO: mark wrongly formatted feeds (PoC for unretrievable feeds)
-(defun elfeed-org-flag-headlines (parsed-org)
-  "Flag headlines in PARSED-ORG if they don't have a valid value."
-  (org-element-map parsed-org 'headline
-    (lambda (h)
-      (let ((tags (org-element-property :tags h)))
-        (org-element-put-property h :tags (push "_flag_" tags))))))
-
 (defun elfeed-org-filter-relevant (list)
   "Filter relevant entries from the LIST."
   (cl-remove-if-not
@@ -150,12 +114,8 @@ all.  Which in my opinion makes the process more traceable."
      (string-match-p "\\(http\\|gopher\\|file\\)" (car entry)))
    list))
 
-(defun elfeed-org-cleanup-headlines (headlines tree-id)
-  "In all HEADLINES given remove the TREE-ID."
-  (mapcar (lambda (e) (delete tree-id e)) headlines))
-
-(defun elfeed-org-import-headlines-from-files (files tree-id)
-  "Visit all FILES and return the headlines stored under tree tagged TREE-ID or with the \":ID:\" TREE-ID in one list."
+(defun elfeed-org-import-headlines-from-files (files)
+  "Visit all FILES and return the headlines in one list."
   (cl-remove-duplicates
    (mapcan (lambda (file)
              (with-temp-buffer
@@ -163,18 +123,11 @@ all.  Which in my opinion makes the process more traceable."
                (let ((org-inhibit-startup t)
                      (org-mode-hook nil))
                  (org-mode))
-               (elfeed-org-cleanup-headlines
-                (elfeed-org-filter-relevant
-                 (elfeed-org-convert-tree-to-headlines
-                  (elfeed-org-import-trees tree-id)))
-                (intern tree-id))))
+               (elfeed-org-filter-relevant
+                (elfeed-org-convert-tree-to-headlines
+                 (elfeed-org-import-headlines)))))
            files)
    :test #'equal))
-
-(defun elfeed-org-convert-headline-to-tagger-params (tagger-headline)
-  "Add new entry hooks for tagging configured with the found headline in TAGGER-HEADLINE."
-  (list (string-clean-whitespace (car tagger-headline))
-        (cdr tagger-headline)))
 
 (defun elfeed-org-export-feed (headline)
   "Export HEADLINE to the proper `elfeed' structure."
@@ -188,14 +141,12 @@ all.  Which in my opinion makes the process more traceable."
           (elfeed-meta feed :title)))
     (add-to-list 'elfeed-feeds headline)))
 
-(defun elfeed-org-process (files tree-id)
-  "Process headlines from FILES with org headlines with TREE-ID."
-
-  (mapc #'elfeed-org-check-configuration-file files)
+(defun elfeed-org-process (files)
+  "Process headlines from FILES with org headlines."
   (setq elfeed-feeds nil)
 
   ;; Convert org structure to elfeed structure and register subscriptions
-  (let* ((headlines (elfeed-org-import-headlines-from-files files tree-id))
+  (let* ((headlines (elfeed-org-import-headlines-from-files files))
          (subscriptions (elfeed-org-filter-subscriptions headlines)))
     (mapc #'elfeed-org-export-feed subscriptions))
 
@@ -224,22 +175,14 @@ all.  Which in my opinion makes the process more traceable."
 
 (defun elfeed-org-process-advice ()
   "Advice to add to `elfeed' to load the configuration before it is run."
-  (elfeed-org-process elfeed-org-files elfeed-org-tree-id))
+  (elfeed-org-process elfeed-org-files))
 
 ;;;###autoload
 (defun elfeed-org ()
   "Hook up elfeed-org to read the `org-mode' configuration when elfeed is run."
   (interactive)
   (elfeed-log 'info "elfeed-org is set up to handle elfeed configuration")
-  (advice-add #'elfeed :before #'elfeed-org-process-advice)
-  (add-hook 'elfeed-http-error-hooks
-            (lambda (url _status)
-              (when elfeed-org-auto-ignore-invalid-feeds
-                (elfeed-org-mark-feed-ignore url))))
-  (add-hook 'elfeed-parse-error-hooks
-            (lambda (url _error)
-              (when elfeed-org-auto-ignore-invalid-feeds
-                (elfeed-org-mark-feed-ignore url)))))
+  (advice-add #'elfeed :before #'elfeed-org-process-advice))
 
 (provide 'elfeed-org)
 ;;; elfeed-org.el ends here
