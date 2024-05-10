@@ -57,19 +57,30 @@
     (org-mode)
     (let (links)
       (org-element-map (org-element-parse-buffer) 'link
-        (lambda (link)
-          (let ((raw-link (org-element-property :raw-link link))
+        (lambda (element)
+          (let ((raw-link (org-element-property :raw-link element))
                 tags)
 
             ;; Traverse up the tree to collect tags from parent headlines
-            (let ((element link))
-              (while (setq element (org-element-property :parent element))
-                (when (eq (org-element-type element) 'headline)
-                  (let ((headline-tags (org-element-property :tags element)))
-                    (when headline-tags
-                      (setq tags (append tags (mapcar 'intern headline-tags))))))))
+            (while (setq element (org-element-property :parent element))
+              (when (eq (org-element-type element) 'headline)
+                (let ((headline-tags (org-element-property :tags element)))
+                  (when headline-tags
+                    (setq tags (append tags (mapcar 'intern headline-tags)))))))
             (push (if tags (cons raw-link tags) raw-link) links))))
       links)))
+
+(defun elfeed-org-export-feed (headline)
+  "Export HEADLINE to the proper `elfeed' structure."
+  (if (and (stringp (car (last headline)))
+           (> (length headline) 1))
+      (progn
+        (add-to-list 'elfeed-feeds (butlast headline))
+        (let ((feed (elfeed-db-get-feed (car headline)))
+              (title (substring-no-properties (car (last headline)))))
+          (setf (elfeed-meta feed :title) title)
+          (elfeed-meta feed :title)))
+    (add-to-list 'elfeed-feeds headline)))
 
 ;;;###autoload
 (defun elfeed-org ()
