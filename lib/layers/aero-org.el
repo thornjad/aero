@@ -519,7 +519,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
         (shell-command "git add -A")
         (shell-command (format "git commit -m '%s'" timestamp))
         (shell-command "git push origin")
-        (message "Done, see messages buffer for shell-command output")))))
+        (message "Done with Thornlog commit and push")))))
 
 (defun insert-meeting-task ()
   (interactive)
