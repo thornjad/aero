@@ -20,7 +20,8 @@
 ;;
 ;;; Code:
 
-;; Aero LLM assistant interface
+;; Aero LLM assistant interface, this has fallen far behind gptel so we'll probably drop this
+;; eventually
 (package! assist :local :load-path "lib/localpackages/assist"
   :after (general)
   :commands (assist-chat assist-commit-message assist-diff-qa-steps)

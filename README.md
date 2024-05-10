@@ -27,7 +27,6 @@ To get started with Emacs, I highly recommend the distribution responsible for h
 
 - [Features](#features)
     - [Spacemacs-like leader keys](#spacemacs-like-leader-keys)
-    - [AI Assistant](#ai-assistant)
     - [Custom theme with simplified mode line](#custom-theme-with-simplified-mode-line)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -57,10 +56,6 @@ Aero also provides a "mode leader", `SPC ,`, which contains bindings for specifi
 > "Emacs is a great operating system, lacking only a decent editor." — ancient Vi proverb
 
 For everything else, Aero makes extensive use of [Evil](https://github.com/emacs-evil/evil), providing the user with modifier-key-free modal editing, though the majority of Emacs bindings remain available. Emacs keybindings belong in the dark ages where they originated. They might work for RMS, but I can only hold `CTRL` for so long.
-
-### AI Assistant
-
-Aero includes a built-in package, Aero Assistant, which interfaces with [currently only] OpenAI models like GPT. Aero provides a text interface for free-form GPT interaction, plus a growing list of features, including writing commit messages.
 
 ### Custom theme with simplified mode line
 
