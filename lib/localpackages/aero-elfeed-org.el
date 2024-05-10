@@ -1,4 +1,4 @@
-;;; aero-elfeed-org.el --- Configure elfeed with one or more org-mode files -*- lexical-binding: t; -*-
+;;; aero-elfeed-org.el --- Configure elfeed with an org file -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2024 Jade Michael Thornton
 ;;
