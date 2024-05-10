@@ -17,8 +17,11 @@
 ;; performance of this software.
 
 ;;; Commentary:
-
-;; A system for keeping elfeed RSS feeds and their tags in an org file. This package is kind of like aero-elfeed-org by Remy Honig, but was written from scratch to significantly simplify the ingestion of entries. unlike Remy's, this package has no export functionality and does not support top-level org links.
+;;
+;; A system for keeping elfeed RSS feeds and their tags in an org file. This package is kind of like
+;; aero-elfeed-org by Remy Honig, but was written from scratch to significantly simplify the
+;; ingestion of entries. unlike Remy's, this package has no export functionality and does not
+;; support top-level org links.
 ;;
 ;; Text under headlines is ignored
 ;;
