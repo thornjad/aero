@@ -34,7 +34,7 @@
   (evil-set-initial-state 'elfeed-show-mode 'normal))
 
 ;; lets us use an elfeed.org file to manage our feeds and their tags
-(package! elfeed-org :local :load-path "lib/localpackages/elfeed-org"
+(package! elfeed-org :localpackage
   :after elfeed
   :custom (elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))
   :config (elfeed-org))
