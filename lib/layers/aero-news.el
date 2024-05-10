@@ -19,22 +19,26 @@
 
 (require 'aero-prelude)
 
+(defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/thornlog-path)
+  "The directory where elfeed will store its database and other files.")
+
 (package! elfeed "skeeto/elfeed"
   :commands elfeed
   :after (general evil)
-  :preface
-  (defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/thornlog-path)
-    "The directory where elfeed will store its database and other files.")
   :custom
   (elfeed-search-title-max-width 120)
   (elfeed-db-directory aero/thornlog-elfeed-directory)
   (elfeed-search-filter "+unread")
   :config
-  (if (file-directory-p thornlog-elfeed-directory)
-      (require 'thornlog-rss (expand-file-name "thornlog-rss.el" aero/thornlog-elfeed-directory) t)
-    (message "The Thornlog elfeed directory does not exist, you must define your own feeds if you want to use elfeed."))
   (evil-set-initial-state 'elfeed-search-mode 'normal)
   (evil-set-initial-state 'elfeed-show-mode 'normal))
+
+;; lets us use an elfeed.org file to manage our feeds and their tags
+(package! elfeed-org :localpackage
+  :after elfeed
+  :config
+  (elfeed-org)
+  (setq elfeed-org-files (list (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))))
 
 
 
