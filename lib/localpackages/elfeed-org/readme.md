@@ -18,11 +18,9 @@ Text under headlines is ignored
 * https://example.com/feed.xml  :feedtag:
 * Emacs  :emacs:
 ** https://sachachua.com/blog/category/emacs/feed/
-** https://planet.emacslife.com/atom.xml
-   :PROPERTIES:
-   :blog-title: Sacha Chua's Emacs Blog
-   :END:
-Add a blog title to the feed with a :blog-title: property
+:PROPERTIES:
+:feed_title: Testing Title
+:END:
 ```
 
 

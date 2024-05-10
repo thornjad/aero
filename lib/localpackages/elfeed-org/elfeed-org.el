@@ -30,6 +30,9 @@
 ;; * https://example.com/feed.xml  :feedtag:
 ;; * Emacs  :emacs:
 ;; ** https://sachachua.com/blog/category/emacs/feed/
+;; :PROPERTIES:
+;; :feed_title: Testing Title
+;; :END:
 ;; ```
 
 ;;; Code:
@@ -67,6 +70,8 @@
                 (let ((headline-tags (org-element-property :tags element)))
                   (when headline-tags
                     (setq tags (append tags (mapcar 'intern headline-tags)))))))
+            (when-let ((feed-title (org-entry-get element "feed_title")))
+              (setf (elfeed-meta (elfeed-db-get-feed raw-link) :title) feed-title))
             (push (if tags (cons raw-link tags) raw-link) links))))
       links)))
 
