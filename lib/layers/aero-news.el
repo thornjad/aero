@@ -38,7 +38,7 @@
   :after elfeed
   :config
   (elfeed-org)
-  (setq elfeed-org-files (list (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))))
+  (setq elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory)))
 
 
 

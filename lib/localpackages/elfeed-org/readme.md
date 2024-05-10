@@ -10,16 +10,19 @@ see the top-level README for more information on Aero Emacs. This version of thi
 the option to use any future versions of the GPL, only version 3. I do not personally like the
 GPL and do not wish to automatically upgrade to future versions of it.
 
-Example:
-``` org
-* Blogs                                                              :elfeed:
 Text under headlines is ignored
-** https://example.com/feed.xml  :feedtag:
-** [[http://orgmode.org][Org Mode Links supported as well]]
-** Emacs  :emacs:
-*** https://sachachua.com/blog/category/emacs/feed/
-Entries inherit tags from their parents
 
+## Example
+
+``` org
+* https://example.com/feed.xml  :feedtag:
+* Emacs  :emacs:
+** https://sachachua.com/blog/category/emacs/feed/
+** https://planet.emacslife.com/atom.xml
+   :PROPERTIES:
+   :blog-title: Sacha Chua's Emacs Blog
+   :END:
+Add a blog title to the feed with a :blog-title: property
 ```
 
 

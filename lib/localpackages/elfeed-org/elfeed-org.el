@@ -22,16 +22,19 @@
 ;; the option to use any future versions of the GPL, only version 3. I do not personally like the
 ;; GPL and do not wish to automatically upgrade to future versions of it.
 
-;; Example:
-;; ``` org
-;; * Blogs
 ;; Text under headlines is ignored
-;; ** https://example.com/feed.xml  :feedtag:
-;; ** [[http://orgmode.org][Org Mode Links supported as well]]
-;; ** Emacs  :emacs:
-;; *** https://sachachua.com/blog/category/emacs/feed/
-;; Entries inherit tags from their parents
+
+;; Example:
 ;;
+;; ``` org
+;; * https://example.com/feed.xml  :feedtag:
+;; * Emacs  :emacs:
+;; ** https://sachachua.com/blog/category/emacs/feed/
+;; ** https://planet.emacslife.com/atom.xml
+;;    :PROPERTIES:
+;;    :blog-title: Sacha Chua's Emacs Blog
+;;    :END:
+;; Add a blog title to the feed with a :blog-title: property
 ;; ```
 
 ;;; Code:
@@ -47,11 +50,10 @@
   :prefix "elfeed-org-"
   :group 'comm)
 
-(defcustom elfeed-org-files (list (locate-user-emacs-file "elfeed.org"))
-  "The files where we look to find trees with RSS feeds.
-In this file paths can be given relative to `org-directory'."
+(defcustom elfeed-org-file (locate-user-emacs-file "elfeed.org")
+  "The file where we look to find trees with RSS feeds."
   :group 'elfeed-org
-  :type '(repeat (file :tag "org-mode file")))
+  :type 'file)
 
 (defun elfeed-org-import-headlines ()
   "Get all headlines as potential feed containers.
@@ -62,13 +64,7 @@ Return all headlines."
     (lambda (h) h)))
 
 (defun elfeed-org-convert-tree-to-headlines (parsed-org)
-  "Get the inherited tags from PARSED-ORG structure.
-The algorithm to gather inherited tags depends on the tree being
-visited depth first by `org-element-map'.  The reason I don't use
-`org-get-tags-at' for this is that I can reuse the parsed org
-structure and I am not dependent on the setting of
-`org-use-tag-inheritance' or an org buffer being present at
-all.  Which in my opinion makes the process more traceable."
+  "Get the inherited tags from PARSED-ORG structure."
   (let* ((tags '())
          (level 1))
     (org-element-map parsed-org 'headline
@@ -79,18 +75,8 @@ all.  Which in my opinion makes the process more traceable."
              (delta-tags (mapcar (lambda (tag)
                                    (intern (substring-no-properties tag)))
                                  (org-element-property :tags h)))
-             (heading (org-element-property :raw-value h))
-             (`(,link ,description)
-              (org-element-map (org-element-property :title h) 'link
-                (lambda (link)
-                  (list
-                   (org-element-property :raw-link link)
-                   (when (and (org-element-property :contents-begin link)
-                              (org-element-property :contents-end link))
-                     (buffer-substring
-                      (org-element-property :contents-begin link)
-                      (org-element-property :contents-end link)))))
-                nil t)))
+             (link (org-element-property :raw-value h))
+             (blog-title (org-element-property :BLOG-TITLE h)))
           ;; update the tags stack when we visit a parent or sibling
           (unless (> delta-level 0)
             (let ((drop-num (+ 1 (- delta-level))))
@@ -99,13 +85,10 @@ all.  Which in my opinion makes the process more traceable."
           (setq level current-level)
           ;; save the tags that might apply to potential children of the current heading
           (push (append (car tags) delta-tags) tags)
-          ;; return the heading and inherited tags
-          (if (and link description)
-              (append (list link)
-                      (car tags)
-                      (list description))
-            (append (list (if link link heading))
-                    (car tags))))))))
+          ;; return the heading, inherited tags, and blog title (if available)
+          (append (list link)
+                  (car tags)
+                  (when blog-title (list blog-title))))))))
 
 (defun elfeed-org-filter-relevant (list)
   "Filter relevant entries from the LIST."
@@ -114,20 +97,16 @@ all.  Which in my opinion makes the process more traceable."
      (string-match-p "\\(http\\|gopher\\|file\\)" (car entry)))
    list))
 
-(defun elfeed-org-import-headlines-from-files (files)
-  "Visit all FILES and return the headlines in one list."
-  (cl-remove-duplicates
-   (mapcan (lambda (file)
-             (with-temp-buffer
-               (insert-file-contents (expand-file-name file org-directory))
-               (let ((org-inhibit-startup t)
-                     (org-mode-hook nil))
-                 (org-mode))
-               (elfeed-org-filter-relevant
-                (elfeed-org-convert-tree-to-headlines
-                 (elfeed-org-import-headlines)))))
-           files)
-   :test #'equal))
+(defun elfeed-org-import-headlines-from-file (file)
+  "Visit FILE and return the headlines in a list."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let ((org-inhibit-startup t)
+          (org-mode-hook nil))
+      (org-mode))
+    (elfeed-org-filter-relevant
+     (elfeed-org-convert-tree-to-headlines
+      (elfeed-org-import-headlines)))))
 
 (defun elfeed-org-export-feed (headline)
   "Export HEADLINE to the proper `elfeed' structure."
@@ -136,17 +115,17 @@ all.  Which in my opinion makes the process more traceable."
       (progn
         (add-to-list 'elfeed-feeds (butlast headline))
         (let ((feed (elfeed-db-get-feed (car headline)))
-              (title (substring-no-properties (car (last headline)))))
+              (title (car (last headline))))
           (setf (elfeed-meta feed :title) title)
           (elfeed-meta feed :title)))
     (add-to-list 'elfeed-feeds headline)))
 
-(defun elfeed-org-process (files)
-  "Process headlines from FILES with org headlines."
+(defun elfeed-org-process ()
+  "Process headlines from the configured org file."
   (setq elfeed-feeds nil)
 
   ;; Convert org structure to elfeed structure and register subscriptions
-  (let* ((headlines (elfeed-org-import-headlines-from-files files))
+  (let* ((headlines (elfeed-org-import-headlines-from-file elfeed-org-file))
          (subscriptions (elfeed-org-filter-subscriptions headlines)))
     (mapc #'elfeed-org-export-feed subscriptions))
 
@@ -158,24 +137,16 @@ all.  Which in my opinion makes the process more traceable."
   (cl-remove-if-not #'identity
                     (mapcar
                      (lambda (headline)
-                       (let* ((text (car headline))
-                              (link-and-title (and (string-match "^\\[\\[\\(http.+?\\)\\]\\[\\(.+?\\)\\]\\]" text)
-                                                   (list (match-string-no-properties 0 text)
-                                                         (match-string-no-properties 1 text)
-                                                         (match-string-no-properties 2 text))))
-                              (hyperlink (and (string-match "^\\[\\[\\(http.+?\\)\\]\\(?:\\[.+?\\]\\)?\\]" text)
-                                              (list (match-string-no-properties 0 text)
-                                                    (match-string-no-properties 1 text)))))
-                         (cond ((string-prefix-p "http" text) headline)
-                               (link-and-title (append (list (nth 1 hyperlink))
-                                                       (cdr headline)
-                                                       (list (nth 2 link-and-title))))
-                               (hyperlink (append (list (nth 1 hyperlink)) (cdr headline))))))
+                       (let ((link (car headline))
+                             (blog-title (car (last headline))))
+                         (if blog-title
+                             (append (list link) (butlast (cdr headline)) (list blog-title))
+                           headline)))
                      headlines)))
 
 (defun elfeed-org-process-advice ()
   "Advice to add to `elfeed' to load the configuration before it is run."
-  (elfeed-org-process elfeed-org-files))
+  (elfeed-org-process))
 
 ;;;###autoload
 (defun elfeed-org ()
