@@ -30,11 +30,6 @@
 ;; * https://example.com/feed.xml  :feedtag:
 ;; * Emacs  :emacs:
 ;; ** https://sachachua.com/blog/category/emacs/feed/
-;; ** https://planet.emacslife.com/atom.xml
-;;    :PROPERTIES:
-;;    :blog-title: Sacha Chua's Emacs Blog
-;;    :END:
-;; Add a blog title to the feed with a :blog-title: property
 ;; ```
 
 ;;; Code:
@@ -55,99 +50,39 @@
   :group 'elfeed-org
   :type 'file)
 
-(defun elfeed-org-import-headlines ()
-  "Get all headlines as potential feed containers.
-Return all headlines."
-  (org-element-map
-      (org-element-parse-buffer)
-      'headline
-    (lambda (h) h)))
-
-(defun elfeed-org-convert-tree-to-headlines (parsed-org)
-  "Get the inherited tags from PARSED-ORG structure."
-  (let ((tags-stack '()))
-    (org-element-map parsed-org 'headline
-      (lambda (h)
-        (let* ((current-level (org-element-property :level h))
-               (delta-tags (mapcar (lambda (tag)
-                                     (intern (substring-no-properties tag)))
-                                   (org-element-property :tags h)))
-               (link (org-element-property :raw-value h))
-               (blog-title (org-element-property :BLOG-TITLE h)))
-          ;; Pop tags from the stack until we reach the current level
-          (while (and tags-stack (> (length tags-stack) current-level))
-            (pop tags-stack))
-          ;; Push the current tags onto the stack
-          (push (append (car tags-stack) delta-tags) tags-stack)
-          ;; Return the headline, inherited tags, and blog title (if available)
-          (append (list link)
-                  (car tags-stack)
-                  (when blog-title (list blog-title))))))))
-
-(defun elfeed-org-filter-relevant (list)
-  "Filter relevant entries from the LIST."
-  (cl-remove-if-not
-   (lambda (entry)
-     (string-match-p "\\(http\\|gopher\\|file\\)" (car entry)))
-   list))
-
-(defun elfeed-org-import-headlines-from-file (file)
-  "Visit FILE and return the headlines in a list."
+(defun elfeed-org-get-links-from-file (file)
+  "Extracts links and their tags from the given org FILE, maintaining the original link format."
   (with-temp-buffer
     (insert-file-contents file)
-    (let ((org-inhibit-startup t)
-          (org-mode-hook nil))
-      (org-mode))
-    (elfeed-org-filter-relevant
-     (elfeed-org-convert-tree-to-headlines
-      (elfeed-org-import-headlines)))))
+    (org-mode)
+    (let (links)
+      (org-element-map (org-element-parse-buffer) 'link
+        (lambda (link)
+          (let ((raw-link (org-element-property :raw-link link))
+                tags)
 
-(defun elfeed-org-export-feed (headline)
-  "Export HEADLINE to the proper `elfeed' structure."
-  (if (and (stringp (car (last headline)))
-           (> (length headline) 1))
-      (progn
-        (add-to-list 'elfeed-feeds (butlast headline))
-        (let ((feed (elfeed-db-get-feed (car headline)))
-              (title (car (last headline))))
-          (setf (elfeed-meta feed :title) title)
-          (elfeed-meta feed :title)))
-    (add-to-list 'elfeed-feeds headline)))
-
-(defun elfeed-org-process ()
-  "Process headlines from the configured org file."
-  (setq elfeed-feeds nil)
-
-  ;; Convert org structure to elfeed structure and register subscriptions
-  (let* ((headlines (elfeed-org-import-headlines-from-file elfeed-org-file))
-         (subscriptions (elfeed-org-filter-subscriptions headlines)))
-    (mapc #'elfeed-org-export-feed subscriptions))
-
-  ;; Tell user what we did
-  (elfeed-log 'info "elfeed-org loaded %i feeds" (length elfeed-feeds)))
-
-(defun elfeed-org-filter-subscriptions (headlines)
-  "Filter subscriptions to rss feeds from the HEADLINES in the tree."
-  (cl-remove-if-not #'identity
-                    (mapcar
-                     (lambda (headline)
-                       (let ((link (car headline))
-                             (blog-title (car (last headline))))
-                         (if blog-title
-                             (append (list link) (butlast (cdr headline)) (list blog-title))
-                           headline)))
-                     headlines)))
-
-(defun elfeed-org-process-advice ()
-  "Advice to add to `elfeed' to load the configuration before it is run."
-  (elfeed-org-process))
+            ;; Traverse up the tree to collect tags from parent headlines
+            (let ((element link))
+              (while (setq element (org-element-property :parent element))
+                (when (eq (org-element-type element) 'headline)
+                  (let ((headline-tags (org-element-property :tags element)))
+                    (when headline-tags
+                      (setq tags (append tags (mapcar 'intern headline-tags))))))))
+            (push (if tags (cons raw-link tags) raw-link) links))))
+      links)))
 
 ;;;###autoload
 (defun elfeed-org ()
-  "Hook up elfeed-org to read the `org-mode' configuration when elfeed is run."
+  "Set `elfeed-feeds' from the org file specified in `elfeed-org-file'."
   (interactive)
-  (elfeed-log 'info "elfeed-org is set up to handle elfeed configuration")
-  (advice-add #'elfeed :before #'elfeed-org-process-advice))
+  (setq elfeed-feeds (elfeed-org-get-links-from-file elfeed-org-file))
+  (elfeed-log 'info "elfeed-org loaded %i feeds" (length elfeed-feeds)))
+
+;;;###autoload
+(defun elfeed-org-reload ()
+  "Refresh the elfeed-org list."
+  (interactive)
+  (elfeed-org))
 
 (provide 'elfeed-org)
 ;;; elfeed-org.el ends here
