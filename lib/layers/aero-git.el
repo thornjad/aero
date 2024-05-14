@@ -39,16 +39,7 @@
     "gmn" 'smerge-next
     "gmp" 'smerge-prev
     "gma" 'smerge-keep-all
-    "gmE" 'smerge-ediff
-    "gmC" 'smerge-combine-with-next
-    "gmr" 'smerge-refine
-    "gmR" 'smerge-resolve
-    "gmd" '(:ignore t :wk "diff")
-    "gmdu" '(:ignore t :wk "upper")
-    "gmdul" 'smerge-diff-upper-lower
-    "gmdb" '(:ignore t :wk "base")
-    "gmdbu" 'smerge-diff-base-upper
-    "gmdbl" 'smerge-diff-base-lower)
+    "gmE" 'smerge-ediff)
 
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
@@ -111,9 +102,6 @@
   (git-gutter:handled-backends
    (cons 'git (cl-remove-if-not #'executable-find (list 'hg 'svn 'bzr)
                                 :key #'symbol-name)))
-  ;; (git-gutter:modified-sign " ")
-  ;; (git-gutter:added-sign " ")
-  ;; (git-gutter:deleted-sign " ")
 
   :config
   ;; Update git-gutter on focus (in case I was using git externally)
