@@ -77,6 +77,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
   (eww-search-prefix "https://lite.duckduckgo.com/lite?q=")
   (shr-max-width 90)
   (shr-indentation 2)
+  (url-privacy-level 'high) ; don't send email nor last location
 
   :init
   (aero-leader-def "wbn" '(aero/wiki-news :wk "wikipedia news"))
