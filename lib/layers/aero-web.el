@@ -55,6 +55,7 @@
   (setenv "NODE_NO_READLINE" "1")  ; avoid fancy terminal codes
   (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
 
+;; Expand className prop in JSZ
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
