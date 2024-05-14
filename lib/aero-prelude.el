@@ -1014,10 +1014,6 @@ HACKED by Aero to add nil checking."
 
 ;; Games, etc.
 
-;; Typing game
-(package! typing "thornjad/emacswiki-typing"
-  :commands (typing-of-emacs))
-
 (require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 
