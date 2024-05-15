@@ -192,7 +192,35 @@
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
                       ,(expand-file-name "log.org" aero/thornlog-path)
                       ,(expand-file-name "ritual.org" aero/thornlog-path)
+                      ,(expand-file-name "holidays.org" aero/thornlog-path)
                       ,(expand-file-name "notes.org" aero/thornlog-path)))
+
+  ;; holidays I don't want to display
+  (holiday-bahai-holidays nil)
+  (holiday-hebrew-holidays nil)
+  (holiday-islamic-holidays nil)
+  (holiday-christian-holidays nil)
+  (holiday-oriental-holidays nil)
+
+  ;; local holidays
+  (holiday-local-holidays '((holiday-fixed 3 14 "Pi Day")
+                            (holiday-fixed 10 23 "Mole Day")
+                            (holiday-fixed 11 23 "Fibonacci Day")
+                            (holiday-fixed 12 23 "Festivus")
+                            (holiday-fixed 9 19 "Talk Like a Pirate Day")
+                            (holiday-fixed 10 9 "Leif Erikson Day")
+                            (holiday-fixed 5 4 "Star Wars Day")
+                            (holiday-fixed 6 28 "Tau Day")
+
+                            (holiday-fixed 2 27 "Hangover (first day)")
+                            (holiday-fixed 2 28 "Hangover (second day")
+                            (holiday-fixed 2 29 "Hangover (third day")
+                            (holiday-fixed 3 1 "Hangover (fourth day")
+                            (holiday-fixed 3 2 "Hangover (fifth day")
+                            (holiday-fixed 3 3 "Hangover (sixth day")
+                            (holiday-fixed 3 4 "Hangover (seventh day")
+                            (holiday-fixed 3 5 "Hangover (eighth day")
+                            (holiday-fixed 3 6 "The Day of the Dude")))
 
   (org-agenda-log-mode-items nil) ; don't show closed nor clocked items
   (org-agenda-tags-column -70) ; shift tags over
