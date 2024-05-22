@@ -78,12 +78,12 @@
   (set-display-table-slot standard-display-table 'selective-display
                           (string-to-vector " …")))
 
-(blink-cursor-mode 0)
-(show-paren-mode 1)
-(line-number-mode 1)
-(column-number-mode 1)
-(pixel-scroll-mode 1)
-(global-hl-line-mode +1)
+(blink-cursor-mode 0)  ; stop cursor from blinking
+(show-paren-mode 1)  ; highlight matching parens
+(pixel-scroll-mode 1)  ; smoother scrolling
+
+;; TEMP, disabled to see if I miss it, remove this if I don't
+;; (global-hl-line-mode +1)
 
 ;; allow navigation by visual wrapped lines rather than real lines
 (global-visual-line-mode +1)
