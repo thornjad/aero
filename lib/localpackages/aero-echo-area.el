@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; aero-echo-area.el --- Display date and time in the echo area -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2023-2024 Jade Michael Thornton
 ;;
@@ -19,12 +19,11 @@
 ;; performance of this software.
 ;;
 ;;; Commentary:
-;;
+
 ;;; Code:
 
 (require 'timer)
 (require 'overlay)
-(require 'battery)
 
 (defvar aero/echo-area-text nil
   "The text currently displayed in the echo bar.")
@@ -41,45 +40,6 @@
         (len (string-pixel-width str)))
     (+ (/ len width) (if (zerop (% len width)) 0 1))))
 
-(defun aero/echo-area-set-text (text)
-  "Set the text displayed by the echo bar to TEXT."
-  (let* ((wid (+ (aero/echo-area--str-len text) 1
-                 (if (and (display-graphic-p)
-                          (> (nth 1 (window-fringes)) 0)
-                          (not overflow-newline-into-fringe))
-                     1
-                   0)))
-         ;; Maximum length for the echo area message before wrap to next line
-         (max-len (- (frame-width) wid 5))
-         ;; Align the text to the correct width to make it right aligned
-         (spc (propertize " " 'cursor 1 'display
-                          `(space :align-to (- right-fringe ,wid)))))
-
-    (setq aero/echo-area-text (concat spc text))
-
-    ;; Add the correct text to each echo bar overlay
-    (when (not (string= aero/echo-area-text aero/echo-area--previous-text))
-      (dolist (o aero/echo-area-overlays)
-        (when (overlay-buffer o)
-
-          (with-current-buffer (overlay-buffer o)
-            ;; Wrap the text to the next line if the echo bar text is too long
-            (if (> (mod (point-max) (frame-width)) max-len)
-                (overlay-put o 'after-string (concat "\n" aero/echo-area-text))
-              (overlay-put o 'after-string aero/echo-area-text))))))
-
-
-    (with-current-buffer " *Minibuf-0*"
-      ;; If the minibuffer is not Minibuf-0, then the user is using the minibuffer
-      (when (eq (current-buffer) (window-buffer (minibuffer-window)))
-
-        ;; Don't override existing text in minibuffer, such as ispell
-        (when (get-text-property (point-min) 'aero/echo-area)
-          (delete-region (point-min) (point-max)))
-        (when (= (point-min) (point-max))
-          ;; Display the full text in Minibuf-0, as overlays don't show up
-          (insert (propertize aero/echo-area-text 'aero/echo-area t)))))))
-
 (defun aero/echo-area--new-overlay ()
   "Add new aero/echo-area overlay."
   (let ((new-overlay (make-overlay (point-max) (point-max) nil t t)))
@@ -89,17 +49,47 @@
 (defun aero/echo-area-update ()
   "Get new text to be displayed from `aero/echo-area-default-function`."
   (when aero/echo-area-mode
-    (aero/echo-area-set-text (aero/echo-area-format-function))))
+    (let* ((text (aero/echo-area-format-function))
+           (wid (+ (aero/echo-area--str-len text) 1
+                   (if (and (display-graphic-p)
+                            (> (nth 1 (window-fringes)) 0)
+                            (not overflow-newline-into-fringe))
+                       1
+                     0)))
+           ;; Maximum length for the echo area message before wrap to next line
+           (max-len (- (frame-width) wid 5))
+           ;; Align the text to the correct width to make it right aligned
+           (spc (propertize " " 'cursor 1 'display
+                            `(space :align-to (- right-fringe ,wid)))))
+
+      (setq aero/echo-area-text (concat spc text))
+
+      ;; Add the correct text to each echo bar overlay
+      (unless (string= aero/echo-area-text aero/echo-area--previous-text)
+        (dolist (o aero/echo-area-overlays)
+          (when (overlay-buffer o)
+
+            (with-current-buffer (overlay-buffer o)
+              ;; Wrap the text to the next line if the echo bar text is too long
+              (if (> (mod (point-max) (frame-width)) max-len)
+                  (overlay-put o 'after-string (concat "\n" aero/echo-area-text))
+                (overlay-put o 'after-string aero/echo-area-text))))))
+
+
+      (with-current-buffer " *Minibuf-0*"
+        ;; If the minibuffer is not Minibuf-0, then the user is using the minibuffer
+        (when (eq (current-buffer) (window-buffer (minibuffer-window)))
+
+          ;; Don't override existing text in minibuffer, such as ispell
+          (when (get-text-property (point-min) 'aero/echo-area)
+            (delete-region (point-min) (point-max)))
+          (when (= (point-min) (point-max))
+            ;; Display the full text in Minibuf-0, as overlays don't show up
+            (insert (propertize aero/echo-area-text 'aero/echo-area t))))))))
 
 (defun aero/echo-area-format-function ()
   "Return the text to be displayed in the echo area."
-  (let* ((status (ignore-errors (funcall battery-status-function)))
-         (percent (when status (round (string-to-number (battery-format "%p" status)))))
-         (power-method (when status (battery-format "%L" status))))
-    (format "%s%% %s  |  %s"
-            (or percent "")
-            (if (string= power-method "AC") "[charging]" "")
-            (format-time-string "%A, %d %b — %R"))))
+  (format-time-string "%A, %d %b — %R"))
 
 (defun aero/echo-area-enable ()
   "Turn on the echo bar."
