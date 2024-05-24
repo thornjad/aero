@@ -35,7 +35,6 @@
 
 ;; lets us use an elfeed.org file to manage our feeds and their tags
 (package! aero-elfeed-org :localpackage
-  :commands (aero-elfeed-org)
   :after elfeed
   :custom (aero-elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))
   :config (aero-elfeed-org))
