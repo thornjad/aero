@@ -66,7 +66,7 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
      ("t.co" . browse-url-generic)
      ("twitter.com" . browse-url-generic)
      ("youtube.com" . browse-url-generic)
-     ("reddit.com" . browse-url-generic)
+     ("*.reddit.com" . browse-url-generic)
      ("." . eww-browse-url)))
 
   ;; MacOS needs its hand held to find the binary
