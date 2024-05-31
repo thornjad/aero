@@ -143,22 +143,6 @@
 (package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
   :init (global-todo-light-mode +1))
 
-;; show indentation guides
-(package! highlight-indent-guides
-  (:host github :repo "DarthFennec/highlight-indent-guides")
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :init (setq highlight-indent-guides-method 'character
-              highlight-indent-guides-responsive 'top)
-  :custom
-  (highlight-indent-guides-suppress-auto-error t)
-  :config
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (set-face-background 'highlight-indent-guides-top-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-top-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray"))
-
 ;; display time and date in echo area
 (package! aero-echo-area :localpackage :defer 4 :config (aero/echo-area-mode +1))
 
