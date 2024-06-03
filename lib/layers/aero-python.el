@@ -195,4 +195,25 @@
     "ri" '(elpy-refactor-inline :wk "inline variable")
     "rF" '(elpy-format-code :wk "format buffer or region")))
 
+(package! flymake-mypy "com4/flymake-mypy"
+  :after (eglot)
+  :init
+  ;; Need to add after eglot so eglot doesn't clobber
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (when (derived-mode-p 'python-base-mode)
+                (flymake-mypy-enable)))))
+
+(package! flymake-ruff "erickgnavar/flymake-ruff"
+  :after (eglot)
+  :functions (flymake-ruff-load)
+  :init
+  ;; Need to add after eglot so eglot doesn't clobber
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-managed-mode-hook
+              (lambda ()
+                (when (derived-mode-p 'python-base-mode)
+                  (setq python-flymake-command '("ruff" "--quiet" "--stdin-filename=stdin" "-"))
+                  (flymake-ruff-load))))))
+
 (provide 'aero-python)
