@@ -72,7 +72,7 @@
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after (company-box general)
   :hook (prog-mode . copilot-mode)
-  :custom (copilot-idle-delay 0.1)
+  :custom (copilot-idle-delay 0.2) ; longer than default so it doesn't mess with typing
   :config
   (general-define-key
    :states '(insert visual motion)
