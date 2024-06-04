@@ -837,4 +837,24 @@ alternative to the beacon package."
       (message "ESLint fix failed with error code %d" exit-code)
       (pop-to-buffer error-buffer))))
 
+(defun aero/prettier-fix-file ()
+  "Run prettier --write on the current buffer's file."
+  (interactive)
+  (when (buffer-modified-p)
+    (if (y-or-n-p (format "Save file %s? " buffer-file-name))
+        (save-buffer)
+      (user-error "Prettier refusing to run on a modified buffer")))
+  (message "Running Prettier fix...")
+  (let* ((default-directory (project-root (project-current)))
+         (filename (aero/filename-relative-to-project))
+         (error-buffer (get-buffer-create "*Prettier Fix Errors*"))
+         (exit-code (call-process "npx" nil error-buffer nil
+                                  "prettier" "--write" buffer-file-name)))
+    (if (zerop exit-code)
+        (progn
+          (message "Prettier fix complete")
+          (revert-buffer t t t))
+      (message "Prettier fix failed with error code %d" exit-code)
+      (pop-to-buffer error-buffer))))
+
 (provide 'aero-lib)
