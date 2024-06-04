@@ -87,6 +87,25 @@
     (org-deadline t)
     (org-refile))
 
+  (defun aero/org-agenda-format-date (date)
+    "Format a DATE string for display in the daily/weekly agenda.
+This function makes sure that dates are aligned for easy reading."
+    (require 'cal-iso)
+    (let* ((dayname (calendar-day-name date))
+	         (day (cadr date))
+	         (month (car date))
+	         (monthname (calendar-month-name month))
+           (quarter (ceiling (/ (1+ month) 3)))
+	         (year (nth 2 date))
+	         (iso-week (org-days-to-iso-week
+		                  (calendar-absolute-from-gregorian date)))
+	         (day-of-week (calendar-day-of-week date))
+	         (weekstring (if (= day-of-week 1)
+			                     (format " W%02d" iso-week)
+		                     "")))
+      (format "%-10s %2d %s %4d%s   (Q%s)"
+	            dayname day monthname year weekstring quarter)))
+
   :custom
   (org-insert-heading-respect-content t) ; insert headings after current subtree
   (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
@@ -187,6 +206,7 @@
   (org-agenda-span 3) ; days to show at a time
   (org-agenda-start-day nil) ; day to start at
   (org-agenda-start-on-weekday nil) ; start week on current day
+  (org-agenda-format-date #'aero/org-agenda-format-date)
 
   ;; all agenda files
   (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
