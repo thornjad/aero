@@ -203,7 +203,7 @@ This function makes sure that dates are aligned for easy reading."
                           (wl . wl-other-frame)))
 
   ;; Agenda
-  (org-agenda-span 3) ; days to show at a time
+  (org-agenda-span 1) ; days to show at a time
   (org-agenda-start-day nil) ; day to start at
   (org-agenda-start-on-weekday nil) ; start week on current day
   (org-agenda-format-date #'aero/org-agenda-format-date)
