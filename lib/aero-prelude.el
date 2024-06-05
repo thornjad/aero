@@ -51,14 +51,12 @@
   (fset #'jsonrpc--log-event #'ignore))
 
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
-;; This lets us use TRAMP more easily and connects us with some tools.
 (package! exec-path-from-shell "purcell/exec-path-from-shell"
-  :defer 1
+  :when (or (memq window-system '(mac ns x)) (daemonp))
   :config
-  (when (or (window-system) (daemonp))
-    (dolist (var '("PATH" "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH" "PATH" "MANPATH" "INFOPATH" "LSP_USE_PLISTS" "HOMEBREW_PREFIX" "HOMEBREW_CELLAR" "HOMEBREW_REPOSITORY"))
-      (add-to-list 'exec-path-from-shell-variables var))
-    (exec-path-from-shell-initialize)))
+  (dolist (var '("PATH" "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH" "PATH" "MANPATH" "INFOPATH" "LSP_USE_PLISTS" "HOMEBREW_PREFIX" "HOMEBREW_CELLAR" "HOMEBREW_REPOSITORY"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 
 ;; Faster than grep, but requires ripgrep to be installed locally
 (package! ripgrep "nlamirault/ripgrep.el" :defer 3)
