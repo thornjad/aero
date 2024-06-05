@@ -62,11 +62,10 @@
    (kbd "C-<return>") 'aero/gptel-send-buffer)
 
   :config
-  ;; Register Claude backend and set it as the default, if we have a key
+  ;; Register Claude backend, but we don't set it as default because it hallucinates much more than
+  ;; GPT.
   (when anthropic-api-key
-    (let ((backend (gptel-make-anthropic "Claude" :stream t :key anthropic-api-key)))
-      (setq gptel-backend backend
-            gptel-model "claude-3-sonnet-20240229"))))
+    (gptel-make-anthropic "Claude" :stream t :key anthropic-api-key)))
 
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
