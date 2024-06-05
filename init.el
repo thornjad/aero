@@ -36,7 +36,7 @@
   :group 'starter-kit
   :prefix 'aero/)
 
-(defcustom aero/use-treesit-p nil
+(defcustom aero/use-treesit-p t
   "Whether to use Treesit for syntax highlighting.
 
 Disabled by default right now because the treesit lib does not have a

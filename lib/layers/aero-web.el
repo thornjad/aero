@@ -29,8 +29,10 @@
 
 (package! web-mode "fxbois/web-mode"
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|erb\\|svg\\|jsx\\|s?css\\)\\'"
-  :custom
-  (web-mode-enable-engine-detection t))
+  :custom (web-mode-enable-engine-detection t)
+  :config
+  ;; If we have tree-sitter, prefer tsx-ts-mode over web-mode (which will also load eglot)
+  (unless (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))))
 
 (package! instant-rename-tag
   (:host github :repo "manateelazycat/instant-rename-tag")
@@ -58,10 +60,6 @@
 ;; Expand className prop in JSZ
 (eval-when-compile (defvar emmet-expand-jsx-className?))
 (add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
-
-(package! json-mode :auto :mode "\\.json\\'")
-(package! typescript-mode :auto :mode "\\.ts\\'")
-(when (treesitterp) (package! tsx-ts-mode :builtin :mode "\\.tsx\\'"))
 
 
 ;; the rest

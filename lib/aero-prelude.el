@@ -511,10 +511,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Automatically install treesitter grammars when missing
 (package! treesit-auto "renzmann/treesit-auto"
   :when (treesitterp)
-  :custom
-  ;; Fix bug where it doesn't set its own source list
-  (treesit-language-source-alist (append (treesit-auto--build-treesit-source-alist)))
-  (treesit-auto-install 'prompt)
+  :custom (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode +1))
@@ -523,7 +520,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 (package! evil-textobj-tree-sitter
   (:repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
   :when (treesitterp)
-  :after (tree-sitter evil)
+  :after (evil)
   :config
   ;; vaf, select function outer
   (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
