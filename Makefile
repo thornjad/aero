@@ -25,8 +25,8 @@ build-emacs-macos: macos-reqs
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
 # for when libgccjit breaks every few months
+# NOTE: dbus isn't working on M1 yet.
 build-emacs-macos-minimal: macos-reqs
-	# NOTE: dbus isn't working on M1 yet.
 	brew install emacs-plus@30 --with-modern-sexy-v1-icon --with-xwidgets
 	ln -sf /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 
