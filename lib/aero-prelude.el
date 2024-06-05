@@ -205,7 +205,7 @@
    "b" '(:ignore t :wk "buffers")
    "bL" 'list-buffers
    "bS" 'switch-to-new-scratch-buffer
-   "bd" 'kill-this-buffer
+   "bd" 'kill-current-buffer
    "bi" 'indent-buffer
    "bl" 'ibuffer
    "bm" 'switch-to-messages-buffer
@@ -468,7 +468,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (evil-define-key 'visual global-map (kbd "<") 'aero/evil-shift-left)
 
   ;; :q should kill the current buffer rather than quitting Emacs entirely
-  (evil-ex-define-cmd "q" 'kill-this-buffer)
+  (evil-ex-define-cmd "q" 'kill-current-buffer)
 
   ;; Unless I'm mistaken, there's no Evil backward equivalent to "e", so we'll invent it.
   (evil-define-key '(normal visual motion) global-map
@@ -848,7 +848,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
 
   :config
   (evil-define-key 'normal helpful-mode-map
-    "q" 'kill-this-buffer
+    "q" 'kill-current-buffer
     "?" 'describe-mode))
 
 ;;; System-specifics
