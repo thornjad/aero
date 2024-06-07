@@ -530,6 +530,8 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 (package! vertico "minad/vertico"
   :init (vertico-mode)
+  :custom
+  (vertico-cycle t)  ; enable wrap
   :config
   (defun aero/vertico-directory-up-maybe ()
     "Go up a directory if completing a file name, otherwise delete char."
