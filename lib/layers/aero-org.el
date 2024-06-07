@@ -370,6 +370,8 @@ This function makes sure that dates are aligned for easy reading."
   :custom
   (org-super-agenda-groups
    '((:name "Daily Ritual" :tag "ritual")
+     (:name "Holidays" :tag "holiday")
+     (:name "Outstanding meetings" :and (:scheduled past :tag "meeting"))
      (:time-grid t)
      (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
      (:name "Reviews" :tag "review")
