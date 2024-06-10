@@ -29,6 +29,7 @@
   (elfeed-search-title-max-width 120)
   (elfeed-db-directory aero/thornlog-elfeed-directory)
   (elfeed-search-filter "+unread")
+  (elfeed-sort-order 'ascending)
   :config
   (evil-set-initial-state 'elfeed-search-mode 'normal)
   (evil-set-initial-state 'elfeed-show-mode 'normal))
