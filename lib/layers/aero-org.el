@@ -146,7 +146,7 @@ This function makes sure that dates are aligned for easy reading."
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
-      "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: \n"
+      "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: "
       :empty-lines 1)
      ("n" "Note" entry
       (file+headline
