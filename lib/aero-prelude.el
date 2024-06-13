@@ -509,9 +509,24 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 ;; Automatically install treesitter grammars when missing
 (package! treesit-auto "renzmann/treesit-auto"
   :when (treesitterp)
-  :custom (treesit-auto-install 'prompt)
+  :custom
+  (treesit-auto-install 'prompt)
+
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
+
+  ;; Python is not playing nicely, so we'll pin it to a working version
+  (defvar aero/python-treesit-auto-recipe
+    (make-treesit-auto-recipe
+     :lang 'python
+     :ts-mode 'python-ts-mode
+     :remap 'python-mode
+     :url "https://github.com/tree-sitter/tree-sitter-python"
+     :ext "\\.py[iw]?\\'"
+     :revision "v0.21.0")
+    "Recipe for libtree-sitter-python.dylib")
+  (add-to-list 'treesit-auto-recipe-list aero/python-treesit-auto-recipe)
+
   (global-treesit-auto-mode +1))
 
 ;; Provide selection of functions
