@@ -37,6 +37,31 @@
          (setq org-map-continue-from (point-min))))
      nil 'file))
 
+  (defun trim-archive-entries ()
+    "Trim entries in the archive file older than 60 days."
+    (interactive)
+    (let ((archive-file (expand-file-name aero/thornlog-archive-file)))
+      (when (file-exists-p archive-file)
+        (let ((cutoff-date (time-subtract (current-time) (days-to-time 60))))
+          (with-current-buffer (find-file-noselect archive-file)
+            (goto-char (point-min))
+            (while (not (eobp))
+              (when (and (org-at-heading-p)
+                         (let ((archive-time-str (org-entry-get (point) "ARCHIVE_TIME")))
+                           (and archive-time-str
+                                (time-less-p (org-read-date nil t archive-time-str) cutoff-date))))
+                (org-cut-subtree)
+                (org-back-to-heading t)
+                (outline-previous-heading))
+              (outline-next-heading)))
+          (save-buffer)))))
+
+  (defun aero/org-archive-cleanup ()
+    "Archive closed tasks and trim archive entries."
+    (interactive)
+    (archive-buffer-closed-tasks)
+    (trim-archive-entries))
+
   (defun aero/org-collapse-entry-if-done ()
     "Collapse the current entry if it is marked as DONE."
     (when (member org-state '("DONE"))
@@ -287,7 +312,7 @@ This function makes sure that dates are aligned for easy reading."
     "ii" 'org-insert-structure-template
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
-    "A" 'archive-buffer-closed-tasks
+    "A" 'aero/org-archive-cleanup
     "c" '(:ignore t :wk "clock / cell")
     "cc" '(org-babel-execute-src-block :wk "exec cell")
     "ci" 'org-clock-in
