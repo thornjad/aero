@@ -289,8 +289,7 @@ This function makes sure that dates are aligned for easy reading."
     "os" 'org-schedule
     "od" 'org-deadline
     "oj" 'org-clock-goto
-    "ot" 'org-set-tags-command
-    "of" 'aero/org-add-file-tag
+    "ot" 'aero/org-set-tags
     "ol" 'org-store-link
     "oT" '(org-tags-view :wk "list tags")
     "vo" 'org-capture)
@@ -634,6 +633,13 @@ response. I'm too lazy to create a weights map or something, this is easier.")
               (insert (format "\n#+filetags: :%s:" tag)))
           (goto-char (point-min))
           (insert (format "#+filetags: :%s:\n" tag)))))))
+
+(defun aero/org-set-tags ()
+  "Set tag on current entry or file."
+  (interactive)
+  (if (org-before-first-heading-p)
+      (aero/org-add-file-tag)
+    (org-set-tags-command)))
 
 
 ;; Org-roam created and updated timestamps
