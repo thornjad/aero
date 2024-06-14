@@ -23,7 +23,7 @@
   "The directory where elfeed will store its database and other files.")
 
 (package! elfeed "skeeto/elfeed"
-  :commands elfeed
+  :commands (elfeed elfeed-db-compact)
   :after (general evil)
   :custom
   (elfeed-search-title-max-width 120)
