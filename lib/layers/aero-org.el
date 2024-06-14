@@ -281,6 +281,9 @@ This function makes sure that dates are aligned for easy reading."
   (org-agenda-window-setup 'current-window) ; stop agenda opening a new window
   (org-agenda-skip-unavailable-files t)
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
+  (org-agenda-custom-commands
+   '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+     ("e" "Experimentation tag" tags "experimentation")))
 
   :init
   (aero-leader-def
