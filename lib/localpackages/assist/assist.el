@@ -109,7 +109,7 @@ This is a list of cons cells, where the car is the session-id and the cdr is a l
 
 ;; Requests
 
-(defvar assist-model-aliases '((gpt-4 . "gpt-4-0125-preview")
+(defvar assist-model-aliases '((gpt-4 . "gpt-4o")
                                (dall-e-3 . "dall-e-3"))
   "A list of model aliases.")
 
@@ -494,9 +494,7 @@ these may be nil and still be a valid message, they need only exist."
 
 (defun assist--git-diff-spec-files ()
   (let ((default-directory (or (project-root (project-current)) (vc-root-dir) default-directory)))
-    (if (zerop (call-process "git" nil nil nil "fetch" "origin" "master:refs/remotes/origin/master"))
-        (shell-command-to-string "git diff origin/master...HEAD --summary -U10 --no-color -- '**/specs/**' '*.spec.ts'")
-      "Failed to fetch origin/master.")))
+    (shell-command-to-string "git diff $(git merge-base master HEAD)...HEAD --summary -U50 --no-color -- '**/specs/**' '*.spec.ts'")))
 
 
 ;; User input
@@ -582,27 +580,27 @@ these may be nil and still be a valid message, they need only exist."
     (error "Message is not valid: %s" message))
   (with-current-buffer assist--session-name
     (assist-without-readonly
-     (goto-char (point-max))
-     (let* ((message-content (plist-get message :content))
-            (role (plist-get message :role)))
-       (unless (bobp) (insert "\n\n"))
-       (cond
-        ((or (plist-get message :error) (eq role nil))
-         (insert "## Assistant [Error]\n\n> Try again with C-c C-r [assist-try-again]\n\n"
-                 (or (plist-get message :status)
-                     (format (or (and (plist-get message :error)
-                                      "Error: unknown error: %s")
-                                 (and (eq role nil)
-                                      "Error: message has no role: %s")
-                                 "Error: invalid message: %s")
-                             message))
-                 "\n\n\f\n"))
+      (goto-char (point-max))
+      (let* ((message-content (plist-get message :content))
+             (role (plist-get message :role)))
+        (unless (bobp) (insert "\n\n"))
+        (cond
+         ((or (plist-get message :error) (eq role nil))
+          (insert "## Assistant [Error]\n\n> Try again with C-c C-r [assist-try-again]\n\n"
+                  (or (plist-get message :status)
+                      (format (or (and (plist-get message :error)
+                                       "Error: unknown error: %s")
+                                  (and (eq role nil)
+                                       "Error: message has no role: %s")
+                                  "Error: invalid message: %s")
+                              message))
+                  "\n\n\f\n"))
 
-        ((string= role "user")
-         (insert "# User\n\n" message-content))
+         ((string= role "user")
+          (insert "# User\n\n" message-content))
 
-        ((string= role "assistant")
-         (insert (assist--format-response message))))))))
+         ((string= role "assistant")
+          (insert (assist--format-response message))))))))
 
 (defun assist--format-response (response)
   "Format assistant response for display."
@@ -642,8 +640,8 @@ these may be nil and still be a valid message, they need only exist."
   (when (y-or-n-p "Clear Aero Assist history forever?")
     (with-current-buffer assist--session-name
       (assist-without-readonly
-       (setq assist--history '())
-       (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
+        (setq assist--history '())
+        (insert "\n\n\f\n# HISTORY CLEARED\n\f\n")))))
 
 (defun assist--header-line ()
   "Display header line."
@@ -723,9 +721,9 @@ If region is active, prefill input buffer with the region."
         (assist-mode))
       (let ((blank (string-empty-p (buffer-string))))
         (assist-without-readonly
-         (switch-to-buffer buf)
-         (goto-char (point-max))
-         (when blank (assist-begin-input init)))))))
+          (switch-to-buffer buf)
+          (goto-char (point-max))
+          (when blank (assist-begin-input init)))))))
 
 ;;;###autoload
 (defun assist-commit-message ()
