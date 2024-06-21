@@ -212,9 +212,13 @@ This function makes sure that dates are aligned for easy reading."
 
   (org-use-fast-todo-selection 'expert) ; don't fuck up the window layout
   (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
-  (org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . org-priority)))
+  (org-priority-faces '((?A . error)
+                        (?B . warning)
+                        (?C . success)
+                        (?D . org-priority)
+                        (?E . org-priority)))
   (org-priority-highest ?A)
-  (org-priority-lowest ?D) ; default is C
+  (org-priority-lowest ?E) ; default is C
   (org-reverse-note-order nil) ; put notes at the end of the entry, instead of the top
   (org-archive-location (concat aero/thornlog-archive-file "::* From %s"))
 
@@ -382,7 +386,7 @@ This function makes sure that dates are aligned for easy reading."
   :after (org)
   :hook (org-mode . org-fancy-priorities-mode)
   :custom
-  (org-fancy-priorities-list '("!!" "↑" "·" "↓")))
+  (org-fancy-priorities-list '("!!" "↑" "·" "↓" "_")))
 
 (package! org-super-agenda "alphapapa/org-super-agenda"
   :preface
