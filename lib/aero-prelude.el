@@ -137,6 +137,7 @@
    "TAB" '(aero/alternate-buffer :wk "alternate buffer")
    (kbd "ESC") 'keyboard-quit
    (kbd "C-g") 'keyboard-quit
+   (kbd "<pause>") 'keyboard-quit
    "'" 'eshell
    "\"" '(aero/eshell-new :wk "eshell-new")
    ":" 'eval-expression
