@@ -25,11 +25,7 @@
 
 (package! jest "thornjad/emacs-jest"
   :commands (jest jest-file jest-test)
-  :after (general)
-  :custom
-  ;; TODO yarn test doesn't display correctly, this should follow what the test script does instead
-  ;; (jest-executable "yarn test")
-  )
+  :after (general))
 
 (package! web-mode "fxbois/web-mode"
   :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|erb\\|svg\\|jsx\\|s?css\\)\\'"
