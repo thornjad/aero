@@ -1,4 +1,4 @@
-personal_ws-1.1 en 710 
+personal_ws-1.1 en 715 
 ACL
 AEC
 APIs
@@ -35,6 +35,7 @@ CLA
 CLI
 CORS
 CRS
+CSCI
 CSRF
 CSV
 CTE
@@ -110,6 +111,7 @@ GQL
 GSM
 GTK
 Gamgee
+Geospatial
 GitLab
 GitLab's
 GraphQL
@@ -329,6 +331,7 @@ args
 async
 autocorrect
 autoloaded
+automata
 aws
 backend
 backquote
@@ -385,6 +388,7 @@ deprovision
 dequeue
 dequeuer
 des
+designator
 destructuring
 dev
 dharmas
@@ -437,6 +441,7 @@ frontend
 frontend's
 fullscreen
 fullscreening
+geocomputing
 geojson
 geolocation
 georeferences
