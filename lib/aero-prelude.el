@@ -44,6 +44,9 @@
 (package! popup "auto-complete/popup-el")
 (package! spinner "Malabarba/spinner.el")
 
+;; used by gptel-quick and available for other stuff
+(package! posframe "tumashu/posframe" :defer 1)
+
 ;; Used by eglot, dape, copilot, etc
 (package! jsonrpc :builtin
   :config

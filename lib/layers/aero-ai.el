@@ -68,6 +68,13 @@
   (when anthropic-api-key
     (gptel-make-anthropic "Claude" :stream t :key anthropic-api-key)))
 
+;; Quick llm lookup at point or region. Uses posframe if its installed (prelude)
+(package! gptel-quick "karthink/gptel-quick"
+  :after (general)
+  :commands (gptel-quick)
+  :init
+  (aero-leader-def "aiq" 'gptel-quick))
+
 ;; Works best with company-box, so we consider it a requirement
 (package! copilot (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :after (company-box general)
