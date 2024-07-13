@@ -240,9 +240,7 @@
   (defvar aero-etc-dir)
   (setq
    flyspell-issue-message-flag nil
-   ispell-personal-dictionary (expand-file-name
-                               "ispell/personal_dictionary.aws"
-                               aero-etc-dir)
+   ispell-personal-dictionary (expand-file-name "ispell/personal_dictionary.aws" aero/thornlog-path)
    flyspell-sort-corrections nil)
 
   ;; Skip code inside org src blocks
