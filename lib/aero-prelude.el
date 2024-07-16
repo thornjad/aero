@@ -797,19 +797,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
   (winner-mode 1)
   (aero-leader-def
     "wu" 'winner-undo
-    "wU" 'winner-redo)
-
-  ;; These don't really always work, and I'm not sure why
-  (global-set-key (kbd "M-h") #'windmove-left)
-  (global-set-key (kbd "M-j") #'windmove-down)
-  (global-set-key (kbd "M-k") #'windmove-up)
-  (global-set-key (kbd "M-l") #'windmove-right)
-  (when (require 'bind-key nil t)
-    (bind-keys*
-     ("M-h" . windmove-left)
-     ("M-j" . windmove-down)
-     ("M-k" . windmove-up)
-     ("M-l" . windmove-right))))
+    "wU" 'winner-redo))
 
 ;; Jump to windows by number. 1 is the upper-left-most
 (package! winum "deb0ch/emacs-winum"
@@ -871,6 +859,17 @@ https://blog.jmthornton.net/p/emacs-project-override"
   (evil-define-key 'normal helpful-mode-map
     "q" 'kill-current-buffer
     "?" 'describe-mode))
+
+;; Drag stuff around
+(package! drag-stuff "rejeep/drag-stuff.el"
+  :defer 1
+  :after (general)
+  :config
+  (drag-stuff-global-mode 1)
+  (general-def
+    (kbd "C-j") 'drag-stuff-down
+    (kbd "C-k") 'drag-stuff-up))
+
 
 ;;; System-specifics
 
