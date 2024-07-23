@@ -120,7 +120,10 @@ This function makes sure that dates are aligned for easy reading."
 	         (day (cadr date))
 	         (month (car date))
 	         (monthname (calendar-month-name month))
-           (quarter (ceiling (/ (1+ month) 3)))
+
+           ;; divisor must be float so (/) doesn't do integer division
+           (quarter (ceiling (/ (1+ month) 3.0)))
+
 	         (year (nth 2 date))
 	         (iso-week (org-days-to-iso-week
 		                  (calendar-absolute-from-gregorian date)))
