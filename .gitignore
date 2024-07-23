@@ -52,6 +52,7 @@ etc/saveplace
 etc/todo.org
 flycheck_*
 games/
+ielm-history.eld
 lsp-cache
 # no idea what this is:
 multisession/
