@@ -923,7 +923,10 @@ https://blog.jmthornton.net/p/emacs-project-override"
   :custom
   (ranger-show-hidden t)
   (find-directory-functions 'deer)
-  :init (aero-leader-def "fd" 'deer))
+  :init (aero-leader-def "fd" 'deer)
+  :config
+  ;; Fix occasional void-variable issue by setting header format ourselves from the start
+  (setq ranger-pre-header-format header-line-format))
 
 
 ;; Better writing
