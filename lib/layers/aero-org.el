@@ -176,6 +176,12 @@ This function makes sure that dates are aligned for easy reading."
        "Tasks")
       "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: "
       :empty-lines 1)
+     ("s" "School inbox item" entry
+      (file+headline
+       ,(expand-file-name "school.org" aero/thornlog-path)
+       "Inbox")
+      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
+      :empty-lines 1)
      ("n" "Note" entry
       (file+headline
        ,(expand-file-name "notes.org" aero/thornlog-path)
@@ -245,7 +251,8 @@ This function makes sure that dates are aligned for easy reading."
                       ,(expand-file-name "log.org" aero/thornlog-path)
                       ,(expand-file-name "ritual.org" aero/thornlog-path)
                       ,(expand-file-name "holidays.org" aero/thornlog-path)
-                      ,(expand-file-name "notes.org" aero/thornlog-path)))
+                      ,(expand-file-name "notes.org" aero/thornlog-path)
+                      ,(expand-file-name "school.org" aero/thornlog-path)))
 
   ;; holidays I don't want to display
   (holiday-bahai-holidays nil)
@@ -321,6 +328,7 @@ This function makes sure that dates are aligned for easy reading."
     "ii" 'org-insert-structure-template
     "id" '(org-insert-drawer :wk "drawer")
     "im" 'insert-meeting-task
+    "is" 'insert-class-task
     "A" 'aero/org-archive-cleanup
     "c" '(:ignore t :wk "clock / cell")
     "cc" '(org-babel-execute-src-block :wk "exec cell")
@@ -635,6 +643,21 @@ response. I'm too lazy to create a weights map or something, this is easier.")
                               meeting-name scheduled-string)))
     (goto-char (point-max))
     (re-search-backward "^\\*+ Meetings" nil t)
+    (org-end-of-subtree)
+    (insert "\n\n" task-string)))
+
+(defun insert-class-task ()
+  (interactive)
+  (let* ((class-name (read-string "Class Name: "))
+         (class-time (read-string "Class Time (optional): "))
+         (today (format-time-string "%Y-%m-%d"))
+         (scheduled-string (if (not (string= class-time ""))
+                               (format "<%s %s>" today class-time)
+                             (format "<%s>" today)))
+         (task-string (format "*** CLASS %s  :school:\nSCHEDULED: %s"
+                              class-name scheduled-string)))
+    (goto-char (point-max))
+    (re-search-backward "^\\*+ Classes" nil t)
     (org-end-of-subtree)
     (insert "\n\n" task-string)))
 
