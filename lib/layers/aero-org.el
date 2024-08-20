@@ -297,6 +297,7 @@ This function makes sure that dates are aligned for easy reading."
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
   (org-agenda-custom-commands
    '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+     ("s" "School items" tags "school")
      ("e" "Experimentation tag" tags "experimentation")))
 
   :init
@@ -425,7 +426,9 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Past scheduled" :and (:scheduled past :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Prioritized" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Waiting/Blocked" :todo "WAITING" :todo "BLOCKED")
-     (:name "Due soon" :deadline future)))
+     (:name "Due soon" :deadline future)
+     (:name "Class" :todo "CLASS")
+     (:name "School" :tag "school")))
 
   ;; add space between dates by adding space after the final group
   (org-super-agenda-final-group-separator "\n"))
