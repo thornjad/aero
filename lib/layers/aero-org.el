@@ -630,9 +630,12 @@ response. I'm too lazy to create a weights map or something, this is easier.")
         (message "Remote has changes, manual commit required")
       (progn
         (shell-command "git add -A")
-        (shell-command (format "git commit -m '%s'" timestamp))
-        (shell-command "git push origin")
-        (message "Done with elfeed commit and push")))))
+        (if (zerop (shell-command "git diff --cached --exit-code"))
+            (message "No elfeed changes to commit")
+          (progn
+            (shell-command (format "git commit -m '%s'" timestamp))
+            (shell-command "git push origin")
+            (message "Done with elfeed commit and push")))))))
 
 (defun insert-meeting-task ()
   (interactive)
