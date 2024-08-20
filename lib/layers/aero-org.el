@@ -427,7 +427,7 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Prioritized" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Waiting/Blocked" :todo "WAITING" :todo "BLOCKED")
      (:name "Due soon" :deadline future)
-     (:name "Class" :todo "CLASS")
+     (:name "Class" :todo "CLASS" :category "Class" :tag "class")
      (:name "School" :tag "school")))
 
   ;; add space between dates by adding space after the final group
