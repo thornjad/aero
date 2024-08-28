@@ -296,8 +296,10 @@ This function makes sure that dates are aligned for easy reading."
   (org-agenda-skip-unavailable-files t)
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
   (org-agenda-custom-commands
-   '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
-     ("s" "School items" tags "school")
+   `(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+     ("s" "School items"
+      ((agenda "") (alltodo ""))
+      ((org-agenda-files '(,(expand-file-name "school.org" aero/thornlog-path)))))
      ("e" "Experimentation tag" tags "experimentation")))
 
   :init
