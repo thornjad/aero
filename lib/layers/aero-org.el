@@ -418,7 +418,7 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Outstanding meetings" :and (:scheduled past :tag "meeting"))
      (:time-grid t)
      (:name "Priority A" :and (:priority "A" :not (:todo "PR")))
-     (:name "Reviews" :tag "review")
+     (:name "Reviews to do" :and (:tag "review" :todo "REVIEW"))
      (:name "Support" :tag "support")
      (:name "Tickets and PRs" :todo "PR" :todo "TICKET")
      (:deadline past)
@@ -426,7 +426,7 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Priority B" :and (:priority "B" :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Past scheduled" :and (:scheduled past :not (:todo "WAITING" :todo "BLOCKED")))
      (:name "Prioritized" :and (:priority<= "B" :not (:todo "WAITING" :todo "BLOCKED")))
-     (:name "Waiting/Blocked" :todo "WAITING" :todo "BLOCKED")
+     (:name "Waiting/blocked" :todo "WAITING" :todo "BLOCKED")
      (:name "Due soon" :deadline future)))
 
   ;; add space between dates by adding space after the final group
