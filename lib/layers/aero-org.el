@@ -299,6 +299,7 @@ This function makes sure that dates are aligned for easy reading."
   :init
   (aero-leader-def
     "oa" '(aero/org-agenda-list :wk "agenda")
+    "oc" '(aero/org-class-agenda-list :wk "class agenda")
     "oA" '(org-agenda :wk "agenda menu")
     "os" 'org-schedule
     "od" 'org-deadline
@@ -443,6 +444,11 @@ This function makes sure that dates are aligned for easy reading."
   "`org-agenda', skipping command menu to list."
   (interactive)
   (org-agenda nil "a"))
+
+(defun aero/org-class-agenda-list ()
+  "`org-agenda', skipping command menu to list."
+  (interactive)
+  (org-agenda nil "s"))
 
 (defun aero/org-agenda-todo ()
   "`org-agenda', skipping command menu to todos."
