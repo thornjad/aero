@@ -152,17 +152,17 @@ This function makes sure that dates are aligned for easy reading."
   (org-image-actual-width '(400))
 
   (org-capture-templates
-   `(("t" "Inbox Task" entry
-      (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
-       "Inbox")
-      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
-      :empty-lines 1)
-     ("T" "Deadline/Scheduled Task" entry
+   `(("t" "Deadline/Scheduled Task" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
+      :empty-lines 1)
+     ("T" "Inbox Task" entry
+      (file+headline
+       ,(expand-file-name "todo.org" aero/thornlog-path)
+       "Inbox")
+      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 1)
      ("p" "Ticket (PR)" entry
       (file+headline
