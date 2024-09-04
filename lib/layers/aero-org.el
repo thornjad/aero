@@ -158,12 +158,6 @@ This function makes sure that dates are aligned for easy reading."
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
       :empty-lines 1)
-     ("T" "Inbox Task" entry
-      (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
-       "Inbox")
-      "* TODO [#C] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nCreated at: %a\n"
-      :empty-lines 1)
      ("p" "Ticket (PR)" entry
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
