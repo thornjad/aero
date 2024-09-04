@@ -398,6 +398,9 @@
   ;; We use SPC as the leader key so it shouldn't do anything when in motion
   (define-key evil-motion-state-map " " nil)
 
+  ;; We use RET for other things, and the default is useless anyway
+  (define-key evil-motion-state-map (kbd "RET") nil)
+
   ;; default states
   (setq evil-default-state 'normal)
   (evil-set-initial-state 'dired-mode 'emacs)
