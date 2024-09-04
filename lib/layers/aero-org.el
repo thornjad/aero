@@ -143,6 +143,7 @@ This function makes sure that dates are aligned for easy reading."
   (org-log-into-drawer t) ; put logs in LOGBOOK
   (org-refile-use-outline-path t) ; show path to outline level during refile
   (org-fontify-done-headline t) ; let theme strike out done items
+  (org-return-follows-link t) ; follow links with RET
 
   ;; always put blank before new headings, but be smart about list items
   (org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
