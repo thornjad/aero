@@ -97,6 +97,7 @@
   (git-gutter:visual-line t)
   (git-gutter:disabled-modes '(so-long-mode
                                image-mode asm-mode
+                               doc-view-mode
                                fundamental-mode image-mode pdf-view-mode))
   (git-gutter:update-interval 0.02)
   (git-gutter:handled-backends
