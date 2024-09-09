@@ -419,10 +419,8 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Tickets and PRs" :and (:todo ("PR" "TICKET") :not (:todo ("WAITING" "BLOCKED"))))
      (:deadline past)
      (:deadline today)
-     (:name "Priority B" :and (:priority "B" :not (:todo ("WAITING" "BLOCKED"))))
-     (:name "Prioritized" :and (:priority<= "B" :not (:todo ("WAITING" "BLOCKED"))))
-     (:name "Waiting/blocked" :todo ("WAITING" "BLOCKED"))
-     (:name "Due soon" :deadline future)))
+     (:name "Prioritized" :and (:not (:todo ("WAITING" "BLOCKED"))))
+     (:name "Waiting/blocked" :todo ("WAITING" "BLOCKED"))))
 
   ;; add space between dates by adding space after the final group
   (org-super-agenda-final-group-separator "\n"))
