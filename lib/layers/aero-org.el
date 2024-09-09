@@ -420,7 +420,6 @@ This function makes sure that dates are aligned for easy reading."
      (:deadline past)
      (:deadline today)
      (:name "Priority B" :and (:priority "B" :not (:todo ("WAITING" "BLOCKED"))))
-     (:name "Past scheduled" :and (:scheduled past :not (:todo ("WAITING" "BLOCKED"))))
      (:name "Prioritized" :and (:priority<= "B" :not (:todo ("WAITING" "BLOCKED"))))
      (:name "Waiting/blocked" :todo ("WAITING" "BLOCKED"))
      (:name "Due soon" :deadline future)))
