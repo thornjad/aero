@@ -413,12 +413,9 @@ This function makes sure that dates are aligned for easy reading."
      (:name "Holidays" :tag "holiday" :category ("Holiday" "Anniversaries"))
      (:name "Outstanding meetings" :and (:scheduled past :tag "meeting"))
      (:time-grid t)
-     (:name "Priority A" :and (:priority "A" :not (:todo ("PR" "WAITING" "BLOCKED"))))
      (:name "Reviews to do" :and (:tag "review" :todo "REVIEW" :not (:todo ("WAITING" "BLOCKED"))))
      (:name "Support" :and (:tag "support" :not (:todo ("WAITING" "BLOCKED"))))
-     (:name "Tickets and PRs" :and (:todo ("PR" "TICKET") :not (:todo ("WAITING" "BLOCKED"))))
-     (:deadline past)
-     (:deadline today)
+     (:deadline past :deadline today)
      (:name "Prioritized" :and (:not (:todo ("WAITING" "BLOCKED"))))
      (:name "Waiting/blocked" :todo ("WAITING" "BLOCKED"))))
 
