@@ -135,10 +135,12 @@ This function makes sure that dates are aligned for easy reading."
 	            dayname day monthname year weekstring quarter)))
 
   :custom
+  (org-hide-leading-stars nil)
+  (org-indent-mode-turns-on-hiding-stars nil) ; why would this even exist??
   (org-insert-heading-respect-content t) ; insert headings after current subtree
   (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
   (org-startup-with-inline-images t) ; default to showing images on startup
-  (org-startup-indented t) ; default to indenting properly
+  (org-startup-indented nil) ; default to not doing silly indenting
   (org-log-done 'time) ; log time when item is marked done
   (org-log-into-drawer t) ; put logs in LOGBOOK
   (org-refile-use-outline-path t) ; show path to outline level during refile
@@ -291,8 +293,7 @@ This function makes sure that dates are aligned for easy reading."
   (org-agenda-show-future-repeats nil) ; don't show repeating tasks on future agenda dates
   (org-agenda-custom-commands
    `(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
-     ("s" "School items"
-      ((agenda "") (alltodo ""))
+     ("s" "School items" agenda ""
       ((org-agenda-files '(,(expand-file-name "school.org" aero/thornlog-path)))))
      ("e" "Experimentation tag" tags "experimentation")))
 
@@ -375,7 +376,10 @@ This function makes sure that dates are aligned for easy reading."
 ;; Org-mode UI improvements
 (package! org-modern "minad/org-modern"
   :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize-hook . org-modern-agenda)))
+         (org-agenda-finalize-hook . org-modern-agenda))
+  :custom
+  (org-modern-hide-stars nil)
+  (org-modern-star nil))
 
 ;; Use evil in org, particularly in org-agenda. Also unblocks using aero-leader chords. See
 ;; https://github.com/Somelauw/evil-org-mode for a list of available commands
