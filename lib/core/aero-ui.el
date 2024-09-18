@@ -82,8 +82,18 @@
 (show-paren-mode 1)  ; highlight matching parens
 (pixel-scroll-mode 1)  ; smoother scrolling
 
-;; TEMP, disabled to see if I miss it, remove this if I don't
-;; (global-hl-line-mode +1)
+(global-hl-line-mode +1)
+(defun aero/suggest-other-faces (func &rest args)
+  "When hl-line-mode is active, suggest a face calculated without it.
+
+Credit: Sacha Chua"
+  (if global-hl-line-mode
+      (progn
+        (global-hl-line-mode -1)
+        (prog1 (apply func args)
+          (global-hl-line-mode 1)))
+    (apply func args)))
+(advice-add #'face-at-point :around #'aero/suggest-other-faces)
 
 ;; allow navigation by visual wrapped lines rather than real lines
 (global-visual-line-mode +1)
