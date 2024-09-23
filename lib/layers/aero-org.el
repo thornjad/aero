@@ -616,8 +616,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (progn
         (shell-command "git add -A")
         (shell-command (format "git commit -m '%s'" timestamp))
-        (shell-command "git push origin")
-        (message "Done with Thornlog commit and push")))))
+        (if (not (zerop (shell-command "git push origin")))
+            (message "Git push failed, manual inspection required")
+          (message "Done with Thornlog commit and push"))))))
 
 (defun aero/elfeed-save-push ()
   "Save and push elfeed."
@@ -634,8 +635,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
             (message "No elfeed changes to commit")
           (progn
             (shell-command (format "git commit -m '%s'" timestamp))
-            (shell-command "git push origin")
-            (message "Done with elfeed commit and push")))))))
+            (if (not (zerop (shell-command "git push origin")))
+                (message "Git push failed, manual inspection required")
+              (message "Done with elfeed commit and push"))))))))
 
 (defun insert-meeting-task ()
   (interactive)
