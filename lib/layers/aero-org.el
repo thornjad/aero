@@ -360,6 +360,8 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
 
   ;; Get rid of the idiotic indentation after pressing enter
   (advice-add 'org-return :after #'aero/org-deindent-on-return)
+  (with-eval-after-load 'evil
+    (advice-add 'evil-org-open-below :after #'aero/org-deindent-on-return))
 
   ;; Also save after state change
   (add-hook 'org-after-todo-state-change-hook #'org-save-all-org-buffers)
