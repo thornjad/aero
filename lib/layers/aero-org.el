@@ -134,6 +134,16 @@ This function makes sure that dates are aligned for easy reading."
       (format "%-10s %2d %s %4d%s   (Q%s)"
 	            dayname day monthname year weekstring quarter)))
 
+  (defun aero/org-deindent-on-return (&rest _)
+    "De-indent the current line if there is only whitespace before the point when pressing ENTER.
+
+This behavior is IDIOTIC and I cannot suffer to live with this automatic indentation any longer."
+    (when (and (derived-mode-p 'org-mode)
+               (save-excursion
+                 (move-beginning-of-line 1)
+                 (looking-at-p "[ \t]*$")))
+      (delete-horizontal-space)))
+
   :custom
   (org-hide-leading-stars nil)
   (org-indent-mode-turns-on-hiding-stars nil) ; why would this even exist??
@@ -347,6 +357,9 @@ This function makes sure that dates are aligned for easy reading."
   ;; Collapse entries when they are marked as done, and expand when reopened
   (add-hook 'org-after-todo-state-change-hook #'aero/org-collapse-entry-if-done)
   (add-hook 'org-after-todo-state-change-hook #'aero/org-expand-entry-if-todo)
+
+  ;; Get rid of the idiotic indentation after pressing enter
+  (advice-add 'org-return :after #'aero/org-deindent-on-return)
 
   ;; Also save after state change
   (add-hook 'org-after-todo-state-change-hook #'org-save-all-org-buffers)
