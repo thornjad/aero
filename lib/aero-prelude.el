@@ -866,7 +866,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
 ;; Drag stuff around
 (package! drag-stuff "rejeep/drag-stuff.el"
   :defer 1
-  :after (general)
+  :after (general evil)
   :config
   (drag-stuff-global-mode 1)
   (general-def

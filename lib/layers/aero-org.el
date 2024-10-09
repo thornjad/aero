@@ -435,7 +435,8 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
      (:name "5-minute items" :effort< "0:05")
      (:name "Reviews to do" :and (:tag "review" :todo "REVIEW" :not (:todo ("WAITING" "BLOCKED"))))
      (:name "Support" :and (:tag "support" :not (:todo ("WAITING" "BLOCKED"))))
-     (:deadline past :deadline today)
+     (:name "Past due" :and (:deadline past :not (:todo ("WAITING" "BLOCKED"))))
+     (:name "Due today" :and (:deadline today :not (:todo ("WAITING" "BLOCKED"))))
      (:name "Prioritized" :and (:not (:todo ("WAITING" "BLOCKED"))))
      (:name "Waiting/blocked" :todo ("WAITING" "BLOCKED"))))
 
