@@ -20,15 +20,6 @@
 ;;
 ;;; Code:
 
-;; Aero LLM assistant interface, this has fallen far behind gptel so we'll probably drop this
-;; eventually
-(package! assist :local :load-path "lib/localpackages/assist"
-  :after (general)
-  :commands (assist-chat assist-commit-message assist-diff-qa-steps)
-  :custom
-  (assist-openai-api-key openai-api-key)
-  (assist-anthropic-api-key anthropic-api-key))
-
 (package! gptel "karthink/gptel"
   :after (general)
   :commands (gptel gptel-send gptel-menu)
