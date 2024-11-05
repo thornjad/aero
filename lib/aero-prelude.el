@@ -779,7 +779,9 @@ https://blog.jmthornton.net/p/emacs-project-override"
   (undo-tree-visualizer-diff t)
 
   :config
-  (global-undo-tree-mode +1))
+  (global-undo-tree-mode +1)
+  ;; enable in non-file buffers too
+  (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
 (package! winner :builtin
   :after (general)
