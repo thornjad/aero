@@ -47,10 +47,11 @@
               eshell-next-input)
   :config
   ;; Ensure eshell doesn't override these
-  (define-key eshell-mode-map (kbd "M-h") 'windmove-left)
-  (define-key eshell-mode-map (kbd "M-l") 'windmove-right)
-  (define-key eshell-mode-map (kbd "M-p") 'eshell-previous-input)
-  (define-key eshell-mode-map (kbd "M-n") 'eshell-next-input)
+  (define-key eshell-mode-map (kbd "M-h") #'windmove-left)
+  (define-key eshell-mode-map (kbd "M-l") #'windmove-right)
+  (define-key eshell-mode-map (kbd "M-p") #'eshell-previous-input)
+  (define-key eshell-mode-map (kbd "M-n") #'eshell-next-input)
+  (define-key eshell-mode-map (kbd "M-r") #'consult-history)
 
   (setq
    eshell-save-history-on-exit t
@@ -152,6 +153,9 @@
 (package! esh-help :auto
   :after eshell
   :config (setup-esh-help-eldoc))
+
+(package! capf-autosuggest "emacs-straight/capf-autosuggest"
+  :hook (eshell-mode . capf-autosuggest-mode))
 
 
 ;; shell scripting
