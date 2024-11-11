@@ -610,7 +610,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
   ;; Use Orderless to compile the regexp for consult-ripgrep
   (defun consult--orderless-regexp-compiler (input type &rest _config)
-    (setq input (orderless-pattern-compiler input))
+    (setq input (cdr (orderless-compile input)))
     (cons
      (mapcar (lambda (r) (consult--convert-regexp r type)) input)
      (lambda (str) (orderless--highlight input t str))))
