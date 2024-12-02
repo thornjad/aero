@@ -122,7 +122,7 @@ This function makes sure that dates are aligned for easy reading."
 	         (monthname (calendar-month-name month))
 
            ;; divisor must be float so (/) doesn't do integer division
-           (quarter (ceiling (/ (1+ month) 3.0)))
+           (quarter (round (/ (1+ month) 3.0)))
 
 	         (year (nth 2 date))
 	         (iso-week (org-days-to-iso-week
