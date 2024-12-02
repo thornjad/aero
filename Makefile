@@ -107,4 +107,5 @@ lsp-booster:
 	else git clone git@github.com:blahgeek/emacs-lsp-booster.git ~/.config/emacs/tmp/emacs-lsp-booster; \
 	fi
 	cd ~/.config/emacs/tmp/emacs-lsp-booster && cargo build --release
+	mkdir -p ~/.local/bin
 	ln -sf ~/.config/emacs/tmp/emacs-lsp-booster/target/release/emacs-lsp-booster ~/.local/bin/emacs-lsp-booster
