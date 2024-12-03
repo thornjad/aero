@@ -16,6 +16,7 @@
 .lsp-*
 .places
 .projectile
+.project.el
 .recentf
 .recentf~
 .smex-items
