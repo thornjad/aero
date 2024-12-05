@@ -93,7 +93,7 @@ install-deps: lsp-booster graphviz
 
 	rustup component add rls rust-analysis rust-src || true
 	brew install clojure-lsp/brew/clojure-lsp-native || true
-	brew install ispell
+	brew install aspell
 	gem install solargraph || true
 	opam install ocaml-lsp-server || true
 	nix-env -i rnix-lsp || true
