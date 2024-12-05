@@ -19,8 +19,12 @@
 
 (require 'aero-prelude)
 
-(defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/thornlog-path)
+
+(defvar aero/thornlog-path (expand-file-name "thornlog/" aero/documents-path))
+(defvar aero/thornlog-archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
+(defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/documents-path)
   "The directory where elfeed will store its database and other files.")
+(defvar aero/thornlog-elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-path))
 
 (package! elfeed "skeeto/elfeed"
   :commands (elfeed elfeed-db-compact)
@@ -36,7 +40,7 @@
 
 ;; lets us use an elfeed.org file to manage our feeds and their tags
 (package! aero-elfeed-org :localpackage
-  :custom (aero-elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))
+  :custom (aero-elfeed-org-file aero/thornlog-elfeed-org-file)
   :config (aero-elfeed-org))
 
 

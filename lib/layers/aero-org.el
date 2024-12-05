@@ -636,25 +636,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
             (user-error "Git push failed, manual inspection required")
           (message "Done with Thornlog commit and push"))))))
 
-(defun aero/elfeed-save-push ()
-  "Save and push elfeed."
-  (interactive)
-  (let* ((default-directory (expand-file-name "elfeed/" aero/thornlog-path))
-         (timestamp (format-time-string "%Y-%m-%d %H:%M")))
-    (save-some-buffers t)
-    (elfeed-db-compact)
-    (if (not (zerop (shell-command "git rev-list --count @{u}..")))
-        (user-error "Remote has changes, manual commit required")
-      (progn
-        (shell-command "git add -A")
-        (if (zerop (shell-command "git diff --cached --exit-code"))
-            (message "No elfeed changes to commit")
-          (progn
-            (shell-command (format "git commit -m '%s'" timestamp))
-            (if (not (zerop (shell-command "git push origin")))
-                (user-error "Git push failed, manual inspection required")
-              (message "Done with elfeed commit and push"))))))))
-
 (defun insert-meeting-task ()
   (interactive)
   (let* ((meeting-name (read-string "Meeting Name: "))
