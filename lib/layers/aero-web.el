@@ -81,30 +81,4 @@
     "y" 'restclient-copy-curl-command))
 
 
-;; yarn.lock derived mode
-
-(defvar yarn-lock-mode-syntax-table
-  (let ((syntable (make-syntax-table)))
-    (modify-syntax-entry ?# "<" syntable)
-    (modify-syntax-entry ?\n ">" syntable)
-    (modify-syntax-entry ?\" "\"" syntable)
-    syntable))
-
-(defvar yarn-lock-mode-package-re "\\(^\\|,\\s-\\)\\([a-zA-Z-_0-9]+\\)@")
-(defvar yarn-lock-mode-dependencies-re "\\s-\\{4,\\}\\([a-zA-Z-_0-9]+\\)\\s-")
-(defvar yarn-lock-mode-attributes-re
-  (regexp-opt '("version" "resolved" "dependencies" "integrity")))
-(defvar yarn-lock-mode-font-lock-defaults
-  `((,yarn-lock-mode-attributes-re . '((t :inherit font-lock-builtin-face)))
-    (,yarn-lock-mode-package-re . (2 '((t :inherit bold)) t)) ;; Direct deps
-    (,yarn-lock-mode-dependencies-re . (1 '((t :inherit bold)) t)) ;; Dep of another dep (nested)
-    ))
-(define-derived-mode yarn-lock-mode text-mode "Yarn Lock"
-  "Simple mode for yarn.lock."
-  :syntax-table yarn-lock-mode-syntax-table
-  (setq font-lock-defaults '(yarn-lock-mode-font-lock-defaults)
-        buffer-read-only t))
-(add-to-list 'auto-mode-alist '("yarn\\.lock\\'" . yarn-lock-mode))
-
-
 (provide 'aero-web)

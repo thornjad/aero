@@ -820,13 +820,7 @@ https://blog.jmthornton.net/p/emacs-project-override"
     "6" '(winum-select-window-6 :wk "window-6")
     "7" '(winum-select-window-7 :wk "window-7")
     "8" '(winum-select-window-8 :wk "window-8")
-    "9" '(winum-select-window-9 :wk "window-9")
-    "wg" '(winum-select-window-by-number :wk "select window by number"))
-
-  ;; collapse all those window commands to one summary in which-key
-  (push '(("\\(.*\\) 0" . "winum-select-window-0") . ("\\1 0..9" . "window 0..9"))
-        which-key-replacement-alist)
-  (push '((nil . "select-window-[1-9]") . t) which-key-replacement-alist))
+    "9" '(winum-select-window-9 :wk "window-9")))
 
 ;; Improved version of help buffers
 (package! helpful "Wilfred/helpful"
@@ -864,16 +858,6 @@ https://blog.jmthornton.net/p/emacs-project-override"
   (evil-define-key 'normal helpful-mode-map
     "q" 'kill-current-buffer
     "?" 'describe-mode))
-
-;; Drag stuff around
-(package! drag-stuff "rejeep/drag-stuff.el"
-  :defer 1
-  :after (general evil)
-  :config
-  (drag-stuff-global-mode 1)
-  (general-def
-    (kbd "C-j") 'drag-stuff-down
-    (kbd "C-k") 'drag-stuff-up))
 
 
 ;;; System-specifics

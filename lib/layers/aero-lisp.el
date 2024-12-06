@@ -203,6 +203,7 @@ does not specify a special indentation."
 
 ;; Elisp-specific
 
+;; Linting for Emacs packages
 (package! package-lint "purcell/package-lint"
   :commands (package-lint-current-buffer))
 
