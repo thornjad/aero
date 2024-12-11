@@ -393,13 +393,55 @@ that have been defined using `sp-pair' or `sp-local-pair'."
   (aero-leader-def
     "bI" 'apheleia-format-buffer))
 
+;; Debug adapter, see https://github.com/svaante/dape for setup instructions, there's a lot of
+;; manual setup required
 (package! dape "svaante/dape"
   :after (general project eglot)
   :custom
   (dape-buffer-window-arrangement 'right)
+  (dape-adapter-dir (expand-file-name "debug-adapters/" user-emacs-directory))
+  (dape-inlay-hints t)
   :config
   ;; Save buffers on startup, useful for interpreted languages
-  (add-hook 'dape-on-start-hooks (lambda () (save-some-buffers t t))))
+  (add-hook 'dape-on-start-hooks (lambda () (save-some-buffers t t)))
+
+  (setq dape-configs-port 4711)
+
+  (defun aero/install-vscode-js-debug ()
+    "Run installation procedure to install JS debugging support"
+    (interactive)
+    (let ((vscode-js-debug-dir (expand-file-name "js-debug" dape-adapter-dir)))
+      (mkdir vscode-js-debug-dir t)
+      (let ((default-directory (expand-file-name vscode-js-debug-dir)))
+        (vc-git-clone "https://github.com/microsoft/vscode-js-debug.git" "." nil)
+        (message "git repository created")
+        (call-process "npm" nil "*aero-install*" t "install")
+        (message "npm dependencies installed")
+        (call-process "npx" nil "*aero-install*" t "gulp" "dapDebugServer")
+        (message "vscode-js-debug installed"))))
+
+  ;; Set up JS
+  (add-to-list 'dape-configs
+               `(js-debug-node
+                 modes (js-mode js-ts-mode typescript-mode typescript-ts-mode)
+                 ;; Command to start the debug adapter
+                 command "node"
+                 command-cwd ,(concat dape-adapter-dir "js-debug")
+                 command-args ("src/dapDebugServer.js" ,(format "%d" dape-configs-port))
+                 ;; Port that Emacs will connect to the debug adapter
+                 port ,dape-configs-port
+                 ;; Debug configuration
+                 :type "pwa-node"
+                 :request "attach"
+                 :name "Attach to Jest Test"
+                 :address "localhost"
+                 :port 9229 ;; Node.js debug port (from --inspect-brk)
+                 :localRoot dape-cwd-fn
+                 :remoteRoot nil
+                 :skipFiles ["<node_internals>/**" "**/node_modules/**"]
+                 :resolveSourceMapLocations ["!**/node_modules/**" "**/*"]
+                 )))
+
 
 
 ;;; auto modes and stuff
