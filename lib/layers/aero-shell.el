@@ -154,6 +154,7 @@
   :after eshell
   :config (setup-esh-help-eldoc))
 
+;; Provides overlay suggestions in eshell. Use M-f to insert the next suggested word
 (package! capf-autosuggest "emacs-straight/capf-autosuggest"
   :hook (eshell-mode . capf-autosuggest-mode))
 
