@@ -713,7 +713,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
 
 If this file exists, it marks the project root. For convenient compatibility with Projectile, '.projectile' is also considered a project root marker.
 
-https://blog.jmthornton.net/p/emacs-project-override"
+https://jmthornton.net/blog/p/emacs-project-override"
     (let ((root (or (locate-dominating-file dir ".project.el")
                     (locate-dominating-file dir ".projectile")))
           (backend (ignore-errors (vc-responsible-backend dir))))
