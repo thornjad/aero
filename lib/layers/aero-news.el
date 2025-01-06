@@ -38,24 +38,12 @@
   (evil-set-initial-state 'elfeed-search-mode 'normal)
   (evil-set-initial-state 'elfeed-show-mode 'normal))
 
-<<<<<<< Updated upstream
-;; lets us use an elfeed.org file to manage our feeds and their tags
-(package! aero-elfeed-org :localpackage
-  :custom (aero-elfeed-org-file aero/thornlog-elfeed-org-file)
-  :config (aero-elfeed-org))
-||||||| Stash base
-;; lets us use an elfeed.org file to manage our feeds and their tags
-(package! aero-elfeed-org :localpackage
-  :custom (aero-elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory))
-  :config (aero-elfeed-org))
-=======
 ;; lets us use an elfeed.org file to manage our feeds and their tags.
-(let ((org-file (expand-file-name "elfeed.org" aero/thornlog-elfeed-directory)))
-  (package! aero-elfeed-org :localpackage
-    :config
-    (when org-file (setq aero-elfeed-org-file org-file))
-    (aero-elfeed-org)))
->>>>>>> Stashed changes
+(package! aero-elfeed-org :localpackage
+  :config
+  (when aero/thornlog-elfeed-org-file
+    (setq aero-elfeed-org-file aero/thornlog-elfeed-org-file))
+  (aero-elfeed-org))
 
 
 
