@@ -440,6 +440,7 @@ that have been defined using `sp-pair' or `sp-local-pair'."
                  :remoteRoot nil
                  :skipFiles ["<node_internals>/**" "**/node_modules/**"]
                  :resolveSourceMapLocations ["!**/node_modules/**" "**/*"]
+                 :suppressSourceMapWarning t
                  )))
 
 
