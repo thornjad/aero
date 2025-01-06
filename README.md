@@ -12,7 +12,7 @@
 
 Here lives my own configuration for GNU Emacs, blending all the best shit I can find, making a conscious effort for speed, robustness and above all, skillfulness. There are many like it, but this one is mine.
 
-Aero is not intended as a general distribution. It undergoes constant evolution; bindings, settings and packages change with no warning and little to no documentation. This project is open source as a reference or source of ideas. Use at your own risk.
+Aero is not a general distribution Emacs configuration system. It undergoes constant evolution; bindings, settings and packages change with no warning and little to no documentation. This project is open source as a reference or source of ideas. Use at your own risk.
 
 To get started with Emacs, I highly recommend the distribution responsible for hooking me in: [Spacemacs](https://spacemacs.org).
 
