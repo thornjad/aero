@@ -25,7 +25,7 @@
   :commands (gptel gptel-send gptel-menu)
   :custom
   (gptel-api-key openai-api-key)
-  (gptel-model "o1-preview") ; default model
+  (gptel-model "gpt-4o") ; default model when starting a buffer
   (gptel-use-header-line t)
   (gptel-display-buffer-action '(pop-to-buffer-same-window)) ; chat in same window
   (gptel-prompt-prefix-alist '((markdown-mode . "\n### ")
