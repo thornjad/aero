@@ -206,7 +206,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
       (file+headline
        ,(expand-file-name "todo.org" aero/thornlog-path)
        "Reading")
-      "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
+      "* TODO [#E] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)
      ("s" "Time sink" entry
       (file+headline
