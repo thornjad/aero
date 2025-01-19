@@ -78,14 +78,11 @@
   :after (company-box general)
   :hook (prog-mode . copilot-mode)
   :custom (copilot-idle-delay 0.2) ; longer than default so it doesn't mess with typing
-  :config
-  (general-define-key
-   :states '(insert visual motion)
-   :keymaps 'copilot-mode-map
-   (kbd "C-<tab>") 'copilot-accept-completion
-   "C-i" 'copilot-accept-completion
-   "C-c C-n" 'copilot-next-completion
-   "C-c C-p" 'copilot-previous-completion))
+  :bind (:map copilot-mode-map
+         ("C-<tab>" . copilot-accept-completion)
+         ("C-c C-i" . copilot-accept-completion)
+         ("C-c C-n" . copilot-next-completion)
+         ("C-c C-p" . copilot-previous-completion)))
 
 (provide 'aero-ai)
 ;;; aero-ai.el ends here
