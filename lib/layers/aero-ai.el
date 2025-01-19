@@ -83,8 +83,9 @@
    :states '(insert visual motion)
    :keymaps 'copilot-mode-map
    (kbd "C-<tab>") 'copilot-accept-completion
-   (kbd "C-c C-n") 'copilot-next-completion
-   (kbd "C-c C-p") 'copilot-previous-completion))
+   "C-i" 'copilot-accept-completion
+   "C-c C-n" 'copilot-next-completion
+   "C-c C-p" 'copilot-previous-completion))
 
 (provide 'aero-ai)
 ;;; aero-ai.el ends here
