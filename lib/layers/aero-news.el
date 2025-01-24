@@ -25,7 +25,7 @@
 (defvar aero/thornlog-archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
 (defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/documents-path)
   "The directory where elfeed will store its database and other files.")
-(defvar aero/thornlog-elfeed-org-file (expand-file-name "elfeed.org" aero/thornlog-path))
+(defvar aero/thornlog-elfeed-org-file (expand-file-name "rss_feeds" aero/roam-path))
 
 (package! elfeed "skeeto/elfeed"
   :commands (elfeed elfeed-db-compact)
