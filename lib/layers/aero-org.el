@@ -816,7 +816,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (aero-leader-def
     "vf" 'org-roam-node-find
     "vF" 'org-roam-capture
-    "vi" 'org-roam-node-insert))
+    "vi" 'org-roam-node-insert
+    "vr" 'org-roam-refile))
 
 (package! consult-org-roam "jgru/consult-org-roam"
   :after (org-roam general)
