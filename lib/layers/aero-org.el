@@ -817,6 +817,8 @@ response. I'm too lazy to create a weights map or something, this is easier.")
     "vf" 'org-roam-node-find
     "vF" 'org-roam-capture
     "vi" 'org-roam-node-insert
+    "vc" '(org-id-get-create :wk "create org ID for node")
+    "va" 'org-roam-alias-add
     "vr" 'org-roam-refile))
 
 (package! consult-org-roam "jgru/consult-org-roam"
