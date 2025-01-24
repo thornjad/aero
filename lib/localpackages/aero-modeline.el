@@ -173,13 +173,13 @@ respectively."
   "Displays a color-coded buffer modification indicator in the mode-line."
   (cond
    ((and buffer-read-only (buffer-file-name))  ;; read-only
-    (propertize "" 'face `(:inherit aero/modeline-read-only :height 0.6)))
+    (propertize "⏿" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((string-match-p "\\*.*\\*" (buffer-name))  ;; special buffer
-    (propertize "" 'face `(:inherit aero/modeline-read-only :height 0.6)))
+    (propertize "ϱ" 'face `(:inherit aero/modeline-read-only :height 0.6)))
    ((buffer-modified-p)  ;; modified
     (propertize "✎" 'face `(:inherit aero/modeline-modified :height 0.65)))
    (t  ;; not modified
-    (propertize "" 'face `(:inherit aero/modeline-not-modified :height 0.6)))))
+    (propertize "✓" 'face `(:inherit aero/modeline-not-modified :height 0.6)))))
 
 (defun aero/modeline-segment-git-state ()
   "Displays the current branch and status from Git.

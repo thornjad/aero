@@ -145,12 +145,13 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
       (delete-horizontal-space)))
 
   :custom
-  (org-hide-leading-stars nil)
+  (org-hide-leading-stars t)
+  (org-pretty-entities nil)
   (org-indent-mode-turns-on-hiding-stars nil) ; why would this even exist??
   (org-insert-heading-respect-content t) ; insert headings after current subtree
   (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
   (org-startup-with-inline-images t) ; default to showing images on startup
-  (org-startup-indented nil) ; default to not doing silly indenting
+  (org-startup-indented t)
   (org-log-done 'time) ; log time when item is marked done
   (org-log-into-drawer t) ; put logs in LOGBOOK
   (org-refile-use-outline-path t) ; show path to outline level during refile
@@ -397,8 +398,8 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize-hook . org-modern-agenda))
   :custom
-  (org-modern-hide-stars nil)
-  (org-modern-star nil))
+  (org-modern-star 'replace) ; uses the "replace" set of stars
+  )
 
 ;; Use evil in org, particularly in org-agenda. Also unblocks using aero-leader chords. See
 ;; https://github.com/Somelauw/evil-org-mode for a list of available commands
