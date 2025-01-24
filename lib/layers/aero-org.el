@@ -816,8 +816,20 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (aero-leader-def
     "vf" 'org-roam-node-find
     "vF" 'org-roam-capture
-    "vi" 'org-roam-node-insert
-    "vb" 'org-roam-buffer-toggle))
+    "vi" 'org-roam-node-insert))
+
+(package! consult-org-roam "jgru/consult-org-roam"
+  :after (org-roam general)
+  :init
+  (consult-org-roam-mode +1) ; hook consult functionality into normal org-roam
+  :custom
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+  (aero-leader-def
+    "vb" 'consult-org-roam-backlinks
+    "vB" 'consult-org-roam-backlinks-recursive
+    "vl" 'consult-org-roam-forward-links
+    "v'" 'consult-org-roam-search))
 
 
 (provide 'aero-org)
