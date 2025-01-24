@@ -589,6 +589,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :custom
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
+  (consult-preview-key '(:debounce 0.4 any))
 
   :init
   (aero-leader-def

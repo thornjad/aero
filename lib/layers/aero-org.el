@@ -823,8 +823,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
 (package! consult-org-roam "jgru/consult-org-roam"
   :after (org-roam general)
-  :init
-  (consult-org-roam-mode +1) ; hook consult functionality into normal org-roam
   :custom
   (consult-org-roam-grep-func #'consult-ripgrep)
   :config
