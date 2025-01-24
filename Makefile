@@ -71,9 +71,11 @@ nongnu-elpa:
 	mkdir -p ~/.config/emacs/straight/repos/
 	git clone https://git.savannah.gnu.org/git/emacs/nongnu.git ~/.config/emacs/straight/repos/nongnu-elpa --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false
 
-init: nongnu-elpa install-deps
+submodule:
 	git submodule init
 	git submodule update
+
+init: nongnu-elpa install-deps submodule
 
 clear-straight:
 	rm -rf ./straight/
@@ -84,6 +86,7 @@ hard-init: clear-straight init
 # Continues even on failures. This lets us only install what the system can install, but can
 # swallow up errors
 install-deps: lsp-booster graphviz
+	brew install node ripgrep
 	npm i -g bash-language-server @types/node || true
 	npm i -g @angular/language-service@next typescript @angular/language-server typescript-language-server eslint @elm-tooling/elm-language-server || true
 	npm i -g emmet-ls vscode-json-languageserver || true
@@ -95,8 +98,6 @@ install-deps: lsp-booster graphviz
 	brew install clojure-lsp/brew/clojure-lsp-native || true
 	brew install aspell
 	gem install solargraph || true
-	opam install ocaml-lsp-server || true
-	nix-env -i rnix-lsp || true
 
 # Required for org-roam graphing
 graphviz:
