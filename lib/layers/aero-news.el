@@ -21,6 +21,7 @@
 
 
 (defvar aero/thornlog-path (expand-file-name "thornlog/" aero/documents-path))
+(defvar aero/roam-path (expand-file-name "roam/" aero/thornlog-path))
 (defvar aero/thornlog-archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
 (defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/documents-path)
   "The directory where elfeed will store its database and other files.")

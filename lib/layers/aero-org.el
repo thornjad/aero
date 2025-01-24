@@ -167,56 +167,56 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (org-capture-templates
    `(("t" "Deadline/Scheduled Task" entry
       (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
+       ,(expand-file-name "todo.org" aero/roam-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
       :empty-lines 1)
      ("p" "Ticket (PR)" entry
       (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
+       ,(expand-file-name "todo.org" aero/roam-path)
        "Tasks")
       "* TICKET [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)
      ("r" "Review (PR or tech design)" entry
       (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
+       ,(expand-file-name "todo.org" aero/roam-path)
        "Tasks")
       "* REVIEW [#B] %? :review:\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\nLink: "
       :empty-lines 1)
      ("s" "School inbox item" entry
       (file+headline
-       ,(expand-file-name "school.org" aero/thornlog-path)
+       ,(expand-file-name "school.org" aero/roam-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
       :empty-lines 1)
      ("n" "Note" entry
       (file+headline
-       ,(expand-file-name "notes.org" aero/thornlog-path)
+       ,(expand-file-name "notes_inbox.org" aero/roam-path)
        "Notes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :jump-to-captured t
       :empty-lines 1)
      ("e" "Experimentation idea" entry
       (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
+       ,(expand-file-name "todo.org" aero/roam-path)
        "Experimentation")
       "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
       :empty-lines 1)
      ("R" "Reading" entry
       (file+headline
-       ,(expand-file-name "todo.org" aero/thornlog-path)
+       ,(expand-file-name "todo.org" aero/roam-path)
        "Reading")
-      "* TODO [#E] %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
+      "* TODO [#E] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)
      ("s" "Time sink" entry
       (file+headline
-       ,(expand-file-name "notes.org" aero/thornlog-path)
+       ,(expand-file-name "20250123102747-time_sinks_at_dd.org" aero/roam-path)
        "Time sinks")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)
      ("m" "Mistake" entry
       (file+headline
-       ,(expand-file-name "notes.org" aero/thornlog-path)
+       ,(expand-file-name "20250123103552-mistakes_to_learn_from_at_dd.org" aero/roam-path)
        "Mistakes")
       "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
       :empty-lines 1)))
@@ -227,7 +227,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
      (sequence "REVIEW(r)" "WAITING(w!)" "BLOCKED(b!)" "|" "DONE(d!)" "CLOSED(x)")))
 
   (org-use-fast-todo-selection 'expert) ; don't fuck up the window layout
-  (org-default-notes-file (expand-file-name "notes.org" aero/thornlog-path))
+  (org-default-notes-file (expand-file-name "notes_inbox.org" aero/roam-path))
   (org-priority-faces '((?A . error)
                         (?B . warning)
                         (?C . success)
@@ -252,13 +252,17 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (org-agenda-start-day nil) ; day to start at
   (org-agenda-start-on-weekday nil) ; start week on current day
   (org-agenda-format-date #'aero/org-agenda-format-date)
+  (org-agenda-prefix-format '((agenda . " %i %?-12t% s")
+                              (todo . " %i %-12:c")
+                              (tags . " %i %-12:c")
+                              (search . " %i %-12:c")))
 
   ;; all agenda files
-  (org-agenda-files `(,(expand-file-name "todo.org" aero/thornlog-path)
-                      ,(expand-file-name "log.org" aero/thornlog-path)
-                      ,(expand-file-name "ritual.org" aero/thornlog-path)
-                      ,(expand-file-name "holidays.org" aero/thornlog-path)
-                      ,(expand-file-name "notes.org" aero/thornlog-path)))
+  (org-agenda-files `(,(expand-file-name "todo.org" aero/roam-path)
+                      ,(expand-file-name "log.org" aero/roam-path)
+                      ,(expand-file-name "ritual.org" aero/roam-path)
+                      ,(expand-file-name "holidays.org" aero/roam-path)
+                      ,(expand-file-name "notes_inbox.org" aero/roam-path)))
 
   ;; holidays I don't want to display
   (holiday-bahai-holidays nil)
@@ -304,7 +308,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (org-agenda-custom-commands
    `(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
      ("s" "School items" agenda ""
-      ((org-agenda-files '(,(expand-file-name "school.org" aero/thornlog-path)))))
+      ((org-agenda-files '(,(expand-file-name "20250123103442-school_todo.org" aero/roam-path)))))
      ("e" "Experimentation tag" tags "experimentation")))
 
   :init
@@ -480,7 +484,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (interactive)
   (let* ((org-agenda-files (list (buffer-file-name)
                                  (expand-file-name "archive/archive.org" aero/thornlog-path)
-                                 (expand-file-name "log.org" aero/thornlog-path)))
+                                 (expand-file-name "log.org" aero/roam-path)))
          (today (current-time))
          (weekday (format-time-string "%u" today))
          (days-back (if (string= weekday "1") 3 1)) ; If today is Monday (1), go back 3 days to Friday
@@ -517,7 +521,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   "Create a new entry for today, if not already present."
   (interactive)
   (cond
-   ((not (string-match "thornlog/log\\.org" (buffer-file-name)))
+   ((not (string-match "thornlog/roam/log\\.org" (buffer-file-name)))
     (message "Not in Thornlog file"))
    ((thornlog-today) (message "Entry for today already present"))
    (t (progn
@@ -597,7 +601,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 (defun aero/thornlog-log ()
   "Personal persistent log."
   (interactive)
-  (find-file (expand-file-name "log.org" aero/thornlog-path)))
+  (find-file (expand-file-name "log.org" aero/roam-path)))
 
 (defun aero/thornlog-today ()
   "Go to today's log if it exists."
@@ -605,15 +609,10 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (aero/thornlog-log)
   (thornlog-today))
 
-(defun aero/thornlog-notes ()
-  "Personal notes file."
-  (interactive)
-  (find-file (expand-file-name "notes.org" aero/thornlog-path)))
-
 (defun aero/thornlog-todo ()
   "Personal todo list."
   (interactive)
-  (find-file (expand-file-name "todo.org" aero/thornlog-path)))
+  (find-file (expand-file-name "todo.org" aero/roam-path)))
 
 (defun aero/thornlog-clean-save ()
   "Automates the git commit in thornlog."
@@ -621,7 +620,7 @@ response. I'm too lazy to create a weights map or something, this is easier.")
   (let* ((default-directory aero/thornlog-path)
          (timestamp (format-time-string "%Y-%m-%d %H:%M")))
     (save-some-buffers t)
-    (let ((todo-file (expand-file-name "todo.org" aero/thornlog-path)))
+    (let ((todo-file (expand-file-name "todo.org" aero/roam-path)))
       (when (file-exists-p todo-file)
         (with-current-buffer (find-file-noselect todo-file)
           (aero/org-archive-cleanup)

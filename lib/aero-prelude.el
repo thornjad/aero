@@ -276,7 +276,6 @@
    "fota" 'aero/open-agenda-file
    "fott" '(aero/thornlog-todo :wk "thornlog todo")
    "fotl" '(aero/thornlog-today :wk "thornlog log")
-   "fotn" '(aero/thornlog-notes :wk "thornlog notes")
    "fotd" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
    "fx" '(aero/xdg-open :wk "xdg-open")
