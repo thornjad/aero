@@ -25,7 +25,7 @@
   :commands (gptel gptel-send gptel-menu)
   :custom
   (gptel-api-key openai-api-key)
-  (gptel-model "gpt-4o") ; default model when starting a buffer
+  (gptel-model 'gpt-4o) ; default model when starting a buffer
   (gptel-use-header-line t)
   (gptel-display-buffer-action '(pop-to-buffer-same-window)) ; chat in same window
   (gptel-prompt-prefix-alist '((markdown-mode . "\n### ")
@@ -63,7 +63,7 @@
   :config
   ;; Register Claude backend, but we don't set it as default because it hallucinates much more than
   ;; GPT.
-  (when anthropic-api-key
+  (when (and (boundp 'anthropic-api-key) anthropic-api-key)
     (gptel-make-anthropic "Claude" :stream t :key anthropic-api-key)))
 
 ;; Quick llm lookup at point or region. Uses posframe if its installed (prelude)
