@@ -48,21 +48,4 @@
 
 
 
-(package! pocket-reader "alphapapa/pocket-reader.el"
-  :after (general)
-  :commands (pocket-reader)
-  :custom
-  (pocket-reader-open-url-default-function #'eww)
-  :init (aero-leader-def "aP" 'pocket-reader)
-  :config
-  ;; Evil messes with all the bindings, so we'll use the defaults in emacs mode.
-  (evil-set-initial-state 'pocket-reader-mode 'emacs))
-
-(package! hackernews "clarete/hackernews.el"
-  :after (general)
-  :commands (hackernews)
-  :init (aero-leader-def "an" 'hackernews))
-
-
-
 (provide 'aero-news)
