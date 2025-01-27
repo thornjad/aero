@@ -186,7 +186,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
       :empty-lines 1)
      ("s" "School inbox item" entry
       (file+headline
-       ,(expand-file-name "school.org" aero/roam-path)
+       ,(expand-file-name "school_todo.org" aero/roam-path)
        "Tasks")
       "* TODO [#C] %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n"
       :empty-lines 1)
@@ -309,7 +309,7 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (org-agenda-custom-commands
    `(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
      ("s" "School items" agenda ""
-      ((org-agenda-files '(,(expand-file-name "20250123103442-school_todo.org" aero/roam-path)))))
+      ((org-agenda-files '(,(expand-file-name "school_todo.org" aero/roam-path)))))
      ("e" "Experimentation tag" tags "experimentation")))
 
   :init
