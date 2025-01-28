@@ -18,135 +18,7 @@
 
 (require 'aero-prelude)
 
-;; Standard completions library
-(package! company
-  (:repo "company-mode/company-mode"
-   :files (:defaults "icons" ("images/small" "doc/images/small/*.png")))
-  :after (evil)
-  :hook ((prog-mode . company-mode)
-         (company-mode-hook . evil-normalize-keymaps))
-  :init
-  (setq company-idle-delay 0.2
-        company-selection-wrap-around t
-        company-minimum-prefix-length 2
-        company-dabbrev-downcase nil
-        company-tooltip-limit 15
-        company-tooltip-margin 2
-        company-require-match nil
-        company-show-numbers t
-        company-tooltip-align-annotations t
-        company-dabbrev-other-buffers t ; only look in open buffers with same major mode
-        company-global-modes '(not
-                               erc-mode message-mode help-mode gud-mode vterm-mode))
-  :config
-  ;; Wait until it's defined, then disable preview after point
-  (setq company-frontends (delq 'company-preview-if-just-one-frontend company-frontends)))
-
-;; Move commonly-used completions to the top
-(package! company-prescient
-  (:host github
-   :repo "radian-software/prescient.el"
-   :files ("company-prescient.el"))
-  :after (company)
-  :hook (company-mode . company-prescient-mode)
-  :custom (prescient-save-file (expand-file-name "prescient-save.el" aero-cache-dir))
-  :config (prescient-persist-mode +1))
-
-;; Better popup interface for company
-(package! company-box
-  (:repo "sebastiencs/company-box" :files (:defaults "images"))
-  :hook (company-mode . company-box-mode))
-
-
-;; LSP
-
-(package! eglot :builtin
-  :hook ((python-mode
-          python-ts-mode
-          clojure-mode
-          typescript-mode
-          typescript-ts-mode
-          js-mode
-          js-ts-mode)
-         . eglot-ensure)
-  :after (general project)
-
-  :custom
-  (eglot-confirm-server-initiated-edits nil) ; don't ask to edit file immediately after I told it to
-  (eglot-autoshutdown t) ; shutdown server after killing last managed buffer
-  (eglot-events-buffer-size 0) ; disable event logging
-  (eglot-send-changes-idle-time 0.75)
-  ;; LSP highlighting is ridiculously slow, we use highlight-thing instead
-  (eglot-ignored-server-capabilities '(:documentHighlightProvider))
-
-  :config
-  ;; Individual server configuration
-  (setq-default eglot-workspace-configuration
-                '(:pylsp (:plugins (:pycodestyle (:enabled :json-false)
-                                    ;; :pyflakes (:enabled :json-false)
-                                    :pyls_mypy (:enabled t
-                                                :live_mode :json-false)
-                                    :pyls_black (:enabled t)
-                                    :pyls_isort (:enabled t)))))
-
-  (aero-leader-def
-    "la" 'eglot-code-actions
-    "lf" '(:ignore t :wk "find")
-    "lfr" 'xref-find-references
-    "lfd" 'eglot-find-declaration
-    "lfi" 'eglot-find-implementation
-    "lft" 'eglot-find-typeDefinition
-    "lr" '(:ignore t :wk "refactor")
-    "lrr" 'eglot-rename
-    "lrf" 'eglot-format
-    "lro" 'eglot-code-action-organize-imports))
-
-;; Optimizations to Eglot, using emacs-lsp-booster under the hood. emacs-lsp-booster must have been
-;; installed already (its a Rust binary), which can be done with `make install-deps' or the more
-;; specific `make lsp-booster'
-(package! eglot-booster "jdtsmith/eglot-booster"
-  :after eglot
-  :config (eglot-booster-mode))
-
-;; Make eglot send more info to eldoc, including parameter and function documentation
-(package! eglot-signature-eldoc-talkative
-  (:host codeberg :repo "mekeor/eglot-signature-eldoc-talkative" :branch "default")
-  :after (eglot)
-  :config (advice-add #'eglot-signature-eldoc-function :override #'eglot-signature-eldoc-talkative))
-
-;; puts eldoc in a child frame instead of the echo area
-(package! eldoc-box (:repo "casouri/eldoc-box")
-  :after general
-
-  :preface
-  (defun aero/eldoc-set-documentation-strategy ()
-    (setq-local eldoc-documentation-strategy #'eldoc-documentation-compose))
-
-  (defun aero/eldoc-box-help-at-point ()
-    (interactive)
-    (if (and (fboundp 'eglot-managed-p) (eglot-managed-p))
-        (call-interactively #'eldoc-box-eglot-help-at-point)
-      (call-interactively #'eldoc-box-help-at-point)))
-
-  ;; Fix documentation strategy to show all of the available eldoc information when we want it. This
-  ;; way Flymake errors don't just get clobbered by docstrings.
-  :hook ((eglot-managed-mode . aero/eldoc-set-documentation-strategy)
-         (prog-mode . eldoc-box-hover-mode))
-
-  :custom
-  (eldoc-idle-delay 0.5)
-  (eldoc-box-only-multi-line t) ; leave single-line docs in minibuffer
-  (eldoc-box-max-pixel-width 600)
-  (eldoc-box-max-pixel-height 600)
-
-  :config
-  (aero-leader-def
-    "i" 'aero/eldoc-box-help-at-point
-    "li" 'eldoc-box-eglot-help-at-point))
-
-
 ;; C language
-
 (package! cc-mode :builtin
   :mode (("\\.c\\'" . c-mode)
          ("\\.h\\'" . c-mode)
@@ -157,9 +29,6 @@
     "Hook to run in all C modes"
     (set (make-local-variable 'parens-require-spaces) nil))
   :hook (c-mode-common . aero/c-mode-common-hook))
-
-
-;; Markup
 
 (package! markdown-mode "jrblevin/markdown-mode"
   :after (general smartparens)
