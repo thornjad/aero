@@ -156,6 +156,28 @@ Credit: Sacha Chua"
 ;; display time and date in echo area
 (package! aero-echo-area :localpackage :defer 4 :config (aero/echo-area-mode +1))
 
+;; Display hex values as their color
+(defun aero/rainbow-mode ()
+  "Display colors represented as hex values."
+  (interactive)
+  (remove-overlays (point-min) (point-max))
+  (let ((hex-color-regex "#[0-9a-fA-F]\\{3,6\\}"))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward hex-color-regex nil t)
+        (let* ((color (match-string 0))
+               (overlay (make-overlay (match-beginning 0) (match-end 0))))
+          (if (string-greaterp color "#888888")
+              (overlay-put overlay 'face `(:background ,color :foreground "black"))
+            (overlay-put overlay 'face `(:background ,color :foreground "white"))))))))
+(defun aero/rainbow-mode-disable ()
+  "Remove all hex color overlays in the current buffer."
+  (interactive)
+  (remove-overlays (point-min) (point-max)))
+(add-hook 'prog-mode-hook #'aero/rainbow-mode)
+(add-hook 'org-mode-hook #'aero/rainbow-mode)
+(add-hook 'conf-space-mode-hook #'aero/rainbow-mode)
+
 ;; make links in comments clickable
 (global-goto-address-mode +1)
 
