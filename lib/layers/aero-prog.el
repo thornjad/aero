@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2024 Jade Michael Thornton
+;; Copyright (c) 2018-2025 Jade Michael Thornton
 ;;
 ;; Permission to use, copy, modify, and/or distribute this software for any
 ;; purpose with or without fee is hereby granted, provided that the above
@@ -192,6 +192,33 @@
 
 (package! aero-yarn-lock :localpackage
   :mode "yarn\\.lock\\'")
+
+
+;; Web languages
+
+(package! web-mode "fxbois/web-mode"
+  :mode "\\.\\(jsp\\|tpl\\|php\\|xml\\|html?\\|erb\\|svg\\|jsx\\|s?css\\)\\'"
+  :custom (web-mode-enable-engine-detection t)
+  :config
+  ;; If we have tree-sitter, prefer tsx-ts-mode (which will also load eglot)
+  (unless (treesitterp) (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))))
+
+(package! emmet-mode :auto
+  :hook ((web-mode html-mode css-mode scss-mode js-mode) . emmet-mode)
+  :init (setq emmet-self-closing-tag-style " /")
+
+  :config
+  (add-hook
+   'js-mode-hook
+   (lambda () (setq emmet-expand-jsx-className? t))))
+
+(package! jest "thornjad/emacs-jest"
+  :commands (jest jest-file jest-test)
+  :after (general))
+
+;; Expand className prop in JSX
+(eval-when-compile (defvar emmet-expand-jsx-className?))
+(add-hook 'js-mode-hook (lambda () (setq emmet-expand-jsx-className? t)))
 
 
 ;; flymake

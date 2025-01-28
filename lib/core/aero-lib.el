@@ -131,6 +131,12 @@ See `sort-regexp-fields'."
   "Evaluate whether Emacs has treesitter support."
   (and aero/use-treesit-p (functionp 'treesit-available-p) (treesit-available-p)))
 
+(defun node-repl ()
+  "Launch a Node.js comint REPL."
+  (interactive)
+  (setenv "NODE_NO_READLINE" "1")  ; avoid fancy terminal codes
+  (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
+
 
 ;; program-wide
 

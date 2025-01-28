@@ -948,6 +948,22 @@ https://jmthornton.net/blog/p/emacs-project-override"
   :init
   (aero-leader-def "ap" 'pomp))
 
+(package! restclient :auto
+  :after (general)
+  :commands (restclient-mode)
+  :mode ("\\.http\\'" . restclient-mode)
+  :config
+  (require 'general)
+  (aero-mode-leader-def
+    :keymaps 'restclient-mode-map
+    "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
+    "c" '(restclient-http-send-current :wk "Run query at point and focus")
+    "r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
+    "n" 'restclient-jump-next
+    "p" 'restclient-jump-prev
+    "." 'restclient-mark-current
+    "y" 'restclient-copy-curl-command))
+
 (package! editorconfig "editorconfig/editorconfig-emacs"
   :defer 1
   :functions (editorconfig-mode)
