@@ -190,6 +190,9 @@
 (package! yaml-mode (:repo "yoshiki/yaml-mode")
   :mode "\\.ya?ml\\'")
 
+(package! aero-yarn-lock :localpackage
+  :mode "yarn\\.lock\\'")
+
 
 ;; flymake
 

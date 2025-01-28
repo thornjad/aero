@@ -43,5 +43,6 @@
   :syntax-table yarn-lock-mode-syntax-table
   (setq font-lock-defaults '(yarn-lock-mode-font-lock-defaults)
         buffer-read-only t))
+(add-to-list 'auto-mode-alist '("yarn\\.lock\\'" . yarn-lock-mode))
 
 (provide 'aero-yarn-lock)
