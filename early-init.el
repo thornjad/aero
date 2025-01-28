@@ -21,6 +21,17 @@
 ;;
 ;;; Code:
 
+;; Use most recent byte-compiled files
+(setq load-prefer-newer t)
+
+;; Native-compile async
+(setq native-comp-jit-compilation t)
+
+;; Ensure that quitting only occurs once Emacs finishes native compiling,
+;; preventing incomplete or leftover compilation files in `/tmp`.
+(setq native-comp-async-query-on-exit t)
+(setq confirm-kill-processes t)
+
 ;; Package initialize occurs automatically, before `user-init-file' is loaded, but after
 ;; `early-init-file'. We want Aero to handle this, so stop Emacs from doing it on its own.
 (setq package-enable-at-startup nil)

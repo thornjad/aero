@@ -80,6 +80,25 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
   "Perform startup initialization, including all compilation and loading"
   (aero/bootstrap)
 
+  ;; Set up automatic compilation for everything past this point
+  (package! compile-angel "jamescherti/compile-angel.el"
+    :demand t
+    :custom (compile-angel-verbose t)
+    :hook (emacs-lisp-mode-hook . compile-angel-on-save-local-mode)
+    :config
+    ;; Exclude the custom-file, recentf, and savehist files
+    (with-eval-after-load "savehist"
+      (push (concat "/" (file-name-nondirectory savehist-file))
+            compile-angel-excluded-files))
+    (with-eval-after-load "recentf"
+      (push (concat "/" (file-name-nondirectory recentf-save-file))
+            compile-angel-excluded-files))
+    (with-eval-after-load "cus-edit"
+      (push (concat "/" (file-name-nondirectory custom-file))
+            compile-angel-excluded-files))
+
+    (compile-angel-on-load-mode))
+
   ;; Core packages
   (require 'subr-x)
   (require 'aero-lib)
