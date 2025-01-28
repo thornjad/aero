@@ -1,6 +1,6 @@
 ;; aero-echo-area.el --- Display date and time in the echo area -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2023-2024 Jade Michael Thornton
+;; Copyright (c) 2023-2025 Jade Michael Thornton
 ;;
 ;; Based on echo-bar by Adam Tillov, copyright 2021-2022
 ;;

@@ -1,6 +1,6 @@
 ;;; aero-elfeed-org.el --- Configure elfeed with an org file -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2024 Jade Michael Thornton
+;; Copyright (c) 2024, 2025 Jade Michael Thornton
 ;;
 ;; This file is not part of GNU Emacs
 ;;
