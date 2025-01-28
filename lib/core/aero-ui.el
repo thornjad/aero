@@ -150,7 +150,7 @@ Credit: Sacha Chua"
   :custom (selection-highlight-mode-min-length 3))
 
 ;; highlight todo and similar words
-(package! todo-light (:host gitlab :repo "thornjad/todo-light" :branch "main")
+(package! todo-light "thornjad/todo-light"
   :init (global-todo-light-mode +1))
 
 ;; display time and date in echo area
