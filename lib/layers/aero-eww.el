@@ -17,6 +17,20 @@
   :commands (eww eww-browse-url eww-search-words browse-url-at-point)
 
   :preface
+  (defmacro shr-display-block (tag)
+    "Register TAG a paragraph (in CSS parlance \"display:block;\").
+
+See https://developer.mozilla.org/en-US/docs/Glossary/Block-level_content"
+    (let ((fname
+           (intern (format "shr-tag-%s" tag)))
+          (docstring
+           (format "Render \"%s\" tag as paragraph." tag)))
+      `(defun ,fname (dom)
+         ,docstring
+         (shr-ensure-paragraph)
+         (shr-generic dom)
+         (shr-ensure-paragraph))))
+
   (defun aero/set-eww-buffer-title ()
     "Rename eww mode buffer so the title of the page is displayed, making
      fake-tabbed-browsing easier"
@@ -129,6 +143,14 @@ This simply calls `ace-link-eww' with a fake double prefix, which is equivalent 
     "D" 'eww-buffer-kill
     (kbd "RET") 'eww-buffer-select
     "q" 'quit-window)
+
+  ;; Handle display block elements
+  (shr-display-block "article")
+  (shr-display-block "aside")
+  (shr-display-block "footer")
+  (shr-display-block "header")
+  (shr-display-block "nav")
+  (shr-display-block "section")
 
   ;; bookmarks
   (evil-set-initial-state 'eww-bookmark-mode 'normal)
