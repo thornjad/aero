@@ -56,8 +56,6 @@ within the same Emacs version)."
     (eval-when-compile (require 'gnutls))
     (setq gnutls-verify-error t)) ; Do not allow insecure TLS connections.
 
-  (require 'aero-package (expand-file-name "lib/core/aero-package.el" user-emacs-directory))
-
   (and (and aero/use-treesit-p (functionp 'module-load) (bound-and-true-p module-file-suffix))
        (require 'treesit nil t)))
 
@@ -65,13 +63,9 @@ within the same Emacs version)."
   "Load all Aero layers.
 
 A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package names MUST match their filename exactly."
-  (require 'aero-prelude) ; Foundational packages
+  (require 'aero-prelude) ; Foundation
   (require 'aero-ui) ; Core theming, loaded now so we have less of a flash of basic Emacs
-
-  ;; The rest of the layers need only exist in the `aero-layers-dir'. NOTE: layer must `provide' a
-  ;; package matching its file name.
-  (dolist (layer (directory-files aero-layers-dir nil "^[^#]*\\.el$"))
-    (require (intern (string-trim-right layer ".el"))))
+  (require 'aero-layers)
 
   ;; Core settings, loaded last to override layer settings
   (require 'aero-rc))
@@ -79,30 +73,6 @@ A layer is a valid ELisp file which lives in `aero-layers-dir'. Provided package
 (defun aero/init ()
   "Perform startup initialization, including all compilation and loading"
   (aero/bootstrap)
-
-  ;; Set up automatic compilation for everything past this point
-  (package! compile-angel "jamescherti/compile-angel.el"
-    :demand t
-    :custom (compile-angel-verbose t)
-    :hook (emacs-lisp-mode-hook . compile-angel-on-save-local-mode)
-    :config
-    ;; Exclude the custom-file, recentf, and savehist files
-    (with-eval-after-load "savehist"
-      (push (concat "/" (file-name-nondirectory savehist-file))
-            compile-angel-excluded-files))
-    (with-eval-after-load "recentf"
-      (push (concat "/" (file-name-nondirectory recentf-save-file))
-            compile-angel-excluded-files))
-    (with-eval-after-load "cus-edit"
-      (push (concat "/" (file-name-nondirectory custom-file))
-            compile-angel-excluded-files))
-
-    (compile-angel-on-load-mode))
-
-  ;; Core packages
-  (require 'subr-x)
-  (require 'aero-lib)
-
   (aero/load-layers)
   (setq-default custom-file "/dev/null") ; Don't use customization system
 
@@ -170,20 +140,13 @@ so we use more cycles but less space, but not too little space.")
   (setq user-init-file (or load-file-name (buffer-file-name)))
   (setq user-emacs-directory (file-name-directory user-init-file))
   (defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
-  (defconst aero-core-dir (expand-file-name "core/" aero-lib-dir))
-  (defconst aero-layers-dir (expand-file-name "layers/" aero-lib-dir))
   (defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
   (defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
   (defconst pcache-directory (expand-file-name "pcache/" aero-cache-dir))
-  (defvar aero/documents-path (expand-file-name "~/Documents/"))
-  (unless (file-exists-p aero-cache-dir)
-    (make-directory aero-cache-dir))
 
-  ;; Actually add them all to the load-path.
-  (defsubst add-to-load-path-if-exists (dir)
-    (when (file-exists-p dir) (add-to-list 'load-path dir)))
-  (mapc 'add-to-load-path-if-exists
-        `(,aero-core-dir ,aero-layers-dir ,aero-lib-dir))
+  (unless (file-exists-p aero-cache-dir) (make-directory aero-cache-dir))
+
+  (when (file-exists-p dir) (add-to-list 'load-path aero-lib-dir))
 
   ;; burn baby burn
   (aero/init)

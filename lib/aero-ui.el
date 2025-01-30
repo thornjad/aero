@@ -37,10 +37,6 @@
   (setq aero-theme-font "JetBrains Mono")
   (load-theme 'aero t))
 
-;; other themes
-(package! tao-theme (:host github :repo "11111000000/tao-theme-emacs") :defer t)
-(package! spacemacs-theme (:host github :repo "nashamri/spacemacs-theme") :defer t)
-
 (setq default-frame-alist
       ;; width assumes we want a buffer to be 106 columns wide
       (append (list '(width  . 212) '(height . 62)
@@ -115,7 +111,7 @@ Credit: Sacha Chua"
 
 ;; improved pixel-based smooth scrolling. Mostly used when screen sharing, doesn't really do much
 ;; for normal navigation
-(package! good-scroll (:host github :repo "io12/good-scroll.el")
+(package! good-scroll "io12/good-scroll.el"
   :functions (good-scroll-mode)
   :init
   ;; Avoid bug with evil-mode, https://github.com/io12/good-scroll.el/issues/16
@@ -123,7 +119,7 @@ Credit: Sacha Chua"
   :config (good-scroll-mode +1))
 
 ;; Display formfeed characters
-(package! formfeeder (:host gitlab :repo "thornjad/formfeeder" :branch "main")
+(package! formfeeder "thornjad/formfeeder"
   :defines (formfeeder-line-width)
   :config
   (setq formfeeder-line-width (- fill-column 1))

@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;;
-;; Aero core prelude layer
+;; Aero core prelude layer, setting up the foundation of the rest of the config
 ;;
 ;; Copyright (c) 2018-2025 Jade Michael Thornton
 ;;
@@ -26,15 +26,42 @@
 ;; The file name of "prelude" has nothing to do with the excellent Emacs configuration distribution
 ;; of the same name. Instead, the name alludes to the fact that the configuration here comes before
 ;; the rest, and in many cases is required by other packages.
-
-(require 'cl-lib)
-(require 'aero-lib)
-
+;;
 ;;; Code:
 
+(require 'cl-lib)
+(require 'subr-x)
+
+;; Load our utilities
+(require 'aero-lib)
+
 
-;; Set up core packages. The ELPA keyring sometimes gets screwed up, but this package lets us fix
-;; it easily.
+;;; Set up core packages and prereqs
+
+;; Require early so we can use this whenever
+(require 'aero-package (expand-file-name "lib/aero-package.el" user-emacs-directory))
+
+;; Set up automatic compilation for everything past this point
+(package! compile-angel "jamescherti/compile-angel.el"
+  :demand t
+  :hook (emacs-lisp-mode-hook . compile-angel-on-save-local-mode)
+
+  :custom
+  (compile-angel-verbose t)
+  (compile-angel-enable-byte-compile nil) ; only native compile
+
+  :config
+  ;; Exclude these files
+  (with-eval-after-load "savehist" (push (concat "/" (file-name-nondirectory savehist-file))
+                                         compile-angel-excluded-files))
+  (with-eval-after-load "recentf" (push (concat "/" (file-name-nondirectory recentf-save-file))
+                                        compile-angel-excluded-files))
+  (with-eval-after-load "cus-edit" (push (concat "/" (file-name-nondirectory custom-file))
+                                         compile-angel-excluded-files))
+
+  (compile-angel-on-load-mode))
+
+;; The ELPA keyring sometimes gets screwed up, this fixes it
 (package! gnu-elpa-keyring-update :auto)
 
 ;; Requirements for lib
@@ -64,8 +91,22 @@
 ;; Faster than grep, but requires ripgrep to be installed locally
 (package! ripgrep "nlamirault/ripgrep.el" :defer 3)
 
+;; Make files executable if the first file has a shebang
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
 
-;; Keybindings
+;;; Location definitions
+
+(defvar aero/documents-path (expand-file-name "~/Documents/"))
+(defvar aero/thornlog-path (expand-file-name "thornlog/" aero/documents-path))
+(defvar aero/roam-path (expand-file-name "roam/" aero/thornlog-path))
+(defvar aero/thornlog-archive-file (expand-file-name "archive/archive.org" aero/thornlog-path))
+(defvar aero/thornlog-elfeed-directory (expand-file-name "elfeed/" aero/documents-path)
+  "The directory where elfeed will store its database and other files.")
+(defvar aero/thornlog-elfeed-org-file (expand-file-name "rss_feeds.org" aero/roam-path))
+
+
+;;; Keybindings
 
 (package! which-key "justbur/emacs-which-key"
   :hook (on-first-input . which-key-mode)
@@ -374,7 +415,7 @@
    "z" 'repeat))
 
 
-;; Evil
+;;; Evil
 
 (package! evil
   (:host github
@@ -510,7 +551,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   :config (global-evil-matchit-mode 1))
 
 
-;; Treesitter
+;;; Treesitter
 
 ;; Automatically install treesitter grammars when missing
 (package! treesit-auto "renzmann/treesit-auto"
@@ -547,7 +588,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
   (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner")))
 
 
-;; completion and navigation
+;;; completion and navigation
 
 (package! vertico "minad/vertico"
   :init (vertico-mode)
@@ -702,7 +743,7 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :config (ace-link-setup-default))
 
 
-;; Project
+;;; Project
 
 (package! project :builtin
   :after (general)
@@ -757,7 +798,7 @@ https://jmthornton.net/blog/p/emacs-project-override"
     "cp" 'project-compile))
 
 
-;; other stuff
+;;; Code navigation
 
 ;; Gives us the M-n and M-p symbol-following ability
 (package! smartscan "mickeynp/smart-scan"
@@ -822,43 +863,8 @@ https://jmthornton.net/blog/p/emacs-project-override"
     "8" '(winum-select-window-8 :wk "window-8")
     "9" '(winum-select-window-9 :wk "window-9")))
 
-;; Improved version of help buffers
-(package! helpful "Wilfred/helpful"
-  :commands (helpful-function
-             helpful-variable
-             helpful-macro
-             helpful-key
-             helpful-callable)
-  :after (evil general)
-  :init
-
-  ;; HACK `help-fns--autoloaded-p's signature changed on Emacs 29. This
-  ;; suppresses the error until it is addressed upstream. Basically we just
-  ;; override the function to ignore the second argument.
-  ;; TODO trying this out without the hack, Jan 27, 2025. If you're reading this and thinking wow
-  ;; that was a long time ago, rip it out
-  ;; (unless (version< emacs-version "29")
-  ;;   (advice-add #'help-fns--autoloaded-p :around
-  ;;               (lambda (fn sym &rest args)
-  ;;                 (apply fn (list sym)))))
-
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "hdf" 'helpful-function
-   "hda" 'helpful-symbol
-   "hdv" 'helpful-variable
-   "hdm" 'helpful-macro
-   "hdk" 'helpful-key
-   "hdc" 'helpful-callable)
-
-  :config
-  (evil-define-key 'normal helpful-mode-map
-    "q" 'kill-current-buffer
-    "?" 'describe-mode))
-
 
-;; Company completions
+;;; Company completions
 
 (package! company
   (:repo "company-mode/company-mode"
@@ -899,7 +905,7 @@ https://jmthornton.net/blog/p/emacs-project-override"
   :hook (company-mode . company-box-mode))
 
 
-;; LSP
+;;; LSP
 
 (package! eglot :builtin
   :hook ((python-mode
@@ -1010,12 +1016,8 @@ https://jmthornton.net/blog/p/emacs-project-override"
         x-gtk-use-system-tooltips t
         dired-listing-switches "-lFaGh1v --group-directories-first"))
 
-;; TTY also needs some clipboard help. Only works in certain term emulators.
-(unless (display-graphic-p)
-  (package! xclip (:repo "emacsmirror/xclip") :config (xclip-mode +1)))
-
 
-;; File navigation
+;;; File navigation
 
 ;; We use the most up-to-date tramp instead of the built-in since it gave us
 ;; trouble in the past
@@ -1044,77 +1046,12 @@ https://jmthornton.net/blog/p/emacs-project-override"
   (setq ranger-pre-header-format header-line-format))
 
 
-;; Better writing
-
-;; Mark passive voice, duplicate words and weasel words
-(package! writegood-mode (:repo "bnbeckwith/writegood-mode")
-  :hook ((text-mode) . writegood-mode))
-
-;; Mark E′ violations
-(package! eprime-mode (:host gitlab :repo "thornjad/eprime-mode" :branch "main")
-  :after (general)
-  ;; :hook text-mode
-  :commands (eprime-check-buffer eprime-mode)
-  :init
-  (aero-leader-def
-    "tp" 'eprime-check-buffer
-    "tP" 'eprime-mode))
-
-
-;; General crap
-
-;; My pomodoro package
-(package! pomp (:host gitlab :repo "thornjad/pomp")
-  :after (general evil)
-  :commands (pomp)
-  :custom
-  (pomp-pomodoro-length 55)
-  (pomp-short-break-length 10)
-  (pomp-long-break-length 15)
-  :init
-  (aero-leader-def "ap" 'pomp))
-
-(package! restclient :auto
-  :after (general)
-  :commands (restclient-mode)
-  :mode ("\\.http\\'" . restclient-mode)
-  :config
-  (require 'general)
-  (aero-mode-leader-def
-    :keymaps 'restclient-mode-map
-    "RET" '(restclient-http-send-current-stay-in-window :wk "Run query at point")
-    "c" '(restclient-http-send-current :wk "Run query at point and focus")
-    "r" '(restclient-http-send-current-raw :wk "Run query, no pretty print")
-    "n" 'restclient-jump-next
-    "p" 'restclient-jump-prev
-    "." 'restclient-mark-current
-    "y" 'restclient-copy-curl-command))
+;;; General crap
 
 (package! editorconfig "editorconfig/editorconfig-emacs"
   :defer 1
   :functions (editorconfig-mode)
   :config (editorconfig-mode +1))
-
-;; startup profiler
-(package! esup "jschaf/esup"
-  :commands (esup)
-  :config
-  ;; Work around a bug where esup tries to profile cl-lib and fails by doing some nil checking
-  (defun esup-read-results ()
-    "Read all `esup-result' objects from `esup-incoming-results-buffer'.
-
-HACKED by Aero to add nil checking."
-    (let (results sep-end-point)
-      (with-current-buffer (get-buffer esup-incoming-results-buffer)
-        (goto-char esup-last-result-start-point)
-        (message "at %s" esup-last-result-start-point)
-        (unless (eobp)
-          (while (setq sep-end-point (esup-next-separator-end-point))
-            (when-let ((result (car (esup-read-result (point)))))
-              (push result results))
-            (setq esup-last-result-start-point sep-end-point)
-            (goto-char esup-last-result-start-point))))
-      (nreverse results))))
 
 ;; detects when the buffer matches what's on disk and marks it unmodified. If, for example, you
 ;; visit a file, change something, then undo the change, this package ensures the buffer doesn't
@@ -1123,35 +1060,6 @@ HACKED by Aero to add nil checking."
   :defer 1
   :hook ((prog-mode text-mode) . unmodified-buffer-mode))
 
-;; Use the bindings below to insert a virtual comment which displays in the buffer but never saves
-;; to disk.
-(package! virtual-comment "thanhvg/emacs-virtual-comment"
-  :hook ((find-file-hook . virtual-comment-mode)
-         (virtual-comment-make-mode . evil-insert-state))
-  :after (general evil)
-  :commands (virtual-comment-make
-             virtual-comment-next
-             virtual-comment-previous
-             virtual-comment-delete
-             virtual-comment-paste
-             virtual-comment-show)
-  :custom (virtual-comment-face 'virtual-comment-face)
-  :init
-  ;; Doesn't define its own faces, using a variable instead, so we need to declare it
-  (defface virtual-comment-face
-    '((t :inherit highlight))
-    "Face for virtual comments"
-    :group 'virtual-comment)
-
-  (aero-leader-def
-    "v" '(:ignore t :wk "virtual comment")
-    "vv" 'virtual-comment-make
-    "vn" 'virtual-comment-next
-    "vp" 'virtual-comment-previous
-    "vk" 'virtual-comment-delete
-    "vP" 'virtual-comment-paste
-    "vs" 'virtual-comment-show))
-
 ;; Use `so-long-revert' in a buffer to get back to what it would otherwise have loaded as.
 (package! so-long :builtin
   :config (global-so-long-mode +1))
@@ -1159,11 +1067,6 @@ HACKED by Aero to add nil checking."
 (package! savehist :builtin
   :init (savehist-mode)
   :custom (savehist-file (expand-file-name "history" aero-cache-dir)))
-
-
-;; etc.
-
-(require 'wttrin (expand-file-name "lib/localpackages/wttrin.el" user-emacs-directory))
 
 
 (provide 'aero-prelude)

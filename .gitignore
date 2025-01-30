@@ -10,6 +10,8 @@
 .directory
 .emacs.desktop
 .emacs.desktop.lock
+.evc
+.evc.bak
 .extension/
 .ignore
 .last-package-update-day
