@@ -146,7 +146,7 @@ so we use more cycles but less space, but not too little space.")
 
   (unless (file-exists-p aero-cache-dir) (make-directory aero-cache-dir))
 
-  (when (file-exists-p dir) (add-to-list 'load-path aero-lib-dir))
+  (when (file-exists-p aero-lib-dir) (add-to-list 'load-path aero-lib-dir))
 
   ;; burn baby burn
   (aero/init)
