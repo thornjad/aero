@@ -224,8 +224,7 @@ Join the crumbs with SEPARATOR."
 
 (defun aero-breadcrumb--header-line ()
   "Helper for `aero-breadcrumb-headerline-mode'."
-  (let ((x (cl-remove-if
-            #'seq-empty-p (mapcar #'funcall '(aero-breadcrumb-crumbs)))))
+  (let ((x (cl-remove-if #'seq-empty-p (mapcar #'funcall '(aero-breadcrumb-crumbs)))))
     (mapconcat #'identity x (propertize " : " 'face 'aero-breadcrumb-face))))
 
 ;;;###autoload
