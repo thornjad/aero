@@ -95,19 +95,15 @@ Credit: Sacha Chua"
 (global-visual-line-mode +1)
 
 ;; Adds a breadcrumb to the headerline
-(package! breadcrumb "joaotavora/breadcrumb"
-  :after (project)
-  :hook ((prog-mode markdown-mode gfm-mode) . breadcrumb-local-mode)
-  :custom (breadcrumb-imenu-max-length 0.98)
+(package! aero-breadcrumb :localpackage
+  :hook ((prog-mode markdown-mode gfm-mode) . aero-breadcrumb-local-mode)
   :config
+  (with-eval-after-load 'gptel
+    ;; No breadcrumbs when gptel is running the show
+    (add-hook 'gptel-mode-hook (lambda () (aero-breadcrumb-local-mode -1))))
   (with-eval-after-load 'lsp-headerline
     ;; No breadcrumbs when the better lsp-headerline is available
-    (add-hook 'lsp-headerline-breadcrumb-mode-hook (lambda () (breadcrumb-local-mode -1))))
-
-  ;; Disable breadcrumb project portion by overriding the function
-  (defun breadcrumb-project-crumbs ()
-    "Disabled by Aero."
-    ""))
+    (add-hook 'lsp-headerline-breadcrumb-mode-hook (lambda () (aero-breadcrumb-local-mode -1)))))
 
 ;; improved pixel-based smooth scrolling. Mostly used when screen sharing, doesn't really do much
 ;; for normal navigation
