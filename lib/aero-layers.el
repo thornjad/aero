@@ -1358,6 +1358,10 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   ;; https://sachachua.com/dotemacs/index.html#idle-timer
   (run-with-idle-timer 600 t 'jump-to-org-agenda))
 
+;; Show formatting markers when point is near
+(package! org-appear "awth13/org-appear"
+  :custom (org-hide-emphasis-markers t))
+
 ;; Org-mode UI improvements
 (package! org-modern "minad/org-modern"
   :hook ((org-mode . org-modern-mode)
