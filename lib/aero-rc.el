@@ -110,7 +110,7 @@
                                " •")))
  ns-use-proxy-icon nil ; remove icon from frame title in NS
 
- initial-scratch-message (concat ";; Aero Emacs v" emacs-version
+ initial-scratch-message (concat ";; Welcome to GNU Emacs v" emacs-version
                                  "." (number-to-string emacs-build-number)
                                  "\n;;\n"
                                  ";; Go placidly amid the noise and haste,\n"
