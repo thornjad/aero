@@ -927,9 +927,11 @@ https://jmthornton.net/blog/p/emacs-project-override"
     (setq-local eldoc-documentation-strategy #'eldoc-documentation-compose))
 
   (defun aero/eldoc-box-help-at-point ()
+    "Display full eldoc at point on command"
     (interactive)
-    (if (and (fboundp 'eglot-managed-p) (eglot-managed-p))
-        (call-interactively #'eldoc-box-eglot-help-at-point)
+    (let ((eldoc-box-max-pixel-height 99999)
+          (eldoc-box-max-pixel-width 99999)
+          (eldoc-echo-area-use-multiline-p t))
       (call-interactively #'eldoc-box-help-at-point)))
 
   ;; Fix documentation strategy to show all of the available eldoc information when we want it. This
@@ -939,14 +941,14 @@ https://jmthornton.net/blog/p/emacs-project-override"
 
   :custom
   (eldoc-idle-delay 0.5)
-  (eldoc-box-only-multi-line t) ; leave single-line docs in minibuffer
-  (eldoc-box-max-pixel-width 600)
-  (eldoc-box-max-pixel-height 600)
+  (eldoc-box-only-multi-line nil) ; leave single-line docs in minibuffer
+  (eldoc-echo-area-use-multiline-p nil) ; normally use one line unless requested
 
   :config
-  (aero-leader-def
-    "i" 'aero/eldoc-box-help-at-point
-    "li" 'eldoc-box-eglot-help-at-point))
+  ;; attempt to prettify typescript errors
+  (add-hook 'eldoc-box-buffer-setup-hook #'eldoc-box-prettify-ts-errors 0 t)
+
+  (aero-leader-def "i" 'aero/eldoc-box-help-at-point))
 
 
 ;;; System-specifics
