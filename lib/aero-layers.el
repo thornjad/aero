@@ -1295,7 +1295,6 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
   (aero-mode-leader-def
     :keymaps 'org-mode-map
     "t" 'org-todo
-    "d" 'thornlog-new-day
     "f" 'org-forward-heading-same-level
     "F" 'org-backward-heading-same-level
     "w" 'org-open-at-point
@@ -1475,111 +1474,15 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
 
 ;; Thornlog management
 
-(defvar aero/thornlog-blocked-response-list
-  '("none" "none" "none" "none" "none" "none" "none"
-    "nothing" "nope" "nil" "zilch" "naught" "void" "n/a"
-    "∅" "nada" "pas une chose" "無" "żadnych")
-  "List of template responses for blocked, to be chosen randomly.
-
-'none' is included multiple times so as to give it increased weight, it being the 'normal'
-response. I'm too lazy to create a weights map or something, this is easier.")
-
-(defun thornlog-new-day ()
-  "Create a new entry for today, if not already present."
-  (interactive)
-  (cond
-   ((not (string-match "thornlog/roam/log\\.org" (buffer-file-name)))
-    (message "Not in Thornlog file"))
-   ((thornlog-today) (message "Entry for today already present"))
-   (t (progn
-        (thornlog-new-day-insert)
-        (recenter)))))
-
-(defun thornlog-today ()
-  "Jump to today's entry, if present, return t if found."
-  (interactive)
-  (let ((today-str (format-time-string "* %A, %B %d"))
-        (found nil))
-    (goto-char (point-max))
-    (when  (search-backward today-str nil t)
-      (setq found t)
-      (outline-show-entry)
-      (recenter))
-    found))
-
-(defun replace-thornlog-placeholders (template prev-day-date)
-  "Replace placeholders in TEMPLATE with reference to PREV-DAY-DATE."
-  (let* ((day-of-week (calendar-day-name (calendar-current-date)))
-         (today (format-time-string "%A, %B %d"))
-         (yesterday (format-time-string "%A, %B %d" (time-subtract (current-time) (days-to-time 1))))
-         (since-string (if (string= prev-day-date yesterday)
-                           "yesterday"
-                         (car (split-string prev-day-date ", "))))
-         (template (replace-regexp-in-string "<new-day-template>" today template))
-         (template (replace-regexp-in-string "<previous-entry-day>" since-string template))
-         (blocked-message (rand-nth aero/thornlog-blocked-response-list))
-         (template (replace-regexp-in-string "<blocked-message>" blocked-message template)))
-    template))
-
-(defun extract-section-content (title)
-  "Extract the content of the section with TITLE."
-  (save-excursion
-    (re-search-forward (regexp-quote title) nil t)
-    (org-back-to-heading t)
-    (org-mark-subtree)
-    (forward-line 1) ; deselect the heading
-    (let ((content
-           (string-trim (buffer-substring-no-properties (region-beginning) (region-end)))))
-      (deactivate-mark)
-      content)))
-
-(defun thornlog-new-day-insert ()
-  "Insert a new day entry based on a template."
-  (interactive)
-  (goto-char (point-max))
-  (re-search-backward "^\\* [[:alpha:]]+, [[:alpha:]]+ [[:digit:]]+" nil t)
-  (let* ((template (with-temp-buffer
-                     (insert-file-contents
-                      (expand-file-name "template/new-day.org" aero/thornlog-path))
-                     (buffer-string)))
-         (element (org-element-at-point))
-         (prev-day (org-element-property :title element))
-         (new-day-entry (replace-thornlog-placeholders template prev-day)))
-    (outline-hide-sublevels 1)
-    (goto-char (point-max))
-    (org-cycle-hide-drawers 'all)
-    (org-previous-visible-heading 1)
-    (org-show-subtree)
-    (org-end-of-subtree)
-    (insert "\n\n" new-day-entry "\n")
-    (org-previous-visible-heading 1)
-    (org-show-subtree)
-    (goto-char (point-max))
-    (search-backward "*** Since")
-    (forward-line)))
-
-(defun aero/thornlog-dir ()
-  "Personal persistent log."
-  (interactive)
-  (declare-function deer "ranger.el")
-  (when (require 'ranger nil t)
-    (deer aero/thornlog-path)))
-
 (defun aero/thornlog-log ()
   "Personal persistent log."
   (interactive)
-  (find-file (expand-file-name "log.org" aero/roam-path)))
-
-(defun aero/thornlog-today ()
-  "Go to today's log if it exists."
-  (interactive)
-  (aero/thornlog-log)
-  (thornlog-today))
+  (org-roam-node-visit (org-roam-node-from-title-or-alias "Work Log")))
 
 (defun aero/thornlog-todo ()
   "Personal todo list."
   (interactive)
-  (find-file (expand-file-name "todo.org" aero/roam-path)))
+  (org-roam-node-visit (org-roam-node-from-title-or-alias "Work Todo: Triaged Tasks and Inbox")))
 
 (defun aero/thornlog-clean-save ()
   "Automates the git commit in thornlog."
@@ -1682,73 +1585,6 @@ response. I'm too lazy to create a weights map or something, this is easier.")
       (goto-char (point-min))  ; Ensure property is applied to the whole file
       (org-set-property "modified" (format-time-string "[%Y-%m-%d %a %H:%M]")))))
 
-(add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
-(add-hook 'before-save-hook #'aero/org-roam-insert-modified-property)
-
-
-;; Notifications
-
-(defun aero/thornlog-notification (title message)
-  "Send a notification with TITLE and MESSAGE."
-  (if (featurep 'dbusbind)
-      (notifications-notify
-       :title title
-       :body message
-       :app-name "Emacs :: Thornlog")
-    (message (format "Thornlog :: %s :: %s" title message))))
-
-(defun aero/thornlog-check-effort-against-clock ()
-  "Check if current clock exceeds effort estimate, notify if it has exceeded."
-  (when (org-clocking-p)
-    (when-let* ((marker (org-entry-get org-clock-marker "Effort"))
-                (effort (org-duration-to-minutes marker))
-                (clocked (org-clock-get-clocked-time)))
-      (when (> clocked effort)
-        (aero/thornlog-notification
-         "Effort exceeded"
-         "The current org task has exceeded its effort estimate.")))))
-
-(defun aero/thornlog-notify-on-excessive-work-time ()
-  "Notify when the current org-clock has exceeded the continuous work limit."
-  (when-let ((clocked-time (floor (org-time-convert-to-integer (time-since org-clock-start-time))
-		                              60)))
-    (when (and (org-clocking-p)
-               (> clocked-time 120))
-      (aero/thornlog-notification
-       "Two-hour check-in"
-       "You've been working for two hours straight."))))
-
-(defvar aero/thornlog-effort-timer nil
-  "Timer for checking effort against clock.")
-
-(defvar aero/thornlog-continuous-work-timer nil
-  "Timer for checking continuous work time.")
-
-(defun aero/thornlog-set-effort-timer ()
-  "Check if current clock exceeds effort estimate, notify if it has exceeded."
-  (setq aero/thornlog-effort-timer (run-with-timer 0 60 'aero/thornlog-check-effort-against-clock)))
-
-(defun aero/thornlog-cancel-effort-timer ()
-  "Cancel the effort timer."
-  (when aero/thornlog-effort-timer (cancel-timer aero/thornlog-effort-timer)))
-
-(defun aero/thornlog-set-continuous-work-timer ()
-  "Notify when org-clock has exceeded the continuous work limit."
-  (setq aero/thornlog-continuous-work-timer
-        (run-with-timer 0 60 'aero/thornlog-notify-on-excessive-work-time)))
-
-(defun aero/thornlog-cancel-continuous-work-timer ()
-  "Cancel the continuous work timer."
-  (when aero/thornlog-continuous-work-timer (cancel-timer aero/thornlog-continuous-work-timer)))
-
-(add-hook 'org-clock-in-hook #'aero/thornlog-set-effort-timer)
-(add-hook 'org-clock-out-hook #'aero/thornlog-cancel-effort-timer)
-(add-hook 'org-clock-cancel-hook #'aero/thornlog-cancel-effort-timer)
-
-(add-hook 'org-clock-in-hook #'aero/thornlog-set-continuous-work-timer)
-(add-hook 'org-clock-out-hook #'aero/thornlog-cancel-continuous-work-timer)
-(add-hook 'org-clock-cancel-hook #'aero/thornlog-cancel-continuous-work-timer)
-
 
 ;; Roam
 
@@ -1778,6 +1614,9 @@ response. I'm too lazy to create a weights map or something, this is easier.")
 
   :config
   (org-roam-db-autosync-mode)
+
+  (add-hook 'before-save-hook #'aero/org-roam-insert-created-property)
+  (add-hook 'before-save-hook #'aero/org-roam-insert-modified-property)
 
   (aero-leader-def
     "vf" 'org-roam-node-find
