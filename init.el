@@ -141,6 +141,7 @@ so we use more cycles but less space, but not too little space.")
   (setq user-emacs-directory (file-name-directory user-init-file))
   (defconst aero-lib-dir (expand-file-name "lib/" user-emacs-directory))
   (defconst aero-etc-dir (expand-file-name "etc/" user-emacs-directory))
+  (defconst aero-snippets-dir (expand-file-name "snippets/" user-emacs-directory))
   (defconst aero-cache-dir (expand-file-name "cache/" aero-etc-dir))
   (defconst pcache-directory (expand-file-name "pcache/" aero-cache-dir))
 

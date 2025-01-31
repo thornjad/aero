@@ -74,10 +74,6 @@
 ;; used by gptel-quick and available for other stuff
 (package! posframe "tumashu/posframe" :defer 1)
 
-;; Used by nova, provides a vertico posframe interface
-(package! vertico-posframe "tumashu/vertico-posframe"
-  :after (posframe vertico))
-
 ;; Used by eglot, dape, copilot, etc
 (package! jsonrpc :builtin
   :config
@@ -350,6 +346,11 @@
    "z" 'repeat))
 
 (package! casual "kickingvegas/casual"
+	:after (dired)
+  :defines (casual-editkit-main-tmenu
+            casual-dired-tmenu
+            casual-dired-sort-by-tmenu
+            casual-dired-search-replace-tmenu)
   :bind (("C-o" . #'casual-editkit-main-tmenu)
 
          :map dired-mode-map
@@ -640,20 +641,34 @@ We display [CRM<separator>], e.g., [CRM,] if the separator is a comma."
   :defer 1
   :init (amx-mode 1))
 
+(package! yasnippet "joaotavora/yasnippet"
+  :custom
+  (yas-installed-snippets-dir aero-snippets-dir)
+  :config
+  (yas-global-mode 1))
+
+(package! consult-yasnippet "mohkale/consult-yasnippet"
+  :after (consult yasnippet)
+  :config
+  (aero-leader-def
+    "y" 'consult-yasnippet))
+
 (package! recentf :builtin
   :defer 1
   ;; Doesn't seem like indent activates properly for me without this intervention. Here we move it
   ;; to a known cache file and set up an auto-save every 5 minutes.
   :defines (recentf-mode)
+  :preface
+  (defun aero/recentf-save-list-quiet ()
+    "Wrapper for `recentf-save-list' with no message."
+    (let ((inhibit-message t))
+      (recentf-save-list)))
   :custom
   (recentf-save-file (expand-file-name ".recentf" user-emacs-directory))
   (recentf-max-saved-items 500)
   :config
   (recentf-mode 1)
-  (defun aero/recentf-save-list-quiet ()
-    "Wrapper for `recentf-save-list' with no message."
-    (let ((inhibit-message t))
-      (recentf-save-list)))
+  
   ;; Would be a great place for `aero/advice-no-message' but there's no need to hide messaging if
   ;; recentf saves for some other reason. Here, we run it regularly so we don't care about the
   ;; constant messaging.
