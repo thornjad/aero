@@ -74,6 +74,10 @@
 ;; used by gptel-quick and available for other stuff
 (package! posframe "tumashu/posframe" :defer 1)
 
+;; Used by nova, provides a vertico posframe interface
+(package! vertico-posframe "tumashu/vertico-posframe"
+  :after (posframe vertico))
+
 ;; Used by eglot, dape, copilot, etc
 (package! jsonrpc :builtin
   :config
@@ -191,51 +195,19 @@
 
    "," '(:ignore t :wk "mode") ; reserved for mode-specific
 
-   "C" '(:ignore t :wk "clue")
-
-   "E" '(:ignore t :wk "emacs")
-   "Ed" '(:ignore t :wk "debug")
-   "Ede" 'toggle-debug-on-error
-   "Edq" 'toggle-debug-on-quit
-
-   "F" '(:ignore t :wk "frame")
-   "FF" 'find-file-other-frame
-   "Fd" 'delete-frame
-   "Ff" 'toggle-frame-fullscreen
-   "Fm" 'toggle-frame-maximized
-   "Fn" 'make-frame
-   "Fo" 'other-frame
-
-   "L" '(:ignore t :wk "local")
-
-   "P" '(:ignore t :wk "packages")
-   "PC" 'straight-check-all
-   "PF" 'straight-fetch-all
-   "PP" 'straight-pull-all
-   "PR" 'straight-rebuild-all
-   "Pg" 'straight-get-recipe
-   "Pp" 'straight-pull-package-and-deps
-   "Pr" 'straight-rebuild-package
-   "Px" 'straight-prune-build
-
-   "S" '(:ignore t :wk "shell/sql")
-   "SE" '(:ignore t :wk "eshell")
-   "Se" 'eshell
-   "St" '(:ignore t :wk "term")
+   "e" '(:ignore t :wk "errors")
+   "ed" 'toggle-debug-on-error
+   "eq" 'toggle-debug-on-quit
 
    "T TAB" 'tab-recent
    "T" '(:ignore t :wk "tab")
+   "Tn" 'tab-next
+   "Tp" 'tab-previous
+   "Tk" 'tab-close
    "T," 'tab-rename
-   "TL" 'tab-last
-   "TL" 'tab-list
-   "TT" 'tab-bar-mode
-   "Tb" 'switch-to-buffer-other-tab
    "Tc" '(tab-new :wk "create tab")
-   "Td" 'tab-close
+   "Tb" 'switch-to-buffer-other-tab
    "Tf" 'find-file-other-tab
-   "Tg" '(tab-select :wk "tab go")
-   "Tj" 'tab-next
-   "Tk" 'tab-previous
    "Ts" '(tab-duplicate :wk "tab duplicate split")
    "Tu" 'tab-undo
 
@@ -243,12 +215,9 @@
 
    "a" '(:ignore t :wk "applications")
    "ai" '(:ignore t :wk "AI functions")
-   "ag" '(:ignore t :wk "games")
-   "agd" 'dunnet
-   "agt" 'tetris
 
    "b" '(:ignore t :wk "buffers")
-   "bL" 'list-buffers
+   "bs" 'switch-to-scratch-buffer
    "bS" 'switch-to-new-scratch-buffer
    "bd" 'kill-current-buffer
    "bi" 'indent-buffer
@@ -258,10 +227,6 @@
    "bp" 'previous-buffer
    "br" '(aero/reopen-file-at-buffer :wk "buffer replace")
    "bR" '(revert-buffer-quick :wk "buffer revert")
-   "bs" 'switch-to-scratch-buffer
-   "bt" '(:ignore t :wk "tabify")
-   "btt" 'tabify-buffer
-   "btu" 'untabify-buffer
    "bw" '(whitespace-mode :wk "whitespace")
    "bx" 'kill-buffer-and-window
 
@@ -271,55 +236,29 @@
    "nw" 'widen
    "nd" 'narrow-to-defun
 
-   "h" '(:ignore :wk "hide/show")
-   "hh" 'hs-toggle-hiding
-   "hH" 'hs-hide-all
-   "hS" 'hs-show-all
-
    "c" '(:ignore t :wk "compile")
    "ct" 'aero/tail-compilation-buffer
-   "cC" '(aero/byte-recompile-file-at-buffer :wk "byte recompile file at buffer")
-   "cR" 'byte-recompile-file
+   "ci" '(ielm :wk "ielm repl")
    "cc" 'compile
    "ce" '(:ignore t :wk "elisp")
-   "ceB" '(:ignore t :wk "byte compile")
-   "ceBF" '(async-byte-compile-file :wk "other file async")
-   "ceBb" '(aero/byte-compile-file-at-buffer :wk "file at buffer")
-   "ceBd" '(byte-recompile-directory :wk "directory")
-   "ceBf" '(byte-compile-file :wk "other file")
-   "ceBr" '(aero/byte-recompile-file-at-buffer :wk "file at buffer (recompile)")
    "ceb" 'eval-buffer
-   "cec" '(:ignore t :wk "compile")
-   "cecb" '(aero/native-compile-file-at-buffer :wk "file at buffer")
    "ced" 'eval-defun
-   "cei" '(ielm :wk "ielm repl")
    "cer" 'eval-region
    "ck" 'kill-compilation
    "cr" 'recompile
 
-   "d" '(:ignore t :wk "debug")
-
-   "e" '(:ignore t :wk "errors")
-
    "f" '(:ignore t :wk "files")
    "ff" 'find-file
    "fc" 'aero/copy-file-relative-to-project
-   "fC" '(:ignore t :wk "convert")
-   "fCd" '(aero/unix2dos :wk "unix2dos")
-   "fCu" '(aero/dos2unix :wk "dos2unix")
    "fD" '(aero/delete-this-file :wk "delete this file")
-   "fE" '(aero/sudo-edit :wk "sudo edit")
    "fR" '(aero/rename-this-file-and-buffer :wk "rename this file")
    "fo" '(:ignore t :wk "open special files")
-   "foP" 'aero/open-emacs-problems
-   "fof" 'aero/open-local-init
    "fot" '(:ignore t :wk "thornlog")
    "fota" 'aero/open-agenda-file
    "fott" '(aero/thornlog-todo :wk "thornlog todo")
    "fotl" '(aero/thornlog-today :wk "thornlog log")
    "fotd" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
-   "fx" '(aero/xdg-open :wk "xdg-open")
    "fh" '(aero/toggle-angular-component-file :wk "toggle angular component file")
 
    "g" '(:ignore t :wk "git")
@@ -388,10 +327,6 @@
    "w" '(:ignore t :wk "window/web")
    "w=" 'balance-windows
    "wB" '(aero/switch-to-minibuffer-window :wk "switch to minibuffer")
-   "wF" 'make-frame
-   "wL" '(:ignore t :wk "layout")
-   "wL2" 'aero/layout-two-columns
-   "wL3" 'aero/layout-three-columns
    "ws" '(eww-search-words :which-key "web search")
    "ww" 'eww
    "wb" '(:ignore t :wk "browse")
@@ -414,6 +349,14 @@
 
    "z" 'repeat))
 
+(package! casual "kickingvegas/casual"
+  :bind (("C-o" . #'casual-editkit-main-tmenu)
+
+         :map dired-mode-map
+         ("C-o" . #'casual-dired-tmenu)
+         ("s" . #'casual-dired-sort-by-tmenu)
+         ("/" . #'casual-dired-search-replace-tmenu)))
+
 
 ;;; Evil
 
@@ -435,11 +378,10 @@
 
   :config
 
-  ;; We use SPC as the leader key so it shouldn't do anything when in motion
+  ;; Free these up for other bindings, they're not useful anyway
   (define-key evil-motion-state-map " " nil)
-
-  ;; We use RET for other things, and the default is useless anyway
   (define-key evil-motion-state-map (kbd "RET") nil)
+  (define-key evil-motion-state-map (kbd "C-o") nil)
 
   ;; default states
   (setq evil-default-state 'normal)
@@ -1033,17 +975,13 @@ https://jmthornton.net/blog/p/emacs-project-override"
   (tramp-default-method "rsync")
   (tramp-terminal-type "tramp"))
 
-;; We only use this for the deer function, which is a better version of dired.
-(package! ranger (:repo "punassuming/ranger.el")
-  :commands (deer)
-  :after (general)
-  :custom
-  (ranger-show-hidden t)
-  (find-directory-functions 'deer)
-  :init (aero-leader-def "fd" 'deer)
-  :config
-  ;; Fix occasional void-variable issue by setting header format ourselves from the start
-  (setq ranger-pre-header-format header-line-format))
+(package! dired :builtin
+  :hook ((dired-mode . hl-line-mode)
+         (dired-mode . dired-async-mode))
+  :bind (:map dired-mode-map
+         ("M-n" . #'dired-next-dirline)
+         ("M-p" . #'dired-prev-dirline)
+         ("TAB" . #'dired-next-subdir)))
 
 
 ;;; General crap
