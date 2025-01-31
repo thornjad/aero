@@ -96,7 +96,7 @@ Credit: Sacha Chua"
 
 ;; Adds a breadcrumb to the headerline
 (package! aero-breadcrumb :localpackage
-  :hook ((prog-mode markdown-mode gfm-mode) . aero-breadcrumb-local-mode)
+  :hook ((prog-mode markdown-mode gfm-mode org-mode) . aero-breadcrumb-local-mode)
   :config
   (with-eval-after-load 'gptel
     ;; No breadcrumbs when gptel is running the show
