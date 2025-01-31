@@ -919,7 +919,7 @@ https://jmthornton.net/blog/p/emacs-project-override"
   :config (advice-add #'eglot-signature-eldoc-function :override #'eglot-signature-eldoc-talkative))
 
 ;; puts eldoc in a child frame instead of the echo area
-(package! eldoc-box (:repo "casouri/eldoc-box")
+(package! eldoc-box "casouri/eldoc-box"
   :after general
 
   :preface
