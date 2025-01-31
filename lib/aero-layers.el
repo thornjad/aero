@@ -1112,8 +1112,9 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
 
   :custom
   (org-hide-leading-stars t)
-  (org-pretty-entities nil)
+  (org-pretty-entities t)
   (org-indent-mode-turns-on-hiding-stars nil) ; why would this even exist??
+  (org-fontify-quote-and-verse-blocks t)
   (org-insert-heading-respect-content t) ; insert headings after current subtree
   (org-fold-catch-invisible-edits 'smart) ; don't accidentally remove hidden text
   (org-startup-with-inline-images t) ; default to showing images on startup
