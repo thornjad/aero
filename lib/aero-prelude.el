@@ -252,7 +252,7 @@
    "fot" '(:ignore t :wk "thornlog")
    "fota" 'aero/open-agenda-file
    "fott" '(aero/thornlog-todo :wk "thornlog todo")
-   "fotl" '(aero/thornlog-today :wk "thornlog log")
+   "fotl" '(aero/thornlog-log :wk "thornlog log")
    "fotd" '(aero/thornlog-dir :wk "thornlog all")
    "fw" '(save-buffer :wk "write buffer")
    "fh" '(aero/toggle-angular-component-file :wk "toggle angular component file")
