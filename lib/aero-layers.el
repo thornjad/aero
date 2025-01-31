@@ -1361,7 +1361,8 @@ This behavior is IDIOTIC and I cannot suffer to live with this automatic indenta
 
 ;; Show formatting markers when point is near
 (package! org-appear "awth13/org-appear"
-  :custom (org-hide-emphasis-markers t))
+  :custom (org-hide-emphasis-markers t)
+  :hook (org-mode . org-appear-mode))
 
 ;; Org-mode UI improvements
 (package! org-modern "minad/org-modern"
